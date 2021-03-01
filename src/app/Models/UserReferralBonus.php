@@ -1,0 +1,14 @@
+<?php
+
+namespace App\Models;
+
+use App\Traits\BelongsToUser;
+use Illuminate\Database\Eloquent\Model;
+
+class UserReferralBonus extends Model
+{
+    use BelongsToUser;
+
+    protected $connection = 'dpaisa';
+    protected $guarded = [];
+}

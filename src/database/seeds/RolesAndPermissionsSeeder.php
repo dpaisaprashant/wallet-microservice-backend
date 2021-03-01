@@ -1,0 +1,259 @@
+<?php
+
+use App\Models\Admin;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+
+class RolesAndPermissionsSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+
+        /*DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        DB::table('model_has_permissions')->truncate();
+        DB::table('model_has_roles')->truncate();
+        DB::table('role_has_permissions')->truncate();
+        Admin::query()->truncate();
+        Permission::query()->truncate();
+        Role::query()->truncate();*/
+
+
+        // Reset cached roles and permissions
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+
+        $permissions = [
+            'Dashboard',
+            'Dashboard all transactions sum',
+            'Dashboard successful transactions count',
+            'Dashboard total KYC not filled users',
+            'Dashboard total KYC filled users',
+            'Dashboard users transactions graph',
+            'Dashboard highest transactions table',
+
+            'Dashboard total KYC accepted by backend user count',
+            'Dashboard total KYC rejected by backend user count',
+
+            'Dashboard total NPay clearance cleared by backend user count',
+            'Dashboard total Paypoint clearance cleared by backend user count',
+
+            'Dashboard npay clearance table',
+            'Dashboard paypoint clearance table',
+
+            'Dashboard accepted KYC table',
+            'Dashboard rejected KYC table',
+
+            'Stat Dashboard KYC',
+            'Stat Dashboard paypoint',
+            'Stat Dashboard npay',
+
+            'Development tools view',
+            'Development tool backup database',
+
+            'Backend user update profile',
+            'Backend user change password',
+
+            'Backend users view',
+            'Backend user update permission',
+            'Backend user update role',
+            'Backend user reset password',
+            'Backend user create',
+
+            'Roles view',
+            'Role create',
+            'Role edit',
+
+            'Bank list view',
+            'Bank list profile',
+
+            'Backend user log view',
+
+            'Users view',
+            'User profile',
+            'User transactions',
+            'User deactivate',
+            'User activate',
+
+            'Deactivate users view',
+
+            'Locked users view',
+            'Locked user login attempts view',
+            'Locked user login attempt enable',
+
+            'KYC not filled users view',
+            'Unverified KYC users view',
+            'KYC list changed by backend user view',
+            'User KYC view',
+            'KYC accept',
+            'KYC reject',
+
+            'Complete transaction view',
+
+            'Fund transfer view',
+            'Fund transfer detail',
+
+            'Fund request view',
+            'Fund request detail',
+
+            'EBanking view',
+            'EBanking detail',
+
+            'Paypoint view',
+            'Paypoint request view',
+            'Paypoint response view',
+            'Paypoint detail',
+
+            'Failed paypoint view',
+            'Failed paypoint request view',
+            'Failed paypoint response view',
+            'Failed paypoint detail',
+
+            'Failed npay view',
+            'Failed npay response view',
+            'Failed npay detail',
+
+            'Clearance npay',
+            'Clearance paypoint',
+            'Clearance npay clear transaction',
+            'Clearance paypoint clear transaction',
+
+            'Clearance npay view',
+            'Clearance paypoint view',
+
+            'Clearance npay change status',
+            'Clearance paypoint change status',
+
+            'Clearance npay transactions view',
+            'Clearance paypoint transactions view',
+
+            'Clearance npay handle dispute',
+            'Clearance paypoint handle dispute',
+
+            'Dispute create',
+            'Dispute view',
+            'Dispute detail view',
+            'Dispute handle single',
+
+            'Dispute accept',
+            'Dispute reject',
+
+            'View all audit trial',
+            'View npay audit trial',
+            'View paypoint audit trial',
+
+            'Monthly report view',
+            'Yearly report view',
+
+            'User session log view',
+            'Auditing log view',
+            'Profiling log view',
+            'Statistics log view',
+            'Development log view',
+
+            'Notification view',
+            'Notification create',
+            'Send notification to user',
+
+            'Sparrow SMS view',
+            'Sparrow SMS detail view',
+
+            'General page setting view',
+            'General page setting create',
+            'General page setting update',
+            'General page setting delete',
+
+            //settings
+            'General setting view',
+            'General setting update',
+
+            'Npay setting view',
+            'Npay setting update',
+
+            'Paypoint setting view',
+            'Paypoint setting update',
+            'Paypoint commission setting view',
+            'Paypoint cashback setting view',
+
+            'Limits setting view',
+            'Limits setting update',
+            'Clear daily limit',
+            'Clear monthly limit',
+
+            'Transaction fee setting view',
+            'KYC setting view',
+            'OTP setting view',
+            //end settings
+
+            //Frontend settings
+            'Frontend header view',
+            'Frontend header create',
+            'Frontend header update',
+
+            'Frontend service view',
+            'Frontend service create',
+            'Frontend service update',
+            'Frontend service delete',
+
+            'Frontend about view',
+            'Frontend about create',
+            'Frontend about update',
+            'Frontend about delete',
+
+            'Frontend process view',
+            'Frontend process create',
+            'Frontend process update',
+            'Frontend process delete',
+            //End frontend settings
+
+            'Terms and condition view',
+            'Terms and condition update'
+
+            ];
+
+        //get users having all permissions
+        $admin = Admin::first();
+        if (! count(Admin::all())) {
+            $admin = Admin::create([
+                'name' => 'Avaya Baniya',
+                'email' => 'baniyaavaya@gmail.com',
+                'password' => bcrypt('password'),
+                'mobile_no' => '9860089363'
+            ]);
+        }
+
+        $role = Role::where('name', 'Super admin')->first();
+        if (! $role) {
+            $role = Role::create(['name' => 'Super admin']);
+            $admin->assignRole('Super admin');
+        }
+
+
+        //create permission
+        foreach ($permissions as $key  => $permission) {
+
+            if ( ! Permission::where('name', $permission)->first()) {
+                $permission = Permission::create(['name' => $permission]);
+            }
+
+           if(! $role->hasPermissionTo($permission) ) {
+
+               $role->givePermissionTo($permission);
+           }
+
+        }
+
+        /*$superAdmins = Admin::all();
+        $superAdmins->map(function($value) use($permissions) {
+           if($value->hasRole("Super admin") || $value->hasRole("Admin")){
+            $value->givePermissionTo($permissions);
+           }
+        });*/
+    }
+}

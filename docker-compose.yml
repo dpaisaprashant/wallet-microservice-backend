@@ -8,6 +8,11 @@ networks:
     external: true
   wallet-microservice-nchl_laravel:
     external: true
+  wallet-microservice-cybersource_laravel:
+    external: true
+  wallet-microservice-npay_laravel:
+    external: true
+
 
 services:
   site:
@@ -30,6 +35,8 @@ services:
       - wallet-microservice-core_laravel
       - wallet-microservice-paypoint_laravel
       - wallet-microservice-nchl_laravel
+      - wallet-microservice-cybersource_laravel
+      - wallet-microservice-npay_laravel
 
   mysql:
     image: mysql:5.7.29
@@ -37,7 +44,7 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "3305:3306"
+      - "3309:3306"
     volumes:
       - ./mysql:/var/lib/mysql
     environment:
@@ -52,6 +59,8 @@ services:
       - wallet-microservice-core_laravel
       - wallet-microservice-paypoint_laravel
       - wallet-microservice-nchl_laravel
+      - wallet-microservice-cybersource_laravel
+      - wallet-microservice-npay_laravel
 
   php:
     build:
@@ -67,6 +76,8 @@ services:
       - wallet-microservice-core_laravel
       - wallet-microservice-paypoint_laravel
       - wallet-microservice-nchl_laravel
+      - wallet-microservice-cybersource_laravel
+      - wallet-microservice-npay_laravel
 
   composer:
     build:
@@ -84,6 +95,8 @@ services:
       - wallet-microservice-core_laravel
       - wallet-microservice-paypoint_laravel
       - wallet-microservice-nchl_laravel
+      - wallet-microservice-cybersource_laravel
+      - wallet-microservice-npay_laravel
     entrypoint: ['composer', '--ignore-platform-reqs']
 
   artisan:
@@ -103,6 +116,8 @@ services:
       - wallet-microservice-core_laravel
       - wallet-microservice-paypoint_laravel
       - wallet-microservice-nchl_laravel
+      - wallet-microservice-cybersource_laravel
+      - wallet-microservice-npay_laravel
   
   phpmyadmin:
     depends_on:
@@ -120,6 +135,8 @@ services:
       - wallet-microservice-core_laravel
       - wallet-microservice-paypoint_laravel
       - wallet-microservice-nchl_laravel
+      - wallet-microservice-cybersource_laravel
+      - wallet-microservice-npay_laravel
 
   mongo:
     container_name: mongo-backend

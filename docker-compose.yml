@@ -128,7 +128,7 @@ services:
     ports:
       - 8093:80
     environment:
-      PMA_HOST: mysql
+      PMA_HOST: mysql_backend_wallet
       MYSQL_ROOT_PASSWORD: secret
     networks:
       - laravel

@@ -13,9 +13,11 @@ class AddMobileImageToFrontendBanners extends Migration
      */
     public function up()
     {
+        if(!Schema::connection('dpaisa')->hasTable('frontend_banners')) {
         Schema::connection('dpaisa')->table('frontend_banners', function (Blueprint $table) {
             $table->string('mobile_image')->nullable();
         });
+    }
     }
 
     /**

@@ -13,6 +13,7 @@ class CreateFrontendContactsTable extends Migration
      */
     public function up()
     {
+        if(!Schema::connection('dpaisa')->hasTable('frontend_contacts')) {
         Schema::connection('dpaisa')->create('frontend_contacts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('logo')->nullable();
@@ -27,6 +28,7 @@ class CreateFrontendContactsTable extends Migration
             $table->double('longitude')->nullable();
             $table->timestamps();
         });
+    }
     }
 
     /**

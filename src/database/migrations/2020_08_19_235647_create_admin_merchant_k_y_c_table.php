@@ -13,6 +13,7 @@ class CreateAdminMerchantKYCTable extends Migration
      */
     public function up()
     {
+        if(!Schema::connection('dpaisa')->hasTable('admin_merchant_k_y_c')) {
         Schema::create('admin_merchant_k_y_c', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('admin_id')->unsigned();
@@ -20,6 +21,7 @@ class CreateAdminMerchantKYCTable extends Migration
             $table->string('status');
             $table->timestamps();
         });
+    }
     }
 
     /**

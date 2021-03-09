@@ -13,6 +13,7 @@ class CreateLoadTestFundsTable extends Migration
      */
     public function up()
     {
+        if(!Schema::connection('dpaisa')->hasTable('load_test_funds')) {
         Schema::connection('dpaisa')->create('load_test_funds', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->index();
@@ -21,6 +22,7 @@ class CreateLoadTestFundsTable extends Migration
             $table->integer('after_amount');
             $table->timestamps();
         });
+    }
     }
 
     /**

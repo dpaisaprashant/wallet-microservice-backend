@@ -66,6 +66,12 @@ trait ReconciliationReportGenerator
                 "transaction_type" => "debit"
             ],
 
+            'NCHL Aggregated Payment' => [
+                "amount" => $repository->totalNchlAggregatedPaymentAmount() / 100,
+                "count" => $repository->totalNchlAggregatedPaymentCount(),
+                "transaction_type" => "debit"
+            ],
+
             'User to Merchant Transaction' => [
                 "amount" => $repository->totalUserToMerchantAmount() / 100,
                 "count" => $repository->totalUserToMerchantCount(),

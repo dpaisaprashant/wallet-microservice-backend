@@ -103,6 +103,7 @@ class UserReconciliationReportRepository extends ReconciliationReportRepository
         return $this->totalNPayTransactionAmount() + $this->totalCashbackAmount()
             + $this->totalReferralAmount() + $this->totalTestFundsAmount()
             + $this->totalNchlLoadAmount() + $this->totalUserReceivedFundsAmount()
+            + $this->totalNicAsiaCyberSourceLoadAmount()
             + $this->totalRoundOffAmount();
     }
 
@@ -110,6 +111,6 @@ class UserReconciliationReportRepository extends ReconciliationReportRepository
     {
         return $this->totalPaypointTransactionAmount() + $this->totalNchlBankTransferAmount()
             + $this->totalUserTransferredFundsAmount() + $this->totalCommissionAmount()
-            + $this->totalUserToMerchantAmount();
+            + $this->totalUserToMerchantAmount() + $this->totalNchlAggregatedPaymentAmount();
     }
 }

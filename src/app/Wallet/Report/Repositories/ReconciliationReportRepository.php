@@ -6,6 +6,7 @@ namespace App\Wallet\Report\Repositories;
 
 use App\Models\LoadTestFund;
 use App\Models\MerchantTransaction;
+use App\Models\NchlAggregatedPayment;
 use App\Models\NchlBankTransfer;
 use App\Models\NchlLoadTransaction;
 use App\Models\NICAsiaCyberSourceLoadTransaction;
@@ -152,6 +153,20 @@ class ReconciliationReportRepository extends AbstractReportRepository
             ->count();
     }
 
+    public function totalNchlAggregatedPaymentAmount()
+    {
+        return TransactionEvent::where('transaction_type', NchlAggregatedPayment::class)
+            ->filter($this->request)
+            ->sum('amount');
+    }
+
+    public function totalNchlAggregatedPaymentCount()
+    {
+        return TransactionEvent::where('transaction_type', NchlAggregatedPayment::class)
+            ->filter($this->request)
+            ->count();
+    }
+
     public function totalNicAsiaCyberSourceLoadAmount()
     {
         return TransactionEvent::where('transaction_type', NICAsiaCyberSourceLoadTransaction::class)
@@ -204,7 +219,8 @@ class ReconciliationReportRepository extends AbstractReportRepository
     public function totalPaymentAmount()
     {
         return $this->totalPaypointTransactionAmount() + $this->totalNchlBankTransferAmount()
-            + $this->totalCommissionAmount() + $this->totalUserToMerchantAmount();
+            + $this->totalCommissionAmount() + $this->totalUserToMerchantAmount()
+            + $this->totalNchlAggregatedPaymentAmount();
     }
 
 }

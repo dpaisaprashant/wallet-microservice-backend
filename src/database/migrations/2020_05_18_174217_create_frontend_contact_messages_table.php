@@ -13,6 +13,7 @@ class CreateFrontendContactMessagesTable extends Migration
      */
     public function up()
     {
+        if(!Schema::connection('dpaisa')->hasTable('frontend_contact_messages')) {
         Schema::connection('dpaisa')->create('frontend_contact_messages', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
@@ -22,6 +23,7 @@ class CreateFrontendContactMessagesTable extends Migration
             $table->string('subject')->nullable();
             $table->timestamps();
         });
+    }
     }
 
     /**

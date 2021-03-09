@@ -13,6 +13,7 @@ class CreateFrontendBannersTable extends Migration
      */
     public function up()
     {
+        if(!Schema::connection('dpaisa')->hasTable('frontend_banners')) {
         Schema::connection('dpaisa')->create('frontend_banners', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title')->nullable();
@@ -20,6 +21,7 @@ class CreateFrontendBannersTable extends Migration
             $table->integer('active')->nullable();
             $table->timestamps();
         });
+    }
     }
 
     /**

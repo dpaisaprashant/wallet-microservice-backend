@@ -179,7 +179,8 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
 
         App\Wallet\Report\WalletReportServiceProvider::class,
-        App\Wallet\Referral\ReferralServiceProvider::class
+        App\Wallet\Referral\ReferralServiceProvider::class,
+        App\Wallet\Merchant\MerchantServiceProvider::class
 
 
     ],

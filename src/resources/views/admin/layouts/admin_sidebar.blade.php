@@ -120,6 +120,16 @@ $url = url()->current();
                     <a href="{{ route('merchant.view') }}"><i class="fa fa-cart-plus"></i> <span class="nav-label">Merchants</span></a>
                 </li>
 
+            <li @if(preg_match('/event/i', $url)) class="active" @endif>
+                <a href="#"><i class="fa fa-birthday-cake"></i> <span class="nav-label">Merchant Events</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+
+                    <li><a href="{{ route('merchant.event.list') }}">All Events</a></li>
+
+                    <li><a href="{{ route('merchant.event.pendingList') }}">Pending Events</a></li>
+                </ul>
+            </li>
+
 
             @can('Deactivate users view')
             <li  @if($url == route('user.deactivate.list')) class="active" @endif>

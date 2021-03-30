@@ -180,7 +180,8 @@ return [
 
         App\Wallet\Report\WalletReportServiceProvider::class,
         App\Wallet\Referral\ReferralServiceProvider::class,
-        App\Wallet\Merchant\MerchantServiceProvider::class
+        App\Wallet\Merchant\MerchantServiceProvider::class,
+        App\Wallet\Architecture\ArchitectureServiceProvider::class
 
 
     ],

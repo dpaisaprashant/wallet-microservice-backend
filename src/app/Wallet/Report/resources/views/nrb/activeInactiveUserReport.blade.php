@@ -2,7 +2,7 @@
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Referral Report</h2>
+            <h2>Active Inactive User Report</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -13,7 +13,7 @@
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Users Referral Report</strong>
+                    <strong>Active Inactive User</strong>
                 </li>
             </ol>
         </div>
@@ -40,16 +40,8 @@
 
                                     <div class="row">
 
-                                        <div class="col-md-4">
-                                            <div class="input-group date">
-                                                    <span class="input-group-addon">
-                                                        <i class="fa fa-user"></i>
-                                                    </span>
-                                                <input required type="text" class="form-control" placeholder="User Number or Email" name="referred_from" autocomplete="off" value="{{ !empty($_GET['referred_from']) ? $_GET['referred_from'] : '' }}">
-                                            </div>
-                                        </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="input-group date">
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
@@ -58,7 +50,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="input-group date">
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
@@ -69,7 +61,7 @@
                                     </div>
                                     <br>
                                     <div>
-                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('referral.report') }}"><strong>Generate Report</strong></button>
+                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('report.nrb.activeInactiveUser') }}"><strong>Generate Report</strong></button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
                                     {{-- <div>
@@ -86,68 +78,46 @@
 
         <div class="row">
             <div class="col-lg-12">
-
-                @if(!empty($_GET['referred_from']) || (!empty($_GET['from']) && !empty($_GET['to'])))
-
+                @if(!empty($_GET['from']) && !empty($_GET['to']))
                     <div class="ibox ">
                         <div class="ibox-title">
-                            <h5> <strong>{{ $user->name . " ({$user->mobile_no})" }} </strong> Referral report from {{ $_GET['from'] . ' to ' . $_GET['to'] }}</h5>
+                            <h5>Active Inactive User report from {{ $_GET['from'] . ' to ' . $_GET['to'] }}</h5>
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover dataTables-example" title="{{ $user->mobile_no . "_referral_report" }}">
+                                <table class="table table-striped table-bordered table-hover dataTables-example" title="Dpasis user's list">
                                     <thead>
                                     <tr>
-                                        <th>S.No.</th>
-                                        <th>User Name</th>
-                                        <th>Mobile No.</th>
-                                        <th>KYC Status</th>
-                                        <th>Transaction Count</th>
-                                        <th>Created At</th>
+                                        <th>Title</th>
+                                        <th>Value</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <?php $totalTransaction = 0 ?>
-                                    @foreach($usedReferrals as $referral)
+
+                                    @foreach($activityReports as $title => $reports)
                                         <tr class="gradeX">
-                                            <td>{{ $loop->index +  1 }}</td>
-                                            <td>
-                                                {{ $referral->referredTo->name }}
-                                            </td>
-                                            <td>
-                                                @if(!empty($referral->referredTo->phone_verified_at))
-                                                    <i class="fa fa-check-circle" style="color: green;"></i> &nbsp;{{ $referral->referredTo->mobile_no . " " }}
-                                                @else
-                                                    <i class="fa fa-times-circle" style="color: red;"></i>&nbsp;{{ $referral->referredTo->mobile_no . " " }}
-                                                @endif
-                                            </td>
-
-                                            <td>
-                                                @include('admin.user.kyc.status', ['kyc' => $referral->referredTo->kyc])
-                                            </td>
-
-                                            <td>
-                                                {{ $referral->referredTo->totalTransactionCount() }}
-                                            </td>
-                                            <td>
-                                                {{ $referral->created_at }}
-                                            </td>
-                                            <?php $totalTransaction = $totalTransaction + $referral->referredTo->totalTransactionCount() ?>
+                                            <td><h2><strong>{{ $title }}</strong></h2></td>
+                                            <td></td>
                                         </tr>
+                                        @foreach($reports as $reportTitle => $report)
+                                            <tr class="gradeX">
+                                                <td style="font-size: 16px">&nbsp;&nbsp;&nbsp;&nbsp;<strong>{{ $reportTitle }}</strong></td>
+                                                <td></td>
+                                            </tr>
+                                            @foreach($report as $valueTitle => $value)
+                                                <tr class="gradeX">
+                                                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <strong>{{ $valueTitle }}: </strong>
+                                                    </td>
+                                                    <td>{{ $value }}</td>
+                                                </tr>
+                                            @endforeach
+                                        @endforeach
                                     @endforeach
                                     </tbody>
-                                    <tfoot>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td><b>Total Transaction Count</b></td>
-                                        <td>{{ $totalTransaction }}</td>
-                                        <td></td>
-                                    </tr>
-                                    </tfoot>
                                 </table>
                             </div>
+
                         </div>
                     </div>
                 @endif

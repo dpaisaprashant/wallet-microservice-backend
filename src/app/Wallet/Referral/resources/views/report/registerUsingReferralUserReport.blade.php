@@ -2,7 +2,7 @@
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Referral Report</h2>
+            <h2>Register Using Referral User Report</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -13,7 +13,7 @@
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Users Referral Report</strong>
+                    <strong> Register Using Referral User Report</strong>
                 </li>
             </ol>
         </div>
@@ -39,17 +39,7 @@
                                 <form role="form" method="get">
 
                                     <div class="row">
-
-                                        <div class="col-md-4">
-                                            <div class="input-group date">
-                                                    <span class="input-group-addon">
-                                                        <i class="fa fa-user"></i>
-                                                    </span>
-                                                <input required type="text" class="form-control" placeholder="User Number or Email" name="referred_from" autocomplete="off" value="{{ !empty($_GET['referred_from']) ? $_GET['referred_from'] : '' }}">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="input-group date">
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
@@ -58,7 +48,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="input-group date">
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
@@ -69,7 +59,7 @@
                                     </div>
                                     <br>
                                     <div>
-                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('referral.report') }}"><strong>Generate Report</strong></button>
+                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('referral.registerUsingReferralUserReport') }}"><strong>Generate Report</strong></button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
                                     {{-- <div>
@@ -91,48 +81,56 @@
 
                     <div class="ibox ">
                         <div class="ibox-title">
-                            <h5> <strong>{{ $user->name . " ({$user->mobile_no})" }} </strong> Referral report from {{ $_GET['from'] . ' to ' . $_GET['to'] }}</h5>
+                            <h5>Registered Using Referral report from {{ $_GET['from'] . ' to ' . $_GET['to'] }}</h5>
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover dataTables-example" title="{{ $user->mobile_no . "_referral_report" }}">
+                                <table class="table table-striped table-bordered table-hover dataTables-example" title="{{ "registered_using_referral_report_" . $_GET['from'] . '_to_' . $_GET['to']  }}">
                                     <thead>
                                     <tr>
                                         <th>S.No.</th>
+                                        <th>Referred From</th>
                                         <th>User Name</th>
                                         <th>Mobile No.</th>
                                         <th>KYC Status</th>
                                         <th>Transaction Count</th>
+                                        <th>Total Balance</th>
+                                        <th>Total Referral Amount</th>
                                         <th>Created At</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <?php $totalTransaction = 0 ?>
-                                    @foreach($usedReferrals as $referral)
+                                    <?php $totalTransaction = 0; $totalAmount = 0; $totalReferralAmount = 0;?>
+                                    @foreach($registerUsingReferralUsers as $user)
                                         <tr class="gradeX">
-                                            <td>{{ $loop->index +  1 }}</td>
+                                            <td>{{ $loop->index + ($registerUsingReferralUsers->perPage() * ($registerUsingReferralUsers->currentPage() - 1)) + 1 }}</td>
+                                            <td>{{ optional($user->referredByUser())->name }}</td>
                                             <td>
-                                                {{ $referral->referredTo->name }}
+                                                {{ $user->name }}
                                             </td>
+                                            <td>{{ $user->mobile_no . " " }}</td>
+
                                             <td>
-                                                @if(!empty($referral->referredTo->phone_verified_at))
-                                                    <i class="fa fa-check-circle" style="color: green;"></i> &nbsp;{{ $referral->referredTo->mobile_no . " " }}
-                                                @else
-                                                    <i class="fa fa-times-circle" style="color: red;"></i>&nbsp;{{ $referral->referredTo->mobile_no . " " }}
-                                                @endif
+                                                @include('admin.user.kyc.status', ['kyc' => $user->kyc])
                                             </td>
 
                                             <td>
-                                                @include('admin.user.kyc.status', ['kyc' => $referral->referredTo->kyc])
-                                            </td>
-
-                                            <td>
-                                                {{ $referral->referredTo->totalTransactionCount() }}
+                                                {{ $user->totalTransactionCount() }}
                                             </td>
                                             <td>
-                                                {{ $referral->created_at }}
+                                                Rs. {{ $user->wallet->balance / 100 }}
                                             </td>
-                                            <?php $totalTransaction = $totalTransaction + $referral->referredTo->totalTransactionCount() ?>
+                                            <td>
+                                                Rs. {{ $user->totalReferralAmount() }}
+                                            </td>
+                                            <td>
+                                                {{ $user->created_at }}
+                                            </td>
+                                            <?php
+                                            $totalTransaction = $totalTransaction + $user->totalTransactionCount();
+                                            $totalAmount = $totalAmount +  $user->wallet->balance;
+                                            $totalReferralAmount = $totalReferralAmount + $user->totalReferralAmount();
+                                            ?>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -141,12 +139,16 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
+                                        <td></td>
                                         <td><b>Total Transaction Count</b></td>
                                         <td>{{ $totalTransaction }}</td>
+                                        <td>Rs. {{ $totalAmount / 100 }}</td>
+                                        <td>Rs. {{ $totalReferralAmount }}</td>
                                         <td></td>
                                     </tr>
                                     </tfoot>
                                 </table>
+                                {{ $registerUsingReferralUsers->appends(request()->query())->links() }}
                             </div>
                         </div>
                     </div>

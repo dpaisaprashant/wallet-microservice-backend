@@ -4,6 +4,7 @@
 namespace App\Wallet\Report\Repositories;
 
 
+use App\Models\FundRequest;
 use App\Models\LoadTestFund;
 use App\Models\MerchantTransaction;
 use App\Models\NchlAggregatedPayment;
@@ -13,7 +14,9 @@ use App\Models\NICAsiaCyberSourceLoadTransaction;
 use App\Models\TransactionEvent;
 use App\Models\UsedUserReferral;
 use App\Models\UserLoadTransaction;
+use App\Models\UserMerchantEventTicketPayment;
 use App\Models\UserReferralBonusTransaction;
+use App\Models\UserToUserFundTransfer;
 use App\Models\UserTransaction;
 use App\Models\Wallet;
 use App\Wallet\Commission\Models\Commission;
@@ -206,6 +209,24 @@ class ReconciliationReportRepository extends AbstractReportRepository
         return TransactionEvent::where('amount', 'like', '%.%')->filter($this->request)->count();
     }
 
+    public function totalUserToMerchantEventTicketPaymentAmount()
+    {
+        return TransactionEvent::where('transaction_type', UserMerchantEventTicketPayment::class)
+            ->filter($this->request)
+            ->sum('amount');
+    }
+
+    public function totalUserToMerchantEventTicketPaymentCount()
+    {
+        return TransactionEvent::where('transaction_type', UserMerchantEventTicketPayment::class)
+            ->filter($this->request)
+            ->count();
+    }
+
+    public function totalTransactionEventCount()
+    {
+        return TransactionEvent::whereNotIn('transaction_type', [UserToUserFundTransfer::class, FundRequest::class])->count();
+    }
 
 
     public function totalLoadAmount()
@@ -220,7 +241,7 @@ class ReconciliationReportRepository extends AbstractReportRepository
     {
         return $this->totalPaypointTransactionAmount() + $this->totalNchlBankTransferAmount()
             + $this->totalCommissionAmount() + $this->totalUserToMerchantAmount()
-            + $this->totalNchlAggregatedPaymentAmount();
+            + $this->totalNchlAggregatedPaymentAmount() + $this->totalUserToMerchantEventTicketPaymentAmount();
     }
 
 }

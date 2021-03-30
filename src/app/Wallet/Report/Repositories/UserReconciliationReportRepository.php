@@ -111,6 +111,7 @@ class UserReconciliationReportRepository extends ReconciliationReportRepository
     {
         return $this->totalPaypointTransactionAmount() + $this->totalNchlBankTransferAmount()
             + $this->totalUserTransferredFundsAmount() + $this->totalCommissionAmount()
-            + $this->totalUserToMerchantAmount() + $this->totalNchlAggregatedPaymentAmount();
+            + $this->totalUserToMerchantAmount() + $this->totalNchlAggregatedPaymentAmount()
+            + $this->totalUserToMerchantEventTicketPaymentAmount();
     }
 }

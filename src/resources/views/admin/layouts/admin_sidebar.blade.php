@@ -320,15 +320,22 @@ $url = url()->current();
 
                         <li><a href="{{ route('report.paypoint') }}">PayPoint Report</a></li>
 
-                        {{--<li><a href="{{ route('report.npay') }}">NPay Report</a></li>--}}
+                        <li><a href="{{ route('report.npay') }}">NPay Report</a></li>
 
                         <li><a href="{{ route('report.nchl.load') }}">NCHL Load Report</a></li>
 
-                        {{--<li><a href="{{ route('referral.report') }}">Referral Report</a></li>--}}
+                        <li><a href="{{ route('referral.report') }}">Referral Report</a></li>
+                        <li><a href="{{ route('referral.registerUsingReferralUserReport') }}">Registered Using Referral Report</a></li>
+
+                        <li><a href="{{ route('report.subscriber') }}">Subscriber Report</a></li>
 
                         <li><a href="{{ route('report.reconciliation') }}">Reconciliation Report</a></li>
 
-                        {{--<li><a href="{{ route('report.user.reconciliation') }}">User Reconciliation Report</a></li>--}}
+                        <li><a href="{{ route('report.user.reconciliation') }}">User Reconciliation Report</a></li>
+
+                        <li><a href="{{ route('report.nrb.activeInactiveUser') }}">NRB Active/Inactive User Report</a></li>
+
+                        <li><a href="{{ route('report.agent') }}">NRB Agent Report</a></li>
                 </ul>
             </li>
             @endif

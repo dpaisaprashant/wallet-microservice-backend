@@ -78,6 +78,12 @@ trait ReconciliationReportGenerator
                 "transaction_type" => "debit"
             ],
 
+            'Merchant Ticket Payment' => [
+                'amount' => $repository->totalUserToMerchantEventTicketPaymentAmount() / 100,
+                'count' => $repository->totalUserToMerchantEventTicketPaymentCount(),
+                'transaction_type' => 'debit'
+            ],
+
             'Rounding off' => [
                 'amount' => $repository->totalRoundOffAmount(),
                 'count' => $repository->totalRoundOffCount(),
@@ -89,6 +95,12 @@ trait ReconciliationReportGenerator
                 "count" => $repository->totalWalletBalanceCount(),
                 "transaction_type" => "balance"
             ],
+
+            "Total Successful" => [
+                "amount" => "",
+                "count" => $repository->totalTransactionEventCount(),
+                "transaction_type" => "info"
+            ]
         ];
     }
 }

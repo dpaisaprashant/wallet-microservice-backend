@@ -1,5 +1,6 @@
 <?php
 
+use App\Wallet\Report\Http\Controllers\NRBReportController;
 use App\Wallet\Report\Http\Controllers\SubscriberReportController;
 use App\Wallet\Report\Http\Controllers\UserWalletReportController;
 use App\Wallet\Report\Http\Controllers\WalletReportController;
@@ -15,4 +16,9 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web','auth']], funct
     Route::match(['get', 'post'],'nchl-load-report', [WalletReportController::class, 'nchlLoadReport'])->name('report.nchl.load');
 
     Route::get('subscriber-daily-report', [SubscriberReportController::class, 'subscriberDailyReport'])->name('report.subscriber');
+
+    //NRB Report
+    Route::get('nrb/active-inactive-user-report', [NRBReportController::class, 'activeInactiveCustomerReport'])->name('report.nrb.activeInactiveUser');
+    Route::get('nrb/agent-report', [NRBReportController::class, 'agentReport'])->name('report.agent');
+
 });

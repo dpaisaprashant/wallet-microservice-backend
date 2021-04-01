@@ -165,6 +165,19 @@ $url = url()->current();
             </li>
             @endcan
 
+
+            <li @if(preg_match('/vendor-transactions/i', $url)) class="active" @endif>
+                <a href="#"><i class="fa fa-history"></i> <span class="nav-label">Wallet Vendors</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    @foreach($walletVendors as $vendor)
+                        <li><a href="{{ route('architecture.vendor.transaction', $vendor) }}">{{ ucwords(strtolower($vendor)) }}</a></li>
+                    @endforeach
+                </ul>
+            </li>
+
+
+
+
             <li @if($url == route('agent.view') || $url == route('agent.create')) class="active" @endif>
                 <a href="#"><i class="fa fa-history"></i> <span class="nav-label">Agents</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">

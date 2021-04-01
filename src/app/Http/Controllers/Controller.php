@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Architecture\WalletTransactionType;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -56,5 +57,9 @@ class Controller extends BaseController
         ];
 
         View::share('paypointVendors', $paypointVendors);
+
+        $walletVendors = WalletTransactionType::groupBy('vendor')->pluck('vendor')->toArray();
+        View::share('walletVendors', $walletVendors);
+
     }
 }

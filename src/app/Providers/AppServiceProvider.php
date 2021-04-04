@@ -6,7 +6,7 @@ use App\Models\UserKYC;
 use App\Observers\AcceptKYCUserKYCObserver;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-use Url;
+use URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Url::forceScheme('https');
+        URL::forceScheme('https');
         UserKYC::observe(AcceptKYCUserKYCObserver::class);
     }
 }

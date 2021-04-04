@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Setting;
 use App\Http\Controllers\Controller;
 use App\Models\CybersourceSetting;
 use App\Models\NchlSetting;
+use App\Models\NpaySetting;
 use App\Models\PaypointSetting;
 use App\Models\Setting;
 use App\Wallet\Setting\Traits\UpdateSetting;
@@ -23,6 +24,7 @@ class SettingController extends Controller
     public function npaySetting(Request $request)
     {
         $settings = $this->updatedSettingsCollection($request);
+        $settings = $this->updatedSettingsCollection($request, NpaySetting::class);
         return view('admin.setting.npaySetting')->with(compact('settings'));
     }
 

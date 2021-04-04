@@ -10,6 +10,8 @@ use App\Events\SaveFCMNotificationEvent;
 use App\Events\SendFcmNotification;
 use App\Events\SendFcmTopicNotification;
 use App\Events\SendOTPCodeEvent;
+use App\Events\UserBonusWalletPaymentEvent;
+use App\Events\UserBonusWalletUpdateEvent;
 use App\Events\UserWalletPaymentEvent;
 use App\Events\UserWalletUpdateEvent;
 use App\Listeners\DisputeHandledListener;
@@ -20,6 +22,8 @@ use App\Listeners\SaveFCMNotificationListener;
 use App\Listeners\SendFcmNotificationListener;
 use App\Listeners\SendFcmTopicNotificationListener;
 use App\Listeners\SendOTPCodeListener;
+use App\Listeners\UserBonusWalletPaymentListener;
+use App\Listeners\UserBonusWalletUpdateListener;
 use App\Listeners\UserWalletPaymentListener;
 use App\Listeners\UserWalletUpdateListener;
 use Illuminate\Auth\Events\Registered;
@@ -71,13 +75,23 @@ class EventServiceProvider extends ServiceProvider
           UserWalletPaymentListener::class
         ],
 
+        //Bonus Wallet
+        UserBonusWalletUpdateEvent::class => [
+            UserBonusWalletUpdateListener::class
+        ],
+        UserBonusWalletPaymentEvent::class => [
+            UserBonusWalletPaymentListener::class
+        ],
+
         DisputeHandledEvent::class => [
             DisputeHandledListener::class
         ],
 
         LoadTestFundEvent::class => [
             LoadTestFundListener::class
-        ]
+        ],
+
+
 
     ];
 

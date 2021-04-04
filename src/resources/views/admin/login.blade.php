@@ -9,11 +9,11 @@
 
     <title>ICash | Login </title>
 
-    <link href="{{ asset('admin/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('admin/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('admin/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
-    <link href="{{ asset('admin/css/animate.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('admin/css/animate.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('admin/css/style.css') }}" rel="stylesheet">
 
 </head>
 
@@ -23,7 +23,7 @@
     <div class="row">
 
         <div class="col-md-12">
-            @include('admin.asset.notification.notify')
+            @include('admin.secure_asset().notification.notify')
         </div>
 
         <div class="col-md-6">
@@ -66,7 +66,7 @@
 
 
 </body>
-<script src="{{ asset('admin/js/jquery-3.1.1.min.js') }} " ></script>
+<script src="{{ secure_asset('admin/js/jquery-3.1.1.min.js') }} " ></script>
 <script>
     $('.close').on('click', function (e) {
         $('.alert-danger').hide();

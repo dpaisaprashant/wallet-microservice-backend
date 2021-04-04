@@ -23,7 +23,7 @@
     <div class="row">
 
         <div class="col-md-12">
-            @include('admin.secure_asset().notification.notify')
+            @include('admin.asset.notification.notify')
         </div>
 
         <div class="col-md-6">

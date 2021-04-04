@@ -15,6 +15,7 @@ class AgentController extends Controller
 
     public function __construct(AgentRepository $repository)
     {
+        parent::__construct();
         $this->repository = $repository;
     }
 

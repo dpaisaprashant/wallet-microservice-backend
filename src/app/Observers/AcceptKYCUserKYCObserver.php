@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\UserBonusWalletUpdateEvent;
 use App\Events\UserWalletUpdateEvent;
 use App\Models\Setting;
 use App\Models\User;
@@ -71,10 +72,11 @@ class AcceptKYCUserKYCObserver
                             'service_type' => /*$transaction->type*/ 'REFERRAL',
                             'uid' => 'REFERRAL-' . TransactionIdGenerator::generateAlphaNumeric(),
                             'balance' => $user->wallet->getOriginal('balance') + $kycAcceptedAmount,
+                            'bonus_balance' => $user->wallet->getOriginal('bonus_balance') + $kycAcceptedAmount,
                             'user_id' => $user->id,
                         ]);
 
-                        event(new UserWalletUpdateEvent($user->id, $kycAcceptedAmount));
+                        event(new UserBonusWalletUpdateEvent($user->id, $kycAcceptedAmount));
                         $user->notify(new ReferralUsedBonusNotification($user, $referredByUser, UserReferralBonusTransaction::TYPE_KYC_VERIFIED, $kycAcceptedAmount));
 
                     }
@@ -103,18 +105,17 @@ class AcceptKYCUserKYCObserver
                                 'vendor' => 'REFERRAL',
                                 'service_type' => /*$transaction->type*/ 'REFERRAL',
                                 'uid' => 'REFERRAL-' . TransactionIdGenerator::generateAlphaNumeric(),
-                                'balance' => $referredByUser->wallet->getOriginal('balance') + $referredByKycAcceptAmount,
+                                'balance' => $referredByUser->wallet->getOriginal('balance'),
+                                'bonus_balance' => $referredByUser->wallet->getOriginal('bonus_balance') + $referredByKycAcceptAmount,
                                 'user_id' => $referredByUser->id,
 
                             ]);
 
-                            event(new UserWalletUpdateEvent($referredByUser->id, $referredByKycAcceptAmount));
+                            event(new UserBonusWalletUpdateEvent($referredByUser->id, $referredByKycAcceptAmount));
                             $referredByUser->notify(new ReferralAcceptedBonusNotification($user, $referredByUser, UserReferralBonusTransaction::TYPE_KYC_VERIFIED, $referredByKycAcceptAmount));
-
                         }
                     }
                 }
-
             }
 
         } catch (\Exception $e) {

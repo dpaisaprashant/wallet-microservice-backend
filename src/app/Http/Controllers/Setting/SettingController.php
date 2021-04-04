@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Setting;
 
 use App\Http\Controllers\Controller;
+use App\Models\CybersourceSetting;
 use App\Models\NchlSetting;
 use App\Models\PaypointSetting;
 use App\Models\Setting;
@@ -108,6 +109,7 @@ class SettingController extends Controller
     public function nicAsiaCyberSource(Request $request)
     {
         $settings = $this->updatedSettingsCollection($request);
+        $settings = $this->updatedSettingsCollection($request, CybersourceSetting::class);
         return view('admin.setting.nicAsiaCyberSourceSetting')->with(compact('settings'));
     }
 }

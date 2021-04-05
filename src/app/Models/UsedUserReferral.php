@@ -13,6 +13,10 @@ class UsedUserReferral extends Model
 {
     protected $connection = 'dpaisa';
 
+    CONST STATUS_PROCESSING = 'PROCESSING';
+    CONST STATUS_INVALID = 'INVALID';
+    CONST STATUS_COMPLETE = 'COMPLETE';
+
     public function getReferredFromAmountAttribute($amount)
     {
         return ($amount/100);

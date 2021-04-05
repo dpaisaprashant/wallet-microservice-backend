@@ -307,10 +307,19 @@ class User extends Authenticatable
         return $this->userTransactionEvents()->count();
     }
 
+    public function totalReferralAmount()
+    {
+        return $this->userTransactionEvents()
+                ->whereIn('transaction_type', [UsedUserReferral::class, UserReferralBonusTransaction::class])
+                ->sum('amount') / 100;
+    }
+
     //referred by user
     public function referredByUserId()
     {
-        $referral =  UsedUserReferral::where('referred_to', $this->id)->first();
+        $referral =  UsedUserReferral::where('referred_to', $this->id)
+            ->where('status', UsedUserReferral::STATUS_COMPLETE)
+            ->first();
         if ($referral) {
             return $referral->referred_from;
         }
@@ -319,7 +328,20 @@ class User extends Authenticatable
 
     public function referredByUser()
     {
-        $referral =  UsedUserReferral::where('referred_to', $this->id)->first();
+        $referral =  UsedUserReferral::where('referred_to', $this->id)
+            //->where('status', UsedUserReferral::STATUS_COMPLETE)
+            ->first();
+        if ($referral) {
+            return User::with('wallet', 'userReferralBonus')->where('id', $referral->referred_from)->first();
+        }
+        return null;
+    }
+
+    public function referredCompleteByUser()
+    {
+        $referral =  UsedUserReferral::where('referred_to', $this->id)
+            ->where('status', UsedUserReferral::STATUS_COMPLETE)
+            ->first();
         if ($referral) {
             return User::with('wallet', 'userReferralBonus')->where('id', $referral->referred_from)->first();
         }

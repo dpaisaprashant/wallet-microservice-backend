@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Models\UserKYC;
 use App\Observers\AcceptKYCUserKYCObserver;
-use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use URL;
@@ -26,12 +25,9 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(UrlGenerator $url)
+    public function boot()
     {
-        if(env('REDIRECT_HTTPS'))
-        {
-            $url->forceScheme('https');
-        }
+        URL::forceScheme('https');
         UserKYC::observe(AcceptKYCUserKYCObserver::class);
     }
 }

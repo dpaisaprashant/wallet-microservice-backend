@@ -165,7 +165,7 @@
                                         <td>{{ $transaction->transaction_id }}</td>
                                         <td>{{ $transaction->reference_id }}</td>
                                         <td>
-                                            {{ $transaction->user['mobile_no']}}
+                                            {{ $transaction->user['mobile_no'] ?? ""}}
                                         </td>
                                         <td>ConnectIPS</td>
                                         <td>{{ $transaction->remark }}</td>

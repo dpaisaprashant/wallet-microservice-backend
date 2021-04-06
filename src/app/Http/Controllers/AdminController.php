@@ -28,6 +28,9 @@ class AdminController extends Controller
         $npayClearedTransactions = (new Clearance())->npayClearedTransactions();
         $paypointClearedTransactions = (new Clearance())->paypointClearedTransactions();
 
+       /* $acceptedKycs = (new Admin())->acceptedKycs();
+        $rejectedKycs = (new Admin())->rejectedKycs();*/
+
         $acceptedKycs = (new Admin())->acceptedKycs();
         $rejectedKycs = (new Admin())->rejectedKycs();
 

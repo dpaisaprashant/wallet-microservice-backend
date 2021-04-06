@@ -234,7 +234,7 @@ class ReconciliationReportRepository extends AbstractReportRepository
         return $this->totalNPayTransactionAmount() + $this->totalCashbackAmount()
             + $this->totalReferralAmount() + $this->totalTestFundsAmount()
             + $this->totalNchlLoadAmount() + $this->totalNicAsiaCyberSourceLoadAmount()
-            + $this->totalRoundOffAmount();
+            + ($this->totalRoundOffAmount() * 100);
     }
 
     public function totalPaymentAmount()

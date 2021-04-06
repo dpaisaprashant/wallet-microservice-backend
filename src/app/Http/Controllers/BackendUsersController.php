@@ -20,6 +20,7 @@ class BackendUsersController extends Controller
 
     public function __construct(BackendUserRepository $repository)
     {
+        parent::__construct();
         $this->repository = $repository;
     }
 

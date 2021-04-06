@@ -24,9 +24,9 @@
         @include('admin.dashboard.widgets.rejectedKYCByBackendUserCount')
     @endcan
 
-    {{--@can('Dashboard total NPay clearance cleared by backend user count')
+    @can('Dashboard total NPay clearance cleared by backend user count')
         @include('admin.dashboard.widgets.npayClearanceClearedByBackendUserCount')
-    @endcan--}}
+    @endcan
 
     @can('Dashboard total Paypoint clearance cleared by backend user count')
         @include('admin.dashboard.widgets.paypointClearanceClearedByBackendUserCount')
@@ -38,7 +38,7 @@
     @include('admin.dashboard.widgets.graph.paypoint')
 
     {{--Npay Graph--}}
-    {{--@include('admin.dashboard.widgets.graph.npay')--}}
+    @include('admin.dashboard.widgets.graph.npay')
 
 
     <div class="row">

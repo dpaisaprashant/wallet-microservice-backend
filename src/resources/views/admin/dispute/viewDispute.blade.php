@@ -97,14 +97,14 @@
                                                     <option value="" selected disabled>Select error source...</option>
                                                     <option value="">All</option>
                                                     @if(!empty($_GET['error_source']))
-                                                        <option value="ICASH"
+                                                        <option value="DPAISA"
                                                                 @if($_GET['error_source']  == Dispute::SOURCE_DPAISA) selected @endif >{{Dispute::SOURCE_DPAISA}}</option>
                                                         <option value="PAYPOINT"
                                                                 @if($_GET['error_source']  == Dispute::SOURCE_PAYPOINT ) selected @endif >{{ Dispute::SOURCE_PAYPOINT }}</option>
                                                         <option value="NPAY"
                                                                 @if($_GET['error_source']  == Dispute::SOURCE_NPAY ) selected @endif >{{ Dispute::SOURCE_NPAY }}</option>
                                                     @else
-                                                        <option value="ICASH">{{Dispute::SOURCE_DPAISA}}</option>
+                                                        <option value="DPAISA">{{Dispute::SOURCE_DPAISA}}</option>
                                                         <option value="PAYPOINT">{{ Dispute::SOURCE_PAYPOINT }}</option>
                                                         <option value="NPAY">{{ Dispute::SOURCE_NPAY }}</option>
                                                     @endif

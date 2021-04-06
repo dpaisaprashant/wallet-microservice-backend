@@ -79,20 +79,23 @@ class Admin extends Authenticatable
             ->latest()
             ->get();*/
 
-        $admin = Admin::where('id', auth()->user()->id)->first();
-        return $admin->userKYC()->where('user_k_y_c_s.status', 1)->where('user_k_y_c_s.accept', 1)->get();
+        //$admin = Admin::where('id', auth()->user()->id)->first();
+        //return $admin->userKYC()->where('user_k_y_c_s.status', 1)->where('user_k_y_c_s.accept', 1)->get();
+        return UserKYC::where('status', 1)->where('accept', 1)->get();
 
     }
 
     public function rejectedKycs()
     {
-        $admin = Admin::where('id', auth()->user()->id)->first();
-        return $admin->userKYC()->where('user_k_y_c_s.accept', 0)->get();
+        //$admin = Admin::where('id', auth()->user()->id)->first();
+        //return $admin->userKYC()->where('user_k_y_c_s.accept', 0)->get();
+        return UserKYC::where('user_k_y_c_s.accept', 0)->get();
     }
 
     public function kycList(Admin $user, $request)
     {
-        return $user->userKYC()->orderBy('admin_user_k_y_c.updated_at', 'desc')->filter($request)->get();
+        //return $user->userKYC()->orderBy('admin_user_k_y_c.updated_at', 'desc')->filter($request)->get();
+        return UserKYC::orderBy('updated_at', 'desc')->filter($request)->get();
     }
 
 

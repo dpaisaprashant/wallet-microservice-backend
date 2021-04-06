@@ -27,7 +27,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        URL::forceScheme('https');
+        if (env('REDIRECT_HTTPS')){
+            URL::forceScheme('https');
+        }
         UserKYC::observe(AcceptKYCUserKYCObserver::class);
     }
 }

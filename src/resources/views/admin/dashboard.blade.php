@@ -36,7 +36,7 @@
     @include('admin.dashboard.js.graph.graphButtons')
 
     @include('admin.dashboard.js.graph.monthlyPayPoint')
-   {{-- @include('admin.dashboard.js.graph.monthlyNPay')--}}
+    @include('admin.dashboard.js.graph.monthlyNPay')
     @include('admin.dashboard.js.graph.yearly')
     @include('admin.dashboard.js.graph.executePaymentTimeElapsed')
 

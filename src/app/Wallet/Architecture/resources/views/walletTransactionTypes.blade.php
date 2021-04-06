@@ -145,8 +145,8 @@
                                         <td>{{ $transactionType->payment_type }}</td>
 
                                         <td class="center">
-
-
+                                            <a style="margin-top: 5px;" href="" class="btn btn-sm btn-icon btn-success m-t-n-xs" title="View Cashbacks"><i class="fa fa-refresh"></i></a>
+                                            <a style="margin-top: 5px;" href="" class="btn btn-sm btn-icon btn-info m-t-n-xs" title="View Commissions"><i class="fa fa-dollar"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

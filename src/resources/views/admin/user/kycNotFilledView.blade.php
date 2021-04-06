@@ -177,7 +177,7 @@
                                         <td>Rs. {{ $user->wallet->balance }}</td>
                                         <td>{{ count($user->userTransactionEvents) }}</td>
                                         <td>Rs. {{ $user->userTransactionEvents()->where('transaction_type', 'App\Models\UserTransaction')->sum('amount') / 100 }}</td>
-                                        <td>Rs. {{ $user->userLoadTransactions()->where('status', '=', 'COMPLETED')->sum('amount') }}</td>
+                                        <td>Rs. {{ $user->userTransactionEvents()->whereIn('transaction_type', [\App\Models\UserLoadTransaction::class, \App\Models\NchlLoadTransaction::class, \App\Models\NICAsiaCyberSourceLoadTransaction::class])->sum('amount') / 100 }}</td>
 
                                         <td class="center">
 

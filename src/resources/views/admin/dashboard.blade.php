@@ -9,7 +9,7 @@
 
 @section('styles')
     <!-- FooTable -->
-    <link href="{{ secure_asset('admin/css/plugins/footable/footable.core.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/css/plugins/footable/footable.core.css') }}" rel="stylesheet">
     <style>
         .apexcharts-menu-icon {
             display: none;
@@ -23,11 +23,11 @@
 @section('scripts')
 
     <!-- Custom and plugin javascript -->
-    <script src="{{ secure_asset('admin/js/inspinia.js') }} " ></script>
-    <script src="{{ secure_asset('admin/js/plugins/pace/pace.min.js') }} " ></script>
+    <script src="{{ asset('admin/js/inspinia.js') }} " ></script>
+    <script src="{{ asset('admin/js/plugins/pace/pace.min.js') }} " ></script>
 
     <!-- jQuery UI -->
-    <script src="{{ secure_asset('admin/js/plugins/jquery-ui/jquery-ui.min.js') }} " ></script>
+    <script src="{{ asset('admin/js/plugins/jquery-ui/jquery-ui.min.js') }} " ></script>
 
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
@@ -41,7 +41,7 @@
     @include('admin.dashboard.js.graph.executePaymentTimeElapsed')
 
     <!-- FooTable -->
-    <script src="{{ secure_asset('admin/js/plugins/footable/footable.all.min.js') }}"></script>
+    <script src="{{ asset('admin/js/plugins/footable/footable.all.min.js') }}"></script>
 
     <!-- Page-Level Scripts -->
     <script>

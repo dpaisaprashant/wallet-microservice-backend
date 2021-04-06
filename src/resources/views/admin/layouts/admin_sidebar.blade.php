@@ -493,6 +493,8 @@ $url = url()->current();
                             @endcan--}}
                                 <li><a href="{{ route('settings.referral') }}">Referral Setting</a></li>
                                 <li><a href="{{ route('settings.bonus') }}">Bonus Setting</a></li>
+                                <li><a href="{{ route('settings.notification') }}">Notification Setting</a></li>
+
 
                             {{--@can('OTP setting view')
                                 <li><a href="{{ route('settings.otp') }}">OTP Setting</a></li>

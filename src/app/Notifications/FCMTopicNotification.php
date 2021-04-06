@@ -5,6 +5,7 @@ namespace App\Notifications;
 use App\Broadcasting\FCMChannel;
 use App\Broadcasting\OneSignalChannel;
 use App\Wallet\FCMTopicNotifier;
+use App\Wallet\Notification\Repository\NotificationRepository;
 use App\Wallet\OneSignalTagNotifier;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
@@ -23,6 +24,8 @@ class FCMTopicNotification extends Notification
 
     protected $type;
 
+    protected string $channel;
+
     /**
      * Create a new notification instance.
      *
@@ -34,6 +37,9 @@ class FCMTopicNotification extends Notification
         $this->title = $title;
         $this->description = $description;
         $this->type = $type;
+
+        $repository = new NotificationRepository(request());
+        $this->channel = $repository->notificationChannel();
     }
 
     /**
@@ -44,7 +50,7 @@ class FCMTopicNotification extends Notification
      */
     public function via($notifiable)
     {
-        return [/*'database',*//* FCMChannel::class,*/ OneSignalChannel::class];
+        return [/*'database',*/ $this->channel];
     }
 
     public function toDatabase($notifiable)

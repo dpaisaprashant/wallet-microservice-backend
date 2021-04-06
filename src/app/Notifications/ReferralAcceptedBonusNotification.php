@@ -5,6 +5,8 @@ namespace App\Notifications;
 use App\Broadcasting\FCMChannel;
 use App\Models\UserReferralBonusTransaction;
 use App\Wallet\FCMNotifier;
+use App\Wallet\Notification\Repository\NotificationRepository;
+use App\Wallet\OneSignalNotifier;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -18,6 +20,7 @@ class ReferralAcceptedBonusNotification extends Notification
     public $referredToUser;
     public $type;
     public $amount;
+    protected string $channel;
 
     /**
      * Create a new notification instance.
@@ -32,6 +35,9 @@ class ReferralAcceptedBonusNotification extends Notification
         $this->referredToUser = $referredToUser;
         $this->type = $type;
         $this->amount = $amount / 100;
+
+        $repository = new NotificationRepository(request());
+        $this->channel = $repository->notificationChannel();
     }
 
     /**
@@ -42,7 +48,7 @@ class ReferralAcceptedBonusNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database', FCMChannel::class];
+        return ['database', $this->channel];
     }
 
     public function toFcm($notifiable)
@@ -58,6 +64,22 @@ class ReferralAcceptedBonusNotification extends Notification
         ], $data);
 
         $notify = new FCMNotifier($data['title'], $data['description'], $data, $this->referredFromUser->fcm_token, $this->referredFromUser->desktop_fcm);
+        $notify->send();
+    }
+
+    public function toOneSignal($notifiable)
+    {
+        $data = $this->toDatabase($notifiable);
+
+        $data = array_merge([
+            'id' => $this->id,
+            'type' => 'ReferralAccepted',
+            'isRead' => false,
+            'readAt' => null,
+            'createdAt' => now()->toDateTimeString()
+        ], $data);
+
+        $notify = new OneSignalNotifier($data['title'], $data['description'], $data, $this->referredFromUser->mobile_no, $this->referredFromUser->mobile_no);
         $notify->send();
     }
 

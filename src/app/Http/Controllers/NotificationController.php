@@ -29,7 +29,11 @@ class NotificationController extends Controller
 
     public function create(Request $request)
     {
-        $allTopics = array_map(function ($arr) {return $arr["title"];}, config('onesignal.tags'));
+        if ($this->repository->notificationService() == NotificationRepository::SERVICE_ONE_SIGNAL) {
+            $allTopics = array_map(function ($arr) {return $arr["title"];}, config('onesignal.tags'));
+        } else {
+            $allTopics = config('fcm.topics');
+        }
         if ($request->isMethod('post')) {
 
             if (empty($request->topics)) {

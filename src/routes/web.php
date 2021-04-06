@@ -93,6 +93,8 @@ Route::group(['prefix' => 'admin'], function () {
         //bonus
         Route::match(['get', 'post'], '/settings/bonus', 'Setting\SettingController@bonusSetting')->name('settings.bonus');
 
+        //notification
+        Route::match(['get', 'post'], '/settings/notification', 'Setting\SettingController@notificationSetting')->name('settings.notification');
         /**
          * Users
          */

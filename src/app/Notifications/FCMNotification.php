@@ -6,6 +6,7 @@ use App\Broadcasting\FCMChannel;
 use App\Broadcasting\OneSignalChannel;
 use App\Models\User;
 use App\Wallet\FCMNotifier;
+use App\Wallet\Notification\Repository\NotificationRepository;
 use App\Wallet\OneSignalNotifier;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -24,6 +25,9 @@ class FCMNotification extends Notification
 
     protected $type;
 
+    protected $channel;
+
+
     /**
      * Create a new notification instance.
      *
@@ -38,6 +42,9 @@ class FCMNotification extends Notification
         $this->description = $description;
         $this->type = $type;
 
+        $repository = new NotificationRepository(request());
+        $this->channel = $repository->notificationChannel();
+
     }
 
     /**
@@ -48,7 +55,7 @@ class FCMNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database', /*FCMChannel::class,*/ OneSignalChannel::class];
+        return ['database', $this->channel];
     }
 
     public function toDatabase($notifiable)

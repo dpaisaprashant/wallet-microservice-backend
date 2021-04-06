@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>ICash | Login </title>
+    <title>DPaisa | Login </title>
 
     <link href="{{ asset('admin/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
@@ -27,9 +27,9 @@
         </div>
 
         <div class="col-md-6">
-            <h2 class="font-bold">Welcome to ICash</h2>
+            <h2 class="font-bold">Welcome to DPaisa</h2>
 
-            <p>Admin panel of ICash </p>
+            <p>Admin panel of DPaisa </p>
 
         </div>
         <div class="col-md-6">
@@ -48,7 +48,7 @@
 
                 </form>
                 <p class="m-t">
-                    <small>ICash admin panel all rights reserved &copy; {{ Date('Y') }}</small>
+                    <small>DPaisa admin panel all rights reserved &copy; {{ Date('Y') }}</small>
                 </p>
             </div>
         </div>
@@ -56,7 +56,7 @@
     <hr/>
     <div class="row">
         <div class="col-md-6">
-            Copyright Galaxy International Pvt. Ltd.
+            Copyright Goldmine Pvt. Ltd.
         </div>
         <div class="col-md-6 text-right">
             <small>© {{ Date('Y') }}</small>

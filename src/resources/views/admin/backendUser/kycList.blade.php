@@ -142,7 +142,7 @@
                                             {{ $kyc->user->email }}
                                         </td>
                                         <td>
-                                            @if($kyc->pivot->status == 'ACCEPTED')
+                                            {{--@if($kyc->pivot->status == 'ACCEPTED')
                                                 <span class="badge badge-primary">
                                                ACCEPTED
                                            </span>
@@ -150,10 +150,12 @@
                                                 <span class="badge badge-danger">
                                                REJECTED
                                            </span>
-                                            @endif
+                                            @endif--}}
+                                            @include('admin.user.kyc.status', ['kyc' => $kyc])
                                         </td>
                                         <td>
-                                            {{ $kyc->admin[0]->pivot->updated_at}}
+                                            {{--{{ $kyc->admin[0]->pivot->updated_at}}--}}
+                                            {{ $kyc->updated_at }}
                                         </td>
 
                                         <td class="center">

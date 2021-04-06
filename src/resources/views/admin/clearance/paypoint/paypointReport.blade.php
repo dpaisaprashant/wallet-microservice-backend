@@ -176,7 +176,7 @@
                 text: "All the listed transaction will be cleared",
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#1E78A2",
+                confirmButtonColor: "#18a689",
                 confirmButtonText: "Yes, clear Transactions!",
                 closeOnConfirm: true,
                 closeOnClickOutside: true

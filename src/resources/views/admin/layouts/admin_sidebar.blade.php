@@ -4,7 +4,7 @@ $url = url()->current();
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">
         <ul class="nav metismenu" id="side-menu">
-            <li class="nav-header" style="background-color: #10273d !important;">
+            <li class="nav-header" style="background-color: #2f4050 !important;">
                 <div class="dropdown profile-element">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="block m-t-xs font-bold"><i class="fa fa-user"></i> &nbsp; {{ auth()->user()->name }}</span>

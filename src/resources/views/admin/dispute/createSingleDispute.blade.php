@@ -208,7 +208,7 @@
                 text: "Dispute for this transaction will be created",
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#1E78A2",
+                confirmButtonColor: "#18a689",
                 confirmButtonText: "Yes, approve",
                 closeOnConfirm: true,
                 closeOnClickOutside: true

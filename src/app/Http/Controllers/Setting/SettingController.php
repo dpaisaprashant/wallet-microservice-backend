@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CybersourceSetting;
 use App\Models\NchlSetting;
 use App\Models\NpaySetting;
+use App\Models\NpsSetting;
 use App\Models\PaypointSetting;
 use App\Models\Setting;
 use App\Wallet\Setting\Traits\UpdateSetting;
@@ -26,6 +27,13 @@ class SettingController extends Controller
         $settings = $this->updatedSettingsCollection($request);
         $settings = $this->updatedSettingsCollection($request, NpaySetting::class);
         return view('admin.setting.npaySetting')->with(compact('settings'));
+    }
+
+    public function npsSetting(Request $request)
+    {
+        $settings = $this->updatedSettingsCollection($request);
+        $settings = $this->updatedSettingsCollection($request, NpsSetting::class);
+        return view('admin.setting.npsSetting')->with(compact('settings'));
     }
 
     public function paypointCommissionSetting(Request $request)

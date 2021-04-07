@@ -12,6 +12,8 @@ networks:
     external: true
   wallet-microservice-npay_laravel:
     external: true
+  wallet-microservice-nps_laravel:
+    external: true
   wallet-microservice-merchant_laravel:
     external: true
 
@@ -39,6 +41,7 @@ services:
       - wallet-microservice-nchl_laravel
       - wallet-microservice-cybersource_laravel
       - wallet-microservice-npay_laravel
+      - wallet-microservice-nps_laravel
       - wallet-microservice-merchant_laravel
 
   mysql:
@@ -64,6 +67,7 @@ services:
       - wallet-microservice-nchl_laravel
       - wallet-microservice-cybersource_laravel
       - wallet-microservice-npay_laravel
+      - wallet-microservice-nps_laravel
       - wallet-microservice-merchant_laravel
 
   php:
@@ -82,6 +86,7 @@ services:
       - wallet-microservice-nchl_laravel
       - wallet-microservice-cybersource_laravel
       - wallet-microservice-npay_laravel
+      - wallet-microservice-nps_laravel
       - wallet-microservice-merchant_laravel
 
   composer:
@@ -102,6 +107,7 @@ services:
       - wallet-microservice-nchl_laravel
       - wallet-microservice-cybersource_laravel
       - wallet-microservice-npay_laravel
+      - wallet-microservice-nps_laravel
       - wallet-microservice-merchant_laravel
     entrypoint: ['composer', '--ignore-platform-reqs']
 
@@ -124,6 +130,7 @@ services:
       - wallet-microservice-nchl_laravel
       - wallet-microservice-cybersource_laravel
       - wallet-microservice-npay_laravel
+      - wallet-microservice-nps_laravel
       - wallet-microservice-merchant_laravel
   
   phpmyadmin:
@@ -144,6 +151,7 @@ services:
       - wallet-microservice-nchl_laravel
       - wallet-microservice-cybersource_laravel
       - wallet-microservice-npay_laravel
+      - wallet-microservice-nps_laravel
       - wallet-microservice-merchant_laravel
 
   mongo:

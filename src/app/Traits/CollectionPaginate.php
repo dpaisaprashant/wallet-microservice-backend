@@ -4,7 +4,6 @@ namespace App\Traits;
 
 use App\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Input;
 
 /**
  * Relation for the user
@@ -13,7 +12,7 @@ trait CollectionPaginate
 {
     public function collectionPaginate($length, $collection, $request, $pageName = 'page')
     {
-        $page = Input::get($pageName, 1); // Get the ?page=1 from the url
+        $page = request()->get($pageName, 1); // Get the ?page=1 from the url
         $offset = ($page * $length) - $length;
 
         return  new LengthAwarePaginator(

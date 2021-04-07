@@ -1,0 +1,5 @@
+{
+    "require": {
+        "apility/laravel-fcm": "^1.4"
+    }
+}

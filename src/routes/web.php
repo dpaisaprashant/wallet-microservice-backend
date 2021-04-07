@@ -70,6 +70,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::match(['get', 'post'], '/settings/general', 'Setting\SettingController@generalSetting')->name('settings.general')->middleware('permission:General setting view|General setting update');
 
         Route::match(['get', 'post'], '/settings/npay', 'Setting\SettingController@npaySetting')->name('settings.npay')->middleware('permission:Npay setting view|Npay setting update'); //NPay Setting
+        Route::match(['get', 'post'], '/settings/nps', 'Setting\SettingController@npsSetting')->name('settings.nps'); //NPS Setting
 
         Route::match(['get', 'post'], '/settings/paypoint/commission', 'Setting\SettingController@paypointCommissionSetting')->name('settings.paypoint.commission');
         Route::match(['get', 'post'], '/settings/paypoint', 'Setting\SettingController@paypointSetting')->name('settings.paypoint')->middleware('permission:Paypoint setting view|Paypoint setting update');

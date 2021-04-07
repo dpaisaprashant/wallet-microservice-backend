@@ -457,9 +457,11 @@ $url = url()->current();
                                 <li><a href="{{ route('settings.merchant') }}">Merchant Setting</a></li>
 
 
-                            {{--@can('Npay setting view')
+                            @can('Npay setting view')
                                 <li><a href="{{ route('settings.npay') }}">Npay Setting</a></li>
-                            @endcan--}}
+                            @endcan
+
+                                <li><a href="{{ route('settings.nps') }}">NPS Setting</a></li>
 
                             @can('Paypoint setting view')
                                 <li><a href="{{ route('settings.paypoint') }}">Paypoint Setting</a></li>

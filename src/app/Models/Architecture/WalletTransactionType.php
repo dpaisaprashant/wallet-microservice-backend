@@ -42,4 +42,9 @@ class WalletTransactionType extends Model
             ->where('service', $service)
             ->first();
     }
+
+    public function walletTransactionTypeCashbacks()
+    {
+        return $this->hasMany(WalletTransactionTypeCashback::class);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Architecture\WalletTransactionTypeCashback;
 use Illuminate\Database\Eloquent\Model;
 
 class AgentType extends Model
@@ -23,5 +24,10 @@ class AgentType extends Model
     public function parentAgentType()
     {
         return $this->belongsTo(AgentType::class, 'agent_type_id');
+    }
+
+    public function walletTransactionTypeCashbacks()
+    {
+        return $this->morphMany(WalletTransactionTypeCashback::class, 'transactionCashbackable' , 'user_type', 'user_type_id');
     }
 }

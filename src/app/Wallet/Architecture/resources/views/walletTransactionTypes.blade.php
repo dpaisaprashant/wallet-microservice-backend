@@ -145,8 +145,12 @@
                                         <td>{{ $transactionType->payment_type }}</td>
 
                                         <td class="center">
-                                            <a style="margin-top: 5px;" href="" class="btn btn-sm btn-icon btn-success m-t-n-xs" title="View Cashbacks"><i class="fa fa-refresh"></i></a>
-                                            <a style="margin-top: 5px;" href="" class="btn btn-sm btn-icon btn-info m-t-n-xs" title="View Commissions"><i class="fa fa-dollar"></i></a>
+                                            <a style="margin-top: 5px;" href="{{ route('architecture.trasnaction.cashback', $transactionType->id) }}" class="btn btn-sm btn-success m-t-n-xs" title="Transaction Cashbacks"><i class="fa fa-refresh"></i> Transaction Cashback</a>
+                                            <a style="margin-top: 5px;" href="" class="btn btn-sm btn-info m-t-n-xs" title="Transaction Commissions"><i class="fa fa-dollar"></i> Transaction Commission</a>
+                                            <br>
+                                            <a style="margin-top: 5px;" href="" class="btn btn-sm btn-success m-t-n-xs" title="User Cashbacks"><i class="fa fa-refresh"></i> User Cashback</a>
+                                            <a style="margin-top: 5px;" href="" class="btn btn-sm btn-info m-t-n-xs" title="User Commissions"><i class="fa fa-dollar"></i> User Commission</a>
+
                                         </td>
                                     </tr>
                                 @endforeach

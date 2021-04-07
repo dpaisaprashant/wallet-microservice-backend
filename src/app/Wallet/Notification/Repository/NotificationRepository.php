@@ -4,9 +4,12 @@
 namespace App\Wallet\Notification\Repository;
 
 
+use App\Broadcasting\FCMChannel;
+use App\Broadcasting\OneSignalChannel;
 use App\Events\SendFcmNotification;
 use App\Events\SendFcmTopicNotification;
 use App\Models\FCMNotification;
+use App\Models\Setting;
 use App\Models\User;
 use App\Notifications\FCMTopicNotification;
 use Illuminate\Http\Request;
@@ -18,6 +21,9 @@ class NotificationRepository
     private $request;
 
     private $length = 15;
+
+    CONST SERVICE_FIREBASE = 'FIREBASE';
+    CONST SERVICE_ONE_SIGNAL = 'ONE SIGNAL';
 
     public function __construct(Request $request)
     {
@@ -32,6 +38,22 @@ class NotificationRepository
     {
         $this->length = $length;
         return $this;
+    }
+
+    public function notificationService()
+    {
+        return Setting::where('option', 'notification_service')->first()->value;
+    }
+
+    public function notificationChannel()
+    {
+        if ($this->notificationService() == self::SERVICE_FIREBASE) {
+            return FCMChannel::class;
+        }
+
+        if ($this->notificationService() == self::SERVICE_ONE_SIGNAL) {
+            return OneSignalChannel::class;
+        }
     }
 
     public function latestNotifications()

@@ -114,4 +114,10 @@ class SettingController extends Controller
         $settings = $this->updatedSettingsCollection($request, CybersourceSetting::class);
         return view('admin.setting.nicAsiaCyberSourceSetting')->with(compact('settings'));
     }
+
+    public function notificationSetting(Request $request)
+    {
+        $settings = $this->updatedSettingsCollection($request);
+        return view('admin.setting.notificationSetting')->with(compact('settings'));
+    }
 }

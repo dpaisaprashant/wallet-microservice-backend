@@ -7,13 +7,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>DPaisa | Login </title>
+    <title>ICash | Login </title>
 
-    <link href="{{ asset('admin/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('admin/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('admin/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
-    <link href="{{ asset('admin/css/animate.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('admin/css/animate.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('admin/css/style.css') }}" rel="stylesheet">
 
 </head>
 
@@ -27,9 +27,9 @@
         </div>
 
         <div class="col-md-6">
-            <h2 class="font-bold">Welcome to DPaisa</h2>
+            <h2 class="font-bold">Welcome to ICash</h2>
 
-            <p>Admin panel of DPaisa </p>
+            <p>Admin panel of ICash </p>
 
         </div>
         <div class="col-md-6">
@@ -48,7 +48,7 @@
 
                 </form>
                 <p class="m-t">
-                    <small>DPaisa admin panel all rights reserved &copy; {{ Date('Y') }}</small>
+                    <small>ICash admin panel all rights reserved &copy; {{ Date('Y') }}</small>
                 </p>
             </div>
         </div>
@@ -56,7 +56,7 @@
     <hr/>
     <div class="row">
         <div class="col-md-6">
-            Copyright Goldmine Pvt. Ltd.
+            Copyright Galaxy International Pvt. Ltd.
         </div>
         <div class="col-md-6 text-right">
             <small>© {{ Date('Y') }}</small>
@@ -66,7 +66,7 @@
 
 
 </body>
-<script src="{{ asset('admin/js/jquery-3.1.1.min.js') }} " ></script>
+<script src="{{ secure_asset('admin/js/jquery-3.1.1.min.js') }} " ></script>
 <script>
     $('.close').on('click', function (e) {
         $('.alert-danger').hide();

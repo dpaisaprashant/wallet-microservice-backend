@@ -341,7 +341,7 @@ class ExcelExportController extends Controller
         });
 
         $export = new ExportExcelHelper();
-        $export->setName('DPaisa_all_audit_trail')
+        $export->setName('ICash_all_audit_trail')
             ->setMixGeneratorModels($collection->filter())
             ->setRequest($request);
 

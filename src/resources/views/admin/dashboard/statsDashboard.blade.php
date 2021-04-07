@@ -89,7 +89,7 @@
         @include('admin.layouts.admin_header')
 
         <div class="wrapper wrapper-content">
-            <h2 style="margin-top: -5px; margin-left: 5px;">DPaisa Dashboard</h2>
+            <h2 style="margin-top: -5px; margin-left: 5px;">ICash Dashboard</h2>
             <div class="row">
                 @can('Dashboard all transactions sum')
                     @include('admin.dashboard.widgets.allTransactionSum')

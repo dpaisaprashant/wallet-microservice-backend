@@ -8,7 +8,7 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>DPaisa Admin Panel</title>
+    <title>ICash Admin Panel</title>
 
     <link href="{{ secure_asset('admin/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ secure_asset('admin/font-awesome/css/font-awesome.css') }}" rel="stylesheet">

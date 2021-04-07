@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>DPaisa Clearance | OTP </title>
+    <title>ICash Clearance | OTP </title>
 
     <link href="{{ asset('admin/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
@@ -46,7 +46,7 @@
 
                 </form>
                 <p class="m-t">
-                    <small>Dpaisa admin panel all rights reserved &copy; {{ Date('Y') }}</small>
+                    <small>Icash admin panel all rights reserved &copy; {{ Date('Y') }}</small>
                 </p>
             </div>
         </div>

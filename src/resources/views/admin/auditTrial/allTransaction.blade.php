@@ -4,7 +4,7 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Dpaisa Transactions Audit Trial</h2>
+            <h2>Icash Transactions Audit Trial</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -15,7 +15,7 @@
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Dpaisa Transactions</strong>
+                    <strong>Icash Transactions</strong>
                 </li>
             </ol>
         </div>

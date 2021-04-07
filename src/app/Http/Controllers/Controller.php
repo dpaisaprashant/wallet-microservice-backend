@@ -26,7 +26,7 @@ class Controller extends BaseController
             'SUBISU',
             'WEBSURFER',
             'TBANK',
-            'Dpaisa',
+            'Icash',
             'Recieved Funds',
             'Transfer Funds',
             'ConnectIPS'

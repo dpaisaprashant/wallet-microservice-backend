@@ -3,6 +3,6 @@
 
     </div>
     <div>
-        <strong>Copyright</strong> DPaisa &copy; {{ Date('Y') }}
+        <strong>Copyright</strong> ICash &copy; {{ Date('Y') }}
     </div>
 </div>

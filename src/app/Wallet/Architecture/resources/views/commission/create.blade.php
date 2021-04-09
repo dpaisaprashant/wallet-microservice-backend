@@ -4,7 +4,7 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Create Wallet Transaction Type Cashback</h2>
+            <h2>Create Wallet Transaction Type Commission</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -43,7 +43,7 @@
 
                         <div class="alert alert-warning">
                             <i class="fa fa-info-circle"></i>
-                            If a cash back for transaction having same <b>User Type</b>, <b>User Type Name</b>, <b>Slab From</b> and
+                            If a commission for transaction having same <b>User Type</b>, <b>User Type Name</b>, <b>Slab From</b> and
                             <b>Slab To</b> is created then the existing cashback will be updated using these new values
                         </div>
 
@@ -56,16 +56,16 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>Add new cashback</h5>
+                        <h5>Add new commission</h5>
                     </div>
                     <div class="ibox-content">
-                        <form method="post" action="{{ route('architecture.transaction.cashback.create', $walletTransactionType->id) }}" enctype="multipart/form-data">
+                        <form method="post" action="{{ route('architecture.transaction.commission.create', $walletTransactionType->id) }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Title</label>
                                 <div class="col-sm-10">
                                     <input name="title" type="text" class="form-control" required>
-                                    <small>Cashback is sent to frontend using this title</small>
+                                    <small>Commission is sent to frontend using this title</small>
                                 </div>
                             </div>
 
@@ -113,7 +113,7 @@
 
                             <div class="hr-line-dashed"></div>
                                 <div class="form-group  row">
-                                    <label class="col-sm-2 col-form-label">Cashback Service (description)</label>
+                                    <label class="col-sm-2 col-form-label">Commission Service (description)</label>
                                     <div class="col-sm-10">
                                         <input name="description" type="text" class="form-control">
                                         <small>Empty for default</small>
@@ -121,10 +121,10 @@
                                 </div>
                             <div class="hr-line-dashed"></div>
 
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Cashback Type</label>
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Commission Type</label>
                                 <div class="col-sm-10">
-                                    <select id="selectCashbackType" data-placeholder="Choose Cashback Type..." class="chosen-select"  tabindex="2" name="cashback_type" required>
-                                        <option value="" selected disabled>-- Select Cashback Type --</option>
+                                    <select id="selectCommissionType" data-placeholder="Choose Commission Type..." class="chosen-select"  tabindex="2" name="commission_type" required>
+                                        <option value="" selected disabled>-- Select Commission Type --</option>
                                         <option value="FLAT" >FLAT</option>
                                         <option value="PERCENTAGE" >PERCENTAGE</option>
                                     </select>
@@ -132,9 +132,9 @@
                             </div>
 
                             <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Cashback Value</label>
+                                <label class="col-sm-2 col-form-label">Commission Value</label>
                                 <div class="col-sm-10">
-                                    <input name="cashback_value" type="number" min="0" class="form-control" required>
+                                    <input name="commission_value" type="number" min="0" class="form-control" required>
                                     <small>Flat amount in paisa</small>
                                 </div>
                             </div>

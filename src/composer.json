@@ -9,25 +9,25 @@
     "license": "MIT",
     "require": {
         "php": "^7.4 ",
+        "ext-curl": "*",
         "ext-json": "*",
-        "brozot/laravel-fcm": "^1.3",
+        "apility/laravel-fcm": "^1.4.0",
         "fideloper/proxy": "^4.0",
         "jenssegers/mongodb": "^3.6",
-        "laravel/framework": "^6.0",
+        "laravel/framework": "^7.0",
         "laravel/tinker": "^2.5",
         "phpoffice/phpspreadsheet": "^1.10",
         "rap2hpoutre/fast-excel": "^1.6",
         "spatie/laravel-activitylog": "^3.9",
         "spatie/laravel-backup": "6.*",
-        "spatie/laravel-permission": "^3.3",
-      "ext-curl": "*"
+        "spatie/laravel-permission": "^3.3"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
-        "facade/ignition": "^1.4",
+        "facade/ignition": "^2.0",
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^3.0",
+        "nunomaduro/collision": "^4.1",
         "phpunit/phpunit": "^8.5.8|^9.3.3"
     },
     "config": {

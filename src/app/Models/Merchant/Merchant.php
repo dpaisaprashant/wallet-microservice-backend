@@ -4,6 +4,8 @@ namespace App\Models\Merchant;
 
 use App\Filters\User\UserFilters;
 use App\Models\AdminMerchantKYC;
+use App\Models\Architecture\SingleUserCashback;
+use App\Models\Architecture\SingleUserCommission;
 use App\Models\MerchantBankAccount;
 use App\Models\MerchantNchlBankTransfer;
 use App\Models\MerchantNchlLoadTransaction;
@@ -149,6 +151,18 @@ class Merchant extends Model
     public function hasValidKyc()
     {
         return $this->kyc ? $this->kyc->accept : false;
+    }
+
+
+    //Architecture
+    public function singleUserCashbacks()
+    {
+        return $this->morphMany(SingleUserCashback::class, 'userCashbackable', 'user_type', 'user_id', 'id');
+    }
+
+    public function singleUserCommissions()
+    {
+        return $this->morphMany(SingleUserCommission::class, 'userCommissionable', 'user_type', 'user_id', 'id');
     }
 
 

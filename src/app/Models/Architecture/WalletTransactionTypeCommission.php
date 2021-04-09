@@ -21,4 +21,10 @@ class WalletTransactionTypeCommission extends Model
     {
         return $this->where('user_type_id', $userTypeId)
             ->where('user_type', $userType);
-    }}
+    }
+
+    public function transactionCommissionable()
+    {
+        return $this->morphTo('transactionCommissionable', 'user_type', 'user_type_id');
+    }
+}

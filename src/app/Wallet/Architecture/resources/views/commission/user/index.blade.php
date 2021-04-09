@@ -106,7 +106,13 @@
 
                                         <td>{{ $commission->commission_type }}</td>
 
-                                        <td>{{ $commission->commission_value }}</td>
+                                        <td>
+                                            @if($commission->$commission_type == 'FLAT')
+                                                Rs. {{ $commission->$commission_value / 100 }}
+                                            @else
+                                                {{ $commission->$commission_value }}
+                                            @endif
+                                        </td>
 
                                         <td class="center">
                                             {{--<a href="{{ route('architecture.user.commission.update', $commission->id) }}"><button class="btn btn-info btn-icon" type="button"><i class="fa fa-edit"></i></button></a>--}}

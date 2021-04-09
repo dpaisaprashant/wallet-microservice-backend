@@ -198,7 +198,7 @@
                     </div>
 
                     {{--COMMISSION--}}
-                    <div class="ibox ">
+                    {{--<div class="ibox ">
                         <div class="ibox-title">
                             <h5>Bank Transfer Commission (Input Currency in paisa)</h5>
                             <div class="ibox-tools">
@@ -253,7 +253,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>--}}
                 </form>
             </div>
         </div>

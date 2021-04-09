@@ -104,7 +104,13 @@
 
                                         <td>{{ $cashback->cashback_type }}</td>
 
-                                        <td>{{ $cashback->cashback_value }}</td>
+                                        <td>
+                                            @if($cashback->cashback_type == 'FLAT')
+                                                Rs. {{ $cashback->cashback_value / 100 }}
+                                            @else
+                                                {{ $cashback->cashback_value }}
+                                            @endif
+                                        </td>
 
                                         <td class="center">
                                             {{--<a href="{{ route('architecture.transaction.cashback.update', $cashback->id) }}"><button class="btn btn-info btn-icon" type="button"><i class="fa fa-edit"></i></button></a>--}}

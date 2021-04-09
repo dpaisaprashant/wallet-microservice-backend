@@ -66,7 +66,7 @@ class WalletTransactionCommissionController extends Controller
 
     public function delete(Request $request)
     {
-        $cashback = WalletTransactionTypeCommission::firstOrFail($request->id);
+        $cashback = WalletTransactionTypeCommission::where('id', $request->id)->firstOrFail();
         $cashback->delete();
 
         return redirect()->back()->with('success', 'Commission deleted successfully');

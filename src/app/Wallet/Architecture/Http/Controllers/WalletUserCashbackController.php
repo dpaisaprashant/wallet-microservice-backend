@@ -67,7 +67,7 @@ class WalletUserCashbackController extends Controller
 
     public function delete(Request $request)
     {
-        $cashback = SingleUserCashback::firstOrFail($request->id);
+        $cashback = SingleUserCashback::where('id', $request->id)->firstOrFail();
         $cashback->delete();
 
         return redirect()->back()->with('success', 'Cashback deleted successfully');

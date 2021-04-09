@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserType extends Model
 {
     protected $guarded = [];
+    protected $connection = 'dpaisa';
 
     CONST TYPE_NORMAL = 'normal';
 

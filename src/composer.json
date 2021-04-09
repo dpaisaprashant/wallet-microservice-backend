@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.4 ",
+        "ext-curl": "*",
         "ext-json": "*",
         "apility/laravel-fcm": "^1.4.0",
         "fideloper/proxy": "^4.0",
@@ -19,8 +20,7 @@
         "rap2hpoutre/fast-excel": "^1.6",
         "spatie/laravel-activitylog": "^3.9",
         "spatie/laravel-backup": "6.*",
-        "spatie/laravel-permission": "^3.3",
-      "ext-curl": "*"
+        "spatie/laravel-permission": "^3.3"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

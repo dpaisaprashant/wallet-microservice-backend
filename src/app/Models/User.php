@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Filters\User\UserFilters;
+use App\Models\Architecture\SingleUserCashback;
 use App\Models\Microservice\PreTransaction;
 use App\Models\Microservice\RequestInfo;
 use App\Models\TransactionEvent;
@@ -404,5 +405,11 @@ class User extends Authenticatable
     public function agentStatus()
     {
         return optional($this->agent)->status;
+    }
+
+    //Architecture
+    public function singleUserCashbacks()
+    {
+        return $this->morphMany(SingleUserCashback::class, 'userCashbackable', 'user_type', 'user_id', 'id');
     }
 }

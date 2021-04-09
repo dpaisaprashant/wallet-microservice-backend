@@ -47,4 +47,9 @@ class WalletTransactionType extends Model
     {
         return $this->hasMany(WalletTransactionTypeCashback::class);
     }
+
+    public function singleUserCashbacks()
+    {
+        return $this->hasMany(SingleUserCashback::class);
+    }
 }

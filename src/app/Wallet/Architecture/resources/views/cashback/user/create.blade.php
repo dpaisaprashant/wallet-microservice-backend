@@ -4,7 +4,7 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Create Wallet Transaction Type Cashback</h2>
+            <h2>Create User Wallet Transaction Type Cashback</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -21,7 +21,7 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>Wallet Transaction Type</h5>
+                        <h5>User Wallet Transaction Type</h5>
                     </div>
                     <div class="ibox-content">
                         <h3>
@@ -59,7 +59,7 @@
                         <h5>Add new cashback</h5>
                     </div>
                     <div class="ibox-content">
-                        <form method="post" action="{{ route('architecture.transaction.cashback.create', $walletTransactionType->id) }}" enctype="multipart/form-data">
+                        <form method="post" action="{{ route('architecture.user.cashback.create', $walletTransactionType->id) }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Title</label>
@@ -84,7 +84,7 @@
 
                             <div class="form-group  row"><label class="col-sm-2 col-form-label">User Type Name</label>
                                 <div class="col-sm-10">
-                                    <select id="selectUserTypeName" data-placeholder="ChooseUser Type..." class="chosen-select"  tabindex="2" name="user_type_id" required>
+                                    <select id="selectUserTypeName" data-placeholder="ChooseUser Type..." class="chosen-select"  tabindex="2" name="user_id" required>
                                         <option value="" selected disabled>-- Select User Type Name--</option>
                                         {{--@foreach($userTypes as $key => $userType)
                                             <option value="{{ $userType }}" >{{ $key }}</option>
@@ -166,7 +166,7 @@
     <script>
         $('#selectUserType').on('change', function (e){
             let userType = $(this).val();
-            let url = `{{ route('architecture.userType.list') }}`
+            let url = `{{ route('architecture.user.list') }}`
 
 
             $.ajax({
@@ -176,7 +176,7 @@
                 url:url,
                 method:"POST",
                 data: { user_type: userType},
-                dataType:'JSON',
+                /*dataType:'JSON',*/
                 cache: false,
                 async: true,
                 beforeSend: function () {
@@ -200,6 +200,7 @@
                 },
                 error: function (resp) {
                     console.log(resp);
+                    console.log(resp.data);
                     alert('error');
 
                     $(".stats").fadeIn(300);

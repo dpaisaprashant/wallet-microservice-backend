@@ -2,7 +2,7 @@
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Wallet Transaction Types Cashbacks</h2>
+            <h2>User Wallet Transaction Types Cashbacks</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -55,7 +55,7 @@
                     <div class="ibox-title">
                         <h5>Cashbacks</h5>
                         <div class="ibox-tools" style="top: 8px;">
-                            <a href="{{ route('architecture.transaction.cashback.create', $walletTransactionType->id) }}"><button class="btn btn-primary" type="button"><i class="fa fa-plus"></i> Create New Cashback</button></a>
+                            <a href="{{ route('architecture.user.cashback.create', $walletTransactionType->id) }}"><button class="btn btn-primary" type="button"><i class="fa fa-plus"></i> Create New Cashback</button></a>
                         </div>
                     </div>
                     <div class="ibox-content">
@@ -66,7 +66,7 @@
                                     <th>S.No.</th>
                                     <th>Title</th>
                                     <th>User Type</th>
-                                    <th>User Type Name</th>
+                                    <th>User</th>
                                     <th>Slab From</th>
                                     <th>Slab To</th>
                                     <th>Cashback Service</th>
@@ -76,7 +76,8 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($walletTransactionType->walletTransactionTypeCashbacks as $cashback)
+                                @foreach($walletTransactionType->singleUserCashbacks as $cashback)
+
                                     <tr class="gradeX">
                                         <td>{{ $loop->index + 1 }}</td>
                                         <td>
@@ -86,7 +87,7 @@
                                             {{ $cashback->user_type }}
                                         </td>
                                         <td>
-                                            {{ $cashback->transactionCashbackable->name }}
+                                            {{ $cashback->userCashbackable->name . "(" . $cashback->userCashbackable->mobile_no .")" }}
                                         </td>
                                         <td>
                                             {{ $cashback->slab_from }}
@@ -103,8 +104,8 @@
                                         <td>{{ $cashback->cashback_value }}</td>
 
                                         <td class="center">
-                                            {{--<a href="{{ route('architecture.transaction.cashback.update', $cashback->id) }}"><button class="btn btn-info btn-icon" type="button"><i class="fa fa-edit"></i></button></a>--}}
-                                            <form action="{{ route('architecture.transaction.cashback.delete') }}" method="post" id="deactivateForm" style="display: inline">
+                                            {{--<a href="{{ route('architecture.user.cashback.update', $cashback->id) }}"><button class="btn btn-info btn-icon" type="button"><i class="fa fa-edit"></i></button></a>--}}
+                                            <form action="{{ route('architecture.user.cashback.delete') }}" method="post" id="deactivateForm" style="display: inline">
                                                 @csrf
                                                 <input type="hidden" name="id" value="{{ $cashback->id }}">
                                                 <button class="btn btn-danger btn-icon deactivate" rel="{{ $cashback->id }}"><i class="fa fa-trash"></i></button>

@@ -45,7 +45,7 @@ class WalletTransactionCashbackController extends Controller
                     'slab_to' => $request->slab_to ?? null
                 ],
                 [
-                    'title' => 'Ncell',
+                    'title' => $request->title,
                     'cashback_type' => $request->cashback_type,
                     'cashback_value' => $request->cashback_value,
                     'description' => null

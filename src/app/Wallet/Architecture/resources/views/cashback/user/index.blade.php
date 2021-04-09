@@ -90,10 +90,14 @@
                                             {{ $cashback->userCashbackable->name . "(" . $cashback->userCashbackable->mobile_no .")" }}
                                         </td>
                                         <td>
-                                            {{ $cashback->slab_from }}
+                                            @isset($cashback->slab_from)
+                                                Rs. {{ $cashback->slab_from / 100 }}
+                                            @endisset
                                         </td>
                                         <td>
-                                            {{ $cashback->slab_to }}
+                                            @isset($cashback->slab_to)
+                                                Rs. {{ $cashback->slab_to / 100 }}
+                                            @endisset
                                         </td>
                                         <td>
                                             {{ $cashback->description ?? "Normal Cashback" }}

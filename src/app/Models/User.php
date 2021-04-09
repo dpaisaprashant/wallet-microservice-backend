@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Filters\User\UserFilters;
 use App\Models\Architecture\SingleUserCashback;
+use App\Models\Architecture\SingleUserCommission;
 use App\Models\Microservice\PreTransaction;
 use App\Models\Microservice\RequestInfo;
 use App\Models\TransactionEvent;
@@ -411,5 +412,10 @@ class User extends Authenticatable
     public function singleUserCashbacks()
     {
         return $this->morphMany(SingleUserCashback::class, 'userCashbackable', 'user_type', 'user_id', 'id');
+    }
+
+    public function singleUserCommissions()
+    {
+        return $this->morphMany(SingleUserCommission::class, 'userCommissionable', 'user_type', 'user_id', 'id');
     }
 }

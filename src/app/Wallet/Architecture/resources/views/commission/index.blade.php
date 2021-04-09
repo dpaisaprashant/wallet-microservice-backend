@@ -2,7 +2,7 @@
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Wallet Transaction Types Cashbacks</h2>
+            <h2>Wallet Transaction Types Commissions</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -13,7 +13,7 @@
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Cashback</strong>
+                    <strong>Commission</strong>
                 </li>
             </ol>
         </div>
@@ -53,9 +53,9 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>Cashbacks</h5>
+                        <h5>Commissions</h5>
                         <div class="ibox-tools" style="top: 8px;">
-                            <a href="{{ route('architecture.transaction.cashback.create', $walletTransactionType->id) }}"><button class="btn btn-primary" type="button"><i class="fa fa-plus"></i> Create New Cashback</button></a>
+                            <a href="{{ route('architecture.transaction.commission.create', $walletTransactionType->id) }}"><button class="btn btn-primary" type="button"><i class="fa fa-plus"></i> Create New Commission</button></a>
                         </div>
                     </div>
                     <div class="ibox-content">
@@ -69,53 +69,50 @@
                                     <th>User Type Name</th>
                                     <th>Slab From</th>
                                     <th>Slab To</th>
-                                    <th>Cashback Service</th>
-                                    <th>Cashback Type</th>
-                                    <th>Cashback Value</th>
+                                    <th>Commission Service</th>
+                                    <th>Commission Type</th>
+                                    <th>Commission Value</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($walletTransactionType->walletTransactionTypeCashbacks as $cashback)
+                                @foreach($walletTransactionType->walletTransactionTypeCommissions as $commission)
                                     <tr class="gradeX">
                                         <td>{{ $loop->index + 1 }}</td>
                                         <td>
-                                            {{ $cashback->title }}
+                                            {{ $commission->title }}
                                         </td>
                                         <td>
-                                            {{ $cashback->user_type }}
+                                            {{ $commission->user_type }}
                                         </td>
                                         <td>
-                                            {{ $cashback->transactionCashbackable->name }}
+                                            {{ $commission->transactionCommissionable->name }}
                                         </td>
                                         <td>
-                                            Rs. {{ $cashback->slab_from / 100 }}
+                                            @isset($commission->slab_from)
+                                                Rs. {{ $commission->slab_from / 100 }}
+                                            @endisset
                                         </td>
                                         <td>
-                                            {{ $cashback->slab_to }}
+                                            @isset($commission->slab_to)
+                                                Rs. {{ $commission->slab_to / 100 }}
+                                            @endisset
                                         </td>
                                         <td>
-                                            {{ $cashback->description ?? "Normal Cashback" }}
+                                            {{ $commission->description ?? "Normal Commission" }}
                                         </td>
 
-                                        <td>
-                                            @isset($cashback->slab_from)
-                                                Rs. {{ $cashback->slab_from / 100 }}
-                                            @endisset
-                                        </td>
-                                        <td>
-                                            @isset($cashback->slab_to)
-                                                Rs. {{ $cashback->slab_to / 100 }}
-                                            @endisset
-                                        </td>
+                                        <td>{{ $commission->commission_type }}</td>
+
+                                        <td>{{ $commission->commission_value }}</td>
 
                                         <td class="center">
-                                            {{--<a href="{{ route('architecture.transaction.cashback.update', $cashback->id) }}"><button class="btn btn-info btn-icon" type="button"><i class="fa fa-edit"></i></button></a>--}}
-                                            <form action="{{ route('architecture.transaction.cashback.delete') }}" method="post" id="deactivateForm" style="display: inline">
+                                            {{--<a href="{{ route('architecture.transaction.commission.update', $commission->id) }}"><button class="btn btn-info btn-icon" type="button"><i class="fa fa-edit"></i></button></a>--}}
+                                            <form action="{{ route('architecture.transaction.commission.delete') }}" method="post" id="deactivateForm" style="display: inline">
                                                 @csrf
-                                                <input type="hidden" name="id" value="{{ $cashback->id }}">
-                                                <button class="btn btn-danger btn-icon deactivate" rel="{{ $cashback->id }}"><i class="fa fa-trash"></i></button>
-                                                <button id="deactivateBtn-{{ $cashback->id }}" type="submit" style=" display:none;"  rel="{{ route('general.setting.delete') }}"></button>
+                                                <input type="hidden" name="id" value="{{ $commission->id }}">
+                                                <button class="btn btn-danger btn-icon deactivate" rel="{{ $commission->id }}"><i class="fa fa-trash"></i></button>
+                                                <button id="deactivateBtn-{{ $commission->id }}" type="submit" style=" display:none;"  rel="{{ route('general.setting.delete') }}"></button>
                                             </form>
                                         </td>
                                     </tr>
@@ -166,7 +163,7 @@
 
             swal({
                 title: "Are you sure?",
-                text: "This cashback will be deleted",
+                text: "This commission will be deleted",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#ed5565",

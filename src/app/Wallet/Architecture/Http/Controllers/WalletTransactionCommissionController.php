@@ -6,24 +6,22 @@ namespace App\Wallet\Architecture\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\AgentType;
-use App\Models\Architecture\SingleUserCashback;
 use App\Models\Architecture\WalletTransactionType;
 use App\Models\Architecture\WalletTransactionTypeCashback;
-use App\Models\Merchant\Merchant;
+use App\Models\Architecture\WalletTransactionTypeCommission;
 use App\Models\Merchant\MerchantType;
-use App\Models\User;
 use App\Models\UserType;
 use Illuminate\Http\Request;
 
-class WalletUserCashbackController extends Controller
+class WalletTransactionCommissionController extends Controller
 {
     public function index($walletTransactionTypeId, Request $request)
     {
-        $walletTransactionType = WalletTransactionType::with('singleUserCashbacks')
+        $walletTransactionType = WalletTransactionType::with('walletTransactionTypeCashbacks')
             ->where('id', $walletTransactionTypeId)
             ->first();
 
-        return view('Architecture::cashback.user.index')->with(compact('walletTransactionType'));
+        return view('Architecture::commission.index')->with(compact('walletTransactionType'));
     }
 
     public function create(Request $request, $id)
@@ -32,32 +30,33 @@ class WalletUserCashbackController extends Controller
             ->first();
 
         $userTypes = [
-            "User Type" => User::class,
-            "Merchant Type" => Merchant::class
+            "User Type" => UserType::class,
+            "Agent Type" => AgentType::class,
+            "Merchant Type" => MerchantType::class
         ];
 
         if ($request->isMethod('POST')) {
 
-            SingleUserCashback::updateOrCreate(
+            $commission = WalletTransactionTypeCommission::updateorCreate(
                 [
                     'wallet_transaction_type_id' => $walletTransactionType->id,
-                    'user_id' => $request->user_id,
                     'user_type' => $request->user_type,
-                    'slab_from' => $request->slab_from,
-                    'slab_to' => $request->slab_to,
+                    'user_type_id' => $request->user_type_id,
+                    'slab_from' => $request->slab_from ?? null,
+                    'slab_to' => $request->slab_to ?? null
                 ],
                 [
                     'title' => $request->title,
-                    'cashback_type' => $request->cashback_type,
-                    'cashback_value' => $request->cashback_value,
-                    'description' => $request->description
+                    'commission_type' => $request->commission_type,
+                    'commission_value' => $request->commission_value,
+                    'description' => null
                 ]
             );
 
-            return redirect()->route('architecture.user.cashback', $id)->with('success', 'CashBack created successfully');
+            return redirect()->route('architecture.transaction.commission', $id)->with('success', 'Commission created successfully');
         }
 
-        return view('Architecture::cashback.user.create')->with(compact('walletTransactionType', 'userTypes'));
+        return view('Architecture::commission.create')->with(compact('walletTransactionType', 'userTypes'));
     }
 
     public function update(Request $request, $id)

@@ -1,8 +1,10 @@
 <?php
 
 use App\Wallet\Architecture\Http\Controllers\WalletTransactionCashbackController;
+use App\Wallet\Architecture\Http\Controllers\WalletTransactionCommissionController;
 use App\Wallet\Architecture\Http\Controllers\WalletTransactionTypeController;
 use App\Wallet\Architecture\Http\Controllers\WalletUserCashbackController;
+use App\Wallet\Architecture\Http\Controllers\WalletUserCommissionController;
 use App\Wallet\Referral\Http\Controllers\ReferralController;
 use App\Wallet\Referral\Http\Controllers\ReferralSchemaController;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +32,15 @@ Route::group(['prefix' => 'admin/architecture', 'middleware' => ['web','auth']],
 
 
     //Create transaction commission
+    Route::get('/wallet-transaction-commissions/{walletTransaction}', [WalletTransactionCommissionController::class, 'index'])->name('architecture.transaction.commission');
+    Route::match(['get', 'post'], '/wallet-transaction-commissions/{walletTransaction}/create', [WalletTransactionCommissionController::class, 'create'])->name('architecture.transaction.commission.create');
+    Route::match(['get', 'post'], '/wallet-transaction-commissions/edit/{id}', [WalletTransactionCommissionController::class, 'update'])->name('architecture.transaction.commission.update');
+    Route::post('/wallet-transaction-commissions/delete', [WalletTransactionCommissionController::class, 'delete'])->name('architecture.transaction.commission.delete');
+
 
     //Create single user commission
+    Route::get('/user-wallet-transaction-commission/{walletTransaction}', [WalletUserCommissionController::class, 'index'])->name('architecture.user.commission');
+    Route::match(['get', 'post'], '/user-wallet-transaction-commission/{walletTransaction}/create', [WalletUserCommissionController::class, 'create'])->name('architecture.user.commission.create');
+    Route::match(['get', 'post'], '/user-wallet-transaction-commission/edit/{id}', [WalletUserCommissionController::class, 'update'])->name('architecture.user.commission.update');
+    Route::post('/user-wallet-transaction-commission/delete', [WalletUserCommissionController::class, 'delete'])->name('architecture.user.commission.delete');
 });

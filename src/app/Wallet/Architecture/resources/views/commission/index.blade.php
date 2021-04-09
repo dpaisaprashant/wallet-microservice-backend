@@ -118,7 +118,7 @@
                                                 @csrf
                                                 <input type="hidden" name="id" value="{{ $commission->id }}">
                                                 <button class="btn btn-danger btn-icon deactivate" rel="{{ $commission->id }}"><i class="fa fa-trash"></i></button>
-                                                <button id="deactivateBtn-{{ $commission->id }}" type="submit" style=" display:none;"  rel="{{ route('general.setting.delete') }}"></button>
+                                                <button id="deactivateBtn-{{ $commission->id }}" type="submit" style=" display:none;"  rel="{{ route('architecture.transaction.commission.delete') }}"></button>
                                             </form>
                                         </td>
                                     </tr>

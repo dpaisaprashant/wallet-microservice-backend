@@ -8,6 +8,8 @@ class SingleUserCashback extends Model
 {
     protected $connection = 'dpaisa';
 
+    protected $guarded = [];
+
     public function resolveCashbackBuilder($walletTransactionTypeId, $userId, $userType)
     {
         return $this->where('wallet_transaction_type_id', $walletTransactionTypeId)
@@ -19,5 +21,10 @@ class SingleUserCashback extends Model
     {
         return $this->where('user_id', $userId)
             ->where('user_type', $userType);
+    }
+
+    public function userCashbackable()
+    {
+        return $this->morphTo('userCashbackable', 'user_type', 'user_id');
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MerchantType extends Model
 {
+    protected $connection = 'dpaisa';
 
     public function merchants()
     {

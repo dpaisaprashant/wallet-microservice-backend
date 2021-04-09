@@ -89,16 +89,6 @@
                                             {{ $cashback->transactionCashbackable->name }}
                                         </td>
                                         <td>
-                                            Rs. {{ $cashback->slab_from / 100 }}
-                                        </td>
-                                        <td>
-                                            {{ $cashback->slab_to }}
-                                        </td>
-                                        <td>
-                                            {{ $cashback->description ?? "Normal Cashback" }}
-                                        </td>
-
-                                        <td>
                                             @isset($cashback->slab_from)
                                                 Rs. {{ $cashback->slab_from / 100 }}
                                             @endisset
@@ -108,6 +98,13 @@
                                                 Rs. {{ $cashback->slab_to / 100 }}
                                             @endisset
                                         </td>
+                                        <td>
+                                            {{ $cashback->description ?? "Normal Cashback" }}
+                                        </td>
+
+                                        <td>{{ $cashback->cashback_type }}</td>
+
+                                        <td>{{ $cashback->cashback_value }}</td>
 
                                         <td class="center">
                                             {{--<a href="{{ route('architecture.transaction.cashback.update', $cashback->id) }}"><button class="btn btn-info btn-icon" type="button"><i class="fa fa-edit"></i></button></a>--}}

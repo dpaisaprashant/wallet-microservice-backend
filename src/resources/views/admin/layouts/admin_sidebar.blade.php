@@ -482,9 +482,9 @@ $url = url()->current();
                                 <li><a href="{{ route('settings.paypoint.commission') }}">PayPoint Commission Setting</a></li>
                             @endcan--}}
 
-                            @can('Paypoint cashback setting view')
+                           {{-- @can('Paypoint cashback setting view')
                                 <li><a href="{{ route('settings.cashback') }}">CashBack Setting</a></li>
-                            @endcan
+                            @endcan--}}
 
                             {{--@can('Transaction fee setting view')
                                 <li><a href="{{ route('settings.transactionFee') }}">Transaction Fee Setting</a></li>

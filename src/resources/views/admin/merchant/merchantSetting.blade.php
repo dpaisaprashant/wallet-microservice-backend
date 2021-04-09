@@ -39,7 +39,7 @@
                             </div>
                         </div>
                         <div class="ibox-content">
-                            <div class="form-group  row">
+                            {{--<div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Merchant Commission enabled</label>
                                 <div class="col-sm-10">
                                     <select class="form-control" name="merchant_commission_enable">
@@ -52,9 +52,9 @@
                                         @endif
                                     </select>
                                 </div>
-                            </div>
+                            </div>--}}
 
-                            <div class="hr-line-dashed"></div>
+                            {{--<div class="hr-line-dashed"></div>--}}
 
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Merchant default min amount in wallet for Bank Transfer</label>
@@ -67,7 +67,7 @@
                             <div class="hr-line-dashed"></div>
 
 
-                            <div class="form-group  row">
+                            {{--<div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Merchant default commission type</label>
                                 <div class="col-sm-10">
                                     <select class="form-control" name="merchant_default_commission_type">
@@ -90,7 +90,7 @@
                             </div>
 
 
-                            <div class="hr-line-dashed"></div>
+                            <div class="hr-line-dashed"></div>--}}
 
 
 

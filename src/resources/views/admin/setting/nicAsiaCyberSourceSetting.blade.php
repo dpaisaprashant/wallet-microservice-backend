@@ -71,7 +71,7 @@
                             </div>--}}
                         </div>
                     </div>
-                    <div class="ibox ">
+                    {{--<div class="ibox ">
                         <div class="ibox-title">
                             <h5>Commission</h5>
                             <div class="ibox-tools">
@@ -118,7 +118,7 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div>--}}
                 </form>
             </div>
         </div>

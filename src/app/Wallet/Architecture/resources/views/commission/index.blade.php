@@ -105,10 +105,10 @@
                                         <td>{{ $commission->commission_type }}</td>
 
                                         <td>
-                                            @if($commission->$commission_type == 'FLAT')
-                                                Rs. {{ $commission->$commission_value / 100 }}
+                                            @if($commission->commission_type == 'FLAT')
+                                                Rs. {{ $commission->commission_value / 100 }}
                                             @else
-                                                {{ $commission->$commission_value }}
+                                                {{ $commission->commission_value }}
                                             @endif
                                         </td>
 

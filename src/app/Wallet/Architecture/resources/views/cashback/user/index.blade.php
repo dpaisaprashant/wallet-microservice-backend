@@ -119,7 +119,7 @@
                                                 @csrf
                                                 <input type="hidden" name="id" value="{{ $cashback->id }}">
                                                 <button class="btn btn-danger btn-icon deactivate" rel="{{ $cashback->id }}"><i class="fa fa-trash"></i></button>
-                                                <button id="deactivateBtn-{{ $cashback->id }}" type="submit" style=" display:none;"  rel="{{ route('general.setting.delete') }}"></button>
+                                                <button id="deactivateBtn-{{ $cashback->id }}" type="submit" style=" display:none;"  rel="{{ route('architecture.user.cashback.delete') }}"></button>
                                             </form>
                                         </td>
                                     </tr>

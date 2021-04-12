@@ -63,6 +63,14 @@
                                 </div>
                             </div>
 
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary btn-sm" type="submit">Save changes</button>
+                                </div>
+                            </div>
+
                             {{--<div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">CyberSource Secret Key</label>
                                 <div class="col-sm-10">

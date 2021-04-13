@@ -56,7 +56,7 @@
                             </div>
 
 
-                            <div class="hr-line-dashed"></div>
+                           {{-- <div class="hr-line-dashed"></div>
 
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Default Cash Out Type</label>
@@ -92,7 +92,7 @@
                                     <input name="default_cash_in_value" type="text" class="form-control">
                                     <small>*If FLAT value should be in paisa</small>
                                 </div>
-                            </div>
+                            </div>--}}
 
                             <div class="hr-line-dashed"></div>
 

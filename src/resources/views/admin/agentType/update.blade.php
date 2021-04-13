@@ -56,7 +56,7 @@
                             </div>
 
 
-                            <div class="hr-line-dashed"></div>
+                            {{--<div class="hr-line-dashed"></div>
 
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Default Cash Out Type</label>
@@ -92,7 +92,7 @@
                                     <input value="{{ $agentType->default_cash_in_value }}" name="default_cash_in_value" type="text" class="form-control">
                                     <small>*If FLAT value should be in paisa</small>
                                 </div>
-                            </div>
+                            </div>--}}
 
                             <div class="hr-line-dashed"></div>
                             <small>NOTE: If the parent agent is changed the cashback and the limits will stay the same for this agent type. Cashback and Limit should be changed separately</small>

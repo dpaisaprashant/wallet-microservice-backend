@@ -34,8 +34,8 @@
                                     <th>S.No.</th>
                                     <th>Agent Types</th>
                                     <th>Sub Agent of</th>
-                                    <th>Default Cash Out Type | Value </th>
-                                    <th>Default Cash In Type | Value </th>
+                                    {{--<th>Default Cash Out Type | Value </th>
+                                    <th>Default Cash In Type | Value </th>--}}
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -49,21 +49,21 @@
                                         <td>
                                             {{ optional($type->parentAgentType)->name }}
                                         </td>
-                                        <td>
+                                        {{--<td>
                                             {{ $type->default_cash_out_type }} | {{ $type->default_cash_out_type == 'FLAT' ? 'Rs.' . ($type->default_cash_out_value ?? 0) / 100 :  $type->default_cash_out_value}}
                                         </td>
 
                                         <td>
                                             {{ $type->default_cash_in_type }} | {{ $type->default_cash_in_type == 'FLAT' ? 'Rs.' . ($type->default_cash_in_value ?? 0) / 100 :  $type->default_cash_in_value}}
 
-                                        </td>
+                                        </td>--}}
 
 
                                         <td class="center">
-                                            <a href="{{ route('agent.type.cashback', $type->id) }}" style="margin-top: 5px;"
+                                           {{-- <a href="{{ route('agent.type.cashback', $type->id) }}" style="margin-top: 5px;"
                                                     title="Cashback"
                                                     class="btn btn-sm btn-icon btn-warning m-t-n-xs"
-                                                    ><i class="fa fa-refresh"></i></a>
+                                                    ><i class="fa fa-refresh"></i></a>--}}
 
                                             <a href="{{ route('agent.type.limit', $type->id) }}" style="margin-top: 5px;"
                                                title="Limit"

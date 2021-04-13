@@ -44,7 +44,7 @@
                         <div class="alert alert-warning">
                             <i class="fa fa-info-circle"></i>
                             If a commission for transaction having same <b>User Type</b>, <b>User Type Name</b>, <b>Slab From</b> and
-                            <b>Slab To</b> is created then the existing cashback will be updated using these new values
+                            <b>Slab To</b> is created then the existing commission will be updated using these new values
                         </div>
 
                     </div>
@@ -56,10 +56,10 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>Add new cashback</h5>
+                        <h5>Add new commission</h5>
                     </div>
                     <div class="ibox-content">
-                        <form method="post" action="{{ route('architecture.user.cashback.create', $walletTransactionType->id) }}" enctype="multipart/form-data">
+                        <form method="post" action="{{ route('architecture.user.commission.create', $walletTransactionType->id) }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Title</label>
@@ -123,7 +123,7 @@
 
                             <div class="form-group  row"><label class="col-sm-2 col-form-label">Commission Type</label>
                                 <div class="col-sm-10">
-                                    <select id="selectCommissionType" data-placeholder="Choose Commission Type..." class="chosen-select"  tabindex="2" name="cashback_type" required>
+                                    <select id="selectCommissionType" data-placeholder="Choose Commission Type..." class="chosen-select"  tabindex="2" name="commission_type" required>
                                         <option value="" selected disabled>-- Select Commission Type --</option>
                                         <option value="FLAT" >FLAT</option>
                                         <option value="PERCENTAGE" >PERCENTAGE</option>
@@ -134,7 +134,7 @@
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Commission Value</label>
                                 <div class="col-sm-10">
-                                    <input name="cashback_value" type="number" min="0" class="form-control" required>
+                                    <input name="commission_value" type="number" min="0" class="form-control" required>
                                     <small>Flat amount in paisa</small>
                                 </div>
                             </div>

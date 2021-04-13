@@ -110,6 +110,11 @@ class ReconciliationReportRepository extends AbstractReportRepository
         return Wallet::sum('balance');
     }
 
+    public function totalBonusBalanceAmount()
+    {
+        return Wallet::sum('bonus_balance');
+    }
+
     public function totalWalletBalanceCount()
     {
         return Wallet::count();

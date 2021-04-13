@@ -22,4 +22,9 @@ class SingleUserCommission extends Model
         return $this->where('user_id', $userId)
             ->where('user_type', $userType);
     }
+
+    public function userCommissionable()
+    {
+        return $this->morphTo('userCommissionable', 'user_type', 'user_id');
+    }
 }

@@ -11,6 +11,7 @@ use App\Models\NchlAggregatedPayment;
 use App\Models\NchlBankTransfer;
 use App\Models\NchlLoadTransaction;
 use App\Models\NICAsiaCyberSourceLoadTransaction;
+use App\Models\NpsLoadTransaction;
 use App\Models\TransactionEvent;
 use App\Models\UsedUserReferral;
 use App\Models\UserLoadTransaction;
@@ -57,6 +58,21 @@ class ReconciliationReportRepository extends AbstractReportRepository
             ->count();
     }
 
+    //nchl
+    public function totalNpsTransactionAmount()
+    {
+        return TransactionEvent::where('transaction_type', NpsLoadTransaction::class)
+            ->filter($this->request)
+            ->sum('amount');
+    }
+
+    public function totalNpsTransactionCount()
+    {
+        return TransactionEvent::where('transaction_type', NpsLoadTransaction::class)
+            ->filter($this->request)
+            ->count();
+    }
+
     public function totalCashbackAmount()
     {
         return TransactionEvent::where('transaction_type', Commission::class)
@@ -92,6 +108,11 @@ class ReconciliationReportRepository extends AbstractReportRepository
     public function totalWalletBalanceAmount()
     {
         return Wallet::sum('balance');
+    }
+
+    public function totalBonusBalanceAmount()
+    {
+        return Wallet::sum('bonus_balance');
     }
 
     public function totalWalletBalanceCount()
@@ -231,10 +252,10 @@ class ReconciliationReportRepository extends AbstractReportRepository
 
     public function totalLoadAmount()
     {
-        return $this->totalNPayTransactionAmount() + $this->totalCashbackAmount()
-            + $this->totalReferralAmount() + $this->totalTestFundsAmount()
-            + $this->totalNchlLoadAmount() + $this->totalNicAsiaCyberSourceLoadAmount()
-            + ($this->totalRoundOffAmount() * 100);
+        return $this->totalNPayTransactionAmount() + $this->totalNpsTransactionAmount()
+            + $this->totalCashbackAmount() + $this->totalReferralAmount()
+            + $this->totalTestFundsAmount() + $this->totalNchlLoadAmount()
+            + $this->totalNicAsiaCyberSourceLoadAmount() + ($this->totalRoundOffAmount() * 100);
     }
 
     public function totalPaymentAmount()

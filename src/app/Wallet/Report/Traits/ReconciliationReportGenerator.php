@@ -24,6 +24,12 @@ trait ReconciliationReportGenerator
                 "transaction_type" => "credit"
             ],
 
+            'NPS' => [
+                "amount" => $repository->totalNpsTransactionAmount() / 100,
+                "count" => $repository->totalNpsTransactionCount(),
+                "transaction_type" => "credit"
+            ],
+
             'Cashback' => [
                 "amount" => $repository->totalCashbackAmount() / 100,
                 "count" => $repository->totalCashbackCount(),
@@ -92,6 +98,12 @@ trait ReconciliationReportGenerator
 
             'WalletBalance' => [
                 "amount" => $repository->totalWalletBalanceAmount() / 100,
+                "count" => $repository->totalWalletBalanceCount(),
+                "transaction_type" => "balance"
+            ],
+
+            'BonusBalance' => [
+                "amount" => $repository->totalBonusBalanceAmount() / 100,
                 "count" => $repository->totalWalletBalanceCount(),
                 "transaction_type" => "balance"
             ],

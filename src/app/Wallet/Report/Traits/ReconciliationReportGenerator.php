@@ -108,11 +108,11 @@ trait ReconciliationReportGenerator
                 "transaction_type" => "balance"
             ],
 
-            "Total Successful" => [
-                "amount" => "",
-                "count" => $repository->totalTransactionEventCount(),
-                "transaction_type" => "info"
-            ]
+            "Total Balance" => [
+                "amount" => ($repository->totalBonusBalanceAmount() + $repository->totalBonusBalanceAmount()) / 100 ,
+                "count" => $repository->totalWalletBalanceCount(),
+                "transaction_type" => "balance"
+            ],
         ];
     }
 }

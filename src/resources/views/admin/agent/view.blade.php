@@ -175,8 +175,8 @@
                                     <th>Contact Number</th>
                                     <th>Business Name</th>
                                     <th>Business PAN</th>
-                                    <th>Cash Out Type | Value </th>
-                                    <th>Cash In Type | Value </th>
+                                   {{-- <th>Cash Out Type | Value </th>
+                                    <th>Cash In Type | Value </th>--}}
                                     {{--<th>Business Doc</th>--}}
                                     {{--<th>Email</th>--}}
                                     <th>Agent status</th>
@@ -223,14 +223,14 @@
                                                 <img src="{{ config('dpaisa-api-url.agent_url') . $user->agent['business_document'] }}" style="width: 40%">
                                             @endisset
                                         </td>--}}
-                                        <td>
+                                        {{--<td>
                                             {{ $user->agent->cash_out_type }} | {{ $user->agent->cash_out_type == 'FLAT' ? 'Rs.' . ($user->agent->cash_out_value ?? 0) / 100 :  $user->agent->cash_out_value}}
                                         </td>
 
                                         <td>
                                             {{ $user->agent->cash_in_type }} | {{ $user->agent->cash_in_type == 'FLAT' ? 'Rs.' . ($user->agent->cash_in_value ?? 0) / 100 :  $user->agent->cash_in_value}}
 
-                                        </td>
+                                        </td>--}}
                                         <td>
                                             @include('admin.agent.status', ['agent' => $user->agent])
                                         </td>

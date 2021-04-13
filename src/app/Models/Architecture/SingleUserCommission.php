@@ -8,6 +8,8 @@ class SingleUserCommission extends Model
 {
     protected $connection = 'dpaisa';
 
+    protected $guarded = [];
+
     public function resolveCommissionBuilder($walletTransactionTypeId, $userId, $userType)
     {
         return $this->where('wallet_transaction_type_id', $walletTransactionTypeId)
@@ -19,5 +21,10 @@ class SingleUserCommission extends Model
     {
         return $this->where('user_id', $userId)
             ->where('user_type', $userType);
+    }
+
+    public function userCommissionable()
+    {
+        return $this->morphTo('userCommissionable', 'user_type', 'user_id');
     }
 }

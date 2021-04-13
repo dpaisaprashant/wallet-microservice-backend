@@ -13,7 +13,7 @@
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Cashback</strong>
+                    <strong>Commission</strong>
                 </li>
             </ol>
         </div>
@@ -55,7 +55,7 @@
                     <div class="ibox-title">
                         <h5>Commissions</h5>
                         <div class="ibox-tools" style="top: 8px;">
-                            <a href="{{ route('architecture.user.commission.create', $walletTransactionType->id) }}"><button class="btn btn-primary" type="button"><i class="fa fa-plus"></i> Create New Cashback</button></a>
+                            <a href="{{ route('architecture.user.commission.create', $walletTransactionType->id) }}"><button class="btn btn-primary" type="button"><i class="fa fa-plus"></i> Create New Commission</button></a>
                         </div>
                     </div>
                     <div class="ibox-content">

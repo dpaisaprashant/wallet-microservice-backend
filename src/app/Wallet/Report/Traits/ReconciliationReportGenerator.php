@@ -24,6 +24,12 @@ trait ReconciliationReportGenerator
                 "transaction_type" => "credit"
             ],
 
+            'NPS' => [
+                "amount" => $repository->totalNpsTransactionAmount() / 100,
+                "count" => $repository->totalNpsTransactionCount(),
+                "transaction_type" => "credit"
+            ],
+
             'Cashback' => [
                 "amount" => $repository->totalCashbackAmount() / 100,
                 "count" => $repository->totalCashbackCount(),

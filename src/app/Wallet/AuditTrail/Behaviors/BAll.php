@@ -100,7 +100,7 @@ class BAll implements IAuditTrail
         });
 
         $referralBonus->transform(function ($value) {
-            $newDate = Carbon::parse($value['created_at'])->addSeconds(1);
+            $newDate = Carbon::parse($value['created_at'])->addSeconds(2);
             $value['created_at'] = $newDate;
             return $value;
         });

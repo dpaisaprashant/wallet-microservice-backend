@@ -38,7 +38,7 @@
                         </td>
                         <td>
                             <strong>
-                                <button type="button" class="btn btn-primary m-r-sm">Rs. {{ $user->wallet->balance }}</button>
+                                <button type="button" class="btn btn-primary m-r-sm">Rs. {{ $user->wallet->bonus_balance }}</button>
                             </strong> Total Bonus Balance
                         </td>
                     </tr>

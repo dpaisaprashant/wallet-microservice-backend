@@ -22,6 +22,11 @@ class Wallet extends Model
         return ($balance/100);
     }
 
+    public function getBonusBalanceAttribute($balance)
+    {
+        return ($balance/100);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class,'user_id','id');

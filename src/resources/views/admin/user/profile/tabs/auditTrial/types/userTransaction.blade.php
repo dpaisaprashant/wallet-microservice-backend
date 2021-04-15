@@ -18,8 +18,9 @@
     <td></td>
 
     <td>Rs. {{ $event->current_balance }}</td>
+    <td>Rs. {{ $event->current_bonus_balance }}</td>
 
-    @if(!empty($event->userTransaction)) {{--Debit--}}
+@if(!empty($event->userTransaction)) {{--Debit--}}
         <?php global $walletAmount; $walletAmount += $event->userTransaction['amount'] ?>
     @endif
 

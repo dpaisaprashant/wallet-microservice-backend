@@ -38,8 +38,8 @@
                         </td>
                         <td>
                             <strong>
-                                <button type="button" class="btn btn-primary m-r-sm">Rs. {{ $loadFundSum }}</button>
-                            </strong> Total Loaded Funds
+                                <button type="button" class="btn btn-primary m-r-sm">Rs. {{ $user->wallet->bonus_balance }}</button>
+                            </strong> Total Bonus Balance
                         </td>
                     </tr>
                     <tr>

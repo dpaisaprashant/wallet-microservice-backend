@@ -14,7 +14,7 @@
     <td></td>
 
     <td>Rs. {{ $event->current_balance }}</td>
-
+    <td>Rs. {{ $event->current_bonus_balance }}</td>
     <td>
         @if($event->microservice_type == 'PAYPOINT')
             @if(!empty($event->userCheckPayment))

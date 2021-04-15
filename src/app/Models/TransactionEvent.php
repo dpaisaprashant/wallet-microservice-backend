@@ -37,6 +37,15 @@ class TransactionEvent extends Model
         return ($balance/100);
     }
 
+    /**
+     * @param $balance
+     * @return float|int
+     */
+    public function getBonusBalanceAttribute($balance)
+    {
+        return ($balance/100);
+    }
+
    /* public function getCurrentBalanceAttribute(){
         return $this->attributes['balance'] / 100;
     }*/

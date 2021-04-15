@@ -128,37 +128,52 @@ class BAll implements IAuditTrail
             //->concat($merchantTransaction);
 
         $balance = 0;
+        $bonusBalance = 0;
 
         foreach ($collection->sortBy('created_at') as $event) {
             if ($event instanceof UserCheckPayment) { //paypoint
                 $balance = $event->userTransaction->transactions->balance ?? $balance;
+                $bonusBalance = $event->userTransaction->transactions->bonus_balance ?? $bonusBalance;
                 $event['current_balance'] = $balance;
+                $event['current_bonus_balance'] = $bonusBalance;
 
             } elseif ($event instanceof UserToUserFundTransfer) {
                 $balance = $event->transactions()->where('user_id', $user->id)->first()->balance ?? $balance;
+                $bonusBalance = $event->transactions()->where('user_id', $user->id)->first()->bonus_balance ?? $bonusBalance;
                 $event['current_balance'] = $balance;
+                $event['current_bonus_balance'] = $bonusBalance;
+
             }
             elseif ($event instanceof FundRequest) {
                 $balance = $event->transactions()->where('user_id', $user->id)->first()->balance ?? $balance;
+                $bonusBalance = $event->transactions()->where('user_id', $user->id)->first()->bonus_balance ?? $bonusBalance;
                 $event['current_balance'] = $balance;
+                $event['current_bonus_balance'] = $bonusBalance;
             }
             elseif ($event instanceof UsedUserReferral) {
                 $balance = $event->transactions()->where('user_id', $user->id)->first()->balance ?? $balance;
+                $bonusBalance = $event->transactions()->where('user_id', $user->id)->first()->bonus_balance ?? $bonusBalance;
                 $event['current_balance'] = $balance;
+                $event['current_bonus_balance'] = $bonusBalance;
             }
             elseif ($event instanceof PreTransaction) {
                 $balance = $event->transactionEvent()->first()->balance ?? $balance;
+                $bonusBalance = $event->transactionEvent()->first()->bonus_balance ?? $bonusBalance;
                 $event['current_balance'] = $balance;
+                $event['current_bonus_balance'] = $bonusBalance;
                 //dd($event);
             }
             elseif ($event instanceof RequestInfo) {
                 $event['current_balance'] = $balance;
+                $event['current_bonus_balance'] = $bonusBalance;
                 //dd($event);
             }
             else
             {
                 $balance = $event->transactions->balance ?? $balance;
+                $bonusBalance = $event->transactions->bonus_balance ?? $bonusBalance;
                 $event['current_balance'] = $balance;
+                $event['current_bonus_balance'] = $bonusBalance;
             }
         }
 

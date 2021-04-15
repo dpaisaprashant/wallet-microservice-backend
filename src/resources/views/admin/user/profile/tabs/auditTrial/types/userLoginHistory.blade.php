@@ -16,6 +16,7 @@
     <td> --- </td>
 
     <td>Rs. {{ $event->current_balance }} </td>
+    <td>Rs. {{ $event->current_bonus_balance }}</td>
     <td>
         <a data-toggle="modal" href="#modal-form-user-login-history{{$event->id}}"><button class="btn btn-warning btn-icon" type="button"><i class="fa fa-info"></i></button></a>
 

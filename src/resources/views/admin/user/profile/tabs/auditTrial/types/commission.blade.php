@@ -11,5 +11,6 @@
 
     </td>
     <td>Rs. {{ $event->current_balance }}</td>
+    <td>Rs. {{ $event->current_bonus_balance }}</td>
     <td></td>
 </tr>

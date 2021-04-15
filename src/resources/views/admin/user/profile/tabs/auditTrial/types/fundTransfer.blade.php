@@ -27,8 +27,9 @@
     {{--<td>Rs. {{ $event->commission['before_amount'] -  $event->commission['after_amount']}}</td>--}}
 
     <td>Rs. {{ $event->current_balance }}</td>
+    <td>Rs. {{ $event->current_bonus_balance }}</td>
 
-    @if($user->id == $event->from_user) {{--Debit--}}
+@if($user->id == $event->from_user) {{--Debit--}}
         <?php global $walletAmount; $walletAmount += $event->amount ?>
     @else {{--Credit--}}
         <?php global $walletAmount; $walletAmount -= $event->amount ?>

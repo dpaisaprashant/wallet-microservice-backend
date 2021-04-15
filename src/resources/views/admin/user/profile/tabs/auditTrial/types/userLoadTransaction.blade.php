@@ -22,6 +22,7 @@
     @endif
 
     <td>Rs. {{ $event->current_balance }}</td>
+    <td>Rs. {{ $event->current_bonus_balance }}</td>
 
     <td>
         @include('admin.transaction.npay.detail', ['transaction' => $event])

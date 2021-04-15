@@ -67,6 +67,7 @@
                     <th>Debit</th>
                     <th>Credit</th>
                     <th>Balance</th>
+                    <th>Bonus Balance</th>
                     <th>Actions</th>
                 </tr>
                 </thead>

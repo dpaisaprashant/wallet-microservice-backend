@@ -350,6 +350,14 @@ class User extends Authenticatable
         return null;
     }
 
+    public function registerReferral()
+    {
+        return $referral =  UsedUserReferral::where('referred_to', $this->id)
+            ->orWhere('referred_from', $this->id)
+            //->where('status', UsedUserReferral::STATUS_COMPLETE)
+            ->first();
+    }
+
     public function getKYCStatus()
     {
         $status = 'not available';

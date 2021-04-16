@@ -90,6 +90,7 @@
                                     <tr>
                                         <th>S.No.</th>
                                         <th>Referred From</th>
+                                        <th>Referred From Earnings</th>
                                         <th>User Name</th>
                                         <th>Mobile No.</th>
                                         <th>KYC Status</th>
@@ -106,6 +107,9 @@
                                             <td>{{ $loop->index + ($registerUsingReferralUsers->perPage() * ($registerUsingReferralUsers->currentPage() - 1)) + 1 }}</td>
                                             <td>{{ optional($user->referredByUser())->name }}</td>
                                             <td>
+                                                Rs. {{ optional($user->referredByUser())->totalReferralAmount() }}
+                                            </td>
+                                            <td>
                                                 {{ $user->name }}
                                             </td>
                                             <td>
@@ -114,7 +118,6 @@
                                                 @else
                                                     <i class="fa fa-times-circle" style="color: red;"></i>&nbsp;{{ $user->mobile_no }}
                                                 @endif
-                                                {{ $user->mobile_no . " " }}
                                             </td>
 
                                             <td>

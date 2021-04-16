@@ -108,7 +108,14 @@
                                             <td>
                                                 {{ $user->name }}
                                             </td>
-                                            <td>{{ $user->mobile_no . " " }}</td>
+                                            <td>
+                                                @if(!empty($user->phone_verified_at))
+                                                    <i class="fa fa-check-circle" style="color: green;"></i> &nbsp;{{ $user->mobile_no }}
+                                                @else
+                                                    <i class="fa fa-times-circle" style="color: red;"></i>&nbsp;{{ $user->mobile_no }}
+                                                @endif
+                                                {{ $user->mobile_no . " " }}
+                                            </td>
 
                                             <td>
                                                 @include('admin.user.kyc.status', ['kyc' => $user->kyc])

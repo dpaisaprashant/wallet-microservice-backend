@@ -107,7 +107,11 @@
                                             <td>{{ $loop->index + ($registerUsingReferralUsers->perPage() * ($registerUsingReferralUsers->currentPage() - 1)) + 1 }}</td>
                                             <td>{{ optional($user->referredByUser())->name }}</td>
                                             <td>
-                                                Rs. {{ optional($user->referredByUser())->totalReferralAmount() }}
+                                                @if(optional($user->registerReferral())->status == 'COMPLETE')
+                                                    Rs. {{ optional($user->registerReferral())->referred_from_amount }}
+                                                @else
+                                                    Rs. 0
+                                                @endif
                                             </td>
                                             <td>
                                                 {{ $user->name }}

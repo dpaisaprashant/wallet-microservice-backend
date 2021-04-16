@@ -232,13 +232,13 @@
                             @if(!empty($user->kyc))
                                 <div class="col-md-5">
                                     <h3>Documents</h3>
-                                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                                        <ol class="carousel-indicators">
+                                    <div id="{{--carouselExampleIndicators--}}" class="{{--carousel slide--}}" data-ride="carousel">
+                                        {{--<ol class="carousel-indicators">
                                             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                                             <li data-target="#carouselExampleIndicators" data-slide-to="1" class=""></li>
-                                        </ol>
-                                        <div class="carousel-inner">
-                                            <div class="carousel-item active">
+                                        </ol>--}}
+                                        <div class="{{--carousel-inner--}}">
+                                            <div class="{{--carousel-item active--}}">
                                                 <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_front'] }}" target="_blank">
                                                     <img class="d-block w-100" src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_front'] }}" alt="First slide">
                                                     <div class="carousel-caption d-none d-md-block">

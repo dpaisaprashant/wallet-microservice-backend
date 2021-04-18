@@ -52,7 +52,6 @@ class AgentTypeRepository
             $newAgentCashback = [];
             foreach ($cashbacks as $cashback) {
                 $cashback['option'] = str_replace(self::DEFAULT_AGENT, $agentName, $cashback['option']);
-                dd($cashbacks, $cashback);
                 Setting::updateOrCreate($cashback);
                 //array_push($newAgentCashback, $cashback);
             }

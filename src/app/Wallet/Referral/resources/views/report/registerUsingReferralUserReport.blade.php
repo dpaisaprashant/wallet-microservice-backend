@@ -90,6 +90,7 @@
                                     <tr>
                                         <th>S.No.</th>
                                         <th>Referred From</th>
+                                        <th>Referred From Earnings</th>
                                         <th>User Name</th>
                                         <th>Mobile No.</th>
                                         <th>KYC Status</th>
@@ -106,9 +107,22 @@
                                             <td>{{ $loop->index + ($registerUsingReferralUsers->perPage() * ($registerUsingReferralUsers->currentPage() - 1)) + 1 }}</td>
                                             <td>{{ optional($user->referredByUser())->name }}</td>
                                             <td>
+                                                @if(optional($user->registerReferral())->status == 'COMPLETE')
+                                                    Rs. {{ optional($user->registerReferral())->referred_from_amount }}
+                                                @else
+                                                    Rs. 0
+                                                @endif
+                                            </td>
+                                            <td>
                                                 {{ $user->name }}
                                             </td>
-                                            <td>{{ $user->mobile_no . " " }}</td>
+                                            <td>
+                                                @if(!empty($user->phone_verified_at))
+                                                    <i class="fa fa-check-circle" style="color: green;"></i> &nbsp;{{ $user->mobile_no }}
+                                                @else
+                                                    <i class="fa fa-times-circle" style="color: red;"></i>&nbsp;{{ $user->mobile_no }}
+                                                @endif
+                                            </td>
 
                                             <td>
                                                 @include('admin.user.kyc.status', ['kyc' => $user->kyc])

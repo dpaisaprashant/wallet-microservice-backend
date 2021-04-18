@@ -51,7 +51,9 @@ class SubscriberReportRepository extends AbstractReportRepository
 
     public function totalSubscriberBonusBalance()
     {
-        return 0;
+        return Wallet::whereHas('user', function ($query) {
+                return $query->filter($this->request);
+            })->sum('bonus_balance') / 100;
     }
 
     public function totalSubscriberBonusPoint()

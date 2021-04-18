@@ -35,6 +35,10 @@ class WalletTransactionCommissionController extends Controller
             "Merchant Type" => MerchantType::class
         ];
 
+        $availableTitles = WalletTransactionTypeCommission::where('wallet_transaction_type_id', $walletTransactionType->id)
+            ->distinct()
+            ->pluck('title')->all();
+
         if ($request->isMethod('POST')) {
 
             $commission = WalletTransactionTypeCommission::updateorCreate(
@@ -56,7 +60,7 @@ class WalletTransactionCommissionController extends Controller
             return redirect()->route('architecture.transaction.commission', $id)->with('success', 'Commission created successfully');
         }
 
-        return view('Architecture::commission.create')->with(compact('walletTransactionType', 'userTypes'));
+        return view('Architecture::commission.create')->with(compact('walletTransactionType', 'userTypes', 'availableTitles'));
     }
 
     public function update(Request $request, $id)

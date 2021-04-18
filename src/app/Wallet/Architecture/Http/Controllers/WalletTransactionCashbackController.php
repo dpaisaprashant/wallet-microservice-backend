@@ -34,6 +34,10 @@ class WalletTransactionCashbackController extends Controller
             "Merchant Type" => MerchantType::class
         ];
 
+        $availableTitles = WalletTransactionTypeCashback::where('wallet_transaction_type_id', $walletTransactionType->id)
+            ->distinct()
+            ->pluck('title')->all();
+
         if ($request->isMethod('POST')) {
 
             $cashback = WalletTransactionTypeCashback::updateorCreate(
@@ -55,7 +59,7 @@ class WalletTransactionCashbackController extends Controller
             return redirect()->route('architecture.transaction.cashback', $id)->with('success', 'CashBack created successfully');
         }
 
-        return view('Architecture::cashback.create')->with(compact('walletTransactionType', 'userTypes'));
+        return view('Architecture::cashback.create')->with(compact('walletTransactionType', 'userTypes', 'availableTitles'));
     }
 
     public function update(Request $request, $id)

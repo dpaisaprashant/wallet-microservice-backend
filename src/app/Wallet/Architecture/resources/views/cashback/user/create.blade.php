@@ -61,13 +61,26 @@
                     <div class="ibox-content">
                         <form method="post" action="{{ route('architecture.user.cashback.create', $walletTransactionType->id) }}" enctype="multipart/form-data">
                             @csrf
-                            <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Title</label>
-                                <div class="col-sm-10">
-                                    <input name="title" type="text" class="form-control" required>
-                                    <small>Cashback is sent to frontend using this title</small>
+                            @if(count($availableTitles) > 0)
+                                <div class="form-group  row"><label class="col-sm-2 col-form-label">Title</label>
+                                    <div class="col-sm-10">
+                                        <select data-placeholder="Choose Title..." class="chosen-select"  tabindex="2" name="title" required>
+                                            <option value="" selected disabled>-- Select Title --</option>
+                                            @foreach($availableTitles as $key => $title)
+                                                <option value="{{ $title }}" >{{ $title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
+                            @else
+                                <div class="form-group  row">
+                                    <label class="col-sm-2 col-form-label">Title</label>
+                                    <div class="col-sm-10">
+                                        <input name="title" type="text" class="form-control" required>
+                                        <small>Cashback is sent to frontend using this title</small>
+                                    </div>
+                                </div>
+                            @endif
 
                             <div class="hr-line-dashed"></div>
 

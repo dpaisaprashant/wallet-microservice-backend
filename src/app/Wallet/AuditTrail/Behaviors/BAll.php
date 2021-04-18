@@ -71,6 +71,16 @@ class BAll implements IAuditTrail
 
         //from Fund Request and receiveFundRequest
 
+        $preTransactions->transform(function ($value){
+            $value['created_at'] = $value['updated_at'];
+            return $value;
+        });
+
+        $requestInfo->transform(function ($value){
+            $value['created_at'] = $value['updated_at'];
+            return $value;
+        });
+
         $fromFundRequest->transform(function ($value){
             $value['created_at'] = $value['updated_at'];
             return $value;

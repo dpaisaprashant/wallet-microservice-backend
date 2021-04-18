@@ -344,7 +344,7 @@ $url = url()->current();
 
                         <li><a href="{{ route('report.reconciliation') }}">Reconciliation Report</a></li>
 
-                        <li><a href="{{ route('report.user.reconciliation') }}">User Reconciliation Report</a></li>
+                        {{--<li><a href="{{ route('report.user.reconciliation') }}">User Reconciliation Report</a></li>--}}
 
                         <li><a href="{{ route('report.nrb.activeInactiveUser') }}">NRB Active/Inactive User Report</a></li>
 

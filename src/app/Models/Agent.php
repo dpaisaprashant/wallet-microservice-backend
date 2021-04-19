@@ -17,6 +17,9 @@ class Agent extends Model
     CONST STATUS_ACCEPTED = 'ACCEPTED';
     CONST STATUS_REJECTED = 'REJECTED';
 
+    CONST INSTITUTION_TYPE_COMPANY = 'COMPANY';
+    CONST INSTITUTION_TYPE_INDIVIDUAL = 'INDIVIDUAL';
+
     public function agentType()
     {
         return $this->belongsTo(AgentType::class, 'agent_type_id');

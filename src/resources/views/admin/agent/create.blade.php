@@ -74,6 +74,16 @@
                                 </div>
                             </div>
 
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Institution Type</label>
+                                <div class="col-sm-10">
+                                    <select data-placeholder="Choose Mobile No..." class="chosen-select"  tabindex="2" name="institution_type" required>
+                                        <option value="" selected disabled>Institution Type</option>
+                                            <option value="{{ \App\Models\Agent::INSTITUTION_TYPE_COMPANY }}" >{{ \App\Models\Agent::INSTITUTION_TYPE_COMPANY }}</option>
+                                            <option value="{{ \App\Models\Agent::INSTITUTION_TYPE_INDIVIDUAL }}" >{{ \App\Models\Agent::INSTITUTION_TYPE_INDIVIDUAL }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="hr-line-dashed"></div>
                             <button class="btn btn-sm btn-primary m-t-n-xs" type="submit"><strong>Create Agent</strong></button>
                         </form>

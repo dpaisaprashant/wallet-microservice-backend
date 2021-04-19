@@ -173,6 +173,7 @@
                                     <th>Agent Type</th>
                                     <th>Parent Agent</th>
                                     <th>Contact Number</th>
+                                    <th>Institution Type</th>
                                     <th>Business Name</th>
                                     <th>Business PAN</th>
                                    {{-- <th>Cash Out Type | Value </th>
@@ -212,6 +213,7 @@
                                                 &nbsp;{{ $user->mobile_no }}
                                             @endif
                                         </td>
+                                        <td>{{ $user->agent->institution_type ?? "" }}</td>
                                         <td>
                                             {{ $user->agent->business_name }}
                                         </td>

@@ -98,19 +98,19 @@ trait ReconciliationReportGenerator
 
             'WalletBalance' => [
                 "amount" => $repository->totalWalletBalanceAmount() / 100,
-                "count" => $repository->totalWalletBalanceCount(),
+                "count" => $repository->totalWalletBalanceCount() .' number of users',
                 "transaction_type" => "balance"
             ],
 
             'BonusBalance' => [
                 "amount" => $repository->totalBonusBalanceAmount() / 100,
-                "count" => $repository->totalWalletBalanceCount(),
+                "count" => $repository->totalWalletBalanceCount().' number of users',
                 "transaction_type" => "balance"
             ],
 
             "Total Balance" => [
                 "amount" => ($repository->totalWalletBalanceAmount() + $repository->totalBonusBalanceAmount()) / 100 ,
-                "count" => $repository->totalWalletBalanceCount(),
+                "count" => $repository->totalWalletBalanceCount().' number of users',
                 "transaction_type" => "balance"
             ],
         ];

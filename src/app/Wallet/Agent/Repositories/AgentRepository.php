@@ -150,6 +150,7 @@ class AgentRepository
                 'cash_out_value' => $agentType->default_cash_out_value,
                 'cash_in_type' => $agentType->default_cash_in_type,
                 'cash_in_value' => $agentType->default_cash_in_value,
+                'institution_type' => $this->request->institution_type
             ];
 
             $agent = Agent::create($agentData);
@@ -193,6 +194,8 @@ class AgentRepository
 
         $agent->cash_in_type = $this->request->cash_in_type;
         $agent->cash_in_value = $this->request->cash_in_value;
+
+        $agent->institution_type = $this->request->institution_type;
         $agent->save();
 
         return true;

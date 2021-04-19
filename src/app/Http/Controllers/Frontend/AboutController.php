@@ -15,6 +15,7 @@ class AboutController extends Controller
 
     public function __construct()
     {
+        parent::__construct();
         $this->middleware('permission:Frontend about view')->only('index');
         $this->middleware('permission:Frontend about create')->only('create');
         $this->middleware('permission:Frontend about update')->only('update');

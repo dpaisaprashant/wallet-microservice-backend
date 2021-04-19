@@ -16,6 +16,7 @@ class ServiceController extends Controller
 
     public function __construct()
     {
+        parent::__construct();
         $this->middleware('permission:Frontend service view')->only('index');
         $this->middleware('permission:Frontend service create')->only('create');
         $this->middleware('permission:Frontend service update')->only('update');

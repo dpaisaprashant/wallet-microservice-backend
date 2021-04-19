@@ -14,6 +14,7 @@ class HeaderController extends Controller
 
     public function __construct()
     {
+        parent::__construct();
         $this->middleware('permission:Frontend header view|Frontend header update|Frontend header create');
     }
 

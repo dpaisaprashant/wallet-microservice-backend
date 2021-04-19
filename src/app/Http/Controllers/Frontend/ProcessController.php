@@ -14,6 +14,7 @@ class ProcessController extends Controller
 
     public function __construct()
     {
+        parent::__construct();
         $this->middleware('permission:Frontend process view')->only('index');
         $this->middleware('permission:Frontend process create')->only('create');
         $this->middleware('permission:Frontend process update')->only('update');

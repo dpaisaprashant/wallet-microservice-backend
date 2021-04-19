@@ -10,6 +10,7 @@ use App\Models\Architecture\SingleUserCashback;
 use App\Models\Architecture\SingleUserCommission;
 use App\Models\Architecture\WalletTransactionType;
 use App\Models\Architecture\WalletTransactionTypeCashback;
+use App\Models\Architecture\WalletTransactionTypeCommission;
 use App\Models\Merchant\Merchant;
 use App\Models\Merchant\MerchantType;
 use App\Models\User;
@@ -37,6 +38,10 @@ class WalletUserCommissionController extends Controller
             "Merchant Type" => Merchant::class
         ];
 
+        $availableTitles = WalletTransactionTypeCommission::where('wallet_transaction_type_id', $walletTransactionType->id)
+            ->distinct()
+            ->pluck('title')->all();
+
         if ($request->isMethod('POST')) {
 
             SingleUserCommission::updateOrCreate(
@@ -58,7 +63,7 @@ class WalletUserCommissionController extends Controller
             return redirect()->route('architecture.user.commission', $id)->with('success', 'CashBack created successfully');
         }
 
-        return view('Architecture::commission.user.create')->with(compact('walletTransactionType', 'userTypes'));
+        return view('Architecture::commission.user.create')->with(compact('walletTransactionType', 'userTypes', 'availableTitles'));
     }
 
     public function update(Request $request, $id)

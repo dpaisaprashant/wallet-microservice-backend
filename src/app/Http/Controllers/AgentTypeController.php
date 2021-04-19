@@ -102,15 +102,16 @@ class AgentTypeController extends Controller
     public function delete(Request $request, $id)
     {
         $agentType = AgentType::findOrFail($id);
-
-        if (AgentType::where('agent_type_id', $id)->count() == 0) {
+        //dd($agentType, AgentType::where('agent_type_id', $id)->count() == 0);
+        if (AgentType::where('agent_type_id', $id)->count() > 0) {
             return redirect()->back()->with('error', 'Cannot delete agent type containing sub agent types. Remove sub agent types before deleting this agent type');
         }
 
-        if (Agent::where('agent_type_id', $id)->count() == 0) {
+        if (Agent::where('agent_type_id', $id)->count() > 0) {
             return redirect()->back()->with('error', 'Cannot delete agent type because there are users belonging to this agent type. Remove agents from this agent type before deleting the agent type');
         }
 
-
+        $agentType->delete();
+        return redirect()->back()->with('success', 'Agent deleted successfully');
     }
 }

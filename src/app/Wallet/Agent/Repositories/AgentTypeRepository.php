@@ -30,13 +30,12 @@ class AgentTypeRepository
 
         if ($agentType->agent_type_id) {
 
-            $cashbacks = $this->defaultSubAgentCashbacks();
+            /*$cashbacks = $this->defaultSubAgentCashbacks();
             $newAgentCashback = [];
             foreach ($cashbacks as $cashback) {
                 $cashback['option'] = str_replace(self::DEFAULT_SUB_AGENT, $agentName, $cashback['option']);
                 Setting::updateOrCreate($cashback);
-                //array_push($newAgentCashback, $cashback);
-            }
+            }*/
 
 
             $limits = $this->defaultSubAgentLimits();
@@ -48,14 +47,13 @@ class AgentTypeRepository
             }
 
         }else {
-            $cashbacks = $this->defaultAgentCashbacks();
+            /*$cashbacks = $this->defaultAgentCashbacks();
             $newAgentCashback = [];
             foreach ($cashbacks as $cashback) {
                 $cashback['option'] = str_replace(self::DEFAULT_AGENT, $agentName, $cashback['option']);
-                dd($cashbacks, $cashback);
                 Setting::updateOrCreate($cashback);
                 //array_push($newAgentCashback, $cashback);
-            }
+            }*/
 
 
             $limits = $this->defaultAgentLimits();

@@ -37,25 +37,19 @@ class TransactionLoadedFilter extends FilterAbstract
 
         if ($value[0] == 0 || $value[1] == 0) {
 
-            $usersWithTransaction = UserLoadTransaction::groupBy('user_id')
-                ->where('status', UserLoadTransaction::STATUS_COMPLETED)
-                ->pluck('user_id')
-                ->all();
+            //$usersWithTransaction = UserLoadTransaction::groupBy('user_id')->pluck('user_id')->all();
+            $usersWithTransaction = TransactionEvent::groupBy('user_id')->pluck('user_id')->all();
 
             return $builder->where(function ($query) use ($usersWithTransaction, $value){
                 $query->whereNotIn('id', $usersWithTransaction)
-                    ->orWhereHas('userLoadTransactions', function ($query) use ($value) {
-                        $query->where('status', UserLoadTransaction::STATUS_COMPLETED)
-                            ->groupBy('user_id')
-                            ->havingRaw('SUM(amount) >= ' .  (float)($value[0] * 100) .' AND SUM(amount) <= '. (float)($value[1] * 100));
+                    ->orwhereHas('userTransactionEvents', function ($query) use ($value) {
+                        $query->groupBy('user_id')->havingRaw('SUM(amount) >= ' .  (float)($value[0] * 100) .' AND SUM(amount) <= '. (float)($value[1] * 100));
                     });
             });
         }
 
-        return $builder->whereHas('userLoadTransactions', function ($query) use ($value) {
-            $query->where('status', UserLoadTransaction::STATUS_COMPLETED)
-                ->groupBy('user_id')
-                ->havingRaw('SUM(amount) >= ' .  (float)($value[0] * 100) .' AND SUM(amount) <= '. (float)($value[1] * 100));
+        return $builder->whereHas('userTransactionEvents', function ($query) use ($value) {
+            $query->groupBy('user_id')->havingRaw('SUM(amount) >= ' .  (float)($value[0] * 100) .' AND SUM(amount) <= '. (float)($value[1] * 100));
         });
 
     }

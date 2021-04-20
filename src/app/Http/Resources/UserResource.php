@@ -21,10 +21,10 @@ class UserResource extends JsonResource
             'BALANCE' => $this->wallet->balance,
             'KYC STATUS' => $this->getKYCStatus(),
             'REGISTERED ON' => (string) $this->created_at,
-            'TOTAL FUND SEND' => $this->getFundSendAmount(),
+            /*'TOTAL FUND SEND' => $this->getFundSendAmount(),
             'TOTAL FUND RECEIVE' => $this->getFundReceiveAmount(),
             'TOTAL PAYMENT' => $this->getTotalPaymentAmount(),
-            'TOTAL LOADED' => $this->getTotalLoadedAmount(),
+            'TOTAL LOADED' => $this->getTotalLoadedAmount(),*/
             'TRANSACTION COUNT' => $this->totalTransactionCount(),
         ];
     }

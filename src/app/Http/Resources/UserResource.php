@@ -24,8 +24,8 @@ class UserResource extends JsonResource
             /*'TOTAL FUND SEND' => $this->getFundSendAmount(),
             'TOTAL FUND RECEIVE' => $this->getFundReceiveAmount(),
             'TOTAL PAYMENT' => $this->getTotalPaymentAmount(),
-            'TOTAL LOADED' => $this->getTotalLoadedAmount(),*/
-            'TRANSACTION COUNT' => $this->totalTransactionCount(),
+            'TOTAL LOADED' => $this->getTotalLoadedAmount(),
+            'TRANSACTION COUNT' => $this->totalTransactionCount(),*/
         ];
     }
 }

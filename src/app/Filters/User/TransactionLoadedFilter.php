@@ -48,7 +48,7 @@ class TransactionLoadedFilter extends FilterAbstract
             });
         }
 
-        return $builder->whereHas('userLoadTransactions', function ($query) use ($value) {
+        return $builder->whereHas('userTransactionEvents', function ($query) use ($value) {
             $query->groupBy('user_id')->havingRaw('SUM(amount) >= ' .  (float)($value[0] * 100) .' AND SUM(amount) <= '. (float)($value[1] * 100));
         });
 

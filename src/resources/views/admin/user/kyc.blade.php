@@ -323,7 +323,7 @@
                 text: "KYC for this user will be verified",
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#1E78A2",
+                confirmButtonColor: "#18a689",
                 confirmButtonText: "Yes, accept KYC!",
                 closeOnConfirm: true,
                 closeOnClickOutside: true

@@ -283,7 +283,7 @@
                 text: "This user will be activated",
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#1E78A2",
+                confirmButtonColor: "#18a689",
                 confirmButtonText: "Yes, activate user!",
                 closeOnConfirm: true,
                 closeOnClickOutside: true

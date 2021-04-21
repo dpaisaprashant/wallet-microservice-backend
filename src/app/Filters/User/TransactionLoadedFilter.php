@@ -42,13 +42,13 @@ class TransactionLoadedFilter extends FilterAbstract
 
             return $builder->where(function ($query) use ($usersWithTransaction, $value){
                 $query->whereNotIn('id', $usersWithTransaction)
-                    ->orwhereHas('userLoadTransactions', function ($query) use ($value) {
+                    ->orwhereHas('userTransactionEvents', function ($query) use ($value) {
                         $query->groupBy('user_id')->havingRaw('SUM(amount) >= ' .  (float)($value[0] * 100) .' AND SUM(amount) <= '. (float)($value[1] * 100));
                     });
             });
         }
 
-        return $builder->whereHas('userLoadTransactions', function ($query) use ($value) {
+        return $builder->whereHas('userTransactionEvents', function ($query) use ($value) {
             $query->groupBy('user_id')->havingRaw('SUM(amount) >= ' .  (float)($value[0] * 100) .' AND SUM(amount) <= '. (float)($value[1] * 100));
         });
 

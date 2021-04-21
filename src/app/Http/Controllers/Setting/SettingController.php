@@ -10,6 +10,7 @@ use App\Models\NpsSetting;
 use App\Models\PaypointSetting;
 use App\Models\Setting;
 use App\Wallet\Setting\Traits\UpdateSetting;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -135,26 +136,27 @@ class SettingController extends Controller
 
     public function redirectSetting(Request $request)
     {
-
-        if (Schema::connection('nicasia')->hasTable('settings')) {
-            Log::info("connection", [Schema::connection('nicasia')]);
+        try {
             $settings = $this->updatedSettingsCollection($request, CybersourceSetting::class) ?? [];
+        }catch (QueryException $e){
+            Log::info($e);
         }
-
-        if (Schema::connection('npay')->hasTable('settings')) {
-            Log::info("connection", [Schema::connection('npay')]);
-
+        try {
             $settings = $this->updatedSettingsCollection($request, NpaySetting::class) ?? [];
+        }catch (QueryException $e){
+            Log::info($e);
         }
 
-        if (Schema::connection('nps')->hasTable('settings')) {
-            Log::info("connection", [Schema::connection('nps')]);
+        try {
             $settings = $this->updatedSettingsCollection($request, NpsSetting::class) ?? [];
+        }catch (QueryException $e){
+            Log::info($e);
         }
 
-        if (Schema::connection('nchl')->hasTable('settings')) {
-            Log::info("connection", [Schema::connection('nchl')]);
+        try {
             $settings = $this->updatedSettingsCollection($request, NchlSetting::class) ?? [];
+        }catch (QueryException $e){
+            Log::info($e);
         }
 
         $settings = $this->updatedSettingsCollection($request);

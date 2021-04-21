@@ -111,7 +111,7 @@
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Slab From</label>
                                 <div class="col-sm-10">
-                                    <input name="slab_from" type="number" min="0" class="form-control">
+                                    <input name="slab_from" type="number" min="0" step='0.1' class="form-control">
                                     <small>Amount in paisa</small>
                                 </div>
                             </div>
@@ -119,7 +119,7 @@
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Slab To</label>
                                 <div class="col-sm-10">
-                                    <input name="slab_to" type="number" min="0" class="form-control">
+                                    <input name="slab_to" type="number" min="0" step='0.1' class="form-control">
                                     <small>Amount in paisa</small>
                                 </div>
                             </div>
@@ -147,7 +147,7 @@
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Cashback Value</label>
                                 <div class="col-sm-10">
-                                    <input name="cashback_value" type="number" min="0" class="form-control" required>
+                                    <input name="cashback_value" type="number" min="0" step='0.1' class="form-control" required>
                                     <small>Flat amount in paisa</small>
                                 </div>
                             </div>

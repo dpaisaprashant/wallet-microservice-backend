@@ -133,23 +133,24 @@ class SettingController extends Controller
 
     public function redirectSetting(Request $request)
     {
-        $settings = $this->updatedSettingsCollection($request);
 
         if (DB::connection('nicasia')->getDatabaseName()) {
-            $settings = $this->updatedSettingsCollection($request, CybersourceSetting::class);
+            $settings = $this->updatedSettingsCollection($request, CybersourceSetting::class) ?? [];
         }
 
         if (DB::connection('npay')->getDatabaseName()) {
-            $settings = $this->updatedSettingsCollection($request, NpaySetting::class);
+            $settings = $this->updatedSettingsCollection($request, NpaySetting::class) ?? [];
         }
 
         if (DB::connection('nps')->getDatabaseName()) {
-            $settings = $this->updatedSettingsCollection($request, NpsSetting::class);
+            $settings = $this->updatedSettingsCollection($request, NpsSetting::class) ?? [];
         }
 
         if (DB::connection('nchl')->getDatabaseName()) {
-            $settings = $this->updatedSettingsCollection($request, NchlSetting::class);
+            $settings = $this->updatedSettingsCollection($request, NchlSetting::class) ?? [];
         }
+
+        $settings = $this->updatedSettingsCollection($request);
 
         return view('admin.setting.redirectSetting')->with(compact('settings'));
     }

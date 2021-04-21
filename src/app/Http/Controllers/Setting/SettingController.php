@@ -128,4 +128,15 @@ class SettingController extends Controller
         $settings = $this->updatedSettingsCollection($request);
         return view('admin.setting.notificationSetting')->with(compact('settings'));
     }
+
+
+    public function redirectSetting(Request $request)
+    {
+        $settings = $this->updatedSettingsCollection($request);
+        $settings = $this->updatedSettingsCollection($request, CybersourceSetting::class);
+        $settings = $this->updatedSettingsCollection($request, NpaySetting::class);
+        $settings = $this->updatedSettingsCollection($request, NpsSetting::class);
+        $settings = $this->updatedSettingsCollection($request, NchlSetting::class);
+        return view('admin.setting.redirectSetting')->with(compact('settings'));
+    }
 }

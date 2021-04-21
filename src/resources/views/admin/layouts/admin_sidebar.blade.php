@@ -496,6 +496,7 @@ $url = url()->current();
                                 <li><a href="{{ route('settings.referral') }}">Referral Setting</a></li>
                                 <li><a href="{{ route('settings.bonus') }}">Bonus Setting</a></li>
                                 <li><a href="{{ route('settings.notification') }}">Notification Setting</a></li>
+                                <li><a href="{{ route('settings.redirect') }}">Redirect Setting</a></li>
 
 
                             {{--@can('OTP setting view')

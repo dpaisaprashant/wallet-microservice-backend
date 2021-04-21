@@ -96,6 +96,9 @@ Route::group(['prefix' => 'admin'], function () {
 
         //notification
         Route::match(['get', 'post'], '/settings/notification', 'Setting\SettingController@notificationSetting')->name('settings.notification');
+
+        //redirect settings
+        Route::match(['get', 'post'], '/settings/redirect', 'Setting\SettingController@redirectSetting')->name('settings.redirect');
         /**
          * Users
          */

@@ -14,7 +14,7 @@ trait UpdateSetting
         if ($request->isMethod('post')) {
             $settings = (new $model())->storeSetting($request);
         }else {
-            $settings = $model::all();
+            $settings = $model::all() ?? [];
         }
 
         $arr = [];

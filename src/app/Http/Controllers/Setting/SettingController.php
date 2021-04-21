@@ -12,6 +12,8 @@ use App\Models\Setting;
 use App\Wallet\Setting\Traits\UpdateSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Schema;
 
 class SettingController extends Controller
 {
@@ -142,7 +144,8 @@ class SettingController extends Controller
             $settings = $this->updatedSettingsCollection($request, NpaySetting::class) ?? [];
         }
 
-        if (DB::connection('nps')->getDatabaseName()) {
+        if (Schema::connection('nps')) {
+            Log::info("connection", [Schema::connection('nps')]);
             $settings = $this->updatedSettingsCollection($request, NpsSetting::class) ?? [];
         }
 

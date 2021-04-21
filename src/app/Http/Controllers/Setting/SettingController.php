@@ -11,6 +11,7 @@ use App\Models\PaypointSetting;
 use App\Models\Setting;
 use App\Wallet\Setting\Traits\UpdateSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SettingController extends Controller
 {
@@ -133,10 +134,23 @@ class SettingController extends Controller
     public function redirectSetting(Request $request)
     {
         $settings = $this->updatedSettingsCollection($request);
-        $settings = $this->updatedSettingsCollection($request, CybersourceSetting::class);
-        $settings = $this->updatedSettingsCollection($request, NpaySetting::class);
-        $settings = $this->updatedSettingsCollection($request, NpsSetting::class);
-        $settings = $this->updatedSettingsCollection($request, NchlSetting::class);
+
+        if (DB::connection('nicasia')->getDatabaseName()) {
+            $settings = $this->updatedSettingsCollection($request, CybersourceSetting::class);
+        }
+
+        if (DB::connection('npay')->getDatabaseName()) {
+            $settings = $this->updatedSettingsCollection($request, NpaySetting::class);
+        }
+
+        if (DB::connection('nps')->getDatabaseName()) {
+            $settings = $this->updatedSettingsCollection($request, NpsSetting::class);
+        }
+
+        if (DB::connection('nchl')->getDatabaseName()) {
+            $settings = $this->updatedSettingsCollection($request, NchlSetting::class);
+        }
+
         return view('admin.setting.redirectSetting')->with(compact('settings'));
     }
 }

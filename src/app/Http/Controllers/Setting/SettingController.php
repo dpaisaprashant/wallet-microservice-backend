@@ -136,11 +136,14 @@ class SettingController extends Controller
     public function redirectSetting(Request $request)
     {
 
-        if (DB::connection('nicasia')->getDatabaseName()) {
+        if (Schema::connection('nicasia')) {
+            Log::info("connection", [Schema::connection('nicasia')]);
             $settings = $this->updatedSettingsCollection($request, CybersourceSetting::class) ?? [];
         }
 
-        if (DB::connection('npay')->getDatabaseName()) {
+        if (Schema::connection('npay')) {
+            Log::info("connection", [Schema::connection('npay')]);
+
             $settings = $this->updatedSettingsCollection($request, NpaySetting::class) ?? [];
         }
 
@@ -150,6 +153,7 @@ class SettingController extends Controller
         }
 
         if (DB::connection('nchl')->getDatabaseName()) {
+            Log::info("connection", [Schema::connection('nchl')]);
             $settings = $this->updatedSettingsCollection($request, NchlSetting::class) ?? [];
         }
 

@@ -10,7 +10,11 @@ use App\Models\NpsSetting;
 use App\Models\PaypointSetting;
 use App\Models\Setting;
 use App\Wallet\Setting\Traits\UpdateSetting;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Schema;
 
 class SettingController extends Controller
 {
@@ -95,6 +99,7 @@ class SettingController extends Controller
     public function nchlAggregatedPaymentSetting(Request $request)
     {
         $settings = $this->updatedSettingsCollection($request);
+        $settings = $this->updatedSettingsCollection($request, NchlSetting::class);
         return view('admin.setting.nchl.aggregatedPaymentSetting')->with(compact('settings'));
     }
 
@@ -132,11 +137,31 @@ class SettingController extends Controller
 
     public function redirectSetting(Request $request)
     {
+        try {
+            $settings = $this->updatedSettingsCollection($request, CybersourceSetting::class) ?? [];
+        }catch (QueryException $e){
+            Log::info($e);
+        }
+        try {
+            $settings = $this->updatedSettingsCollection($request, NpaySetting::class) ?? [];
+        }catch (QueryException $e){
+            Log::info($e);
+        }
+
+        try {
+            $settings = $this->updatedSettingsCollection($request, NpsSetting::class) ?? [];
+        }catch (QueryException $e){
+            Log::info($e);
+        }
+
+        try {
+            $settings = $this->updatedSettingsCollection($request, NchlSetting::class) ?? [];
+        }catch (QueryException $e){
+            Log::info($e);
+        }
+
         $settings = $this->updatedSettingsCollection($request);
-        $settings = $this->updatedSettingsCollection($request, CybersourceSetting::class);
-        $settings = $this->updatedSettingsCollection($request, NpaySetting::class);
-        $settings = $this->updatedSettingsCollection($request, NpsSetting::class);
-        $settings = $this->updatedSettingsCollection($request, NchlSetting::class);
+
         return view('admin.setting.redirectSetting')->with(compact('settings'));
     }
 }

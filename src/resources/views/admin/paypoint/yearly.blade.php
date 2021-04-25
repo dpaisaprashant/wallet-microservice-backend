@@ -293,7 +293,7 @@
                                                     <h5>Paypoint Daily Transaction Number
                                                     </h5>
 
-                                                    <div class="input-group date" style="float: right; width: 31%; margin-top: -9px; border-color: #18a689">
+                                                    <div class="input-group date" style="float: right; width: 31%; margin-top: -9px; border-color: #3366ff">
 
                                                         <input id="date_graph_year" type="text" class="form-control" placeholder="Select Year" name="year" value="{{ date('Y') }}" autocomplete="off">
                                                         <span class="input-group-addon">

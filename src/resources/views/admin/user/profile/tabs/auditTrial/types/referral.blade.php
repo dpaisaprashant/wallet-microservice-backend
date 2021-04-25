@@ -10,7 +10,7 @@
             REFERRED TO BONUS (user used referral code)
         @endif
     </td>
-    <td>DPAISA</td>
+    <td>SAJILOPAY</td>
     <td>---</td>
     <td></td>
     <td style="color: green">

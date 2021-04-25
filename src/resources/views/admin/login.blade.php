@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>DPaisa | Login </title>
+    <title>SajiloPay | Login </title>
 
     <link href="{{ secure_asset('admin/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ secure_asset('admin/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
@@ -27,9 +27,9 @@
         </div>
 
         <div class="col-md-6">
-            <h2 class="font-bold">Welcome to DPaisa</h2>
+            <h2 class="font-bold">Welcome to SajiloPay</h2>
 
-            <p>Admin panel of DPaisa </p>
+            <p>Admin panel of SajiloPay </p>
 
         </div>
         <div class="col-md-6">
@@ -48,7 +48,7 @@
 
                 </form>
                 <p class="m-t">
-                    <small>DPaisa admin panel all rights reserved &copy; {{ Date('Y') }}</small>
+                    <small>SajiloPay admin panel all rights reserved &copy; {{ Date('Y') }}</small>
                 </p>
             </div>
         </div>
@@ -56,7 +56,7 @@
     <hr/>
     <div class="row">
         <div class="col-md-6">
-            Copyright Goldmine Pvt. Ltd.
+            Copyright SajiloPay Pvt. Ltd.
         </div>
         <div class="col-md-6 text-right">
             <small>© {{ Date('Y') }}</small>

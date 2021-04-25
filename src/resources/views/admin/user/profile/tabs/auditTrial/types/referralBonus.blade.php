@@ -6,7 +6,7 @@
     <td style="color: green; font-weight: bold">
         {{ $event->description }}
     </td>
-    <td>DPAISA</td>
+    <td>SAJILOPAY</td>
     <td>---</td>
     <td></td>
     <td style="color: green">

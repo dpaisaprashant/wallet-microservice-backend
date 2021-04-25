@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'DPaisa Admin Panel'),
+    'name' => env('APP_NAME', 'SajiloPay Admin Panel'),
 
     /*
     |--------------------------------------------------------------------------

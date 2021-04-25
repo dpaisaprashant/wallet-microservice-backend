@@ -99,6 +99,7 @@ class SettingController extends Controller
     public function nchlAggregatedPaymentSetting(Request $request)
     {
         $settings = $this->updatedSettingsCollection($request);
+        $settings = $this->updatedSettingsCollection($request, NchlSetting::class);
         return view('admin.setting.nchl.aggregatedPaymentSetting')->with(compact('settings'));
     }
 

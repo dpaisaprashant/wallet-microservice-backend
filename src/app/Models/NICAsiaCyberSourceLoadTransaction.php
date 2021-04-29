@@ -14,7 +14,7 @@ class NICAsiaCyberSourceLoadTransaction extends Model
 
     use BelongsToUser, MorphOneTransaction;
 
-    protected $connection = 'dpaisa';
+    protected $connection = 'nicasia';
 
     protected $table = "nicasia_cybersource_load_transactions";
 

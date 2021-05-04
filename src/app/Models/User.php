@@ -71,6 +71,11 @@ class User extends Authenticatable
         return $this->hasMany(UserLoginHistory::class);
     }
 
+    public function latestLoginAttempt()
+    {
+        return $this->hasOne(UserLoginHistory::class)->latest();
+    }
+
     public function activities()
     {
         return $this->hasMany(UserActivity::class);

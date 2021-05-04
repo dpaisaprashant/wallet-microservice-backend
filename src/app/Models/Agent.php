@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use App\Filters\FiltersAbstract;
 use App\Traits\BelongsToUser;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class Agent extends Model
 {
@@ -19,6 +22,11 @@ class Agent extends Model
 
     CONST INSTITUTION_TYPE_COMPANY = 'COMPANY';
     CONST INSTITUTION_TYPE_INDIVIDUAL = 'INDIVIDUAL';
+
+    public function scopeFilter(Builder $builder, Request $request, array $filters = [])
+    {
+        return (new AgentFilters($request))->add($filters)->filter($builder);
+    }
 
     public function agentType()
     {

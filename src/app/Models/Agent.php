@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Filters\Agent\AgentFilters;
 use App\Filters\FiltersAbstract;
 use App\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Builder;

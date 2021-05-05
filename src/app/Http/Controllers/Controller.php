@@ -29,20 +29,29 @@ class Controller extends BaseController
             'Dpaisa',
             'Recieved Funds',
             'Transfer Funds',
-            'ConnectIPS'
+            'ConnectIPS',
+            'CARD FUND LOAD',
+
         ];
 
         View::share('vendors', $vendors);
 
         $serviceTypes = [
             'LOAD FUNDS',
+            'LOAD',
+            'CARD_LOAD',
             'FUND REQUEST',
             'TOPUP',
+            'PREPAID',
+            'POSTPAID',
             'PAYMENT',
             'TBANK',
             'Payments/s',
             'NCHL_LOAD_FUND',
-            'BANK-TRANSFER'
+            'BANK-TRANSFER',
+            'CASHBACK',
+            'COMMISSION',
+            'REFERRAL',
         ];
 
         View::share('serviceTypes', $serviceTypes);

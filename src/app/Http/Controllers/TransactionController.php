@@ -18,7 +18,10 @@ class TransactionController extends Controller
     public function complete(TransactionEventRepository $repository)
     {
         $transactions = $repository->paginatedTransactions();
-        return view('admin.transaction.complete')->with(compact('transactions'));
+        $totalTransactionCount = $repository->transactionsCount();
+        $totalTransactionAmountSum = $repository->transactionAmountSum();
+
+        return view('admin.transaction.complete')->with(compact('transactions', 'totalTransactionAmountSum', 'totalTransactionCount'));
     }
 
     //USER TO USER FUND TRANSFER

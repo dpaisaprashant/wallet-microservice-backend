@@ -77,6 +77,16 @@ class TransactionEventRepository
         }
     }
 
+    public function transactionsCount()
+    {
+        return TransactionEvent::filter($this->request)->count();
+    }
+
+    public function transactionAmountSum()
+    {
+        return TransactionEvent::filter($this->request)->sum('amount') / 100;
+    }
+
     public function paginatedMonthlyTransactions()
     {
         if (empty($this->request->from || $this->request->to))

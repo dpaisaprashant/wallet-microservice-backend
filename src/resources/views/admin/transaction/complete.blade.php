@@ -1,7 +1,6 @@
 @extends('admin.layouts.admin_design')
 @section('content')
 
-
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
             <h2>All Transactions</h2>
@@ -64,13 +63,31 @@
 
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-md-6">
+                                    <div class="row" style="margin-top: 20px">
+                                       {{-- <div class="col-md-6">
                                             <label for="ionrange_amount">Amount</label>
                                             <input type="text" name="amount" class="ionrange_amount">
+                                        </div>--}}
+
+                                        <div class="col-md-3">
+                                            <div class="input-group date">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-dollar"></i>
+                                                </span>
+                                                <input type="number" class="form-control" placeholder="From Amount" name="from_amount" autocomplete="off" value="{{ !empty($_GET['from_amount']) ? $_GET['from_amount'] : '' }}">
+                                            </div>
                                         </div>
 
-                                        <div class="col-md-3" style="padding-top: 40px;">
+                                        <div class="col-md-3">
+                                            <div class="input-group date">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-dollar"></i>
+                                                </span>
+                                                <input type="number" class="form-control" placeholder="To Amount" name="to_amount" autocomplete="off" value="{{ !empty($_GET['to_amount']) ? $_GET['to_amount'] : '' }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
@@ -79,7 +96,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3" style="padding-top: 40px;">
+                                        <div class="col-md-3">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
@@ -90,7 +107,7 @@
                                     </div>
 
                                     <div class="row" style="margin-top: 40px;">
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <select data-placeholder="Sort By..." class="chosen-select"  tabindex="2" name="sort">
                                                     <option value="" selected disabled>Sort By...</option>
@@ -141,6 +158,24 @@
                                                 </select>
                                             </div>
                                         </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <select data-placeholder="Choose transaction type..." class="chosen-select"  tabindex="2" name="transaction_type">
+                                                    <option value="" selected disabled>Select Transaction Type...</option>
+                                                    <option value="">All</option>
+                                                    @if(!empty($_GET['transaction_type']))
+                                                        @foreach($transactionTypes as $key => $transactionType)
+                                                            <option value="{{ $key }}" @if($_GET['transaction_type'] == $key) selected @endif>{{ $transactionType }}</option>
+                                                        @endforeach
+                                                    @else
+                                                        @foreach($transactionTypes as $key => $transactionType)
+                                                            <option value="{{ $key }}"> {{ $transactionType }} </option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div>
@@ -165,8 +200,11 @@
                 <div class="ibox ">
                     <div class="ibox-title">
                         <h5>List of all transactions</h5>
+
                     </div>
                     <div class="ibox-content">
+                        <h5><b>Total Count:</b> {{ $totalTransactionCount }}</h5>
+                        <h5><b>Total Amount Sum:</b> Rs. {{ $totalTransactionAmountSum }}</h5>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover dataTables-example" title="Complete transactions list">
                                 <thead>

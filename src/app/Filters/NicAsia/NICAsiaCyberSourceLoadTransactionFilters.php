@@ -12,6 +12,7 @@ class NICAsiaCyberSourceLoadTransactionFilters extends  FiltersAbstract {
      * @var array
      */
     protected $filters = [
+        'reference_number' => ReferenceNumberFilter::class,
         'amount' => AmountFilter::class,
         'user' => UserFilter::class,
         'from' => FromDateFilter::class,

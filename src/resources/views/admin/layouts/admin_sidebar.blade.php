@@ -349,6 +349,7 @@ $url = url()->current();
                         <li><a href="{{ route('report.nrb.activeInactiveUser') }}">NRB Active/Inactive User Report</a></li>
 
                         <li><a href="{{ route('report.agent') }}">NRB Agent Report</a></li>
+                        <li><a href="{{ route('report.nonBankPaymentReport') }}">Non bank payment report</a></li>
                 </ul>
             </li>
             @endif

@@ -21,4 +21,6 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web','auth']], funct
     Route::get('nrb/active-inactive-user-report', [NRBReportController::class, 'activeInactiveCustomerReport'])->name('report.nrb.activeInactiveUser');
     Route::get('nrb/agent-report', [NRBReportController::class, 'agentReport'])->name('report.agent');
 
+    //Non bank payment
+    Route::get('/non-bank-payment',[NRBReportController::class,'nonBankPaymentReport'])->name('report.nonBankPaymentReport');
 });

@@ -68,9 +68,28 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 mt-3">
                                             <label for="ionrange_balance">Fund</label>
-                                            <input type="text" name="fund" class="ionrange_fund" value="{{ !empty($_GET['fund']) ? $_GET['fund'] : '' }}">
+{{--                                            <input type="text" name="fund" class="ionrange_fund" value="{{ !empty($_GET['fund']) ? $_GET['fund'] : '' }}">--}}
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="input-group date">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-dollar"></i>
+                                                </span>
+                                                        <input type="number" class="form-control" placeholder="From Fund" name="from_fund" autocomplete="off" value="{{ !empty($_GET['from_fund']) ? $_GET['from_fund'] : '' }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="input-group date">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-dollar"></i>
+                                                </span>
+                                                        <input type="number" class="form-control" placeholder="To Fund" name="to_fund" autocomplete="off" value="{{ !empty($_GET['to_fund']) ? $_GET['to_fund'] : '' }}">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="col-md-3" style="padding-top: 40px;">

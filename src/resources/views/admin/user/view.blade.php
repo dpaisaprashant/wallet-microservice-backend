@@ -94,22 +94,98 @@
 
                                         <div class="col-md-6">
                                             <label for="transaction_number">Transaction Number</label>
-                                            <input type="text" name="transaction_number" class="ionrange_number">
+{{--                                            <input type="text" name="transaction_number" class="ionrange_number">--}}
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="input-group date">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-dollar"></i>
+                                                    </span>
+                                                        <input type="number" class="form-control" placeholder="From Transaction Amount" name="from_transaction_number" autocomplete="off" value="{{ !empty($_GET['from_transaction_number']) ? $_GET['from_transaction_number'] : '' }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="input-group date">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-dollar"></i>
+                                                    </span>
+                                                        <input type="number" class="form-control" placeholder="To Transaction Amount" name="to_transaction_number" autocomplete="off" value="{{ !empty($_GET['to_transaction_number']) ? $_GET['to_transaction_number'] : '' }}">
+                                                    </div>
+                                                </div>
+                                            </div><br>
                                         </div>
 
                                         <div class="col-md-6">
                                             <label for="wallet_balance">Wallet Balance</label>
-                                            <input type="text" name="wallet_balance" class="ionrange_wallet_amount">
+{{--                                            <input type="text" name="wallet_balance" class="ionrange_wallet_amount">--}}
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="input-group date">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-dollar"></i>
+                                                    </span>
+                                                        <input type="number" class="form-control" placeholder="From Wallet balance" name="from_wallet_balance" autocomplete="off" value="{{ !empty($_GET['from_wallet_balance']) ? $_GET['from_wallet_balance'] : '' }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="input-group date">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-dollar"></i>
+                                                    </span>
+                                                        <input type="number" class="form-control" placeholder="To Wallet balance" name="to_wallet_balance" autocomplete="off" value="{{ !empty($_GET['to_wallet_balance']) ? $_GET['to_wallet_balance'] : '' }}">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="col-md-6">
                                             <label for="transaction_amount">Transaction Payment</label>
-                                            <input type="text" name="transaction_payment" class="ionrange_payment_amount">
+{{--                                            <input type="text" name="transaction_payment" class="ionrange_payment_amount">--}}
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="input-group date">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-dollar"></i>
+                                                    </span>
+                                                        <input type="number" class="form-control" placeholder="From Transaction payment" name="from_transaction_payment" autocomplete="off" value="{{ !empty($_GET['from_transaction_payment']) ? $_GET['from_transaction_payment'] : '' }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="input-group date">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-dollar"></i>
+                                                    </span>
+                                                        <input type="number" class="form-control" placeholder="To Transaction payment" name="to_transaction_payment" autocomplete="off" value="{{ !empty($_GET['to_transaction_payment']) ? $_GET['to_transaction_payment'] : '' }}">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="col-md-6">
                                             <label for="transaction_amount">Transaction Loaded</label>
-                                            <input type="text" name="transaction_loaded" class="ionrange_loaded_amount">
+{{--                                            <input type="text" name="transaction_loaded" class="ionrange_loaded_amount">--}}
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="input-group date">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-dollar"></i>
+                                                    </span>
+                                                        <input type="number" class="form-control" placeholder="From Transaction loaded" name="from_transaction_loaded" autocomplete="off" value="{{ !empty($_GET['from_transaction_loaded']) ? $_GET['from_transaction_loaded'] : '' }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="input-group date">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-dollar"></i>
+                                                    </span>
+                                                        <input type="number" class="form-control" placeholder="To Transaction loaded" name="to_transaction_loaded" autocomplete="off" value="{{ !empty($_GET['to_transaction_loaded']) ? $_GET['to_transaction_loaded'] : '' }}">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <br>

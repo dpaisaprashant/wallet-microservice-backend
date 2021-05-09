@@ -64,11 +64,6 @@
                                     </div>
 
                                     <div class="row" style="margin-top: 20px">
-                                        {{-- <div class="col-md-6">
-                                             <label for="ionrange_amount">Amount</label>
-                                             <input type="text" name="amount" class="ionrange_amount">
-                                         </div>--}}
-
                                         <div class="col-md-3">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">

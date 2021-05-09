@@ -8,8 +8,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Agent;
 use App\Models\User;
 use App\Traits\CollectionPaginate;
+use App\Wallet\Report\Repositories\AbstractReportRepository;
 use App\Wallet\Report\Repositories\ActiveInactiveCustomerReportRepository;
 use App\Wallet\Report\Repositories\AgentReportRepository;
+use App\Wallet\Report\Repositories\NonBankPaymentReportRepository;
 use Illuminate\Http\Request;
 
 class NRBReportController extends Controller
@@ -92,5 +94,42 @@ class NRBReportController extends Controller
         $agents = $this->collectionPaginate(200, $agents, $request);
         return view('WalletReport::nrb.agentReport')->with(compact('agents'));
 
+    }
+
+    public function nonBankPaymentReport(Request $request){
+        $repository = new NonBankPaymentReportRepository($request);
+
+        $nonBankPayments = [
+            'Bill Payment' => [
+                'number' => $repository->getBillPaymentNumber(),
+                'value' => ($repository->getBillPaymentValue())/100
+            ],
+
+            'Transfer (A/c to A/c)' => [
+                'number' => $repository->getTransferNumber(),
+                'value' => ($repository->getTransferValue())/100,
+            ],
+
+            'Cash In (wallet load)' => [
+                'number' => $repository->getCashInNumber(),
+                'value' => ($repository->getCashInValue())/100
+            ],
+
+            'Offer/Cashback/Coupon' => [
+                'number' => $repository->getOfferNumber(),
+                'value' => ($repository->getOfferValue())/100
+            ],
+
+            'Commission/Fees and Charges' => [
+                'number' => $repository->getFeesChargesNumber(),
+                'value' => ($repository->getFeesChargesValue())/100
+            ],
+
+            'Cash Out (Bank withdrawal)' => [
+                'number' => $repository->getCashOutNumber(),
+                'value' => ($repository->getCashOutValue())/100,
+            ]
+        ];
+        return view('WalletReport::nrb.nonBankPaymentReport',compact('nonBankPayments'));
     }
 }

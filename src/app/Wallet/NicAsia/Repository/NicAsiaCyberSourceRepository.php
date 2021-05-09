@@ -53,4 +53,8 @@ class NicAsiaCyberSourceRepository
     {
         return NICAsiaCyberSourceLoadTransaction::with('user', 'transactions')->where('id', $id)->firstOrFail();
     }
+
+    public function getAllCardLoadDetails(){
+        return NICAsiaCyberSourceLoadTransaction::all();
+    }
 }

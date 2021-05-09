@@ -233,6 +233,7 @@ $url = url()->current();
 
                     <li><a href="{{ route('nchl.loadTransaction') }}">NCHL Load</a></li>
                     <li><a href="{{ route('nchl.bankTransfer') }}">NCHL Bank Transfer</a></li>
+                        <li><a href="{{ route('nicasia.cyberSourceLoad') }}">All card load transaction</a></li>
                 </ul>
             </li>
             @endif
@@ -350,6 +351,7 @@ $url = url()->current();
 
                         <li><a href="{{ route('report.agent') }}">NRB Agent Report</a></li>
                         <li><a href="{{ route('report.nonBankPaymentReport') }}">Non bank payment report</a></li>
+
                 </ul>
             </li>
             @endif

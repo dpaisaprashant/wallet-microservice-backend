@@ -116,6 +116,12 @@ class TransactionController extends Controller
         return view('admin.transaction.detail.nicAsiaCyberSourceLoadDetail')->with(compact('transaction'));
     }
 
+    public function nicAsiaCyberSourceLoad(NicAsiaCyberSourceRepository $repository)
+    {
+        $transactions = $repository->paginatedTransactions();
+        return view('admin.transaction.nicAsiaCyberSourceLoad',compact('transactions'));
+    }
+
     //REIMBURSE TRANSACTION
     public function reimburseTransaction()
     {

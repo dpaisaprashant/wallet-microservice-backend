@@ -14,6 +14,7 @@ trait BelongsToUseThroughMicroservice
     public function getUserIdAttribute()
     {
         $this->appends = array_merge($this->appends, ['user_id']);
+        //laravel accessors and mutators
 
         $preTransaction = $this->preTransaction()->first() ?? null;
         $requestInfo = $this->requestInfo()->first() ?? null;

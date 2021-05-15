@@ -18,7 +18,10 @@ class TransactionController extends Controller
     public function complete(TransactionEventRepository $repository)
     {
         $transactions = $repository->paginatedTransactions();
-        return view('admin.transaction.complete')->with(compact('transactions'));
+        $totalTransactionCount = $repository->transactionsCount();
+        $totalTransactionAmountSum = $repository->transactionAmountSum();
+
+        return view('admin.transaction.complete')->with(compact('transactions', 'totalTransactionAmountSum', 'totalTransactionCount'));
     }
 
     //USER TO USER FUND TRANSFER
@@ -111,6 +114,12 @@ class TransactionController extends Controller
     {
         $transaction = $repository->detail($id);
         return view('admin.transaction.detail.nicAsiaCyberSourceLoadDetail')->with(compact('transaction'));
+    }
+
+    public function nicAsiaCyberSourceLoad(NicAsiaCyberSourceRepository $repository)
+    {
+        $transactions = $repository->paginatedTransactions();
+        return view('admin.transaction.nicAsiaCyberSourceLoad',compact('transactions'));
     }
 
     //REIMBURSE TRANSACTION

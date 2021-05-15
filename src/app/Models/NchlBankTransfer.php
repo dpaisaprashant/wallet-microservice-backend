@@ -17,6 +17,7 @@ class NchlBankTransfer extends Model
 
     use BelongsToUser, BelongsToUseThroughMicroservice, MorphOneTransaction, MorphOneCommission, MorphOneDispute;
 
+
     protected $connection = 'nchl';
 
     protected $appends = ['commission_amount', 'bank'];

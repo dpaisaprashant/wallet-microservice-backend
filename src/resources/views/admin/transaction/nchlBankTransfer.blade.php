@@ -128,10 +128,29 @@
 
                                     </div>
 
-                                    <div class="row" >
-                                        <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-6 mt-3">
                                             <label for="ionrange_balance">Amount</label>
-                                            <input type="text" name="amount" class="ionrange_amount">
+{{--                                            <input type="text" name="amount" class="ionrange_amount">--}}
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="input-group date">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-dollar"></i>
+                                                </span>
+                                                        <input type="number" class="form-control" placeholder="From Amount" name="from_amount" autocomplete="off" value="{{ !empty($_GET['from_amount']) ? $_GET['from_amount'] : '' }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="input-group date">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-dollar"></i>
+                                                </span>
+                                                        <input type="number" class="form-control" placeholder="To Amount" name="to_amount" autocomplete="off" value="{{ !empty($_GET['to_amount']) ? $_GET['to_amount'] : '' }}">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
 
                                     </div>
@@ -183,6 +202,7 @@
                                         <td>{{ $loop->index + ($transactions->perPage() * ($transactions->currentPage() - 1)) + 1 }}</td>
                                         <td>{{ $transaction->transaction_id }}</td>
                                         <td>
+
                                             @if(!empty($transaction->user))
                                                 <a  @can('User profile') href="{{route('user.profile', $transaction->user_id)}}" @endcan>{{ $transaction->user['mobile_no']}}</a>
                                             @endif

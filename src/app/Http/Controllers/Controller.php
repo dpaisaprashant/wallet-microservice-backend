@@ -3,6 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Architecture\WalletTransactionType;
+use App\Models\FundRequest;
+use App\Models\MerchantTransaction;
+use App\Models\NchlAggregatedPayment;
+use App\Models\NchlBankTransfer;
+use App\Models\NchlLoadTransaction;
+use App\Models\NICAsiaCyberSourceLoadTransaction;
+use App\Models\UserLoadTransaction;
+use App\Models\UserMerchantEventTicketPayment;
+use App\Models\UserToUserFundTransfer;
+use App\Models\UserTransaction;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -29,20 +39,29 @@ class Controller extends BaseController
             'Icash',
             'Recieved Funds',
             'Transfer Funds',
-            'ConnectIPS'
+            'ConnectIPS',
+            'CARD FUND LOAD',
+
         ];
 
         View::share('vendors', $vendors);
 
         $serviceTypes = [
             'LOAD FUNDS',
+            'LOAD',
+            'CARD_LOAD',
             'FUND REQUEST',
             'TOPUP',
+            'PREPAID',
+            'POSTPAID',
             'PAYMENT',
             'TBANK',
             'Payments/s',
             'NCHL_LOAD_FUND',
-            'BANK-TRANSFER'
+            'BANK-TRANSFER',
+            'CASHBACK',
+            'COMMISSION',
+            'REFERRAL',
         ];
 
         View::share('serviceTypes', $serviceTypes);
@@ -61,5 +80,19 @@ class Controller extends BaseController
         $walletVendors = WalletTransactionType::groupBy('vendor')->pluck('vendor')->toArray();
         View::share('walletVendors', $walletVendors);
 
+        $transactionTypes = [
+            UserTransaction::class => "PAYPOINT",
+            UserLoadTransaction::class => "NPAY",
+            NchlLoadTransaction::class => "NCHL LOAD",
+            NchlAggregatedPayment::class => "NCHL AGGREGATED PAYMENT",
+            NchlBankTransfer::class => "BANK TRANSFER",
+            NICAsiaCyberSourceLoadTransaction::class => "CARD LOAD",
+            UserToUserFundTransfer::class => "USER TO USER FUND TRANSFER",
+            FundRequest::class => "USER TO USER FUND REQUEST",
+            MerchantTransaction::class => "USER TO MERCHANT FUND TRANSFER",
+            UserMerchantEventTicketPayment::class => "EVENT TICKET PAYMENT"
+        ];
+
+        View::share('transactionTypes', $transactionTypes);
     }
 }

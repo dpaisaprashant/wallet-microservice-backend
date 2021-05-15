@@ -269,6 +269,31 @@ return [
             ]
         ],
 
+        'bfi' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE10_URL'),
+            'host' => env('DB10_HOST', '127.0.0.1'),
+            'port' => env('DB10_PORT', '3306'),
+            'database' => env('DB10_DATABASE', 'forge'),
+            'username' => env('DB10_USERNAME', 'forge'),
+            'password' => env('DB10_PASSWORD', ''),
+            'unix_socket' => env('DB10_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => false,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+            'dump' => [
+                'dump_binary_path' => env('DB_DUMP_PATH', '/usr/bin/'), // only the path, so without `mysqldump` or `pg_dump`
+                'use_single_transaction',
+                'timeout' => 60 * 5, // 5 minute timeout
+            ]
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),

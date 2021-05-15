@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Agent;
 use App\Models\AgentType;
 
+use App\Models\Architecture\WalletTransactionTypeCashback;
+use App\Models\Architecture\WalletTransactionTypeCommission;
 use App\Models\Setting;
 use App\Wallet\Agent\Repositories\AgentTypeRepository;
 use App\Wallet\Setting\Traits\UpdateSetting;
@@ -111,7 +113,28 @@ class AgentTypeController extends Controller
             return redirect()->back()->with('error', 'Cannot delete agent type because there are users belonging to this agent type. Remove agents from this agent type before deleting the agent type');
         }
 
-        $agentType->delete();
-        return redirect()->back()->with('success', 'Agent deleted successfully');
+        try {
+            DB::beginTransaction();
+
+            WalletTransactionTypeCashback::where('user_type', AgentType::class)
+                ->where('user_type_id', $agentType->id)
+                ->delete();
+
+            WalletTransactionTypeCommission::where('user_type', AgentType::class)
+                ->where('user_type_id', $agentType->id)
+                ->delete();
+
+            $agentType->delete();
+
+            DB::commit();
+            return redirect()->back()->with('success', 'Agent type deleted successfully');
+        } catch (\Exception $e) {
+            Log::error($e);
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Error while deleting agent type');
+
+        }
+
+
     }
 }

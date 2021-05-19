@@ -128,6 +128,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/user/profile/user-graph-data', 'UserController@userYearlyGraph')->name('user.yearly.graph');
         Route::post('/user/profile/user-vendor-graph-data', 'UserController@userYearlyVendorGraph')->name('user.yearly.vendor.graph');
 
+        Route::post('/user/update-referral-code/{id}', 'UserController@referralCode')->name('user.referralCode');
         Route::post('/user/update-referral-bonuses/{id}', 'UserController@referralBonus')->name('user.referralBonus');
         Route::post('/user/update-card-load-commission/{id}', 'UserController@cardLoadCommission')->name('user.cardLoadCommission');
         /**

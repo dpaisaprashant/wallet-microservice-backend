@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\UserCommissionValue;
 use App\Models\UserKYC;
 use App\Models\UserLoadTransaction;
+use App\Models\UserReferral;
 use App\Models\UserReferralBonus;
 use App\Models\UserReferralLimit;
 use App\Traits\CollectionPaginate;
@@ -103,7 +104,7 @@ class UserController extends Controller
         }
 
         //$user = User::with(['userLoadTransactions', 'userLoginHistories', 'userCheckPayment', 'fromFundTransfers', 'receiveFundTransfers', 'fromFundRequests', 'receiveFundRequests', 'kyc', 'wallet'])->findOrFail($id);
-        $user = User::with(['userReferralLimit', 'preTransactions', 'requestInfos', 'userLoginHistories', 'fromFundTransfers', 'receiveFundTransfers', 'fromFundRequests', 'receiveFundRequests', 'kyc', 'wallet', 'agent', 'userReferralBonus'])->findOrFail($id);
+        $user = User::with(['userReferral', 'userReferralLimit', 'preTransactions', 'requestInfos', 'userLoginHistories', 'fromFundTransfers', 'receiveFundTransfers', 'fromFundRequests', 'receiveFundRequests', 'kyc', 'wallet', 'agent', 'userReferralBonus'])->findOrFail($id);
 
         //Audit Trial section
         $allAudits = $this->allAudits($user, $request);
@@ -219,6 +220,36 @@ class UserController extends Controller
         $user = User::where('id', $id)->first();
         $accounts = $repository->bankAccounts($id);
         return view('admin.user.bankAccount')->with(compact('accounts', 'user'));
+    }
+
+    public function referralCode(Request $request, $id)
+    {
+        if (empty($request->referral_code)) {
+            return redirect()->back()->with('error', 'Referral code cannot be empty');
+        }
+
+        $user = User::with('userReferral')->where('id', $id)->first();
+        $oldReferralCode = $user->userReferral->code;
+        $newReferralCode = $request->referral_code;
+
+        if ($oldReferralCode == $newReferralCode) {
+            return redirect()->back()->with('error', 'Same referral code');
+        }
+
+        $duplicateReferralCount = UserReferral::where('code', $newReferralCode)->count();
+        if ($duplicateReferralCount) {
+            return redirect()->back()->with('error', 'Duplicate referral code');
+        }
+
+        UserReferral::updateorCreate(
+            ['user_id' => $user->id],
+            [
+                'code' => $newReferralCode
+            ]
+        );
+
+        return redirect()->back()->with('success', 'referral code update successfully');
+
     }
 
     public function referralBonus(Request $request, $id)

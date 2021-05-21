@@ -3,6 +3,7 @@
     <?php $date = explode(' ', $event->created_at) ?>
     <td>{{ $date[0] }}</td>
     <td>{{ $date[1] }}</td>
+    @if($event->status == \App\Models\UsedUserReferral::STATUS_COMPLETE)
     <td style="color: green; font-weight: bold">
         @if($user->id == $event->referred_from)
             REFERRED FROM BONUS (user referred new user)
@@ -10,8 +11,33 @@
             REFERRED TO BONUS (user used referral code)
         @endif
     </td>
+    @elseif($event->status == \App\Models\UsedUserReferral::STATUS_PROCESSING)
+        <td style="color: yellow; font-weight: bold">
+            @if($user->id == $event->referred_from)
+                REFERRED FROM BONUS (user referred new user)
+            @elseif($user->id == $event->referred_to)
+                REFERRED TO BONUS (user used referral code)
+            @endif
+        </td>
+    @else
+        <td style="color: red; font-weight: bold">
+            @if($user->id == $event->referred_from)
+                REFERRED FROM BONUS (user referred new user)
+            @elseif($user->id == $event->referred_to)
+                REFERRED TO BONUS (user used referral code)
+            @endif
+        </td>
+    @endif
     <td>DPAISA</td>
-    <td>---</td>
+    <td>
+        @if($event->status == \App\Models\UsedUserReferral::STATUS_COMPLETE)
+            <span class="badge badge-success">{{$event->status}}</span>
+        @elseif($event->status == \App\Models\UsedUserReferral::STATUS_COMPLETE)
+            <span class="badge badge-warning">{{$event->status}}</span>
+        @else
+            <span class="badge badge-danger">{{$event->status}}</span>
+        @endif
+    </td>
     <td></td>
     <td style="color: green">
         @if($user->id == $event->referred_from)

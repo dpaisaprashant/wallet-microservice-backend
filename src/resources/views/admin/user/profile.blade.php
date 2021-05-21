@@ -19,6 +19,7 @@
                             </h2>
                             <h4>Joined: {{ date('M d, Y', strtotime($user->created_at)) }}</h4>
                             <h4>Number: {{ $user->mobile_no }}</h4>
+                            <h4>Email: {{ $user->email ?? "" }}</h4>
 
                             @if(!empty($user->kyc))
                                 <h4>Address: {{ $user->kyc->district }}, Province {{ $user->kyc->province }}</h4>

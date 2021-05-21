@@ -49,7 +49,7 @@
 
     </td>
     @else
-        <td style="color: green">
+        <td>
             @if($user->id == $event->referred_from)
                 Rs.{{ $event->referred_from_amount }}
             @elseif($user->id == $event->referred_to)

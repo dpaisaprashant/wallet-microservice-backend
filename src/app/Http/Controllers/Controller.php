@@ -57,7 +57,7 @@ class Controller extends BaseController
             'PAYMENT',
             'TBANK',
             'Payments/s',
-            'NCHL_LOAD_FUND',
+            //'NCHL_LOAD_FUND',
             'BANK-TRANSFER',
             'CASHBACK',
             'COMMISSION',

@@ -1,4 +1,7 @@
 <tr class="gradeC">
+    @if($event->pre_transaction_id = '538040370791801349382')
+        {{ dd($event) }}
+    @endif
     <td>{{ $loop->index + ($allAudits->perPage() * ($allAudits->currentPage() - 1)) + 1 }}</td>
     <?php $date = explode(' ', $event->created_at) ?>
     <td>{{ $date[0] }}</td>

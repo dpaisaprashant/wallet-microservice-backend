@@ -20,15 +20,7 @@
         @endif
     </td>
     <td>
-        @if(strtoupper($transaction->status) == 'SUCCESS')
-            <span class="badge badge-primary">{{ strtoupper($transaction->status) }}</span>
-        @elseif(strtoupper($transaction->status) == 'FAILED')
-            <span class="badge badge-danger">{{ strtoupper($transaction->status) }}</span>
-        @else
-            <span class="badge badge-warning">NO RESPONSE</span>
-        @endif
-
-        {{--@include('admin.transaction.preTransaction.status', ['transaction' => $event])--}}
+        @include('admin.transaction.preTransaction.status', ['transaction' => $event])
     </td>
     @if($event->transaction_type == 'debit')
         @if(strtoupper($event->status) == 'SUCCESS')

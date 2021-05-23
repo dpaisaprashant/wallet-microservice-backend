@@ -2,19 +2,17 @@ version: '3'
 
 networks:
   laravel:
-  wallet-microservice-core_laravel:
+  walletmicroservicecore_laravel:
     external: true
-  wallet-microservice-paypoint_laravel:
+  walletmicroservicepaypoint_laravel:
     external: true
-  wallet-microservice-nchl_laravel:
+  walletmicroservicenchl_laravel:
     external: true
-  wallet-microservice-cybersource_laravel:
+  walletmicroservicecybersource_laravel:
     external: true
-  wallet-microservice-npay_laravel:
+  walletmicroservicenpay_laravel:
     external: true
-  wallet-microservice-nps_laravel:
-    external: true
-  wallet-microservice-merchant_laravel:
+  walletmicroservicemerchant_laravel:
     external: true
 
 
@@ -24,8 +22,10 @@ services:
       context: .
       dockerfile: nginx.dockerfile
     container_name: nginx_backend_wallet
+    environment:
+      TZ: "Asia/Kathmandu"
     ports:
-      - "8083:80"
+      - "5067:80"
     volumes:
       - ./src:/var/www/html:delegated
     depends_on:
@@ -36,13 +36,12 @@ services:
       - mongo-express
     networks:
       - laravel
-      - wallet-microservice-core_laravel
-      - wallet-microservice-paypoint_laravel
-      - wallet-microservice-nchl_laravel
-      - wallet-microservice-cybersource_laravel
-      - wallet-microservice-npay_laravel
-      - wallet-microservice-nps_laravel
-      - wallet-microservice-merchant_laravel
+      - walletmicroservicecore_laravel
+      - walletmicroservicepaypoint_laravel
+      - walletmicroservicenchl_laravel
+      - walletmicroservicecybersource_laravel
+      - walletmicroservicenpay_laravel
+      - walletmicroservicemerchant_laravel
 
   mysql:
     image: mysql:5.7.29
@@ -62,13 +61,12 @@ services:
       SERVICE_NAME: mysql
     networks:
       - laravel
-      - wallet-microservice-core_laravel
-      - wallet-microservice-paypoint_laravel
-      - wallet-microservice-nchl_laravel
-      - wallet-microservice-cybersource_laravel
-      - wallet-microservice-npay_laravel
-      - wallet-microservice-nps_laravel
-      - wallet-microservice-merchant_laravel
+      - walletmicroservicecore_laravel
+      - walletmicroservicepaypoint_laravel
+      - walletmicroservicenchl_laravel
+      - walletmicroservicecybersource_laravel
+      - walletmicroservicenpay_laravel
+      - walletmicroservicemerchant_laravel
 
   php:
     build:
@@ -81,13 +79,12 @@ services:
       - "9033:9000"
     networks:
       - laravel
-      - wallet-microservice-core_laravel
-      - wallet-microservice-paypoint_laravel
-      - wallet-microservice-nchl_laravel
-      - wallet-microservice-cybersource_laravel
-      - wallet-microservice-npay_laravel
-      - wallet-microservice-nps_laravel
-      - wallet-microservice-merchant_laravel
+      - walletmicroservicecore_laravel
+      - walletmicroservicepaypoint_laravel
+      - walletmicroservicenchl_laravel
+      - walletmicroservicecybersource_laravel
+      - walletmicroservicenpay_laravel
+      - walletmicroservicemerchant_laravel
 
   composer:
     build:
@@ -102,13 +99,12 @@ services:
     user: laravel
     networks:
       - laravel
-      - wallet-microservice-core_laravel
-      - wallet-microservice-paypoint_laravel
-      - wallet-microservice-nchl_laravel
-      - wallet-microservice-cybersource_laravel
-      - wallet-microservice-npay_laravel
-      - wallet-microservice-nps_laravel
-      - wallet-microservice-merchant_laravel
+      - walletmicroservicecore_laravel
+      - walletmicroservicepaypoint_laravel
+      - walletmicroservicenchl_laravel
+      - walletmicroservicecybersource_laravel
+      - walletmicroservicenpay_laravel
+      - walletmicroservicemerchant_laravel
     entrypoint: ['composer', '--ignore-platform-reqs']
 
   artisan:
@@ -125,14 +121,13 @@ services:
     entrypoint: ['php', '/var/www/html/artisan']
     networks:
       - laravel
-      - wallet-microservice-core_laravel
-      - wallet-microservice-paypoint_laravel
-      - wallet-microservice-nchl_laravel
-      - wallet-microservice-cybersource_laravel
-      - wallet-microservice-npay_laravel
-      - wallet-microservice-nps_laravel
-      - wallet-microservice-merchant_laravel
-  
+      - walletmicroservicecore_laravel
+      - walletmicroservicepaypoint_laravel
+      - walletmicroservicenchl_laravel
+      - walletmicroservicecybersource_laravel
+      - walletmicroservicenpay_laravel
+      - walletmicroservicemerchant_laravel
+
   phpmyadmin:
     depends_on:
       - mysql
@@ -140,19 +135,18 @@ services:
     container_name: phpmyadmin_backend_wallet
     restart: always
     ports:
-      - 8093:80
+      - 5068:80
     environment:
       PMA_HOST: mysql_backend_wallet
       MYSQL_ROOT_PASSWORD: secret
     networks:
       - laravel
-      - wallet-microservice-core_laravel
-      - wallet-microservice-paypoint_laravel
-      - wallet-microservice-nchl_laravel
-      - wallet-microservice-cybersource_laravel
-      - wallet-microservice-npay_laravel
-      - wallet-microservice-nps_laravel
-      - wallet-microservice-merchant_laravel
+      - walletmicroservicecore_laravel
+      - walletmicroservicepaypoint_laravel
+      - walletmicroservicenchl_laravel
+      - walletmicroservicecybersource_laravel
+      - walletmicroservicenpay_laravel
+      - walletmicroservicemerchant_laravel
 
   mongo:
     container_name: mongo-backend
@@ -161,10 +155,10 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
-    ports: 
+    ports:
       - "27019:27017"
     restart: always
-    volumes: 
+    volumes:
       - ./mongo:/data/db
     networks:
       - laravel
@@ -175,8 +169,9 @@ services:
     restart: always
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: password      
-    ports: 
-      - "8021:8081"
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password
+    ports:
+      - "5069:8081"
     networks:
       - laravel
+

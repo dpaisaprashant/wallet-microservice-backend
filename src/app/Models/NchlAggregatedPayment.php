@@ -15,7 +15,7 @@ class NchlAggregatedPayment extends Model
 {
     use BelongsToUser, MorphOneTransaction, MorphOneCommission, MorphOneDispute;
 
-    protected $connection = 'dpaisa';
+    protected $connection = 'nchl';
     protected $appends = ['commission_amount'];
     protected $guarded = [];
 

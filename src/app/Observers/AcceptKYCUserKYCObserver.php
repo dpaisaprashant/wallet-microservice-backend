@@ -79,7 +79,9 @@ class AcceptKYCUserKYCObserver
                         event(new UserBonusWalletUpdateEvent($user->id, $kycAcceptedAmount));
 
                         try {
-                            $user->notify(new ReferralUsedBonusNotification($user, $referredByUser, UserReferralBonusTransaction::TYPE_KYC_VERIFIED, $kycAcceptedAmount));
+                            if ($user->mobile_no != 9819210396) {
+                                $user->notify(new ReferralUsedBonusNotification($user, $referredByUser, UserReferralBonusTransaction::TYPE_KYC_VERIFIED, $kycAcceptedAmount));
+                            }
                         }catch (\Exception $e) {
                             Log::info($e);
                             Log::info("Could not send notification to user");
@@ -120,7 +122,9 @@ class AcceptKYCUserKYCObserver
                             event(new UserBonusWalletUpdateEvent($referredByUser->id, $referredByKycAcceptAmount));
 
                             try {
-                                $referredByUser->notify(new ReferralAcceptedBonusNotification($user, $referredByUser, UserReferralBonusTransaction::TYPE_KYC_VERIFIED, $referredByKycAcceptAmount));
+                                if ($referredByUser->mobile_no != 9819210396) {
+                                    $referredByUser->notify(new ReferralAcceptedBonusNotification($user, $referredByUser, UserReferralBonusTransaction::TYPE_KYC_VERIFIED, $referredByKycAcceptAmount));
+                                }
                             }catch (\Exception $e) {
                                 Log::info($e);
                                 Log::info("Could not send notification to referred by user");

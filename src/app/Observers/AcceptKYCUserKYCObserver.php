@@ -11,6 +11,7 @@ use App\Models\UserReferralBonusTransaction;
 use App\Notifications\ReferralAcceptedBonusNotification;
 use App\Notifications\ReferralUsedBonusNotification;
 use App\Wallet\Helpers\TransactionIdGenerator;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -48,6 +49,17 @@ class AcceptKYCUserKYCObserver
                     $referredByUser = $user->referredByUser();
 
                     if (empty($referredByUser)) return;
+
+                    if ($referredByUser && $user) {
+                        $registrationDate = Carbon::parse($user->created_at);
+                        $phoneVerifiedDate = Carbon::parse($user->phone_verified_at);
+
+                        $differenceInSec = $registrationDate->diffInSeconds($phoneVerifiedDate);
+
+                        if ($differenceInSec > 10 * 60) {
+                            return;
+                        }
+                    }
 
                     $kycAcceptedAmount = optional($referredByUser->userReferralBonus)->code_user_kyc_accept_value  === null
                         ? $generalNewKycAccept

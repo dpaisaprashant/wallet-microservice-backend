@@ -26,7 +26,6 @@
                         <h5>Delivery Urls</h5>
                     </div>
                     <div class="ibox-content">
-                            @csrf
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Merchant Transaction Id</label>
                                 <div class="col-sm-10">

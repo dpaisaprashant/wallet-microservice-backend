@@ -302,6 +302,13 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/load-test-fund', 'LoadTestFundController@index')->name('loadTestFund.index');
         Route::match(['get', 'post'], '/load-test-fund/create', 'LoadTestFundController@create')->name('loadTestFund.create');
 
+
+        /**
+         * Repost transaction
+         */
+        Route::match(['get', 'post'], '/repost/npay', 'RepostController@npay')->name('repost.npay');
+
+
         /**
          * Report
          */

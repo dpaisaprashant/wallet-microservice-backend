@@ -205,6 +205,15 @@ $url = url()->current();
                 </ul>
             </li>
 
+            <li @if(preg_match('/repost/i', $url)) class="active" @endif>
+                <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Repost Transaction</span><span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="{{ route('repost.npay') }}">NPay Repost</a></li>
+
+                </ul>
+            </li>
+
 
         @if(auth()->user()->hasAnyPermission(['Complete transaction view', 'Fund transfer view', 'Fund request view', 'EBanking view', 'Paypoint view']))
             <li @if($url == route('transaction.complete') || $url == route('transaction.userToUserFundTransfer') || $url == route('fundRequest') || $url == route('eBanking') || $url == route('paypoint'))class="active" @endif>

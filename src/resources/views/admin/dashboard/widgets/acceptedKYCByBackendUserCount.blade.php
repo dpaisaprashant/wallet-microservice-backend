@@ -5,7 +5,7 @@
             <h5>Accepted KYC</h5>
         </div>
         <div class="ibox-content">
-            <h1 class="no-margins">{{ count($acceptedKycs) }}</h1>
+            <h1 class="no-margins">{{ $acceptedKycsCount }}</h1>
             <small>Number of KYC accepted by you </small>
         </div>
     </div>

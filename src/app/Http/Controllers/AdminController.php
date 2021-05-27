@@ -31,8 +31,9 @@ class AdminController extends Controller
        /* $acceptedKycs = (new Admin())->acceptedKycs();
         $rejectedKycs = (new Admin())->rejectedKycs();*/
 
-        //$acceptedKycs = (new Admin())->acceptedKycs();
-        //$rejectedKycs = (new Admin())->rejectedKycs();
+        $acceptedKycsCount = (new Admin())->acceptedKycsCount();
+        $rejectedKycsCount = (new Admin())->rejectedKycsCount();
+
 
         $now = Carbon::now();
         $month = $now->format('m');
@@ -73,7 +74,7 @@ class AdminController extends Controller
                 'kycFilledUserCount', 'kycNotFilledUserCount',
                 'successfulTransactionCount','successfulTransactionSum',
                 'month', 'year', 'graph','nPayGraph','highestTransactions',
-                 'executePayments'));
+                 'executePayments', 'acceptedKycsCount', 'rejectedKycsCount'));
     }
 
     public function payPointYearly(Request $request)

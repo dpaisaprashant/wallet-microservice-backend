@@ -19,17 +19,19 @@ class LoadTestFundListener
      */
     public function handle($event)
     {
-        $currentBalance = Wallet::whereUserId($event->transaction->user_id)->first()->getOriginal('balance');
+        $currentBalance = Wallet::whereUserId($event->transaction->user_id)->first()->balance * 100;
         $amount = $event->transaction->amount * 100;
         $event->transaction->transactions()->create([
             "account" => $event->transaction->user->mobile_no,
             "amount" => $amount,
-            "vendor" => 'TEST FUND',
+            "vendor" => $event->transaction->pre_transaction_id ? "REFUND" : "TEST FUND",
             "user_id" => $event->transaction->user_id,
             "description" => $event->transaction->description,
-            "service_type" => "LOAD_TEST_FUND",
+            "service_type" => $event->transaction->pre_transaction_id ? "REFUND" : "LOAD_TEST_FUND",
             "balance" => $currentBalance + $amount,
-            "uid" => 'LOAD-TEST-FUND-' . TransactionIdGenerator::generateAlphaNumeric(7)
+            "uid" => $event->transaction->pre_transaction_id
+                ? "REFUND-" . TransactionIdGenerator::generateAlphaNumeric(7)
+                : 'LOAD-TEST-FUND-' . TransactionIdGenerator::generateAlphaNumeric(7)
         ]);
 
         event(new UserWalletUpdateEvent($event->transaction->user_id, $event->transaction->amount * 100));

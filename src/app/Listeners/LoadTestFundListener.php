@@ -19,7 +19,7 @@ class LoadTestFundListener
      */
     public function handle($event)
     {
-        $currentBalance = Wallet::whereUserId($event->transaction->user_id)->first()->getOriginal('balance');
+        $currentBalance = Wallet::whereUserId($event->transaction->user_id)->first()->balance * 100;
         $amount = $event->transaction->amount * 100;
         $event->transaction->transactions()->create([
             "account" => $event->transaction->user->mobile_no,

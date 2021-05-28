@@ -29,7 +29,9 @@ class LoadTestFundListener
             "description" => $event->transaction->description,
             "service_type" => $event->transaction->pre_transaction_id ? "REFUND" : "LOAD_TEST_FUND",
             "balance" => $currentBalance + $amount,
-            "uid" => $event->transaction->pre_transaction_id ? "REFUND-" : 'LOAD-TEST-FUND-' . TransactionIdGenerator::generateAlphaNumeric(7)
+            "uid" => $event->transaction->pre_transaction_id
+                ? "REFUND-" . TransactionIdGenerator::generateAlphaNumeric(7)
+                : 'LOAD-TEST-FUND-' . TransactionIdGenerator::generateAlphaNumeric(7)
         ]);
 
         event(new UserWalletUpdateEvent($event->transaction->user_id, $event->transaction->amount * 100));

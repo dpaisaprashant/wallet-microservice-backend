@@ -309,6 +309,11 @@ Route::group(['prefix' => 'admin'], function () {
         //report (npay, paypoint)
         Route::get('/report/paypoint', 'ReportController@paypoint')->name('report.paypoint');
         Route::get('/report/npay', 'ReportController@npay')->name('report.npay');
+        /*
+ * wallet end balance Report
+ * */
+
+        Route::get('/report/wallet-end-balance','ReportController@walletEndBalance')->name('wallet.endbalance');
 
         //Graph
         Route::post('/report/monthly/transaction-graph-data', 'GraphReportController@monthlyTransactionGraph')->name('report.monthly.graph');

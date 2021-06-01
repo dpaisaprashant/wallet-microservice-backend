@@ -5,7 +5,8 @@
             <h5>Paypoint cleared transactions</h5>
         </div>
         <div class="ibox-content">
-            <h1 class="no-margins">{{ $paypointClearedTransactions->sum('clearance_transactions_count') ?? 0}}</h1>
+           {{-- <h1 class="no-margins">{{ $paypointClearedTransactions->sum('clearance_transactions_count') ?? 0}}</h1>--}}
+            <h1 class="no-margins">{{0}}</h1>
             <small>Number of Paypoint transactions cleared by you</small>
         </div>
     </div>

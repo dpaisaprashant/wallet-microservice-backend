@@ -23,6 +23,8 @@ class LoadTestFundController extends Controller
 
             $currentBalance = Wallet::whereUserId($request->user_id)->first()->getOriginal('balance');
             $data = [
+                'pre_transaction_id' => $request->pre_transaction_id,
+                'admin_id' => auth()->user()->id,
                 'user_id' => $request->user_id,
                 'description' => $request['description'],
                 'before_amount' => $currentBalance,

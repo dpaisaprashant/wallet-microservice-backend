@@ -195,13 +195,22 @@ $url = url()->current();
             </li>
 
 
-            <li @if(preg_match('/load-test/i', $url)) class="active" @endif>
+           {{-- <li @if(preg_match('/load-test/i', $url)) class="active" @endif>
                 <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Load Test Funds</span><span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li><a href="{{ route('loadTestFund.index') }}">View Load Test Funds</a></li>
 
                     <li><a href="{{ route('loadTestFund.create') }}">Create Load Test Funds</a></li>
+                </ul>
+            </li>--}}
+
+            <li @if(preg_match('/repost/i', $url)) class="active" @endif>
+                <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Repost Transaction</span><span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="{{ route('repost.npay') }}">NPay Repost</a></li>
+
                 </ul>
             </li>
 

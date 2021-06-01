@@ -115,6 +115,18 @@ class BAll implements IAuditTrail
             return $value;
         });
 
+        $referralFrom->transform(function ($value) {
+            $newDate = Carbon::parse($value['created_at'])->addSeconds(2);
+            $value['created_at'] = $newDate;
+            return $value;
+        });
+
+        $referralTo->transform(function ($value) {
+            $newDate = Carbon::parse($value['created_at'])->addSeconds(2);
+            $value['created_at'] = $newDate;
+            return $value;
+        });
+
         $collection = ($userLoginHistories)
             //->concat($userTransactions)
             ->concat($fromFundTransfers)

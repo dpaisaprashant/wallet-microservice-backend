@@ -169,7 +169,9 @@
                                 <thead>
                                 <tr>
                                     <th>S.No.</th>
+                                    <th>Admin</th>
                                     <th>UID</th>
+                                    <th>Pre Transaction Id</th>
                                     <th>User</th>
                                     <th>Description</th>
                                     <th>Amount</th>
@@ -181,7 +183,9 @@
                                 @foreach($transactions as $transaction)
                                     <tr class="gradeC">
                                         <td>{{ $loop->index + ($transactions->perPage() * ($transactions->currentPage() - 1)) + 1 }}</td>
+                                        <td>{{ $transaction->admin_id }}</td>
                                         <td>{{ $transaction->uid ?? '---' }}</td>
+                                        <td>{{ $transaction->pre_transaction_id ?? '---' }}</td>
                                         <td>
                                             <a  @can('User profile') href="{{route('user.profile', $transaction->user_id)}}" @endcan> {{ $transaction->user['mobile_no'] }} </a>
                                         </td>

@@ -111,6 +111,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
+    public function userReferral()
+    {
+        return $this->hasOne(UserReferral::class);
+    }
+
     public function userReferralBonus()
     {
         return $this->hasOne(UserReferralBonus::class);

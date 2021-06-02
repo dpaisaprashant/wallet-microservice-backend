@@ -65,8 +65,10 @@ class AdminController extends Controller
         $highestTransactions = TransactionEvent::with('user')->orderBy('amount', 'DESC')->take(7)->get();
 
         //Execute Payment
-        $executePayments = UserExecutePayment::latest()->take(30)->pluck('time_elapsed', 'refStan_request');
-        $executePayments = json_encode($executePayments);
+        //$executePayments = UserExecutePayment::latest()->take(30)->pluck('time_elapsed', 'refStan_request');
+        //$executePayments = json_encode($executePayments);
+        $executePayments = [];
+        $executePayments = [];
 
         return view('admin.dashboard')
             ->with(compact('yearTransactionAmount', 'yearTransactionCount',

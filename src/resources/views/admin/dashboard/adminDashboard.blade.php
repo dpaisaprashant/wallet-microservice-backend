@@ -41,7 +41,7 @@
     @include('admin.dashboard.widgets.graph.npay')
 
 
-    <div class="row">
+    {{--<div class="row">
         <div class="col-lg-12">
             <div class="ibox ">
                 <div class="ibox-title">
@@ -59,7 +59,7 @@
 
             </div>
         </div>
-    </div>
+    </div>--}}
 
 @endcan
 

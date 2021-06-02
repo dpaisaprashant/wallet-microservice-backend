@@ -25,14 +25,15 @@ class AdminController extends Controller
         $successfulTransactionCount = $repository->successfulTransactionCount();
         $successfulTransactionSum = $repository->successfulTransactionSum();
 
-        $npayClearedTransactions = (new Clearance())->npayClearedTransactions();
-        $paypointClearedTransactions = (new Clearance())->paypointClearedTransactions();
+        //$npayClearedTransactions = (new Clearance())->npayClearedTransactions();
+        //$paypointClearedTransactions = (new Clearance())->paypointClearedTransactions();
 
        /* $acceptedKycs = (new Admin())->acceptedKycs();
         $rejectedKycs = (new Admin())->rejectedKycs();*/
 
-        $acceptedKycs = (new Admin())->acceptedKycs();
-        $rejectedKycs = (new Admin())->rejectedKycs();
+        $acceptedKycsCount = (new Admin())->acceptedKycsCount();
+        $rejectedKycsCount = (new Admin())->rejectedKycsCount();
+
 
         $now = Carbon::now();
         $month = $now->format('m');
@@ -68,12 +69,12 @@ class AdminController extends Controller
         $executePayments = json_encode($executePayments);
 
         return view('admin.dashboard')
-            ->with(compact('rejectedKycs','acceptedKycs','yearTransactionAmount', 'yearTransactionCount',
+            ->with(compact('yearTransactionAmount', 'yearTransactionCount',
                 'monthTransactionAmount','monthTransactionCount',
                 'kycFilledUserCount', 'kycNotFilledUserCount',
                 'successfulTransactionCount','successfulTransactionSum',
                 'month', 'year', 'graph','nPayGraph','highestTransactions',
-                'npayClearedTransactions', 'paypointClearedTransactions', 'executePayments'));
+                 'executePayments', 'acceptedKycsCount', 'rejectedKycsCount'));
     }
 
     public function payPointYearly(Request $request)

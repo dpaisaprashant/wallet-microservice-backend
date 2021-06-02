@@ -12,7 +12,8 @@ class KhaltiUserTransaction extends Model
 {
     use BelongsToUseThroughMicroservice, BelongsToUser, MorphOneCommission, MorphOneDispute;
 
-    //protected $connection = 'paypoint';
+    protected $connection = 'khalti';
+    protected $table = 'KhaltiApiTable';
 
     /**
      * @param $amount

@@ -44,14 +44,12 @@
                             <span>Bank:</span>
                             <address>
                                 <strong>{{ $transaction->vendor }}</strong><br>
-                                Transaction Id: {{ $transaction->transaction_id }}<br>
-                                Response Id: {{ $transaction->reference_no }}<br>
-                                Status:
+                                Transaction Id: {{ $transaction->reference_no }}<br>
+                                Status: {{ $transaction->state }}
                             </address>
 
                             <address>
                                 <strong>Amount: Rs. {{ $transaction->amount }}<br></strong>
-                                {{--<strong>Commission: Rs.  {{ $transaction->commission_amount }}<br></strong>--}}
                             </address>
 
                         </div>

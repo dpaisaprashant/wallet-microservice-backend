@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\BelongsToPreTransaction;
 use App\Traits\BelongsToUser;
 use App\Traits\BelongsToUseThroughMicroservice;
 use App\Traits\MorphOneCommission;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class KhaltiUserTransaction extends Model
 {
-    use BelongsToUseThroughMicroservice, BelongsToUser, MorphOneCommission, MorphOneDispute;
+    use BelongsToUseThroughMicroservice, BelongsToPreTransaction, BelongsToUser, MorphOneCommission, MorphOneDispute;
 
     protected $connection = 'khalti';
     protected $table = 'khalti_api_table';

@@ -60,7 +60,7 @@
 
                             <p style="margin-top: 20px;">
                                 <?php
-                                    $date = explode(' ', $transaction->created_at);
+                                    $date = explode(' ', $transaction->preTransaction->created_at);
                                 ?>
                                 <span><strong>Transaction Date:</strong> {{ date('d M, Y', strtotime($date[0]))}}</span><br/>
                                 <span><strong>Time:</strong> {{ date('h:i a', strtotime($date[1]))}}</span>

@@ -52,6 +52,6 @@ class KhaltiRepository
 
     public function detail($id)
     {
-        return KhaltiUserTransaction::with('user', 'transactions')->where('id', $id)->firstOrFail();
+        return KhaltiUserTransaction::with('user', 'transactions', 'preTransaction')->where('id', $id)->firstOrFail();
     }
 }

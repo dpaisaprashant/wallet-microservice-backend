@@ -71,6 +71,12 @@
                     <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button>
                 </a>
             @endif
+        @elseif($event->microservice_type == 'KHALTI')
+                @if(!empty($event->khaltiUserTransaction))
+                    <a href="{{ route('khalti.payment.detail', $event->khaltiUserTransaction->id) }}">
+                        <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button>
+                    </a>
+                @endif
         @endif
 
 

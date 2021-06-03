@@ -126,7 +126,8 @@
                                                    <p>
                                                        Transaction Id: {{ $transaction->reference_no }}<br>
                                                        State: {{ $transaction->state }}<br>
-                                                       @if(!empty($transaction->error_code) || !empty($transaction->error_data))
+                                                       Message: {{ $transaction->message }}<br>
+                                                   @if(!empty($transaction->error_code) || !empty($transaction->error_data))
                                                            Error Code: {{ $transaction->error_code }}<br>
                                                            Error Data: <?php print_r($transaction->error_data) ?>
                                                        @endif
@@ -147,6 +148,7 @@
                                                    <p>
                                                        Transaction Id: {{ $transaction->reference_no }}<br>
                                                        State: {{ $transaction->state }}<br>
+                                                       Message: {{ $transaction->message }}<br>
                                                        @if(!empty($transaction->error_code) || !empty($transaction->error_data))
                                                            Error Code: {{ $transaction->error_code }}<br>
                                                            Error Data: <?php print_r($transaction->error_data) ?>
@@ -155,7 +157,7 @@
                                                    <div class="row" style="background: none">
                                                        <div class="col-md-6">
                                                            <address>
-                                                               <strong>Response</strong><br>
+                                                               <strong>Request</strong><br>
                                                                <?php
                                                                     print_r($transaction->request_json)
                                                                ?>
@@ -163,7 +165,7 @@
                                                        </div>
                                                        <div class="col-md-6">
                                                            <address>
-                                                               <strong>Request</strong><br>
+                                                               <strong>Response</strong><br>
                                                                <?php
                                                                print_r($transaction->response_json)
                                                                ?>
@@ -186,7 +188,8 @@
                                                    <p>
                                                        Transaction Id: {{ $transaction->reference_no }}<br>
                                                        State Id: {{ $transaction->state }}<br>
-                                                       @if(!empty($transaction->error_code) || !empty($transaction->error_data))
+                                                       Message: {{ $transaction->message }}<br>
+                                                   @if(!empty($transaction->error_code) || !empty($transaction->error_data))
                                                            Error Code: {{ $transaction->error_code }}<br>
                                                            Error Data: <?php print_r($transaction->error_data) ?>
                                                        @endif

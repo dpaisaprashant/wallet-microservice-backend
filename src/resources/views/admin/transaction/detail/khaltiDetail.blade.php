@@ -41,7 +41,7 @@
                             </address>
 
 
-                            <span>Bank:</span>
+                            <span>Vendor:</span>
                             <address>
                                 <strong>{{ $transaction->vendor }}</strong><br>
                                 Transaction Id: {{ $transaction->reference_no }}<br>

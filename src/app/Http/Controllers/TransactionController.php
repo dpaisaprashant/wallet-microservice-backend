@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Wallet\FundRequest\Repository\FundRequestRepository;
 use App\Wallet\FundTransfer\Repository\FundTransferRepository;
+use App\Wallet\Khalti\Repository\KhaltiRepository;
 use App\Wallet\NCHL\Repository\NchlAggregatedPaymentRepository;
 use App\Wallet\NCHL\Repository\NchlBankTransferRepository;
 use App\Wallet\NCHL\Repository\NchlLoadTransactionRepository;
@@ -120,6 +121,13 @@ class TransactionController extends Controller
     {
         $transactions = $repository->paginatedTransactions();
         return view('admin.transaction.nicAsiaCyberSourceLoad',compact('transactions'));
+    }
+
+    //KHALTI
+    public function khaltiPaymentDetail($id, KhaltiRepository $repository)
+    {
+        $transaction = $repository->detail($id);
+        return view('admin.transaction.detail.khaltiDetail')->with(compact('transaction'));
     }
 
     //REIMBURSE TRANSACTION

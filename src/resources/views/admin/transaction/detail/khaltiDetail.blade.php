@@ -137,17 +137,6 @@
                                            <li class="timeline-item period">
                                                <div class="timeline-content">
                                                    <h2 class="timeline-title">STEP 2</h2>
-                                                   <div class="timeline-content">
-                                                       <h2 class="timeline-title">Create Transaction</h2>
-                                                       <p>
-                                                           Transaction Id: {{ $transaction->reference_no }}<br>
-                                                           State: {{ $transaction->state }}<br>
-                                                           @if(!empty($transaction->error_code) || !empty($transaction->error_data))
-                                                            Error Code: {{ $transaction->error_code }}<br>
-                                                            Error Data: <?php print_r($transaction->error_data) ?>
-                                                           @endif
-                                                       </p>
-                                                   </div>
                                                </div>
                                            </li>
 
@@ -155,6 +144,14 @@
                                                <div class="timeline-marker step2"></div>
                                                <div class="timeline-content">
                                                    <h2 class="timeline-title">Make payment request</h2>
+                                                   <p>
+                                                       Transaction Id: {{ $transaction->reference_no }}<br>
+                                                       State: {{ $transaction->state }}<br>
+                                                       @if(!empty($transaction->error_code) || !empty($transaction->error_data))
+                                                           Error Code: {{ $transaction->error_code }}<br>
+                                                           Error Data: <?php print_r($transaction->error_data) ?>
+                                                       @endif
+                                                   </p>
                                                    <div class="row" style="background: none">
                                                        <div class="col-md-6">
                                                            <address>

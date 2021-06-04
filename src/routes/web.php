@@ -207,6 +207,8 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::get('/transaction-detail', 'TransactionController@transactionDetail')->name('transactionDetail');
 
+        //problematic payments
+        Route::get('/transaction/problematic-payments', 'PreTransactionController@problematicPayment')->name('problematic.payments');
 
         //failed transaction
         Route::get('/failed-user-transaction', 'TransactionController@failedUserTransaction')->name('userTransaction.failed')->middleware('permission:Failed paypoint view');

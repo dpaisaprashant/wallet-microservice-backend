@@ -15,7 +15,7 @@ class PreTransactionRepository
 
     private $request;
 
-    private  $length = 15;
+    private  $length = 150;
 
     public function __construct(Request $request)
     {

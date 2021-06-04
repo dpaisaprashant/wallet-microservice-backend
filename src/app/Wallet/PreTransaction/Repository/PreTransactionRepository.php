@@ -40,7 +40,7 @@ class PreTransactionRepository
             ->get()
             ->transform(function ($value, $key) {
 
-                $responseTransaction = json_decode($value->jsonResponse, true);
+                $responseTransaction = json_decode($value->json_response, true);
                 if (isset($responseTransaction['transaction']) && isset($responseTransaction['transaction']['pre_transaction_status'])) {
                     $preTransactionStatus = $responseTransaction['transaction']['pre_transaction_status'];
                     if ($preTransactionStatus === true || $preTransactionStatus === false

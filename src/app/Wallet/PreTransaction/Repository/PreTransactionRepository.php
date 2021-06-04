@@ -36,6 +36,8 @@ class PreTransactionRepository
     public function paginatedProblematicPayments()
     {
         $transactions = PreTransaction::where('transaction_type', 'debit')
+            ->where('service_type', '!=', 'FUND_TRANSFER')
+            ->where('service_type', '!=', 'FUND_REQUEST')
             ->latest()
             ->filter($this->request)
             ->get()

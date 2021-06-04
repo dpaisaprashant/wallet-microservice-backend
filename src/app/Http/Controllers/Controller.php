@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Architecture\WalletTransactionType;
 use App\Models\FundRequest;
+use App\Models\KhaltiUserTransaction;
 use App\Models\MerchantTransaction;
 use App\Models\NchlAggregatedPayment;
 use App\Models\NchlBankTransfer;
 use App\Models\NchlLoadTransaction;
 use App\Models\NICAsiaCyberSourceLoadTransaction;
+use App\Models\NpsLoadTransaction;
 use App\Models\UserLoadTransaction;
 use App\Models\UserMerchantEventTicketPayment;
 use App\Models\UserToUserFundTransfer;
@@ -82,7 +84,9 @@ class Controller extends BaseController
 
         $transactionTypes = [
             UserTransaction::class => "PAYPOINT",
+            KhaltiUserTransaction::class => "KHALTI",
             UserLoadTransaction::class => "NPAY",
+            NpsLoadTransaction::class => "NPS",
             NchlLoadTransaction::class => "NCHL LOAD",
             NchlAggregatedPayment::class => "NCHL AGGREGATED PAYMENT",
             NchlBankTransfer::class => "BANK TRANSFER",
@@ -90,7 +94,7 @@ class Controller extends BaseController
             UserToUserFundTransfer::class => "USER TO USER FUND TRANSFER",
             FundRequest::class => "USER TO USER FUND REQUEST",
             MerchantTransaction::class => "USER TO MERCHANT FUND TRANSFER",
-            UserMerchantEventTicketPayment::class => "EVENT TICKET PAYMENT"
+            UserMerchantEventTicketPayment::class => "EVENT TICKET PAYMENT",
         ];
 
         View::share('transactionTypes', $transactionTypes);

@@ -8,6 +8,7 @@ use App\Models\UserCheckPayment;
 use App\Models\UserTransaction;
 use App\Traits\CollectionPaginate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PreTransactionRepository
 {
@@ -41,16 +42,15 @@ class PreTransactionRepository
             ->transform(function ($value, $key) {
 
                 $responseTransaction = json_decode($value->json_response, true);
+                Log::info($responseTransaction);
                 if (isset($responseTransaction['transaction']) && isset($responseTransaction['transaction']['pre_transaction_status'])) {
                     $preTransactionStatus = $responseTransaction['transaction']['pre_transaction_status'];
                     if ($preTransactionStatus === true || $preTransactionStatus === false
                         || $preTransactionStatus === "false" || $preTransactionStatus === "true") {
                         return null;
                     }
-                    return $value;
                 }
-
-
+                return $value;
             })
             ->filter();
 

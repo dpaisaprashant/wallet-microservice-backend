@@ -18,6 +18,12 @@ trait ReconciliationReportGenerator
                 "transaction_type" => "debit"
             ],
 
+            'Khalti' => [
+                "amount" => $repository->totalKhaltiTransactionAmount() / 100,
+                "count" => $repository->totalKhaltiTransactionCount(),
+                "transaction_type" => "debit"
+            ],
+
             'NPay' => [
                 "amount" => $repository->totalNPayTransactionAmount() / 100,
                 "count" => $repository->totalNPayTransactionCount(),

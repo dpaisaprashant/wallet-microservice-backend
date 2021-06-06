@@ -142,7 +142,9 @@ class ReconciliationReportRepository extends AbstractReportRepository
     public function totalTestFundsAmount()
     {
         return TransactionEvent::where('transaction_type', LoadTestFund::class)
-            ->doesntHave('refundTransaction')
+            ->whereHas('refundTransaction', function ($query) {
+                return $query->whereNull('pre_transaction_id');
+            })
             ->filter($this->request)
             ->sum('amount');
     }
@@ -150,7 +152,9 @@ class ReconciliationReportRepository extends AbstractReportRepository
     public function totalTestFundsCount()
     {
         return TransactionEvent::where('transaction_type', LoadTestFund::class)
-            ->doesntHave('refundTransaction')
+            ->whereHas('refundTransaction', function ($query) {
+                return $query->whereNull('pre_transaction_id');
+            })
             ->filter($this->request)
             ->count();
     }
@@ -158,7 +162,9 @@ class ReconciliationReportRepository extends AbstractReportRepository
     public function totalRefundAmount()
     {
         return TransactionEvent::where('transaction_type', LoadTestFund::class)
-            ->whereHas('refundTransaction')
+            ->whereHas('refundTransaction', function ($query) {
+                return $query->whereNotNull('pre_transaction_id');
+            })
             ->filter($this->request)
             ->sum('amount');
     }
@@ -166,7 +172,9 @@ class ReconciliationReportRepository extends AbstractReportRepository
     public function totalRefundCount()
     {
         return TransactionEvent::where('transaction_type', LoadTestFund::class)
-            ->whereHas('refundTransaction')
+            ->whereHas('refundTransaction', function ($query) {
+                return $query->whereNotNull('pre_transaction_id');
+            })
             ->filter($this->request)
             ->count();
     }

@@ -262,7 +262,7 @@ $url = url()->current();
             </li>
             @endif--}}
 
-            @if(auth()->user()->hasAnyPermission(['Clearance npay', 'Clearance paypoint']))
+            {{--@if(auth()->user()->hasAnyPermission(['Clearance npay', 'Clearance paypoint']))
             <li @if($url == route('clearance.npay') || $url == route('clearance.paypoint')) class="active" @endif>
                 <a href="#"><i class="fa fa-handshake-o"></i> <span class="nav-label">Clearance</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
@@ -270,14 +270,14 @@ $url = url()->current();
                     <li><a href="{{ route('clearance.npay') }}">NPay</a></li>
                     @endcan
 
-                    {{--@can('Clearance paypoint')
+                    @can('Clearance paypoint')
                     <li><a href="{{ route('clearance.paypoint') }}">Paypoint</a></li>
-                    @endcan--}}
+                    @endcan
                 </ul>
             </li>
-            @endif
+            @endif--}}
 
-            @if(auth()->user()->hasAnyPermission(['Clearance npay view', 'Clearance paypoint view']))
+            {{--@if(auth()->user()->hasAnyPermission(['Clearance npay view', 'Clearance paypoint view']))
             <li @if($url == route('clearance.npayView') || $url == route('clearance.paypointView')) class="active" @endif>
                 <a href="#"><i class="fa fa-handshake-o"></i> <span class="nav-label">View Clearance</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
@@ -286,15 +286,15 @@ $url = url()->current();
                     <li><a href="{{ route('clearance.npayView') }}">NPay</a></li>
                     @endcan
 
-                    {{--@can('Clearance paypoint view')
+                    @can('Clearance paypoint view')
                     <li><a href="{{ route('clearance.paypointView') }}">Paypoint</a></li>
-                    @endcan--}}
+                    @endcan
 
                 </ul>
             </li>
-            @endif
+            @endif--}}
 
-            @if(auth()->user()->hasAnyPermission(['Dispute view', 'Dispute create']))
+           {{-- @if(auth()->user()->hasAnyPermission(['Dispute view', 'Dispute create']))
                 <li @if(preg_match('/dispute/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-times-rectangle"></i> <span class="nav-label">Single Dispute</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
@@ -307,9 +307,9 @@ $url = url()->current();
                         @endcan
                     </ul>
                 </li>
-            @endif
+            @endif--}}
 
-            @if(auth()->user()->hasAnyPermission(['View all audit trial', 'View npay audit trial', 'View paypoint audit trial']))
+            {{--@if(auth()->user()->hasAnyPermission(['View all audit trial', 'View npay audit trial', 'View paypoint audit trial']))
                 <li @if($url == route('auditTrail.all') || $url == route('auditTrail.nPay') || $url == route('auditTrail.payPoint')) class="active" @endif>
                     <a href="#"><i class="fa fa-history"></i> <span class="nav-label">Audit Trial</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
@@ -321,14 +321,14 @@ $url = url()->current();
                             <li><a href="{{ route('auditTrail.nPay') }}">NPay</a></li>
                         @endcan
 
-                       {{-- @can('View paypoint audit trial')
+                        @can('View paypoint audit trial')
                             <li><a href="{{ route('auditTrail.payPoint') }}">PayPoint</a></li>
-                        @endcan--}}
+                        @endcan
                             <li><a href="{{ route('auditTrail.nchl.loadTransaction') }}">NCHL Load Transaction</a></li>
                             <li><a href="{{ route('auditTrail.nchl.bankTransfer') }}">NCHL Bank Transfer</a></li>
                     </ul>
                 </li>
-            @endif
+            @endif--}}
 
             @if(auth()->user()->hasAnyPermission(['Monthly report view', 'Yearly report view']))
             <li @if(preg_match('/report/i', $url)) class="active" @endif>
@@ -518,7 +518,7 @@ $url = url()->current();
                     </li>
                 @endif
 
-                @if(auth()->user()->hasAnyPermission(['Frontend header view', 'Frontend service view', 'Frontend about view', 'Frontend process view']))
+                {{--@if(auth()->user()->hasAnyPermission(['Frontend header view', 'Frontend service view', 'Frontend about view', 'Frontend process view']))
                     <li @if(preg_match('/frontend/i', $url)) class="active" @endif>
                         <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Frontend Settings</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
@@ -542,7 +542,7 @@ $url = url()->current();
                                 <li><a href="{{ route('frontend.contact') }}">Contact</a></li>
                         </ul>
                     </li>
-                @endif
+                @endif--}}
         </ul>
     </div>
 </nav>

@@ -54,11 +54,11 @@ trait ReconciliationReportGenerator
                 "transaction_type" => "credit"
             ],
 
-            'Refund' => [
+            /*'Refund' => [
                 "amount" => $repository->totalRefundAmount() / 100,
                 "count" => $repository->totalRefundCount(),
                 "transaction_type" => "credit"
-            ],
+            ],*/
 
             'Referral' => [
                 "amount" => $repository->totalReferralAmount() / 100,

@@ -38,6 +38,7 @@ class PreTransactionRepository
         $transactions = PreTransaction::where('transaction_type', 'debit')
             ->where('service_type', '!=', 'FUND_TRANSFER')
             ->where('service_type', '!=', 'FUND_REQUEST')
+            ->where('service_type', '!=', 'BFI_LOAD')
             ->latest()
             ->filter($this->request)
             ->get()

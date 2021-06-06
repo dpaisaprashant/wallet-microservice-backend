@@ -8,10 +8,15 @@ use App\Traits\MorphOneTransaction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class LoadTestFund extends Model
 {
-    use BelongsToUser, MorphOneTransaction;
+    use BelongsToUser, MorphOneTransaction, LogsActivity;
+
+    protected static $logAttributes = ['*'];
+    //protected static $logOnlyDirty = true;
+    protected static $logName = 'Load Test Fund (Refund)';
 
     protected $connection = 'dpaisa';
     protected $guarded = [];

@@ -142,7 +142,7 @@ class ReconciliationReportRepository extends AbstractReportRepository
     public function totalTestFundsAmount()
     {
         return TransactionEvent::where('transaction_type', LoadTestFund::class)
-            ->whereNull('pre_transaction_id')
+            ->doesntHave('refundTransaction')
             ->filter($this->request)
             ->sum('amount');
     }
@@ -150,7 +150,7 @@ class ReconciliationReportRepository extends AbstractReportRepository
     public function totalTestFundsCount()
     {
         return TransactionEvent::where('transaction_type', LoadTestFund::class)
-            ->whereNull('pre_transaction_id')
+            ->doesntHave('refundTransaction')
             ->filter($this->request)
             ->count();
     }
@@ -158,7 +158,7 @@ class ReconciliationReportRepository extends AbstractReportRepository
     public function totalRefundAmount()
     {
         return TransactionEvent::where('transaction_type', LoadTestFund::class)
-            ->whereNotNull('pre_transaction_id')
+            ->whereHas('refundTransaction')
             ->filter($this->request)
             ->sum('amount');
     }
@@ -166,7 +166,7 @@ class ReconciliationReportRepository extends AbstractReportRepository
     public function totalRefundCount()
     {
         return TransactionEvent::where('transaction_type', LoadTestFund::class)
-            ->whereNotNull('pre_transaction_id')
+            ->whereHas('refundTransaction')
             ->filter($this->request)
             ->count();
     }
@@ -305,7 +305,7 @@ class ReconciliationReportRepository extends AbstractReportRepository
         return $this->totalPaypointTransactionAmount() + $this->totalNchlBankTransferAmount()
             + $this->totalCommissionAmount() + $this->totalUserToMerchantAmount()
             + $this->totalNchlAggregatedPaymentAmount() + $this->totalUserToMerchantEventTicketPaymentAmount()
-            + $this->totalKhaltiTransactionAmount();
+            + $this->totalKhaltiTransactionAmount() + $this->totalRefundAmount();
     }
 
 }

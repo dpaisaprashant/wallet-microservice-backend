@@ -33,12 +33,16 @@ class TransactionEventRepository
 
     public function sortedTransactions()
     {
-        return TransactionEvent::with('transactionable', 'user')->filter($this->request)->paginate($this->length);
+        return TransactionEvent::with('transactionable', 'user')
+            ->doesntHave('refundTransaction')
+            ->filter($this->request)->paginate($this->length);
     }
 
     public function latestTransactions()
     {
-        return TransactionEvent::with('transactionable', 'user')->latest()->filter($this->request)->paginate($this->length);
+        return TransactionEvent::with('transactionable', 'user')
+            ->doesntHave('refundTransaction')
+            ->latest()->filter($this->request)->paginate($this->length);
     }
 
     public function currentMonthTransactions()
@@ -79,12 +83,14 @@ class TransactionEventRepository
 
     public function transactionsCount()
     {
-        return TransactionEvent::filter($this->request)->count();
+        return TransactionEvent::doesntHave('refundTransaction')
+            ->filter($this->request)->count();
     }
 
     public function transactionAmountSum()
     {
-        return TransactionEvent::filter($this->request)->sum('amount') / 100;
+        return TransactionEvent::doesntHave('refundTransaction')
+            ->filter($this->request)->sum('amount') / 100;
     }
 
     public function paginatedMonthlyTransactions()

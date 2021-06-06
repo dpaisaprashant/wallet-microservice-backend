@@ -192,7 +192,7 @@
                                                 {{ $transaction->transaction_id }}
                                             </td>
                                             <td>
-                                                {{ $transaction->user['mobile_no']}}
+                                                {{ $transaction->user['mobile_no'] ?? ""}}
                                             </td>
                                             <td>
                                                 {{ $transaction->payment_mode }}

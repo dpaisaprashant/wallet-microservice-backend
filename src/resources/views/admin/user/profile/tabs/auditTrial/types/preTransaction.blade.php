@@ -50,13 +50,13 @@
             @include('admin.transaction.preTransaction.response', ['transaction' => $event])
         @endif
         @if($event->microservice_type == 'PAYPOINT')
-            @if(!empty($event->userCheckPayment))
+            {{--@if(!empty($event->userCheckPayment))
                 @include('admin.transaction.paypoint.request', ['transaction' => $event->userCheckPayment])
                 @include('admin.transaction.paypoint.response', ['transaction' => $event->userCheckPayment])
                 <a href="{{ route('paypoint.detail', $event->userCheckPayment->id) }}" title="Transaction Detail">
                     <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button>
                 </a>
-            @endif
+            @endif--}}
         @elseif($event->microservice_type == 'NCHL' && $event->service_type == 'BANK_TRANSFER')
             @if(!empty($event->nchlBankTransfer))
                 @include('admin.transaction.nchlBankTransfer.response', ['transaction' => $event->nchlBankTransfer])

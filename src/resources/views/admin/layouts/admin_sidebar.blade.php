@@ -29,16 +29,16 @@ $url = url()->current();
                             <li><a href="{{ route('admin.dashboard.kyc') }}">KYC</a></li>
                         @endcan
 
-                        @can('Stat Dashboard paypoint')
+                        {{--@can('Stat Dashboard paypoint')
                             <li><a href="{{ route('admin.dashboard.paypoint') }}">PayPoint</a></li>
-                        @endcan
+                        @endcan--}}
 
                         {{--@can('Stat Dashboard npay')
                             <li><a href="{{ route('admin.dashboard.npay') }}">NPay</a></li>
                         @endcan--}}
 
-                            <li><a href="{{ route('admin.dashboard.nchl.bankTransfer') }}">NCHL Bank Transfer</a></li>
-                            <li><a href="{{ route('admin.dashboard.nchl.loadTransaction') }}">NCHL Load Transaction</a></li>
+                            {{--<li><a href="{{ route('admin.dashboard.nchl.bankTransfer') }}">NCHL Bank Transfer</a></li>
+                            <li><a href="{{ route('admin.dashboard.nchl.loadTransaction') }}">NCHL Load Transaction</a></li>--}}
 
                     </ul>
                 </li>

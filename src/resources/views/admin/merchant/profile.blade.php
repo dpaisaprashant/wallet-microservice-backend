@@ -46,7 +46,7 @@
                         <td>
                             <strong>
                                 <button type="button" class="btn btn-warning m-r-sm">12</button>
-                            </strong> D-Paisa Points
+                            </strong>Sajilo Points
                         </td>
                         <td>
                             @if(empty($merchant->kyc))

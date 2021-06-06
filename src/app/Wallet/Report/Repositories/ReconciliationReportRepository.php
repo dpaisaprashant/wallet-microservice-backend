@@ -34,6 +34,7 @@ class ReconciliationReportRepository extends AbstractReportRepository
     public function totalPaypointTransactionAmount()
     {
         return TransactionEvent::where('transaction_type', UserTransaction::class)
+            ->doesentHave('refundTransaction')
             ->filter($this->request)
             ->sum('amount');
     }
@@ -41,6 +42,7 @@ class ReconciliationReportRepository extends AbstractReportRepository
     public function totalPaypointTransactionCount()
     {
         return TransactionEvent::where('transaction_type', UserTransaction::class)
+            ->doesentHave('refundTransaction')
             ->filter($this->request)
             ->count();
     }
@@ -48,6 +50,7 @@ class ReconciliationReportRepository extends AbstractReportRepository
     public function totalKhaltiTransactionAmount()
     {
         return TransactionEvent::where('transaction_type', KhaltiUserTransaction::class)
+            ->doesentHave('refundTransaction')
             ->filter($this->request)
             ->sum('amount');
     }
@@ -55,6 +58,7 @@ class ReconciliationReportRepository extends AbstractReportRepository
     public function totalKhaltiTransactionCount()
     {
         return TransactionEvent::where('transaction_type', KhaltiUserTransaction::class)
+            ->doesentHave('refundTransaction')
             ->filter($this->request)
             ->count();
     }
@@ -199,6 +203,7 @@ class ReconciliationReportRepository extends AbstractReportRepository
     public function totalNchlBankTransferAmount()
     {
         return TransactionEvent::where('transaction_type', NchlBankTransfer::class)
+            ->doesentHave('refundTransaction')
             ->filter($this->request)
             ->sum('amount');
     }
@@ -206,6 +211,7 @@ class ReconciliationReportRepository extends AbstractReportRepository
     public function totalNchlBankTransferCount()
     {
         return TransactionEvent::where('transaction_type', NchlBankTransfer::class)
+            ->doesentHave('refundTransaction')
             ->filter($this->request)
             ->count();
     }
@@ -213,6 +219,7 @@ class ReconciliationReportRepository extends AbstractReportRepository
     public function totalNchlAggregatedPaymentAmount()
     {
         return TransactionEvent::where('transaction_type', NchlAggregatedPayment::class)
+            ->doesentHave('refundTransaction')
             ->filter($this->request)
             ->sum('amount');
     }
@@ -220,6 +227,7 @@ class ReconciliationReportRepository extends AbstractReportRepository
     public function totalNchlAggregatedPaymentCount()
     {
         return TransactionEvent::where('transaction_type', NchlAggregatedPayment::class)
+            ->doesentHave('refundTransaction')
             ->filter($this->request)
             ->count();
     }

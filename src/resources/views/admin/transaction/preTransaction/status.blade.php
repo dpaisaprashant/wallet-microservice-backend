@@ -1,7 +1,7 @@
 @if(strtoupper($transaction->status) == 'SUCCESS')
     @if(isset($transaction->transactionEvent))
         @if($transaction->transactionEvent->refundTransaction)
-            <span class="badge badge-dark">{{ strtoupper("DISPUTE") }}</span>
+            <span class="badge badge-inverse">{{ strtoupper("DISPUTE") }}</span>
         @else
             <span class="badge badge-primary">{{ strtoupper($transaction->status) }}</span>
         @endif

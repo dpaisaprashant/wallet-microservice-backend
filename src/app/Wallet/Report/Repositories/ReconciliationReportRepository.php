@@ -138,6 +138,7 @@ class ReconciliationReportRepository extends AbstractReportRepository
     public function totalTestFundsAmount()
     {
         return TransactionEvent::where('transaction_type', LoadTestFund::class)
+            ->whereNull('pre_transaction_id')
             ->filter($this->request)
             ->sum('amount');
     }
@@ -145,6 +146,23 @@ class ReconciliationReportRepository extends AbstractReportRepository
     public function totalTestFundsCount()
     {
         return TransactionEvent::where('transaction_type', LoadTestFund::class)
+            ->whereNull('pre_transaction_id')
+            ->filter($this->request)
+            ->count();
+    }
+
+    public function totalRefundAmount()
+    {
+        return TransactionEvent::where('transaction_type', LoadTestFund::class)
+            ->whereNotNull('pre_transaction_id')
+            ->filter($this->request)
+            ->sum('amount');
+    }
+
+    public function totalRefundCount()
+    {
+        return TransactionEvent::where('transaction_type', LoadTestFund::class)
+            ->whereNotNull('pre_transaction_id')
             ->filter($this->request)
             ->count();
     }
@@ -270,6 +288,7 @@ class ReconciliationReportRepository extends AbstractReportRepository
         return $this->totalNPayTransactionAmount() + $this->totalNpsTransactionAmount()
             + $this->totalCashbackAmount() + $this->totalReferralAmount()
             + $this->totalTestFundsAmount() + $this->totalNchlLoadAmount()
+            + $this->totalRefundAmount()
             + $this->totalNicAsiaCyberSourceLoadAmount() + ($this->totalRoundOffAmount() * 100);
     }
 

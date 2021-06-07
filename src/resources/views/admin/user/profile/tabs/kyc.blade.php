@@ -6,11 +6,12 @@
                 <dl class="row m-t-md">
                   @if($admin_details == null)
                     <dt class="col-md-3 text-right">Admin Name</dt>
-                    <dd class="col-md-8">Nothing</dd>
+                    <dd class="col-md-8">Not available</dd>
                     <dt class="col-md-3 text-right">Admin Email</dt>
-                    <dd class="col-md-8">Nothing</dd>
+                    <dd class="col-md-8">Not available</dd>
                     <dt class="col-md-3 text-right">Created at</dt>
-                    <dd class="col-md-8">Nothing</dd>
+                    <dd class="col-md-8">Not available</dd>
+                      <br><br>
                     @else
                         <dt class="col-md-3 text-right">Admin Name</dt>
                         <dd class="col-md-8">{{$admin_details->name}}</dd>
@@ -18,7 +19,9 @@
                         <dd class="col-md-8">{{$admin_details->email}}</dd>
                         <dt class="col-md-3 text-right">Created at</dt>
                         <dd class="col-md-8">{{\Carbon\Carbon::parse($admin_details->created_at)->format('F d, Y')}}</dd>
+                      <br><br>
                       @endif
+                    <br>
                     @if(!empty($user->kyc))
 
                         @if(/*$user->kyc->status == 1 */ true)

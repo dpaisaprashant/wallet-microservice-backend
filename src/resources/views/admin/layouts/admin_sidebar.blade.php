@@ -211,6 +211,9 @@ $url = url()->current();
                 <ul class="nav nav-second-level collapse">
                     <li><a href="{{ route('repost.npay') }}">NPay Repost</a></li>
 
+                    <li><a href="{{ route('repost.nps') }}">NPS Repost</a></li>
+
+                    <li><a href="{{ route('repost.connectIPS') }}">Connect IPS Repost</a></li>
                 </ul>
             </li>
 

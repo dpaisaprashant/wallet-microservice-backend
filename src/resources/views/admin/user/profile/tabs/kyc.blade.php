@@ -72,7 +72,7 @@
 
 
                         <dt class="col-md-3 text-right">Date of birth</dt>
-                        <dd class="col-md-8">1995-09-18</dd>
+                        <dd class="col-md-8">{{ $user->kyc->date_of_birth }}</dd>
 
 
 

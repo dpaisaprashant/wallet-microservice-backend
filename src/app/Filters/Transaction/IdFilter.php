@@ -34,7 +34,7 @@ class IdFilter extends FilterAbstract {
 
         //$userTransaction = UserTransaction::where('refStan', $value)->first();
 
-        $npsLoadTransaction = NpsLoadTransaction::where('transaction_id', $value->first();
+        $npsLoadTransaction = NpsLoadTransaction::where('transaction_id', $value)->first();
         $userLoadTransaction = UserLoadTransaction::where('transaction_id', $value)->first();
 
         if($npsLoadTransaction){

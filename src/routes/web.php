@@ -312,6 +312,8 @@ Route::group(['prefix' => 'admin'], function () {
          * Repost transaction
          */
         Route::match(['get', 'post'], '/repost/npay', 'RepostController@npay')->name('repost.npay');
+        Route::match(['get', 'post'], '/repost/nps', 'RepostController@nps')->name('repost.nps');
+        Route::match(['get', 'post'], '/repost/connectIPS', 'RepostController@connectIPS')->name('repost.connectIPS');
 
 
         /**

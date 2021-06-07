@@ -1,6 +1,5 @@
 @extends('admin.layouts.admin_design')
 @section('content')
-
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row m-b-lg m-t-lg">
             <div class="col-md-4" style="margin-top: 20px;">

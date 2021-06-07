@@ -21,4 +21,10 @@ class AdminUserKYC extends Model
         return (new AdminUserKYCFilters($request))->add($filters)->filter($builder);
     }
 
+    public function admin(){
+        return $this->hasMany(Admin::class,'admin_id');
+    }
+
+
+
 }

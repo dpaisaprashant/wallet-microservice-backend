@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TransactionEvent;
+use App\Wallet\Report\Repositories\WalletEndBalanceRepository;
 use App\Wallet\TransactionEvent\Repository\NPayReportRepository;
 use App\Wallet\TransactionEvent\Repository\PayPointReportRepository;
 use App\Wallet\TransactionEvent\Repository\TransactionEventRepository;
@@ -41,5 +42,17 @@ class ReportController extends Controller
         $services = [];
         if (!empty($request->from) && !empty($request->to)) $services = $repository->generateServiceReport();
         return view('admin.report.npay')->with(compact('services'));
+    }
+
+    public function walletEndBalance(WalletEndBalanceRepository $repository,Request $request){
+        $date = $request->get('till');
+        $datas = $repository->getWalletEndBalance($date);
+        $totalSum = $repository->getTotalWalletEndBalanceAmount($date);
+        if($datas != null) {
+            $totalCount = count($datas);
+        }else{
+            $totalCount = null;
+        }
+        return view('admin.report.walletEndBalance',compact('datas','totalCount','totalSum'));
     }
 }

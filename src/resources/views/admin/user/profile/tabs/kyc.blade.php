@@ -4,7 +4,21 @@
         <div class="row">
             <div class="col-md-7">
                 <dl class="row m-t-md">
-
+                  @if($admin_details == null)
+                    <dt class="col-md-3 text-right">Admin Name</dt>
+                    <dd class="col-md-8">Nothing</dd>
+                    <dt class="col-md-3 text-right">Admin Email</dt>
+                    <dd class="col-md-8">Nothing</dd>
+                    <dt class="col-md-3 text-right">Created at</dt>
+                    <dd class="col-md-8">Nothing</dd>
+                    @else
+                        <dt class="col-md-3 text-right">Admin Name</dt>
+                        <dd class="col-md-8">{{$admin_details->name}}</dd>
+                        <dt class="col-md-3 text-right">Admin Email</dt>
+                        <dd class="col-md-8">{{$admin_details->email}}</dd>
+                        <dt class="col-md-3 text-right">Created at</dt>
+                        <dd class="col-md-8">{{\Carbon\Carbon::parse($admin_details->created_at)->format('F d, Y')}}</dd>
+                      @endif
                     @if(!empty($user->kyc))
 
                         @if(/*$user->kyc->status == 1 */ true)
@@ -34,7 +48,6 @@
                                                 <button id="acceptBtn" class="btn btn-primary" type="submit" style="display: none">Verify KYC</button>
                                             </form>
                                         </div>
-
                                         <div class="col-md-2" style="padding-left: 0px; margin-left: -10px;">
                                             <form id="kycForm" action="{{ route('user.changeKYCStatus') }}" method="post">
                                                 @csrf
@@ -55,8 +68,11 @@
 
 
 
-                        <dt class="col-md-3 text-right">Date of Birth</dt>
+
+                        <dt class="col-md-3 text-right">Date of birth</dt>
                         <dd class="col-md-8">1995-09-18</dd>
+
+
 
                         <dt class="col-md-3 text-right">Gender</dt>
                         <dd class="col-md-8">

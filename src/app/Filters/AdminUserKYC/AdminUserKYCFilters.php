@@ -12,7 +12,8 @@ class AdminUserKYCFilters extends FiltersAbstract
      */
     protected $filters = [
         'from' => FromDateFilter::class,
-        'to' => ToDateFilter::class
+        'to' => ToDateFilter::class,
+        'email' => AdminKycNameFilter::class
     ];
 
 

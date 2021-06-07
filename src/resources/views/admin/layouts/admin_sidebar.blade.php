@@ -205,6 +205,16 @@ $url = url()->current();
                 </ul>
             </li>--}}
 
+            <li @if(preg_match('/refund/i', $url)) class="active" @endif>
+                <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Refund</span><span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="{{ route('refund.index') }}">View Refund</a></li>
+
+                    <li><a href="{{ route('refund.create') }}">Create Refund</a></li>
+                </ul>
+            </li>
+
             <li @if(preg_match('/repost/i', $url)) class="active" @endif>
                 <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Repost Transaction</span><span
                         class="fa arrow"></span></a>

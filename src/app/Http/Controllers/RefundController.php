@@ -42,7 +42,7 @@ class RefundController extends Controller
                 'description' => $request['description'],
                 'before_amount' => $currentBalance,
                 //'after_amount' => $currentBalance + ($request['amount'] * 100)
-                'after_amount' => $currentBalance + ($preTransaction->getPriginal('amount'))
+                'after_amount' => $currentBalance + ($preTransaction->getOriginal('amount'))
             ];
 
             $transaction = LoadTestFund::create($data);

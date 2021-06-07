@@ -187,6 +187,47 @@
                                                 </div>
                                             </div>
                                         </div>
+
+
+                                        <div class="col-md-4">
+                                            <br><label>Phone Verification</label><br>
+                                            <div class="form-group">
+                                                <select data-placeholder="Phone Verification..." class="chosen-select"  tabindex="2" name="verification">
+                                                    <option value="" selected disabled>Phone Verification...</option>
+                                                    @if(!empty($_GET['verification']))
+                                                        <option value="all" @if($_GET['verification']  == 'all') selected @endif >All</option>
+                                                        <option value="verified" @if($_GET['verification']  == 'verified') selected @endif >Verified</option>
+                                                        <option value="unverified" @if($_GET['verification'] == 'unverified') selected @endif>Unverified</option>
+                                                    @else
+                                                        <option value="all">All</option>
+                                                        <option value="verified">Verified</option>
+                                                        <option value="unverified">Unverified</option>
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <br><label>Referral Code</label><br>
+                                                <input type="text" class="form-control" placeholder="Referral Code" name="referral_code" autocomplete="off" value="{{ !empty($_GET['referral_code']) ? $_GET['referral_code'] : '' }}">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <br><label>Kyc Status</label><br>
+                                            <div class="form-group">
+                                                <select data-placeholder="Kyc Status..." class="chosen-select"  tabindex="2" name="kyc_status">
+                                                    <option value="" selected disabled>Kyc Status...</option>
+                                                    @if(!empty($_GET['kycstatus']))
+                                                        <option value="verified" @if($_GET['kycstatus']  == 'verified') selected @endif >Verified</option>
+                                                        <option value="unverified" @if($_GET['kycstatus']  == 'unverified') selected @endif >Un verified</option>
+                                                        <option value="pending" @if($_GET['kycstatus'] == 'pending') selected @endif>Pending</option>
+                                                    @else
+                                                        <option value="verified">Verified</option>
+                                                        <option value="unverified">Un verified</option>
+                                                        <option value="pending">Pending</option>
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                     <br>
                                     <div>

@@ -307,11 +307,18 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/load-test-fund', 'LoadTestFundController@index')->name('loadTestFund.index');
         Route::match(['get', 'post'], '/load-test-fund/create', 'LoadTestFundController@create')->name('loadTestFund.create');
 
+        /**
+         * Refund
+         */
+        Route::get('/refunds', 'RefundController@index')->name('refund.index');
+        Route::match(['get', 'post'], '/refund/create', 'RefundController@create')->name('refund.create');
 
         /**
          * Repost transaction
          */
         Route::match(['get', 'post'], '/repost/npay', 'RepostController@npay')->name('repost.npay');
+        Route::match(['get', 'post'], '/repost/nps', 'RepostController@nps')->name('repost.nps');
+        Route::match(['get', 'post'], '/repost/connectIPS', 'RepostController@connectIPS')->name('repost.connectIPS');
 
 
         /**
@@ -322,6 +329,11 @@ Route::group(['prefix' => 'admin'], function () {
         //report (npay, paypoint)
         Route::get('/report/paypoint', 'ReportController@paypoint')->name('report.paypoint');
         Route::get('/report/npay', 'ReportController@npay')->name('report.npay');
+        /*
+ * wallet end balance Report
+ * */
+
+        Route::get('/report/wallet-end-balance','ReportController@walletEndBalance')->name('wallet.endbalance');
 
         //Graph
         Route::post('/report/monthly/transaction-graph-data', 'GraphReportController@monthlyTransactionGraph')->name('report.monthly.graph');

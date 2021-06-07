@@ -28,7 +28,8 @@ class TransactionFilters extends FiltersAbstract
         'date_month' => MonthFilter::class,
         'debit' => DebitCreditFilter::class,
         'debit_range' => DebitFilter::class,
-        'sort' => SortFilter::class
+        'sort' => SortFilter::class,
+        'till' => TillFilter::class
     ];
 
 

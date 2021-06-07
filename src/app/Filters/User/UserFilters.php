@@ -21,7 +21,10 @@ class UserFilters extends FiltersAbstract
         'transaction_loaded' => TransactionLoadedFilter::class,
         'sort' => SortFilter::class,
         'from' => FromDateFilter::class,
-        'to' => ToDateFilter::class
+        'to' => ToDateFilter::class,
+        'verification' => VerificationFilter::class,
+        'referral_code' => ReferralFilter::class,
+        'kyc_status' => KycFilter::class
     ];
 
 

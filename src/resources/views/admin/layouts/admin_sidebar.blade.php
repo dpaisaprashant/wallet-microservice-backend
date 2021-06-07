@@ -360,6 +360,7 @@ $url = url()->current();
 
                         <li><a href="{{ route('report.agent') }}">NRB Agent Report</a></li>
                         <li><a href="{{ route('report.nonBankPaymentReport') }}">Non bank payment report</a></li>
+                        <li><a href="{{ route('wallet.endbalance') }}">Wallet end balance report</a></li>
 
                 </ul>
             </li>

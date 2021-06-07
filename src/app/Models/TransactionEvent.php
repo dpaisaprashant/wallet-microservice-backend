@@ -14,7 +14,6 @@ use Illuminate\Http\Request;
 class TransactionEvent extends Model
 {
     use BelongsToUser, MorphOneCommission;
-
     protected $table = 'transaction_events';
     protected $connection = 'dpaisa';
     protected $guarded = [];
@@ -73,6 +72,7 @@ class TransactionEvent extends Model
         }
         return $user;
     }
+
 
     public function selectedMonthTransactions($year, $month, $transactionType)
     {

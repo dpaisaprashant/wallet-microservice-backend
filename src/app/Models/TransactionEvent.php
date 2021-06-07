@@ -83,4 +83,9 @@ class TransactionEvent extends Model
             ->get();
     }
 
+    public function refundTransaction()
+    {
+        return $this->hasOne(LoadTestFund::class, 'pre_transaction_id', 'pre_transaction_id');
+    }
+
 }

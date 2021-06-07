@@ -140,10 +140,12 @@
                                                                     <hr>
                                                                     <dl class="row m-t-md">
                                                                         <?php $properties = json_decode($log->properties, true); ?>
-                                                                        @foreach($properties['attributes'] as $key => $value)
-                                                                            <dt class="col-md-6 text-right">{{ $key }}</dt>
-                                                                            <dd class="col-md-6">{{ $value }}</dd>
-                                                                        @endforeach
+                                                                        @if(isset($properties['attributes']))
+                                                                            @foreach($properties['attributes'] as $key => $value)
+                                                                                <dt class="col-md-6 text-right">{{ $key }}</dt>
+                                                                                <dd class="col-md-6">{{ $value }}</dd>
+                                                                            @endforeach
+                                                                        @endisset
                                                                     </dl>
                                                                 </div>
                                                             </div>

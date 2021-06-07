@@ -3,6 +3,7 @@
 namespace App\Models\Microservice;
 
 use App\Filters\PreTransaction\PreTransactionFilters;
+use App\Models\KhaltiUserTransaction;
 use App\Models\NchlBankTransfer;
 use App\Models\NchlLoadTransaction;
 use App\Models\TransactionEvent;
@@ -61,6 +62,11 @@ class PreTransaction extends Model
     public function userTransaction()
     {
         return $this->hasOne(UserTransaction::class, 'pre_transaction_id', 'pre_transaction_id');
+    }
+
+    public function khaltiUserTransaction()
+    {
+        return $this->hasOne(KhaltiUserTransaction::class, 'reference_no', 'pre_transaction_id');
     }
 
     public function nchlBankTransfer()

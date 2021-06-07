@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Filters\EBanking\EBankingFilters;
+use App\Traits\BelongsToPreTransaction;
 use App\Traits\BelongsToUser;
 use App\Traits\BelongsToUseThroughMicroservice;
 use App\Traits\MorphOneCommission;
@@ -14,7 +15,7 @@ use Illuminate\Http\Request;
 class UserLoadTransaction extends Model
 {
 
-    use BelongsToUser, MorphOneDispute, MorphOneCommission, BelongsToUseThroughMicroservice;
+    use BelongsToUser, BelongsToPreTransaction, MorphOneDispute, MorphOneCommission, BelongsToUseThroughMicroservice;
 
     protected $table = "user_load_transactions";
     protected $connection = 'npay';

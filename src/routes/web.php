@@ -201,9 +201,14 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('transaction/nicasia-cybesource-load-transaction','TransactionController@nicAsiaCyberSourceLoad')->name('nicasia.cyberSourceLoad');
         Route::get('transaction/nicasia-cybesource-load-transaction/detail/{id}', 'TransactionController@nicAsiaCyberSourceLoadDetail')->name('nicasia.cyberSourceLoadTransaction.detail');
 
+        //Khalti
+        Route::get('transaction/khalti-payment-transaction/detail/{id}', 'TransactionController@khaltiPaymentDetail')->name('khalti.payment.detail');
+
 
         Route::get('/transaction-detail', 'TransactionController@transactionDetail')->name('transactionDetail');
 
+        //problematic payments
+        Route::get('/transaction/problematic-payments', 'PreTransactionController@problematicPayment')->name('problematic.payments');
 
         //failed transaction
         Route::get('/failed-user-transaction', 'TransactionController@failedUserTransaction')->name('userTransaction.failed')->middleware('permission:Failed paypoint view');

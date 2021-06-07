@@ -54,7 +54,7 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
-    'core_url' => env('CORE_URL', 'nginx_core_wallet'),
+    'core_url' => env('CORE_URL', ''),
 
     'asset_url' => env('ASSET_URL', null),
 

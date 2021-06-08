@@ -64,9 +64,9 @@
 @endcan
 
 
-@include('admin.dashboard.clearanceDashboard')
+{{--@include('admin.dashboard.clearanceDashboard')--}}
 
-@include('admin.dashboard.kycVerifierDashboard')
+{{--@include('admin.dashboard.kycVerifierDashboard')--}}
 
 {{--@can('Dashboard highest transactions table')
     <div class="row">

@@ -85,11 +85,33 @@ class Admin extends Authenticatable
 
     }
 
+    public function acceptedKycsCount()
+    {
+        /*return $this->with('userKYC')
+            ->whereHas('userKYC', function ($query) {
+                return $query->whereStatus('ACCEPTED');
+            })
+            ->latest()
+            ->get();*/
+
+        //$admin = Admin::where('id', auth()->user()->id)->first();
+        //return $admin->userKYC()->where('user_k_y_c_s.status', 1)->where('user_k_y_c_s.accept', 1)->get();
+        return UserKYC::where('status', 1)->where('accept', 1)->count();
+
+    }
+
     public function rejectedKycs()
     {
         //$admin = Admin::where('id', auth()->user()->id)->first();
         //return $admin->userKYC()->where('user_k_y_c_s.accept', 0)->get();
         return UserKYC::where('user_k_y_c_s.accept', 0)->get();
+    }
+
+    public function rejectedKycsCount()
+    {
+        //$admin = Admin::where('id', auth()->user()->id)->first();
+        //return $admin->userKYC()->where('user_k_y_c_s.accept', 0)->get();
+        return UserKYC::where('user_k_y_c_s.accept', 0)->count();
     }
 
     public function kycList(Admin $user, $request)

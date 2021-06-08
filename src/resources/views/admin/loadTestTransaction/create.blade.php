@@ -51,6 +51,16 @@
                             </div>
 
                             <div class="hr-line-dashed"></div>
+
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Pre Transaction Id</label>
+                                <div class="col-sm-10">
+                                    <input name="pre_transaction_id" type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+
                             <button id="handleBtn" class="btn btn-sm btn-primary m-t-n-xs" type="submit" formaction="{{ route('loadTestFund.create') }}"><strong>Create</strong></button>
                         </form>
                     </div>

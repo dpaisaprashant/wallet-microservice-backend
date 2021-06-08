@@ -79,12 +79,12 @@
                         @include('admin.user.profile.tabs.auditTrial.types.preTransaction')
                     @elseif($event instanceof \App\Models\Microservice\RequestInfo)
                         @include('admin.user.profile.tabs.auditTrial.types.requestInfo')
-                    @elseif($event instanceof \App\Models\UserToUserFundTransfer)
-                        @include('admin.user.profile.tabs.auditTrial.types.fundTransfer')
+                   {{-- @elseif($event instanceof \App\Models\UserToUserFundTransfer)
+                        @include('admin.user.profile.tabs.auditTrial.types.fundTransfer')--}}
                     @elseif($event instanceof \App\Models\UserLoadTransaction)
                         @include('admin.user.profile.tabs.auditTrial.types.userLoadTransaction')
-                    @elseif($event instanceof \App\Models\FundRequest)
-                        @include('admin.user.profile.tabs.auditTrial.types.fundRequest')
+                    {{--@elseif($event instanceof \App\Models\FundRequest)
+                        @include('admin.user.profile.tabs.auditTrial.types.fundRequest')--}}
                     @elseif($event instanceof \App\Models\UserCheckPayment)
                         @include('admin.user.profile.tabs.auditTrial.types.userTransaction')
                     @elseif($event instanceof \App\Models\NchlLoadTransaction)

@@ -195,13 +195,35 @@ $url = url()->current();
             </li>
 
 
-            <li @if(preg_match('/load-test/i', $url)) class="active" @endif>
+           {{-- <li @if(preg_match('/load-test/i', $url)) class="active" @endif>
                 <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Load Test Funds</span><span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li><a href="{{ route('loadTestFund.index') }}">View Load Test Funds</a></li>
 
                     <li><a href="{{ route('loadTestFund.create') }}">Create Load Test Funds</a></li>
+                </ul>
+            </li>--}}
+
+            <li @if(preg_match('/refund/i', $url)) class="active" @endif>
+                <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Refund</span><span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="{{ route('refund.index') }}">View Refund</a></li>
+
+                    <li><a href="{{ route('refund.create') }}">Create Refund</a></li>
+                </ul>
+            </li>
+
+            <li @if(preg_match('/repost/i', $url)) class="active" @endif>
+                <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Repost Transaction</span><span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="{{ route('repost.npay') }}">NPay Repost</a></li>
+
+                    <li><a href="{{ route('repost.nps') }}">NPS Repost</a></li>
+
+                    <li><a href="{{ route('repost.connectIPS') }}">Connect IPS Repost</a></li>
                 </ul>
             </li>
 
@@ -351,6 +373,8 @@ $url = url()->current();
 
                         <li><a href="{{ route('report.agent') }}">NRB Agent Report</a></li>
                         <li><a href="{{ route('report.nonBankPaymentReport') }}">Non bank payment report</a></li>
+                        <li><a href="{{ route('wallet.endbalance') }}">Wallet end balance report</a></li>
+                        <li><a href="{{ route('report.adminKyc') }}">Admin kyc report</a></li>
 
                 </ul>
             </li>

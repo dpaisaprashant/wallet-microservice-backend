@@ -5,6 +5,7 @@ namespace App\Wallet\Report\Repositories;
 
 
 use App\Models\FundRequest;
+use App\Models\KhaltiUserTransaction;
 use App\Models\LoadTestFund;
 use App\Models\MerchantTransaction;
 use App\Models\NchlAggregatedPayment;
@@ -40,6 +41,20 @@ class ReconciliationReportRepository extends AbstractReportRepository
     public function totalPaypointTransactionCount()
     {
         return TransactionEvent::where('transaction_type', UserTransaction::class)
+            ->filter($this->request)
+            ->count();
+    }
+
+    public function totalKhaltiTransactionAmount()
+    {
+        return TransactionEvent::where('transaction_type', KhaltiUserTransaction::class)
+            ->filter($this->request)
+            ->sum('amount');
+    }
+
+    public function totalKhaltiTransactionCount()
+    {
+        return TransactionEvent::where('transaction_type', KhaltiUserTransaction::class)
             ->filter($this->request)
             ->count();
     }
@@ -219,6 +234,26 @@ class ReconciliationReportRepository extends AbstractReportRepository
             ->count();
     }
 
+    //REFUND
+    //refund for successful transaction -> add to load
+    public function totalSuccessfulTransactionRefundAmount()
+    {
+        return TransactionEvent::where('transaction_type', LoadTestFund::class)
+            ->whereHas('refundTransaction')
+            ->filter($this->request)
+            ->sum('amount');
+    }
+
+    public function totalSuccessfulTransactionRefundCount()
+    {
+        return TransactionEvent::where('transaction_type', LoadTestFund::class)
+            ->whereHas('refundTransaction')
+            ->filter($this->request)
+            ->count();
+    }
+
+    //refund for unsuccessful transaction but balance deduct ->
+
 
     public function totalRoundOffAmount()
     {
@@ -262,7 +297,8 @@ class ReconciliationReportRepository extends AbstractReportRepository
     {
         return $this->totalPaypointTransactionAmount() + $this->totalNchlBankTransferAmount()
             + $this->totalCommissionAmount() + $this->totalUserToMerchantAmount()
-            + $this->totalNchlAggregatedPaymentAmount() + $this->totalUserToMerchantEventTicketPaymentAmount();
+            + $this->totalNchlAggregatedPaymentAmount() + $this->totalUserToMerchantEventTicketPaymentAmount()
+            + $this->totalKhaltiTransactionAmount();
     }
 
 }

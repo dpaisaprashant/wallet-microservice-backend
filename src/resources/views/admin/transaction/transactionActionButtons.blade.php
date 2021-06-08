@@ -26,4 +26,6 @@
     @include('admin.transaction.nchlLoadTransaction.response', ['transaction' => $transaction->transactionable])
     <a href="{{ route('nchl.loadTransaction.detail', $transaction->transaction_id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
 
+@elseif($transaction->transaction_type == 'App\Models\KhaltiUserTransaction')
+    <a href="{{ route('khalti.payment.detail', $transaction->transaction_id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
 @endif

@@ -14,7 +14,6 @@ use Illuminate\Http\Request;
 class TransactionEvent extends Model
 {
     use BelongsToUser, MorphOneCommission;
-
     protected $table = 'transaction_events';
     protected $connection = 'dpaisa';
     protected $guarded = [];
@@ -74,6 +73,7 @@ class TransactionEvent extends Model
         return $user;
     }
 
+
     public function selectedMonthTransactions($year, $month, $transactionType)
     {
         return $this->whereYear('created_at', '=', $year)
@@ -81,6 +81,11 @@ class TransactionEvent extends Model
             ->whereTransactionType($transactionType)
             ->with('transactionable')
             ->get();
+    }
+
+    public function refundTransaction()
+    {
+        return $this->hasOne(LoadTestFund::class, 'pre_transaction_id', 'pre_transaction_id');
     }
 
 }

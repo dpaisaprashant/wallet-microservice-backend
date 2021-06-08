@@ -234,6 +234,26 @@ class ReconciliationReportRepository extends AbstractReportRepository
             ->count();
     }
 
+    //REFUND
+    //refund for successful transaction -> add to load
+    public function totalSuccessfulTransactionRefundAmount()
+    {
+        return TransactionEvent::where('transaction_type', LoadTestFund::class)
+            ->whereHas('refundTransaction')
+            ->filter($this->request)
+            ->sum('amount');
+    }
+
+    public function totalSuccessfulTransactionRefundCount()
+    {
+        return TransactionEvent::where('transaction_type', LoadTestFund::class)
+            ->whereHas('refundTransaction')
+            ->filter($this->request)
+            ->count();
+    }
+
+    //refund for unsuccessful transaction but balance deduct ->
+
 
     public function totalRoundOffAmount()
     {

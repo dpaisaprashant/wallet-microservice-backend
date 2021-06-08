@@ -3,8 +3,20 @@
     <?php $date = explode(' ', $event->created_at) ?>
     <td>{{ $date[0] }}</td>
     <td>{{ $date[1] }}</td>
-    <td>TEST LOAD FUND</td>
-    <td>TEST LOAD FUND</td>
+    <td>
+        @if($event->pre_transaction_id)
+            REFUND For: {{ $event->pre_transaction_id }}
+        @else
+            TEST LOAD FUND
+        @endif
+    </td>
+    <td>
+        @if($event->pre_transaction_id)
+            REFUND
+        @else
+            TEST LOAD FUND
+        @endif
+    </td>
     <td>
         <span class="badge badge-primary">{{ 'COMPLETE' }}</span>
     </td>

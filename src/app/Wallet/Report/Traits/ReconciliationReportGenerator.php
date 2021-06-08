@@ -18,6 +18,12 @@ trait ReconciliationReportGenerator
                 "transaction_type" => "debit"
             ],
 
+            'Khalti' => [
+                "amount" => $repository->totalKhaltiTransactionAmount() / 100,
+                "count" => $repository->totalKhaltiTransactionCount(),
+                "transaction_type" => "debit"
+            ],
+
             'NPay' => [
                 "amount" => $repository->totalNPayTransactionAmount() / 100,
                 "count" => $repository->totalNPayTransactionCount(),
@@ -47,6 +53,12 @@ trait ReconciliationReportGenerator
                 "count" => $repository->totalTestFundsCount(),
                 "transaction_type" => "credit"
             ],
+
+            /*'Refund' => [
+                "amount" => $repository->totalRefundAmount() / 100,
+                "count" => $repository->totalRefundCount(),
+                "transaction_type" => "credit"
+            ],*/
 
             'Referral' => [
                 "amount" => $repository->totalReferralAmount() / 100,

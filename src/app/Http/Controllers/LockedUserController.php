@@ -15,7 +15,12 @@ class LockedUserController extends Controller
     public function index(Request $request)
     {
         $length = 15;
-        $users = User::with('userLoginHistories')->get();
+        //$users = User::with('userLoginHistories')->get();
+        $users = User::whereHas('userLoginHistories', function ($query) {
+            return $query->where("status", 0)->where("created_at", ">", now()->subMinutes(User::LOCK_MINUTES));
+        })->get();
+
+
         $users = $users->filter(function (User $value){
             if ($value->isLocked())  {
                 return $value;

@@ -128,6 +128,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/user/profile/user-graph-data', 'UserController@userYearlyGraph')->name('user.yearly.graph');
         Route::post('/user/profile/user-vendor-graph-data', 'UserController@userYearlyVendorGraph')->name('user.yearly.vendor.graph');
 
+        Route::post('/user/update-referral-code/{id}', 'UserController@referralCode')->name('user.referralCode');
         Route::post('/user/update-referral-bonuses/{id}', 'UserController@referralBonus')->name('user.referralBonus');
         Route::post('/user/update-card-load-commission/{id}', 'UserController@cardLoadCommission')->name('user.cardLoadCommission');
         /**
@@ -200,9 +201,14 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('transaction/nicasia-cybesource-load-transaction','TransactionController@nicAsiaCyberSourceLoad')->name('nicasia.cyberSourceLoad');
         Route::get('transaction/nicasia-cybesource-load-transaction/detail/{id}', 'TransactionController@nicAsiaCyberSourceLoadDetail')->name('nicasia.cyberSourceLoadTransaction.detail');
 
+        //Khalti
+        Route::get('transaction/khalti-payment-transaction/detail/{id}', 'TransactionController@khaltiPaymentDetail')->name('khalti.payment.detail');
+
 
         Route::get('/transaction-detail', 'TransactionController@transactionDetail')->name('transactionDetail');
 
+        //problematic payments
+        Route::get('/transaction/problematic-payments', 'PreTransactionController@problematicPayment')->name('problematic.payments');
 
         //failed transaction
         Route::get('/failed-user-transaction', 'TransactionController@failedUserTransaction')->name('userTransaction.failed')->middleware('permission:Failed paypoint view');
@@ -302,6 +308,20 @@ Route::group(['prefix' => 'admin'], function () {
         Route::match(['get', 'post'], '/load-test-fund/create', 'LoadTestFundController@create')->name('loadTestFund.create');
 
         /**
+         * Refund
+         */
+        Route::get('/refunds', 'RefundController@index')->name('refund.index');
+        Route::match(['get', 'post'], '/refund/create', 'RefundController@create')->name('refund.create');
+
+        /**
+         * Repost transaction
+         */
+        Route::match(['get', 'post'], '/repost/npay', 'RepostController@npay')->name('repost.npay');
+        Route::match(['get', 'post'], '/repost/nps', 'RepostController@nps')->name('repost.nps');
+        Route::match(['get', 'post'], '/repost/connectIPS', 'RepostController@connectIPS')->name('repost.connectIPS');
+
+
+        /**
          * Report
          */
         Route::get('/report/monthly', 'ReportController@monthly')->name('report.monthly')->middleware('permission:Monthly report view');
@@ -309,6 +329,11 @@ Route::group(['prefix' => 'admin'], function () {
         //report (npay, paypoint)
         Route::get('/report/paypoint', 'ReportController@paypoint')->name('report.paypoint');
         Route::get('/report/npay', 'ReportController@npay')->name('report.npay');
+        /*
+ * wallet end balance Report
+ * */
+
+        Route::get('/report/wallet-end-balance','ReportController@walletEndBalance')->name('wallet.endbalance');
 
         //Graph
         Route::post('/report/monthly/transaction-graph-data', 'GraphReportController@monthlyTransactionGraph')->name('report.monthly.graph');

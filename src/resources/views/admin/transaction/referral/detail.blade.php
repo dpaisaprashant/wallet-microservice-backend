@@ -11,6 +11,10 @@
                             <dt class="col-md-3 text-right">Service Type</dt>
                             <dd class="col-md-8">Referral</dd>
 
+                            <dt class="col-md-3 text-right">Id</dt>
+                            <dd class="col-md-8">
+                                    Rs.{{ $transaction->id }}
+                            </dd>
                             <dt class="col-md-3 text-right">Amount</dt>
                             <dd class="col-md-8">
                                     @if($user->id == $transaction->referred_to)

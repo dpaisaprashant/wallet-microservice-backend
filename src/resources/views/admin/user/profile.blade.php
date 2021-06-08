@@ -19,6 +19,7 @@
                             </h2>
                             <h4>Joined: {{ date('M d, Y', strtotime($user->created_at)) }}</h4>
                             <h4>Number: {{ $user->mobile_no }}</h4>
+                            <h4>Email: {{ $user->email ?? "" }}</h4>
 
                             @if(!empty($user->kyc))
                                 <h4>Address: {{ $user->kyc->district }}, Province {{ $user->kyc->province }}</h4>
@@ -180,6 +181,7 @@
                         <li><a class="nav-link @if($activeTab == 'userLoginHistoryAudit') active @endif" data-toggle="tab" href="#userLoginHistoryAudit">User Login History Audit</a></li>
                         {{--<li><a class="nav-link @if($activeTab == 'transaction') active @endif" data-toggle="tab" href="#transaction">Transaction</a></li>--}}
                         <li><a class="nav-link @if($activeTab == 'cardLoadCommission') active @endif" data-toggle="tab" href="#cardLoadCommission">Commission</a></li>
+                        <li><a class="nav-link @if($activeTab == 'referralCode') active @endif" data-toggle="tab" href="#referralCode">Referral Code</a></li>
                         <li><a class="nav-link @if($activeTab == 'referralBonus') active @endif" data-toggle="tab" href="#referralBonus">Referral Bonus</a></li>
                         <li><a class="nav-link" data-toggle="tab" href="#limit">Limits</a></li>
                         <li><a class="nav-link" data-toggle="tab" href="#wallet">Wallet</a></li>
@@ -199,6 +201,7 @@
                         @include('admin.user.profile.tabs.auditTrial.userLoginHistoryAuditTrial')
                         {{--@include('admin.user.profile.tabs.allSuccessfulTransactions')--}}
                         @include('admin.user.profile.tabs.cardLoadCommission')
+                        @include('admin.user.profile.tabs.referralCode')
                         @include('admin.user.profile.tabs.referralBonus')
                         @include('admin.user.profile.tabs.limit')
                         @include('admin.user.profile.tabs.wallet')

@@ -86,7 +86,8 @@ class ReferralUsedBonusNotification extends Notification
 
     public function toDatabase($notifiable)
     {
-        $userInfo = $this->referredFromUser->name . " ( " . $this->referredFromUser->mobile_no . " )";
+        //$userInfo = $this->referredFromUser->name . " ( " . $this->referredFromUser->mobile_no . " )";
+        $userInfo = $this->referredFromUser->name;
         $description = $this->type == UserReferralBonusTransaction::TYPE_FIRST_TRANSACTION
             ? "You received referral bonus of Rs.{$this->amount} for first transaction"
             : "You received referral bonus of Rs.{$this->amount} for KYC Acceptance";

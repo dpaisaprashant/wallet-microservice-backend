@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\SaveFCMNotificationEvent;
 use App\Events\SendFcmNotification;
+use App\Models\Admin;
 use App\Models\AdminUserKYC;
 use App\Models\NICAsiaCyberSourceLoadTransaction;
 use App\Models\TransactionEvent;
@@ -11,6 +12,7 @@ use App\Models\User;
 use App\Models\UserCommissionValue;
 use App\Models\UserKYC;
 use App\Models\UserLoadTransaction;
+use App\Models\UserReferral;
 use App\Models\UserReferralBonus;
 use App\Models\UserReferralLimit;
 use App\Traits\CollectionPaginate;
@@ -29,25 +31,31 @@ class UserController extends Controller
 
     use CollectionPaginate;
 
-    private function allAudits($user, $request) {
+    public $admin_data;
+
+    private function allAudits($user, $request)
+    {
         $IBehaviour = new BAll();
         $auditTrial = new AuditTrial($IBehaviour);
-        return $this->collectionPaginate(50, $auditTrial->setRequest($request)->createTrial($user), $request, 'all-audit-trials') ;
+        return $this->collectionPaginate(50, $auditTrial->setRequest($request)->createTrial($user), $request, 'all-audit-trials');
     }
 
-    private function nPayAudits($user) {
+    private function nPayAudits($user)
+    {
         $IBehaviour = new BNpay();
         $auditTrial = new AuditTrial($IBehaviour);
         return $auditTrial->createTrial($user);
     }
 
-    private function payPointAudits($user) {
+    private function payPointAudits($user)
+    {
         $IBehaviour = new BPayPoint();
         $auditTrial = new AuditTrial($IBehaviour);
         return $auditTrial->createTrial($user);
     }
 
-    private function loginHistoryAudits($user) {
+    private function loginHistoryAudits($user)
+    {
         $IBehaviour = new BLoginHistory();
         $auditTrial = new AuditTrial($IBehaviour);
         return $auditTrial->createTrial($user);
@@ -75,7 +83,7 @@ class UserController extends Controller
     {
         $kyc = $repository->userKYC();
 
-        if ($request->status == 'accepted' ) {
+        if ($request->status == 'accepted') {
             $repository->acceptKYC($kyc);
         } elseif ($request->status = 'rejected') {
             $repository->rejectKYC($kyc);
@@ -86,47 +94,62 @@ class UserController extends Controller
 
     public function profile($id, Request $request)
     {
+
         $length = 15;
         $activeTab = 'kyc';
         if ($request->has('user-load-fund') || $request->transaction_type === 'user-load-fund') {
             $activeTab = 'loadFund';
         }
-        if ($request->has('user-transaction-event') || $request->transaction_type === 'user-transaction-event'){
+        if ($request->has('user-transaction-event') || $request->transaction_type === 'user-transaction-event') {
             $activeTab = 'transaction';
         }
-        if ($request->has('all-audit-trials') || $request->transaction_type === 'all-audit-trials'){
+        if ($request->has('all-audit-trials') || $request->transaction_type === 'all-audit-trials') {
             $activeTab = 'allAuditTrial';
         }
 
-        if ($request->has('user-login-history-audit') || $request->transaction_type === 'user-login-history-audit'){
+        if ($request->has('user-login-history-audit') || $request->transaction_type === 'user-login-history-audit') {
             $activeTab = 'userLoginHistoryAudit';
         }
 
         //$user = User::with(['userLoadTransactions', 'userLoginHistories', 'userCheckPayment', 'fromFundTransfers', 'receiveFundTransfers', 'fromFundRequests', 'receiveFundRequests', 'kyc', 'wallet'])->findOrFail($id);
-        $user = User::with(['userReferralLimit', 'preTransactions', 'requestInfos', 'userLoginHistories', 'fromFundTransfers', 'receiveFundTransfers', 'fromFundRequests', 'receiveFundRequests', 'kyc', 'wallet', 'agent', 'userReferralBonus'])->findOrFail($id);
+        $user = User::with(['userReferral', 'userReferralLimit', 'preTransactions', 'requestInfos', 'userLoginHistories', 'fromFundTransfers', 'receiveFundTransfers', 'fromFundRequests', 'receiveFundRequests', 'kyc', 'wallet', 'agent', 'userReferralBonus'])->findOrFail($id);
 
         //Audit Trial section
         $allAudits = $this->allAudits($user, $request);
         //$nPayAudits = $this->nPayAudits($user);
-       // $payPointAudits = $this->payPointAudits($user);
+        // $payPointAudits = $this->payPointAudits($user);
         $loginHistoryAudits = $this->loginHistoryAudits($user);
 
         //$userLoadTransactions = UserLoadTransaction::with('commission')->where('user_id', $user->id)->where('status', 'COMPLETED')->latest()->filter($request)->paginate($length,['*'], 'user-load-fund');
         $loadPTIds = TransactionEvent::where('transaction_type', UserLoadTransaction::class)->where('user_id', $user->id)->pluck('pre_transaction_id');
-        $userLoadTransactions = UserLoadTransaction::with('commission')->whereIn('pre_transaction_id',$loadPTIds)->where('status', 'COMPLETED')->latest()->filter($request)->paginate($length,['*'], 'user-load-fund');
-        $userTransactionEvents = TransactionEvent::where('user_id', $user->id)->latest()->filter($request)->paginate($length, ['*'],'user-transaction-event');
-        $userTransactionStatements = TransactionEvent::where('user_id', $user->id)->latest()->filter($request)->paginate($length, ['*'],'user-transaction-statement');
+        $userLoadTransactions = UserLoadTransaction::with('commission')->whereIn('pre_transaction_id', $loadPTIds)->where('status', 'COMPLETED')->latest()->filter($request)->paginate($length, ['*'], 'user-load-fund');
+        $userTransactionEvents = TransactionEvent::where('user_id', $user->id)->latest()->filter($request)->paginate($length, ['*'], 'user-transaction-event');
+        $userTransactionStatements = TransactionEvent::where('user_id', $user->id)->latest()->filter($request)->paginate($length, ['*'], 'user-transaction-statement');
         $loadFundSum = $user->loadedFundSum();
         $userLoadCommission = (new UserCommissionValue())->getUserCommission($user->id, NICAsiaCyberSourceLoadTransaction::class);
+        $user_id = UserKYC::where('user_id', $id)->first();
 
-        return view('admin.user.profile')->with(compact('userLoadCommission','loginHistoryAudits','allAudits','user', 'loadFundSum', 'activeTab', 'userLoadTransactions', 'userTransactionStatements','userTransactionEvents'));
+        if ($user_id != null) {
+            $ids = $user_id->id;
+            $admin = AdminUserKYC::where('kyc_id', $ids)->orderBy('created_at', 'DESC')->first();
+            $admin_id = optional($admin)->admin_id;
+            $admin_details = Admin::where('id', $admin_id)->first();
+        } else {
+            $admin_details = collect(array('nodata'));
+            $admin = collect(array('nodata'));
+            $admin_data = collect(array('nodata'));
+        }
+
+
+        return view('admin.user.profile')->with(compact('userLoadCommission', 'admin_details', 'admin', 'loginHistoryAudits', 'allAudits', 'user', 'loadFundSum', 'activeTab', 'userLoadTransactions', 'userTransactionStatements', 'userTransactionEvents'));
     }
 
 
     public function kyc($id)
     {
         $user = User::with('kyc')->findOrFail($id);
-        return view('admin.user.kyc')->with(compact('user'));
+        $admin = 'admin';
+        return view('admin.user.kyc')->with(compact('user', 'admin'));
     }
 
     public function userYearlyGraph(Request $request)
@@ -140,7 +163,7 @@ class UserController extends Controller
             ->filter($request)
             ->get();
 
-        $groupedTransactions =  $transactions
+        $groupedTransactions = $transactions
             ->groupBy(function ($val) {
                 return Carbon::parse($val->created_at)->format('F');
             });
@@ -169,7 +192,7 @@ class UserController extends Controller
             ->filter($request)
             ->get();
 
-        $groupedTransactions =  $transactions
+        $groupedTransactions = $transactions
             ->groupBy('vendor');
 
         //return num of transactions and sum of transaction amount in each grouped date
@@ -221,6 +244,36 @@ class UserController extends Controller
         return view('admin.user.bankAccount')->with(compact('accounts', 'user'));
     }
 
+    public function referralCode(Request $request, $id)
+    {
+        if (empty($request->referral_code)) {
+            return redirect()->back()->with('error', 'Referral code cannot be empty');
+        }
+
+        $user = User::with('userReferral')->where('id', $id)->first();
+        $oldReferralCode = $user->userReferral->code;
+        $newReferralCode = $request->referral_code;
+
+        if ($oldReferralCode == $newReferralCode) {
+            return redirect()->back()->with('error', 'Same referral code');
+        }
+
+        $duplicateReferralCount = UserReferral::where('code', $newReferralCode)->count();
+        if ($duplicateReferralCount) {
+            return redirect()->back()->with('error', 'Duplicate referral code');
+        }
+
+        UserReferral::updateorCreate(
+            ['user_id' => $user->id],
+            [
+                'code' => $newReferralCode
+            ]
+        );
+
+        return redirect()->back()->with('success', 'referral code update successfully');
+
+    }
+
     public function referralBonus(Request $request, $id)
     {
         $user = User::where('id', $id)->first();
@@ -249,7 +302,6 @@ class UserController extends Controller
                 'first_transaction_amount' => $request->first_transaction_amount
             ]
         );
-
 
 
         return redirect()->back()->with('success', 'referral bonus update successfully');

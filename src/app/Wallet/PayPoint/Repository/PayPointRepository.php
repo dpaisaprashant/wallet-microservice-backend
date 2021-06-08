@@ -6,6 +6,7 @@ namespace App\Wallet\PayPoint\Repository;
 use App\Models\UserCheckPayment;
 use App\Models\UserTransaction;
 use App\Traits\CollectionPaginate;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class PayPointRepository

@@ -30,7 +30,7 @@
                         <h5>Select User</h5>
                     </div>
                     <div class="ibox-content">
-                        <form method="post" action="{{ route('loadTestFund.create') }}" enctype="multipart/form-data" id="transactionIdForm">
+                        <form method="post" action="{{ route('loadTestFund.create') }}" enctype="multipart/form-data" id="loadForPayppointForm">
                             @csrf
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">User</label>
@@ -76,13 +76,13 @@
     <script src="{{ asset('admin/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
 
     <script>
-        /*$('form').on('submit', function (e) {
+        $('form').on('submit', function (e) {
 
             e.preventDefault();
 
             swal({
                 title: "Are you sure?",
-                text: "Load Test Fund for this transaction will be created",
+                text: "Amount will be loaded to this user's wallet",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#18a689",
@@ -94,7 +94,7 @@
                 $('#handleBtn').click();
                 swal.close();
             })
-        });*/
+        });
     </script>
 
 

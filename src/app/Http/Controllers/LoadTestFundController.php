@@ -50,7 +50,7 @@ class LoadTestFundController extends Controller
     }
 
 
-    public function paypointCreate(Request $request)
+    public function paypointLoadCreate(Request $request)
     {
         $user = User::where('id', 1356)->firstorFail();
         if ($request->isMethod('post')) {

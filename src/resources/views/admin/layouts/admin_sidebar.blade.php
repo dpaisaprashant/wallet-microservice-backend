@@ -205,7 +205,7 @@ $url = url()->current();
                 </ul>
             </li>--}}
 
-            <li @if(preg_match('/load-for-paypoint/i', $url)) class="active" @endif>
+            {{--<li @if(preg_match('/load-for-paypoint/i', $url)) class="active" @endif>
                 <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Load For Paypoint</span><span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
@@ -213,7 +213,7 @@ $url = url()->current();
 
                     <li><a href="{{ route('paypoint.loadTestFund.create') }}">Create Load For Paypoint</a></li>
                 </ul>
-            </li>
+            </li>--}}
 
             <li @if(preg_match('/refund/i', $url)) class="active" @endif>
                 <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Refund</span><span

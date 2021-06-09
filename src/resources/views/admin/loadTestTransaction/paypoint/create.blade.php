@@ -79,6 +79,7 @@
         $('form').on('submit', function (e) {
 
             e.preventDefault();
+            let formObj = $(this);
 
             swal({
                 title: "Are you sure?",
@@ -90,9 +91,8 @@
                 closeOnConfirm: true,
                 closeOnClickOutside: true
             }, function () {
-                console.log(this)
-                $('#handleBtn').trigger('click');
-                swal.close();
+                console.log(formObj)
+                formObj.submit()
             })
         });
     </script>

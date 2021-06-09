@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\NchlBankTransfer;
 use App\Models\TransactionEvent;
+use App\Wallet\Commission\Models\Commission;
+use App\Wallet\Report\Repositories\CommissionReportRepository;
 use App\Wallet\Report\Repositories\WalletEndBalanceRepository;
 use App\Wallet\TransactionEvent\Repository\NPayReportRepository;
 use App\Wallet\TransactionEvent\Repository\PayPointReportRepository;
@@ -54,5 +57,27 @@ class ReportController extends Controller
             $totalCount = null;
         }
         return view('admin.report.walletEndBalance',compact('datas','totalCount','totalSum'));
+    }
+
+    public function commissionReport(CommissionReportRepository $repository,Request $request){
+        //We get transactiontype from the form.
+        //According to the transaction type we find out the transaction_id(Foreign key)
+        //from the transaction_Events table.
+        //transaction_id from the transaction events == id from the commission table
+        //In commission table commissionable_id == id from the transaction events
+        $selectedTransactionType = $request->get('transaction_type');
+
+
+        $transactionsEvents = TransactionEvent::with('commission')->where('transaction_type',$selectedTransactionType)->filter(request())->get();
+
+        $commissionId = $transactionsEvents->transform(function ($value){
+            if(optional($value->commission)->module == 'commission'){
+                return optional($value->commission)->id;
+            }
+        })->filter();
+
+        $transactionTotalAmount = TransactionEvent::whereIn('transaction_id',$commissionId)->where('transaction_type',Commission::class)->sum('amount');
+        $transactionTotalCount = TransactionEvent::whereIn('transaction_id',$commissionId)->where('transaction_type',Commission::class)->count();
+        return view('admin.report.commissionReport',compact('transactionTotalAmount','transactionTotalCount','selectedTransactionType'));
     }
 }

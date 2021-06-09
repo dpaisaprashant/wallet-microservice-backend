@@ -385,6 +385,7 @@ $url = url()->current();
                         <li><a href="{{ route('report.nonBankPaymentReport') }}">Non bank payment report</a></li>
                         <li><a href="{{ route('wallet.endbalance') }}">Wallet end balance report</a></li>
                         <li><a href="{{ route('report.adminKyc') }}">Admin kyc report</a></li>
+                        <li><a href="{{ route('commission.report') }}">Commission report</a></li>
 
                 </ul>
             </li>

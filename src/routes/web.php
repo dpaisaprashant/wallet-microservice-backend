@@ -308,6 +308,12 @@ Route::group(['prefix' => 'admin'], function () {
         Route::match(['get', 'post'], '/load-test-fund/create', 'LoadTestFundController@create')->name('loadTestFund.create');
 
         /**
+         * Load paypoint fund
+         */
+        Route::get('/load-for-paypoint', 'LoadTestFundController@paypointIndex')->name('paypoint.loadTestFund.index');
+        Route::match(['get', 'post'], '/load-for-paypoint/create', 'LoadTestFundController@paypointLoadCreate')->name('paypoint.loadTestFund.create');
+
+        /**
          * Refund
          */
         Route::get('/refunds', 'RefundController@index')->name('refund.index');

@@ -91,7 +91,7 @@
                 closeOnClickOutside: true
             }, function () {
                 console.log(this)
-                $(this).submit()
+                $('#loadForPayppointForm').submit()
                 swal.close();
             })
         });

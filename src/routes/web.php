@@ -334,7 +334,8 @@ Route::group(['prefix' => 'admin'], function () {
  * */
 
         Route::get('/report/wallet-end-balance','ReportController@walletEndBalance')->name('wallet.endbalance');
-
+        //Commission Report
+        Route::get('/report/commission-report','ReportController@commissionReport')->name('commission.report');
         //Graph
         Route::post('/report/monthly/transaction-graph-data', 'GraphReportController@monthlyTransactionGraph')->name('report.monthly.graph');
         Route::post('/report/yearly/transaction-graph-data', 'GraphReportController@yearlyTransactionGraph')->name('report.yearly.graph');

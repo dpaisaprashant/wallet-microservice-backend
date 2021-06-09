@@ -21,8 +21,9 @@ class TransactionController extends Controller
         $transactions = $repository->paginatedTransactions();
         $totalTransactionCount = $repository->transactionsCount();
         $totalTransactionAmountSum = $repository->transactionAmountSum();
+        $getAllUniqueVendors = $repository->getUniqueVendors();
 
-        return view('admin.transaction.complete')->with(compact('transactions', 'totalTransactionAmountSum', 'totalTransactionCount'));
+        return view('admin.transaction.complete')->with(compact('transactions','getAllUniqueVendors', 'totalTransactionAmountSum', 'totalTransactionCount'));
     }
 
     //USER TO USER FUND TRANSFER

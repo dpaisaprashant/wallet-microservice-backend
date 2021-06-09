@@ -114,4 +114,9 @@ class TransactionEventRepository
         }
     }
 
+    public function getUniqueVendors(){
+        $vendors = TransactionEvent::groupBy('vendor')->pluck('vendor');
+        return $vendors;
+    }
+
 }

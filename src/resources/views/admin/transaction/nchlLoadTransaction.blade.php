@@ -164,6 +164,7 @@
                                 <thead>
                                 <tr>
                                     <th>S.No.</th>
+                                    <th>PreTransaction ID</th>
                                     <th>Transaction ID</th>
                                     <th>Reference ID</th>
                                     <th>User</th>
@@ -181,6 +182,7 @@
                                 @foreach($transactions as $transaction)
                                     <tr class="gradeC">
                                         <td>{{ $loop->index + ($transactions->perPage() * ($transactions->currentPage() - 1)) + 1 }}</td>
+                                        <td>{{$transaction->pre_transaction_id}}</td>
                                         <td>{{ $transaction->transaction_id }}</td>
                                         <td>{{ $transaction->reference_id }}</td>
                                         <td>

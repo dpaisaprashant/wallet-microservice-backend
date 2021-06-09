@@ -4,6 +4,7 @@ use App\Wallet\Report\Http\Controllers\NRBReportController;
 use App\Wallet\Report\Http\Controllers\SubscriberReportController;
 use App\Wallet\Report\Http\Controllers\UserWalletReportController;
 use App\Wallet\Report\Http\Controllers\WalletReportController;
+use App\Wallet\Report\Http\Controllers\AdminKycController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'admin/report', 'middleware' => ['web','auth']], function () {
@@ -23,4 +24,7 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web','auth']], funct
 
     //Non bank payment
     Route::get('/non-bank-payment',[NRBReportController::class,'nonBankPaymentReport'])->name('report.nonBankPaymentReport');
+
+    //AdminKyc
+    Route::get('/adminKyc',[AdminKycController::class,'getAdminData'])->name('report.adminKyc');
 });

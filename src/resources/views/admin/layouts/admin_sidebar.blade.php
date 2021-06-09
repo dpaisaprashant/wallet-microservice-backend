@@ -205,6 +205,16 @@ $url = url()->current();
                 </ul>
             </li>--}}
 
+            {{--<li @if(preg_match('/load-for-paypoint/i', $url)) class="active" @endif>
+                <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Load For Paypoint</span><span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="{{ route('paypoint.loadTestFund.index') }}">View Load For Paypoint</a></li>
+
+                    <li><a href="{{ route('paypoint.loadTestFund.create') }}">Create Load For Paypoint</a></li>
+                </ul>
+            </li>--}}
+
             <li @if(preg_match('/refund/i', $url)) class="active" @endif>
                 <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Refund</span><span
                         class="fa arrow"></span></a>
@@ -374,6 +384,8 @@ $url = url()->current();
                         <li><a href="{{ route('report.agent') }}">NRB Agent Report</a></li>
                         <li><a href="{{ route('report.nonBankPaymentReport') }}">Non bank payment report</a></li>
                         <li><a href="{{ route('wallet.endbalance') }}">Wallet end balance report</a></li>
+                        <li><a href="{{ route('report.adminKyc') }}">Admin kyc report</a></li>
+                        <li><a href="{{ route('commission.report') }}">Commission report</a></li>
 
                 </ul>
             </li>

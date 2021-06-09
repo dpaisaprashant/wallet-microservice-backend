@@ -186,6 +186,7 @@
                                 <tr>
                                     <th>s.No.</th>
                                     <th>UID</th>
+                                    <th>PreTransaction ID</th>
                                     <th>Transaction ID</th>
                                     <th>Vendor</th>
                                     <th>RefStan</th>
@@ -206,6 +207,7 @@
                                         <td>
                                             {{ $transaction->userTransaction->transactions->uid ?? '---'}}
                                         </td>
+                                        <td>{{$transaction->pre_transaction_id}}</td>
                                         <td>
                                             {{ $transaction->transaction_id }}
                                         </td>

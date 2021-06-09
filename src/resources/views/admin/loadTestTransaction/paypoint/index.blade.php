@@ -1,9 +1,10 @@
 @extends('admin.layouts.admin_design')
 @section('content')
 
+
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>All Transactions</h2>
+            <h2>Load for Paypoint Transactions</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -14,7 +15,7 @@
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>All</strong>
+                    <strong>Load for Paypoint Transaction</strong>
                 </li>
             </ol>
         </div>
@@ -63,31 +64,13 @@
 
                                     </div>
 
-                                    <div class="row" style="margin-top: 20px">
-                                       {{-- <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-6">
                                             <label for="ionrange_amount">Amount</label>
                                             <input type="text" name="amount" class="ionrange_amount">
-                                        </div>--}}
-
-                                        <div class="col-md-3">
-                                            <div class="input-group date">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-dollar"></i>
-                                                </span>
-                                                <input type="number" class="form-control" placeholder="From Amount" name="from_amount" autocomplete="off" value="{{ !empty($_GET['from_amount']) ? $_GET['from_amount'] : '' }}">
-                                            </div>
                                         </div>
 
-                                        <div class="col-md-3">
-                                            <div class="input-group date">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-dollar"></i>
-                                                </span>
-                                                <input type="number" class="form-control" placeholder="To Amount" name="to_amount" autocomplete="off" value="{{ !empty($_GET['to_amount']) ? $_GET['to_amount'] : '' }}">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-3">
+                                        <div class="col-md-3" style="padding-top: 40px;">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
@@ -96,7 +79,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3">
+                                        <div class="col-md-3" style="padding-top: 40px;">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
@@ -107,7 +90,7 @@
                                     </div>
 
                                     <div class="row" style="margin-top: 40px;">
-                                        <div class="col-md-3">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <select data-placeholder="Sort By..." class="chosen-select"  tabindex="2" name="sort">
                                                     <option value="" selected disabled>Sort By...</option>
@@ -128,15 +111,13 @@
                                                     <option value="" selected disabled>Select Vendor...</option>
                                                     <option value="">All</option>
                                                     @if(!empty($_GET['vendor']))
-
-                                                        @foreach($getAllUniqueVendors as $getAllUniqueVendor)
-                                                            <option value="{{$getAllUniqueVendor}}"
-                                                                    @if($_GET['vendor']  == $getAllUniqueVendor) selected @endif >{{$getAllUniqueVendor}}</option>
+                                                        @foreach($vendors as $vendor)
+                                                            <option value="{{$vendor}}"
+                                                                    @if($_GET['vendor']  == $vendor) selected @endif >{{$vendor}}</option>
                                                         @endforeach
-
                                                     @else
-                                                        @foreach($getAllUniqueVendors as $getAllUniqueVendor)
-                                                            <option value="{{$getAllUniqueVendor}}">{{$getAllUniqueVendor}}</option>
+                                                        @foreach($vendors as $vendor)
+                                                            <option value="{{$vendor}}">{{$vendor}}</option>
                                                         @endforeach
                                                     @endif
                                                 </select>
@@ -160,33 +141,12 @@
                                                 </select>
                                             </div>
                                         </div>
-
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <select data-placeholder="Choose transaction type..." class="chosen-select"  tabindex="2" name="transaction_type">
-                                                    <option value="" selected disabled>Select Transaction Type...</option>
-                                                    <option value="">All</option>
-                                                    @if(!empty($_GET['transaction_type']))
-                                                        @foreach($transactionTypes as $key => $transactionType)
-                                                            <option value="{{ $key }}" @if($_GET['transaction_type'] == $key) selected @endif>{{ $transactionType }}</option>
-                                                        @endforeach
-                                                    @else
-                                                        @foreach($transactionTypes as $key => $transactionType)
-                                                            <option value="{{ $key }}"> {{ $transactionType }} </option>
-                                                        @endforeach
-                                                    @endif
-                                                </select>
-                                            </div>
-                                        </div>
                                     </div>
 
                                     <div>
-                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('transaction.complete') }}"><strong>Filter</strong></button>
+                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('loadTestFund.index') }}"><strong>Filter</strong></button>
                                     </div>
 
-                                    <div>
-                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs" type="submit" style="margin-right: 10px;" formaction="{{ route('transaction.complete.excel') }}"><strong>Excel</strong></button>
-                                    </div>
                                     @include('admin.asset.components.clearFilterButton')
                                 </form>
                             </div>
@@ -201,25 +161,20 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>List of all transactions</h5>
-
+                        <h5>List of all load funds</h5>
                     </div>
                     <div class="ibox-content">
-                        <h5><b>Total Count:</b> {{ $totalTransactionCount }}</h5>
-                        <h5><b>Total Amount Sum:</b> Rs. {{ $totalTransactionAmountSum }}</h5>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover dataTables-example" title="Complete transactions list">
                                 <thead>
                                 <tr>
                                     <th>S.No.</th>
-                                    <th>Pre Transaction ID</th>
+                                    <th>Admin</th>
                                     <th>UID</th>
-                                    <th>Transaction ID</th>
+                                    <th>Pre Transaction Id</th>
                                     <th>User</th>
-                                    <th>Vendor</th>
-                                    <th>Service Type</th>
+                                    <th>Description</th>
                                     <th>Amount</th>
-                                    <th>Status</th>
                                     <th>Date</th>
                                     <th>Action</th>
                                 </tr>
@@ -228,35 +183,21 @@
                                 @foreach($transactions as $transaction)
                                     <tr class="gradeC">
                                         <td>{{ $loop->index + ($transactions->perPage() * ($transactions->currentPage() - 1)) + 1 }}</td>
-                                        <td>{{ $transaction->pre_transaction_id }}</td>
+                                        <td>{{ $transaction->admin_id }}</td>
                                         <td>{{ $transaction->uid ?? '---' }}</td>
+                                        <td>{{ $transaction->pre_transaction_id ?? '---' }}</td>
                                         <td>
-                                            @if(!empty($transaction->transactionable->transaction_id))
-                                                {{ $transaction->transactionable->transaction_id}}
-                                            @elseif(!empty($transaction->transactionable->refStan))
-                                                {{ $transaction->transactionable->refStan}}
-                                            @else
-                                                {{ $transaction->id }}
-                                            @endif
+                                            <a  @can('User profile') href="{{route('user.profile', $transaction->user_id)}}" @endcan> {{ $transaction->user['mobile_no'] }} </a>
                                         </td>
-                                    <td>
-                                        <a  @can('User profile') href="{{route('user.profile', $transaction->user_id)}}" @endcan> {{ $transaction->user['mobile_no'] }} </a>
-                                    </td>
-                                    <td>
-                                        {{ $transaction->vendor }}
-                                    </td>
-                                    <td>
-                                        {{ $transaction->service_type }}
-                                    </td>
-                                    <td class="center">Rs. {{ $transaction->amount }}</td>
-                                    <td>
-                                        <span class="badge badge-primary">Complete</span>
-                                    </td>
-                                    <td class="center">{{ $transaction->created_at }}</td>
-                                    <td>
-                                        @include('admin.transaction.transactionActionButtons', ['transaction' => $transaction])
-                                    </td>
-                                </tr>
+                                        <td>
+                                            {{ $transaction->description }}
+                                        </td>
+                                        <td class="center">Rs. {{ $transaction->amount }}</td>
+                                        <td class="center">{{ $transaction->created_at }}</td>
+                                        <td>
+
+                                        </td>
+                                    </tr>
                                 @endforeach
                                 </tbody>
                             </table>
@@ -279,9 +220,9 @@
 
 @section('scripts')
 
-   @include('admin.asset.js.chosen')
-   @include('admin.asset.js.datepicker')
-   @include('admin.asset.js.datatable')
+    @include('admin.asset.js.chosen')
+    @include('admin.asset.js.datepicker')
+    @include('admin.asset.js.datatable')
     <script>
         $(document).ready(function (e) {
             let a = "Showing {{ $transactions->firstItem() }} to {{ $transactions->lastItem() }} of {{ $transactions->total() }} entries";
@@ -305,12 +246,12 @@
         });
     </script>
 
-   <script>
-       $('#excel').submit(function (e) {
+    <script>
+        $('#excel').submit(function (e) {
             e.preventDefault();
             let url = $(this).attr('action').val();
-       });
-   </script>
+        });
+    </script>
 
 @endsection
 

@@ -25,24 +25,6 @@
                             <br><br>
                         @endif
                         <br>
-
-
-                        @if($admin_details == null)
-                            <dt class="col-md-3 text-right">Admin Name</dt>
-                            <dd class="col-md-8">Nothing</dd>
-                            <dt class="col-md-3 text-right">Admin Email</dt>
-                            <dd class="col-md-8">Nothing</dd>
-                            <dt class="col-md-3 text-right">Created at</dt>
-                            <dd class="col-md-8">Nothing</dd>
-                        @else
-                            <dt class="col-md-3 text-right">Admin Name</dt>
-                            <dd class="col-md-8">{{$admin_details->name}}</dd>
-                            <dt class="col-md-3 text-right">Admin Email</dt>
-                            <dd class="col-md-8">{{$admin_details->email}}</dd>
-                            <dt class="col-md-3 text-right">Created at</dt>
-                            <dd class="col-md-8">{{\Carbon\Carbon::parse($admin_details->created_at)->format('F d, Y')}}</dd>
-                        @endif
-
                         @if(/*$user->kyc->status == 1 */ true)
                             <dt class="col-md-3 text-right" >Verification Status</dt>
                             <dd class="col-md-8">

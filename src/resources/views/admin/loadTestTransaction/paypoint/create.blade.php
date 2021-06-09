@@ -76,7 +76,7 @@
     <script src="{{ asset('admin/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
 
     <script>
-        $('form').on('submit', function (e) {
+        /*$('form').on('submit', function (e) {
 
             e.preventDefault();
             let formObj = $(this);
@@ -94,7 +94,7 @@
                 console.log(formObj)
                 formObj.submit()
             })
-        });
+        });*/
     </script>
 
 

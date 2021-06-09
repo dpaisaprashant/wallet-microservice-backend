@@ -35,7 +35,7 @@
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">User</label>
                                 <div class="col-sm-10">
-                                    <input name="user" value="{{ $user->name . "( {$user->mobile_no} )" }}" type="text" class="form-control" disabled>
+                                    <input name="user" value="{{ $user->name . " ({$user->mobile_no})" }}" type="text" class="form-control" disabled>
                                 </div>
                             </div>
 

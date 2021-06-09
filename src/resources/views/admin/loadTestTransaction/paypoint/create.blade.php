@@ -91,7 +91,7 @@
                 closeOnClickOutside: true
             }, function () {
                 console.log(this)
-                $('#handleBtn').click();
+                $(this).submit()
                 swal.close();
             })
         });

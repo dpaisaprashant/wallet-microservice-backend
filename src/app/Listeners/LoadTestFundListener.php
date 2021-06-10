@@ -8,6 +8,7 @@ use App\Models\Wallet;
 use App\Wallet\Helpers\TransactionIdGenerator;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Log;
 
 class LoadTestFundListener
 {
@@ -39,11 +40,18 @@ class LoadTestFundListener
         ]);
 
 
-        if ($event->transaction->befor_balance < $event->transaction->after_balance) {
+        Log::info("=============================REFUND======================================");
+        Log::info("user id: " . $event->transaction->user_id);
+        Log::info("main balance refund: " . $amount);
+        Log::info("bonus balance refund: " . $bonusAmount);
+        Log::info("=========================================================================");
+
+
+        if ($amount > 0) {
             event(new UserWalletUpdateEvent($event->transaction->user_id, $amount));
         }
 
-        if ($event->transaction->before_bonus_balance < $event->transaction->after_bonus_balance) {
+        if ($bonusAmount) {
             event(new UserBonusWalletUpdateEvent($event->transaction->user_id, $bonusAmount));
         }
 

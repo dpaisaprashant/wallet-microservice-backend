@@ -83,7 +83,7 @@ class AcceptKYCUserKYCObserver
                             'vendor' => 'REFERRAL',
                             'service_type' => /*$transaction->type*/ 'REFERRAL',
                             'uid' => 'REFERRAL-' . TransactionIdGenerator::generateAlphaNumeric(),
-                            'balance' => $user->wallet->getOriginal('balance') + $kycAcceptedAmount,
+                            'balance' => $user->wallet->getOriginal('balance'),
                             'bonus_balance' => $user->wallet->getOriginal('bonus_balance') + $kycAcceptedAmount,
                             'user_id' => $user->id,
                         ]);

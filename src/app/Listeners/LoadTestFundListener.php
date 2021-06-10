@@ -39,7 +39,7 @@ class LoadTestFundListener
         ]);
 
 
-        if ($event->transaction->befor_balance < $event->trasnaction->after_balance) {
+        if ($event->transaction->befor_balance < $event->transaction->after_balance) {
             event(new UserWalletUpdateEvent($event->transaction->user_id, $amount));
         }
 

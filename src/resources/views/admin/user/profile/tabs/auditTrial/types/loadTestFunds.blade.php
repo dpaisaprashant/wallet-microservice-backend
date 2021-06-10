@@ -22,8 +22,10 @@
     </td>
     <td></td>
     <td style="color: green">
-        @if($event->bonus_amount > 0)
+        @if($event->bonus_amount > 0 && $event->amount > 0)
             Rs.{{ $event->amount }} + Rs.{{ $event->bonus_amount }}
+        @elseif($event->bonus_amount > 0)
+            Rs.{{ $event->bonus_amount }}
         @else
             Rs.{{ $event->amount }}
         @endif

@@ -31,7 +31,7 @@ class LoadTestFund extends Model
 
     public function getBonusAmountAttribute()
     {
-        $amount = $this->getOriginal('after_bonus_amount') - $this->getOriginal('before_bonus_amount');
+        $amount = $this->getOriginal('after_bonus_balance') - $this->getOriginal('before_bonus_balance');
         return $amount / 100;
     }
 

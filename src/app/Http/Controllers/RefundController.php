@@ -35,11 +35,14 @@ class RefundController extends Controller
                 return redirect()->back()->with('error', "Pre transaction and user doesn't match");
             }
 
-            $currentBalance = Wallet::whereUserId($user->id)->first()->getOriginal('balance');
-            $currentBonusBalance = Wallet::whereUserId($user->id)->first()->getOriginal('bonus_balance');
+            $currentBalance = Wallet::whereUserId($user->id)->first()->balance * 100;
+            $currentBonusBalance = Wallet::whereUserId($user->id)->first()->bonus_balance * 100;
 
             if (empty($request['amount'])) $request['amount'] = 0;
             if (empty($request['bonus_amount'])) $request['bonus_amount'] = 0;
+
+            Log::info("before_balance: " . $currentBalance);
+            Log::info("after_balance: " . ($currentBalance + ($request['amount'] * 100)));
 
             $data = [
                 'pre_transaction_id' => $preTransaction->pre_transaction_id,
@@ -50,7 +53,7 @@ class RefundController extends Controller
                 'after_amount' => $currentBalance + ($request['amount'] * 100),
                 //'after_amount' => $currentBalance + ($preTransaction->getOriginal('amount')),
                 'before_bonus_balance' => $currentBonusBalance,
-                'after_bonus_balance' => $currentBonusBalance + ($request['amount'] * 100)
+                'after_bonus_balance' => $currentBonusBalance + ($request['bonus_amount'] * 100)
             ];
 
             DB::beginTransaction();

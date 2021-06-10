@@ -27,12 +27,12 @@ class LoadTestFundListener
         $bonusAmount = $event->transaction->bonus_amount * 100;
         $event->transaction->transactions()->create([
             "account" => $event->transaction->user->mobile_no,
-            "amount" => $amount,
+            "amount" => $amount + $bonusAmount,
             "vendor" => $event->transaction->pre_transaction_id ? "REFUND" : "TEST FUND",
             "user_id" => $event->transaction->user_id,
             "description" => $event->transaction->description,
             "service_type" => $event->transaction->pre_transaction_id ? "REFUND" : "LOAD_TEST_FUND",
-            "balance" => $currentBalance + $amount,
+            "balance" => $currentBalance + $amount + $bonusAmount,
             "bonus_balance" => $currentBonusBalance,
             "uid" => $event->transaction->pre_transaction_id
                 ? "REFUND-" . TransactionIdGenerator::generateAlphaNumeric(7)

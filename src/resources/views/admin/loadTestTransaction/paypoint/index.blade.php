@@ -4,7 +4,7 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Refund Transactions</h2>
+            <h2>Load for Paypoint Transactions</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -15,7 +15,7 @@
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Refund Transaction</strong>
+                    <strong>Load for Paypoint Transaction</strong>
                 </li>
             </ol>
         </div>
@@ -175,7 +175,6 @@
                                     <th>User</th>
                                     <th>Description</th>
                                     <th>Amount</th>
-                                    <th>Bonus Amount</th>
                                     <th>Date</th>
                                     <th>Action</th>
                                 </tr>
@@ -194,7 +193,6 @@
                                             {{ $transaction->description }}
                                         </td>
                                         <td class="center">Rs. {{ $transaction->amount }}</td>
-                                        <td class="center">Rs. {{ $transaction->bonus_amount }}</td>
                                         <td class="center">{{ $transaction->created_at }}</td>
                                         <td>
 

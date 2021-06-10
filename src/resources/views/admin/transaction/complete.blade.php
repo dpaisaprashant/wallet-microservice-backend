@@ -128,13 +128,15 @@
                                                     <option value="" selected disabled>Select Vendor...</option>
                                                     <option value="">All</option>
                                                     @if(!empty($_GET['vendor']))
-                                                        @foreach($vendors as $vendor)
-                                                            <option value="{{$vendor}}"
-                                                                    @if($_GET['vendor']  == $vendor) selected @endif >{{$vendor}}</option>
+
+                                                        @foreach($getAllUniqueVendors as $getAllUniqueVendor)
+                                                            <option value="{{$getAllUniqueVendor}}"
+                                                                    @if($_GET['vendor']  == $getAllUniqueVendor) selected @endif >{{$getAllUniqueVendor}}</option>
                                                         @endforeach
+
                                                     @else
-                                                        @foreach($vendors as $vendor)
-                                                            <option value="{{$vendor}}">{{$vendor}}</option>
+                                                        @foreach($getAllUniqueVendors as $getAllUniqueVendor)
+                                                            <option value="{{$getAllUniqueVendor}}">{{$getAllUniqueVendor}}</option>
                                                         @endforeach
                                                     @endif
                                                 </select>

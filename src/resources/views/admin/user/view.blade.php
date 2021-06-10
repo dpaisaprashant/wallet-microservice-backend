@@ -264,12 +264,13 @@
                                     {{--<th>Email</th>--}}
                                     <th>KYC status</th>
                                     <th>Wallet Balance</th>
-                                    <th>Total <br>Fund Send Amount</th>
+                                    <th>Bonus Balance</th>
+                                    {{--<th>Total <br>Fund Send Amount</th>
                                     <th>Total <br>Fund Received Amount</th>
                                     <th>Total <br>Payment Amount</th>
-                                    <th>Total <br>Loaded Amount</th>
+                                    <th>Total <br>Loaded Amount</th>--}}
                                    {{-- <th>No. of <br>Transactions</th>--}}
-                                    <th>Total <br>CashBack Amount</th>
+                                    {{--<th>Total <br>CashBack Amount</th>--}}
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -299,18 +300,19 @@
                                        @include('admin.user.kyc.status', ['kyc' => $user->kyc])
                                     </td>
                                     <td>Rs. {{ $user->wallet->balance }}</td>
+                                    <td>Rs. {{ $user->wallet->bonus_balance }}</td>
 
-                                    <td>Rs. {{ $user->getFundSendAmount() }}</td>
+                                    {{--<td>Rs. {{ $user->getFundSendAmount() }}</td>
 
                                     <td>Rs. {{ $user->getFundReceiveAmount() }}</td>
 
                                     <td>Rs. {{ $user->getTotalPaymentAmount() }}</td>
 
-                                    <td>Rs. {{ $user->getTotalLoadedAmount() }}</td>
+                                    <td>Rs. {{ $user->getTotalLoadedAmount() }}</td>--}}
 
                                     {{--<td>{{ count($user->userTransactionEvents) }}</td>--}}
 
-                                    <td>Rs. {{ $user->getTotalCashBack() }}</td>
+                                    {{--<td>Rs. {{ $user->getTotalCashBack() }}</td>--}}
 
                                     <td class="center">
                                         @can('User profile')

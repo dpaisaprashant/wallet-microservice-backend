@@ -36,6 +36,7 @@ class NPayRepository
 
     private function latestTransactions()
     {
+//        dd(UserLoadTransaction::with('user', 'transactions', 'commission', 'loadTransactionResponse')->latest()->filter($this->request)->paginate($this->length));
         return UserLoadTransaction::with('user', 'transactions', 'commission', 'loadTransactionResponse')->latest()->filter($this->request)->paginate($this->length);
     }
 

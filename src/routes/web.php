@@ -308,6 +308,12 @@ Route::group(['prefix' => 'admin'], function () {
         Route::match(['get', 'post'], '/load-test-fund/create', 'LoadTestFundController@create')->name('loadTestFund.create');
 
         /**
+         * Load paypoint fund
+         */
+        Route::get('/load-for-paypoint', 'LoadTestFundController@paypointIndex')->name('paypoint.loadTestFund.index');
+        Route::match(['get', 'post'], '/load-for-paypoint/create', 'LoadTestFundController@paypointLoadCreate')->name('paypoint.loadTestFund.create');
+
+        /**
          * Refund
          */
         Route::get('/refunds', 'RefundController@index')->name('refund.index');
@@ -334,7 +340,8 @@ Route::group(['prefix' => 'admin'], function () {
  * */
 
         Route::get('/report/wallet-end-balance','ReportController@walletEndBalance')->name('wallet.endbalance');
-
+        //Commission Report
+        Route::get('/report/commission-report','ReportController@commissionReport')->name('commission.report');
         //Graph
         Route::post('/report/monthly/transaction-graph-data', 'GraphReportController@monthlyTransactionGraph')->name('report.monthly.graph');
         Route::post('/report/yearly/transaction-graph-data', 'GraphReportController@yearlyTransactionGraph')->name('report.yearly.graph');

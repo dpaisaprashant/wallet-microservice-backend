@@ -21,11 +21,17 @@ class LoadTestFund extends Model
     protected $connection = 'dpaisa';
     protected $guarded = [];
 
-    protected $appends = ['amount'];
+    protected $appends = ['amount', 'bonus_amount'];
 
     public function getAmountAttribute()
     {
         $amount = $this->getOriginal('after_amount') - $this->getOriginal('before_amount');
+        return $amount / 100;
+    }
+
+    public function getBonusAmountAttribute()
+    {
+        $amount = $this->getOriginal('after_bonus_amount') - $this->getOriginal('before_bonus_amount');
         return $amount / 100;
     }
 

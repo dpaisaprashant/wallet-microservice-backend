@@ -8,6 +8,8 @@ use App\Models\Microservice\PreTransaction;
 use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class RefundController extends Controller
 {
@@ -51,11 +53,20 @@ class RefundController extends Controller
                 'after_bonus_balance' => $currentBonusBalance + ($request['amount'] * 100)
             ];
 
-            $transaction = LoadTestFund::create($data);
-            if (! $transaction) return redirect(route('refund.index'))->with('error', 'Transaction not created successfully');
+            DB::beginTransaction();
+            try {
+                $transaction = LoadTestFund::create($data);
+                if (! $transaction) return redirect(route('refund.index'))->with('error', 'Transaction not created successfully');
 
-            event(new LoadTestFundEvent($transaction));
-            return redirect(route('refund.index'))->with('success', 'Transaction created successfully');
+                event(new LoadTestFundEvent($transaction));
+                DB::commit();
+                return redirect(route('refund.index'))->with('success', 'Transaction created successfully');
+            } catch (\Exception $e) {
+                Log::info($e);
+                DB::rollBack();
+                return redirect(route('refund.index'))->with('error', 'Transaction not created successfully');
+            }
+
         }
 
         return view('admin.refund.create')->with(compact('users'));

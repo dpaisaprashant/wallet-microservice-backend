@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\UserBonusWalletUpdateEvent;
 use App\Events\UserWalletUpdateEvent;
 use App\Models\Wallet;
 use App\Wallet\Helpers\TransactionIdGenerator;
@@ -22,6 +23,7 @@ class LoadTestFundListener
         $currentBalance = Wallet::whereUserId($event->transaction->user_id)->first()->balance * 100;
         $currentBonusBalance = Wallet::whereUserId($event->transaction->user_id)->first()->bonus_balance * 100;
         $amount = $event->transaction->amount * 100;
+        $bonusAmount = $event->transaction->bonus_amount * 100;
         $event->transaction->transactions()->create([
             "account" => $event->transaction->user->mobile_no,
             "amount" => $amount,
@@ -36,6 +38,14 @@ class LoadTestFundListener
                 : 'LOAD-TEST-FUND-' . TransactionIdGenerator::generateAlphaNumeric(7)
         ]);
 
-        event(new UserWalletUpdateEvent($event->transaction->user_id, $event->transaction->amount * 100));
+
+        if ($event->transaction->befor_balance < $event->trasnaction->after_balance) {
+            event(new UserWalletUpdateEvent($event->transaction->user_id, $amount));
+        }
+
+        if ($event->transaction->before_bonus_balance < $event->transaction->after_bonus_balance) {
+            event(new UserBonusWalletUpdateEvent($event->transaction->user_id, $bonusAmount));
+        }
+
     }
 }

@@ -33,20 +33,26 @@ class RefundController extends Controller
                 return redirect()->back()->with('error', "Pre transaction and user doesn't match");
             }
 
-
             $currentBalance = Wallet::whereUserId($user->id)->first()->getOriginal('balance');
+            $currentBonusBalance = Wallet::whereUserId($user->id)->first()->getOriginal('bonus_balance');
+
+            if (empty($request['amount'])) $request['amount'] = 0;
+            if (empty($request['bonus_amount'])) $request['bonus_amount'] = 0;
+
             $data = [
                 'pre_transaction_id' => $preTransaction->pre_transaction_id,
                 'admin_id' => auth()->user()->id,
                 'user_id' => $user->id,
                 'description' => $request['description'],
                 'before_amount' => $currentBalance,
-                //'after_amount' => $currentBalance + ($request['amount'] * 100)
-                'after_amount' => $currentBalance + ($preTransaction->getOriginal('amount'))
+                'after_amount' => $currentBalance + ($request['amount'] * 100),
+                //'after_amount' => $currentBalance + ($preTransaction->getOriginal('amount')),
+                'before_bonus_balance' => $currentBonusBalance,
+                'after_bonus_balance' => $currentBonusBalance + ($request['amount'] * 100)
             ];
 
             $transaction = LoadTestFund::create($data);
-            if (! $transaction) return redirect(route('loadTestFund.index'))->with('error', 'Transaction not created successfully');
+            if (! $transaction) return redirect(route('refund.index'))->with('error', 'Transaction not created successfully');
 
             event(new LoadTestFundEvent($transaction));
             return redirect(route('refund.index'))->with('success', 'Transaction created successfully');

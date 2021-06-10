@@ -21,7 +21,7 @@ class LoadTestFundController extends Controller
         $users = User::latest()->get();
         if ($request->isMethod('post')) {
 
-            $currentBalance = Wallet::whereUserId($request->user_id)->first()->getOriginal('balance');
+            $currentBalance = Wallet::whereUserId($request->user_id)->first()->balance * 100;
             $data = [
                 'pre_transaction_id' => $request->pre_transaction_id,
                 'admin_id' => auth()->user()->id,
@@ -54,7 +54,7 @@ class LoadTestFundController extends Controller
     {
         $user = User::where('id', 1356)->firstorFail();
         if ($request->isMethod('post')) {
-            $currentBalance = Wallet::whereUserId($user->id)->first()->getOriginal('balance');
+            $currentBalance = Wallet::whereUserId($user->id)->first()->balance * 100;
             $data = [
                 'pre_transaction_id' => $request->pre_transaction_id,
                 'admin_id' => auth()->user()->id,

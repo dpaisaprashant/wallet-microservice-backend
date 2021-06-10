@@ -32,8 +32,8 @@ class LoadTestFundListener
             "user_id" => $event->transaction->user_id,
             "description" => $event->transaction->description,
             "service_type" => $event->transaction->pre_transaction_id ? "REFUND" : "LOAD_TEST_FUND",
-            "balance" => $currentBalance + $amount + $bonusAmount,
-            "bonus_balance" => $currentBonusBalance,
+            "balance" => $currentBalance + $amount ,
+            "bonus_balance" => $currentBonusBalance + $bonusAmount,
             "uid" => $event->transaction->pre_transaction_id
                 ? "REFUND-" . TransactionIdGenerator::generateAlphaNumeric(7)
                 : 'LOAD-TEST-FUND-' . TransactionIdGenerator::generateAlphaNumeric(7)

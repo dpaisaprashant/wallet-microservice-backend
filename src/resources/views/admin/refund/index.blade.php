@@ -175,6 +175,7 @@
                                     <th>User</th>
                                     <th>Description</th>
                                     <th>Amount</th>
+                                    <th>Bonus Amount</th>
                                     <th>Date</th>
                                     <th>Action</th>
                                 </tr>
@@ -193,6 +194,7 @@
                                             {{ $transaction->description }}
                                         </td>
                                         <td class="center">Rs. {{ $transaction->amount }}</td>
+                                        <td class="center">Rs. {{ $transaction->bonus_amount }}</td>
                                         <td class="center">{{ $transaction->created_at }}</td>
                                         <td>
 

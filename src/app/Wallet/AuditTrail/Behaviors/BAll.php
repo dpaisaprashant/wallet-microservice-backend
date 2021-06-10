@@ -36,7 +36,7 @@ class BAll implements IAuditTrail
     public function createTrial($user)
     {
         $preTransactions = $user->preTransactions()->whereUserId($user->id)->filter($this->request)->get();
-        $requestInfo = $user->requestInfos()->whereUserId($user->id)->filter($this->request)->get();
+        //$requestInfo = $user->requestInfos()->whereUserId($user->id)->filter($this->request)->get();
 
         //$userLoadTransactions = $user->userLoadTransactions()->whereUserId($user->id)->filter($this->request)->get();
         $userLoginHistories = $user->userLoginHistories()->whereUserId($user->id)->filter($this->request)->get();
@@ -76,10 +76,10 @@ class BAll implements IAuditTrail
             return $value;
         });
 
-        $requestInfo->transform(function ($value){
+        /*$requestInfo->transform(function ($value){
             $value['created_at'] = $value['updated_at'];
             return $value;
-        });
+        });*/
 
         $fromFundRequest->transform(function ($value){
             $value['created_at'] = $value['updated_at'];
@@ -145,7 +145,7 @@ class BAll implements IAuditTrail
             ->concat($referralFrom)
             ->concat($referralTo)
             ->concat($preTransactions)
-            ->concat($requestInfo)
+            //->concat($requestInfo)
             ->concat($referralBonus);
             //->concat($merchantTransaction);
 

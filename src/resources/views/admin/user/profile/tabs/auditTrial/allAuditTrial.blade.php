@@ -77,8 +77,8 @@
                         @include('admin.user.profile.tabs.auditTrial.types.userLoginHistory')
                     @elseif($event instanceof \App\Models\Microservice\PreTransaction)
                         @include('admin.user.profile.tabs.auditTrial.types.preTransaction')
-                    @elseif($event instanceof \App\Models\Microservice\RequestInfo)
-                        @include('admin.user.profile.tabs.auditTrial.types.requestInfo')
+                    {{--@elseif($event instanceof \App\Models\Microservice\RequestInfo)
+                        @include('admin.user.profile.tabs.auditTrial.types.requestInfo')--}}
                    {{-- @elseif($event instanceof \App\Models\UserToUserFundTransfer)
                         @include('admin.user.profile.tabs.auditTrial.types.fundTransfer')--}}
                     @elseif($event instanceof \App\Models\UserLoadTransaction)

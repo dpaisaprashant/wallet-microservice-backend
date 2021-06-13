@@ -177,6 +177,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/transaction/e-banking' , 'TransactionController@eBanking')->name('eBanking')->middleware('permission:EBanking view');
         Route::get('transaction/e-banking/detail/{id}', 'TransactionController@eBankingDetail')->name('eBanking.detail')->middleware('permission:EBanking detail|Failed npay detail');
 
+        //(NPS)
+        Route::get('/transaction/nps','TransactionController@nps')->name('nps')->middleware('permission:EBanking view');
         //paypoint (Utility)
         Route::get('/transaction/paypoint', 'TransactionController@paypoint')->name('paypoint')->middleware('permission:Paypoint view');
         Route::get('transaction/paypoint/detail/{id}', 'TransactionController@paypointDetail')->name('paypoint.detail')->middleware('permission:Paypoint detail|Failed paypoint detail');

@@ -10,6 +10,7 @@ use App\Wallet\NCHL\Repository\NchlBankTransferRepository;
 use App\Wallet\NCHL\Repository\NchlLoadTransactionRepository;
 use App\Wallet\NicAsia\Repository\NicAsiaCyberSourceRepository;
 use App\Wallet\NPay\Repository\NPayRepository;
+use App\Wallet\NPS\Repository\NPSRepository;
 use App\Wallet\PayPoint\Repository\PayPointRepository;
 use App\Wallet\TransactionEvent\Repository\TransactionEventRepository;
 
@@ -63,6 +64,12 @@ class TransactionController extends Controller
     {
         $transaction = $repository->detail($id);
         return view('admin.transaction.detail.eBankingDetail')->with(compact('transaction'));
+    }
+
+    //NPS
+    public function nps(NPSRepository $repository){
+        $npsLoadTransactions = $repository->paginatedTransactions();
+        return view('admin.transaction.nps',compact('npsLoadTransactions'));
     }
 
     //PAYPOINT

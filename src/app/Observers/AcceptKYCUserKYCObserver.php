@@ -91,7 +91,7 @@ class AcceptKYCUserKYCObserver
                         event(new UserBonusWalletUpdateEvent($user->id, $kycAcceptedAmount));
 
                         try {
-                            if ($user->mobile_no != 9819210396) {
+                            if ($user->mobile_no != 9819210396 && $user->mobile_no != 9826278457) {
                                 $user->notify(new ReferralUsedBonusNotification($user, $referredByUser, UserReferralBonusTransaction::TYPE_KYC_VERIFIED, $kycAcceptedAmount));
                             }
                         }catch (\Exception $e) {
@@ -134,7 +134,7 @@ class AcceptKYCUserKYCObserver
                             event(new UserBonusWalletUpdateEvent($referredByUser->id, $referredByKycAcceptAmount));
 
                             try {
-                                if ($referredByUser->mobile_no != 9819210396) {
+                                if ($referredByUser->mobile_no != 9819210396 && $referredByUser->mobile_no != 9826278457) {
                                     $referredByUser->notify(new ReferralAcceptedBonusNotification($user, $referredByUser, UserReferralBonusTransaction::TYPE_KYC_VERIFIED, $referredByKycAcceptAmount));
                                 }
                             }catch (\Exception $e) {

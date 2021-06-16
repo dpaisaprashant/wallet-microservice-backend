@@ -44,11 +44,11 @@ $url = url()->current();
                 </li>
             @endif
 
-            @can('Development tools view')
+            {{--@can('Development tools view')
             <li  @if(preg_match('/development-tool/i', $url)) class="active" @endif>
                 <a href="{{ route('developmentTool.index') }}"><i class="fa fa-bug"></i> <span class="nav-label">Development Tool</span></a>
             </li>
-            @endcan
+            @endcan--}}
 
             @if(auth()->user()->hasAnyPermission(['Backend user update profile', 'Backend user change password']))
                 <li @if($url == route('backendUser.profile') || $url == route('backendUser.changePassword'))class="active" @endif>
@@ -111,9 +111,9 @@ $url = url()->current();
             </li>
             @endcan
 
-            <li  @if(preg_match('/force-password/i', $url)) class="active" @endif>
+            {{--<li  @if(preg_match('/force-password/i', $url)) class="active" @endif>
                 <a href="{{ route('group.forcePasswordChange') }}"><i class="fa fa-cart-plus"></i> <span class="nav-label">Force Password Change</span></a>
-            </li>
+            </li>--}}
 
 
                {{-- <li  @if(preg_match('/merchants/i', $url)) class="active" @endif>

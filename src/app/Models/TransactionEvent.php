@@ -18,6 +18,9 @@ class TransactionEvent extends Model
     protected $connection = 'dpaisa';
     protected $guarded = [];
     //protected $with = ['current_balance'];
+
+    protected $appends = ["fee"];
+
     /**
      * @param $amount
      * @return float|int
@@ -43,6 +46,58 @@ class TransactionEvent extends Model
     public function getBonusBalanceAttribute($balance)
     {
         return ($balance/100);
+    }
+
+
+    public function getFeeAttribute()
+    {
+        switch ($this->transaction_type) {
+            case NchlLoadTransaction::class:
+                if ($this->amount <= 500) {
+                    return 2;
+                }elseif ($this->amount >= 501 && $this->amount <= 50000) {
+                    return 5;
+                }elseif ($this->amount >= 50001) {
+                    return 10;
+                }
+            case NpsLoadTransaction::class:
+                if ($this->amount >= 10 && $this->amount <= 1000) {
+                    return (0.5 / 100) * $this->amount;
+                }elseif ($this->amount >= 1001) {
+                    return 7;
+                }
+            case UserLoadTransaction::class:
+                if ($this->vendor == "SCT") {
+                    if ($this->amount >= 1 && $this->amount <= 5000) {
+                        return 5;
+                    } elseif ($this->amount >= 5001 && $this->amount <= 15000) {
+                        return 10;
+                    }elseif ($this->amount >= 15001) {
+                        return 25;
+                    }
+                }
+
+                if ($this->amount >= 1 && $this->amount <= 1000 ) {
+                    return (0.5/100) * $this->amount;
+                } elseif ($this->amount >= 1001 && $this->amount <= 15000) {
+                    return 6;
+                } elseif ($this->amount >= 15001) {
+                    return 7;
+                }
+            case NchlBankTransfer::class:
+            case NchlAggregatedPayment::class:
+                if ($this->amount <= 500) {
+                    return 2;
+                }elseif ($this->amount >= 501 && $this->amount <= 5000) {
+                    return 5;
+                }elseif ($this->amount >= 5001 && $this->amount <= 50000) {
+                    return 10;
+                } elseif ($this->amount >= 50001 ) {
+                    return 15;
+                }
+            default:
+                return 0;
+        }
     }
 
    /* public function getCurrentBalanceAttribute(){

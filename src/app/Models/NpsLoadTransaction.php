@@ -12,7 +12,6 @@ class NpsLoadTransaction extends Model
     protected $guarded = [];
 
     protected $connection = 'nps';
-    protected $table = "nps_load_transactions";
 
     protected $casts = [
         "amount" => "integer"

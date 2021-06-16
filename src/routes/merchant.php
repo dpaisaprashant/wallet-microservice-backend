@@ -4,7 +4,7 @@ use App\Http\Controllers\Setting\SettingController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
-    Route::get('/merchants', 'MerchantController@view')->name('merchant.view');
+    Route::get('/merchants', 'MerchantController@view')->name('merchant.view')->middleware('permission:Merchant dashboard');
 
     Route::get('/merchants/profile/{id}', 'MerchantController@profile')->name('merchant.profile');
     Route::get('/merchants/kyc/{id}', 'MerchantController@kyc')->name('merchant.kyc');
@@ -19,7 +19,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::post('change-merchant-bank-account/{merchant}', "MerchantController@merchantBankAccount")->name('merchant.bankAccount');
 
     //Locked Merchants
-    Route::get('/merchant/locked', 'LockedMerchantController@index')->name('merchant.locked.list');
+    Route::get('/merchant/locked', 'LockedMerchantController@index')->name('merchant.locked.list')->middleware('permission:Merchant locked view');
     Route::get('/merchant/login-attempts/{id}', 'LockedMerchantController@loginAttempts')->name('merchant.login.attempts');
     Route::post('/merchant/update-login-attempt', 'LockedMerchantController@updateLoginAttempts')->name('merchant.loginAttemptsUpdate');
 

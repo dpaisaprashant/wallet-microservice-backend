@@ -96,7 +96,9 @@ class TransactionEventRepository
     public function transactionFeeSum()
     {
         return TransactionEvent::doesntHave('refundTransaction')
-                ->filter($this->request)->sum('fee') / 100;
+                ->filter($this->request)
+                ->get()
+                ->sum('fee');
     }
 
     public function paginatedMonthlyTransactions()

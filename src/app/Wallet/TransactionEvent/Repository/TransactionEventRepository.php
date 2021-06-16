@@ -93,6 +93,12 @@ class TransactionEventRepository
             ->filter($this->request)->sum('amount') / 100;
     }
 
+    public function transactionFeeSum()
+    {
+        return TransactionEvent::doesntHave('refundTransaction')
+                ->filter($this->request)->sum('fee') / 100;
+    }
+
     public function paginatedMonthlyTransactions()
     {
         if (empty($this->request->from || $this->request->to))

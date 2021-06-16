@@ -20,7 +20,7 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web','auth']], funct
 
     //NRB Report
     Route::get('nrb/active-inactive-user-report', [NRBReportController::class, 'activeInactiveCustomerReport'])->name('report.nrb.activeInactiveUser')->middleware('permission:Report nrb active and inactive user');
-    Route::get('nrb/agent-report', [NRBReportController::class, 'agentReport'])->name('report.agent');
+    Route::get('nrb/agent-report', [NRBReportController::class, 'agentReport'])->name('report.agent')->middleware('permission:Report nrb agent');
 
     //Non bank payment
     Route::get('/non-bank-payment',[NRBReportController::class,'nonBankPaymentReport'])->name('report.nonBankPaymentReport')->middleware('permission:Report non bank payment');

@@ -138,10 +138,12 @@ $url = url()->current();
                 <a href="#"><i class="fa fa-birthday-cake"></i> <span class="nav-label">Merchant Events</span><span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-
-                    <li><a href="{{ route('merchant.event.list') }}">All Events</a></li>
-
-                    <li><a href="{{ route('merchant.event.pendingList') }}">Pending Events</a></li>
+                    @can('Merchant event list')
+                        <li><a href="{{ route('merchant.event.list') }}">All Events</a></li>
+                    @endcan
+                    @can('Merchant pending event list')
+                        <li><a href="{{ route('merchant.event.pendingList') }}">Pending Events</a></li>
+                    @endcan
                 </ul>
             </li>
 
@@ -373,7 +375,7 @@ $url = url()->current();
                 </li>
             @endif
 
-            @if(auth()->user()->hasAnyPermission(['View all audit trial', 'View npay audit trial', 'View paypoint audit trial']))
+            @if(auth()->user()->hasAnyPermission(['View all audit trial', 'View npay audit trial', 'View paypoint audit trial','View nchl bank transfer audit trail','View nchl load transaction audit trail']))
                 <li @if($url == route('auditTrail.all') || $url == route('auditTrail.nPay') || $url == route('auditTrail.payPoint')) class="active" @endif>
                     <a href="#"><i class="fa fa-history"></i> <span class="nav-label">Audit Trial</span><span
                             class="fa arrow"></span></a>
@@ -389,8 +391,12 @@ $url = url()->current();
                         @can('View paypoint audit trial')
                             <li><a href="{{ route('auditTrail.payPoint') }}">PayPoint</a></li>
                         @endcan
-                        <li><a href="{{ route('auditTrail.nchl.loadTransaction') }}">NCHL Load Transaction</a></li>
-                        <li><a href="{{ route('auditTrail.nchl.bankTransfer') }}">NCHL Bank Transfer</a></li>
+                        @can('View nchl bank transfer audit trail')
+                            <li><a href="{{ route('auditTrail.nchl.bankTransfer') }}">NCHL Bank Transfer</a></li>
+                        @endcan
+                        @can('View nchl load transaction audit trail')
+                            <li><a href="{{ route('auditTrail.nchl.loadTransaction') }}">NCHL Load Transaction</a></li>
+                        @endcan
                     </ul>
                 </li>
             @endif
@@ -435,7 +441,9 @@ $url = url()->current();
                                     Report</a>
                             </li>
                         @endcan
-                        <li><a href="{{ route('report.agent') }}">NRB Agent Report</a></li>
+                        @can('Report nrb agent')
+                            <li><a href="{{ route('report.agent') }}">NRB Agent Report</a></li>
+                        @endcan
                         @can('Report non bank payment')
                             <li><a href="{{ route('report.nonBankPaymentReport') }}">Non bank payment report</a></li>
                         @endcan
@@ -465,9 +473,9 @@ $url = url()->current();
                         @can('Backend user log view')
                             <li><a href="{{ route('backendLog.all') }}">Backend Log</a></li>
                         @endcan
-
-                        <li><a href="{{ route('apiLog.all') }}">API Log</a></li>
-
+                        @can('Api log')
+                            <li><a href="{{ route('apiLog.all') }}">API Log</a></li>
+                        @endcan
 
                         {{--@can('Auditing log view')
                         <li><a href="{{ route('admin.log.auditing') }}">Auditing Log</a></li>
@@ -548,7 +556,17 @@ $url = url()->current();
                         'Paypoint commission setting view',
                         'Transaction fee setting view',
                         'KYC setting view',
-                        'OTP setting view'
+                        'OTP setting view',
+                        'Merchant setting view',
+                        'Nps setting view',
+                        'Nchl load setting view',
+                        'Nchl bank transfer setting view',
+                        'Nchl aggregated setting view',
+                        'Nicasia cybersource setting view',
+                        'Referral setting view',
+                        'Bonus setting view',
+                        'Notification setting view',
+                        'Redirect setting view',
                 ]))
                 <li @if(preg_match('/settings/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Settings</span><span
@@ -559,8 +577,9 @@ $url = url()->current();
                             <li><a href="{{ route('settings.general') }}">General Setting</a></li>
                         @endcan
 
-                        <li><a href="{{ route('settings.merchant') }}">Merchant Setting</a></li>
-
+                        @can('Merchant setting view')
+                            <li><a href="{{ route('settings.merchant') }}">Merchant Setting</a></li>
+                        @endcan
 
                         @can('Npay setting view')
                             <li><a href="{{ route('settings.npay') }}">Npay Setting</a></li>

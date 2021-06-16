@@ -151,6 +151,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'View all audit trial',
             'View npay audit trial',
             'View paypoint audit trial',
+            'View nchl bank transfer audit trail',
+            'View nchl load transaction audit trail',
 
             'Monthly report view',
             'Yearly report view',
@@ -264,6 +266,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Report wallet end balance',
             'Report admin kyc',
             'Report commission',
+            'Report nrb agent',
 
             //setting
             'Nps setting view',
@@ -275,7 +278,12 @@ class RolesAndPermissionsSeeder extends Seeder
             'Bonus setting view',
             'Notification setting view',
             'Redirect setting view',
+            'Merchant setting view',
 
+            'Api log',
+
+            'Merchant event list',
+            'Merchant pending event list'
 
             ];
 

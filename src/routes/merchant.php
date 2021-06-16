@@ -23,5 +23,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/merchant/login-attempts/{id}', 'LockedMerchantController@loginAttempts')->name('merchant.login.attempts');
     Route::post('/merchant/update-login-attempt', 'LockedMerchantController@updateLoginAttempts')->name('merchant.loginAttemptsUpdate');
 
-    Route::match(['get', 'post'], '/settings/merchant', [SettingController::class, 'merchantSetting'])->name('settings.merchant');
+    Route::match(['get', 'post'], '/settings/merchant', [SettingController::class, 'merchantSetting'])->name('settings.merchant')->middleware('permission:Merchant setting view');
 });

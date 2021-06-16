@@ -62,7 +62,7 @@ Route::group(['prefix' => 'admin'], function () {
         /**
          * API log
          */
-        Route::get('/api-log', 'APILogController@all')->name('apiLog.all');
+        Route::get('/api-log', 'APILogController@all')->name('apiLog.all')->middleware('permission:Api log');
 
         /**
          * Settings
@@ -281,8 +281,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/audit-trails/all-transaction', 'AuditTrailController@all')->name('auditTrail.all')->middleware('permission:View all audit trial');
         Route::get('/audit-trails/nPay', 'AuditTrailController@nPay')->name('auditTrail.nPay')->middleware('permission:View npay audit trial');
         Route::get('/audit-trails/payPoint', 'AuditTrailController@payPoint')->name('auditTrail.payPoint')->middleware('permission:View paypoint audit trial');
-        Route::get('/audit-trails/nchl-bank-transfer', 'AuditTrailController@nchlBankTransfer')->name('auditTrail.nchl.bankTransfer');
-        Route::get('/audit-trails/nchl-load-transaction', 'AuditTrailController@nchlLoadTransaction')->name('auditTrail.nchl.loadTransaction');
+        Route::get('/audit-trails/nchl-bank-transfer', 'AuditTrailController@nchlBankTransfer')->name('auditTrail.nchl.bankTransfer')->middleware('permission:View nchl bank transfer audit trail');
+        Route::get('/audit-trails/nchl-load-transaction', 'AuditTrailController@nchlLoadTransaction')->name('auditTrail.nchl.loadTransaction')->middleware('permission:View nchl load transaction audit trail');
 
 
         /**

@@ -31,12 +31,12 @@ class KhaltiRepository
 
     private function latestTransactions()
     {
-        return KhaltiUserTransaction::with('user', 'transactions')->latest()->paginate($this->length);
+        return KhaltiUserTransaction::with('user', 'transactions')->latest()->filter(request())->paginate($this->length);
     }
 
     private function sortedTransactions()
     {
-        return KhaltiUserTransaction::with('user', 'transactions')->paginate($this->length);
+        return KhaltiUserTransaction::with('user', 'transactions')->filter(request())->paginate($this->length);
     }
 
     public function paginatedTransactions()
@@ -53,5 +53,10 @@ class KhaltiRepository
     public function detail($id)
     {
         return KhaltiUserTransaction::with('user', 'transactions', 'preTransaction')->where('id', $id)->firstOrFail();
+    }
+
+    public function getVendorName(){
+        $vendorName = KhaltiUserTransaction::groupBy('vendor')->pluck('vendor');
+        return $vendorName;
     }
 }

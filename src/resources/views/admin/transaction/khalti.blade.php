@@ -213,6 +213,7 @@
                                     <th>Reference No</th>
                                     <th>Service</th>
                                     <th>Vendor</th>
+                                    <th>Status</th>
                                     <th>State</th>
                                 </tr>
                                 </thead>
@@ -228,6 +229,7 @@
                                         <td>{{$khaltiTransaction->reference_no}}</td>
                                         <td>{{$khaltiTransaction->service}}</td>
                                         <td>{{$khaltiTransaction->vendor}}</td>
+                                        <td>{{$khaltiTransaction->status}}</td>
                                         <td>@include('admin.transaction.khalti.state',['khaltiTransaction' => $khaltiTransaction])</td>
                                     </tr>
                                 @endforeach

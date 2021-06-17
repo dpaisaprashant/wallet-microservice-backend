@@ -135,7 +135,8 @@ $url = url()->current();
                 </li>
             @endcan--}}
 
-            {{--<li @if(preg_match('/event/i', $url)) class="active" @endif>
+            {{--@if(auth()->user()->hasPermissionTo('Merchant event list') || auth()->user()->hasPermissionTo('Merchant pending event list'))
+            <li @if(preg_match('/event/i', $url)) class="active" @endif>
                 <a href="#"><i class="fa fa-birthday-cake"></i> <span class="nav-label">Merchant Events</span><span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
@@ -146,8 +147,8 @@ $url = url()->current();
                         <li><a href="{{ route('merchant.event.pendingList') }}">Pending Events</a></li>
                     @endcan
                 </ul>
-            </li>--}}
-
+            </li>
+            @endif--}}
 
             @can('Deactivate users view')
                 <li @if($url == route('user.deactivate.list')) class="active" @endif>
@@ -202,7 +203,7 @@ $url = url()->current();
                 </li>
             @endcan
 
-
+            @if(auth()->user()->hasPermissionTo('Agent view') || auth()->user()->hasPermissionTo('Agent create'))
             <li @if($url == route('agent.view') || $url == route('agent.create')) class="active" @endif>
                 <a href="#"><i class="fa fa-history"></i> <span class="nav-label">Agents</span><span
                         class="fa arrow"></span></a>
@@ -215,7 +216,9 @@ $url = url()->current();
                     @endcan
                 </ul>
             </li>
+            @endif
 
+            @if(auth()->user()->hasPermissionTo('Agent type view') || auth()->user()->hasPermissionTo('Agent type create'))
             <li @if($url == route('agent.type.view') || $url == route('agent.type.create') ) class="active" @endif>
                 <a href="#"><i class="fa fa-list-ul"></i> <span class="nav-label">Agent Types</span><span
                         class="fa arrow"></span></a>
@@ -228,7 +231,7 @@ $url = url()->current();
                     @endcan
                 </ul>
             </li>
-
+            @endif
 
             {{-- <li @if(preg_match('/load-test/i', $url)) class="active" @endif>
                  <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Load Test Funds</span><span
@@ -249,7 +252,7 @@ $url = url()->current();
                     <li><a href="{{ route('paypoint.loadTestFund.create') }}">Create Load For Paypoint</a></li>
                 </ul>
             </li>--}}
-
+            @if(auth()->user()->hasPermissionTo('Refund view') || auth()->user()->hasPermissionTo('Refund create'))
             <li @if(preg_match('/refund/i', $url)) class="active" @endif>
                 <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Refund</span><span
                         class="fa arrow"></span></a>
@@ -262,7 +265,9 @@ $url = url()->current();
                     @endcan
                 </ul>
             </li>
+            @endif
 
+            @if(auth()->user()->hasPermissionTo('Repost transaction npay') || auth()->user()->hasPermissionTo('Repost transaction nps') || auth()->user()->hasPermissionTo('Repost transaction connectips'))
             <li @if(preg_match('/repost/i', $url)) class="active" @endif>
                 <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Repost Transaction</span><span
                         class="fa arrow"></span></a>
@@ -278,6 +283,7 @@ $url = url()->current();
                     @endcan
                 </ul>
             </li>
+            @endif
 
 
             @if(auth()->user()->hasAnyPermission(['Complete transaction view', 'Fund transfer view', 'Fund request view', 'EBanking view', 'Paypoint view','Transaction nps view','Transaction nchl bank transfer','Transaction nchl load','Nicasia cybersource load transaction']))
@@ -473,7 +479,7 @@ $url = url()->current();
                 </li>
             @endif
 
-            @if(auth()->user()->hasAnyPermission(['User session log view', 'Backend user log view' , 'Auditing log view', 'Profiling log view', 'Statistics log view', 'Development log view']))
+            @if(auth()->user()->hasAnyPermission(['User session log view', 'Backend user log view' , 'Auditing log view', 'Profiling log view', 'Statistics log view', 'Development log view','Api log']))
                 <li @if(preg_match('/log/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-th-list"></i> <span class="nav-label">Logs</span><span
                             class="fa arrow"></span></a>

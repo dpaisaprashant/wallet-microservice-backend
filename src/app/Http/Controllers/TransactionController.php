@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KhaltiUserTransaction;
 use App\Wallet\FundRequest\Repository\FundRequestRepository;
 use App\Wallet\FundTransfer\Repository\FundTransferRepository;
 use App\Wallet\Khalti\Repository\KhaltiRepository;
@@ -167,5 +168,12 @@ class TransactionController extends Controller
     {
         $failedTransactions = $repository->paginatedFailedTransaction();
         return view('admin.transaction.failedTransaction.npay')->with(compact('failedTransactions'));
+    }
+
+    //KHALTI TRANSACTION
+    public function khaltiTransaction(KhaltiRepository $repository){
+        $khaltiTransactions = $repository->paginatedTransactions();
+        $vendorNames = $repository->getVendorName();
+        return view('admin.transaction.khalti')->with(compact('khaltiTransactions','vendorNames'));
     }
 }

@@ -31,10 +31,10 @@
 
 
                             <dt class="col-md-3 text-right">From User</dt>
-                            <dd class="col-md-8">{{ $transaction->referredFrom['name']  ?? "" }}</dd>
+                            <dd class="col-md-8">{{ $transaction->referredFrom['mobile_no']  ?? "" }}</dd>
 
                             <dt class="col-md-3 text-right">To User</dt>
-                            <dd class="col-md-8">{{ $transaction->referredTo['name'] ?? ""}}</dd>
+                            <dd class="col-md-8">{{ $transaction->referredTo['mobile_no'] ?? ""}}</dd>
                         </dl>
                     </div>
                 </div>

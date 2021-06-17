@@ -44,6 +44,9 @@ class KycFilter extends FilterAbstract {
                 $query->where('accept',null);
             })->pluck('user_id');
             return $builder->whereIn('id' ,$userIds);
+        }else if($value == 'all'){
+            $userIds = UserKYC::pluck('user_id');
+            return $builder->whereIn('id',$userIds);
         }
 
 

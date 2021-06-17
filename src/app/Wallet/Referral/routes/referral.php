@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'admin/referral', 'middleware' => ['web','auth']], function () {
 
     //report
-    Route::match(['get', 'post'],'referral-report', [ReferralController::class, 'referralReport'])->name('referral.report');
-    Route::match(['get', 'post'],'register-using-referral-user-report', [ReferralController::class, 'registerUsingReferralUserReport'])->name('referral.registerUsingReferralUserReport');
+    Route::match(['get', 'post'],'referral-report', [ReferralController::class, 'referralReport'])->name('referral.report')->middleware('permission:Report referral');
+    Route::match(['get', 'post'],'register-using-referral-user-report', [ReferralController::class, 'registerUsingReferralUserReport'])->name('referral.registerUsingReferralUserReport')->middleware('permission:Report register using referral user');
 
     //Referral schema
     Route::get('referral-schema', [ReferralSchemaController::class, 'index'])->name('referral.schema.index');

@@ -207,6 +207,7 @@
                     <div class="ibox-content">
                         <h5><b>Total Count:</b> {{ $totalTransactionCount }}</h5>
                         <h5><b>Total Amount Sum:</b> Rs. {{ $totalTransactionAmountSum }}</h5>
+                        <h5><b>Total Fee Sum:</b> Rs. {{ $totalTransactionFeeSum }}</h5>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover dataTables-example" title="Complete transactions list">
                                 <thead>
@@ -219,6 +220,7 @@
                                     <th>Vendor</th>
                                     <th>Service Type</th>
                                     <th>Amount</th>
+                                    <th>Fee</th>
                                     <th>Status</th>
                                     <th>Date</th>
                                     <th>Action</th>
@@ -249,6 +251,9 @@
                                         {{ $transaction->service_type }}
                                     </td>
                                     <td class="center">Rs. {{ $transaction->amount }}</td>
+                                    <td class="center">
+                                       Rs. {{ $transaction->fee }}
+                                    </td>
                                     <td>
                                         <span class="badge badge-primary">Complete</span>
                                     </td>

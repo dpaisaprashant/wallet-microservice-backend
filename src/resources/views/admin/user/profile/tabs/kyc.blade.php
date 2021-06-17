@@ -23,8 +23,18 @@
                             <dt class="col-md-3 text-right">Created at</dt>
                             <dd class="col-md-8">{{\Carbon\Carbon::parse($admin_details->created_at)->format('F d, Y')}}</dd>
                             <br><br>
+
                         @endif
                         <br>
+
+                            <dt class="col-md-3 text-right">First Name</dt>
+                            <dd class="col-md-8">{{$user->kyc->first_name == null ? 'Not available' : $user->kyc->first_name}}</dd>
+                            <dt class="col-md-3 text-right">Middle Name</dt>
+                            <dd class="col-md-8">{{$user->kyc->middle_name == null ? ' ' : $user->kyc->middle_name}}</dd>
+                            <dt class="col-md-3 text-right">Last Name</dt>
+                            <dd class="col-md-8">{{$user->kyc->last_name == null ? 'Not available' : $user->kyc->last_name}}</dd>
+
+
                         @if(/*$user->kyc->status == 1 */ true)
                             <dt class="col-md-3 text-right" >Verification Status</dt>
                             <dd class="col-md-8">

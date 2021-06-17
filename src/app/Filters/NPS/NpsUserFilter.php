@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filters\EBanking;
+namespace App\Filters\NPS;
 
 use App\Filters\FilterAbstract;
 use App\Models\Microservice\PreTransaction;
@@ -8,7 +8,7 @@ use App\Models\Microservice\RequestInfo;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 
-class UserFilter extends FilterAbstract {
+class NpsUserFilter extends FilterAbstract {
 
 
     public function mapping()

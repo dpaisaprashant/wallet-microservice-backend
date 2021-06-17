@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Wallet\FCMNotifier;
 use App\Wallet\Notification\Repository\NotificationRepository;
 use App\Wallet\OneSignalNotifier;
+use App\Wallet\SparrowSMS\Models\Sparrow;
+use App\Wallet\SparrowSMS\SendSMS;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -55,7 +57,7 @@ class FCMNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database', $this->channel];
+        return ['database', $this->channel,Sparrow::class];
     }
 
     public function toDatabase($notifiable)
@@ -98,5 +100,11 @@ class FCMNotification extends Notification
         ], $data);
         (new FCMNotifier($data['title'], $data['description'], $data, $this->user->fcm_token, $this->user->desktop_fcm))
             ->send();
+    }
+
+    public function toSparrow($notifiable){
+        if($this->type == "KYCAccepted" || $this->type == "KYCRejected"){
+            (new SendSMS())->send($this->user->mobile_no,$this->description);
+        }
     }
 }

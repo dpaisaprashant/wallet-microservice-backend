@@ -4,18 +4,18 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Create Refund</h2>
+            <h2>Create Load For Paypoint</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Refund</strong>
+                    <strong>Load for Paypoint</strong>
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Create Refund</strong>
+                    <strong>Create Load for Paypoint</strong>
                 </li>
             </ol>
         </div>
@@ -27,48 +27,28 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>Enter user Mobile Number</h5>
+                        <h5>Select User</h5>
                     </div>
                     <div class="ibox-content">
-                        <form method="post" action="{{ route('loadTestFund.create') }}" enctype="multipart/form-data" id="transactionIdForm">
+                        <form method="post" action="{{ route('loadTestFund.create') }}" enctype="multipart/form-data" id="loadForPayppointForm">
                             @csrf
                             <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Mobile No</label>
+                                <label class="col-sm-2 col-form-label">User</label>
                                 <div class="col-sm-10">
-                                    <input name="mobile_no" type="text" class="form-control" required>
+                                    <input name="user" value="{{ $user->name . " ({$user->mobile_no})" }}" type="text" class="form-control" disabled>
                                 </div>
                             </div>
 
                             <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Amount (in Rs.)</label>
+                                <label class="col-sm-2 col-form-label">Amount in Rs.</label>
                                 <div class="col-sm-10">
-                                    <input name="amount" type="text" class="form-control">
-                                    <small>Amount Should be in Rs.</small>
+                                    <input name="amount" type="text" class="form-control" required>
                                 </div>
                             </div>
 
                             <div class="hr-line-dashed"></div>
 
-                            <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Bonus Amount (in Rs.)</label>
-                                <div class="col-sm-10">
-                                    <input name="bonus_amount" type="text" class="form-control">
-                                    <small>Amount Should be in Rs.</small>
-                                </div>
-                            </div>
-
-                            <div class="hr-line-dashed"></div>
-
-                            <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Pre Transaction Id</label>
-                                <div class="col-sm-10">
-                                    <input name="pre_transaction_id" type="text" class="form-control" required>
-                                </div>
-                            </div>
-
-                            <div class="hr-line-dashed"></div>
-
-                            <button id="handleBtn" class="btn btn-sm btn-primary m-t-n-xs" type="submit" formaction="{{ route('refund.create') }}"><strong>Create</strong></button>
+                            <button id="handleBtn" class="btn btn-sm btn-primary m-t-n-xs" type="submit" formaction="{{ route('paypoint.loadTestFund.create') }}"><strong>Create</strong></button>
                         </form>
                     </div>
                 </div>
@@ -99,20 +79,20 @@
         /*$('form').on('submit', function (e) {
 
             e.preventDefault();
+            let formObj = $(this);
 
             swal({
                 title: "Are you sure?",
-                text: "Refund for this transaction will be created",
+                text: "Amount will be loaded to this user's wallet",
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#3366ff",
+                confirmButtonColor: "#18a689",
                 confirmButtonText: "Yes, approve",
                 closeOnConfirm: true,
                 closeOnClickOutside: true
             }, function () {
-                console.log(this)
-                $('#handleBtn').click();
-                swal.close();
+                console.log(formObj)
+                formObj.submit()
             })
         });*/
     </script>

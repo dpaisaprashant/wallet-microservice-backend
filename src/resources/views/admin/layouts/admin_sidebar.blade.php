@@ -50,11 +50,11 @@ $url = url()->current();
                 </li>
             @endif
 
-            @can('Development tools view')
-                <li @if(preg_match('/development-tool/i', $url)) class="active" @endif>
-                    <a href="{{ route('developmentTool.index') }}"><i class="fa fa-bug"></i> <span class="nav-label">Development Tool</span></a>
-                </li>
-            @endcan
+            {{--@can('Development tools view')
+            <li  @if(preg_match('/development-tool/i', $url)) class="active" @endif>
+                <a href="{{ route('developmentTool.index') }}"><i class="fa fa-bug"></i> <span class="nav-label">Development Tool</span></a>
+            </li>
+            @endcan--}}
 
             @if(auth()->user()->hasAnyPermission(['Backend user update profile', 'Backend user change password']))
                 <li @if($url == route('backendUser.profile') || $url == route('backendUser.changePassword'))class="active" @endif>
@@ -120,12 +120,13 @@ $url = url()->current();
                 </li>
             @endcan
 
-            @can('Group force password change')
+           {{-- @can('Group force password change')
                 <li @if(preg_match('/force-password/i', $url)) class="active" @endif>
                     <a href="{{ route('group.forcePasswordChange') }}"><i class="fa fa-cart-plus"></i> <span
                             class="nav-label">Force Password Change</span></a>
                 </li>
-            @endcan
+            @endcan--}}
+
 
             @can('Merchant dashboard')
                 <li @if(preg_match('/merchants/i', $url)) class="active" @endif>
@@ -238,6 +239,16 @@ $url = url()->current();
                      <li><a href="{{ route('loadTestFund.create') }}">Create Load Test Funds</a></li>
                  </ul>
              </li>--}}
+
+            {{--<li @if(preg_match('/load-for-paypoint/i', $url)) class="active" @endif>
+                <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Load For Paypoint</span><span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="{{ route('paypoint.loadTestFund.index') }}">View Load For Paypoint</a></li>
+
+                    <li><a href="{{ route('paypoint.loadTestFund.create') }}">Create Load For Paypoint</a></li>
+                </ul>
+            </li>--}}
 
             <li @if(preg_match('/refund/i', $url)) class="active" @endif>
                 <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Refund</span><span

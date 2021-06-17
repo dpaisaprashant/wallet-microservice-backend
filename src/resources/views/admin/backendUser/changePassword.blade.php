@@ -39,7 +39,7 @@
 
                                 @include('admin.asset.notification.notify')
 
-                                <label class="col-sm-2 col-form-label">Name</label>
+                                <label class="col-sm-2 col-form-label">Current Password</label>
                                 <div class="col-sm-10">
                                     <input name="current_password" type="password" class="form-control" required placeholder="Current Password">
                                     <p style="color: red; margin-bottom: 0px;">{{ $errors -> first('current_password') }}</p>
@@ -47,7 +47,7 @@
                             </div>
 
                             <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Email</label>
+                                <label class="col-sm-2 col-form-label">New Password</label>
                                 <div class="col-sm-10">
                                     <input name="new_password" type="password" class="form-control" required placeholder="New Password">
                                     <p style="color: red; margin-bottom: 0px;">{{ $errors -> first('new_password') }}</p>
@@ -55,7 +55,7 @@
                             </div>
 
                             <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Mobile No.</label>
+                                <label class="col-sm-2 col-form-label">Confirm New Password</label>
                                 <div class="col-sm-10">
                                     <input name="new_password_confirmation" type="password" class="form-control" required placeholder="Current Password">
                                     <p style="color: red; margin-bottom: 0px;">{{ $errors -> first('new_password_confirmation') }}</p>

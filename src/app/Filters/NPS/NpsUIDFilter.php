@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filters\EBanking;
+namespace App\Filters\NPS;
 
 use App\Filters\FilterAbstract;
 use App\Models\Microservice\PreTransaction;
-use App\Models\Microservice\RequestInfo;
-use App\Models\User;
+use App\Models\TransactionEvent;
+use App\Models\UserTransaction;
 use Illuminate\Database\Eloquent\Builder;
 
-class UserFilter extends FilterAbstract {
+class NpsUIDFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -32,12 +32,10 @@ class UserFilter extends FilterAbstract {
         if ($value === null) {
             return $builder;
         }
+//        dd($builder->first());
+        $preTransactionIds = TransactionEvent::where('uid',$value)->pluck('pre_transaction_id');
+//        $preTransaction = PreTransaction::where('user_id',$transactionEvents)->pluck('pre_transaction_id');
 
-        $user = User::where('email', $value)->orWhere('mobile_no', $value)->value('id');
-
-        $preTransactionList = PreTransaction::whereUserId($user)->pluck('pre_transaction_id');
-//        $requestInfoList = RequestInfo::whereUserId($user)->pluck('request_id');
-
-        return $builder->whereIn('pre_transaction_id', $preTransactionList);
+        return $builder->whereIn('pre_transaction_id',$preTransactionIds);
     }
 }

@@ -10,7 +10,7 @@ use App\Wallet\Referral\Http\Controllers\ReferralSchemaController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'admin/architecture', 'middleware' => ['web','auth']], function () {
-    Route::get('/vendor-transactions/{vendorName}', [WalletTransactionTypeController::class, 'vendorTransactions'])->name('architecture.vendor.transaction');
+    Route::get('/vendor-transactions/{vendorName}', [WalletTransactionTypeController::class, 'vendorTransactions'])->name('architecture.vendor.transaction')->middleware('permission:Architecture vendor transaction');
 
     //GET USER TYPE LISTS
     Route::post('/get-user-type-lists', [WalletTransactionTypeController::class, 'getUserTransactionTypeList'])->name('architecture.userType.list');

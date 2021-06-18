@@ -1,4 +1,5 @@
 <div class="col-lg-3">
+    <a href="{{ route('user.kycNotFilled.view') }}">
     <div class="ibox ">
         <div class="ibox-title" style="padding-right: 15px";>
             <span class="label label-danger float-right">Total</span>
@@ -15,4 +16,5 @@
             <small>Users who have not filled KYC form </small>
         </div>
     </div>
+    </a>
 </div>

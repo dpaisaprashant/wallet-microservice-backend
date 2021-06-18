@@ -50,6 +50,10 @@ class RolesAndPermissionsSeeder extends Seeder
             'Dashboard accepted KYC table',
             'Dashboard rejected KYC table',
 
+            //dashboard
+            'Dashboard NCHL bank transfer',
+            'Dashboard NCHL load transaction',
+
             'Stat Dashboard KYC',
             'Stat Dashboard paypoint',
             'Stat Dashboard npay',
@@ -147,6 +151,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'View all audit trial',
             'View npay audit trial',
             'View paypoint audit trial',
+            'View nchl bank transfer audit trail',
+            'View nchl load transaction audit trail',
 
             'Monthly report view',
             'Yearly report view',
@@ -210,10 +216,74 @@ class RolesAndPermissionsSeeder extends Seeder
             'Frontend process create',
             'Frontend process update',
             'Frontend process delete',
+
+            'Frontend banner view',
+
+            'Frontend contact view',
             //End frontend settings
 
             'Terms and condition view',
-            'Terms and condition update'
+            'Terms and condition update',
+
+            'Group force password change',
+
+            'Merchant dashboard',
+            'Merchant locked view',
+
+            'Architecture vendor transaction',
+
+            //agents
+            'Agent view',
+            'Agent create',
+            'Agent type view',
+            'Agent type create',
+
+            //refund
+            'Refund view',
+            'Refund create',
+
+            //repost transaction
+            'Repost transaction npay',
+            'Repost transaction nps',
+            'Repost transaction connectips',
+
+            'Transaction nps view',
+            'Transaction nchl load',
+            'Transaction nchl bank transfer',
+            'Nicasia cybersource load transaction',
+
+
+            //Report
+            'Report paypoint',
+            'Report npay',
+            'Report nchl load',
+            'Report referral',
+            'Report register using referral user',
+            'Report subscriber daily',
+            'Report reconciliation',
+            'Report nrb active and inactive user',
+            'Report non bank payment',
+            'Report wallet end balance',
+            'Report admin kyc',
+            'Report commission',
+            'Report nrb agent',
+
+            //setting
+            'Nps setting view',
+            'Nchl load setting view',
+            'Nchl bank transfer setting view',
+            'Nchl aggregated setting view',
+            'Nicasia cybersource setting view',
+            'Referral setting view',
+            'Bonus setting view',
+            'Notification setting view',
+            'Redirect setting view',
+            'Merchant setting view',
+
+            'Api log',
+
+            'Merchant event list',
+            'Merchant pending event list'
 
             ];
 

@@ -216,13 +216,15 @@
                                             <div class="form-group">
                                                 <select data-placeholder="Kyc Status..." class="chosen-select"  tabindex="2" name="kyc_status">
                                                     <option value="" selected disabled>Kyc Status...</option>
-                                                    @if(!empty($_GET['kycstatus']))
-                                                        <option value="verified" @if($_GET['kycstatus']  == 'verified') selected @endif >Verified</option>
-                                                        <option value="unverified" @if($_GET['kycstatus']  == 'unverified') selected @endif >Un verified</option>
-                                                        <option value="pending" @if($_GET['kycstatus'] == 'pending') selected @endif>Pending</option>
+                                                    @if(!empty($_GET['kyc_status']))
+                                                        <option value="all" @if($_GET['kyc_status']  == 'all') selected @endif >All</option>
+                                                        <option value="verified" @if($_GET['kyc_status']  == 'verified') selected @endif >Accepted</option>
+                                                        <option value="unverified" @if($_GET['kyc_status']  == 'unverified') selected @endif >Rejected</option>
+                                                        <option value="pending" @if($_GET['kyc_status'] == 'pending') selected @endif>Pending</option>
                                                     @else
-                                                        <option value="verified">Verified</option>
-                                                        <option value="unverified">Un verified</option>
+                                                        <option value="all">All</option>
+                                                        <option value="verified">Accepted</option>
+                                                        <option value="unverified">Rejected</option>
                                                         <option value="pending">Pending</option>
                                                     @endif
                                                 </select>

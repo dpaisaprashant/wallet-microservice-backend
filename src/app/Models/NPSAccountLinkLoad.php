@@ -2,27 +2,17 @@
 
 namespace App\Models;
 
-use App\Filters\FiltersAbstract;
-use App\Traits\BelongsToPreTransaction;
-use App\Traits\BelongsToUser;
-use App\Traits\BelongsToUseThroughMicroservice;
-use App\Traits\MorphOneCommission;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
-use App\Filters\NPS;
 
-class NpsLoadTransaction extends Model
+class NPSAccountLinkLoad extends Model
 {
-    use BelongsToPreTransaction,MorphOneCommission,BelongsToUseThroughMicroservice,BelongsToUser;
     CONST STATUS_COMPLETED = 'COMPLETED';
     CONST STATUS_VALIDATED = 'VALIDATED';
 
     protected $guarded = [];
 
     protected $connection = 'nps';
-
-    protected $table = 'nps_load_transactions';
+    protected $table = "nps_load_transactions";
 
     protected $casts = [
         "amount" => "integer"
@@ -74,17 +64,6 @@ class NpsLoadTransaction extends Model
     {
         return $this->where('gateway_ref_no', $value)->lockForUpdate()->first();
     }
-
-    public function scopeFilter(Builder $builder, Request $request, array $filters = [])
-    {
-        return (new NPS\NpsFilters($request))->add($filters)->filter($builder);
-    }
-
-    public function transactions()
-    {
-        return $this->morphOne(TransactionEvent::class, 'transactionable','transaction_type', 'transaction_id');
-    }
-
 
     /**
      * Check If the transsaction id exists

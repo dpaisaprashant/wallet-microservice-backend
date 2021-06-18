@@ -45,10 +45,21 @@
                     <h3>Documents</h3>
                     <div id="agentCarouselExampleIndicators" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
-                            <li data-target="#agentCarouselExampleIndicators" data-slide-to="0" class="active"></li>
-                            <li data-target="#agentCarouselExampleIndicators" data-slide-to="1" class=""></li>
-                            <li data-target="#agentCarouselExampleIndicators" data-slide-to="2" class=""></li>
-                            <li data-target="#agentCarouselExampleIndicators" data-slide-to="3" class=""></li>
+                            @isset($user->agent['business_document'])
+                                <li data-target="#agentCarouselExampleIndicators" data-slide-to="0" class="active"></li>
+                            @endisset
+
+                            @isset($user->agent['business_owner_citizenship_front'])
+                                <li data-target="#agentCarouselExampleIndicators" data-slide-to="1" class="@if(empty($user->agent['business_document'])) active @endif"></li>
+                            @endisset
+
+                            @isset($user->agent['business_owner_citizenship_back'])
+                                <li data-target="#agentCarouselExampleIndicators" data-slide-to="2" class=""></li>
+                            @endisset
+
+                            @isset($user->agent['tax_clearance_certificate'])
+                                <li data-target="#agentCarouselExampleIndicators" data-slide-to="3" class=""></li>
+                            @endisset
                         </ol>
                         <div class="carousel-inner">
 

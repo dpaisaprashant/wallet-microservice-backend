@@ -217,6 +217,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/failed-user-load-transaction', 'TransactionController@failedUserLoadTransaction')->name('userLoadTransaction.failed')->middleware('permission:Failed npay view');
 
 
+        //Khalti transaction report
+
+        Route::get('/transaction/khalti','TransactionController@khaltiTransaction')->name('khalti.transaction');
 
         /**
          * Clearance

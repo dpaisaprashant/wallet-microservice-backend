@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use App\Broadcasting\FCMChannel;
 use App\Broadcasting\OneSignalChannel;
+use App\Broadcasting\SparrowChannel;
 use App\Models\User;
 use App\Wallet\FCMNotifier;
 use App\Wallet\Notification\Repository\NotificationRepository;
@@ -57,7 +58,7 @@ class FCMNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database', $this->channel,Sparrow::class];
+        return ['database', $this->channel, SparrowChannel::class];
     }
 
     public function toDatabase($notifiable)

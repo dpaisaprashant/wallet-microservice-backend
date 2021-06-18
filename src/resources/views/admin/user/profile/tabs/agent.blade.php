@@ -42,11 +42,29 @@
             </div>
             @if(!empty($user->agent))
                 <div class="col-md-5">
-                    <h3>Agent Documents</h3>
-                        <div class="row">
+                    <h3>Documents</h3>
+                    <div id="agentCarouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            @isset($user->agent['business_document'])
+                                <li data-target="#agentCarouselExampleIndicators" data-slide-to="0" class="active"></li>
+                            @endisset
+
+                            @isset($user->agent['business_owner_citizenship_front'])
+                                <li data-target="#agentCarouselExampleIndicators" data-slide-to="1" class="@if(empty($user->agent['business_document'])) active @endif"></li>
+                            @endisset
+
+                            @isset($user->agent['business_owner_citizenship_back'])
+                                <li data-target="#agentCarouselExampleIndicators" data-slide-to="2" class=""></li>
+                            @endisset
+
+                            @isset($user->agent['tax_clearance_certificate'])
+                                <li data-target="#agentCarouselExampleIndicators" data-slide-to="3" class=""></li>
+                            @endisset
+                        </ol>
+                        <div class="carousel-inner">
 
                             @isset($user->agent['business_document'])
-                            <div class="col-md-12">
+                            <div class="carousel-item active">
                                 <a href="{{ config('dpaisa-api-url.agent_url') . $user->agent['business_document'] }}" target="_blank">
                                     <img class="d-block w-100" src="{{ config('dpaisa-api-url.agent_url') . $user->agent['business_document'] }}" alt="First slide">
                                     <div class="carousel-caption d-none d-md-block">
@@ -59,7 +77,7 @@
                             @endisset
 
                             @isset($user->agent['business_owner_citizenship_front'])
-                            <div class="col-md-12">
+                            <div class="carousel-item @if(empty($user->agent['business_document'])) active @endif">
                                 <a href="{{ config('dpaisa-api-url.agent_url') . $user->agent['business_owner_citizenship_front'] }}" target="_blank">
                                     <img class="d-block w-100" src="{{ config('dpaisa-api-url.agent_url') . $user->agent['business_owner_citizenship_front'] }}" alt="First slide">
                                     <div class="carousel-caption d-none d-md-block">
@@ -72,7 +90,7 @@
                             @endisset
 
                             @isset($user->agent['business_owner_citizenship_back'])
-                            <div class="col-md-12">
+                            <div class="carousel-item">
                                 <a href="{{ config('dpaisa-api-url.agent_url') . $user->agent['business_owner_citizenship_back'] }}" target="_blank">
                                     <img class="d-block w-100" src="{{ config('dpaisa-api-url.agent_url') . $user->agent['business_owner_citizenship_back'] }}" alt="First slide">
                                     <div class="carousel-caption d-none d-md-block">
@@ -85,7 +103,7 @@
                             @endisset
 
                             @isset($user->agent['pp_photo'])
-                            <div class="col-md-12">
+                            <div class="carousel-item">
                                 <a href="{{ config('dpaisa-api-url.agent_url') . $user->agent['pp_photo'] }}" target="_blank">
                                     <img class="d-block w-100" src="{{ config('dpaisa-api-url.agent_url') . $user->agent['pp_photo'] }}" alt="First slide">
                                     <div class="carousel-caption d-none d-md-block">
@@ -98,7 +116,7 @@
                             @endisset
 
                             @isset($user->agent['tax_clearance_certificate'])
-                            <div class="col-md-12">
+                            <div class="carousel-item">
                                 <a href="{{ config('dpaisa-api-url.agent_url') . $user->agent['tax_clearance_certificate'] }}" target="_blank">
                                     <img class="d-block w-100" src="{{ config('dpaisa-api-url.agent_url') . $user->agent['tax_clearance_certificate'] }}" alt="First slide">
                                     <div class="carousel-caption d-none d-md-block">
@@ -110,6 +128,15 @@
                             </div>
                             @endisset
                         </div>
+
+                        <a class="carousel-control-prev" href="#agentCarouselExampleIndicators" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#agentCarouselExampleIndicators" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
                     </div>
                 </div>
             @endif

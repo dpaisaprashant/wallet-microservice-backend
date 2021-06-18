@@ -42,7 +42,7 @@
             </div>
             @if(!empty($user->agent))
                 <div class="col-md-5">
-                    <h3>Documents</h3>
+                    <h3>Agent Documents</h3>
                         <div class="row">
 
                             @isset($user->agent['business_document'])
@@ -110,8 +110,6 @@
                             </div>
                             @endisset
                         </div>
-
-
                     </div>
                 </div>
             @endif

@@ -35,6 +35,11 @@ class NpsLoadTransaction extends Model
         "vendor"
     ];
 
+    public function getAmountAttribute($amount)
+    {
+        return ($amount/100);
+    }
+
     public function getTypeAttribute()
     {
         return "credit";

@@ -16,7 +16,8 @@ class KhaltiFilters extends FiltersAbstract
         'vendor' => VendorKhaltiFilter::class,
         'user' => UserKhaltiFilter::class,
         'from' => FromKhaltiFilter::class,
-        'to' => ToKhaltiFilter::class
+        'to' => ToKhaltiFilter::class,
+        'reference_no' => KhaltiReferenceFilter::class
     ];
 
     /**

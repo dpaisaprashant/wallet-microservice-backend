@@ -55,4 +55,12 @@ class NchlBankTransferRepository
     {
         return NchlBankTransfer::with('user', 'transactions', 'commission')->where('id', $id)->firstOrFail();
     }
+
+    public function getNchlLoadBankTransferTransactionCount(){
+        return NchlBankTransfer::filter($this->request)->count();
+    }
+
+    public function     getNchlLoadBankTransferTransactionSum(){
+        return NchlBankTransfer::filter($this->request)->sum('amount') / 100;
+    }
 }

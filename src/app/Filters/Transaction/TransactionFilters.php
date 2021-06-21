@@ -29,7 +29,8 @@ class TransactionFilters extends FiltersAbstract
         'debit' => DebitCreditFilter::class,
         'debit_range' => DebitFilter::class,
         'sort' => SortFilter::class,
-        'till' => TillFilter::class
+        'till' => TillFilter::class,
+        'pre_transaction_id' => CompletePreTransactionFilter::class,
     ];
 
 

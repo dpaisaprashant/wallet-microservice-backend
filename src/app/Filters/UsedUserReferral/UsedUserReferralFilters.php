@@ -13,7 +13,7 @@ class UsedUserReferralFilters extends FiltersAbstract
     protected $filters = [
         'referred_from' => ReferredFromFilter::class,
         'from' => FromDateFilter::class,
-        'to' => ToDateFilter::class
+        'to' => ToDateFilter::class,
     ];
 
 

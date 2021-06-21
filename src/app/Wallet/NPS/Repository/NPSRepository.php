@@ -78,5 +78,13 @@ class NPSRepository
         return NpsLoadTransaction::with('user', 'transactions', 'commission')->where('id', $id)->firstOrFail();
     }
 
+    public function getNpsTotalTransactionCount(){
+        return NpsLoadTransaction::filter($this->request)->count();
+    }
+
+    public function getNpsTotalTransactionSum(){
+        return NpsLoadTransaction::filter($this->request)->sum('amount') / 100;
+    }
+
 
 }

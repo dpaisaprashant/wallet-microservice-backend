@@ -3,6 +3,7 @@
     <?php $date = explode(' ', $event->created_at) ?>
     <td>{{ $date[0] }}</td>
     <td>{{ $date[1] }}</td>
+    <td>{{$event->pre_transaction_id == null ? '---' : $event->pre_transaction_id}}</td>
     <td>
         @if($user->id == $event->to_user)
             RECEIVE FUND REQUEST

@@ -21,6 +21,7 @@ class EBankingFilters extends  FiltersAbstract {
         'to' => ToDateFilter::class,
         'status' => StatusFilter::class,
         'sort' => SortFilter::class,
+        'pre_transaction_id' => NPayPreTransactionFilter::class
     ];
 
     /**

@@ -90,4 +90,12 @@ class PayPointRepository
     {
         return UserCheckPayment::with('userExecutePayment', 'userTransaction', 'user')->where('id', $id)->firstOrFail();
     }
+
+    public function getPayPointTransactionCount(){
+        return UserCheckPayment::filter($this->request)->count();
+    }
+
+    public function getPayPointTransactionSum(){
+        return UserTransaction::filter($this->request)->sum('amount') / 100;
+    }
 }

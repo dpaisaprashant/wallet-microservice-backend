@@ -18,7 +18,7 @@ class MerchantTransactionEventFilters extends FiltersAbstract
         'amount' => AmountFilter::class,
         'from' => FromDateFilter::class,
         'to' => ToDateFilter::class,
-        'sort' => SortFilter::class
+        'sort' => SortFilter::class,
     ];
 
 

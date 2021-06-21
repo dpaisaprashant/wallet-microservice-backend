@@ -60,7 +60,7 @@ class NchlBankTransferRepository
         return NchlBankTransfer::filter($this->request)->count();
     }
 
-    public function getNchlLoadBankTransferTransactionSum(){
+    public function     getNchlLoadBankTransferTransactionSum(){
         return NchlBankTransfer::filter($this->request)->sum('amount') / 100;
     }
 }

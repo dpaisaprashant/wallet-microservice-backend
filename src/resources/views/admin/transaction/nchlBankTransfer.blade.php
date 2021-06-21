@@ -152,8 +152,19 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-md-6 mt-3">
+                                            <label for="ionrange_balance">Pre Transaction Id</label>
+                                            {{--                                            <input type="text" name="amount" class="ionrange_amount">--}}
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="input-group date">
+                                                        <input type="number" class="form-control" placeholder="Pre Transaction Id" name="pre_transaction_id" autocomplete="off" value="{{ !empty($_GET['pre_transaction_id']) ? $_GET['pre_transaction_id'] : '' }}">
+                                                    </div>
+                                                </div>
 
-                                    </div>
+                                            </div>
+                                        </div>
+                                    </div><br>
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('nchl.bankTransfer') }}"><strong>Filter</strong></button>
                                     </div>
@@ -177,6 +188,8 @@
                         <h5>List of NCHL Bank Transfers</h5>
                     </div>
                     <div class="ibox-content">
+                        <h5><b>Total Count:</b> {{ $totalNchlLoadBankTransferTransactionCount }}</h5>
+                        <h5><b>Total Amount Sum:</b> Rs. {{$totalNchlLoadBankTransferTransactionSum}}</h5>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover dataTables-example" title="NPay transactions list">
                                 <thead>

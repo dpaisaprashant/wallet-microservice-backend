@@ -20,7 +20,8 @@ class NchlBankTransferFilters extends  FiltersAbstract {
         'to' => ToDateFilter::class,
         'transaction_id' => IdFilter::class,
         'sort' => SortFilter::class,
-        'user' => UserFilter::class
+        'user' => UserFilter::class,
+        'pre_transaction_id' => NchlBankTransferPreTransactionFilter::class,
     ];
 
     /**

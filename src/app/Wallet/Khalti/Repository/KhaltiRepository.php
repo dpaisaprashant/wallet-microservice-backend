@@ -59,4 +59,12 @@ class KhaltiRepository
         $vendorName = KhaltiUserTransaction::groupBy('vendor')->pluck('vendor');
         return $vendorName;
     }
+
+    public function getKhaltiTotalTransactionCount(){
+        return KhaltiUserTransaction::filter($this->request)->count();
+    }
+
+    public function getKhaltiTotalTransactionSum(){
+        return KhaltiUserTransaction::filter($this->request)->sum('amount') / 100;
+    }
 }

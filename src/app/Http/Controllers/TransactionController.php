@@ -14,12 +14,24 @@ use App\Wallet\NPay\Repository\NPayRepository;
 use App\Wallet\NPS\Repository\NPSRepository;
 use App\Wallet\PayPoint\Repository\PayPointRepository;
 use App\Wallet\TransactionEvent\Repository\TransactionEventRepository;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+
 
 class TransactionController extends Controller
 {
     //SUCCESSFUL
-    public function complete(TransactionEventRepository $repository)
+    public function complete(Request $request,TransactionEventRepository $repository)
     {
+
+        if(empty($_GET['from']) && empty($_GET['to'])){
+            $request->merge([
+                'from' => Carbon::now()->format('Y-m-d'),
+                'to' => Carbon::now()->format('Y-m-d'),
+            ]);
+        }
+
+
         $transactions = $repository->paginatedTransactions();
         $totalTransactionCount = $repository->transactionsCount();
         $totalTransactionAmountSum = $repository->transactionAmountSum();
@@ -56,10 +68,18 @@ class TransactionController extends Controller
     }
 
     //NPAY
-    public function eBanking(NPayRepository $repository)
+    public function eBanking(Request $request,NPayRepository $repository)
     {
+        if(empty($_GET['from']) && empty($_GET['to'])){
+            $request->merge([
+                'from' => Carbon::now()->format('Y-m-d'),
+                'to' => Carbon::now()->format('Y-m-d'),
+            ]);
+        }
+        $totalCountEbanking = $repository->getTotalCountEbanking();
+        $totalSumEbanking = $repository->getTotalSumEbanking();
         $userLoadTransactions = $repository->paginatedTransactions();
-        return view('admin.transaction.eBanking')->with(compact('userLoadTransactions'));
+        return view('admin.transaction.eBanking')->with(compact('userLoadTransactions','totalCountEbanking','totalSumEbanking'));
     }
 
     public function eBankingDetail($id, NPayRepository $repository)
@@ -69,16 +89,32 @@ class TransactionController extends Controller
     }
 
     //NPS
-    public function nps(NPSRepository $repository){
+    public function nps(Request $request,NPSRepository $repository){
+        if(empty($_GET['from']) && empty($_GET['to'])){
+            $request->merge([
+                'from' => Carbon::now()->format('Y-m-d'),
+                'to' => Carbon::now()->format('Y-m-d'),
+            ]);
+        }
+        $npsTotalTransactionCount = $repository->getNpsTotalTransactionCount();
+        $npsTotalTransactionSum = $repository->getNpsTotalTransactionSum();
         $npsLoadTransactions = $repository->paginatedTransactions();
-        return view('admin.transaction.nps',compact('npsLoadTransactions'));
+        return view('admin.transaction.nps',compact('npsLoadTransactions','npsTotalTransactionCount','npsTotalTransactionSum'));
     }
 
     //PAYPOINT
-    public function paypoint(PayPointRepository $repository)
+    public function paypoint(PayPointRepository $repository,Request $request)
     {
+        if(empty($_GET['from']) && empty($_GET['to'])){
+            $request->merge([
+                'from' => Carbon::now()->format('Y-m-d'),
+                'to' => Carbon::now()->format('Y-m-d'),
+            ]);
+        }
+        $totalPayPointTransactionCount = $repository->getPayPointTransactionCount();
+        $totalPayPointTransactionSum = $repository->getPayPointTransactionSum();
         $transactions = $repository->paginatedTransactions();
-        return view('admin.transaction.paypoint')->with(compact('transactions'));
+        return view('admin.transaction.paypoint')->with(compact('transactions','totalPayPointTransactionCount','totalPayPointTransactionSum'));
     }
 
     public function paypointDetail($id, PayPointRepository $repository)
@@ -88,10 +124,18 @@ class TransactionController extends Controller
     }
 
     //NCHL LOAD TRANSACTION
-    public function nchlLoadTransaction(NchlLoadTransactionRepository $repository)
+    public function nchlLoadTransaction(NchlLoadTransactionRepository $repository,Request $request)
     {
+        if(empty($_GET['from']) && empty($_GET['to'])){
+            $request->merge([
+                'from' => Carbon::now()->format('Y-m-d'),
+                'to' => Carbon::now()->format('Y-m-d'),
+            ]);
+        }
+        $totalNchlLoadTransactionCount = $repository->getTotalNchlLoadTransactionCount();
+        $totalNchlLoadTransactionSum = $repository->getTotalNchlLoadTransactionSum();
         $transactions = $repository->paginatedTransactions();
-        return view('admin.transaction.nchlLoadTransaction')->with(compact('transactions'));
+        return view('admin.transaction.nchlLoadTransaction')->with(compact('transactions','totalNchlLoadTransactionCount','totalNchlLoadTransactionSum'));
     }
 
     public function nchlLoadTransactionDetail($id, NchlLoadTransactionRepository $repository)
@@ -101,10 +145,18 @@ class TransactionController extends Controller
     }
 
     //NCHL BANK TRANSFER
-    public function nchlBankTransfer(NchlBankTransferRepository $repository)
+    public function nchlBankTransfer(NchlBankTransferRepository $repository,Request $request)
     {
+        if(empty($_GET['from']) && empty($_GET['to'])){
+            $request->merge([
+                'from' => Carbon::now()->format('Y-m-d'),
+                'to' => Carbon::now()->format('Y-m-d'),
+            ]);
+        }
+        $totalNchlLoadBankTransferTransactionCount = $repository->getNchlLoadBankTransferTransactionCount();
+        $totalNchlLoadBankTransferTransactionSum = $repository->getNchlLoadBankTransferTransactionSum();
         $transactions = $repository->paginatedTransactions();
-        return view('admin.transaction.nchlBankTransfer')->with(compact('transactions'));
+        return view('admin.transaction.nchlBankTransfer')->with(compact('transactions','totalNchlLoadBankTransferTransactionCount','totalNchlLoadBankTransferTransactionSum'));
     }
 
     public function nchlBankTransferDetail($id, NchlBankTransferRepository $repository)
@@ -127,10 +179,18 @@ class TransactionController extends Controller
         return view('admin.transaction.detail.nicAsiaCyberSourceLoadDetail')->with(compact('transaction'));
     }
 
-    public function nicAsiaCyberSourceLoad(NicAsiaCyberSourceRepository $repository)
+    public function nicAsiaCyberSourceLoad(NicAsiaCyberSourceRepository $repository,Request $request)
     {
+        if(empty($_GET['from']) && empty($_GET['to'])){
+            $request->merge([
+                'from' => Carbon::now()->format('Y-m-d'),
+                'to' => Carbon::now()->format('Y-m-d'),
+            ]);
+        }
+        $totalNicAisaTransactionCount = $repository->getTotalNicAisaTransactionCount();
+        $totalNicAisaTransactionSum = $repository->getTotalNicAisaTransactionSum();
         $transactions = $repository->paginatedTransactions();
-        return view('admin.transaction.nicAsiaCyberSourceLoad',compact('transactions'));
+        return view('admin.transaction.nicAsiaCyberSourceLoad',compact('transactions','totalNicAisaTransactionCount','totalNicAisaTransactionSum'));
     }
 
     //KHALTI
@@ -172,9 +232,17 @@ class TransactionController extends Controller
     }
 
     //KHALTI TRANSACTION
-    public function khaltiTransaction(KhaltiRepository $repository){
+    public function khaltiTransaction(KhaltiRepository $repository,Request $request){
+        if(empty($_GET['from']) && empty($_GET['to'])){
+            $request->merge([
+                'from' => Carbon::now()->format('Y-m-d'),
+                'to' => Carbon::now()->format('Y-m-d'),
+            ]);
+        }
+        $khaltiTotalTransactionCount = $repository->getKhaltiTotalTransactionCount();
+        $khaltiTotalTransactionSum = $repository->getKhaltiTotalTransactionSum();
         $khaltiTransactions = $repository->paginatedTransactions();
         $vendorNames = $repository->getVendorName();
-        return view('admin.transaction.khalti')->with(compact('khaltiTransactions','vendorNames'));
+        return view('admin.transaction.khalti')->with(compact('khaltiTransactions','vendorNames','khaltiTotalTransactionCount','khaltiTotalTransactionSum'));
     }
 }

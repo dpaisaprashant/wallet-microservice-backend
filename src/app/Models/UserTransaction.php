@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use App\Filters\FiltersAbstract;
 use App\Traits\BelongsToUser;
 use App\Traits\BelongsToUseThroughMicroservice;
 use App\Traits\MorphOneCommission;
 use App\Traits\MorphOneDispute;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use App\Filters\UserTransaction\UserTransactionFilters;
 
 class UserTransaction extends Model
 {
@@ -117,5 +121,8 @@ class UserTransaction extends Model
         return round($totalCommission, 3);
     }
 
-
+    public function scopeFilter(Builder $builder, Request $request, array $filters = [])
+    {
+        return (new UserTransactionFilters($request))->add($filters)->filter($builder);
+    }
 }

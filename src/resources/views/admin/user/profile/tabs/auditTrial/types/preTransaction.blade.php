@@ -3,7 +3,9 @@
     <?php $date = explode(' ', $event->created_at) ?>
     <td>{{ $date[0] }}</td>
     <td>{{ $date[1] }}</td>
-    <td>{{ $event->description . " " . $event->pre_transaction_id}}</td>
+    <td>{{$event->pre_transaction_id == null ? '---' : $event->pre_transaction_id}}</td>
+    <td>{{dd($event)}}</td>
+    <td>{{ $event->description }}</td>
     <td>
         <?php $transaction = json_decode($event->json_response, true) ?>
         @if(is_array($transaction) && isset($transaction['transaction']) && isset($transaction['transaction']['vendor']))

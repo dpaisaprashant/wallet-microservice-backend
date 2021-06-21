@@ -61,6 +61,7 @@
                     <th>S.No</th>
                     <th>Date</th>
                     <th>Time</th>
+                    <th>Pre Transaction</th>
                     <th>Description</th>
                     <th>Vendor</th>
                     <th>Status</th>

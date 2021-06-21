@@ -1,21 +1,22 @@
 <?php
 
-namespace App\Filters\EBanking;
+namespace App\Filters\Khalti;
 
 use App\Filters\FilterAbstract;
+use App\Models\Microservice\PreTransaction;
+use App\Models\Microservice\RequestInfo;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 
-class StatusFilter extends FilterAbstract {
+class KhaltiReferenceFilter extends FilterAbstract {
+
 
     public function mapping()
     {
         return [
-            'completed' => 'COMPLETED',
-            'validated' => 'VALIDATED',
-            'error' => 'ERROR'
+
         ];
     }
-
 
     /**
      * Apply filter.
@@ -27,12 +28,11 @@ class StatusFilter extends FilterAbstract {
      */
     public function filter(Builder $builder, $value)
     {
-        $value = $this->resolveFilterValue($this->mapping(), $value);
+        //$value = $this->resolveFilterValue($value);
         if ($value === null) {
             return $builder;
         }
 
-
-        return $builder->where('status', $value);
+        return $builder->where('reference_no', $value);
     }
 }

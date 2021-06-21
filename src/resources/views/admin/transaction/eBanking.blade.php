@@ -2,7 +2,7 @@
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>E Banking</h2>
+            <h2>NPay Web/Mobile Banking</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -11,7 +11,7 @@
                     <strong>Transactions</strong>
                 </li>
                 <li class="breadcrumb-item active">
-                    <strong>E-Banking</strong>
+                    <strong>NPay Web/Mobile Banking</strong>
                 </li>
             </ol>
         </div>
@@ -21,7 +21,7 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title collapse-link">
-                        <h5>Filter E-Banking Transactions</h5>
+                        <h5>Filter NPay Transactions</h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -87,11 +87,13 @@
                                                     <option value="" selected disabled>Select Status...</option>
                                                     <option value="" >All</option>
                                                     @if(!empty($_GET['status']))
-                                                        <option value="completed" @if($_GET['status']  == 'completed') selected @endif>Complete</option>
-                                                        <option value="validated" @if($_GET['status']  == 'validated') selected @endif>Validates</option>
+                                                        <option value="completed" @if($_GET['status']  == 'completed') selected @endif>Completed</option>
+                                                        <option value="validated" @if($_GET['status']  == 'validated') selected @endif>Validated</option>
+                                                        <option value="error" @if($_GET['status']  == 'error') selected @endif>Error</option>
                                                     @else
-                                                        <option value="completed">Complete</option>
-                                                        <option value="validated">Validates</option>
+                                                        <option value="completed">Completed</option>
+                                                        <option value="validated">Validated</option>
+                                                        <option value="error">Error</option>
                                                     @endif
                                                 </select>
                                             </div>
@@ -140,7 +142,20 @@
                                             </div>
                                         </div>
 
-                                    </div>
+                                        <div class="col-md-6 mt-3">
+                                            <label for="ionrange_balance">Pre Transaction Id</label>
+                                            {{--                                            <input type="text" name="amount" class="ionrange_amount">--}}
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="input-group date">
+                                                        <input type="text" class="form-control" placeholder="Pre Transaction Id" name="pre_transaction_id" autocomplete="off" value="{{ !empty($_GET['pre_transaction_id']) ? $_GET['pre_transaction_id'] : '' }}">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div><br>
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('eBanking') }}"><strong>Filter</strong></button>
                                     </div>
@@ -161,9 +176,11 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>List of EBanking (Load Fund) transactions</h5>
+                        <h5>List of NPay (Load Fund) transactions</h5>
                     </div>
                     <div class="ibox-content">
+                        <h5><b>Total Count:</b> {{ $totalCountEbanking }}</h5>
+                        <h5><b>Total Amount Sum:</b> Rs. {{ $totalSumEbanking }}</h5>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover dataTables-example" title="NPay transactions list">
                                 <thead>

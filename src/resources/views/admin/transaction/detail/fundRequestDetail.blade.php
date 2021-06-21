@@ -45,7 +45,6 @@
 
                             <address>
                             <strong>Amount: Rs. {{ $transaction->amount }}<br></strong>
-                            <strong>Commission: Rs. {{ $transaction->commission['before_amount'] - $transaction->commission['after_amount'] }}<br></strong>
                             </address>
 
                         </div>

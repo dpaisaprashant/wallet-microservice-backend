@@ -322,9 +322,9 @@ $url = url()->current();
                         @endcan
                         @can('Nicasia cybersource load transaction')
                             <li><a href="{{ route('nicasia.cyberSourceLoad') }}">All card load transaction</a></li>
-                        @endcan
+                        @endcan--}}
                     </ul>
-                </li>--}}
+                </li>
             @endif
 
             {{--@if(auth()->user()->hasAnyPermission(['Failed paypoint view', 'Failed npay view']))

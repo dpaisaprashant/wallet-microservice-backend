@@ -52,4 +52,12 @@ class NchlLoadTransactionRepository
         return NchlLoadTransaction::with('user', 'transactions', 'commission')->where('id', $id)->firstOrFail();
     }
 
+    public function getTotalNchlLoadTransactionCount(){
+        return NchlLoadTransaction::filter($this->request)->count();
+    }
+
+    public function getTotalNchlLoadTransactionSum(){
+        return NchlLoadTransaction::filter($this->request)->sum('amount') / 100;
+    }
+
 }

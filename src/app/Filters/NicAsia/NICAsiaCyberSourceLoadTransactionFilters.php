@@ -23,7 +23,8 @@ class NICAsiaCyberSourceLoadTransactionFilters extends  FiltersAbstract {
         'from' => FromDateFilter::class,
         'to' => ToDateFilter::class,
         'status' => StatusFilter::class,
-        'sort' => SortFilter::class
+        'sort' => SortFilter::class,
+        'pre_transaction_id' => NICPreTransactionFilter::class
     ];
 
     /**

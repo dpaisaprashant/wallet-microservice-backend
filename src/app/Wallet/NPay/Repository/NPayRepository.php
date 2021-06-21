@@ -76,4 +76,12 @@ class NPayRepository
     {
         return UserLoadTransaction::with('user', 'transactions', 'loadTransactionResponse', 'commission')->where('id', $id)->firstOrFail();
     }
+
+    public function getTotalCountEbanking(){
+        return UserLoadTransaction::filter($this->request)->count();
+    }
+
+    public function getTotalSumEbanking(){
+        return UserLoadTransaction::filter($this->request)->sum('amount') / 100;
+    }
 }

@@ -129,10 +129,16 @@
                                             </div>
                                         </div>
 
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <input type="text" name="pre_transaction_id" placeholder="Pre Transaction Id" class="form-control" value="{{ !empty($_GET['pre_transaction_id']) ? $_GET['pre_transaction_id'] : '' }}">
+                                            </div>
+                                        </div>
+
                                     </div>
 
                                     <div>
-                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('transaction.complete') }}"><strong>Filter</strong></button>
+                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('nicasia.cyberSourceLoad') }}"><strong>Filter</strong></button>
                                     </div>
 
                                     <div>
@@ -156,8 +162,8 @@
 
                     </div>
                     <div class="ibox-content">
-{{--                        <h5><b>Total Count:</b> {{ $totalTransactionCount }}</h5>--}}
-{{--                        <h5><b>Total Amount Sum:</b> Rs. {{ $totalTransactionAmountSum }}</h5>--}}
+                        <h5><b>Total Count:</b> {{ $totalNicAisaTransactionCount }}</h5>
+                        <h5><b>Total Amount Sum:</b> Rs. {{ $totalNicAisaTransactionSum }}</h5>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover dataTables-example" title="Complete Card load list">
                                 <thead>
@@ -226,12 +232,12 @@
     @include('admin.asset.js.chosen')
     @include('admin.asset.js.datepicker')
     @include('admin.asset.js.datatable')
-{{--    <script>--}}
-{{--        $(document).ready(function (e) {--}}
-{{--            let a = "Showing {{ $transactions->firstItem() }} to {{ $transactions->lastItem() }} of {{ $transactions->total() }} entries";--}}
-{{--            $('.dataTables_info').text(a);--}}
-{{--        });--}}
-{{--    </script>--}}
+    <script>
+        $(document).ready(function (e) {
+            let a = "Showing {{ $transactions->firstItem() }} to {{ $transactions->lastItem() }} of {{ $transactions->total() }} entries";
+            $('.dataTables_info').text(a);
+        });
+    </script>
 
 
     <script>

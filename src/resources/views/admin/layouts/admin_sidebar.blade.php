@@ -324,7 +324,7 @@ $url = url()->current();
                             <li><a href="{{ route('nicasia.cyberSourceLoad') }}">All card load transaction</a></li>
                         @endcan
                     </ul>
-                </li>
+                </li>--}}
             @endif
 
             {{--@if(auth()->user()->hasAnyPermission(['Failed paypoint view', 'Failed npay view']))

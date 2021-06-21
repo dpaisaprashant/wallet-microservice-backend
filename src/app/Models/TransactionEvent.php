@@ -68,33 +68,65 @@ class TransactionEvent extends Model
                 }
             case UserLoadTransaction::class:
                 if ($this->vendor == "SCT") {
-                    if ($this->amount >= 1 && $this->amount <= 5000) {
-                        return 5;
-                    } elseif ($this->amount >= 5001 && $this->amount <= 15000) {
-                        return 10;
-                    }elseif ($this->amount >= 15001) {
-                        return 25;
-                    }
+                    return (2 / 100) * $this->amount;
                 }
 
-                if ($this->amount >= 1 && $this->amount <= 1000 ) {
-                    return (0.5/100) * $this->amount;
-                } elseif ($this->amount >= 1001 && $this->amount <= 15000) {
-                    return 6;
-                } elseif ($this->amount >= 15001) {
-                    return 7;
-                }
+                return (1 / 100) * $this->amount;
+
             case NchlBankTransfer::class:
             case NchlAggregatedPayment::class:
                 if ($this->amount <= 500) {
                     return 2;
                 }elseif ($this->amount >= 501 && $this->amount <= 5000) {
                     return 5;
-                }elseif ($this->amount >= 5001 && $this->amount <= 50000) {
+                }elseif ($this->amount >= 5001 && $this->amount <= 25000) {
                     return 10;
-                } elseif ($this->amount >= 50001 ) {
-                    return 15;
+                } elseif ($this->amount >= 25001 ) {
+                    return 10;
                 }
+            case NICAsiaCyberSourceLoadTransaction::class:
+                return (3.5/100) * $this->amount;
+            case UserTransaction::class:
+                if ($this->vendor == "NTC") {
+                    if ($this->service_type == "EPIN") {
+                        return (3.5 / 100) * $this->amount;
+                    }
+                    return (3.84 / 100) * $this->amount;
+                } elseif ($this->vendor == "DISHHOME") {
+                    if ($this->service_type == "EPIN") {
+                        return (3.5 / 100) * $this->amount;
+                    }
+                    return (3.7 / 100) * $this->amount;
+                } elseif ($this->vendor == "NCELL") {
+                    return (4 / 100) * $this->amount;
+                } elseif ($this->vendor == "NETTV_EPIN" || $this->vendor == "NETTV") {
+                    return (4 / 100) * $this->amount;
+                } elseif ($this->vendor == "SMARTCELL") {
+                    if ($this->service_type == "EPIN") {
+                        return (2.7 / 100) * $this->amount;
+                    }
+                    return (2.7 / 100 ) * $this->amount;
+                } elseif ($this->vendor == "SIMTV") {
+                    return (3.6 / 100) * $this->amount;
+                } elseif($this->vendor == "SUBISU") {
+                    return (0.9 / 100) * $this->amount;
+                } elseif ($this->vendor == "WORLDLINK") {
+                    return (0.9 / 100) * $this->amount;
+                } elseif ($this->vendor == "VIANET") {
+                    return (0.9 / 100) * $this->amount;
+                } elseif ($this->vendor == "MEROTV") {
+                    return (2.5 / 100) * $this->amount;
+                } elseif ($this->vendor == "WEBSURFER") {
+                    return (0.9 / 100) * $this->amount;
+                } elseif ($this->vendor == "ARROWNET") {
+                    return (0.9 / 100) * $this->amount;
+                } elseif ($this->vendor == "PRABHUTV") {
+                    return (3 / 100) * $this->amount;
+                } elseif ($this->vendor == "PRABHUNET") {
+                    return (2.5 / 100) * $this->amount;
+                }
+
+
             default:
                 return 0;
         }

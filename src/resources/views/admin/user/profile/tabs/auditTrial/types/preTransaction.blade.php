@@ -82,7 +82,7 @@
             @if($event->transactionEvent instanceof \App\Models\UserToUserFundTransfer)
                 @include('admin.transaction.fundTransfer.detail', [$event->transactionEvent->transactionable])
                     <a href="{{ route('userToUserFundTransfer.detail', $event->transactionEvent->transaction_id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
-                @endif
+            @endif
         @endif
 
 

@@ -22,8 +22,8 @@ class AdminController extends Controller
         $kycNotFilledUserCount = $repository->totalKYCNotFilledUsersCount();
         $kycFilledUserCount = $repository->totalKYCFilledUsersCount();
 
-        $successfulTransactionCount = $repository->successfulTransactionCount();
-        $successfulTransactionSum = $repository->successfulTransactionSum();
+//        $successfulTransactionCount = $repository->successfulTransactionCount();
+//        $successfulTransactionSum = $repository->successfulTransactionSum();
 
         //$npayClearedTransactions = (new Clearance())->npayClearedTransactions();
         //$paypointClearedTransactions = (new Clearance())->paypointClearedTransactions();
@@ -40,25 +40,25 @@ class AdminController extends Controller
         $year = $now->format('Y');
 
         //Npay graph
-        $nPayTransactions = $repository->monthNPayTransactions($year, $month);
-        $nPayGraph = json_encode($repository->transactionGraph($nPayTransactions));
+//        $nPayTransactions = $repository->monthNPayTransactions($year, $month);
+//        $nPayGraph = json_encode($repository->transactionGraph($nPayTransactions));
 
         //payPoint graph
-        $transactions = $repository->monthPayPointTransactions($year, $month);
-        $graph = json_encode($repository->transactionGraph($transactions));
+//        $transactions = $repository->monthPayPointTransactions($year, $month);
+//        $graph = json_encode($repository->transactionGraph($transactions));
 
-        $monthTransactionCount = [
-          'npay' => $nPayTransactions->count(),
-          'paypoint' => $transactions->count()
-        ];
+//        $monthTransactionCount = [
+//          'npay' => $nPayTransactions->count(),
+//          'paypoint' => $transactions->count()
+//        ];
 
-        $monthTransactionAmount = [
-            'npay' => $nPayTransactions->sum('amount'),
-            'paypoint' => $transactions->sum('amount')
-        ];
-
-        $yearTransactionCount = $repository->yearTransactionCounts($year);
-        $yearTransactionAmount = $repository->yearTransactionSums($year);
+//        $monthTransactionAmount = [
+//            'npay' => $nPayTransactions->sum('amount'),
+//            'paypoint' => $transactions->sum('amount')
+//        ];
+//
+//        $yearTransactionCount = $repository->yearTransactionCounts($year);
+//        $yearTransactionAmount = $repository->yearTransactionSums($year);
 
 
         //Highest Transactions
@@ -69,11 +69,15 @@ class AdminController extends Controller
         $executePayments = json_encode($executePayments);
 
         return view('admin.dashboard')
-            ->with(compact('yearTransactionAmount', 'yearTransactionCount',
-                'monthTransactionAmount','monthTransactionCount',
+            ->with(compact(
+//                'yearTransactionAmount', 'yearTransactionCount',
+//                'monthTransactionAmount','monthTransactionCount',
                 'kycFilledUserCount', 'kycNotFilledUserCount',
-                'successfulTransactionCount','successfulTransactionSum',
-                'month', 'year', 'graph','nPayGraph','highestTransactions',
+//                'successfulTransactionCount',
+//                'successfulTransactionSum',
+                'month', 'year',
+//                'graph','nPayGraph',
+                'highestTransactions',
                  'executePayments', 'acceptedKycsCount', 'rejectedKycsCount'));
     }
 

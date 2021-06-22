@@ -1,6 +1,6 @@
 <?php
 $url = url()->current();
-$today = \Carbon\Carbon::now()->format('d M, Y');
+//$today = \Carbon\Carbon::now()->format('d M, Y');
 ?>
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">
@@ -295,7 +295,7 @@ $today = \Carbon\Carbon::now()->format('d M, Y');
                     <ul class="nav nav-second-level collapse">
 
                         @can('Complete transaction view')
-                            <li><a href="{{ route('transaction.complete',['from'=>$today,'to'=>$today]) }}">Complete Transactions</a></li>
+                            <li><a href="{{ route('transaction.complete') }}">Complete Transactions</a></li>
                         @endcan
 
                         @can('Fund transfer view')
@@ -307,25 +307,25 @@ $today = \Carbon\Carbon::now()->format('d M, Y');
                         @endcan
 
                         @can('EBanking view')
-                            <li><a href="{{ route('eBanking',['from'=>$today,'to'=>$today]) }}">NPay Web/Mobile Banking</a></li>
+                            <li><a href="{{ route('eBanking') }}">NPay Web/Mobile Banking</a></li>
                         @endcan
                         @can('Transaction nps view')
-                            <li><a href="{{ route('nps',['from'=>$today,'to'=>$today]) }}">Nps Web/Mobile Banking</a></li>
+                            <li><a href="{{ route('nps') }}">Nps Web/Mobile Banking</a></li>
                         @endcan
 
-                            <li><a href="{{ route('khalti.transaction',['from'=>$today,'to'=>$today]) }}">Khalti</a></li>
+                            <li><a href="{{ route('khalti.transaction') }}">Khalti</a></li>
 
                         @can('Paypoint view')
-                            <li><a href="{{ route('paypoint',['from'=>$today,'to'=>$today]) }}">Paypoint Transactions</a></li>
+                            <li><a href="{{ route('paypoint') }}">Paypoint Transactions</a></li>
                         @endcan
                         @can('Transaction nchl load')
-                            <li><a href="{{ route('nchl.loadTransaction',['from'=>$today,'to'=>$today]) }}">NCHL Load</a></li>
+                            <li><a href="{{ route('nchl.loadTransaction') }}">NCHL Load</a></li>
                         @endcan
                         @can('Transaction nchl bank transfer')
-                            <li><a href="{{ route('nchl.bankTransfer',['from'=>$today,'to'=>$today]) }}">NCHL Bank Transfer</a></li>
+                            <li><a href="{{ route('nchl.bankTransfer') }}">NCHL Bank Transfer</a></li>
                         @endcan
                         @can('Nicasia cybersource load transaction')
-                            <li><a href="{{ route('nicasia.cyberSourceLoad',['from'=>$today,'to'=>$today]) }}">All card load transaction</a></li>
+                            <li><a href="{{ route('nicasia.cyberSourceLoad') }}">All card load transaction</a></li>
                         @endcan
                     </ul>
                 </li>

@@ -33,12 +33,12 @@
 
     @include('admin.asset.js.datatable')
 
-    @include('admin.dashboard.js.graph.graphButtons')
+{{--    @include('admin.dashboard.js.graph.graphButtons')--}}
 
-    @include('admin.dashboard.js.graph.monthlyPayPoint')
-    @include('admin.dashboard.js.graph.monthlyNPay')
-    @include('admin.dashboard.js.graph.yearly')
-    @include('admin.dashboard.js.graph.executePaymentTimeElapsed')
+{{--    @include('admin.dashboard.js.graph.monthlyPayPoint')--}}
+{{--    @include('admin.dashboard.js.graph.monthlyNPay')--}}
+{{--    @include('admin.dashboard.js.graph.yearly')--}}
+{{--    @include('admin.dashboard.js.graph.executePaymentTimeElapsed')--}}
 
     <!-- FooTable -->
     <script src="{{ asset('admin/js/plugins/footable/footable.all.min.js') }}"></script>

@@ -23,14 +23,17 @@ class TransactionController extends Controller
     //SUCCESSFUL
     public function complete(Request $request,TransactionEventRepository $repository)
     {
-
-        $transactions = $repository->paginatedTransactions();
-        $totalTransactionCount = $repository->transactionsCount();
-        $totalTransactionAmountSum = $repository->transactionAmountSum();
-        $totalTransactionFeeSum = $repository->transactionFeeSum();
+        if(!empty($_GET)){
+            $transactions = $repository->paginatedTransactions();
+            $totalTransactionCount = $repository->transactionsCount();
+            $totalTransactionAmountSum = $repository->transactionAmountSum();
+            $totalTransactionFeeSum = $repository->transactionFeeSum();
+            $getAllUniqueVendors = $repository->getUniqueVendors();
+            return view('admin.transaction.complete')->with(compact('transactions','getAllUniqueVendors', 'totalTransactionAmountSum', 'totalTransactionCount', 'totalTransactionFeeSum'));
+        }
         $getAllUniqueVendors = $repository->getUniqueVendors();
+        return view('admin.transaction.complete')->with(compact('getAllUniqueVendors'));
 
-        return view('admin.transaction.complete')->with(compact('transactions','getAllUniqueVendors', 'totalTransactionAmountSum', 'totalTransactionCount', 'totalTransactionFeeSum'));
     }
 
     //USER TO USER FUND TRANSFER

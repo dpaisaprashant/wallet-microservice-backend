@@ -62,11 +62,11 @@ class AdminController extends Controller
 
 
         //Highest Transactions
-        $highestTransactions = TransactionEvent::with('user')->orderBy('amount', 'DESC')->take(7)->get();
+//        $highestTransactions = TransactionEvent::with('user')->orderBy('amount', 'DESC')->take(7)->get();
 
         //Execute Payment
-        $executePayments = UserExecutePayment::latest()->take(30)->pluck('time_elapsed', 'refStan_request');
-        $executePayments = json_encode($executePayments);
+//        $executePayments = UserExecutePayment::latest()->take(30)->pluck('time_elapsed', 'refStan_request');
+//        $executePayments = json_encode($executePayments);
 
         return view('admin.dashboard')
             ->with(compact(
@@ -77,8 +77,9 @@ class AdminController extends Controller
 //                'successfulTransactionSum',
                 'month', 'year',
 //                'graph','nPayGraph',
-                'highestTransactions',
-                 'executePayments', 'acceptedKycsCount', 'rejectedKycsCount'));
+//                'highestTransactions',
+//                 'executePayments',
+                'acceptedKycsCount', 'rejectedKycsCount'));
     }
 
     public function payPointYearly(Request $request)

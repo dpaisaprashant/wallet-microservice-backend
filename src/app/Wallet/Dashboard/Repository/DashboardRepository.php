@@ -26,14 +26,16 @@ class DashboardRepository
     public function totalKYCNotFilledUsersCount()
     {
         $user = new User();
-        return count($user->kycNotFilledUsers()->get());
+        return User::doesnthave('kyc')->count();
+        //return count($user->kycNotFilledUsers()->get());
     }
 
     public function totalKYCFilledUsersCount()
     {
         $user = new User();
+        return User::has('kyc')->count();
         $kycNotFilledUserCount = $this->totalKYCNotFilledUsersCount();
-        return count($user->get()) - $kycNotFilledUserCount;
+        //return count($user->get()) - $kycNotFilledUserCount;
     }
 
     public function successfulTransactionCount()

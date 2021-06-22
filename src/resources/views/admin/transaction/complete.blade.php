@@ -334,10 +334,12 @@
     @include('admin.asset.js.datepicker')
     @include('admin.asset.js.datatable')
     <script>
+        @if(!empty($_GET))
         $(document).ready(function (e) {
-            {{--let a = "Showing {{ $transactions->firstItem() }} to {{ $transactions->lastItem() }} of {{ $transactions->total() }} entries";--}}
+            let a = "Showing {{ $transactions->firstItem() }} to {{ $transactions->lastItem() }} of {{ $transactions->total() }} entries";
             $('.dataTables_info').text(a);
         });
+        @endif
     </script>
 
     <!-- IonRangeSlider -->

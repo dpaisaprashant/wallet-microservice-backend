@@ -23,16 +23,16 @@ class TransactionController extends Controller
     //SUCCESSFUL
     public function complete(Request $request,TransactionEventRepository $repository)
     {
-        if(!empty($_GET)){
+//        if(!empty($_GET)){
             $transactions = $repository->paginatedTransactions();
             $totalTransactionCount = $repository->transactionsCount();
             $totalTransactionAmountSum = $repository->transactionAmountSum();
             $totalTransactionFeeSum = $repository->transactionFeeSum();
             $getAllUniqueVendors = $repository->getUniqueVendors();
             return view('admin.transaction.complete')->with(compact('transactions','getAllUniqueVendors', 'totalTransactionAmountSum', 'totalTransactionCount', 'totalTransactionFeeSum'));
-        }
-        $getAllUniqueVendors = $repository->getUniqueVendors();
-        return view('admin.transaction.complete')->with(compact('getAllUniqueVendors'));
+//        }
+//        $getAllUniqueVendors = $repository->getUniqueVendors();
+//        return view('admin.transaction.complete')->with(compact('getAllUniqueVendors'));
 
     }
 
@@ -65,10 +65,14 @@ class TransactionController extends Controller
     //NPAY
     public function eBanking(Request $request,NPayRepository $repository)
     {
-        $totalCountEbanking = $repository->getTotalCountEbanking();
-        $totalSumEbanking = $repository->getTotalSumEbanking();
-        $userLoadTransactions = $repository->paginatedTransactions();
-        return view('admin.transaction.eBanking')->with(compact('userLoadTransactions','totalCountEbanking','totalSumEbanking'));
+        if(!empty($_GET)) {
+            $totalCountEbanking = $repository->getTotalCountEbanking();
+            $totalSumEbanking = $repository->getTotalSumEbanking();
+            $userLoadTransactions = $repository->paginatedTransactions();
+            return view('admin.transaction.eBanking')->with(compact('userLoadTransactions', 'totalCountEbanking', 'totalSumEbanking'));
+        }
+        return view('admin.transaction.eBanking');
+
     }
 
     public function eBankingDetail($id, NPayRepository $repository)

@@ -310,10 +310,10 @@ $url = url()->current();
                             <li><a href="{{ route('eBanking') }}">NPay Web/Mobile Banking</a></li>
                         @endcan
                         @can('Transaction nps view')
-                            <li><a href="{{ route('nps') }}">Nps Web/Mobile Banking</a></li>
+                            {{--<li><a href="{{ route('nps') }}">Nps Web/Mobile Banking</a></li>--}}
                         @endcan
 
-                            <li><a href="{{ route('khalti.transaction') }}">Khalti</a></li>
+                            {{--<li><a href="{{ route('khalti.transaction') }}">Khalti</a></li>--}}
 
                         @can('Paypoint view')
                             <li><a href="{{ route('paypoint') }}">Paypoint Transactions</a></li>

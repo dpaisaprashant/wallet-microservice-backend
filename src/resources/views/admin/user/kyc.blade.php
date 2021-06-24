@@ -222,6 +222,38 @@
                                         <dt class="col-md-3 text-right">Identity Issue From</dt>
                                         <dd class="col-md-8">{{ $user->kyc->c_issued_from }}</dd>
 
+                                            <dt class="col-md-3 text-right">Province</dt>
+                                            <dd class="col-md-8">{{ $user->kyc->province }}</dd>
+
+                                            <dt class="col-md-3 text-right">Zone</dt>
+                                            <dd class="col-md-8">{{ $user->kyc->zone }}</dd>
+
+                                            <dt class="col-md-3 text-right">District</dt>
+                                            <dd class="col-md-8">{{ $user->kyc->district }}</dd>
+
+                                            <dt class="col-md-3 text-right">Municipality</dt>
+                                            <dd class="col-md-8">{{ $user->kyc->municipality }}</dd>
+
+                                            <dt class="col-md-3 text-right">Ward No.</dt>
+                                            <dd class="col-md-8">{{ $user->kyc->ward_no }}</dd>
+
+
+
+                                            <dt class="col-md-3 text-right">Tmp Province</dt>
+                                            <dd class="col-md-8">{{ $user->kyc->tmp_province }}</dd>
+
+                                            <dt class="col-md-3 text-right">Tmp Zone</dt>
+                                            <dd class="col-md-8">{{ $user->kyc->tmp_zone }}</dd>
+
+                                            <dt class="col-md-3 text-right">Tmp District</dt>
+                                            <dd class="col-md-8">{{ $user->kyc->tmp_district }}</dd>
+
+                                            <dt class="col-md-3 text-right">Tmp Municipality</dt>
+                                            <dd class="col-md-8">{{ $user->kyc->tmp_municipality }}</dd>
+
+                                            <dt class="col-md-3 text-right">Tmp Ward No.</dt>
+                                            <dd class="col-md-8">{{ $user->kyc->tmp_ward_no }}</dd>
+
 
                                     @else
                                         <dt class="col-md-3 text-right" style="font-size: 16px;">KYC form not filled</dt>

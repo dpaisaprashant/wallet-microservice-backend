@@ -3,7 +3,8 @@
     <?php $date = explode(' ', $event->created_at) ?>
     <td>{{ $date[0] }}</td>
     <td>{{ $date[1] }}</td>
-    <td>{{ $event->description . " " . $event->pre_transaction_id}}</td>
+    <td>{{$event->pre_transaction_id == null ? '---' : $event->pre_transaction_id}}</td>
+    <td>{{ $event->description }}</td>
     <td>
         <?php $transaction = json_decode($event->json_response, true) ?>
         @if(is_array($transaction) && isset($transaction['transaction']) && isset($transaction['transaction']['vendor']))
@@ -77,6 +78,11 @@
                         <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button>
                     </a>
                 @endif
+        @elseif(!empty($event->transactionEvent))
+            @if($event->transactionEvent instanceof \App\Models\UserToUserFundTransfer)
+                @include('admin.transaction.fundTransfer.detail', [$event->transactionEvent->transactionable])
+                    <a href="{{ route('userToUserFundTransfer.detail', $event->transactionEvent->transaction_id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+            @endif
         @endif
 
 

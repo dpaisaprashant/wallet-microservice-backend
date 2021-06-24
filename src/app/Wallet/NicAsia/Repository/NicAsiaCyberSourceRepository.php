@@ -57,4 +57,12 @@ class NicAsiaCyberSourceRepository
     public function getAllCardLoadDetails(){
         return NICAsiaCyberSourceLoadTransaction::all();
     }
+
+    public function getTotalNicAisaTransactionCount(){
+        return NICAsiaCyberSourceLoadTransaction::filter($this->request)->count();
+    }
+
+    public function getTotalNicAisaTransactionSum(){
+        return NICAsiaCyberSourceLoadTransaction::filter($this->request)->sum('amount') / 100;
+    }
 }

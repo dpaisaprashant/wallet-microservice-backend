@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Filters\EBanking;
+namespace App\Filters\UserTransaction;
 
 use App\Filters\FilterAbstract;
+use App\Models\UserExecutePayment;
+use App\Models\UserTransaction;
 use Illuminate\Database\Eloquent\Builder;
 
-class StatusFilter extends FilterAbstract {
+class UserTransactionPreTransactionFilter extends FilterAbstract {
+
 
     public function mapping()
     {
         return [
-            'completed' => 'COMPLETED',
-            'validated' => 'VALIDATED',
-            'error' => 'ERROR'
+
         ];
     }
-
 
     /**
      * Apply filter.
@@ -27,12 +27,11 @@ class StatusFilter extends FilterAbstract {
      */
     public function filter(Builder $builder, $value)
     {
-        $value = $this->resolveFilterValue($this->mapping(), $value);
+        //$value = $this->resolveFilterValue($value);
         if ($value === null) {
             return $builder;
         }
 
-
-        return $builder->where('status', $value);
+        return $builder->where('pre_transaction_id',$value);
     }
 }

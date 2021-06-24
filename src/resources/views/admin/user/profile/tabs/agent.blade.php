@@ -45,10 +45,29 @@
                     <h3>Documents</h3>
                     <div id="agentCarouselExampleIndicators" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
-                            <li data-target="#agentCarouselExampleIndicators" data-slide-to="0" class="active"></li>
-                            <li data-target="#agentCarouselExampleIndicators" data-slide-to="1" class=""></li>
-                            <li data-target="#agentCarouselExampleIndicators" data-slide-to="2" class=""></li>
-                            <li data-target="#agentCarouselExampleIndicators" data-slide-to="3" class=""></li>
+                            @isset($user->agent['business_document'])
+                                <li data-target="#agentCarouselExampleIndicators" data-slide-to="0" class="active"></li>
+                            @endisset
+
+                            @isset($user->agent['business_owner_citizenship_front'])
+                                <li data-target="#agentCarouselExampleIndicators" data-slide-to="1" class="@if(empty($user->agent['business_document'])) active @endif"></li>
+                            @endisset
+
+                            @isset($user->agent['business_owner_citizenship_back'])
+                                <li data-target="#agentCarouselExampleIndicators" data-slide-to="2" class=""></li>
+                            @endisset
+
+                                @isset($user->agent['pp_photo'])
+                                    <li data-target="#agentCarouselExampleIndicators" data-slide-to="3" class=""></li>
+                                @endisset
+
+                                @isset($user->agent['pan_vat_document'])
+                                    <li data-target="#agentCarouselExampleIndicators" data-slide-to="3" class=""></li>
+                                @endisset
+
+                            @isset($user->agent['tax_clearance_certificate'])
+                                <li data-target="#agentCarouselExampleIndicators" data-slide-to="3" class=""></li>
+                            @endisset
                         </ol>
                         <div class="carousel-inner">
 
@@ -66,7 +85,7 @@
                             @endisset
 
                             @isset($user->agent['business_owner_citizenship_front'])
-                            <div class="carousel-item">
+                            <div class="carousel-item @if(empty($user->agent['business_document'])) active @endif">
                                 <a href="{{ config('dpaisa-api-url.agent_url') . $user->agent['business_owner_citizenship_front'] }}" target="_blank">
                                     <img class="d-block w-100" src="{{ config('dpaisa-api-url.agent_url') . $user->agent['business_owner_citizenship_front'] }}" alt="First slide">
                                     <div class="carousel-caption d-none d-md-block">
@@ -103,6 +122,19 @@
                                 </a>
                             </div>
                             @endisset
+
+                            @isset($user->agent['pan_vat_document'])
+                                    <div class="carousel-item">
+                                        <a href="{{ config('dpaisa-api-url.agent_url') . $user->agent['pan_vat_document'] }}" target="_blank">
+                                            <img class="d-block w-100" src="{{ config('dpaisa-api-url.agent_url') . $user->agent['pan_vat_document'] }}" alt="First slide">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <p style="color: black; font-weight: bold;">
+                                                    PAN/VAT DOCUMENT
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                @endisset
 
                             @isset($user->agent['tax_clearance_certificate'])
                             <div class="carousel-item">

@@ -1,4 +1,6 @@
+
 {{--Yearly and monthly button click--}}
+<!--
 <script>
 
     $('#yearlyButton').one('click', function (e) {
@@ -52,7 +54,7 @@
         $('#monthly').css('display', 'block');
     });
 </script>
-{{--Yearly and monthly button click paypoint--}}
+Yearly and monthly button click paypoint
 <script>
 
     $('#yearlyButton2').one('click', function (e) {
@@ -106,3 +108,4 @@
         $('#monthly2').css('display', 'block');
     });
 </script>
+-->

@@ -33,6 +33,8 @@ class NpsStatusFilter extends FilterAbstract {
             return $builder->where('status','COMPLETED');
         }elseif($value == 'validated'){
             return $builder->where('status','VALIDATED');
+        }elseif($value == 'error') {
+            return $builder->where('status','ERROR');
         }else{
             return $builder->where('status','!=',null);
         }

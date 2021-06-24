@@ -171,8 +171,21 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                    </div>
+                                        <div class="col-md-6 mt-3">
+                                            <label for="ionrange_balance">Reference Number</label>
+                                            {{--                                            <input type="text" name="amount" class="ionrange_amount">--}}
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="input-group date">
+                                                        <input type="number" class="form-control"
+                                                               placeholder="Reference Number" name="reference_no"
+                                                               autocomplete="off"
+                                                               value="{{ !empty($_GET['reference_no']) ? $_GET['reference_no'] : '' }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><br>
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
                                                 formaction="{{ route('khalti.transaction') }}"><strong>Filter</strong>
@@ -200,6 +213,8 @@
                         <h5>List of Khalti transactions</h5>
                     </div>
                     <div class="ibox-content">
+                        <h5><b>Total Count:</b> {{ $khaltiTotalTransactionCount }}</h5>
+                        <h5><b>Total Amount Sum:</b> Rs. {{ $khaltiTotalTransactionSum }}</h5>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover dataTables-example"
                                    title="Khalti transactions list">
@@ -264,7 +279,7 @@
     @include('admin.asset.js.datatable')
     <script>
         $(document).ready(function (e) {
-            {{--let a = "Showing {{ $userLoadTransactions->firstItem() }} to {{ $userLoadTransactions->lastItem() }} of {{ $userLoadTransactions->total() }} entries";--}}
+            let a = "Showing {{ $khaltiTransactions->firstItem() }} to {{ $khaltiTransactions->lastItem() }} of {{ $khaltiTransactions->total() }} entries";
             $('.dataTables_info').text(a);
         });
     </script>

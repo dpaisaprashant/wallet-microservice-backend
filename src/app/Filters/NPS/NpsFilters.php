@@ -22,6 +22,7 @@ class NpsFilters extends  FiltersAbstract {
         'from_amount' => NpsFromAmount::class,
         'to_amount' => NpsToAmount::class,
         'user' => NpsUserFilter::class,
+        'pre_transaction_id' => NpsPreTransactionFilter::class
     ];
 
     /**

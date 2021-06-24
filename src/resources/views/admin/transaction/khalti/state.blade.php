@@ -1,5 +1,5 @@
 @if($khaltiTransaction->state == 'Success')
-    <span class="badge badge-success">{{$khaltiTransaction->state}}</span>
+    <span class="badge badge-primary">{{$khaltiTransaction->state}}</span>
     @elseif($khaltiTransaction->state == null)
     <span class="badge badge-danger">Null</span>
     @elseif($khaltiTransaction->state == 'Queued')

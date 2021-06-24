@@ -1,4 +1,5 @@
 {{--yearly graph--}}
+<!--
 <script>
     function loadYearGraph(respData , containerId) {
 
@@ -85,3 +86,4 @@
         chart2.render();
     }
 </script>
+-->

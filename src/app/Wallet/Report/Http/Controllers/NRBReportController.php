@@ -75,7 +75,7 @@ class NRBReportController extends Controller
 
         $agents = Agent::with('user')
             ->where('status', Agent::STATUS_ACCEPTED)
-            ->filter($request)
+            /*->filter($request)*/
             ->latest()
             ->get()
             ->transform(function ($value, $key) use ($request) {

@@ -21,7 +21,8 @@ class UserTransactionFilters extends FiltersAbstract
         'refStan' => RefStanFilter::class,
         'bill_no' => BillNoFilter::class,
         'vendor' => VendorFilter::class,
-        'uid' => UIDFilter::class
+        'uid' => UIDFilter::class,
+        'pre_transaction_id' => UserTransactionPreTransactionFilter::class
     ];
 
 

@@ -1,4 +1,5 @@
 {{--monthly npay graph--}}
+<!--
 <script>
     data = <?php echo $nPayGraph ?>;
     year = <?php echo $year  ?>;
@@ -88,3 +89,4 @@
 
     chart3.render();
 </script>
+-->

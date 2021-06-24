@@ -1,12 +1,12 @@
 <h2 style="margin-top: -5px; margin-left: 5px;">Admin Dashboard</h2>
 <div class="row">
-    @can('Dashboard all transactions sum')
-        @include('admin.dashboard.widgets.allTransactionSum')
-    @endcan
+{{--    @can('Dashboard all transactions sum')--}}
+{{--        @include('admin.dashboard.widgets.allTransactionSum')--}}
+{{--    @endcan--}}
 
-    @can('Dashboard successful transactions count')
-        @include('admin.dashboard.widgets.successfulTransactionCount')
-    @endcan
+{{--    @can('Dashboard successful transactions count')--}}
+{{--        @include('admin.dashboard.widgets.successfulTransactionCount')--}}
+{{--    @endcan--}}
 
     @can('Dashboard total KYC not filled users')
         @include('admin.dashboard.widgets.totalKYCNotFilledUsers')
@@ -24,44 +24,44 @@
         @include('admin.dashboard.widgets.rejectedKYCByBackendUserCount')
     @endcan
 
-    @can('Dashboard total NPay clearance cleared by backend user count')
-        @include('admin.dashboard.widgets.npayClearanceClearedByBackendUserCount')
-    @endcan
+{{--    @can('Dashboard total NPay clearance cleared by backend user count')--}}
+{{--        @include('admin.dashboard.widgets.npayClearanceClearedByBackendUserCount')--}}
+{{--    @endcan--}}
 
-    @can('Dashboard total Paypoint clearance cleared by backend user count')
-        @include('admin.dashboard.widgets.paypointClearanceClearedByBackendUserCount')
-    @endcan
+{{--    @can('Dashboard total Paypoint clearance cleared by backend user count')--}}
+{{--        @include('admin.dashboard.widgets.paypointClearanceClearedByBackendUserCount')--}}
+{{--    @endcan--}}
 </div>
 
-@can('Dashboard users transactions graph')
-    {{--Paypoint Graph--}}
-    @include('admin.dashboard.widgets.graph.paypoint')
+{{--@can('Dashboard users transactions graph')--}}
+{{--    --}}{{--Paypoint Graph--}}
+{{--    @include('admin.dashboard.widgets.graph.paypoint')--}}
 
-    {{--Npay Graph--}}
-    @include('admin.dashboard.widgets.graph.npay')
+{{--    --}}{{--Npay Graph--}}
+{{--    @include('admin.dashboard.widgets.graph.npay')--}}
 
 
-    {{--<div class="row">
-        <div class="col-lg-12">
-            <div class="ibox ">
-                <div class="ibox-title">
-                    <h5 id="timeElapsedTitle">Execute Payment time elapsed</h5>
-                </div>
-                <div class="ibox-content" style="height: 400px;">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="flot-chart" id="timeElapsed">
-                                <div class="flot-chart-content" id="chart-time-elapsed"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+{{--    <div class="row">--}}
+{{--        <div class="col-lg-12">--}}
+{{--            <div class="ibox ">--}}
+{{--                <div class="ibox-title">--}}
+{{--                    <h5 id="timeElapsedTitle">Execute Payment time elapsed</h5>--}}
+{{--                </div>--}}
+{{--                <div class="ibox-content" style="height: 400px;">--}}
+{{--                    <div class="row">--}}
+{{--                        <div class="col-lg-12">--}}
+{{--                            <div class="flot-chart" id="timeElapsed">--}}
+{{--                                <div class="flot-chart-content" id="chart-time-elapsed"></div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
-            </div>
-        </div>
-    </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 
-@endcan
+{{--@endcan--}}
 
 
 {{--@include('admin.dashboard.clearanceDashboard')--}}

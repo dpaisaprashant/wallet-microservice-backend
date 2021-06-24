@@ -1,9 +1,10 @@
 {{--monthly graph--}}
+<!--
 <script>
 
-    let data = <?php echo $graph ?>;
-    let year = <?php echo $year  ?>;
-    let month = <?php echo $month ?>;
+{{--    let data = <?php echo $graph ?>;--}}
+{{--    let year = <?php echo $year  ?>;--}}
+{{--    let month = <?php echo $month ?>;--}}
 
     let monthDates = new Date(parseInt(year), parseInt(month), 0).getDate();
     let countObj = {};
@@ -93,4 +94,5 @@
 
     chart.render();
 </script>
+-->
 

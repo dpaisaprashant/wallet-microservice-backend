@@ -23,22 +23,17 @@ class TransactionController extends Controller
     //SUCCESSFUL
     public function complete(Request $request,TransactionEventRepository $repository)
     {
-
-        if(empty($_GET['from']) && empty($_GET['to'])){
-            $request->merge([
-                'from' => Carbon::now()->format('Y-m-d'),
-                'to' => Carbon::now()->format('Y-m-d'),
-            ]);
+        if(!empty($_GET)){
+            $transactions = $repository->paginatedTransactions();
+            $totalTransactionCount = $repository->transactionsCount();
+            $totalTransactionAmountSum = $repository->transactionAmountSum();
+            $totalTransactionFeeSum = $repository->transactionFeeSum();
+            $getAllUniqueVendors = $repository->getUniqueVendors();
+            return view('admin.transaction.complete')->with(compact('transactions','getAllUniqueVendors', 'totalTransactionAmountSum', 'totalTransactionCount', 'totalTransactionFeeSum'));
         }
-
-
-        $transactions = $repository->paginatedTransactions();
-        $totalTransactionCount = $repository->transactionsCount();
-        $totalTransactionAmountSum = $repository->transactionAmountSum();
-        $totalTransactionFeeSum = $repository->transactionFeeSum();
         $getAllUniqueVendors = $repository->getUniqueVendors();
+        return view('admin.transaction.complete')->with(compact('getAllUniqueVendors'));
 
-        return view('admin.transaction.complete')->with(compact('transactions','getAllUniqueVendors', 'totalTransactionAmountSum', 'totalTransactionCount', 'totalTransactionFeeSum'));
     }
 
     //USER TO USER FUND TRANSFER
@@ -70,16 +65,14 @@ class TransactionController extends Controller
     //NPAY
     public function eBanking(Request $request,NPayRepository $repository)
     {
-        if(empty($_GET['from']) && empty($_GET['to'])){
-            $request->merge([
-                'from' => Carbon::now()->format('Y-m-d'),
-                'to' => Carbon::now()->format('Y-m-d'),
-            ]);
-        }
-        $totalCountEbanking = $repository->getTotalCountEbanking();
-        $totalSumEbanking = $repository->getTotalSumEbanking();
-        $userLoadTransactions = $repository->paginatedTransactions();
-        return view('admin.transaction.eBanking')->with(compact('userLoadTransactions','totalCountEbanking','totalSumEbanking'));
+//        if(!empty($_GET)) {
+            $totalCountEbanking = $repository->getTotalCountEbanking();
+            $totalSumEbanking = $repository->getTotalSumEbanking();
+            $userLoadTransactions = $repository->paginatedTransactions();
+            return view('admin.transaction.eBanking')->with(compact('userLoadTransactions', 'totalCountEbanking', 'totalSumEbanking'));
+//        }
+//        return view('admin.transaction.eBanking');
+
     }
 
     public function eBankingDetail($id, NPayRepository $repository)
@@ -90,12 +83,6 @@ class TransactionController extends Controller
 
     //NPS
     public function nps(Request $request,NPSRepository $repository){
-        if(empty($_GET['from']) && empty($_GET['to'])){
-            $request->merge([
-                'from' => Carbon::now()->format('Y-m-d'),
-                'to' => Carbon::now()->format('Y-m-d'),
-            ]);
-        }
         $npsTotalTransactionCount = $repository->getNpsTotalTransactionCount();
         $npsTotalTransactionSum = $repository->getNpsTotalTransactionSum();
         $npsLoadTransactions = $repository->paginatedTransactions();
@@ -105,12 +92,6 @@ class TransactionController extends Controller
     //PAYPOINT
     public function paypoint(PayPointRepository $repository,Request $request)
     {
-        if(empty($_GET['from']) && empty($_GET['to'])){
-            $request->merge([
-                'from' => Carbon::now()->format('Y-m-d'),
-                'to' => Carbon::now()->format('Y-m-d'),
-            ]);
-        }
         $totalPayPointTransactionCount = $repository->getPayPointTransactionCount();
         $totalPayPointTransactionSum = $repository->getPayPointTransactionSum();
         $transactions = $repository->paginatedTransactions();
@@ -126,12 +107,6 @@ class TransactionController extends Controller
     //NCHL LOAD TRANSACTION
     public function nchlLoadTransaction(NchlLoadTransactionRepository $repository,Request $request)
     {
-        if(empty($_GET['from']) && empty($_GET['to'])){
-            $request->merge([
-                'from' => Carbon::now()->format('Y-m-d'),
-                'to' => Carbon::now()->format('Y-m-d'),
-            ]);
-        }
         $totalNchlLoadTransactionCount = $repository->getTotalNchlLoadTransactionCount();
         $totalNchlLoadTransactionSum = $repository->getTotalNchlLoadTransactionSum();
         $transactions = $repository->paginatedTransactions();
@@ -147,12 +122,6 @@ class TransactionController extends Controller
     //NCHL BANK TRANSFER
     public function nchlBankTransfer(NchlBankTransferRepository $repository,Request $request)
     {
-        if(empty($_GET['from']) && empty($_GET['to'])){
-            $request->merge([
-                'from' => Carbon::now()->format('Y-m-d'),
-                'to' => Carbon::now()->format('Y-m-d'),
-            ]);
-        }
         $totalNchlLoadBankTransferTransactionCount = $repository->getNchlLoadBankTransferTransactionCount();
         $totalNchlLoadBankTransferTransactionSum = $repository->getNchlLoadBankTransferTransactionSum();
         $transactions = $repository->paginatedTransactions();
@@ -181,12 +150,6 @@ class TransactionController extends Controller
 
     public function nicAsiaCyberSourceLoad(NicAsiaCyberSourceRepository $repository,Request $request)
     {
-        if(empty($_GET['from']) && empty($_GET['to'])){
-            $request->merge([
-                'from' => Carbon::now()->format('Y-m-d'),
-                'to' => Carbon::now()->format('Y-m-d'),
-            ]);
-        }
         $totalNicAisaTransactionCount = $repository->getTotalNicAisaTransactionCount();
         $totalNicAisaTransactionSum = $repository->getTotalNicAisaTransactionSum();
         $transactions = $repository->paginatedTransactions();
@@ -233,12 +196,6 @@ class TransactionController extends Controller
 
     //KHALTI TRANSACTION
     public function khaltiTransaction(KhaltiRepository $repository,Request $request){
-        if(empty($_GET['from']) && empty($_GET['to'])){
-            $request->merge([
-                'from' => Carbon::now()->format('Y-m-d'),
-                'to' => Carbon::now()->format('Y-m-d'),
-            ]);
-        }
         $khaltiTotalTransactionCount = $repository->getKhaltiTotalTransactionCount();
         $khaltiTotalTransactionSum = $repository->getKhaltiTotalTransactionSum();
         $khaltiTransactions = $repository->paginatedTransactions();

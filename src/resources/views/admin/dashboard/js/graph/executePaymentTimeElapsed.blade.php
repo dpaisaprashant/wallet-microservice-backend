@@ -1,3 +1,4 @@
+<!--
 <script>
     let userExecutePayments = {!! $executePayments !!};
 
@@ -64,3 +65,4 @@
     let chartTimeElapsed = new ApexCharts(document.querySelector("#chart-time-elapsed"), optionsTimeElapsed);
     chartTimeElapsed.render();
 </script>
+-->

@@ -139,7 +139,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6" style="margin-top: 40px;">
+                                        <div class="col-md-3" style="margin-top: 40px;">
                                             <div class="form-group">
                                                 <div class="form-group">
                                                     <select data-placeholder="Sort By..." class="chosen-select"  tabindex="2" name="sort">
@@ -152,6 +152,13 @@
                                                             <option value="amount">Highest Amount</option>
                                                         @endif
                                                     </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3" style="margin-top: 40px;">
+                                            <div class="form-group">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" placeholder="Pre Transaction Id" name="pre_transaction_id" autocomplete="off" value="{{ !empty($_GET['pre_transaction_id']) ? $_GET['pre_transaction_id'] : '' }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -179,7 +186,8 @@
                         <h5>List of Paypoint (Utility) transactions</h5>
                     </div>
                     <div class="ibox-content">
-
+                        <h5><b>Total Count:</b> {{ $totalPayPointTransactionCount }}</h5>
+                        <h5><b>Total Amount Sum:</b> Rs. {{$totalPayPointTransactionSum}}</h5>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover dataTables-example" title="PayPoint transaction list">
                                 <thead>

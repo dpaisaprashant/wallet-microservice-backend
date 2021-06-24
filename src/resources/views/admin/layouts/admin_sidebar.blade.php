@@ -1,5 +1,6 @@
 <?php
 $url = url()->current();
+//$today = \Carbon\Carbon::now()->format('d M, Y');
 ?>
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">

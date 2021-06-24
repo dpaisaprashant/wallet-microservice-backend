@@ -1,5 +1,5 @@
 @if($npsLoadTransaction->status == 'COMPLETED')
-    <span class="badge badge-success">{{$npsLoadTransaction->status}}</span>
+    <span class="badge badge-primary">{{$npsLoadTransaction->status}}</span>
     @elseif($npsLoadTransaction->status == 'VALIDATED')
     <span class="badge badge-warning">{{$npsLoadTransaction->status}}</span>
 @else

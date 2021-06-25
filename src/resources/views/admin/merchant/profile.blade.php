@@ -129,7 +129,7 @@
                         <h3 class="font-bold no-margins">
                            Total balance in wallet
                         </h3>
-                        <small>Money saved in d-paisa wallet</small>
+                        <small>Money saved in SajiloPay wallet</small>
                     </div>
 
                 </div>

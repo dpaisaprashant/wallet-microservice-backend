@@ -181,6 +181,13 @@
                                             </dd>
                                         @endif
 
+                                            <dt class="col-md-3 text-right">First Name</dt>
+                                            <dd class="col-md-8">{{$user->kyc->first_name == null ? 'Not available' : $user->kyc->first_name}}</dd>
+                                            <dt class="col-md-3 text-right">Middle Name</dt>
+                                            <dd class="col-md-8">{{$user->kyc->middle_name == null ? ' ' : $user->kyc->middle_name}}</dd>
+                                            <dt class="col-md-3 text-right">Last Name</dt>
+                                            <dd class="col-md-8">{{$user->kyc->last_name == null ? 'Not available' : $user->kyc->last_name}}</dd>
+
                                         <dt class="col-md-3 text-right">Date of Birth</dt>
                                         <dd class="col-md-8">{{ $user->kyc->date_of_birth }}</dd>
 

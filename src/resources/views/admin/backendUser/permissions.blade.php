@@ -86,20 +86,11 @@
 @endsection
 
 @section('styles')
-    <link href="{{ asset('admin/css/plugins/iCheck/custom.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') }}" rel="stylesheet">
+    @include('admin.asset.css.icheck')
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('admin/js/plugins/iCheck/icheck.min.js') }}"></script>
-    <script>
-        $(document).ready(function () {
-            $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green',
-            });
-        });
-    </script>
+   @include('admin.asset.js.icheck')
 @endsection
 
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\TransactionEvent;
 use App\Wallet\TransactionEvent\Repository\TransactionEventRepository;
 use Illuminate\Http\Request;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class ClearanceController extends Controller
 {
@@ -30,6 +31,17 @@ class ClearanceController extends Controller
 
     public function clearanceGenerate(Request $request)
     {
+        $spreadsheet = IOFactory::load($request->file);
+        $worksheet = $spreadsheet->getActiveSheet();
+        $columns = [
+            "linked_id",
+            "amount",
+            "transaction_fee"
+        ];
+
+
+        $excelTransactions = [];
+        $walletTransactions = [];
 
     }
 }

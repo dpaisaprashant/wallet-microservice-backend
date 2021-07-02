@@ -156,25 +156,19 @@
                                                             @can('KYC accept')
                                                                 <div class="col-md-2"
                                                                      style="padding-right: 0px; margin-left: -45px;">
-                                                                    <form id="kycForm"
-                                                                          action="{{ route('user.changeKYCStatus') }}"
-                                                                          method="post">
+                                                                    {{-- <form id="kycForm" action="{{ route('user.changeKYCStatus') }}" method="post">
 
-                                                                        @csrf
-                                                                        <input type="hidden"
-                                                                               value="{{ $user->kyc->id }}" name="kyc">
-                                                                        <input type="hidden" value="accepted"
-                                                                               name="status">
-                                                                        <button
-                                                                            rel="{{ route('user.changeKYCStatus') }}"
+                                                                         @csrf--}}
+                                                                    <input type="hidden" value="{{ $user->kyc->id }}"
+                                                                           name="kyc">
+                                                                    <input type="hidden" value="accepted" name="status">
+                                                                    <button rel="{{ route('user.changeKYCStatus') }}"
                                                                             id="accept" class="btn btn-primary btn-sm"
                                                                             type="submit">Accept
-                                                                        </button>
-                                                                        <button id="acceptBtn" class="btn btn-primary"
-                                                                                type="submit" style="display: none">
-                                                                            Verify KYC
-                                                                        </button>
-                                                                    </form>
+                                                                    </button>
+                                                                    <button id="acceptBtn" type="submit"
+                                                                            style="display: none"></button>
+                                                                    {{--</form>--}}
                                                                 </div>
                                                             @endcan
                                                         @endif
@@ -183,62 +177,55 @@
                                                             @can('KYC reject')
                                                                 <div class="col-md-2"
                                                                      style="padding-left: 0px; margin-left: -10px;">
-                                                                    <form id="kycForm"
-                                                                          action="{{ route('user.changeKYCStatus') }}"
-                                                                          method="post">
-                                                                        @csrf
-                                                                        <input type="hidden"
-                                                                               value="{{ $user->kyc->id }}" name="kyc">
-                                                                        <input type="hidden" value="rejected"
-                                                                               name="status">
-                                                                        <a data-toggle="modal" href="#modal-reject-kyc">
-                                                                            <button class="btn btn-danger btn-sm"
-                                                                                    type="button">
-                                                                                Reject
-                                                                            </button>
-                                                                        </a>
-                                                                        <button id="rejectBtn" class="btn btn-primary"
-                                                                                type="submit" style="display: none">
-                                                                            Verify KYC
+                                                                    {{--<form id="kycForm" action="{{ route('user.changeKYCStatus') }}" method="post">
+                                                                        @csrf--}}
+                                                                    <input type="hidden" value="{{ $user->kyc->id }}"
+                                                                           name="kyc">
+                                                                    <input type="hidden" value="rejected" name="status">
+                                                                    <a data-toggle="modal" href="#modal-reject-kyc">
+                                                                        <button class="btn btn-danger btn-sm"
+                                                                                type="button">
+                                                                            Reject
                                                                         </button>
-                                                                        <div id="modal-reject-kyc" class="modal fade"
-                                                                             aria-hidden="true">
-                                                                            <div class="modal-dialog">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-body">
-                                                                                        <div class="row">
-                                                                                            <div class="col-sm-12">
-                                                                                                <h3 class="m-t-none m-b">
-                                                                                                    Reason of
-                                                                                                    rejection</h3>
-                                                                                                <hr>
-                                                                                                <div
-                                                                                                    class="form-group  row">
-                                                                                                    <textarea
-                                                                                                        class="form-control"
-                                                                                                        name="reason"
-                                                                                                        id="reason"
-                                                                                                        placeholder="Reason of rejection"
-                                                                                                        style="width: 100%">Your KYC form has been rejected</textarea>
-                                                                                                </div>
+                                                                    </a>
+                                                                    <button id="rejectBtn" type="submit"
+                                                                            style="display: none"></button>
+                                                                    <div id="modal-reject-kyc" class="modal fade"
+                                                                         aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-sm-12">
+                                                                                            <h3 class="m-t-none m-b">
+                                                                                                Reason of rejection</h3>
+                                                                                            <hr>
+                                                                                            <div
+                                                                                                class="form-group  row">
+                                                                                                <textarea
+                                                                                                    class="form-control"
+                                                                                                    name="reason"
+                                                                                                    id="reason"
+                                                                                                    placeholder="Reason of rejection"
+                                                                                                    style="width: 100%">Your KYC form has been rejected</textarea>
+                                                                                            </div>
 
-                                                                                                <div
-                                                                                                    class="hr-line-dashed"></div>
+                                                                                            <div
+                                                                                                class="hr-line-dashed"></div>
 
-                                                                                                <button
-                                                                                                    style="width: 100%"
+                                                                                            <button style="width: 100%"
                                                                                                     rel="{{ route('user.changeKYCStatus') }}"
                                                                                                     id="reject"
                                                                                                     class="btn btn-danger ">
-                                                                                                    Reject
-                                                                                                </button>
-                                                                                            </div>
+                                                                                                Reject
+                                                                                            </button>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </form>
+                                                                    </div>
+                                                                    {{--</form>--}}
                                                                 </div>
                                                             @endcan
                                                         @endif

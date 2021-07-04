@@ -22,7 +22,7 @@ class ClearanceController extends Controller
         $totalTransactionCount = 0;
         $totalTransactionAmountSum = 0;
         $totalTransactionFeeSum = 0;
-        if (isset($_GET)) {
+        if (isset($_GET) || count($_GET) > 0 || isset($_GET['from'])) {
             $transactions = $repository->paginatedTransactions();
             $totalTransactionCount = $repository->transactionsCount();
             $totalTransactionAmountSum = $repository->transactionAmountSum();

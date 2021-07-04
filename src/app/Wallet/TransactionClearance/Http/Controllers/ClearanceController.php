@@ -6,12 +6,16 @@ namespace App\Wallet\TransactionClearance\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\TransactionEvent;
+use App\Traits\CollectionPaginate;
+use App\Wallet\TransactionClearance\Clearance\Resolver\ClearanceTransactionTypeResolver;
 use App\Wallet\TransactionEvent\Repository\TransactionEventRepository;
 use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class ClearanceController extends Controller
 {
+    use CollectionPaginate;
+
     public function clearanceTransactions(Request $request, TransactionEventRepository $repository)
     {
         $transactions  = [];
@@ -31,6 +35,10 @@ class ClearanceController extends Controller
 
     public function clearanceGenerate(Request $request)
     {
+        $transactionType = $request->transaction_type;
+        $fromDate = $request->from;
+        $toDate = $request->to;
+
         $spreadsheet = IOFactory::load($request->file);
         $worksheet = $spreadsheet->getActiveSheet();
         $columns = [
@@ -39,9 +47,20 @@ class ClearanceController extends Controller
             "transaction_fee"
         ];
 
+        $excelTransactions = array_slice($worksheet->toArray(), 1);
+        $clearanceTypeResolver = new ClearanceTransactionTypeResolver($transactionType);
+        $resolvedTransaction = $clearanceTypeResolver->resolve();
+        $transactions = $resolvedTransaction->compare($excelTransactions);
 
-        $excelTransactions = [];
-        $walletTransactions = [];
+
+        $comparedTransactions = $transactions["comparedTransactions"] ?? [];
+        $excelTransactionsNotFoundInWallet = $transactions["excelTransactionsNotFoundInWallet"] ?? [];
+        $walletTransactionsNotFoundInExcel = $transactions["walletTransactionsNotFoundInExcel"] ?? [];
+        $transactionName = $resolvedTransaction->transactionName();
+
+        return view("Clearance::clearance.compareTransactionList")
+            ->with(compact('comparedTransactions', 'excelTransactionsNotFoundInWallet', 'transactionType',
+                'walletTransactionsNotFoundInExcel', 'fromDate', 'toDate', 'transactionName'));
 
     }
 }

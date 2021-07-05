@@ -143,9 +143,9 @@
 
                                         <form id="excelClearance" action="{{ route('clearance.generate') }}" method="post" enctype="multipart/form-data">
                                             @csrf
-                                            <input type="hidden" name="dateFrom" value="{{ $date['from'] ?? "" }}">
-                                            <input type="hidden" name="dateTo" value="{{ $date['to'] ?? "" }}">
-                                            <input type="hidden" name="transaction_type" value="payPoint">
+                                            <input type="hidden" name="from" value="{{ $_GET['from'] ?? "" }}">
+                                            <input type="hidden" name="to" value="{{ $_GET['to'] ?? "" }}">
+                                            <input type="hidden" name="transaction_type" value="{{ $_GET['transaction_type'] ?? "" }}">
 
                                             <div class="input-group date">
                                                 <div class="custom-file" style="margin-right: 19px;">

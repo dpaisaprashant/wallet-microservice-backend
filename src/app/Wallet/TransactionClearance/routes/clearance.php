@@ -12,4 +12,5 @@ Route::group(['prefix' => 'admin/clearance', 'middleware' => ['web','auth']], fu
 
     Route::get('/clearance-transaction-list', [ClearanceController::class, 'clearanceTransactions'])->name('clearance.transactions');
     Route::post('/clearance-generate', [ClearanceController::class, 'clearanceGenerate'])->name('clearance.generate');
+    Route::get('/clearance-generate', [ClearanceController::class, 'clearanceGenerate'])->name('clearance.generate');
 });

@@ -344,21 +344,11 @@ $url = url()->current();
                 </li>
             @endif--}}
 
-            {{--@if(auth()->user()->hasAnyPermission(['Clearance npay', 'Clearance paypoint']))
-                <li @if($url == route('clearance.npay') || $url == route('clearance.paypoint')) class="active" @endif>
-                    <a href="#"><i class="fa fa-handshake-o"></i> <span class="nav-label">Clearance</span><span
-                            class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        @can('Clearance npay')
-                        <li><a href="{{ route('clearance.npay') }}">NPay</a></li>
-                        @endcan
-
-                        @can('Clearance paypoint')
-                            <li><a href="{{ route('clearance.paypoint') }}">Paypoint</a></li>
-                        @endcan
-                    </ul>
+            @if(auth()->user()->hasAnyPermission(['Clearance npay', 'Clearance paypoint']))
+                <li @if($url == route('clearance.transactions') || $url == route('clearance.generate')) class="active" @endif>
+                    <a href="{{ route('clearance.transactions') }}"><i class="fa fa-handshake-o"></i> <span class="nav-label">Clearance</span></a>
                 </li>
-            @endif--}}
+            @endif
 
             {{--@if(auth()->user()->hasAnyPermission(['Clearance npay view', 'Clearance paypoint view']))
                 <li @if($url == route('clearance.npayView') || $url == route('clearance.paypointView')) class="active" @endif>

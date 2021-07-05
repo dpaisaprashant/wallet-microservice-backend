@@ -4,17 +4,18 @@
 namespace App\Wallet\TransactionClearance\Clearance\Strategy;
 
 
+use App\Models\NtcRetailerToCustomerTransaction;
 use App\Models\TransactionEvent;
 use App\Models\UserTransaction;
 use App\Wallet\TransactionClearance\Clearance\contracts\CompareTransactionForClearance;
 
-class PaypointClearanceStrategy extends AbstractClearanceCompareStrategy
+class NtcPaymentClearanceStrategy extends AbstractClearanceCompareStrategy
 {
-    const TRANSACTION_TYPE = UserTransaction::class;
+    const TRANSACTION_TYPE = NtcRetailerToCustomerTransaction::class;
 
     public function transactionName()
     {
-        return "paypoint";
+        return "Ntc Payment";
     }
 
     public function walletTransactionsWithLinkedId()
@@ -24,7 +25,7 @@ class PaypointClearanceStrategy extends AbstractClearanceCompareStrategy
             ->filter(request())
             ->get()
             ->transform(function ($value) {
-                $value->linked_id = $value->transactionable->refStan;
+                $value->linked_id = $value->transactionable->ext_transaction_id;
                 return $value;
             });
     }

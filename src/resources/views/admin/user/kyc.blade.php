@@ -163,6 +163,7 @@
                                                                     <input type="hidden" value="{{ $user->kyc->id }}"
                                                                            name="kyc">
                                                                     <input type="hidden" value="accepted" name="status" id="acceptInputValue">
+                                                                    <input type="hidden" value="accepted" name="accept_status">
                                                                     <button rel="{{ route('user.changeKYCStatus') }}"
                                                                             id="accept" class="btn btn-primary btn-sm"
                                                                             type="submit">Accept

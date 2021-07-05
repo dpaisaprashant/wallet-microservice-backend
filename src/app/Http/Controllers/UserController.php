@@ -85,6 +85,7 @@ class UserController extends Controller
 
         if (isset($request->accept_status)) {
             $repository->acceptKYC($kyc);
+            return redirect()->back();
         }
 
         if ($request->status == 'accepted') {

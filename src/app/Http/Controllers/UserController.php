@@ -83,6 +83,11 @@ class UserController extends Controller
     {
         $kyc = $repository->userKYC();
 
+        if (isset($request->accept_status)) {
+            $repository->acceptKYC($kyc);
+            return redirect()->back();
+        }
+
         if ($request->status == 'accepted') {
             $repository->acceptKYC($kyc);
         } elseif ($request->status = 'rejected') {

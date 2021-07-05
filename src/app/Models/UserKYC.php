@@ -46,6 +46,11 @@ class UserKYC extends Model
         return $this->belongsToMany(Admin::class, $db . '.admin_user_k_y_c', 'kyc_id', 'admin_id')->withPivot('status', 'created_at', 'updated_at');
     }
 
+    public function kycValidation()
+    {
+        return $this->hasOne(UserKYCValidation::class, 'kyc_id');
+    }
+
     public function unverifiedKYC()
     {
         return User::whereHas('kyc', function ($query) {

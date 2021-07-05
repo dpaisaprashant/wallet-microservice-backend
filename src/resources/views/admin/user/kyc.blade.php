@@ -65,6 +65,7 @@
                                                                     <input type="hidden" value="{{ $user->kyc->id }}"
                                                                            name="kyc">
                                                                     <input type="hidden" value="accepted" name="status">
+                                                                    <input type="hidden" value="accepted" name="accept_status">
                                                                     <button rel="{{ route('user.changeKYCStatus') }}"
                                                                             id="accept" class="btn btn-primary btn-sm"
                                                                             type="submit">Accept
@@ -161,7 +162,8 @@
                                                                          @csrf--}}
                                                                     <input type="hidden" value="{{ $user->kyc->id }}"
                                                                            name="kyc">
-                                                                    <input type="hidden" value="accepted" name="status">
+                                                                    <input type="hidden" value="accepted" name="status" id="acceptInputValue">
+                                                                    <input type="hidden" value="accepted" name="accept_status">
                                                                     <button rel="{{ route('user.changeKYCStatus') }}"
                                                                             id="accept" class="btn btn-primary btn-sm"
                                                                             type="submit">Accept
@@ -673,6 +675,7 @@
                 closeOnConfirm: true,
                 closeOnClickOutside: true
             }, function () {
+                document.getElementById("acceptInputValue").value = "accepted";
                 $('#acceptBtn').trigger('click');
                 swal.close();
             })

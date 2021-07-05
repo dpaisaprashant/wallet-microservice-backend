@@ -4,17 +4,18 @@
 namespace App\Wallet\TransactionClearance\Clearance\Strategy;
 
 
+use App\Models\NchlBankTransfer;
 use App\Models\TransactionEvent;
 use App\Models\UserTransaction;
 use App\Wallet\TransactionClearance\Clearance\contracts\CompareTransactionForClearance;
 
-class PaypointClearanceStrategy extends AbstractClearanceCompareStrategy
+class NchlBankTransferClearanceStrategy extends AbstractClearanceCompareStrategy
 {
-    const TRANSACTION_TYPE = UserTransaction::class;
+    const TRANSACTION_TYPE = NchlBankTransfer::class;
 
     public function transactionName()
     {
-        return "paypoint";
+        return "NCHL Bank Transfer";
     }
 
     public function walletTransactionsWithLinkedId()
@@ -24,7 +25,7 @@ class PaypointClearanceStrategy extends AbstractClearanceCompareStrategy
             ->filter(request())
             ->get()
             ->transform(function ($value) {
-                $value->linked_id = $value->transactionable->refStan;
+                $value->linked_id = $value->transactionable->transaction_id;
                 return $value;
             });
     }

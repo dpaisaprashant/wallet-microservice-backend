@@ -4,17 +4,18 @@
 namespace App\Wallet\TransactionClearance\Clearance\Strategy;
 
 
+use App\Models\NchlLoadTransaction;
 use App\Models\TransactionEvent;
 use App\Models\UserTransaction;
 use App\Wallet\TransactionClearance\Clearance\contracts\CompareTransactionForClearance;
 
-class PaypointClearanceStrategy extends AbstractClearanceCompareStrategy
+class NchlLoadClearanceStrategy extends AbstractClearanceCompareStrategy
 {
-    const TRANSACTION_TYPE = UserTransaction::class;
+    const TRANSACTION_TYPE = NchlLoadTransaction::class;
 
     public function transactionName()
     {
-        return "paypoint";
+        return "ConnectIPS Load";
     }
 
     public function walletTransactionsWithLinkedId()

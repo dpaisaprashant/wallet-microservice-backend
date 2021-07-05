@@ -22,6 +22,8 @@ class ClearanceTransactionTypeResolver
             case UserTransaction::class:
                 return new PaypointClearanceStrategy();
 
+
+
         }
     }
 

@@ -4,17 +4,19 @@
 namespace App\Wallet\TransactionClearance\Clearance\Strategy;
 
 
+use App\Models\NICAsiaCyberSourceLoadTransaction;
+use App\Models\NtcRetailerToCustomerTransaction;
 use App\Models\TransactionEvent;
 use App\Models\UserTransaction;
 use App\Wallet\TransactionClearance\Clearance\contracts\CompareTransactionForClearance;
 
-class PaypointClearanceStrategy extends AbstractClearanceCompareStrategy
+class NicAsiaCybersourceClearanceStrategy extends AbstractClearanceCompareStrategy
 {
-    const TRANSACTION_TYPE = UserTransaction::class;
+    const TRANSACTION_TYPE = NICAsiaCyberSourceLoadTransaction::class;
 
     public function transactionName()
     {
-        return "paypoint";
+        return "Nicasia Cybersource Load Transaction";
     }
 
     public function walletTransactionsWithLinkedId()
@@ -24,7 +26,7 @@ class PaypointClearanceStrategy extends AbstractClearanceCompareStrategy
             ->filter(request())
             ->get()
             ->transform(function ($value) {
-                $value->linked_id = $value->transactionable->refStan;
+                $value->linked_id = $value->transactionable->reference_number;
                 return $value;
             });
     }

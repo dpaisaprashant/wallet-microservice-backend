@@ -5,16 +5,17 @@ namespace App\Wallet\TransactionClearance\Clearance\Strategy;
 
 
 use App\Models\TransactionEvent;
+use App\Models\UserLoadTransaction;
 use App\Models\UserTransaction;
 use App\Wallet\TransactionClearance\Clearance\contracts\CompareTransactionForClearance;
 
-class PaypointClearanceStrategy extends AbstractClearanceCompareStrategy
+class NPayLoadClearanceStrategy extends AbstractClearanceCompareStrategy
 {
-    const TRANSACTION_TYPE = UserTransaction::class;
+    const TRANSACTION_TYPE = UserLoadTransaction::class;
 
     public function transactionName()
     {
-        return "paypoint";
+        return "NPay Load";
     }
 
     public function walletTransactionsWithLinkedId()
@@ -24,7 +25,7 @@ class PaypointClearanceStrategy extends AbstractClearanceCompareStrategy
             ->filter(request())
             ->get()
             ->transform(function ($value) {
-                $value->linked_id = $value->transactionable->refStan;
+                $value->linked_id = $value->transactionable->gateway_ref_no;
                 return $value;
             });
     }

@@ -13,6 +13,11 @@ class NchlLoadClearanceStrategy extends AbstractClearanceCompareStrategy
 {
     const TRANSACTION_TYPE = NchlLoadTransaction::class;
 
+    public function clearanceInfo()
+    {
+        return "Use transaction_id as linked_id";
+    }
+
     public function transactionName()
     {
         return "ConnectIPS Load";
@@ -25,7 +30,7 @@ class NchlLoadClearanceStrategy extends AbstractClearanceCompareStrategy
             ->filter(request())
             ->get()
             ->transform(function ($value) {
-                $value->linked_id = $value->transactionable->refStan;
+                $value->linked_id = $value->transactionable->transaction_id;
                 return $value;
             });
     }

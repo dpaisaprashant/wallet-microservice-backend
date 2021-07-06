@@ -36,8 +36,7 @@
                         </div>
                     </div>
 
-                    <div class="ibox-content"
-                         @if( empty($_GET) || (!empty($_GET['page']) && count($_GET) === 1)  ) style="display: none" @endif>
+                    <div class="ibox-content">
                         <div class="row">
                             <div class="col-sm-12">
                                 <form role="form" method="get" action="{{ route('transaction.complete') }}" id="filter">

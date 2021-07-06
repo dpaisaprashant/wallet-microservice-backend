@@ -13,6 +13,11 @@ class NchlBankTransferClearanceStrategy extends AbstractClearanceCompareStrategy
 {
     const TRANSACTION_TYPE = NchlBankTransfer::class;
 
+    public function clearanceInfo()
+    {
+        return "Use transaction_id/batch_id as linked_id";
+    }
+
     public function transactionName()
     {
         return "NCHL Bank Transfer";

@@ -28,61 +28,81 @@
                             </a>
                         </div>
                     </div>
-                    <div class="ibox-content" @if( empty($_GET) || (!empty($_GET['page']) && count($_GET) === 1)  ) style="display: none"  @endif>
+                    <div class="ibox-content">
                         <div class="row">
                             <div class="col-sm-12">
-                                <form role="form" method="get" >
+                                <form role="form" method="get">
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <input type="text" name="transaction_id" placeholder="Transaction ID" class="form-control" value="{{ !empty($_GET['transaction_id']) ? $_GET['transaction_id'] : '' }}">
+                                                <input type="text" name="transaction_id" placeholder="Transaction ID"
+                                                       class="form-control"
+                                                       value="{{ !empty($_GET['transaction_id']) ? $_GET['transaction_id'] : '' }}">
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <input type="text" name="reference_id" placeholder="Reference ID" class="form-control" value="{{ !empty($_GET['reference_id']) ? $_GET['reference_id'] : '' }}">
+                                                <input type="text" name="reference_id" placeholder="Reference ID"
+                                                       class="form-control"
+                                                       value="{{ !empty($_GET['reference_id']) ? $_GET['reference_id'] : '' }}">
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <input type="text" name="user" placeholder="Email or Number" class="form-control" value="{{ !empty($_GET['user']) ? $_GET['user'] : '' }}">
+                                                <input type="text" name="user" placeholder="Email or Number"
+                                                       class="form-control"
+                                                       value="{{ !empty($_GET['user']) ? $_GET['user'] : '' }}">
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <input type="text" name="bank" placeholder="Bank" class="form-control" value="{{ !empty($_GET['bank']) ? $_GET['bank'] : '' }}">
+                                                <input type="text" name="bank" placeholder="Bank" class="form-control"
+                                                       value="{{ !empty($_GET['bank']) ? $_GET['bank'] : '' }}">
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-3" >
+                                        <div class="col-md-3">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </span>
-                                                <input id="date_load_from" type="text" class="form-control date_from" placeholder="From" name="from" autocomplete="off" value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}">
+                                                <input id="date_load_from" type="text" class="form-control date_from"
+                                                       placeholder="From" name="from" autocomplete="off"
+                                                       value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}">
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3" >
+                                        <div class="col-md-3">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </span>
-                                                <input id="date_load_to" type="text" class="form-control date_to" placeholder="To" name="to" autocomplete="off" value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
+                                                <input id="date_load_to" type="text" class="form-control date_to"
+                                                       placeholder="To" name="to" autocomplete="off"
+                                                       value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
                                             </div>
                                         </div>
 
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <select data-placeholder="Choose transaction status..." class="chosen-select"  tabindex="2" name="status">
+                                                <select data-placeholder="Choose transaction status..."
+                                                        class="chosen-select" tabindex="2" name="status">
                                                     <option value="" selected disabled>Select Status...</option>
-                                                    <option value="" >All</option>
+                                                    <option value="">All</option>
                                                     @if(!empty($_GET['status']))
-                                                        <option value="SUCCESS" @if($_GET['status']  == 'SUCCESS') selected @endif>SUCCESS</option>
-                                                        <option value="ERROR" @if($_GET['status']  == 'ERROR') selected @endif>ERROR</option>
-                                                        <option value="NOT_COMPLETED" @if($_GET['status']  == 'NOT_COMPLETED') selected @endif>NOT COMPLETED</option>
+                                                        <option value="SUCCESS"
+                                                                @if($_GET['status']  == 'SUCCESS') selected @endif>
+                                                            SUCCESS
+                                                        </option>
+                                                        <option value="ERROR"
+                                                                @if($_GET['status']  == 'ERROR') selected @endif>ERROR
+                                                        </option>
+                                                        <option value="NOT_COMPLETED"
+                                                                @if($_GET['status']  == 'NOT_COMPLETED') selected @endif>
+                                                            NOT COMPLETED
+                                                        </option>
                                                     @else
                                                         <option value="SUCCESS">SUCCESS</option>
                                                         <option value="ERROR">ERROR</option>
@@ -95,11 +115,18 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <div class="form-group">
-                                                    <select data-placeholder="Sort By..." class="chosen-select"  tabindex="2" name="sort">
+                                                    <select data-placeholder="Sort By..." class="chosen-select"
+                                                            tabindex="2" name="sort">
                                                         <option value="" selected disabled>Sort By...</option>
                                                         @if(!empty($_GET['sort']))
-                                                            <option value="date" @if($_GET['sort'] == 'date') selected @endif>Latest Date</option>
-                                                            <option value="amount" @if($_GET['sort'] == 'amount') selected @endif>Highest amount</option>
+                                                            <option value="date"
+                                                                    @if($_GET['sort'] == 'date') selected @endif>Latest
+                                                                Date
+                                                            </option>
+                                                            <option value="amount"
+                                                                    @if($_GET['sort'] == 'amount') selected @endif>
+                                                                Highest amount
+                                                            </option>
                                                         @else
                                                             <option value="date">Latest Date</option>
                                                             <option value="amount">Highest Amount</option>
@@ -110,17 +137,20 @@
                                         </div>
                                     </div>
 
-                                    <div class="row" >
+                                    <div class="row">
                                         <div class="col-md-6 mt-3">
                                             <label for="ionrange_balance">Amount</label>
-{{--                                            <input type="text" name="amount" class="ionrange_amount">--}}
+                                            {{--                                            <input type="text" name="amount" class="ionrange_amount">--}}
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-dollar"></i>
                                                 </span>
-                                                        <input type="number" class="form-control" placeholder="From Amount" name="from_amount" autocomplete="off" value="{{ !empty($_GET['from_amount']) ? $_GET['from_amount'] : '' }}">
+                                                        <input type="number" class="form-control"
+                                                               placeholder="From Amount" name="from_amount"
+                                                               autocomplete="off"
+                                                               value="{{ !empty($_GET['from_amount']) ? $_GET['from_amount'] : '' }}">
                                                     </div>
                                                 </div>
 
@@ -129,7 +159,10 @@
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-dollar"></i>
                                                 </span>
-                                                        <input type="number" class="form-control" placeholder="To Amount" name="to_amount" autocomplete="off" value="{{ !empty($_GET['to_amount']) ? $_GET['to_amount'] : '' }}">
+                                                        <input type="number" class="form-control"
+                                                               placeholder="To Amount" name="to_amount"
+                                                               autocomplete="off"
+                                                               value="{{ !empty($_GET['to_amount']) ? $_GET['to_amount'] : '' }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -140,16 +173,22 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="input-group date">
-                                                        <input type="number" class="form-control" placeholder="Pre Transaction Id" name="pre_transaction_id" autocomplete="off" value="{{ !empty($_GET['pre_transaction_id']) ? $_GET['pre_transaction_id'] : '' }}">
+                                                        <input type="number" class="form-control"
+                                                               placeholder="Pre Transaction Id"
+                                                               name="pre_transaction_id" autocomplete="off"
+                                                               value="{{ !empty($_GET['pre_transaction_id']) ? $_GET['pre_transaction_id'] : '' }}">
                                                     </div>
                                                 </div>
 
 
                                             </div>
                                         </div>
-                                    </div><br>
+                                    </div>
+                                    <br>
                                     <div>
-                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('nchl.loadTransaction') }}"><strong>Filter</strong></button>
+                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
+                                                formaction="{{ route('nchl.loadTransaction') }}"><strong>Filter</strong>
+                                        </button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
                                     {{--<div>
@@ -163,82 +202,87 @@
                 </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox ">
-                    <div class="ibox-title">
-                        <h5>List of NCHL Load Transactions</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <h5><b>Total Count:</b> {{ $totalNchlLoadTransactionCount }}</h5>
-                        <h5><b>Total Amount Sum:</b> Rs. {{$totalNchlLoadTransactionSum}}</h5>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover dataTables-example" title="NPay transactions list">
-                                <thead>
-                                <tr>
-                                    <th>S.No.</th>
-                                    <th>PreTransaction ID</th>
-                                    <th>Transaction ID</th>
-                                    <th>Reference ID</th>
-                                    <th>User</th>
-                                    <th>Bank</th>
-                                    <th>Description</th>
-                                    <th>Amount</th>
-                                    <th style="width: 1%">Commission</th>
-                                    <th>Status</th>
-                                    <th>Date</th>
-                                    <th style="width: 1%">Response</th>
-                                    <th>Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($transactions as $transaction)
-                                    <tr class="gradeC">
-                                        <td>{{ $loop->index + ($transactions->perPage() * ($transactions->currentPage() - 1)) + 1 }}</td>
-                                        <td>{{$transaction->pre_transaction_id}}</td>
-                                        <td>{{ $transaction->transaction_id }}</td>
-                                        <td>{{ $transaction->reference_id }}</td>
-                                        <td>
-                                            {{ $transaction->user['mobile_no'] ?? ""}}
-                                        </td>
-                                        <td>ConnectIPS</td>
-                                        <td>{{ $transaction->remark }}</td>
-
-                                        <td>
-                                            Rs. {{ $transaction->amount ?? 0}}
-                                        </td>
-
-                                        <td>
-                                            @include('admin.transaction.nchlLoadTransaction.commission', ['transaction' => $transaction])
-                                        </td>
-
-                                        <td>
-                                            @include('admin.transaction.nchlLoadTransaction.status', ['transaction' => $transaction])
-                                        </td>
-
-
-                                        <td class="center">{{ $transaction->updated_at }}</td>
-
-                                        <td>
-                                            @include('admin.transaction.nchlLoadTransaction.response', ['$transaction' => $transaction])
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('nchl.loadTransaction.detail', $transaction->id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-
-                                </tbody>
-
-                            </table>
-                            {{ $transactions->appends(request()->query())->links() }}
+        @if(!empty($_GET))
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5>List of NCHL Load Transactions</h5>
                         </div>
+                        <div class="ibox-content">
+                            <h5><b>Total Count:</b> {{ $totalNchlLoadTransactionCount }}</h5>
+                            <h5><b>Total Amount Sum:</b> Rs. {{$totalNchlLoadTransactionSum}}</h5>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover dataTables-example"
+                                       title="NPay transactions list">
+                                    <thead>
+                                    <tr>
+                                        <th>S.No.</th>
+                                        <th>PreTransaction ID</th>
+                                        <th>Transaction ID</th>
+                                        <th>Reference ID</th>
+                                        <th>User</th>
+                                        <th>Bank</th>
+                                        <th>Description</th>
+                                        <th>Amount</th>
+                                        <th style="width: 1%">Commission</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                        <th style="width: 1%">Response</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($transactions as $transaction)
+                                        <tr class="gradeC">
+                                            <td>{{ $loop->index + ($transactions->perPage() * ($transactions->currentPage() - 1)) + 1 }}</td>
+                                            <td>{{$transaction->pre_transaction_id}}</td>
+                                            <td>{{ $transaction->transaction_id }}</td>
+                                            <td>{{ $transaction->reference_id }}</td>
+                                            <td>
+                                                {{ $transaction->user['mobile_no'] ?? ""}}
+                                            </td>
+                                            <td>ConnectIPS</td>
+                                            <td>{{ $transaction->remark }}</td>
 
+                                            <td>
+                                                Rs. {{ $transaction->amount ?? 0}}
+                                            </td>
+
+                                            <td>
+                                                @include('admin.transaction.nchlLoadTransaction.commission', ['transaction' => $transaction])
+                                            </td>
+
+                                            <td>
+                                                @include('admin.transaction.nchlLoadTransaction.status', ['transaction' => $transaction])
+                                            </td>
+
+
+                                            <td class="center">{{ $transaction->updated_at }}</td>
+
+                                            <td>
+                                                @include('admin.transaction.nchlLoadTransaction.response', ['$transaction' => $transaction])
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('nchl.loadTransaction.detail', $transaction->id) }}">
+                                                    <button class="btn btn-primary btn-icon" type="button"><i
+                                                            class="fa fa-eye"></i></button>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+
+                                    </tbody>
+
+                                </table>
+                                {{ $transactions->appends(request()->query())->links() }}
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
     </div>
 
 
@@ -248,7 +292,8 @@
 @section('styles')
     @include('admin.asset.css.chosen')
     @include('admin.asset.css.datatable')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/css/ion.rangeSlider.min.css"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/css/ion.rangeSlider.min.css"/>
     @include('admin.asset.css.datepicker')
 
 @endsection
@@ -258,16 +303,19 @@
     @include('admin.asset.js.datepicker')
     @include('admin.asset.js.datatable')
     <script>
+        @if(!empty($_GET))
         $(document).ready(function (e) {
             let a = "Showing {{ $transactions->firstItem() }} to {{ $transactions->lastItem() }} of {{ $transactions->total() }} entries";
             $('.dataTables_info').text(a);
         });
+        @endif
     </script>
 
     <!-- IonRangeSlider -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js"></script>
     <script>
-        let amount = @if(!empty($_GET['amount'])) `{{ $_GET['amount'] }}`; @else '0;100000'; @endif
+        let amount = @if(!empty($_GET['amount'])) `{{ $_GET['amount'] }}`;
+        @else '0;100000'; @endif
         let split = amount.split(';');
         $(".ionrange_amount").ionRangeSlider({
             type: "double",

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Agent;
 use App\Traits\CollectionPaginate;
 
+use App\Wallet\Report\Repositories\AbstractReportRepository;
 use App\Wallet\Report\Repositories\AdminKycRepository;
 use Illuminate\Http\Request;
 
@@ -16,10 +17,13 @@ class AdminKycController extends Controller
     use CollectionPaginate;
 
     public function getAdminData(Request $request){
-        $repository = new AdminKycRepository($request);
-        $fromData = $request->get('from');
-        $getAdminDatas = $repository->getAdminAllData($fromData);
-        return view('WalletReport::AdminKyc.report',compact('getAdminDatas'));
+        if(!empty($_GET)){
+            $repository = new AdminKycRepository($request);
+            $fromData = $request->get('from');
+            $getAdminDatas = $repository->getAdminAllData($fromData);
+            return view('WalletReport::AdminKyc.report',compact('getAdminDatas'));
+        }
+        return view('WalletReport::AdminKyc.report');
     }
 
 }

@@ -8,8 +8,9 @@ use App\Wallet\TransactionClearance\Clearance\contracts\CompareTransactionForCle
 
 abstract class AbstractClearanceCompareStrategy implements CompareTransactionForClearance
 {
-
     abstract public function walletTransactionsWithLinkedId();
+    abstract public function clearanceInfo();
+    abstract public function transactionName();
 
     public function compare(array $excelTransactions)
     {

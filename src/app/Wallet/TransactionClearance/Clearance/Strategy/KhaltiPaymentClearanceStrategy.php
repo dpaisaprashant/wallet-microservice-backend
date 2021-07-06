@@ -13,6 +13,11 @@ class KhaltiPaymentClearanceStrategy extends AbstractClearanceCompareStrategy
 {
     const TRANSACTION_TYPE = KhaltiUserTransaction::class;
 
+    public function clearanceInfo()
+    {
+        return "Use reference as linked_id";
+    }
+
     public function transactionName()
     {
         return "Khalti Payments";

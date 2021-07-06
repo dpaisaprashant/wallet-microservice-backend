@@ -14,6 +14,11 @@ class NicAsiaCybersourceClearanceStrategy extends AbstractClearanceCompareStrate
 {
     const TRANSACTION_TYPE = NICAsiaCyberSourceLoadTransaction::class;
 
+    public function clearanceInfo()
+    {
+        return "Use reference_number as linked_id";
+    }
+
     public function transactionName()
     {
         return "Nicasia Cybersource Load Transaction";

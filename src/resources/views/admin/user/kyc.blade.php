@@ -163,7 +163,7 @@
                                                                     <input type="hidden" value="{{ $user->kyc->id }}"
                                                                            name="kyc">
                                                                     <input type="hidden" value="accepted" name="status" id="acceptInputValue">
-                                                                    <input type="hidden" value="accepted" name="accept_status">
+                                                                    <input type="hidden" value="" name="accept_status" id="acceptStatusInput">
                                                                     <button rel="{{ route('user.changeKYCStatus') }}"
                                                                             id="accept" class="btn btn-primary btn-sm"
                                                                             type="submit">Accept
@@ -675,7 +675,7 @@
                 closeOnConfirm: true,
                 closeOnClickOutside: true
             }, function () {
-                document.getElementById("acceptInputValue").value = "accepted";
+                document.getElementById("acceptStatusInput").value = "accepted";
                 $('#acceptBtn').trigger('click');
                 swal.close();
             })

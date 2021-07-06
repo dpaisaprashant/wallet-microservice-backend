@@ -28,8 +28,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="ibox-content"
-                         @if( empty($_GET) || (!empty($_GET['page']) && count($_GET) === 1)  ) style="display: none" @endif>
+                    <div class="ibox-content">
                         <div class="row">
                             <div class="col-sm-12">
                                 <form role="form" method="get">
@@ -100,7 +99,9 @@
                                                     <option value="" selected disabled>Select Status...</option>
 
                                                     @if(!empty($_GET['status']))
-                                                        <option value="all" @if($_GET['status'] == 'all') selected @endif>All</option>
+                                                        <option value="all"
+                                                                @if($_GET['status'] == 'all') selected @endif>All
+                                                        </option>
                                                         <option value="completed"
                                                                 @if($_GET['status']  == 'completed') selected @endif>
                                                             Completed
@@ -185,14 +186,16 @@
                                                 <div class="col-md-6">
                                                     <div class="input-group date">
                                                         <input type="number" class="form-control"
-                                                               placeholder="Pre Transaction Id" name="pre_transaction_id"
+                                                               placeholder="Pre Transaction Id"
+                                                               name="pre_transaction_id"
                                                                autocomplete="off"
                                                                value="{{ !empty($_GET['pre_transaction_id']) ? $_GET['pre_transaction_id'] : '' }}">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div><br>
+                                    </div>
+                                    <br>
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
                                                 formaction="{{ route('nps') }}"><strong>Filter</strong></button>
@@ -211,68 +214,69 @@
                 </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox ">
-                    <div class="ibox-title">
-                        <h5>List of NPS transactions</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <h5><b>Total Count:</b> {{ $npsTotalTransactionCount }}</h5>
-                        <h5><b>Total Amount Sum:</b> Rs. {{ $npsTotalTransactionSum }}</h5>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover dataTables-example"
-                                   title="NPS transactions list">
-                                <thead>
-                                <tr>
-                                    <th>S.No.</th>
-                                    <th>UID</th>
-                                    <th>Pre Transaction ID</th>
-                                    <th>Transaction ID</th>
-                                    <th>User</th>
-                                    <th>Bank</th>
-                                    <th>Description</th>
-                                    <th>Gateway Ref no.</th>
-                                    <th>Amount</th>
-                                    <th style="width: 1%">Commission</th>
-                                    <th>Status</th>
-                                    <th>Date</th>
-                                    <th style="width: 1%">Response</th>
-                                    <th>Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                @foreach($npsLoadTransactions as $npsLoadTransaction)
-
-                                    <tr>
-                                        <td>{{ $loop->index + ($npsLoadTransactions->perPage() * ($npsLoadTransactions->currentPage() - 1)) + 1 }}</td>
-                                        <td>{{optional($npsLoadTransaction->transactions)->uid ?? '---'}}</td>
-                                        <td>{{$npsLoadTransaction->pre_transaction_id}}</td>
-                                        <td>{{$npsLoadTransaction->transaction_id}}</td>
-                                        <td>{{optional($npsLoadTransaction->user)->mobile_no}}</td>
-                                        <td>{{$npsLoadTransaction->payment_mode}}</td>
-                                        <td>{{$npsLoadTransaction->description}}</td>
-                                        <td>{{$npsLoadTransaction->gateway_ref_no}}</td>
-                                        <td class="center">Rs {{$npsLoadTransaction->amount}}</td>
-                                        <td>Rs {{$npsLoadTransaction->transaction_fee ?? 0}}</td>
-                                        <td>@include('admin.transaction.nps.status',['npsLoadTransaction'=>$npsLoadTransaction])</td>
-                                        <td>{{$npsLoadTransaction->created_at}}</td>
-                                        <td>{{$npsLoadTransaction->response}}</td>
-                                        <td>Action</td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-
-                            </table>
-                                                        {{ $npsLoadTransactions->appends(request()->query())->links() }}
+        @if(!empty($_GET))
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5>List of NPS transactions</h5>
                         </div>
+                        <div class="ibox-content">
+                            <h5><b>Total Count:</b> {{ $npsTotalTransactionCount }}</h5>
+                            <h5><b>Total Amount Sum:</b> Rs. {{ $npsTotalTransactionSum }}</h5>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover dataTables-example"
+                                       title="NPS transactions list">
+                                    <thead>
+                                    <tr>
+                                        <th>S.No.</th>
+                                        <th>UID</th>
+                                        <th>Pre Transaction ID</th>
+                                        <th>Transaction ID</th>
+                                        <th>User</th>
+                                        <th>Bank</th>
+                                        <th>Description</th>
+                                        <th>Gateway Ref no.</th>
+                                        <th>Amount</th>
+                                        <th style="width: 1%">Commission</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                        <th style="width: 1%">Response</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
 
+                                    @foreach($npsLoadTransactions as $npsLoadTransaction)
+
+                                        <tr>
+                                            <td>{{ $loop->index + ($npsLoadTransactions->perPage() * ($npsLoadTransactions->currentPage() - 1)) + 1 }}</td>
+                                            <td>{{optional($npsLoadTransaction->transactions)->uid ?? '---'}}</td>
+                                            <td>{{$npsLoadTransaction->pre_transaction_id}}</td>
+                                            <td>{{$npsLoadTransaction->transaction_id}}</td>
+                                            <td>{{optional($npsLoadTransaction->user)->mobile_no}}</td>
+                                            <td>{{$npsLoadTransaction->payment_mode}}</td>
+                                            <td>{{$npsLoadTransaction->description}}</td>
+                                            <td>{{$npsLoadTransaction->gateway_ref_no}}</td>
+                                            <td class="center">Rs {{$npsLoadTransaction->amount}}</td>
+                                            <td>Rs {{$npsLoadTransaction->transaction_fee ?? 0}}</td>
+                                            <td>@include('admin.transaction.nps.status',['npsLoadTransaction'=>$npsLoadTransaction])</td>
+                                            <td>{{$npsLoadTransaction->created_at}}</td>
+                                            <td>{{$npsLoadTransaction->response}}</td>
+                                            <td>Action</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+
+                                </table>
+                                {{ $npsLoadTransactions->appends(request()->query())->links() }}
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
     </div>
 
 
@@ -293,10 +297,12 @@
     @include('admin.asset.js.datepicker')
     @include('admin.asset.js.datatable')
     <script>
+        @if(!empty($_GET))
         $(document).ready(function (e) {
             let a = "Showing {{ $npsLoadTransactions->firstItem() }} to {{ $npsLoadTransactions->lastItem() }} of {{ $npsLoadTransactions->total() }} entries";
             $('.dataTables_info').text(a);
         });
+        @endif
     </script>
 
     <!-- IonRangeSlider -->

@@ -13,6 +13,12 @@ class NtcPaymentClearanceStrategy extends AbstractClearanceCompareStrategy
 {
     const TRANSACTION_TYPE = NtcRetailerToCustomerTransaction::class;
 
+    public function clearanceInfo()
+    {
+        return "Use ext_transaction_id as linked_id";
+    }
+
+
     public function transactionName()
     {
         return "Ntc Payment";

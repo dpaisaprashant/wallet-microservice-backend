@@ -13,6 +13,11 @@ class NPayLoadClearanceStrategy extends AbstractClearanceCompareStrategy
 {
     const TRANSACTION_TYPE = UserLoadTransaction::class;
 
+    public function clearanceInfo()
+    {
+        return "Use gateway_ref_no as linked_id";
+    }
+
     public function transactionName()
     {
         return "NPay Load";

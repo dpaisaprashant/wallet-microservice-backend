@@ -28,8 +28,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="ibox-content"
-                         @if( empty($_GET) || (!empty($_GET['page']) && count($_GET) === 1)  ) style="display: none" @endif>
+                    <div class="ibox-content">
                         <div class="row">
                             <div class="col-sm-12">
                                 <form role="form" method="get">
@@ -101,14 +100,14 @@
 
                                                     @if(!empty($_GET['vendor']))
                                                         @foreach($vendorNames as $vendorName)
-                                                        <option value="{{$vendorName}}"
-                                                                @if($_GET['vendor'] == $vendorName) selected @endif>{{$vendorName}}
-                                                        </option>
+                                                            <option value="{{$vendorName}}"
+                                                                    @if($_GET['vendor'] == $vendorName) selected @endif>{{$vendorName}}
+                                                            </option>
                                                         @endforeach
 
                                                     @else
                                                         @foreach($vendorNames as $vendorName)
-                                                        <option value="{{$vendorName}}">{{$vendorName}}</option>
+                                                            <option value="{{$vendorName}}">{{$vendorName}}</option>
                                                         @endforeach
 
                                                     @endif
@@ -185,7 +184,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div><br>
+                                    </div>
+                                    <br>
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
                                                 formaction="{{ route('khalti.transaction') }}"><strong>Filter</strong>
@@ -205,59 +205,60 @@
                 </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox ">
-                    <div class="ibox-title">
-                        <h5>List of Khalti transactions</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <h5><b>Total Count:</b> {{ $khaltiTotalTransactionCount }}</h5>
-                        <h5><b>Total Amount Sum:</b> Rs. {{ $khaltiTotalTransactionSum }}</h5>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover dataTables-example"
-                                   title="Khalti transactions list">
-                                <thead>
-                                <tr>
-                                    <th>S.No.</th>
-                                    <th>Account</th>
-                                    <th>Amount</th>
-                                    <th>User</th>
-                                    <th>Message</th>
-                                    <th>Reference No</th>
-                                    <th>Service</th>
-                                    <th>Vendor</th>
-                                    <th>Status</th>
-                                    <th>State</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                @foreach($khaltiTransactions as $khaltiTransaction)
-                                    <tr>
-                                        <td>{{ $loop->index + ($khaltiTransactions->perPage() * ($khaltiTransactions->currentPage() - 1)) + 1 }}</td>
-                                        <td>{{ $khaltiTransaction->account }}</td>
-                                        <td>Rs {{ $khaltiTransaction->amount }}</td>
-                                        <td>{{optional($khaltiTransaction->user)->mobile_no}}</td>
-                                        <td>{{$khaltiTransaction->message}}</td>
-                                        <td>{{$khaltiTransaction->reference_no}}</td>
-                                        <td>{{$khaltiTransaction->service}}</td>
-                                        <td>{{$khaltiTransaction->vendor}}</td>
-                                        <td>{{$khaltiTransaction->status}}</td>
-                                        <td>@include('admin.transaction.khalti.state',['khaltiTransaction' => $khaltiTransaction])</td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-
-                            </table>
-                                                        {{ $khaltiTransactions->appends(request()->query())->links() }}
+        @if(!empty($_GET))
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5>List of Khalti transactions</h5>
                         </div>
+                        <div class="ibox-content">
+                            <h5><b>Total Count:</b> {{ $khaltiTotalTransactionCount }}</h5>
+                            <h5><b>Total Amount Sum:</b> Rs. {{ $khaltiTotalTransactionSum }}</h5>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover dataTables-example"
+                                       title="Khalti transactions list">
+                                    <thead>
+                                    <tr>
+                                        <th>S.No.</th>
+                                        <th>Account</th>
+                                        <th>Amount</th>
+                                        <th>User</th>
+                                        <th>Message</th>
+                                        <th>Reference No</th>
+                                        <th>Service</th>
+                                        <th>Vendor</th>
+                                        <th>Status</th>
+                                        <th>State</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
 
+                                    @foreach($khaltiTransactions as $khaltiTransaction)
+                                        <tr>
+                                            <td>{{ $loop->index + ($khaltiTransactions->perPage() * ($khaltiTransactions->currentPage() - 1)) + 1 }}</td>
+                                            <td>{{ $khaltiTransaction->account }}</td>
+                                            <td>Rs {{ $khaltiTransaction->amount }}</td>
+                                            <td>{{optional($khaltiTransaction->user)->mobile_no}}</td>
+                                            <td>{{$khaltiTransaction->message}}</td>
+                                            <td>{{$khaltiTransaction->reference_no}}</td>
+                                            <td>{{$khaltiTransaction->service}}</td>
+                                            <td>{{$khaltiTransaction->vendor}}</td>
+                                            <td>{{$khaltiTransaction->status}}</td>
+                                            <td>@include('admin.transaction.khalti.state',['khaltiTransaction' => $khaltiTransaction])</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+
+                                </table>
+                                {{ $khaltiTransactions->appends(request()->query())->links() }}
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
     </div>
 
 
@@ -278,10 +279,12 @@
     @include('admin.asset.js.datepicker')
     @include('admin.asset.js.datatable')
     <script>
+        @if(!empty($_GET))
         $(document).ready(function (e) {
             let a = "Showing {{ $khaltiTransactions->firstItem() }} to {{ $khaltiTransactions->lastItem() }} of {{ $khaltiTransactions->total() }} entries";
             $('.dataTables_info').text(a);
         });
+        @endif
     </script>
 
     <!-- IonRangeSlider -->

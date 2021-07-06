@@ -12,6 +12,11 @@ class PaypointClearanceStrategy extends AbstractClearanceCompareStrategy
 {
     const TRANSACTION_TYPE = UserTransaction::class;
 
+    public function clearanceInfo()
+    {
+        return "Use refStan as linked_id";
+    }
+
     public function transactionName()
     {
         return "paypoint";

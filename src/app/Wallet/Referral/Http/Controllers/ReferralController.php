@@ -17,7 +17,7 @@ class ReferralController extends Controller
     {
         //$usedReferrals = UsedUserReferral::filter($request)->latest()->get();
         $user = User::where('mobile_no', $request->referred_from)->orWhere('email', $request->referred_from)->first();
-        $usedReferrals = UsedUserReferral::where('referred_from', $user->id)->latest()->get();
+        $usedReferrals = UsedUserReferral::where('referred_from', $user->id)->filter($request)->latest()->get();
 
         return view('Referral::report.userReferral')->with(compact('usedReferrals', 'user'));
     }

@@ -22,15 +22,22 @@ class ClearanceController extends Controller
         $totalTransactionCount = 0;
         $totalTransactionAmountSum = 0;
         $totalTransactionFeeSum = 0;
+        $info = "";
         if (isset($_GET) || count($_GET) > 0 || isset($_GET['from'])) {
             $transactions = $repository->paginatedTransactions();
             $totalTransactionCount = $repository->transactionsCount();
             $totalTransactionAmountSum = $repository->transactionAmountSum();
             $totalTransactionFeeSum = $repository->transactionFeeSum();
+
+            $transactionType = $request->transaction_type;
+            $clearanceTypeResolver = (new ClearanceTransactionTypeResolver($transactionType))->resolve();
+            if (method_exists($clearanceTypeResolver, "clearanceInfo")) {
+                $info = $clearanceTypeResolver->clearanceInfo();
+            }
         }
 
         return view("Clearance::clearance.transactionList")->with(compact('transactions', 'totalTransactionCount',
-                                                                        'totalTransactionAmountSum', 'totalTransactionFeeSum'));
+                                                                        'totalTransactionAmountSum', 'totalTransactionFeeSum', 'info'));
     }
 
     public function clearanceGenerate(Request $request)

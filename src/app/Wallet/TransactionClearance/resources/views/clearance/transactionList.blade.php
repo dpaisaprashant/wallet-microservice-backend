@@ -95,8 +95,18 @@
                                      </div>--}}
                                 </form>
                             </div>
-
                         </div>
+                        @if(!empty($_GET['from']) && !empty($_GET['to']))
+                            @if(!empty($info))
+                                <div class="row" style="margin-top: 10px">
+                                    <div class="col-sm-12">
+                                        <div class="alert alert-warning" style="width: 100%">
+                                            <i class="fa fa-info-circle"></i>&nbsp; {{ $info }}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endif
                     </div>
                 </div>
             </div>

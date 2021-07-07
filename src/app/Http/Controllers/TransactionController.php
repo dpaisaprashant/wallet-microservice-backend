@@ -21,15 +21,15 @@ use Illuminate\Http\Request;
 class TransactionController extends Controller
 {
     //SUCCESSFUL
-    public function complete(Request $request,TransactionEventRepository $repository)
+    public function complete(Request $request, TransactionEventRepository $repository)
     {
-        if(!empty($_GET)){
+        if (!empty($_GET)) {
             $transactions = $repository->paginatedTransactions();
             $totalTransactionCount = $repository->transactionsCount();
             $totalTransactionAmountSum = $repository->transactionAmountSum();
             $totalTransactionFeeSum = $repository->transactionFeeSum();
             $getAllUniqueVendors = $repository->getUniqueVendors();
-            return view('admin.transaction.complete')->with(compact('transactions','getAllUniqueVendors', 'totalTransactionAmountSum', 'totalTransactionCount', 'totalTransactionFeeSum'));
+            return view('admin.transaction.complete')->with(compact('transactions', 'getAllUniqueVendors', 'totalTransactionAmountSum', 'totalTransactionCount', 'totalTransactionFeeSum'));
         }
         $getAllUniqueVendors = $repository->getUniqueVendors();
         return view('admin.transaction.complete')->with(compact('getAllUniqueVendors'));
@@ -53,7 +53,7 @@ class TransactionController extends Controller
     public function fundRequest(FundRequestRepository $repository)
     {
         $fundRequests = $repository->paginatedTransactions();
-        return view ('admin.transaction.fundRequest')->with(compact('fundRequests'));
+        return view('admin.transaction.fundRequest')->with(compact('fundRequests'));
     }
 
     public function fundRequestDetail($id, FundRequestRepository $repository)
@@ -63,15 +63,15 @@ class TransactionController extends Controller
     }
 
     //NPAY
-    public function eBanking(Request $request,NPayRepository $repository)
+    public function eBanking(Request $request, NPayRepository $repository)
     {
-//        if(!empty($_GET)) {
+        if (!empty($_GET)) {
             $totalCountEbanking = $repository->getTotalCountEbanking();
             $totalSumEbanking = $repository->getTotalSumEbanking();
             $userLoadTransactions = $repository->paginatedTransactions();
             return view('admin.transaction.eBanking')->with(compact('userLoadTransactions', 'totalCountEbanking', 'totalSumEbanking'));
-//        }
-//        return view('admin.transaction.eBanking');
+        }
+        return view('admin.transaction.eBanking');
 
     }
 
@@ -82,20 +82,27 @@ class TransactionController extends Controller
     }
 
     //NPS
-    public function nps(Request $request,NPSRepository $repository){
-        $npsTotalTransactionCount = $repository->getNpsTotalTransactionCount();
-        $npsTotalTransactionSum = $repository->getNpsTotalTransactionSum();
-        $npsLoadTransactions = $repository->paginatedTransactions();
-        return view('admin.transaction.nps',compact('npsLoadTransactions','npsTotalTransactionCount','npsTotalTransactionSum'));
+    public function nps(Request $request, NPSRepository $repository)
+    {
+        if (!empty($_GET)) {
+            $npsTotalTransactionCount = $repository->getNpsTotalTransactionCount();
+            $npsTotalTransactionSum = $repository->getNpsTotalTransactionSum();
+            $npsLoadTransactions = $repository->paginatedTransactions();
+            return view('admin.transaction.nps', compact('npsLoadTransactions', 'npsTotalTransactionCount', 'npsTotalTransactionSum'));
+        }
+        return view('admin.transaction.nps');
     }
 
     //PAYPOINT
-    public function paypoint(PayPointRepository $repository,Request $request)
+    public function paypoint(PayPointRepository $repository, Request $request)
     {
-        $totalPayPointTransactionCount = $repository->getPayPointTransactionCount();
-        $totalPayPointTransactionSum = $repository->getPayPointTransactionSum();
-        $transactions = $repository->paginatedTransactions();
-        return view('admin.transaction.paypoint')->with(compact('transactions','totalPayPointTransactionCount','totalPayPointTransactionSum'));
+        if (!empty($_GET)) {
+            $totalPayPointTransactionCount = $repository->getPayPointTransactionCount();
+            $totalPayPointTransactionSum = $repository->getPayPointTransactionSum();
+            $transactions = $repository->paginatedTransactions();
+            return view('admin.transaction.paypoint')->with(compact('transactions', 'totalPayPointTransactionCount', 'totalPayPointTransactionSum'));
+        }
+        return view('admin.transaction.paypoint');
     }
 
     public function paypointDetail($id, PayPointRepository $repository)
@@ -105,12 +112,15 @@ class TransactionController extends Controller
     }
 
     //NCHL LOAD TRANSACTION
-    public function nchlLoadTransaction(NchlLoadTransactionRepository $repository,Request $request)
+    public function nchlLoadTransaction(NchlLoadTransactionRepository $repository, Request $request)
     {
-        $totalNchlLoadTransactionCount = $repository->getTotalNchlLoadTransactionCount();
-        $totalNchlLoadTransactionSum = $repository->getTotalNchlLoadTransactionSum();
-        $transactions = $repository->paginatedTransactions();
-        return view('admin.transaction.nchlLoadTransaction')->with(compact('transactions','totalNchlLoadTransactionCount','totalNchlLoadTransactionSum'));
+        if(!empty($_GET)) {
+            $totalNchlLoadTransactionCount = $repository->getTotalNchlLoadTransactionCount();
+            $totalNchlLoadTransactionSum = $repository->getTotalNchlLoadTransactionSum();
+            $transactions = $repository->paginatedTransactions();
+            return view('admin.transaction.nchlLoadTransaction')->with(compact('transactions', 'totalNchlLoadTransactionCount', 'totalNchlLoadTransactionSum'));
+        }
+        return view('admin.transaction.nchlLoadTransaction');
     }
 
     public function nchlLoadTransactionDetail($id, NchlLoadTransactionRepository $repository)
@@ -120,12 +130,15 @@ class TransactionController extends Controller
     }
 
     //NCHL BANK TRANSFER
-    public function nchlBankTransfer(NchlBankTransferRepository $repository,Request $request)
+    public function nchlBankTransfer(NchlBankTransferRepository $repository, Request $request)
     {
-        $totalNchlLoadBankTransferTransactionCount = $repository->getNchlLoadBankTransferTransactionCount();
-        $totalNchlLoadBankTransferTransactionSum = $repository->getNchlLoadBankTransferTransactionSum();
-        $transactions = $repository->paginatedTransactions();
-        return view('admin.transaction.nchlBankTransfer')->with(compact('transactions','totalNchlLoadBankTransferTransactionCount','totalNchlLoadBankTransferTransactionSum'));
+        if(!empty($_GET)) {
+            $totalNchlLoadBankTransferTransactionCount = $repository->getNchlLoadBankTransferTransactionCount();
+            $totalNchlLoadBankTransferTransactionSum = $repository->getNchlLoadBankTransferTransactionSum();
+            $transactions = $repository->paginatedTransactions();
+            return view('admin.transaction.nchlBankTransfer')->with(compact('transactions', 'totalNchlLoadBankTransferTransactionCount', 'totalNchlLoadBankTransferTransactionSum'));
+        }
+        return view('admin.transaction.nchlBankTransfer');
     }
 
     public function nchlBankTransferDetail($id, NchlBankTransferRepository $repository)
@@ -148,12 +161,15 @@ class TransactionController extends Controller
         return view('admin.transaction.detail.nicAsiaCyberSourceLoadDetail')->with(compact('transaction'));
     }
 
-    public function nicAsiaCyberSourceLoad(NicAsiaCyberSourceRepository $repository,Request $request)
+    public function nicAsiaCyberSourceLoad(NicAsiaCyberSourceRepository $repository, Request $request)
     {
-        $totalNicAisaTransactionCount = $repository->getTotalNicAisaTransactionCount();
-        $totalNicAisaTransactionSum = $repository->getTotalNicAisaTransactionSum();
-        $transactions = $repository->paginatedTransactions();
-        return view('admin.transaction.nicAsiaCyberSourceLoad',compact('transactions','totalNicAisaTransactionCount','totalNicAisaTransactionSum'));
+        if(!empty($_GET)) {
+            $totalNicAisaTransactionCount = $repository->getTotalNicAisaTransactionCount();
+            $totalNicAisaTransactionSum = $repository->getTotalNicAisaTransactionSum();
+            $transactions = $repository->paginatedTransactions();
+            return view('admin.transaction.nicAsiaCyberSourceLoad', compact('transactions', 'totalNicAisaTransactionCount', 'totalNicAisaTransactionSum'));
+        }
+        return view('admin.transaction.nicAsiaCyberSourceLoad');
     }
 
     //KHALTI
@@ -195,11 +211,17 @@ class TransactionController extends Controller
     }
 
     //KHALTI TRANSACTION
-    public function khaltiTransaction(KhaltiRepository $repository,Request $request){
-        $khaltiTotalTransactionCount = $repository->getKhaltiTotalTransactionCount();
-        $khaltiTotalTransactionSum = $repository->getKhaltiTotalTransactionSum();
-        $khaltiTransactions = $repository->paginatedTransactions();
+    public function khaltiTransaction(KhaltiRepository $repository, Request $request)
+    {
+
+        if (!empty($_GET)) {
+            $khaltiTotalTransactionCount = $repository->getKhaltiTotalTransactionCount();
+            $khaltiTotalTransactionSum = $repository->getKhaltiTotalTransactionSum();
+            $khaltiTransactions = $repository->paginatedTransactions();
+            $vendorNames = $repository->getVendorName();
+            return view('admin.transaction.khalti')->with(compact('khaltiTransactions', 'vendorNames', 'khaltiTotalTransactionCount', 'khaltiTotalTransactionSum'));
+        }
         $vendorNames = $repository->getVendorName();
-        return view('admin.transaction.khalti')->with(compact('khaltiTransactions','vendorNames','khaltiTotalTransactionCount','khaltiTotalTransactionSum'));
+        return view('admin.transaction.khalti')->with(compact('vendorNames'));
     }
 }

@@ -13,6 +13,11 @@ class NpsLoadClearanceStrategy extends AbstractClearanceCompareStrategy
 {
     const TRANSACTION_TYPE = NpsLoadTransaction::class;
 
+    public function clearanceInfo()
+    {
+        return "Use gateway_ref_no as linked_id";
+    }
+
     public function transactionName()
     {
         return "Nps Load";

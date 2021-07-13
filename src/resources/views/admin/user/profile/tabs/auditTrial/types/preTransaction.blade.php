@@ -3,8 +3,30 @@
     <?php $date = explode(' ', $event->created_at) ?>
     <td>{{ $date[0] }}</td>
     <td>{{ $date[1] }}</td>
-    <td>{{$event->pre_transaction_id == null ? '---' : $event->pre_transaction_id}}</td>
-    <td>{{ $event->description }}</td>
+    <td>{{$event->pre_transaction_id == null ? '---' : $event->pre_transaction_id}}
+        <br>
+        @if($event->vendor == "PAYPOINT")
+            <b>RefStan :</b> {{ isset($event->userTransaction) ? $event->userTransaction['refStan'] : '' }}
+        @elseif($event->vendor == "NPAY")
+            <b>Gateway Ref
+                No:</b> {{isset($event->userLoadTransaction) ? $event->userLoadTransaction['gateway_ref_no'] : ''}}
+        @elseif($event->vendor == "NCHL_LOAD")
+            <b>Transaction
+                Id:</b> {{isset($event->nchlLoadTransaction) ? $event->nchlLoadTransaction['transaction_id'] : ''}}
+        @elseif($event->vendor == "NIC_ASIA_LOAD")
+            <b>Reference
+                No:</b>{{isset($event->nicAsiaCyberSourceLoad) ? $event->nicAsiaCyberSourceLoad['reference_number'] : ''}}
+            <br>
+            <b>Transaction
+                UID:</b>{{isset($event->nicAsiaCyberSourceLoad) ? $event->nicAsiaCyberSourceLoad['transaction_uuid'] : ''}}
+        @elseif($event->vendor == "NCHL BANK TRANSFER")
+            <b>Transaction Id:</b>{{isset($event->nchlBankTransfer) ? $event->nchlBankTransfer['transaction_id'] : ''}}
+        @endif
+
+    </td>
+    <td>
+        {{ $event->description }}
+    </td>
     <td>
         <?php $transaction = json_decode($event->json_response, true) ?>
         @if(is_array($transaction) && isset($transaction['transaction']) && isset($transaction['transaction']['vendor']))
@@ -73,15 +95,17 @@
                 </a>
             @endif
         @elseif($event->microservice_type == 'KHALTI')
-                @if(!empty($event->khaltiUserTransaction))
-                    <a href="{{ route('khalti.payment.detail', $event->khaltiUserTransaction->id) }}">
-                        <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button>
-                    </a>
-                @endif
+            @if(!empty($event->khaltiUserTransaction))
+                <a href="{{ route('khalti.payment.detail', $event->khaltiUserTransaction->id) }}">
+                    <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button>
+                </a>
+            @endif
         @elseif(!empty($event->transactionEvent))
             @if($event->transactionEvent instanceof \App\Models\UserToUserFundTransfer)
                 @include('admin.transaction.fundTransfer.detail', [$event->transactionEvent->transactionable])
-                    <a href="{{ route('userToUserFundTransfer.detail', $event->transactionEvent->transaction_id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+                <a href="{{ route('userToUserFundTransfer.detail', $event->transactionEvent->transaction_id) }}">
+                    <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button>
+                </a>
             @endif
         @endif
 

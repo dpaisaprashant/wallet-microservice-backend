@@ -738,7 +738,7 @@
                 $('input[type="checkbox"]').iCheck('uncheck');
                 $('#selectdata').html('<b>Select all</b>');
             }
-            
+
         });
 
 

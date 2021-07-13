@@ -26,6 +26,8 @@ class KycFilter extends FilterAbstract {
      */
     public function filter(Builder $builder, $value)
     {
+
+//        dd($builder->get());
         //$value = $this->resolveFilterValue($value);
         if ($value === null) {
             return $builder;
@@ -44,7 +46,11 @@ class KycFilter extends FilterAbstract {
                 $query->where('accept',null);
             })->pluck('user_id');
             return $builder->whereIn('id' ,$userIds);
-        }else if($value == 'all'){
+        }else if($value == 'notfilled'){
+            $data = $builder->doesntHave('kyc');
+            return $data;
+        }
+        else if($value == 'all'){
             $userIds = UserKYC::pluck('user_id');
             return $builder->whereIn('id',$userIds);
         }

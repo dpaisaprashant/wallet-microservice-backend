@@ -590,31 +590,43 @@
                                         <div class="col-12">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_front'] }}"
-                                                       target="_blank">
-                                                        <img class="d-block w-100"
-                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_front'] }}"
-                                                             alt="First slide">
-                                                        <div class="carousel-caption d-none d-md-block">
-                                                            <p style="color: black; font-weight: bold;">
-                                                                DOCUMENT FRONT
-                                                            </p>
-                                                        </div>
-                                                    </a>
+{{--                                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_front'] }}"--}}
+{{--                                                       target="_blank">--}}
+{{--                                                        <img class="d-block w-100"--}}
+{{--                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_front'] }}"--}}
+{{--                                                             alt="First slide">--}}
+{{--                                                        <div class="carousel-caption d-none d-md-block">--}}
+{{--                                                            <p style="color: black; font-weight: bold;">--}}
+{{--                                                                DOCUMENT FRONT--}}
+{{--                                                            </p>--}}
+{{--                                                        </div>--}}
+{{--                                                    </a>--}}
+                                                        <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_front'] }}"
+                                                           target="_blank">
+                                                    <img src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_front'] }}" alt="">
+                                                    <p style="color: black; font-weight: bold;">
+                                                        &nbsp;DOCUMENT FRONT
+                                                    </p>
+                                                        </a>
                                                 </div>
 
                                                 <div class="col-12">
-                                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_back'] }}"
-                                                       target="_blank">
-                                                        <img class="d-block w-100"
-                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_back'] }}"
-                                                             alt="First slide">
-                                                        <div class="carousel-caption d-none d-md-block">
-                                                            <p style="color: black; font-weight: bold;">
-                                                                DOCUMENT BACK
-                                                            </p>
-                                                        </div>
-                                                    </a>
+{{--                                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_back'] }}"--}}
+{{--                                                       target="_blank">--}}
+{{--                                                        <img class="d-block w-100"--}}
+{{--                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_back'] }}"--}}
+{{--                                                             alt="First slide">--}}
+{{--                                                        <div class="carousel-caption d-none d-md-block">--}}
+{{--                                                            <p style="color: black; font-weight: bold;">--}}
+{{--                                                                DOCUMENT BACK--}}
+{{--                                                            </p>--}}
+{{--                                                        </div>--}}
+{{--                                                    </a>--}}
+                                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_back'] }}" target="_blank"></a>
+                                                    <img src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_back'] }}" alt="">
+                                                    <p style="color: black; font-weight: bold;">
+                                                        &nbsp;DOCUMENT BACK
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>

@@ -14,6 +14,12 @@ class UserCheckPaymentResource extends JsonResource
      */
     public function toArray($request)
     {
+        $completedDate = 'not available';
+        if (isset($this->userTransaction['created_at'])) {
+
+            $completedDate = $this->userTransaction['created_at'];
+        }
+
         return [
             'REF_STAN' => $this->refStan,
             'BILL NUMBER' => $this->bill_number,
@@ -24,7 +30,7 @@ class UserCheckPaymentResource extends JsonResource
             'AMOUNT' => $this->userTransaction['amount'] ?? 'not available',
             'VENDOR' => $this->userTransaction['vendor'] ?? 'not available',
             'STATUS' => $this->getStatus(),
-            'COMPLETED DATE' => (string) $this->userTransaction['created_at'] ?? 'not available'
+            'COMPLETED DATE' => (string) $completedDate
         ];
     }
 }

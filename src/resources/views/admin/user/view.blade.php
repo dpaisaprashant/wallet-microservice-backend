@@ -221,11 +221,13 @@
                                                         <option value="verified" @if($_GET['kyc_status']  == 'verified') selected @endif >Accepted</option>
                                                         <option value="unverified" @if($_GET['kyc_status']  == 'unverified') selected @endif >Rejected</option>
                                                         <option value="pending" @if($_GET['kyc_status'] == 'pending') selected @endif>Pending</option>
+                                                        <option value="notfilled" @if($_GET['kyc_status'] == 'notfilled') selected @endif>Not filled</option>
                                                     @else
                                                         <option value="all">All</option>
                                                         <option value="verified">Accepted</option>
                                                         <option value="unverified">Rejected</option>
                                                         <option value="pending">Pending</option>
+                                                        <option value="notfilled">Not filled</option>
                                                     @endif
                                                 </select>
                                             </div>

@@ -53,8 +53,8 @@
                                             @if($user->kyc->status == 1 && $user->kyc->accept == 1)
                                                 <div class="col-12">
                                                     <div class="i-checks">
-                                                        <input type="checkbox" class="select-all">&nbsp;&nbsp;
-                                                        <label id="selectdata"><b>Select All</b></label>
+                                                        <input type="checkbox" class="select-all" id="select-all">&nbsp;&nbsp;
+                                                        <label id="selectdata" for="select-all"><b>Select All</b></label>
                                                     </div>
                                                 </div>
                                                 <dt class="col-md-3 text-right">Verification Status</dt>
@@ -148,8 +148,8 @@
                                             @else
                                                 <div class="col-12">
                                                     <div class="i-checks">
-                                                        <input type="checkbox" class="select-all">&nbsp;&nbsp;
-                                                        <label id="selectdata"><b>Select all</b></label>
+                                                        <input type="checkbox" class="select-all" id="select-all">&nbsp;&nbsp;
+                                                        <label id="selectdata" for="select-all"><b>Select all</b></label>
                                                     </div>
 
                                                 </div>
@@ -266,7 +266,6 @@
                                             <dd class="col-md-8">{{$user->kyc->first_name == null ? 'Not available' : $user->kyc->first_name}}</dd>
 
                                             <dt class="col-md-3 text-right">
-                                                x
                                                 <div class="i-checks">
                                                     <label>
                                                         <input type="checkbox"

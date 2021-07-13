@@ -5,9 +5,11 @@
             <div class="col-md-4" style="margin-top: 20px;">
                 <div class="profile-image">
                     @isset($user->kyc['p_photo'])
-                        <img src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['p_photo'] }}" class="rounded-circle circle-border m-b-md" alt="profile">
+                        <img src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['p_photo'] }}"
+                             class="rounded-circle circle-border m-b-md" alt="profile">
                     @else
-                        <img src="{{ asset('admin/img/a4.jpg') }}" class="rounded-circle circle-border m-b-md" alt="profile">
+                        <img src="{{ asset('admin/img/a4.jpg') }}" class="rounded-circle circle-border m-b-md"
+                             alt="profile">
                     @endisset
                 </div>
                 <div class="profile-info">
@@ -49,6 +51,12 @@
                                     <dl class="row m-t-md">
                                         @if(!empty($user->kyc))
                                             @if($user->kyc->status == 1 && $user->kyc->accept == 1)
+                                                <div class="col-12">
+                                                    <div class="i-checks">
+                                                        <input type="checkbox" class="select-all">&nbsp;&nbsp;
+                                                        <label id="selectdata"><b>Select All</b></label>
+                                                    </div>
+                                                </div>
                                                 <dt class="col-md-3 text-right">Verification Status</dt>
                                                 <dd class="col-md-8">
                                                     <div class="row">
@@ -65,7 +73,8 @@
                                                                     <input type="hidden" value="{{ $user->kyc->id }}"
                                                                            name="kyc">
                                                                     <input type="hidden" value="accepted" name="status">
-                                                                    <input type="hidden" value="accepted" name="accept_status">
+                                                                    <input type="hidden" value="accepted"
+                                                                           name="accept_status">
                                                                     <button rel="{{ route('user.changeKYCStatus') }}"
                                                                             id="accept" class="btn btn-primary btn-sm"
                                                                             type="submit">Accept
@@ -137,6 +146,13 @@
 
                                                 </dd>
                                             @else
+                                                <div class="col-12">
+                                                    <div class="i-checks">
+                                                        <input type="checkbox" class="select-all">&nbsp;&nbsp;
+                                                        <label id="selectdata"><b>Select all</b></label>
+                                                    </div>
+
+                                                </div>
                                                 <dt class="col-md-3 text-right"
                                                     style="margin-top: auto; margin-bottom: auto;">Verification Status
                                                 </dt>
@@ -162,8 +178,10 @@
                                                                          @csrf--}}
                                                                     <input type="hidden" value="{{ $user->kyc->id }}"
                                                                            name="kyc">
-                                                                    <input type="hidden" value="accepted" name="status" id="acceptInputValue">
-                                                                    <input type="hidden" value="" name="accept_status" id="acceptStatusInput">
+                                                                    <input type="hidden" value="accepted" name="status"
+                                                                           id="acceptInputValue">
+                                                                    <input type="hidden" value="" name="accept_status"
+                                                                           id="acceptStatusInput">
                                                                     <button rel="{{ route('user.changeKYCStatus') }}"
                                                                             id="accept" class="btn btn-primary btn-sm"
                                                                             type="submit">Accept
@@ -239,7 +257,8 @@
                                                 <div class="i-checks">
                                                     <label>
                                                         <input type="checkbox"
-                                                               name="first_name" {{ optional($user->kyc->kycValidation)->first_name ? "checked" : "" }}>
+                                                               name="first_name"
+                                                               class="check" {{ optional($user->kyc->kycValidation)->first_name ? "checked" : "" }}>
                                                         <i></i> First Name
                                                     </label>
                                                 </div>
@@ -247,10 +266,12 @@
                                             <dd class="col-md-8">{{$user->kyc->first_name == null ? 'Not available' : $user->kyc->first_name}}</dd>
 
                                             <dt class="col-md-3 text-right">
+                                                x
                                                 <div class="i-checks">
                                                     <label>
                                                         <input type="checkbox"
-                                                               name="middle_name" {{ optional($user->kyc->kycValidation)->middle_name ? "checked" : "" }}>
+                                                               name="middle_name"
+                                                               class="check" {{ optional($user->kyc->kycValidation)->middle_name ? "checked" : "" }}>
                                                         <i></i> Middle Name
                                                     </label>
                                                 </div>
@@ -702,6 +723,25 @@
 
             })
         });
+
+
+        var checkAll = $('.select-all');
+        var checkboxes = $('input[type="checkbox"]');
+
+
+        checkAll.on('ifChecked ifUnchecked', function (event) {
+
+            if (event.type == "ifChecked") {
+                $('input[type="checkbox"]').iCheck('check');
+                $('#selectdata').html('<b>Deselect all</b>');
+            } else {
+                $('input[type="checkbox"]').iCheck('uncheck');
+                $('#selectdata').html('<b>Select all</b>');
+            }
+            
+        });
+
+
     </script>
 @endsection
 

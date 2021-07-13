@@ -26,6 +26,7 @@
     </td>
     <td>
         {{ $event->description }}
+
     </td>
     <td>
         <?php $transaction = json_decode($event->json_response, true) ?>

@@ -319,6 +319,31 @@ return [
             ]
         ],
 
+        'cellpay' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE12_URL'),
+            'host' => env('DB12_HOST', '127.0.0.1'),
+            'port' => env('DB12_PORT', '3306'),
+            'database' => env('DB12_DATABASE', 'forge'),
+            'username' => env('DB12_USERNAME', 'forge'),
+            'password' => env('DB12_PASSWORD', ''),
+            'unix_socket' => env('DB12_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => false,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+            'dump' => [
+                'dump_binary_path' => env('DB_DUMP_PATH', '/usr/bin/'), // only the path, so without `mysqldump` or `pg_dump`
+                'use_single_transaction',
+                'timeout' => 60 * 5, // 5 minute timeout
+            ]
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),

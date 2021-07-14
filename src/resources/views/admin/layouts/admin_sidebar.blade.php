@@ -1,3 +1,4 @@
+'
 <?php
 $url = url()->current();
 //$today = \Carbon\Carbon::now()->format('d M, Y');
@@ -202,6 +203,13 @@ $url = url()->current();
                             </li>
                         @endforeach
                     </ul>
+                </li>
+            @endcan
+
+            @can('Architecture vendor transaction')
+                <li @if(preg_match('/vendor-transactions/i', $url)) class="active" @endif>
+                    <a href="{{route('wallet.transaction.type.view')}}"><i class="fa fa-history"></i> <span class="nav-label">Wallet Transaction Type</span><span
+                            class="fa arrow"></span></a>
                 </li>
             @endcan
 

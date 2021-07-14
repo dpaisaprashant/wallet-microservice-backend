@@ -7,6 +7,7 @@ use App\Wallet\Architecture\Http\Controllers\WalletUserCashbackController;
 use App\Wallet\Architecture\Http\Controllers\WalletUserCommissionController;
 use App\Wallet\Referral\Http\Controllers\ReferralController;
 use App\Wallet\Referral\Http\Controllers\ReferralSchemaController;
+use App\Wallet\Architecture\Http\Controllers\WalletTypeTransactionController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'admin/architecture', 'middleware' => ['web','auth']], function () {
@@ -43,4 +44,8 @@ Route::group(['prefix' => 'admin/architecture', 'middleware' => ['web','auth']],
     Route::match(['get', 'post'], '/user-wallet-transaction-commission/{walletTransaction}/create', [WalletUserCommissionController::class, 'create'])->name('architecture.user.commission.create');
     Route::match(['get', 'post'], '/user-wallet-transaction-commission/edit/{id}', [WalletUserCommissionController::class, 'update'])->name('architecture.user.commission.update');
     Route::post('/user-wallet-transaction-commission/delete', [WalletUserCommissionController::class, 'delete'])->name('architecture.user.commission.delete');
+
+
+    //Wallet transaction types
+    Route::get('/wallet-transaction-type',[WalletTypeTransactionController::class,'index'])->name('wallet.transaction.type.view');
 });

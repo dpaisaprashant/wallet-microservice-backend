@@ -283,7 +283,18 @@ class RolesAndPermissionsSeeder extends Seeder
             'Api log',
 
             'Merchant event list',
-            'Merchant pending event list'
+            'Merchant pending event list',
+
+            'Add cashback to user type',
+            'Add cashback to agent type',
+            'Add cashback to merchant type',
+
+            'Add commission to user type',
+            'Add commission to agent type',
+            'Add commission to merchant type',
+
+            'Add cashback to single user',
+            'Add commission to single user'
 
             ];
 

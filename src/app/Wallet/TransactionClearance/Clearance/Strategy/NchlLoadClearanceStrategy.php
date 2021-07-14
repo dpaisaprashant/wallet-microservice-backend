@@ -15,7 +15,7 @@ class NchlLoadClearanceStrategy extends AbstractClearanceCompareStrategy
 
     public function clearanceInfo()
     {
-        return "Use transaction_id as linked_id";
+        return "Use app_transaction_id as linked_id";
     }
 
     public function transactionName()

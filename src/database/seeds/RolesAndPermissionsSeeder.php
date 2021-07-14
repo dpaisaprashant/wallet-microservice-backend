@@ -294,7 +294,11 @@ class RolesAndPermissionsSeeder extends Seeder
             'Add commission to merchant type',
 
             'Add cashback to single user',
-            'Add commission to single user'
+            'Add commission to single user',
+
+            'Add wallet transaction type',
+            'View wallet transaction type',
+            'Edit wallet transaction type',
 
             ];
 

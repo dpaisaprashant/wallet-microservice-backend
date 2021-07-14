@@ -206,10 +206,9 @@ $url = url()->current();
                 </li>
             @endcan
 
-            @can('Architecture vendor transaction')
+            @can('View wallet transaction type')
                 <li @if(preg_match('/vendor-transactions/i', $url)) class="active" @endif>
-                    <a href="{{route('wallet.transaction.type.view')}}"><i class="fa fa-history"></i> <span class="nav-label">Wallet Transaction Type</span><span
-                            class="fa arrow"></span></a>
+                    <a href="{{route('wallet.transaction.type.view')}}"><i class="fa fa-history"></i> <span class="nav-label">Wallet Transaction Type</span></a>
                 </li>
             @endcan
 

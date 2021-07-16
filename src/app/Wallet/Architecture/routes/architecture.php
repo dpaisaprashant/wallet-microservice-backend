@@ -5,6 +5,7 @@ use App\Wallet\Architecture\Http\Controllers\WalletTransactionCommissionControll
 use App\Wallet\Architecture\Http\Controllers\WalletTransactionTypeController;
 use App\Wallet\Architecture\Http\Controllers\WalletUserCashbackController;
 use App\Wallet\Architecture\Http\Controllers\WalletUserCommissionController;
+use App\Wallet\Architecture\Http\Controllers\WalletServiceController;
 use App\Wallet\Referral\Http\Controllers\ReferralController;
 use App\Wallet\Referral\Http\Controllers\ReferralSchemaController;
 use App\Wallet\Architecture\Http\Controllers\WalletTypeTransactionController;
@@ -53,4 +54,7 @@ Route::group(['prefix' => 'admin/architecture', 'middleware' => ['web','auth']],
     Route::get('/edit-wallet-transaction-type/{id}',[WalletTypeTransactionController::class,'edit'])->name('wallet.transaction.type.edit');//Edit wallet transaction type
     Route::post('/edit-wallet-transaction-type/{id}',[WalletTypeTransactionController::class,'update'])->name('wallet.transaction.type.update');//Updating wallet transaction type
     Route::get('/delete-wallet-transaction-type/{id}',[WalletTypeTransactionController::class,'delete'])->name('wallet.transaction.type.delete');//Delete wallet transaction type
+
+    //Wallet Services
+    Route::get('/view-wallet-service',[WalletServiceController::class,'index'])->name('wallet.service.view');//View wallet service
 });

@@ -15,7 +15,7 @@ class NPayLoadClearanceStrategy extends AbstractClearanceCompareStrategy
 
     public function clearanceInfo()
     {
-        return "Use gateway_ref_no as linked_id";
+        return "Use Customer Transaction Id as linked_id";
     }
 
     public function transactionName()
@@ -30,7 +30,7 @@ class NPayLoadClearanceStrategy extends AbstractClearanceCompareStrategy
             ->filter(request())
             ->get()
             ->transform(function ($value) {
-                $value->linked_id = $value->transactionable->gateway_ref_no;
+                $value->linked_id = $value->transactionable->transaction_id;
                 return $value;
             });
     }

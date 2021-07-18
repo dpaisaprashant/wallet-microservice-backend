@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\TransactionEvent;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TransactionEventResource extends JsonResource
@@ -24,6 +25,7 @@ class TransactionEventResource extends JsonResource
             'VENDOR' => $this->vendor,
             'SERVICE TYPE' => $this->service_type,
             'DESCRIPTION' => $this->description,
+            'CASHBACK AMOUNT' => $this->cashback_amount,
             'CREATED AT' => $this->created_at
         ];
     }

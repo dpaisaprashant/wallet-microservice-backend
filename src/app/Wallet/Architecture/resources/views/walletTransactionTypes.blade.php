@@ -31,7 +31,8 @@
                             </a>
                         </div>
                     </div>
-                    <div class="ibox-content" @if( empty($_GET) || (!empty($_GET['page']) && count($_GET) === 1)  ) style="display: none"  @endif>
+                    <div class="ibox-content"
+                         @if( empty($_GET) || (!empty($_GET['page']) && count($_GET) === 1)  ) style="display: none" @endif>
                         <div class="row">
                             <div class="col-sm-12">
                                 <form role="form" method="get">
@@ -39,29 +40,48 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <input type="text" name="name" placeholder="Enter User Name" class="form-control" value="{{ !empty($_GET['name']) ? $_GET['name'] : '' }}">
+                                                <input type="text" name="name" placeholder="Enter User Name"
+                                                       class="form-control"
+                                                       value="{{ !empty($_GET['name']) ? $_GET['name'] : '' }}">
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <input type="text" name="number" placeholder="Enter Contact Number" class="form-control" value="{{ !empty($_GET['number']) ? $_GET['number'] : '' }}">
+                                                <input type="text" name="number" placeholder="Enter Contact Number"
+                                                       class="form-control"
+                                                       value="{{ !empty($_GET['number']) ? $_GET['number'] : '' }}">
                                             </div>
                                         </div>
 
 
                                         <div class="col-md-3">
-                                            <input type="email" name="email" placeholder="Enter Email" class="form-control" value="{{ !empty($_GET['email']) ? $_GET['email'] : '' }}">
+                                            <input type="email" name="email" placeholder="Enter Email"
+                                                   class="form-control"
+                                                   value="{{ !empty($_GET['email']) ? $_GET['email'] : '' }}">
                                         </div>
 
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <select data-placeholder="Choose transaction status..." class="chosen-select"  tabindex="2" name="sort">
+                                                <select data-placeholder="Choose transaction status..."
+                                                        class="chosen-select" tabindex="2" name="sort">
                                                     <option value="" selected disabled>Sort By...</option>
                                                     @if(!empty($_GET['sort']))
-                                                        <option value="wallet_balance" @if($_GET['sort']  == 'wallet_balance') selected @endif >Wallet Balance</option>
-                                                        <option value="transaction_number" @if($_GET['sort'] == 'transaction_number') selected @endif>Transaction Number</option>
-                                                        <option value="transaction_payment" @if($_GET['sort'] == 'transaction_payment') selected @endif>Transaction Payment</option>
-                                                        <option value="transaction_loaded" @if($_GET['sort'] == 'transaction_loaded') selected @endif>Transaction Loaded</option>
+                                                        <option value="wallet_balance"
+                                                                @if($_GET['sort']  == 'wallet_balance') selected @endif >
+                                                            Wallet Balance
+                                                        </option>
+                                                        <option value="transaction_number"
+                                                                @if($_GET['sort'] == 'transaction_number') selected @endif>
+                                                            Transaction Number
+                                                        </option>
+                                                        <option value="transaction_payment"
+                                                                @if($_GET['sort'] == 'transaction_payment') selected @endif>
+                                                            Transaction Payment
+                                                        </option>
+                                                        <option value="transaction_loaded"
+                                                                @if($_GET['sort'] == 'transaction_loaded') selected @endif>
+                                                            Transaction Loaded
+                                                        </option>
                                                     @else
                                                         <option value="wallet_balance">Wallet Balance</option>
                                                         <option value="transaction_number">Transaction Number</option>
@@ -74,7 +94,9 @@
                                     </div>
                                     <br>
                                     <div>
-                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('architecture.vendor.transaction', $vendorName) }}"><strong>Filter</strong></button>
+                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
+                                                formaction="{{ route('architecture.vendor.transaction', $vendorName) }}">
+                                            <strong>Filter</strong></button>
                                     </div>
 
                                     <div>
@@ -116,14 +138,14 @@
                                     <tr class="gradeX">
                                         <td>{{ $loop->index + 1 }}</td>
                                         <td>
-                                           @if($transactionType->user_type == \App\Models\User::class)
-                                               User
-                                           @elseif($transactionType->user_type == \App\Models\Merchant\Merchant::class)
-                                               Merchant
-                                           @endif
+                                            @if($transactionType->user_type == \App\Models\User::class)
+                                                User
+                                            @elseif($transactionType->user_type == \App\Models\Merchant\Merchant::class)
+                                                Merchant
+                                            @endif
                                         </td>
                                         <td>
-                                           {{ $transactionType->vendor }}
+                                            {{ $transactionType->vendor }}
                                         </td>
                                         <td>
                                             {{ $transactionType->transaction_category }}
@@ -145,11 +167,27 @@
                                         <td>{{ $transactionType->payment_type }}</td>
 
                                         <td class="center">
-                                            <a style="margin-top: 5px;" href="{{ route('architecture.transaction.cashback', $transactionType->id) }}" class="btn btn-sm btn-success m-t-n-xs" title="Transaction Cashbacks"><i class="fa fa-refresh"></i> Transaction Cashback</a>
-                                            <a style="margin-top: 5px;" href="{{ route('architecture.transaction.commission', $transactionType->id) }}" class="btn btn-sm btn-info m-t-n-xs" title="Transaction Commissions"><i class="fa fa-dollar"></i> Transaction Commission</a>
+                                            <a style="margin-top: 5px;"
+                                               href="{{ route('architecture.transaction.cashback', $transactionType->id) }}"
+                                               class="btn btn-sm btn-success m-t-n-xs" title="Transaction Cashbacks"><i
+                                                    class="fa fa-refresh"></i> Transaction Cashback</a>
+                                            <a style="margin-top: 5px;"
+                                               href="{{ route('architecture.transaction.commission', $transactionType->id) }}"
+                                               class="btn btn-sm btn-info m-t-n-xs" title="Transaction Commissions"><i
+                                                    class="fa fa-dollar"></i> Transaction Commission</a>
                                             <br>
-                                            <a style="margin-top: 5px;" href="{{ route('architecture.user.cashback', $transactionType->id) }}" class="btn btn-sm btn-success m-t-n-xs" title="User Cashbacks"><i class="fa fa-refresh"></i> User Cashback</a>
-                                            <a style="margin-top: 5px;" href="{{ route('architecture.user.commission', $transactionType->id) }}" class="btn btn-sm btn-info m-t-n-xs" title="User Commissions"><i class="fa fa-dollar"></i> User Commission</a>
+                                            @can('Add cashback to single user')
+                                                <a style="margin-top: 5px;"
+                                                   href="{{ route('architecture.user.cashback', $transactionType->id) }}"
+                                                   class="btn btn-sm btn-success m-t-n-xs" title="User Cashbacks"><i
+                                                        class="fa fa-refresh"></i> User Cashback</a>
+                                            @endcan
+                                            @can('Add commission to single user')
+                                                <a style="margin-top: 5px;"
+                                                   href="{{ route('architecture.user.commission', $transactionType->id) }}"
+                                                   class="btn btn-sm btn-info m-t-n-xs" title="User Commissions"><i
+                                                        class="fa fa-dollar"></i> User Commission</a>
+                                            @endcan
 
                                         </td>
                                     </tr>
@@ -174,7 +212,8 @@
 
     @include('admin.asset.css.datatable')
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/css/ion.rangeSlider.min.css"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/css/ion.rangeSlider.min.css"/>
 
 @endsection
 

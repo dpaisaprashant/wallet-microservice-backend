@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Architecture\WalletTransactionType;
 use App\Models\FundRequest;
 use App\Models\KhaltiUserTransaction;
+use App\Models\Merchant\Merchant;
 use App\Models\MerchantTransaction;
 use App\Models\NchlAggregatedPayment;
 use App\Models\NchlBankTransfer;
 use App\Models\NchlLoadTransaction;
 use App\Models\NICAsiaCyberSourceLoadTransaction;
 use App\Models\NpsLoadTransaction;
+use App\Models\User;
 use App\Models\UserLoadTransaction;
 use App\Models\UserMerchantEventTicketPayment;
 use App\Models\UserToUserFundTransfer;
@@ -97,6 +99,13 @@ class Controller extends BaseController
             UserMerchantEventTicketPayment::class => "EVENT TICKET PAYMENT",
         ];
 
+        $userTypes = [
+            User::class => 'USER',
+            Merchant::class => 'MERCHANT'
+        ];
+
+
+        View::share('userTypes', $userTypes);
         View::share('transactionTypes', $transactionTypes);
     }
 }

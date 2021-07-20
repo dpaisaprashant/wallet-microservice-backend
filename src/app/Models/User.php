@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Filters\User\UserFilters;
 use App\Models\Architecture\SingleUserCashback;
 use App\Models\Architecture\SingleUserCommission;
+use App\Models\Merchant\Merchant;
 use App\Models\Microservice\PreTransaction;
 use App\Models\Microservice\RequestInfo;
 use App\Models\TransactionEvent;
@@ -96,6 +97,21 @@ class User extends Authenticatable
     }
 
 
+    public function userType()
+    {
+        return $this->belongsTo(UserType::class, 'user_type_id');
+    }
+
+
+
+    public function agentType()
+    {
+        if($this->isValidAgentOrSubAgent()){
+            return optional(optional($this->agent)->agentType)->name;
+        }
+        return null;
+    }
+
     public function wallet()
     {
         return $this->hasOne(Wallet::class, 'user_id');
@@ -133,8 +149,10 @@ class User extends Authenticatable
 
     public function agent()
     {
-        return $this->hasOne(Agent::class);
+        return $this->hasOne(Agent::class,'user_id');
     }
+
+
 
     public function preTransactions()
     {
@@ -208,6 +226,11 @@ class User extends Authenticatable
     public function merchantTransactions()
     {
         return $this->hasMany(MerchantTransaction::class, 'user_id');
+    }
+
+    public function merchant()
+    {
+        return $this->hasOne(Merchant::class,'user_id');
     }
 
 

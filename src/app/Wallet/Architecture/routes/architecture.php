@@ -10,6 +10,7 @@ use App\Wallet\Referral\Http\Controllers\ReferralController;
 use App\Wallet\Referral\Http\Controllers\ReferralSchemaController;
 use App\Wallet\Architecture\Http\Controllers\WalletTypeTransactionController;
 use Illuminate\Support\Facades\Route;
+use App\Wallet\Architecture\Http\Controllers\WalletPermissionTransactionTypeController;
 
 Route::group(['prefix' => 'admin/architecture', 'middleware' => ['web','auth']], function () {
     Route::get('/vendor-transactions/{vendorName}', [WalletTransactionTypeController::class, 'vendorTransactions'])->name('architecture.vendor.transaction')->middleware('permission:Architecture vendor transaction');
@@ -45,6 +46,12 @@ Route::group(['prefix' => 'admin/architecture', 'middleware' => ['web','auth']],
     Route::match(['get', 'post'], '/user-wallet-transaction-commission/{walletTransaction}/create', [WalletUserCommissionController::class, 'create'])->name('architecture.user.commission.create');
     Route::match(['get', 'post'], '/user-wallet-transaction-commission/edit/{id}', [WalletUserCommissionController::class, 'update'])->name('architecture.user.commission.update');
     Route::post('/user-wallet-transaction-commission/delete', [WalletUserCommissionController::class, 'delete'])->name('architecture.user.commission.delete');
+
+    //Wallet permission transaction type
+    Route::get('/view-wallet-permission-transaction-type',[WalletPermissionTransactionTypeController::class, 'index'])->name('wallet.permission.transaction.type.view');
+    Route::get('/create-wallet-permission-transaction-type',[WalletPermissionTransactionTypeController::class,'create'])->name('wallet.permission.transaction.type.create');
+    Route::post('/store-wallet-permission-transaction-type',[WalletPermissionTransactionTypeController::class, 'store'])->name('wallet.permission.transaction.type.store');
+    Route::post('/delete-wallet-permission-transaction-type/{id}',[WalletPermissionTransactionTypeController::class,'delete'])->name('wallet.permission.transaction.type.delete');
 
 
     //Wallet transaction types

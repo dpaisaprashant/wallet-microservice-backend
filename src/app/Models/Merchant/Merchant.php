@@ -11,6 +11,7 @@ use App\Models\MerchantNchlBankTransfer;
 use App\Models\MerchantNchlLoadTransaction;
 use App\Models\MerchantTransaction;
 use App\Models\MerchantTransactionEvent;
+use App\Models\UserType;
 use App\Wallet\Commission\Models\Commission;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -35,6 +36,11 @@ class Merchant extends Model
     public function wallet()
     {
         return $this->hasOne(MerchantWallet::class);
+    }
+
+    public function merchantType()
+    {
+        return $this->belongsTo(MerchantType::class, 'merchant_type_id');
     }
 
     public function kyc()

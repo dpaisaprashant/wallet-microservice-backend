@@ -177,6 +177,7 @@
                         @if($user->agentStatus())
                             <li><a class="nav-link @if($activeTab == 'agent') active @endif" data-toggle="tab" href="#agent"> Agent</a></li>
                         @endif
+
                         <li><a class="nav-link @if($activeTab == 'allAuditTrial') active @endif" data-toggle="tab" href="#allAuditTrial">All Audit Trials</a></li>
                         <li><a class="nav-link @if($activeTab == 'userLoginHistoryAudit') active @endif" data-toggle="tab" href="#userLoginHistoryAudit">User Login History Audit</a></li>
                         {{--<li><a class="nav-link @if($activeTab == 'transaction') active @endif" data-toggle="tab" href="#transaction">Transaction</a></li>--}}

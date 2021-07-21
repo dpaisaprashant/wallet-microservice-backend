@@ -131,7 +131,7 @@ $url = url()->current();
 
 
             @can('Merchant dashboard')
-                <li @if(preg_match('/merchants/i', $url)) class="active" @endif>
+                <li @if(preg_match('/merchans/i', $url)) class="active" @endif>
                     <a href="{{ route('merchant.view') }}"><i class="fa fa-cart-plus"></i> <span
                             class="nav-label">Merchants</span></a>
                 </li>
@@ -185,6 +185,12 @@ $url = url()->current();
                             class="nav-label">Unverified KYC List</span></a>
                 </li>
             @endcan
+
+                <li @if($url == route('merchant.unverifiedMerchantKYC.view')) class="active" @endif>
+                    <a href="{{ route('merchant.unverifiedMerchantKYC.view') }}"><i class="fa fa-user-times"></i> <span
+                            class="nav-label">Unverified Merchant KYC List</span></a>
+                </li>
+
 
             @can('KYC list changed by backend user view')
                 <li @if($url == route('backendUser.kycList')) class="active" @endif>

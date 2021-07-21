@@ -387,21 +387,8 @@
                                             @include('admin.user.kyc.status', ['kyc' => $user->kyc])
                                         </td>
                                         <td>Rs. {{ $user->wallet->balance }}</td>
-                                        <td><span
-                                                class="badge badge-success">User type : {{ optional($user->userType)->name }}</span>
-                                            @if($user->merchant != null)
-                                                <span class="badge badge-primary">Merchant type :
-                                                    {{ $user->merchant->merchantType->name }}
-
-                                            </span>
-                                            @endif
-                                            @if($user->agent != null)
-                                                <span class="badge badge-danger">Agent type :
-                                                    @if($user->agentType() != null)
-                                                    {{ $user->agentType() }}
-                                                    @endif
-                                                </span>
-                                            @endif
+                                        <td>
+                                           @include('admin.user.userType.displayUserTypes',['user' => $user])
                                         </td>
                                         <td>Rs. {{ $user->wallet->bonus_balance }}</td>
 

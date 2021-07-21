@@ -12,6 +12,7 @@ use App\Wallet\Merchant\Repositories\MerchantKYCRepository;
 use App\Wallet\Merchant\Repositories\MerchantRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 
 class MerchantController extends Controller
 {
@@ -29,7 +30,7 @@ class MerchantController extends Controller
         $merchants = $repository->paginatedMerchants();
         $stats = $repository->merchantStats();
 
-        return view('admin.merchant.view')->with(compact('merchants', 'stats'));
+        return view('admin.merchant.view')->with(compact('merchants','stats'));
     }
 
     public function transaction($id, MerchantRepository $repository)
@@ -48,16 +49,31 @@ class MerchantController extends Controller
 
     public function changeKYCStatus(Request $request, MerchantKYCRepository $repository)
     {
-        $kyc = $repository->merchantKYC();
-
-        if ($request->status == 'accepted' ) {
-            $repository->acceptKYC($kyc);
-        } elseif ($request->status = 'rejected') {
-            $repository->rejectKYC($kyc);
+        $kycId = $request->get('kyc');
+        $kyc = $repository->merchantKYC($kycId);
+        if(isset($kyc)) {
+            if ($request->accept_status == 'accepted') {
+                $repository->acceptKYC($kyc);
+            } elseif ($request->status == 'rejected') {
+                $repository->rejectKYC($kyc);
+            }
+        }else{
+            return redirect()->back()->with('error','Merchant kyc not found');
         }
 
         return redirect()->back();
     }
+
+    public function unverifiedMerchantKYCView(MerchantKYCRepository $repository){
+        $merchants = $repository->paginatedUnverifiedMerchantKYC();
+        return view('admin.merchant.unverifiedMerchantKYC',compact('merchants'));
+    }
+
+    public function merchantDetailKyc($id){
+        $merchant = User::with('merchant','kyc')->findOrFail($id);
+        return view('admin.merchant.kyc',compact('merchant'));
+    }
+
 
     public function profile($id, Request $request)
     {

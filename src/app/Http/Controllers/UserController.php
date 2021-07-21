@@ -69,9 +69,7 @@ class UserController extends Controller
     public function view(UserRepository $repository)
     {
         $users = $repository->paginatedUsers();
-        $agentTypes = AgentType::orderBy('created_at','DESC')->get();
-        $merchantTypes = MerchantType::orderBy('created_at','DESC')->get();
-        return view('admin.user.view')->with(compact('users','merchantTypes','agentTypes'));
+        return view('admin.user.view')->with(compact('users'));
     }
 
     public function kycNotFilledView(UserKYCRepository $repository)

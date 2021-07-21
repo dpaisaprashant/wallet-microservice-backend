@@ -108,8 +108,11 @@ class UserKYCRepository
 
     public function paginatedUnverifiedKycUsers()
     {
-        return User::whereHas('kyc', function ($query) {
-            $query->where('accept', UserKyc::ACCEPT_UNVERIFIED);
+//        return User::whereHas('kyc', function ($query) {
+//            $query->where('accept', UserKyc::ACCEPT_UNVERIFIED);
+//        })->latest()->filter($this->request)->paginate($this->length);
+        return User::whereHas('userType')->whereHas('kyc',function($query){
+            $query->where('accept',UserKYC::ACCEPT_UNVERIFIED);
         })->latest()->filter($this->request)->paginate($this->length);
     }
 

@@ -48,7 +48,7 @@ Route::group(['prefix' => 'admin/architecture', 'middleware' => ['web','auth']],
     Route::post('/user-wallet-transaction-commission/delete', [WalletUserCommissionController::class, 'delete'])->name('architecture.user.commission.delete');
 
     //Wallet permission transaction type
-    Route::get('/view-wallet-permission-transaction-type',[WalletPermissionTransactionTypeController::class, 'index'])->name('wallet.permission.transaction.type.view');
+    Route::get('/view-wallet-permission-transaction-type',[WalletPermissionTransactionTypeController::class, 'index'])->name('wallet.permission.transaction.type.view')->middleware('permission:View wallet permission transaction type');
     Route::get('/create-wallet-permission-transaction-type',[WalletPermissionTransactionTypeController::class,'create'])->name('wallet.permission.transaction.type.create');
     Route::post('/store-wallet-permission-transaction-type',[WalletPermissionTransactionTypeController::class, 'store'])->name('wallet.permission.transaction.type.store');
     Route::post('/delete-wallet-permission-transaction-type/{id}',[WalletPermissionTransactionTypeController::class,'delete'])->name('wallet.permission.transaction.type.delete');

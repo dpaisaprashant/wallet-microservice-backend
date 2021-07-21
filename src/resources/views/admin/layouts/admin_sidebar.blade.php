@@ -218,7 +218,7 @@ $url = url()->current();
 {{--                </li>--}}
 {{--            @endcan--}}
 
-            @can('View wallet transaction type')
+            @can('View wallet permission transaction type')
                 <li @if(preg_match('/vendor-transactions/i', $url)) class="active" @endif>
                     <a href="{{route('wallet.permission.transaction.type.view')}}"><i class="fa fa-history"></i> <span
                             class="nav-label">Wallet Permission Transaction Type</span></a>

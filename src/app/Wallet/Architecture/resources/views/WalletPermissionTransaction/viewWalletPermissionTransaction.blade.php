@@ -136,106 +136,118 @@
         {{--                </div>--}}
         {{--            </div>--}}
         {{--        </div>--}}
-{{--    </div>--}}
+        {{--    </div>--}}
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="ibox">
-                <div class="ibox-title">
-                    <h5>List of wallet permission transaction type users</h5>
-                    @can('Add wallet transaction type')
-                        <div class="ibox-tools" style="top: 8px;">
-                            <a href="{{ route('wallet.permission.transaction.type.create') }}"><button class="btn btn-primary" type="button"><i class="fa fa-plus"></i> Add
-                                    Wallet Permission Transaction</button></a>
-                        </div>
-                    @endcan
-                </div>
-                <div class="ibox-content">
-                    <div class="table-responsive">
-                        @include('admin.asset.notification.notify')
-                        <table class="table table-striped table-bordered table-hover dataTables-example"
-                               title="Dpasis user's list">
-                            <thead>
-                            <tr>
-                                <th>S.No.</th>
-                                <th>User type id</th>
-                                <th>User type</th>
-                                <th>Wallet tranasction type id</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($walletPermissionTransactions as $key=>$walletPermissionTransaction)
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>List of wallet permission transaction type users</h5>
+                        @can('Add wallet permission transaction type')
+                            <div class="ibox-tools" style="top: 8px;">
+                                <a href="{{ route('wallet.permission.transaction.type.create') }}">
+                                    <button class="btn btn-primary" type="button"><i class="fa fa-plus"></i> Add
+                                        Wallet Permission Transaction
+                                    </button>
+                                </a>
+                            </div>
+                        @endcan
+                    </div>
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            @include('admin.asset.notification.notify')
+                            <table class="table table-striped table-bordered table-hover dataTables-example"
+                                   title="Dpasis user's list">
+                                <thead>
                                 <tr>
-                                    <td>{{ $key+1 }}</td>
+                                    <th>S.No.</th>
+                                    <th>User type id</th>
+                                    <th>User type</th>
+                                    <th>Wallet tranasction type id</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($walletPermissionTransactions as $key=>$walletPermissionTransaction)
+                                    <tr>
+                                        <td>{{ $key+1 }}</td>
 
-                                    @if($walletPermissionTransaction->user_type == 'App\Models\UserType')
-                                        @foreach($userTypes as $key=>$userType)
-                                            @if($userType->id == $walletPermissionTransaction->user_type_id)
-                                                <td><span class="badge badge-inverse">{{$userType->name}}</span></td>
-                                            @endif
-                                        @endforeach
-                                    @elseif($walletPermissionTransaction->user_type == 'App\Models\Merchant\MerchantType')
-                                        @foreach($merchantTypes as $key=>$merchantType)
-                                            @if($merchantType->id == $walletPermissionTransaction->user_type_id)
-                                                <td><span class="badge badge-success">{{$merchantType->name}}</span>
-                                                </td>
-                                            @endif
-                                        @endforeach
-                                    @elseif($walletPermissionTransaction->user_type == 'App\Models\AgentType')
-                                        @foreach($agentTypes as $key=>$agentType)
-                                            @if($agentType->id == $walletPermissionTransaction->user_type_id)
-                                                <td><span class="badge badge-primary">{{$agentType->name}}</span></td>
-                                            @endif
-                                        @endforeach
-                                    @endif
+                                        @if($walletPermissionTransaction->user_type == 'App\Models\UserType')
+                                            @foreach($userTypes as $key=>$userType)
+                                                @if($userType->id == $walletPermissionTransaction->user_type_id)
+                                                    <td><span class="badge badge-inverse">{{$userType->name}}</span>
+                                                    </td>
+                                                @endif
+                                            @endforeach
+                                        @elseif($walletPermissionTransaction->user_type == 'App\Models\Merchant\MerchantType')
+                                            @foreach($merchantTypes as $key=>$merchantType)
+                                                @if($merchantType->id == $walletPermissionTransaction->user_type_id)
+                                                    <td><span class="badge badge-success">{{$merchantType->name}}</span>
+                                                    </td>
+                                                @endif
+                                            @endforeach
+                                        @elseif($walletPermissionTransaction->user_type == 'App\Models\AgentType')
+                                            @foreach($agentTypes as $key=>$agentType)
+                                                @if($agentType->id == $walletPermissionTransaction->user_type_id)
+                                                    <td><span class="badge badge-primary">{{$agentType->name}}</span>
+                                                    </td>
+                                                @endif
+                                            @endforeach
+                                        @endif
 
-                                    @if($walletPermissionTransaction->user_type == 'App\Models\AgentType')
-                                        <td><span class="badge badge-primary">Agent Type</span></td>
-                                    @elseif($walletPermissionTransaction->user_type == 'App\Models\Merchant\MerchantType')
-                                        <td><span class="badge badge-success">Merchant Type</span></td>
-                                    @elseif($walletPermissionTransaction->user_type == 'App\Models\UserType')
-                                        <td><span class="badge badge-inverse">User Type</span></td>
-                                    @endif
+                                        @if($walletPermissionTransaction->user_type == 'App\Models\AgentType')
+                                            <td><span class="badge badge-primary">Agent Type</span></td>
+                                        @elseif($walletPermissionTransaction->user_type == 'App\Models\Merchant\MerchantType')
+                                            <td><span class="badge badge-success">Merchant Type</span></td>
+                                        @elseif($walletPermissionTransaction->user_type == 'App\Models\UserType')
+                                            <td><span class="badge badge-inverse">User Type</span></td>
+                                        @endif
 
                                         @foreach($transactionTypes as $key=>$transactionType)
                                             @if($walletPermissionTransaction->wallet_transaction_type_id == $transactionType->id)
-                                            <td><span class="badge badge-pill">TransactionType : {{$transactionType->transaction_type}}</span>
-                                            <span class="badge badge-pill">Service : {{$transactionType->service == null ? 'Null' : $transactionType->service}}</span>
-                                                <span class="badge badge-pill">Service Type : {{$transactionType->service_type}}</span>
-                                                <span class="badge badge-pill">Micro service : {{$transactionType->microservice}}</span>
-                                            </td>
+                                                <td><span
+                                                        class="badge badge-pill">TransactionType : {{$transactionType->transaction_type}}</span>
+                                                    <span
+                                                        class="badge badge-pill">Service : {{$transactionType->service == null ? 'Null' : $transactionType->service}}</span>
+                                                    <span
+                                                        class="badge badge-pill">Service Type : {{$transactionType->service_type}}</span>
+                                                    <span
+                                                        class="badge badge-pill">Micro service : {{$transactionType->microservice}}</span>
+                                                </td>
                                             @endif
                                         @endforeach
 
-                                    <td>
-                                        <form
-                                            action="{{ route('wallet.permission.transaction.type.delete',$walletPermissionTransaction->id) }}"
-                                            method="post">
-                                            @csrf
-                                            <button
-                                                href="{{ route('wallet.permission.transaction.type.delete',$walletPermissionTransaction->id) }}"
-                                                class="reset btn btn-sm btn-danger m-t-n-xs"
-                                                rel="{{ $walletPermissionTransaction->id }}"><i class="fa fa-trash"></i>
-                                            </button>
-                                            </a>
-                                            <button id="resetBtn-{{ $walletPermissionTransaction->id }}"
-                                                    style="display: none" type="submit"
-                                                    href="{{ route('wallet.permission.transaction.type.delete',$walletPermissionTransaction->id) }}"
-                                                    class="resetBtn btn btn-sm btn-danger m-t-n-xs">
-                                                <i class="fa fa-trash"></i></button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                                        <td>
+                                            <form
+                                                action="{{ route('wallet.permission.transaction.type.delete',$walletPermissionTransaction->id) }}"
+                                                method="post">
+                                                @csrf
+                                                @can('Delete wallet permission transaction type')
+                                                    <button
+                                                        href="{{ route('wallet.permission.transaction.type.delete',$walletPermissionTransaction->id) }}"
+                                                        class="reset btn btn-sm btn-danger m-t-n-xs"
+                                                        rel="{{ $walletPermissionTransaction->id }}"><i
+                                                            class="fa fa-trash"></i>
+                                                    </button>
 
+                                                    <button id="resetBtn-{{ $walletPermissionTransaction->id }}"
+                                                            style="display: none" type="submit"
+                                                            href="{{ route('wallet.permission.transaction.type.delete',$walletPermissionTransaction->id) }}"
+                                                            class="resetBtn btn btn-sm btn-danger m-t-n-xs">
+                                                        <i class="fa fa-trash"></i></button>
+                                                @endcan
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection
 @section('styles')

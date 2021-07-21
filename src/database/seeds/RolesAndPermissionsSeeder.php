@@ -300,7 +300,11 @@ class RolesAndPermissionsSeeder extends Seeder
             'View wallet transaction type',
             'Edit wallet transaction type',
 
-            'View agent profile'
+            'View agent profile',
+
+            'View wallet permission transaction type',
+            'Add wallet permission transaction type',
+            'Delete wallet permission transaction type'
 
             ];
 

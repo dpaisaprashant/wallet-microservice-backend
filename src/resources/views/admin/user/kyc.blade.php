@@ -587,54 +587,48 @@
                                 @if(!empty($user->kyc))
                                     <div class="col-md-5">
                                         <h3>Documents</h3>
-                                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                                            <ol class="carousel-indicators">
-                                                <li data-target="#carouselExampleIndicators" data-slide-to="0"
-                                                    class="active"></li>
-                                                <li data-target="#carouselExampleIndicators" data-slide-to="1"
-                                                    class=""></li>
-                                            </ol>
-                                            <div class="carousel-inner">
-                                                <div class="carousel-item active">
-                                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_front'] }}"
-                                                       target="_blank">
-                                                        <img class="d-block w-100"
-                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_front'] }}"
-                                                             alt="First slide">
-                                                        <div class="carousel-caption d-none d-md-block">
-                                                            <p style="color: black; font-weight: bold;">
-                                                                DOCUMENT FRONT
-                                                            </p>
-                                                        </div>
-                                                    </a>
-
+                                        <div class="col-12">
+                                            <div class="row">
+                                                <div class="col-12">
+{{--                                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_front'] }}"--}}
+{{--                                                       target="_blank">--}}
+{{--                                                        <img class="d-block w-100"--}}
+{{--                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_front'] }}"--}}
+{{--                                                             alt="First slide">--}}
+{{--                                                        <div class="carousel-caption d-none d-md-block">--}}
+{{--                                                            <p style="color: black; font-weight: bold;">--}}
+{{--                                                                DOCUMENT FRONT--}}
+{{--                                                            </p>--}}
+{{--                                                        </div>--}}
+{{--                                                    </a>--}}
+                                                        <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_front'] }}"
+                                                           target="_blank">
+                                                    <img src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_front'] }}" alt="">
+                                                    <p style="color: black; font-weight: bold;">
+                                                        &nbsp;DOCUMENT FRONT
+                                                    </p>
+                                                        </a>
                                                 </div>
 
-                                                <div class="carousel-item">
-                                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_back'] }}"
-                                                       target="_blank">
-                                                        <img class="d-block w-100"
-                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_back'] }}"
-                                                             alt="First slide">
-                                                        <div class="carousel-caption d-none d-md-block">
-                                                            <p style="color: black; font-weight: bold;">
-                                                                DOCUMENT BACK
-                                                            </p>
-                                                        </div>
-                                                    </a>
-
+                                                <div class="col-12">
+{{--                                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_back'] }}"--}}
+{{--                                                       target="_blank">--}}
+{{--                                                        <img class="d-block w-100"--}}
+{{--                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_back'] }}"--}}
+{{--                                                             alt="First slide">--}}
+{{--                                                        <div class="carousel-caption d-none d-md-block">--}}
+{{--                                                            <p style="color: black; font-weight: bold;">--}}
+{{--                                                                DOCUMENT BACK--}}
+{{--                                                            </p>--}}
+{{--                                                        </div>--}}
+{{--                                                    </a>--}}
+                                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_back'] }}" target="_blank"></a>
+                                                    <img src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_back'] }}" alt="">
+                                                    <p style="color: black; font-weight: bold;">
+                                                        &nbsp;DOCUMENT BACK
+                                                    </p>
                                                 </div>
                                             </div>
-                                            <a class="carousel-control-prev" href="#carouselExampleIndicators"
-                                               role="button" data-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="sr-only">Previous</span>
-                                            </a>
-                                            <a class="carousel-control-next" href="#carouselExampleIndicators"
-                                               role="button" data-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="sr-only">Next</span>
-                                            </a>
                                         </div>
 
 

@@ -1,3 +1,4 @@
+'
 <?php
 $url = url()->current();
 //$today = \Carbon\Carbon::now()->format('d M, Y');
@@ -204,6 +205,18 @@ $url = url()->current();
                     </ul>
                 </li>
             @endcan
+
+{{--            @can('View wallet transaction type')--}}
+{{--                <li @if(preg_match('/vendor-transactions/i', $url)) class="active" @endif>--}}
+{{--                    <a href="{{route('wallet.transaction.type.view')}}"><i class="fa fa-history"></i> <span class="nav-label">Wallet Transaction Type</span></a>--}}
+{{--                </li>--}}
+{{--            @endcan--}}
+
+{{--            @can('View wallet transaction type')--}}
+{{--                <li @if(preg_match('/vendor-transactions/i', $url)) class="active" @endif>--}}
+{{--                    <a href="{{route('wallet.service.view')}}"><i class="fa fa-history"></i> <span class="nav-label">Wallet Services</span></a>--}}
+{{--                </li>--}}
+{{--            @endcan--}}
 
             @if(auth()->user()->hasPermissionTo('Agent view') || auth()->user()->hasPermissionTo('Agent create'))
             <li @if($url == route('agent.view') || $url == route('agent.create')) class="active" @endif>

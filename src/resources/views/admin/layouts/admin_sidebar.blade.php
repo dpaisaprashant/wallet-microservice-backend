@@ -225,6 +225,13 @@ $url = url()->current();
                 </li>
             @endcan
 
+            @can('View BFI Merchant')
+                <li @if(preg_match('/vendor-transactions/i', $url)) class="active" @endif>
+                    <a href="{{route('bfi.view')}}"><i class="fa fa-history"></i> <span
+                            class="nav-label">BFI Merchant</span></a>
+                </li>
+            @endcan
+
 {{--            @can('View wallet transaction type')--}}
 {{--                <li @if(preg_match('/vendor-transactions/i', $url)) class="active" @endif>--}}
 {{--                    <a href="{{route('wallet.service.view')}}"><i class="fa fa-history"></i> <span class="nav-label">Wallet Services</span></a>--}}

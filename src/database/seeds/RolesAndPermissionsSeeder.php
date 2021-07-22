@@ -304,7 +304,11 @@ class RolesAndPermissionsSeeder extends Seeder
 
             'View wallet permission transaction type',
             'Add wallet permission transaction type',
-            'Delete wallet permission transaction type'
+            'Delete wallet permission transaction type',
+
+            'View BFI Merchant',
+            'Add BFI Merchant',
+            'Delete BFI Merchant',
 
             ];
 

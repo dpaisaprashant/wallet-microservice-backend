@@ -77,7 +77,6 @@ class MerchantController extends Controller
 
     public function profile($id, Request $request)
     {
-
         $length = 15;
         $activeTab = 'kyc';
         if ($request->has('user-load-fund') || $request->transaction_type === 'user-load-fund') {
@@ -94,12 +93,14 @@ class MerchantController extends Controller
             $activeTab = 'userLoginHistoryAudit';
         }
 
-        $merchant = Merchant::with(['kyc', 'wallet', 'bankAccount'])->findOrFail($id);
-        $allAudits = $this->allAudits($merchant, $request);
 
-        $loadFundSum = MerchantTransaction::whereMerchantId($id)->whereStatus(MerchantTransaction::STATUS_COMPLETE)->sum('amount') / 100;
+        $merchant = User::with(['kyc', 'wallet', 'bankAccount'])->whereHas('merchant')->whereHas('kyc')->findOrFail($id);
+//        dd($merchant);
+//        $allAudits = $this->allAudits($merchant, $request);
 
-        return view('admin.merchant.profile')->with(compact('merchant', 'allAudits', 'loadFundSum', 'activeTab'));
+//        $loadFundSum = MerchantTransaction::whereMerchantId($id)->whereStatus(MerchantTransaction::STATUS_COMPLETE)->sum('amount') / 100;
+
+        return view('admin.merchant.profile')->with(compact('merchant',  'activeTab'));
     }
 
     public function merchantNotification(Merchant $merchant, Request $request)
@@ -108,23 +109,25 @@ class MerchantController extends Controller
         return redirect()->back()->with('success', 'SMS sent successfully');
     }
 
-    public function merchantCommission(Merchant $merchant, Request $request)
+    public function merchantCommission(User $merchant, Request $request)
     {
 
+
         //if (!empty($request->commission_type) && !empty($request->commission_value)) {
-            $merchant->update([
-                'commission_type' => $request->commission_type,
-                'commission_value' => $request->commission_value,
+        $updateMerchant = $merchant->merchant;
+        $commission = $updateMerchant->update([
+            'commission_type' => $request->commission_type,
+            'commission_value' => $request->commission_value,
 
-                'scan_cashback_type' => $request->scan_cashback_type,
-                'scan_cashback_value' => $request->scan_cashback_value,
+            'scan_cashback_type' => $request->scan_cashback_type,
+            'scan_cashback_value' => $request->scan_cashback_value,
 
-                'portal_cashback_type' => $request->portal_cashback_type,
-                'portal_cashback_value' => $request->portal_cashback_value,
-            ]);
+            'portal_cashback_type' => $request->portal_cashback_type,
+            'portal_cashback_value' => $request->portal_cashback_value,
+        ]);
 
-            return redirect()->back()->with('success', 'Commission for the merchant updated successfully');
-       // }
+        return redirect()->back()->with('success', 'Commission for the merchant updated successfully');
+        // }
 
         //return redirect()->back()->with('error', 'Error while updating commission for the merchant');
 

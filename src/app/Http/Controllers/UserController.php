@@ -102,6 +102,7 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+
     public function profile($id, Request $request)
     {
 
@@ -124,7 +125,7 @@ class UserController extends Controller
 
 
         //$user = User::with(['userLoadTransactions', 'userLoginHistories', 'userCheckPayment', 'fromFundTransfers', 'receiveFundTransfers', 'fromFundRequests', 'receiveFundRequests', 'kyc', 'wallet'])->findOrFail($id);
-        $user = User::with(['userReferral', 'userReferralLimit', 'preTransactions', 'requestInfos', 'userLoginHistories', 'fromFundTransfers', 'receiveFundTransfers', 'fromFundRequests', 'receiveFundRequests', 'kyc', 'wallet', 'agent', 'userReferralBonus'])->findOrFail($id);
+        $user = User::with(['userReferral', 'userReferralLimit','merchant','bankAccount','preTransactions', 'requestInfos', 'userLoginHistories', 'fromFundTransfers', 'receiveFundTransfers', 'fromFundRequests', 'receiveFundRequests', 'kyc', 'wallet', 'agent', 'userReferralBonus'])->findOrFail($id);
 
         if($request->user()->hasPermissionTo('View agent profile') && !$request->user()->hasPermissionTo('User profile')) {
             if(!$user->isValidAgentOrSubAgent()){
@@ -141,7 +142,6 @@ class UserController extends Controller
 
             //$userLoadTransactions = UserLoadTransaction::with('commission')->where('user_id', $user->id)->where('status', 'COMPLETED')->latest()->filter($request)->paginate($length,['*'], 'user-load-fund');
             $loadPTIds = TransactionEvent::where('transaction_type', UserLoadTransaction::class)->where('user_id', $user->id)->pluck('pre_transaction_id');
-            $userLoadTransactions = UserLoadTransaction::with('commission')->whereIn('pre_transaction_id', $loadPTIds)->where('status', 'COMPLETED')->latest()->filter($request)->paginate($length, ['*'], 'user-load-fund');
             $userTransactionEvents = TransactionEvent::where('user_id', $user->id)->latest()->filter($request)->paginate($length, ['*'], 'user-transaction-event');
             $userTransactionStatements = TransactionEvent::where('user_id', $user->id)->latest()->filter($request)->paginate($length, ['*'], 'user-transaction-statement');
             $loadFundSum = $user->loadedFundSum();
@@ -161,7 +161,7 @@ class UserController extends Controller
 
 
 
-        return view('admin.user.profile')->with(compact('userLoadCommission', 'admin_details', 'admin', 'loginHistoryAudits', 'allAudits', 'user', 'loadFundSum', 'activeTab', 'userLoadTransactions', 'userTransactionStatements', 'userTransactionEvents'));
+        return view('admin.user.profile')->with(compact('userLoadCommission', 'admin_details', 'admin', 'loginHistoryAudits', 'allAudits', 'user', 'loadFundSum', 'activeTab', 'userTransactionStatements', 'userTransactionEvents'));
     }
 
 

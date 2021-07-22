@@ -450,9 +450,9 @@
 
                                     <td class="center">
 
-                                            <a style="margin-top: 5px;" href="{{route('merchant.kyc.detail', $merchant->id)}}" class="btn btn-sm btn-icon btn-primary m-t-n-xs" title="merchant profile"><i class="fa fa-eye"></i></a>
+                                            <a style="margin-top: 5px;" href="{{route('merchant.kyc.detail', $merchant->id)}}" class="btn btn-sm btn-icon btn-primary m-t-n-xs" title="Unverified Merchant Kyc List"><i class="fa fa-eye"></i></a>
 
-
+                                            <a style="margin-top: 5px" href="{{ route('user.profile', $merchant->id) }}" class="btn btn-sm btn-icon btn-danger m-t-n-xs" title="Merchant Profile"><i class="fa fa-user"></i></a>
 {{--                                        <a style="margin-top: 5px;" href="{{route('merchant.transaction', $merchant->id)}}" class="btn btn-sm btn-icon btn-info m-t-n-xs" title="merchant transactions"><i class="fa fa-credit-card"></i></a>--}}
 
 {{--                                        <a style="margin-top: 5px;" href="{{route('merchant.kyc', $merchant->id)}}" class="btn btn-sm btn-icon btn-warning m-t-n-xs" title="merchant kyc"><i class="fa fa-file"></i></a>--}}

@@ -239,6 +239,11 @@ class User extends Authenticatable
         return $this->hasMany(NchlBankTransfer::class);
     }
 
+    public function bankAccount()
+    {
+        return $this->hasOne(UserBankAccount::class, 'user_id');
+    }
+
     public function nchlAggregatedPayments()
     {
         return $this->hasMany(NchlAggregatedPayment::class);

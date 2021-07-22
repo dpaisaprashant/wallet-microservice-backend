@@ -1,15 +1,28 @@
 @extends('admin.layouts.admin_design')
 @section('content')
+
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row m-b-lg m-t-lg">
             @include('admin.asset.notification.notify')
             <div class="col-md-4" style="margin-top: 20px;">
                 <div class="profile-image">
-                    @isset($user->kyc['p_photo'])
-                        <img src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['p_photo'] }}" class="rounded-circle circle-border m-b-md" alt="profile">
-                    @else
-                        <img src="{{ asset('admin/img/a4.jpg') }}" class="rounded-circle circle-border m-b-md" alt="profile">
-                    @endisset
+                    @if(isset($user->userType))
+                        @isset($user->kyc['p_photo'])
+                            <img src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['p_photo'] }}"
+                                 class="rounded-circle circle-border m-b-md" alt="profile">
+                        @else
+                            <img src="{{ asset('admin/img/a4.jpg') }}" class="rounded-circle circle-border m-b-md"
+                                 alt="profile">
+                        @endisset
+                        @elseif(isset($user->merchant))
+                        @isset($user->kyc['company_logo'])
+                            <img src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_logo'] }}"
+                                 class="rounded-circle circle-border m-b-md" alt="profile">
+                        @else
+                            <img src="{{ asset('admin/img/a4.jpg') }}" class="rounded-circle circle-border m-b-md"
+                                 alt="profile">
+                        @endisset
+                    @endif
                 </div>
                 <div class="profile-info">
                     <div class="">
@@ -24,6 +37,15 @@
                             @if(!empty($user->kyc))
                                 <h4>Address: {{ $user->kyc->district }}, Province {{ $user->kyc->province }}</h4>
                             @endif
+
+                            <h4>User Type&nbsp;&nbsp;:&nbsp;&nbsp;<span class="badge badge-primary">
+                                @if(isset($user->userType))
+                                        User
+                                    @elseif(isset($user->merchant))
+                                        Merchant
+                                    @endif
+                            </span>
+                            </h4>
                         </div>
                     </div>
                 </div>
@@ -34,12 +56,14 @@
                     <tr>
                         <td>
                             <strong>
-                                <button type="button" class="btn btn-primary m-r-sm">{{ count($user->userTransactionEvents) }}</button>
+                                <button type="button"
+                                        class="btn btn-primary m-r-sm">{{ count($user->userTransactionEvents) }}</button>
                             </strong> Total Transactions
                         </td>
                         <td>
                             <strong>
-                                <button type="button" class="btn btn-primary m-r-sm">Rs. {{ $user->wallet->bonus_balance }}</button>
+                                <button type="button" class="btn btn-primary m-r-sm">
+                                    Rs. {{ $user->wallet->bonus_balance }}</button>
                             </strong> Total Bonus Balance
                         </td>
                     </tr>
@@ -82,7 +106,9 @@
                             @if($user->should_change_password == 0)
 
                                 <a data-toggle="modal" href="#modal-should-change-password">
-                                    <button style="margin-top: 5px;" class="btn btn-danger m-t-n-xs" rel="{{ route('user.forcePasswordChange') }}"><strong>Force Password Change</strong></button>
+                                    <button style="margin-top: 5px;" class="btn btn-danger m-t-n-xs"
+                                            rel="{{ route('user.forcePasswordChange') }}"><strong>Force Password
+                                            Change</strong></button>
                                 </a>
                                 <div id="modal-should-change-password" class="modal fade" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -92,16 +118,26 @@
                                                     <div class="col-sm-12">
                                                         <h3 class="m-t-none m-b">Reason of forcing password change</h3>
                                                         <hr>
-                                                        <form action="{{ route('user.forcePasswordChange') }}" method="post" id="forcePasswordChangeForm">
+                                                        <form action="{{ route('user.forcePasswordChange') }}"
+                                                              method="post" id="forcePasswordChangeForm">
                                                             @csrf
                                                             <input type="hidden" name="user_id" value="{{ $user->id }}">
                                                             <div class="form-group  row">
-                                                                <textarea class="form-control" name="reason" id="reason" placeholder="Reason of rejection" style="width: 100%">Please change your password for security reasons</textarea>
+                                                                <textarea class="form-control" name="reason" id="reason"
+                                                                          placeholder="Reason of rejection"
+                                                                          style="width: 100%">Please change your password for security reasons</textarea>
                                                             </div>
 
                                                             <div class="hr-line-dashed"></div>
-                                                            <button id="forcePasswordChange" style="margin-top: 5px;" class="btn btn-danger m-t-n-xs deactivate" rel="{{ route('user.forcePasswordChange') }}"><strong>Force Password Change</strong></button>
-                                                            <button id="forcePasswordChangeBtn" type="submit" style=" display:none;" class="btn btn-danger m-t-n-xs deactivate" rel="{{ route('user.forcePasswordChange') }}"><strong>Force Password Change</strong></button>
+                                                            <button id="forcePasswordChange" style="margin-top: 5px;"
+                                                                    class="btn btn-danger m-t-n-xs deactivate"
+                                                                    rel="{{ route('user.forcePasswordChange') }}">
+                                                                <strong>Force Password Change</strong></button>
+                                                            <button id="forcePasswordChangeBtn" type="submit"
+                                                                    style=" display:none;"
+                                                                    class="btn btn-danger m-t-n-xs deactivate"
+                                                                    rel="{{ route('user.forcePasswordChange') }}">
+                                                                <strong>Force Password Change</strong></button>
                                                         </form>
 
                                                     </div>
@@ -113,29 +149,42 @@
 
 
                             @else
-                                <button style="margin-top: 5px;" class="btn btn-success m-t-n-xs " disabled><strong>Password Change Forced</strong></button>
+                                <button style="margin-top: 5px;" class="btn btn-success m-t-n-xs " disabled><strong>Password
+                                        Change Forced</strong></button>
                             @endif
                         </td>
 
                         <td>
                             @if($user->status == 1 || $user->status === null)
-                            @can('User deactivate')
-                                <form action="{{ route('user.deactivate') }}" method="post" id="deactivateForm">
-                                    @csrf
-                                    <input type="hidden" name="user_id" value="{{ $user->id }}">
-                                    <button id="deactivate" style="margin-top: 5px;" class="btn btn-danger m-t-n-xs deactivate" rel="{{ route('user.deactivate') }}"><strong>Deactivate User</strong></button>
-                                    <button id="deactivateBtn" type="submit" style=" display:none;" class="btn btn-danger m-t-n-xs deactivate" rel="{{ route('user.deactivate') }}"><strong>Deactivate User</strong></button>
-                                </form>
-                            @endcan
+                                @can('User deactivate')
+                                    <form action="{{ route('user.deactivate') }}" method="post" id="deactivateForm">
+                                        @csrf
+                                        <input type="hidden" name="user_id" value="{{ $user->id }}">
+                                        <button id="deactivate" style="margin-top: 5px;"
+                                                class="btn btn-danger m-t-n-xs deactivate"
+                                                rel="{{ route('user.deactivate') }}"><strong>Deactivate User</strong>
+                                        </button>
+                                        <button id="deactivateBtn" type="submit" style=" display:none;"
+                                                class="btn btn-danger m-t-n-xs deactivate"
+                                                rel="{{ route('user.deactivate') }}"><strong>Deactivate User</strong>
+                                        </button>
+                                    </form>
+                                @endcan
                             @else
-                            @can('User activate')
-                                <form action="{{ route('user.activate') }}" method="post" id="activateForm">
-                                    @csrf
-                                    <input type="hidden" name="user_id" value="{{ $user->id }}">
-                                    <button id="activate" style="margin-top: 5px;" class="btn btn-primary m-t-n-xs activate" rel="{{ route('user.activate') }}"><strong>Activate User</strong></button>
-                                    <button id="activateBtn" type="submit" style=" display:none;" class="btn btn-primary m-t-n-xs activate" rel="{{ route('user.activate') }}"><strong>Activate User</strong></button>
-                                </form>
-                            @endcan
+                                @can('User activate')
+                                    <form action="{{ route('user.activate') }}" method="post" id="activateForm">
+                                        @csrf
+                                        <input type="hidden" name="user_id" value="{{ $user->id }}">
+                                        <button id="activate" style="margin-top: 5px;"
+                                                class="btn btn-primary m-t-n-xs activate"
+                                                rel="{{ route('user.activate') }}"><strong>Activate User</strong>
+                                        </button>
+                                        <button id="activateBtn" type="submit" style=" display:none;"
+                                                class="btn btn-primary m-t-n-xs activate"
+                                                rel="{{ route('user.activate') }}"><strong>Activate User</strong>
+                                        </button>
+                                    </form>
+                                @endcan
                             @endif
                         </td>
 
@@ -160,7 +209,7 @@
                         <h1 class="m-xs">Rs. {{ $user->wallet->balance }}</h1>
 
                         <h3 class="font-bold no-margins">
-                           Total balance in wallet
+                            Total balance in wallet
                         </h3>
                         <small>Money saved in d-paisa wallet</small>
                     </div>
@@ -173,21 +222,45 @@
             <div class="col-lg-12">
                 <div class="tabs-container">
                     <ul class="nav nav-tabs" role="tablist">
-                        <li><a class="nav-link @if($activeTab == 'kyc') active @endif" data-toggle="tab" href="#kyc"> KYC</a></li>
+                        <li><a class="nav-link @if($activeTab == 'kyc') active @endif" data-toggle="tab" href="#kyc">
+                                KYC</a></li>
                         @if($user->agentStatus())
-                            <li><a class="nav-link @if($activeTab == 'agent') active @endif" data-toggle="tab" href="#agent"> Agent</a></li>
+                            <li><a class="nav-link @if($activeTab == 'agent') active @endif" data-toggle="tab"
+                                   href="#agent"> Agent</a></li>
                         @endif
-                        <li><a class="nav-link @if($activeTab == 'allAuditTrial') active @endif" data-toggle="tab" href="#allAuditTrial">All Audit Trials</a></li>
-                        <li><a class="nav-link @if($activeTab == 'userLoginHistoryAudit') active @endif" data-toggle="tab" href="#userLoginHistoryAudit">User Login History Audit</a></li>
+
+                        @if(isset($user->merchant))
+                            <li><a class="nav-link @if($activeTab == 'companyInfo') active @endif" data-toggle="tab"
+                                   href="#companyInfo"> Company Info</a></li>
+                            <li><a class="nav-link @if($activeTab == 'bankDetails') active @endif" data-toggle="tab"
+                                   href="#bankDetails">Bank Details</a></li>
+
+                            <li><a class="nav-link @if($activeTab == 'commission') active @endif" data-toggle="tab"
+                                   href="#commission">Commission | Cashback</a></li>
+
+                        @endif
+
+                        <li><a class="nav-link @if($activeTab == 'allAuditTrial') active @endif" data-toggle="tab"
+                               href="#allAuditTrial">All Audit Trials</a></li>
+                        <li><a class="nav-link @if($activeTab == 'userLoginHistoryAudit') active @endif"
+                               data-toggle="tab" href="#userLoginHistoryAudit">User Login History Audit</a></li>
                         {{--<li><a class="nav-link @if($activeTab == 'transaction') active @endif" data-toggle="tab" href="#transaction">Transaction</a></li>--}}
-                        <li><a class="nav-link @if($activeTab == 'cardLoadCommission') active @endif" data-toggle="tab" href="#cardLoadCommission">Commission</a></li>
-                        <li><a class="nav-link @if($activeTab == 'referralCode') active @endif" data-toggle="tab" href="#referralCode">Referral Code</a></li>
-                        <li><a class="nav-link @if($activeTab == 'referralBonus') active @endif" data-toggle="tab" href="#referralBonus">Referral Bonus</a></li>
-                        <li><a class="nav-link" data-toggle="tab" href="#limit">Limits</a></li>
+                        @if((isset($user->userType) == true) && (isset($user->merchant) == false))
+                            <li><a class="nav-link @if($activeTab == 'cardLoadCommission') active @endif"
+                                   data-toggle="tab"
+                                   href="#cardLoadCommission">Commission</a></li>
+                            <li><a class="nav-link @if($activeTab == 'referralCode') active @endif" data-toggle="tab"
+                                   href="#referralCode">Referral Code</a></li>
+                            <li><a class="nav-link @if($activeTab == 'referralBonus') active @endif" data-toggle="tab"
+                                   href="#referralBonus">Referral Bonus</a></li>
+                            <li><a class="nav-link" data-toggle="tab" href="#limit">Limits</a></li>
+                        @endif
                         <li><a class="nav-link" data-toggle="tab" href="#wallet">Wallet</a></li>
                         {{--<li><a class="nav-link @if($activeTab == 'loadFund') active @endif" data-toggle="tab" href="#loadFund">Load Funds</a></li>--}}
-                        <li><a id="vendorGraphTabButton" class="nav-link" data-toggle="tab" href="#vendorGraph">Vendor Graph</a></li>
-                        <li><a id="transactionGraphTabButton" class="nav-link" data-toggle="tab" href="#transactionGraph">Transaction Graph</a></li>
+                        <li><a id="vendorGraphTabButton" class="nav-link" data-toggle="tab" href="#vendorGraph">Vendor
+                                Graph</a></li>
+                        <li><a id="transactionGraphTabButton" class="nav-link" data-toggle="tab"
+                               href="#transactionGraph">Transaction Graph</a></li>
                         @can('Send notification to user')
                             <li><a class="nav-link" data-toggle="tab" href="#notification">Notification</a></li>
                         @endcan
@@ -196,6 +269,11 @@
                         @include('admin.user.profile.tabs.kyc')
                         @if($user->agentStatus())
                             @include('admin.user.profile.tabs.agent')
+                        @endif
+                        @if(isset($user->merchant))
+                            @include('admin.merchant.profile.tabs.companyInfo', ['user' => $user])
+                            @include('admin.merchant.profile.tabs.bankDetails')
+                            @include('admin.merchant.profile.tabs.commission')
                         @endif
                         @include('admin.user.profile.tabs.auditTrial.allAuditTrial')
                         @include('admin.user.profile.tabs.auditTrial.userLoginHistoryAuditTrial')
@@ -211,9 +289,9 @@
                         @can('Send notification to user')
                             @include('admin.user.profile.tabs.notification')
                         @endcan
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
     </div>
 @endsection
@@ -232,7 +310,8 @@
         }
     </style>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/css/ion.rangeSlider.min.css"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/css/ion.rangeSlider.min.css"/>
 
     <!-- Sweet Alert -->
     <link href="{{ asset('admin/css/plugins/sweetalert/sweetalert.css') }}" rel="stylesheet">
@@ -322,7 +401,7 @@
         });
     </script>
 
-   @include('admin.asset.js.chosen')
+    @include('admin.asset.js.chosen')
 
     <!-- iCheck -->
     <script src="{{ asset('admin/js/plugins/iCheck/icheck.min.js') }}"></script>
@@ -351,7 +430,8 @@
 
     <script>
 
-        let balance = @if(!empty($_GET['amount'])) `{{ $_GET['amount'] }}`; @else '0;100000'; @endif
+        let balance = @if(!empty($_GET['amount'])) `{{ $_GET['amount'] }}`;
+        @else '0;100000'; @endif
         let split = balance.split(';');
 
         $(".ionrange_balance_transaction_statement").ionRangeSlider({
@@ -365,7 +445,9 @@
         });
 
 
-        let credit = @if(!empty($_GET['debit_range'])) `{{ $_GET['debit_range'] }}`; @else '0;100000'; @endif
+        let credit = @if(!empty($_GET['debit_range'])) `{{ $_GET['debit_range'] }}`;
+        @else '0;100000';
+        @endif
             split = credit.split(';');
 
         $(".ionrange_debit").ionRangeSlider({
@@ -388,8 +470,10 @@
             prefix: "Rs."
         });
 
-        let amount = @if(!empty($_GET['amount'])) `{{ $_GET['amount'] }}`; @else '0;100000'; @endif
-         split = amount.split(';');
+        let amount = @if(!empty($_GET['amount'])) `{{ $_GET['amount'] }}`;
+        @else '0;100000';
+        @endif
+            split = amount.split(';');
 
         $(".ionrange_load_fund_amount").ionRangeSlider({
             type: "double",
@@ -415,24 +499,6 @@
 
     @include('admin.asset.js.datatable')
 
-    <script>
-        $(document).ready(function (e) {
-            let a = "Showing {{ $userLoadTransactions->firstItem() }} to {{ $userLoadTransactions->lastItem() }} of {{ $userLoadTransactions->total() }} entries";
-            $('#userLoadFundTable').find('.dataTables_info').text(a);
-
-            let b = "Showing {{ $userTransactionEvents->firstItem() }} to {{ $userTransactionEvents->lastItem() }} of {{ $userTransactionEvents->total() }} entries";
-            $('#userTransactionEventTable').find('.dataTables_info').text(b);
-
-            let c = "Showing {{ $userTransactionStatements->firstItem() }} to {{ $userTransactionStatements->lastItem() }} of {{ $userTransactionStatements->total() }} entries";
-            $('#userTransactionStatementTable').find('.dataTables_info').text(c);
-
-            let d = "Showing {{ $allAudits->firstItem() }} to {{ $allAudits->lastItem() }} of {{ $allAudits->total() }} entries";
-            $('#AllAuditTable').find('.dataTables_info').text(d);
-
-            let f = "Showing {{ $loginHistoryAudits->firstItem() }} to {{ $loginHistoryAudits->lastItem() }} of {{ $loginHistoryAudits->total() }} entries";
-            $('#LoginHistoryAuditTable').find('.dataTables_info').text(f);
-        });
-    </script>
 
     <!-- ChartJS-->
     <script src="{{ asset('admin/js/plugins/chartJs/Chart.min.js') }}"></script>
@@ -455,10 +521,10 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url:url,
-                method:"POST",
-                data:new FormData(this),
-                dataType:'JSON',
+                url: url,
+                method: "POST",
+                data: new FormData(this),
+                dataType: 'JSON',
                 contentType: false,
                 cache: false,
                 processData: false,
@@ -469,7 +535,7 @@
                 success: function (resp) {
 
 
-                    if(lineChart) {
+                    if (lineChart) {
                         lineChart.destroy();
                     }
 
@@ -497,7 +563,7 @@
             let countObj = {};
             let amountObj = {};
 
-            $.each(monthLabels, function( index, value ) {
+            $.each(monthLabels, function (index, value) {
                 data[value] !== undefined
                     ? countObj[value] = data[value].count
                     : countObj[value] = 0;
@@ -531,8 +597,8 @@
                     xAxes: [{
                         ticks: {
                             // Include a dollar sign in the ticks
-                            callback: function(value, index, values) {
-                                return  value;
+                            callback: function (value, index, values) {
+                                return value;
                             },
                             autoSkip: false
                         },
@@ -551,15 +617,15 @@
                 },
                 tooltips: {
                     callbacks: {
-                        label: function(tooltipItem) {
-                            return "Count: " + Number(tooltipItem.yLabel) + "\n\n Amount: Rs." + amountObj[tooltipItem.xLabel]  ;
+                        label: function (tooltipItem) {
+                            return "Count: " + Number(tooltipItem.yLabel) + "\n\n Amount: Rs." + amountObj[tooltipItem.xLabel];
                             //return "Total transaction amount Rs. ";
                         }
                     }
                 }
             };
             var ctx = document.getElementById("lineChart2").getContext("2d");
-            lineChart = new Chart(ctx, {type: 'line', data: lineData, options:lineOptions});
+            lineChart = new Chart(ctx, {type: 'line', data: lineData, options: lineOptions});
         }
     </script>
 
@@ -578,10 +644,10 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url:url,
-                method:"POST",
-                data:new FormData(this),
-                dataType:'JSON',
+                url: url,
+                method: "POST",
+                data: new FormData(this),
+                dataType: 'JSON',
                 contentType: false,
                 cache: false,
                 processData: false,
@@ -591,7 +657,7 @@
                 },
                 success: function (resp) {
 
-                    if(barChart) {
+                    if (barChart) {
                         barChart.destroy();
                     }
 
@@ -609,9 +675,9 @@
 
         function loadVendorGraph(graphData) {
 
-            Chart.scaleService.updateScaleDefaults('linear',{
-                ticks:{
-                    min:0,
+            Chart.scaleService.updateScaleDefaults('linear', {
+                ticks: {
+                    min: 0,
                 }
             });
 
@@ -649,8 +715,8 @@
                     xAxes: [{
                         barPercentage: 0.4,
                         ticks: {
-                            callback: function(value, index, values) {
-                                return  value;
+                            callback: function (value, index, values) {
+                                return value;
                             },
                             autoSkip: false
                         },
@@ -668,8 +734,8 @@
                 },
                 tooltips: {
                     callbacks: {
-                        label: function(tooltipItem) {
-                            return "Count: " + Number(tooltipItem.yLabel) + "\n\n Amount: Rs." + amountObj[tooltipItem.xLabel]  ;
+                        label: function (tooltipItem) {
+                            return "Count: " + Number(tooltipItem.yLabel) + "\n\n Amount: Rs." + amountObj[tooltipItem.xLabel];
                             //return "Total transaction amount Rs. ";
                         }
                     }
@@ -677,7 +743,7 @@
             };
 
             var ctx2 = document.getElementById("barChart").getContext("2d");
-            barChart = new Chart(ctx2, {type: 'bar', data: barData, options:barOptions});
+            barChart = new Chart(ctx2, {type: 'bar', data: barData, options: barOptions});
 
         }
     </script>

@@ -176,8 +176,8 @@
                                     <th>Institution Type</th>
                                     <th>Business Name</th>
                                     <th>Business PAN</th>
-                                   {{-- <th>Cash Out Type | Value </th>
-                                    <th>Cash In Type | Value </th>--}}
+                                    {{-- <th>Cash Out Type | Value </th>
+                                     <th>Cash In Type | Value </th>--}}
                                     {{--<th>Business Doc</th>--}}
                                     {{--<th>Email</th>--}}
                                     <th>Agent status</th>
@@ -251,12 +251,12 @@
                                         <td>Rs. {{ $user->getTotalCashBack() }}</td>
 
                                         <td class="center">
-                                            @can('User profile')
-                                                <a style="margin-top: 5px;" href="{{route('user.profile', $user->id)}}"
-                                                   class="btn btn-sm btn-icon btn-primary m-t-n-xs"
-                                                   title="user profile"><i class="fa fa-eye"></i></a>
-                                            @endcan
-
+                                            @if(auth()->user()->hasAnyPermission(['User profile','View agent profile']))
+                                                    <a style="margin-top: 5px;"
+                                                       href="{{route('user.profile', $user->id)}}"
+                                                       class="btn btn-sm btn-icon btn-primary m-t-n-xs"
+                                                       title="user profile"><i class="fa fa-eye"></i></a>
+                                            @endif
                                             @can('User transactions')
                                                 <a style="margin-top: 5px;"
                                                    href="{{route('user.transaction', $user->id)}}"

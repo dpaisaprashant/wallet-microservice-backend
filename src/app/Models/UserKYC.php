@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Filters\UserKyc\UserKycFilters;
+use App\Models\Merchant\Merchant;
+use App\Traits\BelongsToMerchant;
 use App\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +13,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class UserKYC extends Model
 {
-    use BelongsToUser, LogsActivity;
+    use BelongsToUser, LogsActivity, BelongsToMerchant;
 
     protected static $logAttributes = ['*'];
     //protected static $logOnlyDirty = true;
@@ -57,6 +59,7 @@ class UserKYC extends Model
             $query->where('accept', UserKYC::ACCEPT_UNVERIFIED);
         })->latest()->get();
     }
+
 
     public function notFilledKYC()
     {

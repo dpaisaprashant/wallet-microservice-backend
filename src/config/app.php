@@ -184,7 +184,8 @@ return [
         App\Wallet\Referral\ReferralServiceProvider::class,
         App\Wallet\Merchant\MerchantServiceProvider::class,
         App\Wallet\Architecture\ArchitectureServiceProvider::class,
-        App\Wallet\TransactionClearance\ClearanceServiceProvider::class
+        App\Wallet\TransactionClearance\ClearanceServiceProvider::class,
+        App\Wallet\BFIMerchant\BFIMerchantServiceProvider::class
 
 
     ],

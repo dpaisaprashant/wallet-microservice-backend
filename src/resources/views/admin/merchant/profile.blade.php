@@ -141,10 +141,14 @@
                 <div class="tabs-container">
                     <ul class="nav nav-tabs" role="tablist">
                         <li><a class="nav-link @if($activeTab == 'kyc') active @endif" data-toggle="tab" href="#kyc"> KYC</a></li>
+
                         <li><a class="nav-link @if($activeTab == 'companyInfo') active @endif" data-toggle="tab" href="#companyInfo"> Company Info</a></li>
                         <li><a class="nav-link @if($activeTab == 'allAuditTrial') active @endif" data-toggle="tab" href="#allAuditTrial">All Audit Trials</a></li>
+
                         <li><a class="nav-link @if($activeTab == 'bankDetails') active @endif" data-toggle="tab" href="#bankDetails">Bank Details</a></li>
+
                         <li><a class="nav-link @if($activeTab == 'commission') active @endif" data-toggle="tab" href="#commission">Commission | Cashback</a></li>
+
                         <li><a class="nav-link @if($activeTab == 'minBankTransferBalance') active @endif" data-toggle="tab" href="#minBankTransferBalance">BankTransferBalance Limit</a></li>
                         <li><a class="nav-link" data-toggle="tab" href="#wallet">Wallet</a></li>
                         {{--<li><a class="nav-link @if($activeTab == 'loadFund') active @endif" data-toggle="tab" href="#loadFund">Load Funds</a></li>--}}

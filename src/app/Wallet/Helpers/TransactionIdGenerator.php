@@ -48,4 +48,25 @@ class TransactionIdGenerator
         }
         self::generateAlphaNumeric($digits);
     }
+
+
+    public static function generateBFIId($firstAlphabet = "BFI", $digits = 5){
+        $transaction = new TransactionId();
+        $BFIId = [];
+        $chars = explode(" ","A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 0 1 2 3 4 5 6 7 8 9");
+        $totalNoChars = count($chars) - 1;
+        foreach(range(0,$digits) as $r){
+            array_push($BFIId,$chars[rand(0,$totalNoChars)]);
+        }
+        $bfiBackNumber = implode('',$BFIId);
+        $bfiNumber = $firstAlphabet.$bfiBackNumber;
+
+        $transactionId = $transaction->createTransaction($bfiNumber);
+        \Log::info($bfiNumber." has been saved as transaction_id in transaction_ids table in BFI database");
+        if($transactionId){
+            return $bfiNumber;
+        }
+        self::generateBFIId($digits);
+    }
+
 }

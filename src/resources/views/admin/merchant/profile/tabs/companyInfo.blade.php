@@ -82,103 +82,110 @@
                 </dl>
             </div>
             @if(!empty($user->kyc))
-                <div class="col-md-5">
+                <div class="col-md-5" style="margin-left: -80px;">
                     <h3>Documents</h3>
                     <div class="col-12">
                         <div class="row">
 
                             @if($user->merchant()->first())
-
-                                <div class="col-12">
-                                    {{--                                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $merchant->kyc['id_photo_back'] }}"--}}
-                                    {{--                                                       target="_blank">--}}
-                                    {{--                                                        <img class="d-block w-100"--}}
-                                    {{--                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $merchant->kyc['id_photo_back'] }}"--}}
-                                    {{--                                                             alt="First slide">--}}
-                                    {{--                                                        <div class="carousel-caption d-none d-md-block">--}}
-                                    {{--                                                            <p style="color: black; font-weight: bold;">--}}
-                                    {{--                                                                DOCUMENT BACK--}}
-                                    {{--                                                            </p>--}}
-                                    {{--                                                        </div>--}}
-                                    {{--                                                    </a>--}}
-                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_document'] }}"
-                                       target="_blank"></a>
-                                    <img
-                                        src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_document'] }}"
-                                        alt="">
-                                    <p style="color: black; font-weight: bold;">
-                                        &nbsp;COMPANY DOCUMENT
-                                    </p>
-                                </div>
-
-                                <div class="col-12">
-                                    {{--                                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $merchant->kyc['id_photo_back'] }}"--}}
-                                    {{--                                                       target="_blank">--}}
-                                    {{--                                                        <img class="d-block w-100"--}}
-                                    {{--                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $merchant->kyc['id_photo_back'] }}"--}}
-                                    {{--                                                             alt="First slide">--}}
-                                    {{--                                                        <div class="carousel-caption d-none d-md-block">--}}
-                                    {{--                                                            <p style="color: black; font-weight: bold;">--}}
-                                    {{--                                                                DOCUMENT BACK--}}
-                                    {{--                                                            </p>--}}
-                                    {{--                                                        </div>--}}
-                                    {{--                                                    </a>--}}
-                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_logo'] }}"
-                                       target="_blank">
+                                @if(isset($user->kyc->company_document) == true)
+                                    <div class="col-12">
+                                        {{--                                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $merchant->kyc['id_photo_back'] }}"--}}
+                                        {{--                                                       target="_blank">--}}
+                                        {{--                                                        <img class="d-block w-100"--}}
+                                        {{--                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $merchant->kyc['id_photo_back'] }}"--}}
+                                        {{--                                                             alt="First slide">--}}
+                                        {{--                                                        <div class="carousel-caption d-none d-md-block">--}}
+                                        {{--                                                            <p style="color: black; font-weight: bold;">--}}
+                                        {{--                                                                DOCUMENT BACK--}}
+                                        {{--                                                            </p>--}}
+                                        {{--                                                        </div>--}}
+                                        {{--                                                    </a>--}}
+                                        <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_document'] }}"
+                                           target="_blank"></a>
                                         <img
-                                            src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_logo'] }}"
+                                            src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_document'] }}"
                                             alt="">
                                         <p style="color: black; font-weight: bold;">
-                                            &nbsp;COMPANY LOGO
+                                            &nbsp;COMPANY DOCUMENT
                                         </p>
-                                    </a>
-                                </div>
+                                    </div>
+                                @endif
 
-                                <div class="col-12">
-                                    {{--                                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $merchant->kyc['id_photo_back'] }}"--}}
-                                    {{--                                                       target="_blank">--}}
-                                    {{--                                                        <img class="d-block w-100"--}}
-                                    {{--                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $merchant->kyc['id_photo_back'] }}"--}}
-                                    {{--                                                             alt="First slide">--}}
-                                    {{--                                                        <div class="carousel-caption d-none d-md-block">--}}
-                                    {{--                                                            <p style="color: black; font-weight: bold;">--}}
-                                    {{--                                                                DOCUMENT BACK--}}
-                                    {{--                                                            </p>--}}
-                                    {{--                                                        </div>--}}
-                                    {{--                                                    </a>--}}
-                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_vat_document'] }}"
-                                       target="_blank">
-                                        <img
-                                            src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_vat_document'] }}"
-                                            alt="">
-                                        <p style="color: black; font-weight: bold;">
-                                            &nbsp;COMPANY VAT DOCUMENT
-                                        </p>
-                                    </a>
-                                </div>
+                                @if(isset($user->kyc->company_logo) == true)
+                                    <div class="col-12">
+                                        {{--                                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $merchant->kyc['id_photo_back'] }}"--}}
+                                        {{--                                                       target="_blank">--}}
+                                        {{--                                                        <img class="d-block w-100"--}}
+                                        {{--                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $merchant->kyc['id_photo_back'] }}"--}}
+                                        {{--                                                             alt="First slide">--}}
+                                        {{--                                                        <div class="carousel-caption d-none d-md-block">--}}
+                                        {{--                                                            <p style="color: black; font-weight: bold;">--}}
+                                        {{--                                                                DOCUMENT BACK--}}
+                                        {{--                                                            </p>--}}
+                                        {{--                                                        </div>--}}
+                                        {{--                                                    </a>--}}
+                                        <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_logo'] }}"
+                                           target="_blank">
+                                            <img
+                                                src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_logo'] }}"
+                                                alt="">
+                                            <p style="color: black; font-weight: bold;">
+                                                &nbsp;COMPANY LOGO
+                                            </p>
+                                        </a>
+                                    </div>
+                                @endif
 
-                                <div class="col-12">
-                                    {{--                                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $merchant->kyc['id_photo_back'] }}"--}}
-                                    {{--                                                       target="_blank">--}}
-                                    {{--                                                        <img class="d-block w-100"--}}
-                                    {{--                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $merchant->kyc['id_photo_back'] }}"--}}
-                                    {{--                                                             alt="First slide">--}}
-                                    {{--                                                        <div class="carousel-caption d-none d-md-block">--}}
-                                    {{--                                                            <p style="color: black; font-weight: bold;">--}}
-                                    {{--                                                                DOCUMENT BACK--}}
-                                    {{--                                                            </p>--}}
-                                    {{--                                                        </div>--}}
-                                    {{--                                                    </a>--}}
-                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_tax_clearance_document'] }}"
-                                       target="_blank">
-                                        <img
-                                            src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_tax_clearance_document'] }}"
-                                            alt="">
-                                        <p style="color: black; font-weight: bold;">
-                                            &nbsp;COMPANY TAX CLEARANCE DOCUMENT
-                                        </p>
-                                    </a>
-                                </div>
+                                @if(isset($user->kyc->company_vat_document) == true)
+                                    <div class="col-12">
+                                        {{--                                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $merchant->kyc['id_photo_back'] }}"--}}
+                                        {{--                                                       target="_blank">--}}
+                                        {{--                                                        <img class="d-block w-100"--}}
+                                        {{--                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $merchant->kyc['id_photo_back'] }}"--}}
+                                        {{--                                                             alt="First slide">--}}
+                                        {{--                                                        <div class="carousel-caption d-none d-md-block">--}}
+                                        {{--                                                            <p style="color: black; font-weight: bold;">--}}
+                                        {{--                                                                DOCUMENT BACK--}}
+                                        {{--                                                            </p>--}}
+                                        {{--                                                        </div>--}}
+                                        {{--                                                    </a>--}}
+                                        <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_vat_document'] }}"
+                                           target="_blank">
+                                            <img
+                                                src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_vat_document'] }}"
+                                                alt="">
+                                            <p style="color: black; font-weight: bold;">
+                                                &nbsp;COMPANY VAT DOCUMENT
+                                            </p>
+                                        </a>
+                                    </div>
+                                @endif
+
+                                @if(isset($user->kyc->company_tax_clearance_document) == true)
+                                    <div class="col-12">
+                                        {{--                                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $merchant->kyc['id_photo_back'] }}"--}}
+                                        {{--                                                       target="_blank">--}}
+                                        {{--                                                        <img class="d-block w-100"--}}
+                                        {{--                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $merchant->kyc['id_photo_back'] }}"--}}
+                                        {{--                                                             alt="First slide">--}}
+                                        {{--                                                        <div class="carousel-caption d-none d-md-block">--}}
+                                        {{--                                                            <p style="color: black; font-weight: bold;">--}}
+                                        {{--                                                                DOCUMENT BACK--}}
+                                        {{--                                                            </p>--}}
+                                        {{--                                                        </div>--}}
+                                        {{--                                                    </a>--}}
+                                        <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_tax_clearance_document'] }}"
+                                           target="_blank">
+                                            <img
+                                                src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_tax_clearance_document'] }}"
+                                                alt="">
+                                            <p style="color: black; font-weight: bold;">
+                                                &nbsp;COMPANY TAX CLEARANCE DOCUMENT
+                                            </p>
+                                        </a>
+                                    </div>
+                                @endif
 
                             @endif
                         </div>

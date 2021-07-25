@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
-class BFIUser extends Model
+class UserApprovedIp extends Model
 {
     use BelongsToUser;
 
@@ -17,14 +17,6 @@ class BFIUser extends Model
 
     protected $guarded = [];
 
-    protected $table = 'users';
+    protected $table = 'user_approved_ips';
 
-
-    public function UserApiDetail(){
-        return $this->hasOne(UserApiDetail::class,'user_id');
-    }
-
-    public function UserApprovedIp(){
-        return $this->hasMany(UserApprovedIp::class,'user_id');
-    }
 }

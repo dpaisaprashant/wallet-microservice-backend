@@ -145,56 +145,18 @@
 @endsection
 
 @section('styles')
-    <link href="{{ asset('admin/css/plugins/dataTables/datatables.min.css') }}" rel="stylesheet">
+    @include('admin.asset.css.datatable')
     @include('admin.asset.css.chosen')
-
-    <style>
-        .pagination {
-            padding-top: -20px;
-            padding-left: 15px;
-        }
-
-        .dataTables_wrapper {
-            padding-bottom: 5px;
-        }
-    </style>
 
 @endsection
 
 @section('scripts')
     @include('admin.asset.js.chosen')
 
-    <script src="{{ asset('admin/js/plugins/dataTables/datatables.min.js') }}"></script>
-    <script src="{{ asset('admin/js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
-    <link href="{{ asset('admin/css/plugins/sweetalert/sweetalert.css') }}" rel="stylesheet">
+    @include('admin.asset.css.sweetalert')
     <!-- Page-Level Scripts -->
-    <script>
-        $(document).ready(function () {
-            $('.dataTables-example').DataTable({
-                paging: false,
-                responsive: true,
-                dom: '<"html5buttons"B>lTfgitp',
-                buttons: [
-                    {extend: 'copy'},
-                    {extend: 'csv'},
-                    {extend: 'excel', title: 'Unverified KYC Users List'},
-                    {extend: 'pdf', title: 'Unverified KYC Users List'},
-                    {
-                        extend: 'print',
-                        customize: function (win) {
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
-                        }
-                    }
-                ]
-            });
-        });
-    </script>
-
-    <script src="{{ asset('admin/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
+    @include('admin.asset.js.datatable')
+    @include('admin.asset.js.sweetalert')
     <script>
         $('.reset').on('click', function (e) {
             e.preventDefault();

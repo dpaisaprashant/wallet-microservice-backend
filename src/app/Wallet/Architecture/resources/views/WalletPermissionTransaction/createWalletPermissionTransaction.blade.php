@@ -60,7 +60,7 @@
                             <div class="form-group  row"><label class="col-sm-2 col-form-label">Wallet transaction
                                     type</label>
                                 <div class="col-sm-10">
-                                    <select id="selectCashbackType" data-placeholder="Choose wallet transaction type..."
+                                    <select id="walletTransactionType" data-placeholder="Choose wallet transaction type..."
                                             class="chosen-select" tabindex="2" name="wallet_transaction_type_id" required>
                                         <option value="" selected disabled>-- Select wallet transaction type --</option>
                                         @foreach($walletTransactionTypes as $key=>$walletTransactionType)

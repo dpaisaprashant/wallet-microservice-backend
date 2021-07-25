@@ -310,6 +310,12 @@ class RolesAndPermissionsSeeder extends Seeder
             'Add BFI Merchant',
             'Delete BFI Merchant',
 
+            'View BFI user',
+            'View secret key',
+            'Add ip',
+            'Edit BFI user status',
+            'Add BFI user',
+
             ];
 
         //get users having all permissions

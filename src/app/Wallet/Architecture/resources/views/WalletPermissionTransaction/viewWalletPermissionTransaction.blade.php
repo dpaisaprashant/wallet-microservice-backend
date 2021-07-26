@@ -262,13 +262,13 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/css/ion.rangeSlider.min.css"/>
 
-    <link href="{{ asset('admin/css/plugins/sweetalert/sweetalert.css') }}" rel="stylesheet">
+    @include('admin.asset.css.sweetalert')
 
 @endsection
 
 @section('scripts')
 
-    <script src="{{ asset('admin/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
+    @include('admin.asset.js.sweetalert')
     <script>
         $('.reset').on('click', function (e) {
             e.preventDefault();

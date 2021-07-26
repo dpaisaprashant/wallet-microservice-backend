@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Wallet\BFIMerchant\Http\Controllers\BFIMerchantController;
 use App\Wallet\BFIMerchant\Http\Controllers\BFIUserController;
+use App\Wallet\BFIMerchant\Http\Controllers\BFIPaymentExecutePaymentController;
 
 
 Route::group(['prefix' => 'admin/BFIMerchant', 'middleware' => ['web','auth']], function () {
@@ -21,4 +22,8 @@ Route::group(['prefix' => 'admin/BFIMerchant', 'middleware' => ['web','auth']], 
 
     Route::get('change-bfi-user-status/{id}',[BFIUserController::class,'editStatus'])->name('bfi.user.status.edit')->middleware('permission:Edit BFI user status');
     Route::post('change-bfi-user-status/{id}',[BFIUserController::class,'updateStatus'])->name('bfi.user.status.update')->middleware('permission:Edit BFI user status');
+
+
+    //BFI Execute Payment Routes
+    Route::get('view-bfi-execute-payment',[BFIPaymentExecutePaymentController::class,'index'])->name('view.bfi.execute.payment');
 });

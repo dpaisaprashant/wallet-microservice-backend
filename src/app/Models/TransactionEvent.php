@@ -115,6 +115,7 @@ class TransactionEvent extends Model
                             return (4.5 / 100) * $this->amount;
                         }
                         return (2.7 / 100) * $this->amount;
+
                     }
                     return (2.7 / 100 ) * $this->amount;
                 } elseif ($this->vendor == "SIMTV") {

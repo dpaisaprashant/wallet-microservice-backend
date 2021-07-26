@@ -13,13 +13,18 @@
 
                             $decoded_request_to_wallet = json_decode($request_to_wallet,true);
                         @endphp
+                        @if(!empty($decoded_request_to_wallet))
                         <dl class="row m-t-md">
                             @foreach($decoded_request_to_wallet as $key=>$value)
                                 <dt class="col-md-5 text-left">{{ $key }} :</dt>
                                 <dd class="col-md-5 text-left">{{ $value == null ? 'Null' : $value}} </dd>
                             @endforeach
                         </dl>
+                        @else
 
+                            <dt class="text-left">No request to wallet</dt>
+
+                        @endif
                     </div>
                 </div>
             </div>

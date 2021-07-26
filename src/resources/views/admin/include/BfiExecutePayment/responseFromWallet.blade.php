@@ -13,6 +13,7 @@
                             $decoded_response_from_wallet = json_decode($response_from_wallet,true);
 
                         @endphp
+                        @if(!empty($decoded_response_from_wallet))
                         <dl class="row m-t-md">
                             @if (is_array($decoded_response_from_wallet) || is_object($decoded_response_from_wallet))
 
@@ -45,7 +46,11 @@
                             @endif
 
                         </dl>
+                        @else
 
+                            <dt class="text-left">No response from wallet</dt>
+
+                        @endif
 
                     </div>
                 </div>

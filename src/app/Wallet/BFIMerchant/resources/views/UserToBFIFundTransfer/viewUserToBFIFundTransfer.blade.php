@@ -4,13 +4,13 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>BFI execute payment</h2>
+            <h2>User to bfi fund transfer</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
                 </li>
                 <li class="breadcrumb-item active">
-                    <strong>BFI execute payment</strong>
+                    <strong>User to bfi fund transfer</strong>
                 </li>
             </ol>
         </div>
@@ -20,7 +20,7 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title collapse-link">
-                        <h5>Filter BFI Execute Payment</h5>
+                        <h5>Filter User to bfi fund transfer</h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -244,11 +244,12 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>List of BFI execute Payment</h5>
+                        <h5>List of User to bfi fund transfer</h5>
                     </div>
                     <div class="ibox-content">
-                        <h5><b>Total Count:</b>  {{ $bfiExecutePaymentsTotalCount }}</h5>
-                        <h5><b>Total Amount Sum:</b> Rs. {{ $bfiExecutePaymentsTotalAmount }} </h5>
+                        <h5><b>Total Count:</b> {{ $userToBfiFundTransferTotalCount }}</h5>
+                        <h5><b>Total Amount Sum:</b> Rs.  {{$userToBfiFundTransferTotalAmount}}</h5>
+
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover dataTables-example"
                                    title="Fund Request transaction list">
@@ -258,14 +259,14 @@
                                     <th>User</th>
                                     <th>BFI Id</th>
                                     <th>Transaction Id</th>
-                                    <th>Transaction Category</th>
                                     <th>Process Id</th>
                                     <th>Wallet Id</th>
                                     <th>Amount</th>
                                     <th>Purpose</th>
                                     <th>Transaction Detail</th>
                                     <th>Status</th>
-                                    <th>Pre Transaction Id</th>
+                                    <th>From Pre Transaction Id</th>
+                                    <th>To Pre Transaction Id</th>
                                     <th>Action</th>
                                     <th>Request from bfi</th>
                                     <th>Response to bfi</th>
@@ -274,82 +275,70 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($bfiExecutePayments as $key=>$bfiExecutePayment)
+                                @foreach($userToBfiFundTransfers as $key=>$userToBfiFundTransfer)
                                     <tr>
-                                        <td>{{ $loop->index + ($bfiExecutePayments->perPage() * ($bfiExecutePayments->currentPage() - 1)) + 1 }}</td>
-                                        <td>{{ isset($bfiExecutePayment->bfiUser->bfi_name) == null ? "Null" : $bfiExecutePayment->bfiUser->bfi_name}}</td>
-                                        <td>{{ $bfiExecutePayment->bfi_id }}</td>
-                                        <td>{{ $bfiExecutePayment->transaction_id }}</td>
+                                        <td>{{ $loop->index + ($userToBfiFundTransfers->perPage() * ($userToBfiFundTransfers->currentPage() - 1)) + 1 }}</td>
+                                        <td>{{ isset($userToBfiFundTransfer->bfiUser->bfi_name) == null?'Null':$userToBfiFundTransfer->bfiUser->bfi_name }}</td>
+                                        <td>{{ $userToBfiFundTransfer->bfi_id }}</td>
+                                        <td>{{ $userToBfiFundTransfer->transaction_id }}</td>
+                                        <td>{{ $userToBfiFundTransfer->process_id }}</td>
+                                        <td>{{ $userToBfiFundTransfer->wallet_id }}</td>
+                                        <td>Rs.{{ $userToBfiFundTransfer->amount }}</td>
                                         <td>
-                                            @if($bfiExecutePayment->transaction_category == "DEBIT")
-                                                <span class="badge badge-success">Debit</span>
-                                            @elseif($bfiExecutePayment->transaction_category == "CREDIT")
-                                                <span class="badge badge-primary">Credit</span>
-                                            @elseif($bfiExecutePayment->transaction_category == null)
-                                                <span class="badge badge-danger">Null</span>
-                                            @endif
-                                        </td>
-                                        <td>{{ $bfiExecutePayment->process_id }}</td>
-                                        <td>{{ $bfiExecutePayment->wallet_id }}</td>
-                                        <td>Rs.{{ $bfiExecutePayment->amount }}</td>
-                                        <td>
-                                            @if($bfiExecutePayment->purpose == null)
+                                            @if($userToBfiFundTransfer->purpose == null)
                                                 <span class="badge badge-danger">Null</span>
                                             @else
-                                                {{ $bfiExecutePayment->purpose }}
+                                                {{$userToBfiFundTransfer->purpose}}
                                             @endif
                                         </td>
                                         <td>
-                                            @if($bfiExecutePayment->transaction_detail == null)
+                                            @if($userToBfiFundTransfer->transaction_detail == null)
                                                 <span class="badge badge-danger">Null</span>
                                             @else
-                                                {{ $bfiExecutePayment->transaction_detail }}
+                                                {{$userToBfiFundTransfer->transaction_detail}}
                                             @endif
                                         </td>
                                         <td>
-                                            @if($bfiExecutePayment->status == "SUCCESS")
+                                            @if($userToBfiFundTransfer->status == 'SUCCESS')
                                                 <span class="badge badge-primary">Success</span>
-                                            @elseif($bfiExecutePayment->status == "PROCESSING")
+                                            @elseif($userToBfiFundTransfer->status == 'PROCESSING')
                                                 <span class="badge badge-success">Processing</span>
                                             @endif
                                         </td>
                                         <td>
-                                            @if($bfiExecutePayment->pre_transaction_id == null)
+                                            @if($userToBfiFundTransfer->from_pre_transaction_id == null)
                                                 <span class="badge badge-danger">Null</span>
-                                            @else
-                                                {{ $bfiExecutePayment->pre_transaction_id }}
+                                                @else
+                                            {{$userToBfiFundTransfer->from_pre_transaction_id}}
                                             @endif
                                         </td>
-
                                         <td>
-                                            @include('admin.include.BfiExecutePayment.bfiExecutePaymentInfo',[
-                                                    'id'=>$bfiExecutePayment->id,
-                                                    'bank_transaction_id'=>$bfiExecutePayment->bank_transaction_id,
-                                                    'bank_transaction_date'=>$bfiExecutePayment->bank_transaction_date,
-                                                    'initiating_account' =>$bfiExecutePayment->initiating_account,
-                                                    'initiating_account_name'=>$bfiExecutePayment->initiating_account_name,
-                                                    'remarks'=>$bfiExecutePayment->remarks])
+                                            @if($userToBfiFundTransfer->to_pre_transaction_id == null)
+                                                <span class="badge badge-danger">Null</span>
+                                            @else
+                                                {{$userToBfiFundTransfer->to_pre_transaction_id}}
+                                            @endif
                                         </td>
                                         <td>
-                                            @include('admin.include.BfiExecutePayment.requestFromBfi',['id'=>$bfiExecutePayment->id,'request_from_bfi'=>$bfiExecutePayment->request_from_bfi])
+                                            @include('admin.include.BfiExecutePayment.bfiExecutePaymentInfo',['id'=> $userToBfiFundTransfer->id,'bank_transaction_id'=>$userToBfiFundTransfer->bank_transaction_id,'bank_transaction_date'=>$userToBfiFundTransfer->bank_transaction_date,'initiating_account'=>$userToBfiFundTransfer->initiating_account,'initiating_account_name'=>$userToBfiFundTransfer->initiating_account_name,'remarks'=>$userToBfiFundTransfer->remarks])
                                         </td>
                                         <td>
-                                            @include('admin.include.BfiExecutePayment.responseToBfi',['id'=>$bfiExecutePayment->id,'response_to_bfi'=>$bfiExecutePayment->response_to_bfi])
+                                            @include('admin.include.BfiExecutePayment.requestFromBfi',['id'=>$userToBfiFundTransfer->id,'request_from_bfi'=>$userToBfiFundTransfer->request_from_bfi])
                                         </td>
                                         <td>
-                                            @include('admin.include.BfiExecutePayment.requestToWallet',['id'=>$bfiExecutePayment->id,'request_to_wallet'=>$bfiExecutePayment->request_to_wallet])
-
+                                            @include('admin.include.BfiExecutePayment.responseToBfi',['id'=>$userToBfiFundTransfer->id,'response_to_bfi'=>$userToBfiFundTransfer->response_to_bfi])
                                         </td>
                                         <td>
-                                            @include('admin.include.BfiExecutePayment.responseFromWallet',['id'=>$bfiExecutePayment->id,'response_from_wallet'=>$bfiExecutePayment->response_from_wallet])
-
+                                            @include('admin.include.BfiExecutePayment.requestToWallet',['id'=>$userToBfiFundTransfer->id,'request_to_wallet'=>$userToBfiFundTransfer->request_to_wallet])
                                         </td>
-
+                                        <td>
+                                            @include('admin.include.BfiExecutePayment.responseFromWallet',['id'=>$userToBfiFundTransfer->id,'response_from_wallet'=>$userToBfiFundTransfer->response_from_wallet])
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
-                                                                                    {{ $bfiExecutePayments->appends(request()->query())->links() }}
+                                                        {{ $userToBfiFundTransfers->appends(request()->query())->links() }}
                         </div>
                     </div>
                 </div>
@@ -436,7 +425,7 @@
     @include('admin.asset.js.datatable')
         <script>
             $(document).ready(function (e) {
-                let a = "Showing {{ $bfiExecutePayments->firstItem() }} to {{ $bfiExecutePayments->lastItem() }} of {{ $bfiExecutePayments->total() }} entries";
+                let a = "Showing {{ $userToBfiFundTransfers->firstItem() }} to {{ $userToBfiFundTransfers->lastItem() }} of {{ $userToBfiFundTransfers->total() }} entries";
                 $('.dataTables_info').text(a);
             });
         </script>

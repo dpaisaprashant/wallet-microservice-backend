@@ -12,12 +12,18 @@
                         @php
                             $decoded_request_from_bfi = json_decode($request_from_bfi);
                         @endphp
+                        @if(!empty($decoded_request_from_bfi))
                         <dl class="row m-t-md">
                             @foreach($decoded_request_from_bfi as $key=>$value)
                                 <dt class="col-md-5 text-left">{{ $key }} :</dt>
                                 <dd class="col-md-7">{{ $value == null ? 'Null' : $value }}</dd>
                             @endforeach
                         </dl>
+                        @else
+
+                            <dt class="text-left">No response from bfi</dt>
+
+                        @endif
 
                     </div>
                 </div>

@@ -28,7 +28,7 @@ class AgentController extends Controller
     public function create(Request $request)
     {
         $roles = Role::where('name', 'like', '%agent')->get();
-        $users = User::doesnthave('roles')->latest()->get();
+        $users = User::doesnthave('agent')->doesnthave('merchant')->latest()->get();
         $agentTypes = AgentType::with('parentAgentType')->latest()->get();
 
         if ($request->isMethod('POST')) {
@@ -41,7 +41,7 @@ class AgentController extends Controller
         return view('admin.agent.create')->with(compact('roles', 'users', 'agentTypes'));
     }
 
-    public function edit(Request $request, $id)
+    public function edit($request, $id)
     {
         $agent = Agent::with('user', 'agentType', 'createdBy', 'codeUsed')->findOrFail($id);
         $agentTypes = AgentType::latest()->get();

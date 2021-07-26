@@ -100,10 +100,10 @@ class TransactionEvent extends Model
                     return (3.7 / 100) * $this->amount;
                 } elseif ($this->vendor == "NCELL")
                 {
-                    if (Carbon::createFromFormat('Y-m-d', $this->created_at)->gt(Carbon::createFromFormat('Y-m-d', '2020-03-24'))) {
+                    //if ($this->created_at > '2020-03-24') {
                         return (3.25 / 100) * $this->amount;
-                    }
-                    return (4 / 100) * $this->amount;
+                    //}
+                    //return (4 / 100) * $this->amount;
 
                 } elseif ($this->vendor == "NETTV_EPIN" || $this->vendor == "NETTV") {
                     return (4 / 100) * $this->amount;
@@ -111,9 +111,9 @@ class TransactionEvent extends Model
 
                     if ($this->service_type == "EPIN")
                     {
-                        if (Carbon::createFromFormat('Y-m-d', $this->created_at)->gt(Carbon::createFromFormat('Y-m-d', '2020-07-22'))) {
-                            return (4.5 / 100) * $this->amount;
-                        }
+                        //if (Carbon::createFromFormat('Y-m-d', $this->created_at)->gt(Carbon::createFromFormat('Y-m-d', '2020-07-22'))) {
+                          //  return (4.5 / 100) * $this->amount;
+                        //}
                         return (2.7 / 100) * $this->amount;
                     }
                     return (2.7 / 100 ) * $this->amount;

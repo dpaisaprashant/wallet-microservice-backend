@@ -41,7 +41,7 @@ class AgentController extends Controller
         return view('admin.agent.create')->with(compact('roles', 'users', 'agentTypes'));
     }
 
-    public function edit($request, $id)
+    public function edit(Request $request, $id)
     {
         $agent = Agent::with('user', 'agentType', 'createdBy', 'codeUsed')->findOrFail($id);
         $agentTypes = AgentType::latest()->get();

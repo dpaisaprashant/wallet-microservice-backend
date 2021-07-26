@@ -11,6 +11,8 @@ class AgentType extends Model
 
     protected $guarded = [];
 
+    protected $subAgentTypeList = [];
+
     public function agents()
     {
         return $this->hasMany(Agent::class, 'agent_type_id');
@@ -29,5 +31,14 @@ class AgentType extends Model
     public function walletTransactionTypeCashbacks()
     {
         return $this->morphMany(WalletTransactionTypeCashback::class, 'transactionCashbackable' , 'user_type', 'user_type_id');
+    }
+
+    public function getAllSubAgentTypes()
+    {
+        if ($this->subAgentTypes()->first()) {
+            array_push($this->subAgentTypeList, $this->subAgentTypes()->first());
+            self::getAllSubAgentTypes();
+        }
+        return $this->subAgentTypeList;
     }
 }

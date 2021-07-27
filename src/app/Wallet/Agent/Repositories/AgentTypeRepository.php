@@ -5,7 +5,9 @@ namespace App\Wallet\Agent\Repositories;
 
 
 use App\Models\AgentType;
+use App\Models\Architecture\WalletTransactionType;
 use App\Models\Setting;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 
@@ -26,19 +28,21 @@ class AgentTypeRepository
     {
         $allParentAgentTypesList = $agentType->getAllParentAgentTypes();
         //create row for cashback having no parent
-        $agentType->agentTypeHierarchyCashbacks()->create();
-        //create cashback for each parent
-        foreach ($allParentAgentTypesList as $parentAgentType) {
-            //create cashback for its parent types
-            $agentType->agentTypeHierarchyCashbacks()->create([
-                'parent_agent_type_id' => $parentAgentType->id,
-            ]);
-        }
 
-        //check if has agent type has parent agent type
-        //if empty set parent_type_id as null
-        //else create commission for that agent type with relation to its agent_type_parent
-        //also check if agent_type_parent has a parent if yes than creat cashback for that agent_type_parent with the tst agent type
+        $walletTransactionTypes = WalletTransactionType::where('user_type', User::class)->get();
+
+        foreach ($walletTransactionTypes as $walletTransactionType) {
+            $agentType->agentTypeHierarchyCashbacks()->create(['wallet_transaction_type_id' => $walletTransactionType->id]);
+            //create cashback for each parent
+            foreach ($allParentAgentTypesList as $parentAgentType) {
+                //create cashback for its parent types
+                $agentType->agentTypeHierarchyCashbacks()->create([
+                    'parent_agent_type_id' => $parentAgentType->id,
+                    'wallet_transaction_type_id' => $walletTransactionType->id
+                ]);
+            }
+
+        }
     }
 
 

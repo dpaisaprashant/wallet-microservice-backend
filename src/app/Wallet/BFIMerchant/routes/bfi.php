@@ -33,4 +33,5 @@ Route::group(['prefix' => 'admin/BFIMerchant', 'middleware' => ['web', 'auth']],
 
     //User To BFI Fund Transfer
     Route::get('view-user-to-bfi-fund-transfer',[UserToBFIFundTransferController::class,'index'])->name('view.user.to.bfi.fund.transfer');
+    Route::get('user-to-bfi-fund-transfer-check-payment/{id}',[UserToBFIFundTransferController::class,'checkPayment'])->name('user.to.bfi.fund.transfer.check.payment');
 });

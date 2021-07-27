@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\BFI\BFIUser;
+use App\Models\Merchant\MerchantBFI;
 use App\Traits\BelongsToUser;
 use App\Traits\MorphOneTransaction;
 use Illuminate\Database\Eloquent\Model;
@@ -20,4 +21,10 @@ class UserToBfiFundTransfer extends Model
     public function bfiUser(){
         return $this->belongsTo(BFIUser::class,'user_id');
     }
+
+    public function bfiCheckPayment(){
+        return $this->belongsTo(BfiGatewayCheckPayment::class,'process_id','process_id');
+    }
+
+
 }

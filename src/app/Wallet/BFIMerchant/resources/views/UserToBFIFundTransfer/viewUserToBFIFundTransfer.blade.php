@@ -272,6 +272,7 @@
                                     <th>Response to bfi</th>
                                     <th>Request to wallet</th>
                                     <th>Response from wallet</th>
+                                    <th>Check Payment Details</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -333,6 +334,9 @@
                                         </td>
                                         <td>
                                             @include('admin.include.BfiExecutePayment.responseFromWallet',['id'=>$userToBfiFundTransfer->id,'response_from_wallet'=>$userToBfiFundTransfer->response_from_wallet])
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('user.to.bfi.fund.transfer.check.payment',$userToBfiFundTransfer->id) }}" class="btn btn-sm btn-icon btn-success" title="Check Payment Details"><i class="fa fa-eye"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

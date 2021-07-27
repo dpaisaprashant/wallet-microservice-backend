@@ -27,15 +27,15 @@ class AgentTypeRepository
     private function createHierarchyCashback(AgentType $agentType)
     {
         $allParentAgentTypesList = $agentType->getAllParentAgentTypes();
-        //create row for cashback having no parent
 
         $walletTransactionTypes = WalletTransactionType::where('user_type', User::class)->get();
 
+        //create cashback for each wallet transaction type
         foreach ($walletTransactionTypes as $walletTransactionType) {
+            //create row for cashback having no parent
             $agentType->agentTypeHierarchyCashbacks()->create(['wallet_transaction_type_id' => $walletTransactionType->id]);
             //create cashback for each parent
             foreach ($allParentAgentTypesList as $parentAgentType) {
-                //create cashback for its parent types
                 $agentType->agentTypeHierarchyCashbacks()->create([
                     'parent_agent_type_id' => $parentAgentType->id,
                     'wallet_transaction_type_id' => $walletTransactionType->id

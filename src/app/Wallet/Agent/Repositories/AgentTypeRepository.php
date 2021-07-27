@@ -21,22 +21,37 @@ class AgentTypeRepository
         $this->request = $request;
     }
 
+
+    private function createHierarchyCashback(AgentType $agentType)
+    {
+        $allParentAgentTypesList = $agentType->getAllParentAgentTypes();
+        //create row for cashback having no parent
+        $agentType->agentTypeHierarchyCashbacks()->create();
+        //create cashback for each parent
+        foreach ($allParentAgentTypesList as $parentAgentType) {
+            //create cashback for its parent types
+            $agentType->agentTypeHierarchyCashbacks()->create([
+                'parent_agent_type_id' => $parentAgentType->id,
+            ]);
+        }
+
+        //check if has agent type has parent agent type
+        //if empty set parent_type_id as null
+        //else create commission for that agent type with relation to its agent_type_parent
+        //also check if agent_type_parent has a parent if yes than creat cashback for that agent_type_parent with the tst agent type
+    }
+
+
+
     public function createAgentType()
     {
         $agentType = AgentType::create($this->request->all());
 
+        //create linit for agent type
         $agentName = str_replace(" ", "_", $agentType->name);
         $agentName = strtolower($agentName);
 
         if ($agentType->agent_type_id) {
-
-            /*$cashbacks = $this->defaultSubAgentCashbacks();
-            $newAgentCashback = [];
-            foreach ($cashbacks as $cashback) {
-                $cashback['option'] = str_replace(self::DEFAULT_SUB_AGENT, $agentName, $cashback['option']);
-                Setting::updateOrCreate($cashback);
-            }*/
-
 
             $limits = $this->defaultSubAgentLimits();
             $newAgentLimit = [];
@@ -47,15 +62,6 @@ class AgentTypeRepository
             }
 
         }else {
-            /*$cashbacks = $this->defaultAgentCashbacks();
-            $newAgentCashback = [];
-            foreach ($cashbacks as $cashback) {
-                $cashback['option'] = str_replace(self::DEFAULT_AGENT, $agentName, $cashback['option']);
-                Setting::updateOrCreate($cashback);
-                //array_push($newAgentCashback, $cashback);
-            }*/
-
-
             $limits = $this->defaultAgentLimits();
             $newAgentLimit = [];
             foreach ($limits as $limit) {
@@ -65,8 +71,9 @@ class AgentTypeRepository
             }
         }
 
-        //Setting::insert($newAgentCashback);
-        //Setting::insert($newAgentLimit);
+
+        //create hierarchy cashback for agent type
+        $this->createHierarchyCashback($agentType);
 
         return $agentType;
     }

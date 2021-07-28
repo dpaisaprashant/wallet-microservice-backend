@@ -477,5 +477,8 @@ Route::group(['prefix' => 'admin'], function () {
 
         //Contact Us
         Route::match(['get', 'post'],'frontend/contact-us', 'Frontend\ContactController@index')->name('frontend.contact')->middleware('permission:Frontend contact view');
+    
+        //RequestInfo 
+        Route::get('transaction/request-info', 'RequestInfoController@index')->name('requestinfo.index');
     });
 });

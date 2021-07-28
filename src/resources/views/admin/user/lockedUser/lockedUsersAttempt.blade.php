@@ -30,14 +30,14 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox ">
-                    <div class="ibox-title" style="">
+                    <div class="ibox-title" >
 
-                        <h5>List of login attempts</h5>
+                        <h5 style="float:left;">List of login attempts</h5>
                         
                         @can('Locked user login attempts view')                        
                         <form action="{{ route('user.loginAttemptsUpdateBulk',$user->id) }}" method="post">
                             @csrf      
-                            <button title="Unlock User" rel="{{ $user->id }}" class="resetB btn btn-sm btn-primary btn-xs" style="">Unblock User</button>
+                            <button title="Unlock User" rel="{{ $user->id }}" class="resetB btn btn-sm btn-primary btn-xs" style="float:right;"><i class="fa fa-unlock"><i class="fa fa-user"></i></i> Unlock</button>
                             <button id="resetBtnB-{{ $user->id }}" style="display: none" type="submit" href="{{ route('user.loginAttemptsUpdateBulk', $user->id) }}"  class="resetBtn"></button>
                         </form>                             
                         @endcan

@@ -31,6 +31,7 @@ class FromAmountFilter extends FilterAbstract {
         }
 
 
-        return $builder->where('amount', '>=', (float)($value * 100));
+        //return $builder->where('amount', '>=', (float)($value * 100));
+        return $builder->whereRaw('CAST(`amount` AS SIGNED) >= ?', [(int)($value * 100)]);
     }
 }

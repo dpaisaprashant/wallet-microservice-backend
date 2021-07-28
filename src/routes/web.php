@@ -129,6 +129,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/user/login-attempts/{id}', 'LockedUserController@loginAttempts')->name('user.login.attempts')->middleware('permission:Locked user login attempts view');
         Route::post('/user/update-login-attempt', 'LockedUserController@updateLoginAttempts')->name('user.loginAttemptsUpdate')->middleware('permission:Locked user login attempt enable');
 
+        //Unlock User Bulk Attempts
+        Route::post('/user/update-login-attempt-bulk/{id}', 'LockedUserController@updateLoginAttemptsBulk')->name('user.loginAttemptsUpdateBulk')->middleware('permission:Locked user login attempt enable');
+        
         Route::get('/user/profile/filter/transaction', 'UserController@filterTransaction')->name('filter.profile.transaction');
 
         Route::post('/user/profile/user-graph-data', 'UserController@userYearlyGraph')->name('user.yearly.graph');

@@ -340,6 +340,15 @@ $url = url()->current();
             @endif
 
 
+            
+               {{-- <li @if($url == route('preTransaction.view') || $url == route('clearance.generate')) class="active" @endif>--}}
+                <li @if($url == route('preTransaction.view')) class="active" @endif>
+                    <a href="{{route('preTransaction.view')}}"><i class="fa fa-handshake-o"></i> <span
+                            class="nav-label">Pre Transactions</span></a>
+                </li>
+           
+
+
             @if(auth()->user()->hasAnyPermission(['Complete transaction view', 'Fund transfer view', 'Fund request view', 'EBanking view', 'Paypoint view','Transaction nps view','Transaction nchl bank transfer','Transaction nchl load','Nicasia cybersource load transaction']))
                 <li @if($url == route('transaction.complete') || $url == route('transaction.userToUserFundTransfer') || $url == route('fundRequest') || $url == route('eBanking') || $url == route('paypoint'))class="active" @endif>
                     <a href="#"><i class="fa fa-credit-card"></i> <span class="nav-label">Transactions</span><span

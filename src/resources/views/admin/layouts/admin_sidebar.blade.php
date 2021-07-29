@@ -237,15 +237,21 @@ $url = url()->current();
                         @can('View BFI user')
                             <li><a href="{{ route('bfi.user.view') }}">BFI User</a></li>
                         @endcan
-                        <li>
-                            <a href="{{ route('view.bfi.execute.payment') }}">BFI Execute Payment</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('view.bfi.to.user.fund.transfer') }}">BFI to user fund transfer</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('view.user.to.bfi.fund.transfer') }}">User to bfi fund transfer</a>
-                        </li>
+                        @can('View bfi execute payment')
+                            <li>
+                                <a href="{{ route('view.bfi.execute.payment') }}">BFI Execute Payment</a>
+                            </li>
+                        @endcan
+                        @can('View bfi to user fund transfer')
+                            <li>
+                                <a href="{{ route('view.bfi.to.user.fund.transfer') }}">BFI to user fund transfer</a>
+                            </li>
+                        @endcan
+                        @can('View user to bfi fund transfer')
+                            <li>
+                                <a href="{{ route('view.user.to.bfi.fund.transfer') }}">User to bfi fund transfer</a>
+                            </li>
+                        @endcan
                     </ul>
                 </li>
             @endcan

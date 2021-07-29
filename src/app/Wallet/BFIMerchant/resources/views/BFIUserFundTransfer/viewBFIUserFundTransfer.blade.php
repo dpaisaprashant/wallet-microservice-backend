@@ -252,7 +252,7 @@
 
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover dataTables-example"
-                                   title="Fund Request transaction list">
+                                   title="BFI to user fund transfer list">
                                 <thead>
                                 <tr>
                                     <th>S.No.</th>

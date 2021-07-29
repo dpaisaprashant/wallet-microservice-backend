@@ -11,6 +11,7 @@ use App\Models\NchlAggregatedPayment;
 use App\Models\NchlBankTransfer;
 use App\Models\NchlLoadTransaction;
 use App\Models\NICAsiaCyberSourceLoadTransaction;
+use App\Models\NPSAccountLinkLoad;
 use App\Models\NpsLoadTransaction;
 use App\Models\User;
 use App\Models\UserLoadTransaction;
@@ -97,6 +98,7 @@ class Controller extends BaseController
             FundRequest::class => "USER TO USER FUND REQUEST",
             MerchantTransaction::class => "USER TO MERCHANT FUND TRANSFER",
             UserMerchantEventTicketPayment::class => "EVENT TICKET PAYMENT",
+            NPSAccountLinkLoad::class => "ACCOUNT LINK LOAD"
         ];
 
         $userTypes = [

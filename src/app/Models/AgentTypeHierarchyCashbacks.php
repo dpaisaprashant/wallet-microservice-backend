@@ -13,7 +13,7 @@ class AgentTypeHierarchyCashbacks extends Model
 
     public function agentType()
     {
-        return $this->belongsTo(AgentType::class);
+        return $this->belongsTo(AgentType::class,'agent_type_id');
     }
 
     public function parentAgentType()

@@ -316,6 +316,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'Edit BFI user status',
             'Add BFI user',
 
+            'View and update agent type hierarchy cashback'
+
             ];
 
         //get users having all permissions

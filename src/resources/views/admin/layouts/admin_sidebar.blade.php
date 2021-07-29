@@ -225,6 +225,7 @@ $url = url()->current();
                 </li>
             @endcan
 
+
             @can('View BFI Merchant')
                 <li @if($url == route('bfi.view') || $url == route('bfi.user.view')) class="active" @endif>
                     <a href="#"><i class="fa fa-history"></i> <span class="nav-label">BFI</span><span
@@ -272,7 +273,7 @@ $url = url()->current();
                 </li>
             @endif
 
-            @if(auth()->user()->hasPermissionTo('Agent type view') || auth()->user()->hasPermissionTo('Agent type create'))
+            @if(auth()->user()->hasPermissionTo('Agent type view') || auth()->user()->hasPermissionTo('Agent type create') || auth()->user()->hasPermissionTo('View and update agent type hierarchy cashback'))
                 <li @if($url == route('agent.type.view') || $url == route('agent.type.create') ) class="active" @endif>
                     <a href="#"><i class="fa fa-list-ul"></i> <span class="nav-label">Agent Types</span><span
                             class="fa arrow"></span></a>
@@ -283,6 +284,13 @@ $url = url()->current();
                         @can('Agent type create')
                             <li><a href="{{ route('agent.type.create') }}">Create Agent Type</a></li>
                         @endcan
+                        @can('View and update agent type hierarchy cashback')
+                            <li @if(preg_match('/vendor-transactions/i', $url)) class="active" @endif>
+                                <a href="{{route('view.agent.type.hierarchy.cashback')}}">
+                                    <span
+                                        class="nav-label">Agent Type Hierarchy Cashback</span></a>
+                            </li>
+                        @endif
                     </ul>
                 </li>
             @endif

@@ -226,12 +226,12 @@ $url = url()->current();
             @endcan
 
 
-            @can('View BFI Merchant')
+            @if(auth()->user()->hasPermissionTo('View BFI Merchant') || auth()->user()->hasPermissionTo('View BFI user') || auth()->user()->hasPermissionTo('View bfi execute payment') || auth()->user()->hasPermissionTo('View bfi to user fund transfer') || auth()->user()->hasPermissionTo('View user to bfi fund transfer'))
                 <li @if($url == route('bfi.view') || $url == route('bfi.user.view')) class="active" @endif>
                     <a href="#"><i class="fa fa-history"></i> <span class="nav-label">BFI</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        @can('Agent view')
+                        @can('View BFI Merchant')
                             <li><a href="{{ route('bfi.view') }}">BFI Merchant</a></li>
                         @endcan
                         @can('View BFI user')
@@ -254,7 +254,7 @@ $url = url()->current();
                         @endcan
                     </ul>
                 </li>
-            @endcan
+            @endif
 
 
 

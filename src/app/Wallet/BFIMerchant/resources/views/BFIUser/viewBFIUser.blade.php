@@ -88,7 +88,7 @@
                     @include('admin.asset.notification.notify')
                     <div class="ibox-content">
                         <div class="table-responsive">
-                            <table class="table table-data table-striped table-bordered table-hover dataTables-example">
+                            <table class="table table-data table-striped table-bordered table-hover dataTables-example" title="BFI user list">
                                 <thead>
                                 <tr>
                                     <th>S.No.</th>

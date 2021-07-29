@@ -225,29 +225,36 @@ $url = url()->current();
                 </li>
             @endcan
 
-            @can('View BFI Merchant')
+
+            @if(auth()->user()->hasPermissionTo('View BFI Merchant') || auth()->user()->hasPermissionTo('View BFI user') || auth()->user()->hasPermissionTo('View bfi execute payment') || auth()->user()->hasPermissionTo('View bfi to user fund transfer') || auth()->user()->hasPermissionTo('View user to bfi fund transfer'))
                 <li @if($url == route('bfi.view') || $url == route('bfi.user.view')) class="active" @endif>
                     <a href="#"><i class="fa fa-history"></i> <span class="nav-label">BFI</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        @can('Agent view')
+                        @can('View BFI Merchant')
                             <li><a href="{{ route('bfi.view') }}">BFI Merchant</a></li>
                         @endcan
                         @can('View BFI user')
                             <li><a href="{{ route('bfi.user.view') }}">BFI User</a></li>
                         @endcan
-                        <li>
-                            <a href="{{ route('view.bfi.execute.payment') }}">BFI Execute Payment</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('view.bfi.to.user.fund.transfer') }}">BFI to user fund transfer</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('view.user.to.bfi.fund.transfer') }}">User to bfi fund transfer</a>
-                        </li>
+                        @can('View bfi execute payment')
+                            <li>
+                                <a href="{{ route('view.bfi.execute.payment') }}">BFI Execute Payment</a>
+                            </li>
+                        @endcan
+                        @can('View bfi to user fund transfer')
+                            <li>
+                                <a href="{{ route('view.bfi.to.user.fund.transfer') }}">BFI to user fund transfer</a>
+                            </li>
+                        @endcan
+                        @can('View user to bfi fund transfer')
+                            <li>
+                                <a href="{{ route('view.user.to.bfi.fund.transfer') }}">User to bfi fund transfer</a>
+                            </li>
+                        @endcan
                     </ul>
                 </li>
-            @endcan
+            @endif
 
 
 
@@ -272,7 +279,7 @@ $url = url()->current();
                 </li>
             @endif
 
-            @if(auth()->user()->hasPermissionTo('Agent type view') || auth()->user()->hasPermissionTo('Agent type create'))
+            @if(auth()->user()->hasPermissionTo('Agent type view') || auth()->user()->hasPermissionTo('Agent type create') || auth()->user()->hasPermissionTo('View and update agent type hierarchy cashback'))
                 <li @if($url == route('agent.type.view') || $url == route('agent.type.create') ) class="active" @endif>
                     <a href="#"><i class="fa fa-list-ul"></i> <span class="nav-label">Agent Types</span><span
                             class="fa arrow"></span></a>
@@ -283,6 +290,13 @@ $url = url()->current();
                         @can('Agent type create')
                             <li><a href="{{ route('agent.type.create') }}">Create Agent Type</a></li>
                         @endcan
+                        @can('View and update agent type hierarchy cashback')
+                            <li @if(preg_match('/vendor-transactions/i', $url)) class="active" @endif>
+                                <a href="{{route('view.agent.type.hierarchy.cashback')}}">
+                                    <span
+                                        class="nav-label">Agent Type Hierarchy Cashback</span></a>
+                            </li>
+                        @endif
                     </ul>
                 </li>
             @endif

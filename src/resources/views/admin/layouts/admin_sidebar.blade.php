@@ -122,12 +122,12 @@ $url = url()->current();
                 </li>
             @endcan
 
-           {{-- @can('Group force password change')
-                <li @if(preg_match('/force-password/i', $url)) class="active" @endif>
-                    <a href="{{ route('group.forcePasswordChange') }}"><i class="fa fa-cart-plus"></i> <span
-                            class="nav-label">Force Password Change</span></a>
-                </li>
-            @endcan--}}
+            {{-- @can('Group force password change')
+                 <li @if(preg_match('/force-password/i', $url)) class="active" @endif>
+                     <a href="{{ route('group.forcePasswordChange') }}"><i class="fa fa-cart-plus"></i> <span
+                             class="nav-label">Force Password Change</span></a>
+                 </li>
+             @endcan--}}
 
 
             @can('Merchant dashboard')
@@ -138,18 +138,18 @@ $url = url()->current();
             @endcan
 
             @if(auth()->user()->hasPermissionTo('Merchant event list') || auth()->user()->hasPermissionTo('Merchant pending event list'))
-            <li @if(preg_match('/event/i', $url)) class="active" @endif>
-                <a href="#"><i class="fa fa-birthday-cake"></i> <span class="nav-label">Merchant Events</span><span
-                        class="fa arrow"></span></a>
-                <ul class="nav nav-second-level collapse">
-                    @can('Merchant event list')
-                        <li><a href="{{ route('merchant.event.list') }}">All Events</a></li>
-                    @endcan
-                    @can('Merchant pending event list')
-                        <li><a href="{{ route('merchant.event.pendingList') }}">Pending Events</a></li>
-                    @endcan
-                </ul>
-            </li>
+                <li @if(preg_match('/event/i', $url)) class="active" @endif>
+                    <a href="#"><i class="fa fa-birthday-cake"></i> <span class="nav-label">Merchant Events</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        @can('Merchant event list')
+                            <li><a href="{{ route('merchant.event.list') }}">All Events</a></li>
+                        @endcan
+                        @can('Merchant pending event list')
+                            <li><a href="{{ route('merchant.event.pendingList') }}">Pending Events</a></li>
+                        @endcan
+                    </ul>
+                </li>
             @endif
 
 
@@ -186,10 +186,10 @@ $url = url()->current();
                 </li>
             @endcan
 
-{{--                <li @if($url == route('merchant.unverifiedMerchantKYC.view')) class="active" @endif>--}}
-{{--                    <a href="{{ route('merchant.unverifiedMerchantKYC.view') }}"><i class="fa fa-user-times"></i> <span--}}
-{{--                            class="nav-label">Unverified Merchant KYC List</span></a>--}}
-{{--                </li>--}}
+            {{--                <li @if($url == route('merchant.unverifiedMerchantKYC.view')) class="active" @endif>--}}
+            {{--                    <a href="{{ route('merchant.unverifiedMerchantKYC.view') }}"><i class="fa fa-user-times"></i> <span--}}
+            {{--                            class="nav-label">Unverified Merchant KYC List</span></a>--}}
+            {{--                </li>--}}
 
 
             @can('KYC list changed by backend user view')
@@ -212,11 +212,11 @@ $url = url()->current();
                 </li>
             @endcan
 
-{{--            @can('View wallet transaction type')--}}
-{{--                <li @if(preg_match('/vendor-transactions/i', $url)) class="active" @endif>--}}
-{{--                    <a href="{{route('wallet.transaction.type.view')}}"><i class="fa fa-history"></i> <span class="nav-label">Wallet Transaction Type</span></a>--}}
-{{--                </li>--}}
-{{--            @endcan--}}
+            {{--            @can('View wallet transaction type')--}}
+            {{--                <li @if(preg_match('/vendor-transactions/i', $url)) class="active" @endif>--}}
+            {{--                    <a href="{{route('wallet.transaction.type.view')}}"><i class="fa fa-history"></i> <span class="nav-label">Wallet Transaction Type</span></a>--}}
+            {{--                </li>--}}
+            {{--            @endcan--}}
 
             @can('View wallet permission transaction type')
                 <li @if(preg_match('/vendor-transactions/i', $url)) class="active" @endif>
@@ -226,56 +226,65 @@ $url = url()->current();
             @endcan
 
             @can('View BFI Merchant')
-            <li @if($url == route('bfi.view') || $url == route('bfi.user.view')) class="active" @endif>
-                <a href="#"><i class="fa fa-history"></i> <span class="nav-label">BFI</span><span
-                        class="fa arrow"></span></a>
-                <ul class="nav nav-second-level collapse">
-                    @can('Agent view')
-                        <li><a href="{{ route('bfi.view') }}">BFI Merchant</a></li>
-                    @endcan
-                    @can('View BFI user')
-                        <li><a href="{{ route('bfi.user.view') }}">BFI User</a></li>
-                    @endcan
-                </ul>
-            </li>
+                <li @if($url == route('bfi.view') || $url == route('bfi.user.view')) class="active" @endif>
+                    <a href="#"><i class="fa fa-history"></i> <span class="nav-label">BFI</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        @can('Agent view')
+                            <li><a href="{{ route('bfi.view') }}">BFI Merchant</a></li>
+                        @endcan
+                        @can('View BFI user')
+                            <li><a href="{{ route('bfi.user.view') }}">BFI User</a></li>
+                        @endcan
+                        <li>
+                            <a href="{{ route('view.bfi.execute.payment') }}">BFI Execute Payment</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('view.bfi.to.user.fund.transfer') }}">BFI to user fund transfer</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('view.user.to.bfi.fund.transfer') }}">User to bfi fund transfer</a>
+                        </li>
+                    </ul>
+                </li>
             @endcan
 
 
 
-{{--            @can('View wallet transaction type')--}}
-{{--                <li @if(preg_match('/vendor-transactions/i', $url)) class="active" @endif>--}}
-{{--                    <a href="{{route('wallet.service.view')}}"><i class="fa fa-history"></i> <span class="nav-label">Wallet Services</span></a>--}}
-{{--                </li>--}}
-{{--            @endcan--}}
+                      @can('View wallet transaction type')
+                          <li @if(preg_match('/vendor-transactions/i', $url)) class="active" @endif>
+                             <a href="{{route('wallet.service.view')}}"><i class="fa fa-history"></i> <span class="nav-label">Wallet Services</span></a>
+                            </li>
+                       @endcan
 
             @if(auth()->user()->hasPermissionTo('Agent view') || auth()->user()->hasPermissionTo('Agent create'))
-            <li @if($url == route('agent.view') || $url == route('agent.create')) class="active" @endif>
-                <a href="#"><i class="fa fa-history"></i> <span class="nav-label">Agents</span><span
-                        class="fa arrow"></span></a>
-                <ul class="nav nav-second-level collapse">
-                    @can('Agent view')
-                        <li><a href="{{ route('agent.view') }}">View Agent</a></li>
-                    @endcan
-                    @can('Agent create')
-                        <li><a href="{{ route('agent.create') }}">Create Agent</a></li>
-                    @endcan
-                </ul>
-            </li>
+                <li @if($url == route('agent.view') || $url == route('agent.create')) class="active" @endif>
+                    <a href="#"><i class="fa fa-history"></i> <span class="nav-label">Agents</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        @can('Agent view')
+                            <li><a href="{{ route('agent.view') }}">View Agent</a></li>
+                        @endcan
+                        @can('Agent create')
+                            <li><a href="{{ route('agent.create') }}">Create Agent</a></li>
+                        @endcan
+                    </ul>
+                </li>
             @endif
 
             @if(auth()->user()->hasPermissionTo('Agent type view') || auth()->user()->hasPermissionTo('Agent type create'))
-            <li @if($url == route('agent.type.view') || $url == route('agent.type.create') ) class="active" @endif>
-                <a href="#"><i class="fa fa-list-ul"></i> <span class="nav-label">Agent Types</span><span
-                        class="fa arrow"></span></a>
-                <ul class="nav nav-second-level collapse">
-                    @can('Agent type view')
-                        <li><a href="{{ route('agent.type.view') }}">View Agent Type</a></li>
-                    @endcan
-                    @can('Agent type create')
-                        <li><a href="{{ route('agent.type.create') }}">Create Agent Type</a></li>
-                    @endcan
-                </ul>
-            </li>
+                <li @if($url == route('agent.type.view') || $url == route('agent.type.create') ) class="active" @endif>
+                    <a href="#"><i class="fa fa-list-ul"></i> <span class="nav-label">Agent Types</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        @can('Agent type view')
+                            <li><a href="{{ route('agent.type.view') }}">View Agent Type</a></li>
+                        @endcan
+                        @can('Agent type create')
+                            <li><a href="{{ route('agent.type.create') }}">Create Agent Type</a></li>
+                        @endcan
+                    </ul>
+                </li>
             @endif
 
             {{-- <li @if(preg_match('/load-test/i', $url)) class="active" @endif>
@@ -298,37 +307,46 @@ $url = url()->current();
                 </ul>
             </li>--}}
             @if(auth()->user()->hasPermissionTo('Refund view') || auth()->user()->hasPermissionTo('Refund create'))
-            <li @if(preg_match('/refund/i', $url)) class="active" @endif>
-                <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Refund</span><span
-                        class="fa arrow"></span></a>
-                <ul class="nav nav-second-level collapse">
-                    @can('Refund view')
-                        <li><a href="{{ route('refund.index') }}">View Refund</a></li>
-                    @endcan
-                    @can('Refund create')
-                        <li><a href="{{ route('refund.create') }}">Create Refund</a></li>
-                    @endcan
-                </ul>
-            </li>
+                <li @if(preg_match('/refund/i', $url)) class="active" @endif>
+                    <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Refund</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        @can('Refund view')
+                            <li><a href="{{ route('refund.index') }}">View Refund</a></li>
+                        @endcan
+                        @can('Refund create')
+                            <li><a href="{{ route('refund.create') }}">Create Refund</a></li>
+                        @endcan
+                    </ul>
+                </li>
             @endif
 
             @if(auth()->user()->hasPermissionTo('Repost transaction npay') || auth()->user()->hasPermissionTo('Repost transaction nps') || auth()->user()->hasPermissionTo('Repost transaction connectips'))
-            <li @if(preg_match('/repost/i', $url)) class="active" @endif>
-                <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Repost Transaction</span><span
-                        class="fa arrow"></span></a>
-                <ul class="nav nav-second-level collapse">
-                    @can('Repost transaction npay')
-                        <li><a href="{{ route('repost.npay') }}">NPay Repost</a></li>
-                    @endcan
-                    @can('Repost transaction nps')
-                        <li><a href="{{ route('repost.nps') }}">NPS Repost</a></li>
-                    @endcan
-                    @can('Repost transaction connectips')
-                        <li><a href="{{ route('repost.connectIPS') }}">Connect IPS Repost</a></li>
-                    @endcan
-                </ul>
-            </li>
+                <li @if(preg_match('/repost/i', $url)) class="active" @endif>
+                    <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Repost Transaction</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        @can('Repost transaction npay')
+                            <li><a href="{{ route('repost.npay') }}">NPay Repost</a></li>
+                        @endcan
+                        @can('Repost transaction nps')
+                            <li><a href="{{ route('repost.nps') }}">NPS Repost</a></li>
+                        @endcan
+                        @can('Repost transaction connectips')
+                            <li><a href="{{ route('repost.connectIPS') }}">Connect IPS Repost</a></li>
+                        @endcan
+                    </ul>
+                </li>
             @endif
+
+
+            
+               {{-- <li @if($url == route('preTransaction.view') || $url == route('clearance.generate')) class="active" @endif>--}}
+                <li @if($url == route('preTransaction.view')) class="active" @endif>
+                    <a href="{{route('preTransaction.view')}}"><i class="fa fa-handshake-o"></i> <span
+                            class="nav-label">Pre Transactions</span></a>
+                </li>
+           
 
 
             @if(auth()->user()->hasAnyPermission(['Complete transaction view', 'Fund transfer view', 'Fund request view', 'EBanking view', 'Paypoint view','Transaction nps view','Transaction nchl bank transfer','Transaction nchl load','Nicasia cybersource load transaction']))
@@ -356,7 +374,7 @@ $url = url()->current();
                             <li><a href="{{ route('nps') }}">Nps Web/Mobile Banking</a></li>
                         @endcan
 
-                            <li><a href="{{ route('khalti.transaction') }}">Khalti</a></li>
+                        <li><a href="{{ route('khalti.transaction') }}">Khalti</a></li>
 
                         @can('Paypoint view')
                             <li><a href="{{ route('paypoint') }}">Paypoint Transactions</a></li>
@@ -392,7 +410,8 @@ $url = url()->current();
 
             @if(auth()->user()->hasAnyPermission(['Clearance npay', 'Clearance paypoint']))
                 <li @if($url == route('clearance.transactions') || $url == route('clearance.generate')) class="active" @endif>
-                    <a href="{{ route('clearance.transactions') }}"><i class="fa fa-handshake-o"></i> <span class="nav-label">Clearance</span></a>
+                    <a href="{{ route('clearance.transactions') }}"><i class="fa fa-handshake-o"></i> <span
+                            class="nav-label">Clearance</span></a>
                 </li>
             @endif
 

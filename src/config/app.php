@@ -185,7 +185,8 @@ return [
         App\Wallet\Merchant\MerchantServiceProvider::class,
         App\Wallet\Architecture\ArchitectureServiceProvider::class,
         App\Wallet\TransactionClearance\ClearanceServiceProvider::class,
-        App\Wallet\BFIMerchant\BFIMerchantServiceProvider::class
+        App\Wallet\BFIMerchant\BFIMerchantServiceProvider::class,
+        App\Wallet\WalletIP\WalletIPServiceProvider::class
 
 
     ],

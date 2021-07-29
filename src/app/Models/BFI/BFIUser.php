@@ -4,6 +4,7 @@ namespace App\Models\BFI;
 
 use App\Filters\Agent\AgentFilters;
 use App\Filters\FiltersAbstract;
+use App\Models\Merchant\MerchantBFI;
 use App\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -26,5 +27,9 @@ class BFIUser extends Model
 
     public function UserApprovedIp(){
         return $this->hasMany(UserApprovedIp::class,'user_id');
+    }
+
+    public function bfiMerchant(){
+        return $this->belongsTo(MerchantBFI::class,'bfi_id','bfi_id');
     }
 }

@@ -64,4 +64,11 @@ Route::group(['prefix' => 'admin/architecture', 'middleware' => ['web','auth']],
 
     //Wallet Services
     Route::get('/view-wallet-service',[WalletServiceController::class,'index'])->name('wallet.service.view');//View wallet service
+    Route::get('/add-wallet-service',[WalletServiceController::class,'create'])->name('wallet.service.create');//Form for creating wallet service
+    Route::post('/add-wallet-service',[WalletServiceController::class,'store'])->name('wallet.service.store');//Storing wallet service
+    Route::get('/edit-wallet-service/{id}',[WalletServiceController::class,'edit'])->name('wallet.service.edit');//edit wallet service
+    Route::post('/edit-wallet-service/{id}',[WalletServiceController::class,'update'])->name('wallet.service.update');//update wallet service
+    Route::get('/delete-wallet-service/{id}',[WalletServiceController::class,'delete'])->name('wallet.service.delete');//delete wallet service
+
+
 });

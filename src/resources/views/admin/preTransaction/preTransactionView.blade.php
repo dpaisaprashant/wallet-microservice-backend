@@ -1,16 +1,15 @@
 @extends('admin.layouts.admin_design')
 @section('content')
-
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Wallet Permission Transaction</h2>
+            <h2>Pre Transactions</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>View Wallet Permission Transaction</strong>
+                    <strong>View Pre-Transactions</strong>
                 </li>
             </ol>
         </div>
@@ -18,7 +17,6 @@
 
         </div>
     </div>
-
     <div class="wrapper wrapper-content animated fadeInRight">
 
 
@@ -136,119 +134,87 @@
         {{--                </div>--}}
         {{--            </div>--}}
         {{--        </div>--}}
-        {{--    </div>--}}
+    </div>
 
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox">
-                    <div class="ibox-title">
-                        <h5>List of wallet permission transaction type users</h5>
-                        @can('Add wallet permission transaction type')
-                            <div class="ibox-tools" style="top: 8px;">
-                                <a href="{{ route('wallet.permission.transaction.type.create') }}">
-                                    <button class="btn btn-primary" type="button"><i class="fa fa-plus"></i> Add
-                                        Wallet Permission Transaction
-                                    </button>
-                                </a>
-                            </div>
-                        @endcan
-                    </div>
-                    <div class="ibox-content">
-                        <div class="table-responsive">
-                            @include('admin.asset.notification.notify')
-                            <table class="table table-striped table-bordered table-hover dataTables-example"
-                                   title="Dpasis user's list">
-                                <thead>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                @include('admin.asset.notification.notify')
+            
+                <div class="ibox-content">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example"
+                               title="Dpasis user's list">
+                            <thead>
                                 <tr>
                                     <th>S.No.</th>
-                                    <th>User type id</th>
-                                    <th>User type</th>
-                                    <th>Wallet tranasction type id</th>
-                                    <th>Action</th>
+                                    <th>UID</th>
+                                    <th>Pre Transaction ID</th>
+                                    <th>Amount</th>
+                                    <th>Description</th>
+                                    <th>Vendor</th>
+                                    <th>Service type</th>
+                                    <th>Micro Service Type</th>
+                                    <th>Transaction Type</th>
+                                    <th>URL</th>
+                                    <th>Before Balance</th>
+                                    <th>After Balance</th>
+                                    <th>Before Bonus Balance</th>
+                                    <th>After Balance Bonus</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
                                 </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($walletPermissionTransactions as $key=>$walletPermissionTransaction)
-                                    <tr>
-                                        <td>{{ $key+1 }}</td>
-
-                                        @if($walletPermissionTransaction->user_type == 'App\Models\UserType')
-                                            @foreach($userTypes as $key=>$userType)
-                                                @if($userType->id == $walletPermissionTransaction->user_type_id)
-                                                    <td><span class="badge badge-inverse">{{$userType->name}}</span>
-                                                    </td>
+                            </thead>
+                            <tbody>
+                            @foreach($preTransactions as $preTransaction)
+                                    <tr class="gradeC">
+                                            <td>{{ $loop->index + ($preTransactions->perPage() * ($preTransactions->currentPage() - 1)) + 1 }}</td>
+                                            <td>{{ $preTransaction->user_id }}</td>
+                                            <td>{{ $preTransaction->pre_transaction_id }}</td>
+                                            <td>Rs. {{$preTransaction->amount}}</td>
+                                            <td>{{$preTransaction->description}}</td>
+                                            <td>
+                                                {{ $preTransaction->vendor }}
+                                            </td>
+                                            <td>
+                                                {{ $preTransaction->service_type }}
+                                            </td>
+                                            <td>{{ $preTransaction->microservice_type }}</td>
+                                            <td>{{ $preTransaction->transaction_type }}</td>
+                                            <td>{{ $preTransaction->url }}</td>
+                                            <td>{{ $preTransaction->before_balance }}</td>
+                                            <td>{{ $preTransaction->after_balance }}</td>
+                                            <td>{{ $preTransaction->before_bonus_balance }}</td>
+                                            <td>{{ $preTransaction->after_bonus_balance }}</td>
+                                            
+                                            <td>
+                                                @if($preTransaction->status=="FAILED")
+                                                <span class="badge badge-danger">{{$preTransaction->status}}</span>
+                                                @elseif($preTransaction->status=="SUCCESS")
+                                                <span class="badge badge-primary">{{$preTransaction->status}}</span>
+                                                @else
+                                                <span class="badge badge-secondary">Null</span>
                                                 @endif
-                                            @endforeach
-                                        @elseif($walletPermissionTransaction->user_type == 'App\Models\Merchant\MerchantType')
-                                            @foreach($merchantTypes as $key=>$merchantType)
-                                                @if($merchantType->id == $walletPermissionTransaction->user_type_id)
-                                                    <td><span class="badge badge-success">{{$merchantType->name}}</span>
-                                                    </td>
-                                                @endif
-                                            @endforeach
-                                        @elseif($walletPermissionTransaction->user_type == 'App\Models\AgentType')
-                                            @foreach($agentTypes as $key=>$agentType)
-                                                @if($agentType->id == $walletPermissionTransaction->user_type_id)
-                                                    <td><span class="badge badge-primary">{{$agentType->name}}</span>
-                                                    </td>
-                                                @endif
-                                            @endforeach
-                                        @endif
+                                            </td>
+                                            <td>
+                                            @include('admin.preTransaction.preTransactionJsonRequest', ['preTransaction' => $preTransaction])
+                                            @include('admin.preTransaction.preTransactionJsonResponse', ['preTransaction' => $preTransaction])
+                                            @include('admin.preTransaction.preTransactionRequestParameter', ['preTransaction' => $preTransaction])
+                                            @include('admin.preTransaction.preTransactionSpecials', ['preTransaction' => $preTransaction])
 
-                                        @if($walletPermissionTransaction->user_type == 'App\Models\AgentType')
-                                            <td><span class="badge badge-primary">Agent Type</span></td>
-                                        @elseif($walletPermissionTransaction->user_type == 'App\Models\Merchant\MerchantType')
-                                            <td><span class="badge badge-success">Merchant Type</span></td>
-                                        @elseif($walletPermissionTransaction->user_type == 'App\Models\UserType')
-                                            <td><span class="badge badge-inverse">User Type</span></td>
-                                        @endif
-
-                                        @foreach($transactionTypes as $key=>$transactionType)
-                                            @if($walletPermissionTransaction->wallet_transaction_type_id == $transactionType->id)
-                                                <td><span
-                                                        class="badge badge-pill">TransactionType : {{$transactionType->transaction_type}}</span>
-                                                    <span
-                                                        class="badge badge-pill">Service : {{$transactionType->service == null ? 'Null' : $transactionType->service}}</span>
-                                                    <span
-                                                        class="badge badge-pill">Service Type : {{$transactionType->service_type}}</span>
-                                                    <span
-                                                        class="badge badge-pill">Micro service : {{$transactionType->microservice}}</span>
-                                                </td>
-                                            @endif
-                                        @endforeach
-
-                                        <td>
-                                            <form
-                                                action="{{ route('wallet.permission.transaction.type.delete',$walletPermissionTransaction->id) }}"
-                                                method="post">
-                                                @csrf
-                                                @can('Delete wallet permission transaction type')
-                                                    <button
-                                                        href="{{ route('wallet.permission.transaction.type.delete',$walletPermissionTransaction->id) }}"
-                                                        class="reset btn btn-sm btn-danger m-t-n-xs"
-                                                        rel="{{ $walletPermissionTransaction->id }}"><i
-                                                            class="fa fa-trash"></i>
-                                                    </button>
-
-                                                    <button id="resetBtn-{{ $walletPermissionTransaction->id }}"
-                                                            style="display: none" type="submit"
-                                                            href="{{ route('wallet.permission.transaction.type.delete',$walletPermissionTransaction->id) }}"
-                                                            class="resetBtn btn btn-sm btn-danger m-t-n-xs">
-                                                        <i class="fa fa-trash"></i></button>
-                                                @endcan
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                            </tbody>
+                        </table>
+                        {{ $preTransactions->appends(request()->query())->links() }}
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
+
 @endsection
 @section('styles')
 
@@ -263,31 +229,30 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/css/ion.rangeSlider.min.css"/>
 
     @include('admin.asset.css.sweetalert')
-
 @endsection
 
 @section('scripts')
 
     @include('admin.asset.js.sweetalert')
-    <script>
-        $('.reset').on('click', function (e) {
-            e.preventDefault();
-            let userId = $(this).attr('rel');
-            swal({
-                title: "Are you sure?",
-                text: "Wallet permission transaction will be deleted",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes",
-                closeOnConfirm: false
-            }, function () {
-                $('#resetBtn-' + userId).trigger('click');
-                swal.close();
+        <!-- <script>
+            $('.reset').on('click', function (e) {
+                e.preventDefault();
+                let userId = $(this).attr('rel');
+                swal({
+                    title: "Are you sure?",
+                    text: "Wallet permission transaction will be deleted",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes",
+                    closeOnConfirm: false
+                }, function () {
+                    $('#resetBtn-' + userId).trigger('click');
+                    swal.close();
 
-            })
-        });
-    </script>
+                })
+            });
+        </script> -->
 
     @include('admin.asset.js.datepicker')
 
@@ -297,6 +262,12 @@
 
     @include('admin.asset.js.sweetalert')
 
+    <script>
+        $(document).ready(function (e) {
+            let a = "Showing {{ $preTransactions->firstItem() }} to {{ $preTransactions->lastItem() }} of {{ $preTransactions->total() }} entries";
+            $('.dataTables_info').text(a);
+        });
+    </script>
 
 @endsection
 

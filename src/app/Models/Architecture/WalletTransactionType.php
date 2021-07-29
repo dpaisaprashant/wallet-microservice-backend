@@ -62,4 +62,9 @@ class WalletTransactionType extends Model
     {
         return $this->hasMany(SingleUserCommission::class);
     }
+
+    public function walletServices()
+    {
+        return $this->hasMany(WalletService::class);
+    }
 }

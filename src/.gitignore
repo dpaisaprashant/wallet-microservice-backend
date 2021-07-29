@@ -14,4 +14,4 @@ npm-debug.log
 yarn-error.log
 /storage/*
 .idea/*
-docker-compose.yml
+

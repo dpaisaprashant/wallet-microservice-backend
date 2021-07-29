@@ -142,14 +142,14 @@
                 @include('admin.asset.notification.notify')
                 <div class="ibox-title">
                     <h5>List of wallet service</h5>
-                    @can('Add wallet transaction type')
+                    @can('Add wallet service')
                             <div class="ibox-tools" style="top: 8px;">
                                 <a href="{{ route('wallet.service.create') }}">
                                     <button class="btn btn-primary" type="button"><i class="fa fa-plus"></i> Add
                                         Wallet Service
                                     </button>
                                 </a>
-                            </div>    
+                            </div>
                     @endcan
                 </div>
                 <div class="ibox-content">
@@ -165,7 +165,7 @@
                                 <th>Payment Validated</th>
                                 <th>Payment Handeled</th>
                                 <th>Actions</th>
-                                
+
                             </tr>
                             </thead>
                             <tbody>
@@ -196,11 +196,7 @@
                                                    class="btn btn-sm btn-icon btn-primary m-t-n-xs"
                                                    title="user profile"><i class="fa fa-pencil"></i>
                                                 </a>
-                                    <!-- <a style="margin-top: 5px;"
-                                                   href="{{route('wallet.service.delete', $service->id)}}"
-                                                   class="btn btn-sm btn-icon btn-danger m-t-n-xs"
-                                                   title="user profile"><i class="fa fa-trash"></i>
-                                                </a> -->
+
 
                                     <button
                                         href="{{ route('wallet.service.delete',$service->id) }}"
@@ -215,7 +211,7 @@
                                         class="resetBtn btn btn-sm btn-danger m-t-n-xs">
                                         <i class="fa fa-trash"></i>
                                     </button>
-                                    </td>                                    
+                                    </td>
                                 </tr>
                                 @endforeach
 

@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Filters\Transaction;
+namespace App\Filters\AgentTypeHierarchyCashbackFilter;
 
 use App\Filters\FilterAbstract;
+use App\Models\Architecture\AgentTypeHierarchyCashback;
+use App\Models\Clearance;
 use Illuminate\Database\Eloquent\Builder;
 
-class ToAmountFilter extends FilterAbstract {
-
+class AgentTypeFilter extends FilterAbstract {
 
     public function mapping()
     {
@@ -14,6 +15,7 @@ class ToAmountFilter extends FilterAbstract {
 
         ];
     }
+
 
     /**
      * Apply filter.
@@ -25,13 +27,10 @@ class ToAmountFilter extends FilterAbstract {
      */
     public function filter(Builder $builder, $value)
     {
-        //$value = $this->resolveFilterValue($value);
         if ($value === null) {
             return $builder;
         }
 
-        //return $builder->where('amount', '<=', (float)($value * 100));
-        return $builder->whereRaw('CAST(`amount` AS SIGNED) <= ?', [(int)($value * 100)]);
-
+        return $builder->where('agent_type_id',$value)->orWhere('parent_agent_type_id',$value);
     }
 }

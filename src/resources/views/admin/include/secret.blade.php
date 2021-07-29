@@ -1,6 +1,6 @@
 <a data-toggle="modal" href="#modal-form-fund-transfer{{$secret}}" title="Secret Key"><button class="btn btn-warning btn-icon  m-t-n-xs" type="button"><i class="fa fa-info"></i></button></a>
 <div id="modal-form-fund-transfer{{ $secret }}" class="modal fade" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="max-width: 630px !important;">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="row">

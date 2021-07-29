@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Filters\Transaction;
+namespace App\Filters\UserToBFIFundTransferFilter;
 
 use App\Filters\FilterAbstract;
 use Illuminate\Database\Eloquent\Builder;
 
-class ToAmountFilter extends FilterAbstract {
-
+class ProcessIdFilter extends FilterAbstract {
 
     public function mapping()
     {
@@ -14,6 +13,7 @@ class ToAmountFilter extends FilterAbstract {
 
         ];
     }
+
 
     /**
      * Apply filter.
@@ -25,13 +25,10 @@ class ToAmountFilter extends FilterAbstract {
      */
     public function filter(Builder $builder, $value)
     {
-        //$value = $this->resolveFilterValue($value);
+        //$value = $this->resolveFilterValue($this->mapping(), $value);
         if ($value === null) {
             return $builder;
         }
-
-        //return $builder->where('amount', '<=', (float)($value * 100));
-        return $builder->whereRaw('CAST(`amount` AS SIGNED) <= ?', [(int)($value * 100)]);
-
+        return $builder->where('process_id', $value);
     }
 }

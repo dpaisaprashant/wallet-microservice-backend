@@ -15,7 +15,7 @@ class PaymentNepalLoadTransaction extends Model
 
     use BelongsToUser, MorphOneTransaction, BelongsToUseThroughMicroservice;
 
-    protected $connection = 'nepalpayment';
+    protected $connection = 'paymentnepal';
 
     protected $table = "payment_nepal_transaction";
 

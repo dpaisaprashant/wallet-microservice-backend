@@ -39,69 +39,60 @@
                     <div class="ibox-content">
                         <div class="row">
                             <div class="col-sm-12">
-                                <form role="form" method="get" action="{{ route('transaction.complete') }}" id="filter">
+                                <form role="form" method="get" action="{{ route('requestinfo.index') }}" id="filter">
                                     <div class="row">
-
-                                        <div class="col-md-3">
+                                        <div class="col-md-6">
                                             <div class="form-group">
-                                                <input type="text" name="uid" placeholder="User Transaction ID"
+                                                <input type="text" name="request_id" placeholder="Request ID"
+                                                       class="form-control"
+                                                       value="{{ !empty($_GET['request_id']) ? $_GET['request_id'] : '' }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" name="uid" placeholder="User ID"
                                                        class="form-control"
                                                        value="{{ !empty($_GET['uid']) ? $_GET['uid'] : '' }}">
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3">
+                                        {{-- <div class="col-md-3">
                                             <div class="form-group">
-                                                <input type="text" name="transaction_id" placeholder="Transaction ID"
+                                                <input type="text" name="description" placeholder="Description"
                                                        class="form-control"
-                                                       value="{{ !empty($_GET['transaction_id']) ? $_GET['transaction_id'] : '' }}">
+                                                       value="{{ !empty($_GET['description']) ? $_GET['description'] : '' }}">
                                             </div>
                                         </div>
 
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <input type="text" name="user" placeholder="Email or number"
+                                                <input type="text" name="url" placeholder="URL"
                                                        class="form-control"
-                                                       value="{{ !empty($_GET['user']) ? $_GET['user'] : '' }}">
+                                                       value="{{ !empty($_GET['url']) ? $_GET['url'] : '' }}">
                                             </div>
-                                        </div>
-
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <input type="text" name="pre_transaction_id"
-                                                       placeholder="Pre Transaction Id" class="form-control"
-                                                       value="{{ !empty($_GET['pre_transaction_id']) ? $_GET['pre_transaction_id'] : '' }}">
-                                            </div>
-                                        </div>
-
-
+                                        </div> --}}
+                                      
                                     </div>
 
                                     <div class="row" style="margin-top: 20px">
-                                        {{-- <div class="col-md-6">
-                                             <label for="ionrange_amount">Amount</label>
-                                             <input type="text" name="amount" class="ionrange_amount">
-                                         </div>--}}
-
                                         <div class="col-md-3">
-                                            <div class="input-group date">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-dollar"></i>
-                                                </span>
-                                                <input type="number" class="form-control" placeholder="From Amount"
-                                                       name="from_amount" autocomplete="off"
-                                                       value="{{ !empty($_GET['from_amount']) ? $_GET['from_amount'] : '' }}">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-3">
-                                            <div class="input-group date">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-dollar"></i>
-                                                </span>
-                                                <input type="number" class="form-control" placeholder="To Amount"
-                                                       name="to_amount" autocomplete="off"
-                                                       value="{{ !empty($_GET['to_amount']) ? $_GET['to_amount'] : '' }}">
+                                            <div class="form-group">
+                                                <select data-placeholder="Select Status...." class="chosen-select"
+                                                        tabindex="2" name="status">
+                                                    <option value="" selected disabled>Select Status...</option>                                                
+                                                    @if(!empty($_GET['status']))
+                                                        @foreach($status as $stat)
+                                                            <option value="{{$stat}}"
+                                                                    @if($_GET['status']  == $stat) selected @endif >{{$stat}}</option>
+                                                        @endforeach
+                                                    @else
+                                                        @foreach($status as $stat)
+                                                            <option
+                                                                value="{{$stat}}">{{$stat}}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
                                             </div>
                                         </div>
 
@@ -126,31 +117,29 @@
                                                        value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="row" style="margin-top: 40px;">
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <select data-placeholder="Sort By..." class="chosen-select" tabindex="2"
-                                                        name="sort">
+                                                        name="latest_date">
                                                     <option value="" selected disabled>Sort By...</option>
-                                                    @if(!empty($_GET['sort']))
+                                                    @if(!empty($_GET['latest_date']))
                                                         <option value="date"
-                                                                @if($_GET['sort'] == 'date') selected @endif>Latest Date
+                                                                @if($_GET['latest_date'] == 'date') selected @endif>Latest Date
                                                         </option>
-                                                        <option value="amount"
-                                                                @if($_GET['sort'] == 'amount') selected @endif>Highest
-                                                            amount
-                                                        </option>
+                                                        
                                                     @else
                                                         <option value="date">Latest Date</option>
-                                                        <option value="amount">Amount</option>
                                                     @endif
                                                 </select>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        {{-- <div class="col-md-3">
+                                    <div class="row" style="margin-top: 40px;">
+                                        
+
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <select data-placeholder="Select Vendor...." class="chosen-select"
                                                         tabindex="2" name="vendor">
@@ -171,7 +160,7 @@
                                                     @endif
                                                 </select>
                                             </div>
-                                        </div> --}}
+                                        </div>
 
                                         <div class="col-md-3">
                                             <div class="form-group">
@@ -198,17 +187,17 @@
                                             <div class="form-group">
                                                 <select data-placeholder="Choose transaction type..."
                                                         class="chosen-select" tabindex="2" name="transaction_type">
-                                                    <option value="" selected disabled>Select Transaction Type...
+                                                    <option value="" selected disabled>Select Micro-Service Type...
                                                     </option>
                                                     <option value="">All</option>
-                                                    @if(!empty($_GET['transaction_type']))
-                                                        @foreach($transactionTypes as $key => $transactionType)
+                                                    @if(!empty($_GET['microservice_type']))
+                                                        @foreach($microServiceTypes as $key => $microServiceType)
                                                             <option value="{{ $key }}"
-                                                                    @if($_GET['transaction_type'] == $key) selected @endif>{{ $transactionType }}</option>
+                                                                    @if($_GET['microservice_type'] == $key) selected @endif>{{ $microServiceType }}</option>
                                                         @endforeach
                                                     @else
-                                                        @foreach($transactionTypes as $key => $transactionType)
-                                                            <option value="{{ $key }}"> {{ $transactionType }} </option>
+                                                        @foreach($microServiceTypes as $key => $microServiceType)
+                                                            <option value="{{ $key }}"> {{ $microServiceType }} </option>
                                                         @endforeach
                                                     @endif
                                                 </select>
@@ -225,7 +214,7 @@
                                     <div>
                                         <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
                                                 type="submit" style="margin-right: 10px;"
-                                                formaction="{{ route('transaction.complete.excel') }}">
+                                                formaction="{{ route('transaction.requestInfo.excel') }}">
                                             <strong>Excel</strong></button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
@@ -261,7 +250,7 @@
                                         <th>URL</th>
                                         <th>Status</th> 
                                         <th>Date</th>                                        
-                                        <th>Action</th>
+                                        <th style='width: 100px'>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>

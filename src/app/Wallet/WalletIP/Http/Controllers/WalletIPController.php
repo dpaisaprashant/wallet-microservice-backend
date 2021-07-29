@@ -16,7 +16,7 @@ class WalletIPController extends Controller
 
     public function view()
     {
-        $blockedIPs =  WalletIP::orderBy('created_at','DESC')->get();       
+        $blockedIPs =  WalletIP::orderBy('created_at','DESC')->paginate(20);       
         
         return view('WalletIP::viewBlockedIP',compact('blockedIPs'));
     }

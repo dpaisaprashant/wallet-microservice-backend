@@ -316,6 +316,13 @@ class RolesAndPermissionsSeeder extends Seeder
             'Edit BFI user status',
             'Add BFI user',
 
+            'Add blocked ip',
+            'Delete blocked ip',
+            'Edit blocked ip',
+            'View blocked ip',
+
+            'View request info',
+
             ];
 
         //get users having all permissions

@@ -23,10 +23,10 @@
                 <div class="ibox ">
                     <div class="ibox-title">
                         <h5>List of Blocked IPs</h5>
-                        {{-- @can('Add BlockedIP') --}}
+                        @can('Add blocked ip')
                             <a href="{{ route('blockedip.create') }}" class="btn btn-sm btn-primary btn-xs"
                                style="float: right;margin-top: -5px;">Block an IP</a>
-                        {{-- @endcan --}}
+                        @endcan
                     </div>
                     <div class="ibox-content">
                         <div class="table-responsive">
@@ -52,7 +52,7 @@
                                         <td> {{ $blockedIP->block_duration }}</td>
                                         <td> {{ $blockedIP->status }}</td>                                        
                                         <td class="center">
-                                            {{-- @can('Delete BlockedIP') --}}                                           
+                                            @can('Delete blocked ip')                                           
                                             <form action="{{ route('blockedip.delete',$blockedIP->id) }}" method="POST">
                                                 @csrf
                                                 <button                                                    
@@ -67,12 +67,12 @@
                                                     class="resetBtn btn btn-sm btn-danger m-t-n-xs">
                                                 <i class="fa fa-trash"></i></button>     
                                                    
-                                                {{-- @can('Edit BlockedIP') --}}                                            
+                                                @can('Edit blocked ip')                                            
                                                 <a href="{{ route('blockedip.edit',$blockedIP->id)}}" class="btn btn-success btn-sm m-t-n-xs"><i class="fa fa-edit"></i></a>                                            
-                                                {{-- @endcan --}}                                                              
+                                                @endcan                                                              
                                             </form>                    
                                                               
-                                            {{-- @endcan --}}
+                                            @endcan
                                             
                                         </td>
                                     </tr>
@@ -80,7 +80,7 @@
                                 </tbody>
                             </table>
 
-                            {{-- {{ $blockedIPs->appends(request()->query())->links() }} --}}
+                            {{ $blockedIPs->appends(request()->query())->links() }}
                         </div>
 
                     </div>

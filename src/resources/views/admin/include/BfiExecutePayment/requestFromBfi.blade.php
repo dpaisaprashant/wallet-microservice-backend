@@ -16,7 +16,9 @@
                         <dl class="row m-t-md">
                             @foreach($decoded_request_from_bfi as $key=>$value)
                                 <dt class="col-md-5 text-left">{{ $key }} :</dt>
-                                <dd class="col-md-7">{{ $value == null ? 'Null' : $value }}</dd>
+                                <dd class="col-md-7">
+                                    <?php print_r($value) ?>
+                                </dd>
                             @endforeach
                         </dl>
                         @else

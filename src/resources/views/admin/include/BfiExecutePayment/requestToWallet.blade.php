@@ -17,7 +17,7 @@
                         <dl class="row m-t-md">
                             @foreach($decoded_request_to_wallet as $key=>$value)
                                 <dt class="col-md-5 text-left">{{ $key }} :</dt>
-                                <dd class="col-md-5 text-left">{{ $value == null ? 'Null' : $value}} </dd>
+                                <?php print_r($value) ?>
                             @endforeach
                         </dl>
                         @else

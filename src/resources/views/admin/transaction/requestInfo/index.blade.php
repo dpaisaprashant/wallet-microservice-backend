@@ -51,9 +51,9 @@
 
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <input type="text" name="uid" placeholder="User ID"
+                                                <input type="text" name="user_id" placeholder="User ID"
                                                        class="form-control"
-                                                       value="{{ !empty($_GET['uid']) ? $_GET['uid'] : '' }}">
+                                                       value="{{ !empty($_GET['user_id']) ? $_GET['user_id'] : '' }}">
                                             </div>
                                         </div>
 

@@ -32,6 +32,6 @@ class UserIdFilter extends FilterAbstract {
         }
 
 
-        return $builder->where('uid',$value);
+        return $builder->where('user_id',$value);
     }
 }

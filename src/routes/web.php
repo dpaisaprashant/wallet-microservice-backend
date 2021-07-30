@@ -167,10 +167,10 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/banks/profile', 'BankListController@profile')->name('bank.profile')->middleware('permission:Bank list profile');
 
         /**
-         * 
+         *
          * Pre Transactions
          */
-        Route::get('/PreTransaction','PreTransactionController@index')->name('preTransaction.view');
+        Route::get('/PreTransaction','PreTransactionController@index')->name('preTransaction.view')->middleware('permission:View pre-transactions');
 
 
         /**

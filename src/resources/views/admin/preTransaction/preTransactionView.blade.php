@@ -58,7 +58,7 @@
 {{--                                                   value="{{ !empty($_GET['email']) ? $_GET['email'] : '' }}">--}}
 {{--                                        </div>--}}
 
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <select data-placeholder="Select Pre-Transaction status..."
                                                         class="chosen-select" tabindex="2" name="status">
@@ -82,6 +82,102 @@
                                                         <option value="FAILED">FAILED</option>
                                                         <option value="NULL">NULL</option>
 
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="service_type">Service Type</label>
+                                                <select data-placeholder="Select Service Type" class="chosen-select"
+                                                        tabindex="2" name="service_type">
+                                                    <option value="" selected disabled>Select Service Type...</option>
+                                                    <option value="">All</option>
+                                                    @if(!empty($_GET['service_type']))
+
+                                                        @foreach($service_types as $service_type)
+                                                            <option value="{{$service_type}}"
+                                                                    @if($_GET['service_type']  == $service_type) selected @endif >{{$service_type}}</option>
+                                                        @endforeach
+                                                    @else
+                                                        @foreach($service_types as $service_type)
+                                                            <option
+                                                                value="{{$service_type}}">{{$service_type}}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="microservice_type">Micro Service Type</label>
+                                                <select data-placeholder="Select MicroService Type" class="chosen-select"
+                                                        tabindex="2" name="microservice_type">
+                                                    <option value="" selected disabled>Select Micro-Service Type...</option>
+                                                    <option value="">All</option>
+                                                    @if(!empty($_GET['microservice_type']))
+
+                                                        @foreach($microservice_types as $microservice_type)
+                                                            <option value="{{$microservice_type}}"
+                                                                    @if($_GET['microservice_type']  == $microservice_type) selected @endif >{{$microservice_type}}</option>
+                                                        @endforeach
+
+                                                    @else
+                                                        @foreach($microservice_types as $microservice_type)
+                                                            <option
+                                                                value="{{$microservice_type}}">{{$microservice_type}}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="transaction_type">Transaction Type</label>
+                                                <select data-placeholder="Select Transaction Type" class="chosen-select"
+                                                        tabindex="2" name="transaction_type">
+                                                    <option value="" selected disabled>Select Transaction Type...</option>
+                                                    <option value="">All</option>
+                                                    @if(!empty($_GET['transaction_type']))
+
+                                                        @foreach($transaction_types as $transaction_type)
+                                                            <option value="{{$transaction_type}}"
+                                                                    @if($_GET['transaction_type']  == $transaction_type) selected @endif >{{$transaction_type}}</option>
+                                                        @endforeach
+
+                                                    @else
+                                                        @foreach($transaction_types as $transaction_type)
+                                                            <option
+                                                                value="{{$transaction_type}}">{{$transaction_type}}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="vendor">Vendor</label>
+                                                <select data-placeholder="Select Vendor...." class="chosen-select"
+                                                        tabindex="2" name="vendor">
+                                                    <option value="" selected disabled>Select Vendor...</option>
+                                                    <option value="">All</option>
+                                                    @if(!empty($_GET['vendor']))
+
+                                                        @foreach($vendors as $vendor)
+                                                            <option value="{{$vendor}}"
+                                                                    @if($_GET['vendor']  == $vendor) selected @endif >{{$vendor}}</option>
+                                                        @endforeach
+
+                                                    @else
+                                                        @foreach($vendors as $vendor)
+                                                            <option
+                                                                value="{{$vendor}}">{{$vendor}}</option>
+                                                        @endforeach
                                                     @endif
                                                 </select>
                                             </div>
@@ -132,7 +228,9 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-7">
+
+
+                                        <div class="col-md-10">
                                             <label for="transaction_number">Pre Transaction Amount</label>
                                             {{--                                            <input type="text" name="transaction_number" class="ionrange_number">--}}
                                             <div class="row">
@@ -163,101 +261,7 @@
                                             <br>
                                         </div>
 
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="service_type">Service Type</label>
-                                                <select data-placeholder="Select Service Type" class="chosen-select"
-                                                        tabindex="2" name="service_type">
-                                                    <option value="" selected disabled>Select Service Type...</option>
-                                                    <option value="">All</option>
-                                                    @if(!empty($_GET['service_type']))
 
-                                                        @foreach($service_types as $service_type)
-                                                            <option value="{{$service_type}}"
-                                                                    @if($_GET['service_type']  == $service_type) selected @endif >{{$service_type}}</option>
-                                                        @endforeach
-                                                    @else
-                                                        @foreach($service_types as $service_type)
-                                                            <option
-                                                                value="{{$service_type}}">{{$service_type}}</option>
-                                                        @endforeach
-                                                    @endif
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="microservice_type">Micro Service Type</label>
-                                                <select data-placeholder="Select MicroService Type" class="chosen-select"
-                                                        tabindex="2" name="microservice_type">
-                                                    <option value="" selected disabled>Select Micro-Service Type...</option>
-                                                    <option value="">All</option>
-                                                    @if(!empty($_GET['microservice_type']))
-
-                                                        @foreach($microservice_types as $microservice_type)
-                                                            <option value="{{$microservice_type}}"
-                                                                    @if($_GET['microservice_type']  == $microservice_type) selected @endif >{{$microservice_type}}</option>
-                                                        @endforeach
-
-                                                    @else
-                                                        @foreach($microservice_types as $microservice_type)
-                                                            <option
-                                                                value="{{$microservice_type}}">{{$microservice_type}}</option>
-                                                        @endforeach
-                                                    @endif
-                                                </select>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="transaction_type">Transaction Type</label>
-                                                <select data-placeholder="Select Transaction Type" class="chosen-select"
-                                                        tabindex="2" name="transaction_type">
-                                                    <option value="" selected disabled>Select Transaction Type...</option>
-                                                    <option value="">All</option>
-                                                    @if(!empty($_GET['transaction_type']))
-
-                                                        @foreach($transaction_types as $transaction_type)
-                                                            <option value="{{$transaction_type}}"
-                                                                    @if($_GET['transaction_type']  == $transaction_type) selected @endif >{{$transaction_type}}</option>
-                                                        @endforeach
-
-                                                    @else
-                                                        @foreach($transaction_types as $transaction_type)
-                                                            <option
-                                                                value="{{$transaction_type}}">{{$transaction_type}}</option>
-                                                        @endforeach
-                                                    @endif
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="vendor">Vendor</label>
-                                                <select data-placeholder="Select Vendor...." class="chosen-select"
-                                                        tabindex="2" name="vendor">
-                                                    <option value="" selected disabled>Select Vendor...</option>
-                                                    <option value="">All</option>
-                                                    @if(!empty($_GET['vendor']))
-
-                                                        @foreach($vendors as $vendor)
-                                                            <option value="{{$vendor}}"
-                                                                    @if($_GET['vendor']  == $vendor) selected @endif >{{$vendor}}</option>
-                                                        @endforeach
-
-                                                    @else
-                                                        @foreach($vendors as $vendor)
-                                                            <option
-                                                                value="{{$vendor}}">{{$vendor}}</option>
-                                                        @endforeach
-                                                    @endif
-                                                </select>
-                                            </div>
-                                        </div>
                                     </div>
                                     <br>
                                     <div>

@@ -191,13 +191,16 @@
                                             <span class="badge badge-danger">Unhandeled</span>
                                         @endif</td>
                                     <td>
-                                    <a style="margin-top: 5px;"
-                                                   href="{{route('wallet.service.edit', $service->id)}}"
+                                        @can('Edit wallet service')
+                                            <a style="margin-top: 5px;"
+                                               href="{{route('wallet.service.edit', $service->id)}}"
                                                    class="btn btn-sm btn-icon btn-primary m-t-n-xs"
-                                                   title="user profile"><i class="fa fa-pencil"></i>
-                                                </a>
+                                                   title="user profile">
+                                                <i class="fa fa-pencil"></i>
+                                            </a>
+                                        @endcan
 
-
+                                    @can('Delete wallet service')
                                     <button
                                         href="{{ route('wallet.service.delete',$service->id) }}"
                                         class="reset btn btn-sm btn-danger m-t-n-xs"
@@ -211,6 +214,7 @@
                                         class="resetBtn btn btn-sm btn-danger m-t-n-xs">
                                         <i class="fa fa-trash"></i>
                                     </button>
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach

@@ -165,13 +165,13 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <select data-placeholder="Choose transaction status..."
-                                                        class="chosen-select" tabindex="2" name="service">
+                                                        class="chosen-select" tabindex="2" name="service_type">
                                                     <option value="" selected disabled>Select Service Type...</option>
                                                     <option value="">All</option>
-                                                    @if(!empty($_GET['service']))
+                                                    @if(!empty($_GET['service_type']))
                                                         @foreach($serviceTypes as $serviceType)
                                                             <option value="{{ $serviceType }}"
-                                                                    @if($_GET['service'] == $serviceType) selected @endif>{{ $serviceType }}</option>
+                                                                    @if($_GET['service_type'] == $serviceType) selected @endif>{{ $serviceType }}</option>
                                                         @endforeach
                                                     @else
                                                         @foreach($serviceTypes as $serviceType)
@@ -186,18 +186,18 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <select data-placeholder="Choose transaction type..."
-                                                        class="chosen-select" tabindex="2" name="transaction_type">
+                                                        class="chosen-select" tabindex="2" name="microservice_type">
                                                     <option value="" selected disabled>Select Micro-Service Type...
                                                     </option>
                                                     <option value="">All</option>
                                                     @if(!empty($_GET['microservice_type']))
                                                         @foreach($microServiceTypes as $key => $microServiceType)
-                                                            <option value="{{ $key }}"
+                                                            <option value="{{ $microServiceType }}"
                                                                     @if($_GET['microservice_type'] == $key) selected @endif>{{ $microServiceType }}</option>
                                                         @endforeach
                                                     @else
                                                         @foreach($microServiceTypes as $key => $microServiceType)
-                                                            <option value="{{ $key }}"> {{ $microServiceType }} </option>
+                                                            <option value="{{ $microServiceType }}"> {{ $microServiceType }} </option>
                                                         @endforeach
                                                     @endif
                                                 </select>
@@ -279,7 +279,8 @@
                                                 {{ $requestInfo->url }}
                                             </td>
                                             <td>
-                                                {{ $requestInfo->status }}
+                                                
+                                                <span class="badge {{$requestInfo->status=="STARTED" ? "badge-success" : "badge-primary"}}">{{ $requestInfo->status }}</span>
                                             </td>      
                                             <td class="center">{{ $requestInfo->created_at }}</td>  
                                             <td>

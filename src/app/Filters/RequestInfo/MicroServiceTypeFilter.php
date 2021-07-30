@@ -5,7 +5,7 @@ namespace App\Filters\RequestInfo;
 use App\Filters\FilterAbstract;
 use Illuminate\Database\Eloquent\Builder;
 
-class MicroServiceFilter extends FilterAbstract {
+class MicroServiceTypeFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -32,6 +32,7 @@ class MicroServiceFilter extends FilterAbstract {
         }
 
 
-        return $builder->where('microservice_type',$value);
+
+        return $builder->where('microservice_type', $value);
     }
 }

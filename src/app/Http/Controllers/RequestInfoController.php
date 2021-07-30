@@ -15,6 +15,10 @@ class RequestInfoController extends Controller
    
         View::share('microServiceTypes', $microServiceTypes);
 
+        $serviceTypes = RequestInfo::groupBy('service_type')->pluck('service_type')->toArray();
+   
+        View::share('serviceTypes', $serviceTypes);
+
         $getAllUniqueVendors = RequestInfo::groupBy('vendor')->pluck('vendor')->toArray();
    
         View::share('getAllUniqueVendors', $getAllUniqueVendors);

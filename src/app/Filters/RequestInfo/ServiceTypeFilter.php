@@ -32,6 +32,6 @@ class ServiceTypeFilter extends FilterAbstract {
         }
 
 
-        return $builder->where('service_type',$value);
+        return $builder->where('service_type', $value);
     }
 }

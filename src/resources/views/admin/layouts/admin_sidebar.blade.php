@@ -393,6 +393,10 @@ $url = url()->current();
                         @can('Nicasia cybersource load transaction')
                             <li><a href="{{ route('nicasia.cyberSourceLoad') }}">All card load transaction</a></li>
                         @endcan
+
+                        @can('View request info')
+                            <li><a href="{{ route('requestinfo.index') }}">View Requests Info</a></li>
+                        @endcan
                     </ul>
                 </li>
             @endif
@@ -539,6 +543,12 @@ $url = url()->current();
                     </ul>
                 </li>
             @endif
+
+            @can('View blocked ip')
+            <li @if($url == route('blockedip.view')) class="active" @endif>
+                <a href="{{ route('blockedip.view') }}"><i class="fa fa-lock"></i> <span class="nav-label">Blocked IP</span></a>
+            </li>
+            @endcan
 
             @if(auth()->user()->hasAnyPermission(['User session log view', 'Backend user log view' , 'Auditing log view', 'Profiling log view', 'Statistics log view', 'Development log view','Api log']))
                 <li @if(preg_match('/log/i', $url)) class="active" @endif>

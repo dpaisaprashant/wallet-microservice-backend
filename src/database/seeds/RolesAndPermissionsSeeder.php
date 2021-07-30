@@ -316,11 +316,20 @@ class RolesAndPermissionsSeeder extends Seeder
             'Edit BFI user status',
             'Add BFI user',
 
+<<<<<<< HEAD
+            'Add blocked ip',
+            'Delete blocked ip',
+            'Edit blocked ip',
+            'View blocked ip',
+
+            'View request info',
+=======
             'View and update agent type hierarchy cashback',
 
             'View bfi execute payment',
             'View bfi to user fund transfer',
             'View user to bfi fund transfer'
+>>>>>>> 0aef38c413804d1b679d33555987065a8b20af9f
 
             ];
 

@@ -31,7 +31,7 @@ abstract class AbstractClearanceCompareStrategy implements CompareTransactionFor
             //Excel Transaction not found in microservice
             //$microserviceTransaction = UserTransaction::where('refStan', $excelTransaction[0])->first();
             $microserviceTransactionArr = $walletTransactions->filter(function ($walletTransaction) use ($excelTransaction) {
-                if ($excelTransaction[0] == $walletTransaction->linked_id) {
+                if ((string) $excelTransaction[0] == (string) $walletTransaction->linked_id) {
                     return $walletTransaction;
                 }
             });

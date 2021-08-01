@@ -14,4 +14,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web','auth']], function () 
     Route::put('update-blocked-ip/{id}', [WalletIPController::class, 'update'])->name('blockedip.update')->middleware('permission:Edit blocked ip');
     Route::post('delete-blockedip/{id}', [WalletIPController::class, 'delete'])->name('blockedip.delete')->middleware('permission:Delete blocked ip');
 
+    //Whitelist IP CRUD
+    Route::get('whitelist-ip', [WalletIPController::class, 'view_whitelist'])->name('whitelistedIP.view')->middleware('permission:View blocked ip');
+    Route::get('whitelist-ip/create', [WalletIPController::class, 'create_whitelist'])->name('whitelistedIP.create')->middleware('permission:Add blocked ip');
+    Route::post('whitelist-ip/create', [WalletIPController::class, 'store_whitelist'])->name('whitelistedIP.store')->middleware('permission:Add blocked ip');
+    Route::get('whitelist-ip/edit/{id}', [WalletIPController::class, 'edit_whitelist'])->name('whitelistedIP.edit')->middleware('permission:Edit blocked ip');
+    Route::put('whitelist-ip/update/{id}', [WalletIPController::class, 'update_whitelist'])->name('whitelistedIP.update')->middleware('permission:Edit blocked ip');
+    Route::post('whitelist/delete/{id}', [WalletIPController::class, 'delete_whitelist'])->name('whitelistedIP.delete')->middleware('permission:Delete blocked ip');
+
 });

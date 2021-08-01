@@ -31,12 +31,12 @@
                         </div>--}}
 
                         <div class="col-sm-6" style="margin-top: 30px;">
-                            <h5>User: {{ $userToBfiFundTransferCheckPaymentDetails->bfiUser->bfi_name }}</h5>
+                            <h5>From User: {{ $userToBfiFundTransferCheckPaymentDetails->bfiUser->bfi_name ?? 'Null' }}</h5>
                             <address>
                                 <strong></strong><br>
-                                Email: {{ $userToBfiFundTransferCheckPaymentDetails->bfiUser->email }}<br>
+                                Email: {{ $userToBfiFundTransferCheckPaymentDetails->bfiUser->email ?? 'Null'}}<br>
                                 Contact
-                                Number: {{ $userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment->wallet_id }}<br>
+                                Number: {{ $userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment->wallet_id ?? 'Null'}}<br>
                                 From Pre Transaction Id :
                                 @if($userToBfiFundTransferCheckPaymentDetails->from_pre_transaction_id == null)
                                     <span class="badge badge-danger">Null</span><br>
@@ -50,7 +50,10 @@
                                     {{ $userToBfiFundTransferCheckPaymentDetails->to_pre_transaction_id }}<br>
                                 @endif
                                 Amount : {{ ($userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment->amount)/100 }}<br>
-                                Bfi User: {{ $userToBfiFundTransferCheckPaymentDetails->wallet_id}}
+                                From User: {{ $userToBfiFundTransferCheckPaymentDetails->wallet_id ?? 'Null'}}<br>
+                                To User: {{$userDetails->mobile_no ?? 'Null'}}<br>
+                                To User Name : {{ $userDetails->name ?? 'Null'}}<br>
+                                To User Email : {{ $userDetails->email ?? 'Null'}}
                             </address>
 
                             {{--                            @isset($transaction->userTransaction)--}}

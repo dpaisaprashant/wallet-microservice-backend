@@ -316,12 +316,20 @@ class RolesAndPermissionsSeeder extends Seeder
             'Edit BFI user status',
             'Add BFI user',
 
+
             'Add wallet service',
             'View wallet service',
             'Edit wallet service',
             'Delete wallet service',
 
             'View pre-transactions',
+
+            'View and update agent type hierarchy cashback',
+
+            'View bfi execute payment',
+            'View bfi to user fund transfer',
+            'View user to bfi fund transfer'
+
 
             ];
 

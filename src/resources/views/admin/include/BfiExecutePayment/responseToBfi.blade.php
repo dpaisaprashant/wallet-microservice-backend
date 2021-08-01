@@ -36,7 +36,7 @@
                                             @if (is_array($secondLevelResponse) || is_object($secondLevelResponse))
                                                 @foreach($secondLevelResponse as $key=>$value)
                                                     <dt class="col-md-5 text-left">{{ $key }} :</dt>
-                                                    <dd class="col-md-7 text-left">{{ $value == null ? 'Null' : $value }} </dd>
+                                                    <dd class="col-md-7 text-left"><?php print_r($value) ?></dd>
                                                 @endforeach
                                             @endif
                                         @endif

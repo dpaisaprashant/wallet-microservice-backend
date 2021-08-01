@@ -251,7 +251,7 @@
                         <h5><b>Total Amount Sum:</b> Rs. {{ $bfiExecutePaymentsTotalAmount }} </h5>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover dataTables-example"
-                                   title="Fund Request transaction list">
+                                   title="BFI execute payment list">
                                 <thead>
                                 <tr>
                                     <th>S.No.</th>

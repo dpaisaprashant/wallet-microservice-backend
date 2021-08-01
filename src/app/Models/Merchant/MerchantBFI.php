@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 
 class MerchantBFI extends Model
 {
-    use BelongsToUser,BelongsToMerchant;
+    use BelongsToMerchant;
 
     protected $connection = "dpaisa";
 

@@ -11,6 +11,7 @@ use App\Wallet\Referral\Http\Controllers\ReferralSchemaController;
 use App\Wallet\Architecture\Http\Controllers\WalletTypeTransactionController;
 use Illuminate\Support\Facades\Route;
 use App\Wallet\Architecture\Http\Controllers\WalletPermissionTransactionTypeController;
+use App\Wallet\Architecture\Http\Controllers\AgentTypeHierarchyCashbackController;
 
 Route::group(['prefix' => 'admin/architecture', 'middleware' => ['web','auth']], function () {
     Route::get('/vendor-transactions/{vendorName}', [WalletTransactionTypeController::class, 'vendorTransactions'])->name('architecture.vendor.transaction')->middleware('permission:Architecture vendor transaction');
@@ -63,12 +64,19 @@ Route::group(['prefix' => 'admin/architecture', 'middleware' => ['web','auth']],
     Route::get('/delete-wallet-transaction-type/{id}',[WalletTypeTransactionController::class,'delete'])->name('wallet.transaction.type.delete');//Delete wallet transaction type
 
     //Wallet Services
+
     Route::get('/view-wallet-service',[WalletServiceController::class,'index'])->name('wallet.service.view')->middleware('permission:View wallet service');//View wallet service
     Route::get('/add-wallet-service',[WalletServiceController::class,'create'])->name('wallet.service.create')->middleware('permission:Add wallet service');//Form for creating wallet service
     Route::post('/add-wallet-service',[WalletServiceController::class,'store'])->name('wallet.service.store')->middleware('permission:Add wallet service');//Storing wallet service
     Route::get('/edit-wallet-service/{id}',[WalletServiceController::class,'edit'])->name('wallet.service.edit')->middleware('permission:Edit wallet service');//edit wallet service
     Route::post('/edit-wallet-service/{id}',[WalletServiceController::class,'update'])->name('wallet.service.update')->middleware('permission:Edit wallet service');//update wallet service
     Route::get('/delete-wallet-service/{id}',[WalletServiceController::class,'delete'])->name('wallet.service.delete')->middleware('permission:Delete wallet service');//delete wallet service
+
+    Route::get('/view-wallet-service',[WalletServiceController::class,'index'])->name('wallet.service.view');//View wallet service
+
+    //Agent Tyoe Hierarchy Cashback
+    Route::get('/view-agent-type-hierarchy-cashback',[AgentTypeHierarchyCashbackController::class,'index'])->name('view.agent.type.hierarchy.cashback');
+    Route::post('/update-agent-type-hierarchy-cashback',[AgentTypeHierarchyCashbackController::class,'update'])->name('update.agent.type.hierarchy.cashback');
 
 
 });

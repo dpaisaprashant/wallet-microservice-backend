@@ -31,6 +31,7 @@ class VendorFilter extends FilterAbstract {
             return $builder;
         }
 
+      
 
         return $builder->where('vendor',$value);
     }

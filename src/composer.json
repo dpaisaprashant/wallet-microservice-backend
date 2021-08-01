@@ -15,7 +15,7 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.5",
-        "phpoffice/phpspreadsheet": "^1.10",
+        "phpoffice/phpspreadsheet": "^1.18",
         "rap2hpoutre/fast-excel": "^1.6",
         "spatie/laravel-activitylog": "^3.9",
         "spatie/laravel-backup": "6.*",

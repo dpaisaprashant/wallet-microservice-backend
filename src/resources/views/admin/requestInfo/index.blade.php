@@ -56,23 +56,7 @@
                                                        value="{{ !empty($_GET['user_id']) ? $_GET['user_id'] : '' }}">
                                             </div>
                                         </div>
-
-                                        {{-- <div class="col-md-3">
-                                            <div class="form-group">
-                                                <input type="text" name="description" placeholder="Description"
-                                                       class="form-control"
-                                                       value="{{ !empty($_GET['description']) ? $_GET['description'] : '' }}">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <input type="text" name="url" placeholder="URL"
-                                                       class="form-control"
-                                                       value="{{ !empty($_GET['url']) ? $_GET['url'] : '' }}">
-                                            </div>
-                                        </div> --}}
-                                      
+                                                                    
                                     </div>
 
                                     <div class="row" style="margin-top: 20px">
@@ -214,7 +198,7 @@
                                     <div>
                                         <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
                                                 type="submit" style="margin-right: 10px;"
-                                                formaction="{{-- route('transaction.requestInfo.excel') --}}">
+                                                formaction="{{ route('requestinfo.excel') }}">
                                             <strong>Excel</strong></button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
@@ -284,7 +268,7 @@
                                             </td>      
                                             <td class="center">{{ $requestInfo->created_at }}</td>  
                                             <td>
-                                                @include('admin.transaction.requestInfo.requestInfoActionButtons', ['requestInfo' => $requestInfo])
+                                                @include('admin.requestInfo.requestInfoActionButtons', ['requestInfo' => $requestInfo])
                                             </td>
                                         </tr>
                                     @endforeach

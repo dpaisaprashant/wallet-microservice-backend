@@ -328,7 +328,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
             'View bfi execute payment',
             'View bfi to user fund transfer',
-            'View user to bfi fund transfer'
+            'View user to bfi fund transfer',
 
 
             ];

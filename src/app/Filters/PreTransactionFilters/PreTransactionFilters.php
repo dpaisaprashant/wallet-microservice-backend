@@ -13,6 +13,7 @@ class PreTransactionFilters extends FiltersAbstract
     protected $filters = [
         'user_id' => UsersFilter::class,
         'pre_transaction_id' => PreTransactionIdFilter::class,
+        'vendor'=>PreTransactionVendorFilter::class,
         'status'=>PreTransactionStatusFilter::class,
         'service_type' => PreTransactionServiceTypeFilter::class,
         'microservice_type' => PreTransactionMicroServiceTypeFilter::class,

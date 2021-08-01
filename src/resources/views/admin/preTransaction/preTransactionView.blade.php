@@ -36,14 +36,14 @@
                                 <form role="form" method="get">
 
                                     <div class="row">
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <input type="text" name="user_id" placeholder="Enter User Id"
                                                        class="form-control"
                                                        value="{{ !empty($_GET['user_id']) ? $_GET['user_id'] : '' }}">
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <input type="text" name="pre_transaction_id" placeholder="Enter Pre Transaction ID"
                                                        class="form-control"
@@ -294,7 +294,7 @@
                 <div class="ibox-content">
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover dataTables-example"
-                               title="Dpasis user's list">
+                               title="Pre Transaction list">
                             <thead>
                                 <tr>
                                     <th>S.No.</th>

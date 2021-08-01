@@ -616,6 +616,13 @@ $url = url()->current();
                                 <a href="{{ route('sparrow.detail') }}"> <span class="nav-label"> SMS Detail</span></a>
                             </li>
                         @endcan
+
+                            @can('Miracle info SMS view')
+                                <li>
+                                <a href="{{route('miracle-info.view')}}"><span class="nav-label">Miracle Info SMS</span></a>
+                                </li>
+                            @endcan
+
                     </ul>
                 </li>
             @endif

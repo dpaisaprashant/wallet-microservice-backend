@@ -388,6 +388,11 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/sparrow-sms/detail', 'SparrowSMSController@detail')->name('sparrow.detail')->middleware('permission:Sparrow SMS detail view');
 
         /**
+         * Miracle Info sms
+         */
+        Route::get('/miracle-info-sms','MiracleInfoSMSController@index')->name('miracle-info.view')->middleware('permission:Miracle info SMS view');
+
+        /**
          * Terms and Condition
          */
         Route::get('/terms-and-condition/', 'TermsAndConditionController@view')->name('termsAndCondition.view')->middleware('permission:Terms and condition view');

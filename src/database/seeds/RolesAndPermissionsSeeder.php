@@ -170,6 +170,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'Sparrow SMS view',
             'Sparrow SMS detail view',
 
+            'Miracle info SMS view',
+
             'General page setting view',
             'General page setting create',
             'General page setting update',

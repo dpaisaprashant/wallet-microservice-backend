@@ -122,6 +122,8 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            {{ $messages->appends(request()->query())->links() }}
+
                         </div>
                     </div>
                 </div>

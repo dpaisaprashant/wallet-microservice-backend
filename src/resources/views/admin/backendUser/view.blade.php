@@ -44,7 +44,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach($users as $user)
-                                    <tr class="gradeX">
+                                <tr class="gradeX">
                                     <td>{{ $loop->index + ($users->perPage() * ($users->currentPage() - 1)) + 1 }}</td>
                                     <td>
                                         &nbsp;{{ $user->name }}

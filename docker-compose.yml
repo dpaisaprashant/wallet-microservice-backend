@@ -6,15 +6,7 @@ networks:
     external: true
   wallet-microservice-paypoint_laravel:
     external: true
-  wallet-microservice-nchl_laravel:
-    external: true
-  wallet-microservice-cybersource_laravel:
-    external: true
-  wallet-microservice-npay_laravel:
-    external: true
-  wallet-microservice-nps_laravel:
-    external: true
-  wallet-microservice-merchant_laravel:
+  wallet-microservice-khalti_spring-boot-mysql-network:
     external: true
 
 
@@ -38,11 +30,7 @@ services:
       - laravel
       - wallet-microservice-core_laravel
       - wallet-microservice-paypoint_laravel
-      - wallet-microservice-nchl_laravel
-      - wallet-microservice-cybersource_laravel
-      - wallet-microservice-npay_laravel
-      - wallet-microservice-nps_laravel
-      - wallet-microservice-merchant_laravel
+      - wallet-microservice-khalti_spring-boot-mysql-network
 
   mysql:
     image: mysql:5.7.29
@@ -64,11 +52,7 @@ services:
       - laravel
       - wallet-microservice-core_laravel
       - wallet-microservice-paypoint_laravel
-      - wallet-microservice-nchl_laravel
-      - wallet-microservice-cybersource_laravel
-      - wallet-microservice-npay_laravel
-      - wallet-microservice-nps_laravel
-      - wallet-microservice-merchant_laravel
+      - wallet-microservice-khalti_spring-boot-mysql-network
 
   php:
     build:
@@ -84,11 +68,7 @@ services:
       - laravel
       - wallet-microservice-core_laravel
       - wallet-microservice-paypoint_laravel
-      - wallet-microservice-nchl_laravel
-      - wallet-microservice-cybersource_laravel
-      - wallet-microservice-npay_laravel
-      - wallet-microservice-nps_laravel
-      - wallet-microservice-merchant_laravel
+      - wallet-microservice-khalti_spring-boot-mysql-network
 
   composer:
     build:
@@ -105,11 +85,7 @@ services:
       - laravel
       - wallet-microservice-core_laravel
       - wallet-microservice-paypoint_laravel
-      - wallet-microservice-nchl_laravel
-      - wallet-microservice-cybersource_laravel
-      - wallet-microservice-npay_laravel
-      - wallet-microservice-nps_laravel
-      - wallet-microservice-merchant_laravel
+      - wallet-microservice-khalti_spring-boot-mysql-network
     entrypoint: ['composer', '--ignore-platform-reqs']
 
   artisan:
@@ -128,11 +104,7 @@ services:
       - laravel
       - wallet-microservice-core_laravel
       - wallet-microservice-paypoint_laravel
-      - wallet-microservice-nchl_laravel
-      - wallet-microservice-cybersource_laravel
-      - wallet-microservice-npay_laravel
-      - wallet-microservice-nps_laravel
-      - wallet-microservice-merchant_laravel
+      - wallet-microservice-khalti_spring-boot-mysql-network
   
   phpmyadmin:
     depends_on:
@@ -149,11 +121,7 @@ services:
       - laravel
       - wallet-microservice-core_laravel
       - wallet-microservice-paypoint_laravel
-      - wallet-microservice-nchl_laravel
-      - wallet-microservice-cybersource_laravel
-      - wallet-microservice-npay_laravel
-      - wallet-microservice-nps_laravel
-      - wallet-microservice-merchant_laravel
+      - wallet-microservice-khalti_spring-boot-mysql-network
 
   mongo:
     container_name: mongo-backend

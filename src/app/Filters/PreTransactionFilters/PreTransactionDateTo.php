@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filters\Khalti;
+namespace App\Filters\PreTransactionFilters;
 
 use App\Filters\FilterAbstract;
 use Illuminate\Database\Eloquent\Builder;
 
-class VendorKhaltiFilter extends FilterAbstract {
+class PreTransactionDateTo extends FilterAbstract {
 
 
     public function mapping()
@@ -29,10 +29,7 @@ class VendorKhaltiFilter extends FilterAbstract {
         if ($value === null) {
             return $builder;
         }
-        if($value == 'All'){
-            return $builder->where('vendor','!=',null);
-        }
-        return $builder->where('vendor',$value);
+        return $builder->whereDate('created_at', '<=' ,date('Y-m-d', strtotime(str_replace(',', ' ', $value))));
 
     }
 }

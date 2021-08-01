@@ -317,6 +317,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Add BFI user',
 
 
+
             'Add blocked ip',
             'Delete blocked ip',
             'Edit blocked ip',
@@ -328,7 +329,17 @@ class RolesAndPermissionsSeeder extends Seeder
 
             'View bfi execute payment',
             'View bfi to user fund transfer',
-            'View user to bfi fund transfer'
+            'View user to bfi fund transfer',
+
+            'Add wallet service',
+            'View wallet service',
+            'Edit wallet service',
+            'Delete wallet service',
+
+            'View pre-transactions',
+
+            'View khalti details',
+            'View khalti detail page'
 
             ];
 

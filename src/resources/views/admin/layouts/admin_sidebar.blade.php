@@ -257,12 +257,11 @@ $url = url()->current();
             @endif
 
 
-
-            {{--            @can('View wallet transaction type')--}}
-            {{--                <li @if(preg_match('/vendor-transactions/i', $url)) class="active" @endif>--}}
-            {{--                    <a href="{{route('wallet.service.view')}}"><i class="fa fa-history"></i> <span class="nav-label">Wallet Services</span></a>--}}
-            {{--                </li>--}}
-            {{--            @endcan--}}
+            @can('View wallet service')
+                <li @if($url == route('wallet.service.view')) class="active" @endif>
+                    <a href="{{route('wallet.service.view')}}"><i class="fa fa-history"></i> <span class="nav-label">Wallet Services</span></a>
+                </li>
+            @endcan
 
             @if(auth()->user()->hasPermissionTo('Agent view') || auth()->user()->hasPermissionTo('Agent create'))
                 <li @if($url == route('agent.view') || $url == route('agent.create')) class="active" @endif>
@@ -354,6 +353,16 @@ $url = url()->current();
             @endif
 
 
+
+               @can('View pre-transactions')
+                <li @if($url == route('preTransaction.view')) class="active" @endif>
+                    <a href="{{route('preTransaction.view')}}"><i class="fa fa-handshake-o"></i> <span
+                            class="nav-label">Pre Transactions</span></a>
+                </li>
+                @endcan
+
+
+
             @if(auth()->user()->hasAnyPermission(['Complete transaction view', 'Fund transfer view', 'Fund request view', 'EBanking view', 'Paypoint view','Transaction nps view','Transaction nchl bank transfer','Transaction nchl load','Nicasia cybersource load transaction']))
                 <li @if($url == route('transaction.complete') || $url == route('transaction.userToUserFundTransfer') || $url == route('fundRequest') || $url == route('eBanking') || $url == route('paypoint'))class="active" @endif>
                     <a href="#"><i class="fa fa-credit-card"></i> <span class="nav-label">Transactions</span><span
@@ -378,9 +387,9 @@ $url = url()->current();
                         @can('Transaction nps view')
                             <li><a href="{{ route('nps') }}">Nps Web/Mobile Banking</a></li>
                         @endcan
-
+                        @can('View khalti details')
                         <li><a href="{{ route('khalti.transaction') }}">Khalti</a></li>
-
+                        @endcan
                         @can('Paypoint view')
                             <li><a href="{{ route('paypoint') }}">Paypoint Transactions</a></li>
                         @endcan

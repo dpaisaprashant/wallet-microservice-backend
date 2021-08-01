@@ -12,7 +12,16 @@ class RequestInfoFilters extends FiltersAbstract
      */
     protected $filters = [
         'from' => FromDateFilter::class,
-        'to' => ToDateFilter::class
+        'to' => ToDateFilter::class,
+        'request_id' => RequestIdFilter::class,
+        'uid' => UserIdFilter::class,
+        'status' =>StatusFilter::class,
+        'vendor' => VendorFilter::class,
+        'service_type' => ServiceTypeFilter::class,
+        'microservice_type' => MicroServiceTypeFilter::class,
+        'latest_date' => LatestDateFilter::class,
+
+
     ];
 
 
@@ -25,7 +34,6 @@ class RequestInfoFilters extends FiltersAbstract
         $map = [
             'sort' => [
                 'date' => 'created_at',
-                'amount' => 'amount'
             ]
         ];
 

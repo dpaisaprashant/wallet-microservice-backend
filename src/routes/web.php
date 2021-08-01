@@ -129,6 +129,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/user/login-attempts/{id}', 'LockedUserController@loginAttempts')->name('user.login.attempts')->middleware('permission:Locked user login attempts view');
         Route::post('/user/update-login-attempt', 'LockedUserController@updateLoginAttempts')->name('user.loginAttemptsUpdate')->middleware('permission:Locked user login attempt enable');
 
+        //Unlock User Bulk Attempts
+        Route::post('/user/update-login-attempt-bulk/{id}', 'LockedUserController@updateLoginAttemptsBulk')->name('user.loginAttemptsUpdateBulk')->middleware('permission:Locked user login attempt enable');
+
         Route::get('/user/profile/filter/transaction', 'UserController@filterTransaction')->name('filter.profile.transaction');
 
         Route::post('/user/profile/user-graph-data', 'UserController@userYearlyGraph')->name('user.yearly.graph');
@@ -165,6 +168,13 @@ Route::group(['prefix' => 'admin'], function () {
          */
         Route::get('/banks/list', 'BankListController@bankList')->name('bankList')->middleware('permission:Bank list view');
         Route::get('/banks/profile', 'BankListController@profile')->name('bank.profile')->middleware('permission:Bank list profile');
+
+        /**
+         *
+         * Pre Transactions
+         */
+        Route::get('/PreTransaction','PreTransactionController@index')->name('preTransaction.view')->middleware('permission:View pre-transactions');
+
 
         /**
          * Transactions
@@ -225,7 +235,8 @@ Route::group(['prefix' => 'admin'], function () {
 
         //Khalti transaction report
 
-        Route::get('/transaction/khalti','TransactionController@khaltiTransaction')->name('khalti.transaction');
+        Route::get('/transaction/khalti','TransactionController@khaltiTransaction')->name('khalti.transaction')->middleware('permission:View khalti details');
+        Route::get('/transaction/khalti/{id}','TransactionController@khaltiSpecificDetail')->name('khalti.specific')->middleware('permission:View khalti detail page');
 
         /**
          * Clearance
@@ -474,5 +485,9 @@ Route::group(['prefix' => 'admin'], function () {
 
         //Contact Us
         Route::match(['get', 'post'],'frontend/contact-us', 'Frontend\ContactController@index')->name('frontend.contact')->middleware('permission:Frontend contact view');
+
+        //RequestInfo
+        Route::get('transaction/request-info', 'RequestInfoController@index')->name('requestinfo.index')->middleware('permission:View request info');
+
     });
 });

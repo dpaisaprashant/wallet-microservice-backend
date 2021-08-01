@@ -3,14 +3,14 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>All Transactions</h2>
+            <h2>All Requests</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Transactions</strong>
+                    <strong>Requests</strong>
                 </li>
 
                 <li class="breadcrumb-item active">

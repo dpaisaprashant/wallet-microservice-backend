@@ -200,7 +200,7 @@ $url = url()->current();
 
             @can('Architecture vendor transaction')
                 <li @if(preg_match('/vendor-transactions/i', $url)) class="active" @endif>
-                    <a href="#"><i class="fa fa-history"></i> <span class="nav-label">Wallet Vendors</span><span
+                    <a href="#"><i class="fa fa-history"></i> <span class="nav-label">Commission and Cashback</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         @foreach($walletVendors as $vendor)

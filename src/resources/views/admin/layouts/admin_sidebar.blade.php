@@ -544,11 +544,26 @@ $url = url()->current();
                 </li>
             @endif
 
+
+            @if(auth()->user()->hasAnyPermission(['View blocked ip', 'View whitelisted ip']))
+            <li @if(preg_match('/report/i', $url)) class="active" @endif>
+                <a href="#"><i class="fa fa-server"></i> <span class="nav-label">Block / Whitelist IPs</span><span
+                    class="fa arrow"></span></a>
+            <ul class="nav nav-second-level collapse">
             @can('View blocked ip')
             <li @if($url == route('blockedip.view')) class="active" @endif>
-                <a href="{{ route('blockedip.view') }}"><i class="fa fa-lock"></i> <span class="nav-label">Blocked IP</span></a>
+                <a href="{{ route('blockedip.view') }}"><i class="fa fa-lock"></i> <span class="nav-label">Block IP</span></a>
             </li>
             @endcan
+            @can('View whitelisted ip')
+            <li @if($url == route('whitelistedIP.view')) class="active" @endif>
+                <a href="{{ route('whitelistedIP.view') }}"><i class="fa fa-check-square"></i> <span class="nav-label">Whitelist IP</span></a>
+            </li>
+            @endcan
+            </ul>
+            </li>
+
+            @endif
 
             @if(auth()->user()->hasAnyPermission(['User session log view', 'Backend user log view' , 'Auditing log view', 'Profiling log view', 'Statistics log view', 'Development log view','Api log']))
                 <li @if(preg_match('/log/i', $url)) class="active" @endif>

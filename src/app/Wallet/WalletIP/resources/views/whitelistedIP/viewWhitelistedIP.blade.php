@@ -2,7 +2,7 @@
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Blocked IPs</h2>
+            <h2>Whitelisted IPs</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -23,7 +23,7 @@
                 <div class="ibox ">
                     <div class="ibox-title">
                         <h5>List of Whitelisted IPs</h5>
-                        @can('Add blocked ip')
+                        @can('Add whitelisted ip')
                             <a href="{{ route('whitelistedIP.create') }}" class="btn btn-sm btn-primary btn-xs"
                                style="float: right;margin-top: -5px;">Whitelist an IP</a>
                         @endcan
@@ -50,7 +50,7 @@
                                         <td> {{ $whitelistedIP->status }}</td>
                                         <td> {{ $whitelistedIP->created_at }}</td>                                                                      
                                         <td class="center">
-                                            @can('Delete blocked ip')                                           
+                                            @can('Delete whitelisted ip')                                           
                                             <form action="{{ route('whitelistedIP.delete',$whitelistedIP->id) }}" method="POST">
                                                 @csrf
                                                 <button                                                    
@@ -65,7 +65,7 @@
                                                     class="resetBtn btn btn-sm btn-danger m-t-n-xs">
                                                 <i class="fa fa-trash"></i></button>     
                                                    
-                                                @can('Edit blocked ip')                                            
+                                                @can('Edit whitelisted ip')                                            
                                                 <a href="{{ route('whitelistedIP.edit',$whitelistedIP->id)}}" class="btn btn-success btn-sm m-t-n-xs"><i class="fa fa-edit"></i></a>                                            
                                                 @endcan                                                              
                                             </form>                    

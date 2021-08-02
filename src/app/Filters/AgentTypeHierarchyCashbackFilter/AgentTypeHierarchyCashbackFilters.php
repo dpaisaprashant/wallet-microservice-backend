@@ -11,7 +11,8 @@ class AgentTypeHierarchyCashbackFilters extends FiltersAbstract
      * @var array
      */
     protected $filters = [
-        'agent_type' => AgentTypeFilter::class
+        'agent_type' => AgentTypeFilter::class,
+        'wallet_transaction_type_id' => WalletTransactionTypeFilter::class,
     ];
 
 

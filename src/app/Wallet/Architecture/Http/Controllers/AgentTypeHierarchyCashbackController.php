@@ -23,7 +23,8 @@ class AgentTypeHierarchyCashbackController extends Controller
     {
         $agentTypeHierarchyCashbacks = AgentTypeHierarchyCashback::filter(request())->with('agentType', 'parentAgentType', 'walletTransactionType')->orderBy('created_at', 'DESC')->get();
         $agentTypes = AgentType::orderBy('created_at','DESC')->get();
-        return view('Architecture::AgentTypeHierarchyCashback.viewAgentTypeHierarchyCashback', compact('agentTypeHierarchyCashbacks','agentTypes'));
+        $walletTransactionTypes = WalletTransactionType::orderBy('created_at','DESC')->get();
+        return view('Architecture::AgentTypeHierarchyCashback.viewAgentTypeHierarchyCashback', compact('agentTypeHierarchyCashbacks','agentTypes','walletTransactionTypes'));
     }
 
     public function update(Request $request)

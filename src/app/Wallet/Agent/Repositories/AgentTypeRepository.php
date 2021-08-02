@@ -6,9 +6,11 @@ namespace App\Wallet\Agent\Repositories;
 
 use App\Models\AgentType;
 use App\Models\Architecture\WalletTransactionType;
+use App\Models\Architecture\WalletTransactionTypeCashback;
 use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 
 class AgentTypeRepository
@@ -33,12 +35,28 @@ class AgentTypeRepository
         //create cashback for each wallet transaction type
         foreach ($walletTransactionTypes as $walletTransactionType) {
             //create row for cashback having no parent
-            $agentType->agentTypeHierarchyCashbacks()->create(['wallet_transaction_type_id' => $walletTransactionType->id]);
+
+            $title = null;
+            $cashbacks = WalletTransactionTypeCashback::where('wallet_transaction_type_id', $walletTransactionType->id)->get();
+            foreach ($cashbacks as $cashback) {
+                if (isset($cashback->title)) {
+                    Log::info("cashback has title", [$cashback]);
+                    $title = $cashback->title;
+                    break;
+                }
+            }
+
+
+            $agentType->agentTypeHierarchyCashbacks()->create([
+                'wallet_transaction_type_id' => $walletTransactionType->id,
+                'title' => $title
+            ]);
             //create cashback for each parent
             foreach ($allParentAgentTypesList as $parentAgentType) {
                 $agentType->agentTypeHierarchyCashbacks()->create([
                     'parent_agent_type_id' => $parentAgentType->id,
-                    'wallet_transaction_type_id' => $walletTransactionType->id
+                    'wallet_transaction_type_id' => $walletTransactionType->id,
+                    'title' => $title
                 ]);
             }
 

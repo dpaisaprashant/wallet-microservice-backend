@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Agent;
 use App\Models\AgentType;
 
+use App\Models\Architecture\AgentTypeHierarchyCashback;
 use App\Models\Architecture\WalletTransactionTypeCashback;
 use App\Models\Architecture\WalletTransactionTypeCommission;
 use App\Models\Setting;
@@ -124,6 +125,10 @@ class AgentTypeController extends Controller
 
             WalletTransactionTypeCommission::where('user_type', AgentType::class)
                 ->where('user_type_id', $agentType->id)
+                ->delete();
+
+            AgentTypeHierarchyCashback::where('agent_type_id', $agentType->id)
+                ->orWhere('parent_agent_type_id', $agentType->id)
                 ->delete();
 
             $agentType->delete();

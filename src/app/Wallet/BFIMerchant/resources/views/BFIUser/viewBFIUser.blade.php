@@ -135,7 +135,7 @@
                                             @can('View secret key')
                                                 @if(isset($bfiUser->UserApiDetail->secret_key) == true)
                                                     {{--                                            <a href="" id="secret-key" class="btn btn-icon btn-sm btn-warning"><i class="fa fa-eye"></i></a>--}}
-                                                    @include('admin.include.secret',['secret' => $bfiUser->UserApiDetail->secret_key])
+                                                    @include('BFIMerchant::include.secret',['secret' => $bfiUser->UserApiDetail->secret_key])
                                                 @endif
                                             @endcan
                                             @can('Add ip')

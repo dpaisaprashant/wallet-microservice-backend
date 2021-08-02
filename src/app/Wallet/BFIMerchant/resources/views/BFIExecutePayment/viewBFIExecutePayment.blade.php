@@ -322,7 +322,7 @@
                                         </td>
 
                                         <td>
-                                            @include('admin.include.BfiExecutePayment.bfiExecutePaymentInfo',[
+                                            @include('BFIMerchant::include.BfiExecutePayment.bfiExecutePaymentInfo',[
                                                     'id'=>$bfiExecutePayment->id,
                                                     'bank_transaction_id'=>$bfiExecutePayment->bank_transaction_id,
                                                     'bank_transaction_date'=>$bfiExecutePayment->bank_transaction_date,
@@ -331,17 +331,17 @@
                                                     'remarks'=>$bfiExecutePayment->remarks])
                                         </td>
                                         <td>
-                                            @include('admin.include.BfiExecutePayment.requestFromBfi',['id'=>$bfiExecutePayment->id,'request_from_bfi'=>$bfiExecutePayment->request_from_bfi])
+                                            @include('BFIMerchant::include.BfiExecutePayment.requestFromBfi',['id'=>$bfiExecutePayment->id,'request_from_bfi'=>$bfiExecutePayment->request_from_bfi])
                                         </td>
                                         <td>
-                                            @include('admin.include.BfiExecutePayment.responseToBfi',['id'=>$bfiExecutePayment->id,'response_to_bfi'=>$bfiExecutePayment->response_to_bfi])
+                                            @include('BFIMerchant::include.BfiExecutePayment.responseToBfi',['id'=>$bfiExecutePayment->id,'response_to_bfi'=>$bfiExecutePayment->response_to_bfi])
                                         </td>
                                         <td>
-                                            @include('admin.include.BfiExecutePayment.requestToWallet',['id'=>$bfiExecutePayment->id,'request_to_wallet'=>$bfiExecutePayment->request_to_wallet])
+                                            @include('BFIMerchant::include.BfiExecutePayment.requestToWallet',['id'=>$bfiExecutePayment->id,'request_to_wallet'=>$bfiExecutePayment->request_to_wallet])
 
                                         </td>
                                         <td>
-                                            @include('admin.include.BfiExecutePayment.responseFromWallet',['id'=>$bfiExecutePayment->id,'response_from_wallet'=>$bfiExecutePayment->response_from_wallet])
+                                            @include('BFIMerchant::include.BfiExecutePayment.responseFromWallet',['id'=>$bfiExecutePayment->id,'response_from_wallet'=>$bfiExecutePayment->response_from_wallet])
 
                                         </td>
 

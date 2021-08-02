@@ -21,4 +21,8 @@ class PreTransaction extends Model
         return (new PreTransactionFilters($request))->add($filters)->filter($builder);
     }
 
+    public function UserToBFIFundTransfer(){
+        return $this->hasMany(UserToBfiFundTransfer::class,'from_pre_transaction_id','pre_transaction_id');
+    }
+
 }

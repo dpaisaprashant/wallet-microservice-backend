@@ -35,20 +35,53 @@
                     <div class="ibox-content">
                         <div class="row">
                             <div class="col-sm-12">
-                                <form role="form" method="get" action="{{ route('view.agent.type.hierarchy.cashback') }}" id="filter">
+                                <form role="form" method="get"
+                                      action="{{ route('view.agent.type.hierarchy.cashback') }}" id="filter">
                                     <div class="row">
 
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <select data-placeholder="Sort By..." class="chosen-select" tabindex="2"
                                                         name="agent_type">
                                                     <option value="" selected disabled>-- Agent Type --</option>
                                                     @foreach($agentTypes as $key=>$agentType)
-                                                        <option value="{{ $agentType->id }}">{{ $agentType->name }}</option>
+                                                        <option value="{{ $agentType->id }}"
+                                                                @if(isset($_GET['agent_type']) == true)
+                                                                @if($_GET['agent_type'] == $agentType->id)
+                                                                selected
+                                                            @endif
+                                                            @endif
+                                                        >{{ $agentType->name }}</option>
                                                     @endforeach
-
                                                 </select>
+                                            </div>
+                                        </div>
 
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <select data-placeholder="Sort By..." class="chosen-select" tabindex="2"
+                                                        name="wallet_transaction_type_id">
+                                                    <option value="" selected disabled>-- Wallet transaction type --
+                                                    </option>
+                                                    @foreach($walletTransactionTypes as $key=>$walletTransactionType)
+                                                        <option value="{{ $walletTransactionType->id }}"
+                                                                @if(isset($_GET['wallet_transaction_type_id']) == true)
+                                                                @if($_GET['wallet_transaction_type_id'] == $walletTransactionType->id)
+                                                                selected
+                                                            @endif
+                                                            @endif
+                                                        >
+                                                            Vendor : {{ $walletTransactionType->vendor }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            @if($walletTransactionType->service != null)
+                                                                Service : {{ $walletTransactionType->service }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                @elseif($walletTransactionType->service == null && $walletTransactionType->service_type != null)
+                                                                Service Type : {{ $walletTransactionType->service_type }}
+                                                                @elseif($walletTransactionType->service_type == null && $walletTransactionType->transaction_category != null)
+                                                                Transaction Category : {{ $walletTransactionType->transaction_category }}
+                                                            @endif
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
 
@@ -126,10 +159,10 @@
                                                 @if($agentTypeHierarchyCashback->walletTransactionType->service != null)
                                                     <b>Service</b>
                                                     : {{ $agentTypeHierarchyCashback->walletTransactionType->service }}
-                                                @elseif($agentTypeHierarchyCashback->walletTransactionType->service == null)
+                                                @elseif($agentTypeHierarchyCashback->walletTransactionType->service == null && $agentTypeHierarchyCashback->walletTransactionType->service_type != null)
                                                     <b>Service Type</b>
                                                     : {{$agentTypeHierarchyCashback->walletTransactionType->service_type}}
-                                                @elseif($agentTypeHierarchyCashback->walletTransactionType->service_type == null)
+                                                @elseif($agentTypeHierarchyCashback->walletTransactionType->service_type == null && $agentTypeHierarchyCashback->walletTransactionType->transaction_category != null)
                                                     <b>Transaction Category</b>
                                                     : {{ $agentTypeHierarchyCashback->walletTransactionType->transaction_category }}
                                                 @endif

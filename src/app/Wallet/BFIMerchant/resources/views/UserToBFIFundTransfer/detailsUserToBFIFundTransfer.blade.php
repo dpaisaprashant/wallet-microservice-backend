@@ -154,9 +154,9 @@
                                                                     <span class="badge badge-success">Processing</span>
                                                                     <br>
                                                                 @endif
-                                                                @if(isset($userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment->purpose) == true)
+                                                                @if(isset(optional($userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment)->purpose) == true)
                                                                     <strong>Purpose
-                                                                        : </strong>{{ $userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment->purpose }}
+                                                                        : </strong>{{ optional($userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment)->purpose }}
                                                                     <br>
                                                                 @endif
                                                                 @if(isset($userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment->transaction_detail) == true)

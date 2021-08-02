@@ -12,6 +12,7 @@ use App\Models\TransactionEvent;
 use App\Models\UserCheckPayment;
 use App\Models\UserExecutePayment;
 use App\Models\UserLoadTransaction;
+use App\Models\UserToBfiFundTransfer;
 use App\Models\UserTransaction;
 use App\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Builder;
@@ -94,4 +95,9 @@ class PreTransaction extends Model
     public function nicAsiaCyberSourceLoad(){
         return $this->hasOne(NICAsiaCyberSourceLoadTransaction::class,'pre_transaction_id','pre_transaction_id');
     }
+
+    public function UserToBFIFundTransfer(){
+        return $this->hasOne(UserToBfiFundTransfer::class,'from_pre_transaction_id','pre_transaction_id');
+    }
+
 }

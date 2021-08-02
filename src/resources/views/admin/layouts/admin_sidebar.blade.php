@@ -271,9 +271,9 @@ $url = url()->current();
                         @can('Agent view')
                             <li><a href="{{ route('agent.view') }}">View Agent</a></li>
                         @endcan
-                        @can('Agent create')
+                        {{--@can('Agent create')
                             <li><a href="{{ route('agent.create') }}">Create Agent</a></li>
-                        @endcan
+                        @endcan--}}
                     </ul>
                 </li>
             @endif

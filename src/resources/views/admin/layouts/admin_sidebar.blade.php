@@ -200,7 +200,7 @@ $url = url()->current();
 
             @can('Architecture vendor transaction')
                 <li @if(preg_match('/vendor-transactions/i', $url)) class="active" @endif>
-                    <a href="#"><i class="fa fa-history"></i> <span class="nav-label">Wallet Vendors</span><span
+                    <a href="#"><i class="fa fa-history"></i> <span class="nav-label">Commission and Cashback</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         @foreach($walletVendors as $vendor)
@@ -257,12 +257,11 @@ $url = url()->current();
             @endif
 
 
-
-            {{--            @can('View wallet transaction type')--}}
-            {{--                <li @if(preg_match('/vendor-transactions/i', $url)) class="active" @endif>--}}
-            {{--                    <a href="{{route('wallet.service.view')}}"><i class="fa fa-history"></i> <span class="nav-label">Wallet Services</span></a>--}}
-            {{--                </li>--}}
-            {{--            @endcan--}}
+            @can('View wallet service')
+                <li @if($url == route('wallet.service.view')) class="active" @endif>
+                    <a href="{{route('wallet.service.view')}}"><i class="fa fa-history"></i> <span class="nav-label">Wallet Services</span></a>
+                </li>
+            @endcan
 
             @if(auth()->user()->hasPermissionTo('Agent view') || auth()->user()->hasPermissionTo('Agent create'))
                 <li @if($url == route('agent.view') || $url == route('agent.create')) class="active" @endif>
@@ -354,6 +353,16 @@ $url = url()->current();
             @endif
 
 
+
+               @can('View pre-transactions')
+                <li @if($url == route('preTransaction.view')) class="active" @endif>
+                    <a href="{{route('preTransaction.view')}}"><i class="fa fa-handshake-o"></i> <span
+                            class="nav-label">Pre Transactions</span></a>
+                </li>
+                @endcan
+
+
+
             @if(auth()->user()->hasAnyPermission(['Complete transaction view', 'Fund transfer view', 'Fund request view', 'EBanking view', 'Paypoint view','Transaction nps view','Transaction nchl bank transfer','Transaction nchl load','Nicasia cybersource load transaction']))
                 <li @if($url == route('transaction.complete') || $url == route('transaction.userToUserFundTransfer') || $url == route('fundRequest') || $url == route('eBanking') || $url == route('paypoint'))class="active" @endif>
                     <a href="#"><i class="fa fa-credit-card"></i> <span class="nav-label">Transactions</span><span
@@ -379,11 +388,13 @@ $url = url()->current();
                             <li><a href="{{ route('nps') }}">Nps Web/Mobile Banking</a></li>
                         @endcan
 
-                        {{--@can('Paypoint view')
-                            <li><a href="{{ route('khalti.transaction') }}">Khalti</a></li>
-                        @endcan('Paypoint view')
-
+                        @can('View khalti details')
                         <li><a href="{{ route('khalti.transaction') }}">Khalti</a></li>
+                        @endcan
+
+                        {{--@can('Paypoint view')
+                            <li><a href="{{ route('paypoint') }}">Paypoint Transactions</a></li>
+                        @endcan--}}
 
                         @can('Transaction nchl load')
                             <li><a href="{{ route('nchl.loadTransaction') }}">NCHL Load</a></li>
@@ -392,8 +403,13 @@ $url = url()->current();
                             <li><a href="{{ route('nchl.bankTransfer') }}">NCHL Bank Transfer</a></li>
                         @endcan
                         @can('Nicasia cybersource load transaction')
-                            <li><a href="{{ route('nicasia.cyberSourceLoad') }}">All card load transaction</a></li>
-                        @endcan--}}
+                            <li><a href="{{ route('nicasia.cyberSourceLoad') }}">All card load transaction</a></li
+                        @endcan
+
+                        @can('View request info')
+                            <li><a href="{{ route('requestinfo.index') }}">View Requests Info</a></li>
+                        @endcan
+
                     </ul>
                 </li>
             @endif
@@ -492,9 +508,9 @@ $url = url()->current();
                         @can('Yearly report view')
                             <li><a href="{{ route('report.yearly') }}">Yearly Report</a></li>
                         @endcan
-                        @can('Report paypoint')
+                        {{--@can('Report paypoint')
                             <li><a href="{{ route('report.paypoint') }}">PayPoint Report</a></li>
-                        @endcan
+                        @endcan--}}
                         @can('Report npay')
                             <li><a href="{{ route('report.npay') }}">NPay Report</a></li>
                         @endcan
@@ -540,6 +556,12 @@ $url = url()->current();
                     </ul>
                 </li>
             @endif
+
+            @can('View blocked ip')
+            <li @if($url == route('blockedip.view')) class="active" @endif>
+                <a href="{{ route('blockedip.view') }}"><i class="fa fa-lock"></i> <span class="nav-label">Blocked IP</span></a>
+            </li>
+            @endcan
 
             @if(auth()->user()->hasAnyPermission(['User session log view', 'Backend user log view' , 'Auditing log view', 'Profiling log view', 'Statistics log view', 'Development log view','Api log']))
                 <li @if(preg_match('/log/i', $url)) class="active" @endif>
@@ -669,9 +691,10 @@ $url = url()->current();
                             <li><a href="{{ route('settings.nps') }}">NPS Setting</a></li>
                         @endcan
 
-                        @can('Paypoint setting view')
+                        {{--@can('Paypoint setting view')
                             <li><a href="{{ route('settings.paypoint') }}">Paypoint Setting</a></li>
-                        @endcan
+                        @endcan--}}
+
                         @can('Nchl load setting view')
                             <li><a href="{{ route('settings.nchl.load') }}">NCHL Load Setting</a></li>
                         @endcan

@@ -176,6 +176,7 @@ class TransactionController extends Controller
     public function khaltiPaymentDetail($id, KhaltiRepository $repository)
     {
         $transaction = $repository->detail($id);
+
         return view('admin.transaction.detail.khaltiDetail')->with(compact('transaction'));
     }
 
@@ -223,5 +224,10 @@ class TransactionController extends Controller
         }
         $vendorNames = $repository->getVendorName();
         return view('admin.transaction.khalti')->with(compact('vendorNames'));
+    }
+
+    public function khaltiSpecificDetail($id){
+        $khaltiTransaction = KhaltiUserTransaction::with('preTransaction')->find($id);
+        return view('admin.transaction.khalti.details',compact('khaltiTransaction'));
     }
 }

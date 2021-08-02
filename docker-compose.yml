@@ -14,7 +14,6 @@ networks:
     external: true
 
 
-
 services:
   site:
     build:
@@ -99,6 +98,7 @@ services:
       - wallet-microservice-nps_laravel
       - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paymentnepal_spring-boot-mysql-network
+
     entrypoint: ['composer', '--ignore-platform-reqs']
 
   artisan:
@@ -120,7 +120,6 @@ services:
       - wallet-microservice-nps_laravel
       - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paymentnepal_spring-boot-mysql-network
-      - wallet-microservice-merchant_laravel
 
   phpmyadmin:
     depends_on:
@@ -140,6 +139,7 @@ services:
       - wallet-microservice-nps_laravel
       - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paymentnepal_spring-boot-mysql-network
+
 
   mongo:
     container_name: mongo-backend

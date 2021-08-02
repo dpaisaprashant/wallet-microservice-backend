@@ -40,7 +40,7 @@ class UserController extends Controller
 
     private function allAudits($user, $request)
     {
-        $IBehaviour = new BAll();
+        $IBehaviour = new BAll(); //get audit data from all transactions/user activity tables
         $auditTrial = new AuditTrial($IBehaviour);
         return $this->collectionPaginate(50, $auditTrial->setRequest($request)->createTrial($user), $request, 'all-audit-trials');
     }

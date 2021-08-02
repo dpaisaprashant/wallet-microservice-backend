@@ -31,6 +31,8 @@ class AgentTypeFilter extends FilterAbstract {
             return $builder;
         }
 
-        return $builder->where('agent_type_id',$value)->orWhere('parent_agent_type_id',$value);
+        return $builder->where(function($query) use ($value){
+            $query->where('agent_type_id',$value)->orWhere('parent_agent_type_id',$value);
+        });
     }
 }

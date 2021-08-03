@@ -81,7 +81,7 @@
                     <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button>
                 </a>
             @endif
-            @elseif($event->microservice_type == 'NCHL' && $event->service_type == 'BANK_TRANSFER')
+  {{--          @elseif($event->microservice_type == 'NCHL' && $event->service_type == 'BANK_TRANSFER')
                 @if(!empty($event->nchlBankTransfer))
                     @include('admin.transaction.nchlBankTransfer.response', ['transaction' => $event->nchlBankTransfer])
                     <a href="{{ route('nchl.bankTransfer.detail', $event->nchlBankTransfer->id) }}">
@@ -94,7 +94,7 @@
                     <a href="{{ route('nchl.loadTransaction.detail', $event->nchlLoadTransaction->id) }}">
                         <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button>
                     </a>
-                @endif
+                @endif--}}
         @elseif($event->microservice_type == 'KHALTI')
             @if(!empty($event->khaltiUserTransaction))
                 <a href="{{ route('khalti.payment.detail', $event->khaltiUserTransaction->id) }}">

@@ -224,7 +224,8 @@
                     <ul class="nav nav-tabs" role="tablist">
                         <li><a class="nav-link @if($activeTab == 'kyc') active @endif" data-toggle="tab" href="#kyc">
                                 KYC</a></li>
-                        @if($user->agentStatus())
+
+                        @if($user->agent())
                             <li><a class="nav-link @if($activeTab == 'agent') active @endif" data-toggle="tab"
                                    href="#agent"> Agent</a></li>
                         @endif
@@ -267,7 +268,7 @@
                     </ul>
                     <div class="tab-content">
                         @include('admin.user.profile.tabs.kyc')
-                        @if($user->agentStatus())
+                        @if($user->agent())
                             @include('admin.user.profile.tabs.agent')
                         @endif
                         @if(isset($user->merchant))

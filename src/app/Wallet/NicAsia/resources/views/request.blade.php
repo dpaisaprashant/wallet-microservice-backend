@@ -1,6 +1,6 @@
-@if(!empty($transaction->json_request))
-    <a data-toggle="modal" href="#modal-form-nicasia-cybersource-request{{$transaction->id}}"><button class="btn btn-warning btn-icon" type="button"><i class="fa fa-info"></i></button></a>
-    <div id="modal-form-nicasia-cybersource-request{{ $transaction->id }}" class="modal fade" aria-hidden="true">
+@if(!empty($NicTransaction->json_request))
+    <a data-toggle="modal" href="#modal-form-nicasia-cybersource-request{{$NicTransaction->id}}"><button class="btn btn-warning btn-icon" type="button"><i class="fa fa-info"></i></button></a>
+    <div id="modal-form-nicasia-cybersource-request{{ $NicTransaction->id }}" class="modal fade" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
@@ -11,7 +11,7 @@
                             <dl class="row m-t-md">
 
                                 <?php
-                                    $request =  json_decode($transaction->json_request, true);
+                                    $request =  json_decode($NicTransaction->json_request, true);
                                 ?>
 
 

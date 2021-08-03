@@ -332,6 +332,11 @@ class RolesAndPermissionsSeeder extends Seeder
             'View bfi to user fund transfer',
             'View user to bfi fund transfer',
 
+            // NicAsia
+            'Nicasia cybersource view',
+
+            //Cellpay
+            'Cellpay user transaction view',
 
             ];
 

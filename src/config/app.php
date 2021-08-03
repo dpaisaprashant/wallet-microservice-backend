@@ -189,6 +189,7 @@ return [
         App\Wallet\WalletIP\WalletIPServiceProvider::class,
         App\Wallet\CellPayUserTransaction\CellPayUserTransactionServiceProvider::class,
         App\Wallet\Microservice\MicroserviceServiceProvider::class,
+        App\Wallet\NicAsia\NICAsiaCyberSourceLoadTransactionServiceProvider::class,
 
 
     ],

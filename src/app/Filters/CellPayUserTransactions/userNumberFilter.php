@@ -31,8 +31,13 @@ class userNumberFilter extends FilterAbstract {
         if ($value === null) {
             return $builder;
         }
-
-        $user = User::where('mobile_no',$value)->pluck('id');
+//        dd($value);
+//        return $builder->whereHas('preTransaction',function($query) use ($value){
+//            $query->whereHas('user',function ($query) use ($value){
+//                return $query->where('mobile_no',$value);
+//            });
+//        });
+        $user = User::has('preTransaction')->where('mobile_no',$value)->pluck('id');
         $preTransactions = PreTransaction::where('user_id',$user)->pluck('pre_transaction_id');
 //        dd($pretransactions);
         return $builder->whereIn('reference_no', $preTransactions);

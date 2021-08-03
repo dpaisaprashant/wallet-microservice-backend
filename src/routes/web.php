@@ -209,9 +209,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/transaction/nchl-load-transaction', 'TransactionController@nchlLoadTransaction')->name('nchl.loadTransaction')->middleware('permission:Transaction nchl load');
         Route::get('transaction/nchl-load-transaction/detail/{id}', 'TransactionController@nchlLoadTransactionDetail')->name('nchl.loadTransaction.detail');
 
-        //NicAsia CyberSource
-        Route::get('transaction/nicasia-cybesource-load-transaction','TransactionController@nicAsiaCyberSourceLoad')->name('nicasia.cyberSourceLoad')->middleware('permission:Nicasia cybersource load transaction');
-        Route::get('transaction/nicasia-cybesource-load-transaction/detail/{id}', 'TransactionController@nicAsiaCyberSourceLoadDetail')->name('nicasia.cyberSourceLoadTransaction.detail');
+//        //NicAsia CyberSource
+//        Route::get('transaction/nicasia-cybesource-load-transaction','TransactionController@nicAsiaCyberSourceLoad')->name('nicasia.cyberSourceLoad')->middleware('permission:Nicasia cybersource load transaction');
+//        Route::get('transaction/nicasia-cybesource-load-transaction/detail/{id}', 'TransactionController@nicAsiaCyberSourceLoadDetail')->name('nicasia.cyberSourceLoadTransaction.detail');
 
         //Khalti
         Route::get('transaction/khalti-payment-transaction/detail/{id}', 'TransactionController@khaltiPaymentDetail')->name('khalti.payment.detail');

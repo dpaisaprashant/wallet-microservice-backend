@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filters\PreTransactionFilters;
+namespace App\Filters\CellPayUserTransactions;
 
 use App\Filters\FilterAbstract;
 use Illuminate\Database\Eloquent\Builder;
 
-class PreTransactionVendorFilter extends FilterAbstract {
+class statusFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -29,6 +29,14 @@ class PreTransactionVendorFilter extends FilterAbstract {
         if ($value === null) {
             return $builder;
         }
-        return $builder->where('vendor',$value);
+        if ($value == "true"){
+            return $builder->where("status","true");
+        }
+        elseif($value == "false"){
+            return $builder->where("status","false");
+        }
+        elseif($value == "null"){
+            return $builder->where("status",null);
+        }
     }
 }

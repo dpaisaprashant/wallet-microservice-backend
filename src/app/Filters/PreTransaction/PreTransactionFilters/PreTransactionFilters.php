@@ -1,6 +1,5 @@
 <?php
-namespace App\Filters\PreTransactionFilters;
-
+namespace App\Filters\PreTransaction\PreTransactionFilters;
 use App\Filters\FiltersAbstract;
 
 class PreTransactionFilters extends FiltersAbstract
@@ -11,7 +10,7 @@ class PreTransactionFilters extends FiltersAbstract
      * @var array
      */
     protected $filters = [
-        'user_id' => UsersFilter::class,
+        'user_number' => UsersFilter::class,
         'pre_transaction_id' => PreTransactionIdFilter::class,
         'vendor'=>PreTransactionVendorFilter::class,
         'status'=>PreTransactionStatusFilter::class,

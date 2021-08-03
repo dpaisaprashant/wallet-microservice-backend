@@ -168,10 +168,7 @@ Route::group(['prefix' => 'admin'], function () {
 
         /**
          *
-         * Pre Transactions
-         */
-        Route::get('/PreTransaction','PreTransactionController@index')->name('preTransaction.view')->middleware('permission:View pre-transactions');
-
+         *
 
         /**
          * Transactions

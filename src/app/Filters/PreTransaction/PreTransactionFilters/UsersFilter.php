@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Filters\PreTransactionFilters;
+namespace App\Filters\PreTransaction\PreTransactionFilters;
+
 
 use App\Filters\FilterAbstract;
 use Illuminate\Database\Eloquent\Builder;
 
-class FromPreTransactionAmountFilter extends FilterAbstract {
+class UsersFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -29,6 +30,6 @@ class FromPreTransactionAmountFilter extends FilterAbstract {
         if ($value === null) {
             return $builder;
         }
-        return $builder->where('amount' ,'>=' ,$value*100);
+        return $builder->where('user_id',$value);
     }
 }

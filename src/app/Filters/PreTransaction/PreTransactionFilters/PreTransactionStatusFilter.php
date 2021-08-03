@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Filters\PreTransactionFilters;
+namespace App\Filters\PreTransaction\PreTransactionFilters;
+
 
 use App\Filters\FilterAbstract;
 use Illuminate\Database\Eloquent\Builder;

@@ -2,7 +2,8 @@
 
 namespace App\Models\Microservice;
 
-use App\Filters\PreTransaction\PreTransactionFilters;
+use App\Filters\PreTransaction\PreTransactionFilters\PreTransactionFilters;
+use App\Models\CellPayUserTransaction;
 use App\Models\KhaltiUserTransaction;
 use App\Models\LoadTestFund;
 use App\Models\NchlBankTransfer;
@@ -93,5 +94,9 @@ class PreTransaction extends Model
 
     public function nicAsiaCyberSourceLoad(){
         return $this->hasOne(NICAsiaCyberSourceLoadTransaction::class,'pre_transaction_id','pre_transaction_id');
+    }
+
+    public function cellPayUserTransaction(){
+        return $this->hasOne(CellPayUserTransaction::class,'reference_no','pre_transaction_id');
     }
 }

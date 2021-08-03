@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Filters\PreTransactionFilters;
+namespace App\Filters\PreTransaction\PreTransactionFilters;
+
 
 use App\Filters\FilterAbstract;
 use Illuminate\Database\Eloquent\Builder;
 
-class PreTransactionServiceTypeFilter extends FilterAbstract {
+class PreTransactionVendorFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -29,6 +30,6 @@ class PreTransactionServiceTypeFilter extends FilterAbstract {
         if ($value === null) {
             return $builder;
         }
-        return $builder->where('service_type',$value);
+        return $builder->where('vendor',$value);
     }
 }

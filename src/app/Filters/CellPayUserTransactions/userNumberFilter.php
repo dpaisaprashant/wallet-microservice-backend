@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Filters\PreTransactionFilters;
+namespace App\Filters\CellPayUserTransactions;
 
 use App\Filters\FilterAbstract;
+use App\Models\Microservice\PreTransaction;
 use Illuminate\Database\Eloquent\Builder;
+use App\Models\User;
 
-class PreTransactionIdFilter extends FilterAbstract {
+class userNumberFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -29,6 +31,10 @@ class PreTransactionIdFilter extends FilterAbstract {
         if ($value === null) {
             return $builder;
         }
-        return $builder->where('pre_transaction_id',$value);
+
+        $user = User::where('mobile_no',$value)->pluck('id');
+        $preTransactions = PreTransaction::where('user_id',$user)->pluck('pre_transaction_id');
+//        dd($pretransactions);
+        return $builder->whereIn('reference_no', $preTransactions);
     }
 }

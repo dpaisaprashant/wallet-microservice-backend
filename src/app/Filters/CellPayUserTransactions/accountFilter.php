@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filters\PreTransactionFilters;
+namespace App\Filters\CellPayUserTransactions;
 
 use App\Filters\FilterAbstract;
 use Illuminate\Database\Eloquent\Builder;
 
-class UsersFilter extends FilterAbstract {
+class accountFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -29,6 +29,6 @@ class UsersFilter extends FilterAbstract {
         if ($value === null) {
             return $builder;
         }
-        return $builder->where('user_id',$value);
+        return $builder->where('account',$value);
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filters\PreTransactionFilters;
+namespace App\Filters\CellPayUserTransactions;
 
 use App\Filters\FilterAbstract;
 use Illuminate\Database\Eloquent\Builder;
 
-class ToPreTransactionAmountFilter extends FilterAbstract {
+class sortFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -25,10 +25,16 @@ class ToPreTransactionAmountFilter extends FilterAbstract {
      */
     public function filter(Builder $builder, $value)
     {
-        //$value = $this->resolveFilterValue($value);
+
         if ($value === null) {
-            return $builder;
+            return $builder->latest();
         }
-        return $builder->where('amount' ,'<=' ,$value*100);
+
+        if ($value == "amount") {
+            return $builder->orderBy('amount','DESC')->get();
+        }
+        elseif($value  == "date"){
+            return $builder->orderBy('created_at','DESC')->get();
+        }
     }
 }

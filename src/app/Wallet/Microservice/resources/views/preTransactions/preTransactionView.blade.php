@@ -36,20 +36,35 @@
                                 <form role="form" method="get">
 
                                     <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <input type="text" name="user_id" placeholder="Enter User Id"
-                                                       class="form-control"
-                                                       value="{{ !empty($_GET['user_id']) ? $_GET['user_id'] : '' }}">
-                                            </div>
+                                        <div class="col-md-6">
+                                            <label for="user_number">User Number</label>
+                                            <select data-placeholder="Select User Number" class="chosen-select"
+                                                    tabindex="2" name="user_number">
+                                                <option value="" selected disabled>Select User Number...</option>
+                                                <option value="">All</option>
+                                                @if(!empty($_GET['user_number']))
+                                                    @foreach($usersUnique as $userUnique)
+                                                                    <option value="{{$userUnique->id}}"
+                                                                            @if($_GET['user_number']  == $userUnique->id) selected @endif >{{$userUnique->mobile_no}}</option>
+                                                    @endforeach
+                                                @else
+                                                    @foreach($usersUnique as $userUnique)
+                                                        <option value="{{$userUnique->id}}">{{$userUnique->mobile_no}}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
                                         </div>
-                                        <div class="col-md-4">
+
+                                        <div class="col-md-6">
                                             <div class="form-group">
+                                                <label for="pre_transaction_id">Enter Pre-Transaction ID</label>
                                                 <input type="text" name="pre_transaction_id" placeholder="Enter Pre Transaction ID"
                                                        class="form-control"
                                                        value="{{ !empty($_GET['pre_transaction_id']) ? $_GET['pre_transaction_id'] : '' }}">
                                             </div>
                                         </div>
+
+
 
 
 {{--                                        <div class="col-md-3">--}}
@@ -58,34 +73,7 @@
 {{--                                                   value="{{ !empty($_GET['email']) ? $_GET['email'] : '' }}">--}}
 {{--                                        </div>--}}
 
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <select data-placeholder="Select Pre-Transaction status..."
-                                                        class="chosen-select" tabindex="2" name="status">
-                                                    <option value="" selected disabled>Select Status: </option>
-                                                    <option value="">All</option>
-                                                    @if(!empty($_GET['status']))
-                                                        <option value="SUCCESS"
-                                                                @if($_GET['status']  == 'SUCCESS') selected @endif >
-                                                            SUCCESS
-                                                        </option>
-                                                        <option value="FAILED"
-                                                                @if($_GET['status'] == 'FAILED') selected @endif>
-                                                            FAILED
-                                                        </option>
-                                                        <option value=""
-                                                                @if($_GET['status'] == "NULL") selected @endif>
-                                                            NULL
-                                                        </option>
-                                                    @else
-                                                        <option value="SUCCESS">SUCCESS</option>
-                                                        <option value="FAILED">FAILED</option>
-                                                        <option value="NULL">NULL</option>
 
-                                                    @endif
-                                                </select>
-                                            </div>
-                                        </div>
 
                                         <div class="col-md-3">
                                             <div class="form-group">
@@ -206,29 +194,58 @@
                                             </div>
                                         </div>
 
+{{--                                        <div class="col-md-3">--}}
+{{--                                            <div class="form-group">--}}
+{{--                                                <select data-placeholder="Sort By..." class="chosen-select" tabindex="2"--}}
+{{--                                                        name="sort">--}}
+{{--                                                    <option value="">All</option>--}}
+{{--                                                    <option value="" selected disabled>Sort By...</option>--}}
+{{--                                                    @if(!empty($_GET['sort']))--}}
+{{--                                                        <option value="date"--}}
+{{--                                                                @if($_GET['sort'] == 'date') selected @endif>Latest Date--}}
+{{--                                                        </option>--}}
+{{--                                                        <option value="amount"--}}
+{{--                                                                @if($_GET['sort'] == 'amount') selected @endif>Highest--}}
+{{--                                                            amount--}}
+{{--                                                        </option>--}}
+{{--                                                    @else--}}
+{{--                                                        <option value="date">Latest Date</option>--}}
+{{--                                                        <option value="amount">Amount</option>--}}
+{{--                                                    @endif--}}
+{{--                                                </select>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+
+
+
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <select data-placeholder="Sort By..." class="chosen-select" tabindex="2"
-                                                        name="sort">
+                                                <select data-placeholder="Select Pre-Transaction status..."
+                                                        class="chosen-select" tabindex="2" name="status">
+                                                    <option value="" selected disabled>Select Status: </option>
                                                     <option value="">All</option>
-                                                    <option value="" selected disabled>Sort By...</option>
-                                                    @if(!empty($_GET['sort']))
-                                                        <option value="date"
-                                                                @if($_GET['sort'] == 'date') selected @endif>Latest Date
+                                                    @if(!empty($_GET['status']))
+                                                        <option value="SUCCESS"
+                                                                @if($_GET['status']  == 'SUCCESS') selected @endif >
+                                                            SUCCESS
                                                         </option>
-                                                        <option value="amount"
-                                                                @if($_GET['sort'] == 'amount') selected @endif>Highest
-                                                            amount
+                                                        <option value="FAILED"
+                                                                @if($_GET['status'] == 'FAILED') selected @endif>
+                                                            FAILED
+                                                        </option>
+                                                        <option value=""
+                                                                @if($_GET['status'] == "NULL") selected @endif>
+                                                            NULL
                                                         </option>
                                                     @else
-                                                        <option value="date">Latest Date</option>
-                                                        <option value="amount">Amount</option>
+                                                        <option value="SUCCESS">SUCCESS</option>
+                                                        <option value="FAILED">FAILED</option>
+                                                        <option value="NULL">NULL</option>
+
                                                     @endif
                                                 </select>
                                             </div>
                                         </div>
-
-
 
                                         <div class="col-md-10">
                                             <label for="transaction_number">Pre Transaction Amount</label>
@@ -298,7 +315,7 @@
                             <thead>
                                 <tr>
                                     <th>S.No.</th>
-                                    <th>UID</th>
+                                    <th>User Number</th>
                                     <th>Pre Transaction ID</th>
                                     <th>Amount</th>
                                     <th>Description</th>
@@ -320,7 +337,13 @@
                             @foreach($preTransactions as $preTransaction)
                                     <tr class="gradeC">
                                             <td>{{ $loop->index + ($preTransactions->perPage() * ($preTransactions->currentPage() - 1)) + 1 }}</td>
-                                            <td>{{ $preTransaction->user_id }}</td>
+                                            <td>
+                                                @foreach($users as $user)
+                                                    @if($user->id == $preTransaction->user_id)
+                                                        {{$user->mobile_no}}
+                                                    @endif
+                                                @endforeach
+                                            </td>
                                             <td>{{ $preTransaction->pre_transaction_id }}</td>
                                             <td>Rs. {{$preTransaction->amount}}</td>
                                             <td>{{$preTransaction->description}}</td>
@@ -349,10 +372,10 @@
                                                 @endif
                                             </td>
                                             <td>
-                                            @include('admin.preTransaction.preTransactionJsonRequest', ['preTransaction' => $preTransaction])
-                                            @include('admin.preTransaction.preTransactionJsonResponse', ['preTransaction' => $preTransaction])
-                                            @include('admin.preTransaction.preTransactionRequestParameter', ['preTransaction' => $preTransaction])
-                                            @include('admin.preTransaction.preTransactionSpecials', ['preTransaction' => $preTransaction])
+                                            @include('Microservice::preTransactions.preTransactionJsonRequest', ['preTransaction' => $preTransaction])
+                                            @include('Microservice::preTransactions.preTransactionJsonResponse', ['preTransaction' => $preTransaction])
+                                            @include('Microservice::preTransactions.preTransactionRequestParameter', ['preTransaction' => $preTransaction])
+                                            @include('Microservice::preTransactions.preTransactionSpecials', ['preTransaction' => $preTransaction])
 
                                             </td>
                                         </tr>

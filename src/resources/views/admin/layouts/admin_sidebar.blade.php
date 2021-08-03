@@ -402,6 +402,9 @@ $url = url()->current();
                         @can('Nicasia cybersource load transaction')
                             <li><a href="{{ route('nicasia.cyberSourceLoad') }}">All card load transaction</a></li>
                         @endcan
+{{--                        @can('Transaction cellpay load')--}}
+                            <li><a href="{{route('cellPayUserTransaction.view')}}">CellPay Transactions</a></li>
+{{--                            @endcan--}}
                     </ul>
                 </li>
             @endif

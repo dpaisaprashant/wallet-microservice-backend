@@ -15,4 +15,9 @@ class BFIToUserFundTransferController extends Controller{
         $bfiToUserFundTransferTotalSum = BfiToUserFundTransfer::pluck('amount')->sum();
         return view('BFIMerchant::BFIUserFundTransfer.viewBFIUserFundTransfer',compact('bfiToUserFundTransfers','bfiToUserFundTransferTotalCount','bfiToUserFundTransferTotalSum'));
     }
+
+    public function checkPayment($id){
+        $bfiToUserFundTransfer = BfiToUserFundTransfer::where('id',$id)->first();
+        return view('BFIMerchant::BFIUserFundTransfer.detailBFIUserFundTransfer',compact('bfiToUserFundTransfer'));
+    }
 }

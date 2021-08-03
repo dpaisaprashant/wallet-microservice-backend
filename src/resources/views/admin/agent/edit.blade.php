@@ -117,7 +117,7 @@
                             <div class="form-group  row"><label class="col-sm-2 col-form-label">Business owner citizenship front</label>
                                 <div class="col-sm-10">
                                     <a href="{{ config('dpaisa-api-url.admin_documentation_url') . $agent->business_owner_citizenship_front}}" target="_blank">
-                                        <img class="d-block w-100" src="{{ config('dpaisa-api-url.kyc_documentation_url') . $agent->business_owner_citizenship_front}}" alt="Business owner citizenship front">
+                                        <img class="d-block w-100" src="{{ config('dpaisa-api-url.admin_documentation_url') . $agent->business_owner_citizenship_front}}" alt="Business owner citizenship front">
                                     </a>
 
                                 </div>
@@ -126,7 +126,7 @@
                             <div class="form-group  row"><label class="col-sm-2 col-form-label">Business owner citizenship back</label>
                                 <div class="col-sm-10">
                                     <a href="{{ config('dpaisa-api-url.admin_documentation_url') . $agent->business_owner_citizenship_back}}" target="_blank">
-                                        <img class="d-block w-100" src="{{ config('dpaisa-api-url.kyc_documentation_url') . $agent->business_owner_citizenship_back}}" alt="Business owner citizenship back">
+                                        <img class="d-block w-100" src="{{ config('dpaisa-api-url.admin_documentation_url') . $agent->business_owner_citizenship_back}}" alt="Business owner citizenship back">
                                     </a>
 
                                 </div>
@@ -135,7 +135,7 @@
                             <div class="form-group  row"><label class="col-sm-2 col-form-label">PP photo</label>
                                 <div class="col-sm-10">
                                     <a href="{{ config('dpaisa-api-url.admin_documentation_url') . $agent->pp_photo}}" target="_blank">
-                                        <img class="d-block w-100" src="{{ config('dpaisa-api-url.kyc_documentation_url') . $agent->pp_photo}}" alt="PP Photo">
+                                        <img class="d-block w-100" src="{{ config('dpaisa-api-url.admin_documentation_url') . $agent->pp_photo}}" alt="PP Photo">
                                     </a>
 
                                 </div>
@@ -144,7 +144,7 @@
                             <div class="form-group  row"><label class="col-sm-2 col-form-label">Tax clearance certificate</label>
                                 <div class="col-sm-10">
                                     <a href="{{ config('dpaisa-api-url.admin_documentation_url') . $agent->tax_clearance_certificate}}" target="_blank">
-                                        <img class="d-block w-100" src="{{ config('dpaisa-api-url.kyc_documentation_url') . $agent->tax_clearance_certificate}}" alt="Tax clearance certificate">
+                                        <img class="d-block w-100" src="{{ config('dpaisa-api-url.admin_documentation_url') . $agent->tax_clearance_certificate}}" alt="Tax clearance certificate">
                                     </a>
 
                                 </div>
@@ -153,7 +153,7 @@
                             <div class="form-group  row"><label class="col-sm-2 col-form-label">Pan vat document</label>
                                 <div class="col-sm-10">
                                     <a href="{{ config('dpaisa-api-url.admin_documentation_url') . $agent->pan_vat_document}}" target="_blank">
-                                        <img class="d-block w-100" src="{{ config('dpaisa-api-url.kyc_documentation_url') . $agent->pan_vat_document}}" alt="Pan vat document">
+                                        <img class="d-block w-100" src="{{ config('dpaisa-api-url.admin_documentation_url') . $agent->pan_vat_document}}" alt="Pan vat document">
                                     </a>
 
                                 </div>

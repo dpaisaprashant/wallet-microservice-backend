@@ -6,7 +6,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12">
-                        <h3 class="m-t-none m-b">Pre-Transaction Json Request Info For <br> Pre-Transaction Id: {{$preTransaction->pre_transaction_id}}</h3>
+                        <h3 class="m-t-none m-b">Json Request Info For <br> Pre-Transaction Id: {{$preTransaction->pre_transaction_id}}</h3>
                         <hr>
                         @php
                             $jsonRequest = json_decode($preTransaction->json_request,true);

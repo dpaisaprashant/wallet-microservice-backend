@@ -6,7 +6,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-12">
-                            <h3 class="m-t-none m-b">CellPay User-Transaction Other Info For <br> Account: {{$cellPayUserTransaction->account}}</h3>
+                            <h3 class="m-t-none m-b">Other Info For <br> Account: {{$cellPayUserTransaction->account}}</h3>
                             <hr>
                             <dl class="row m-t-md">
                                 <dt class="col-md-3 text-right">Status Code: </dt>

@@ -6,7 +6,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-12">
-                            <h3 class="m-t-none m-b">CellPay User-Transactions Json Response Info For <br> Account: {{$cellPayUserTransaction->account}}</h3>
+                            <h3 class="m-t-none m-b">Json Response Info For <br> Account: {{$cellPayUserTransaction->account}}</h3>
                             <hr>
                             @php
                                 $response = json_decode($cellPayUserTransaction->response,true);

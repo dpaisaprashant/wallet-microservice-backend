@@ -37,9 +37,13 @@ class UserFilter extends FilterAbstract {
 //                $query->where('email', $value)->orWhere('mobile_no', $value);
 //            });
 //        });
-        $user = User::has('preTransaction')->where('mobile_no',$value)->pluck('id');
-        $preTransactions = PreTransaction::where('user_id',$user)->pluck('pre_transaction_id');
-//        dd($pretransactions);
-        return $builder->whereIn('pre_transaction_id', $preTransactions);
+//        $user = User::has('preTransaction')->where('mobile_no',$value)->pluck('id');
+//        $preTransactions = PreTransaction::where('user_id',$user)->pluck('pre_transaction_id');
+////        dd($preTransactions);
+//        return $builder->whereIn('pre_transaction_id', $preTransactions);
+
+        $user = User::with('preTransaction')->where('mobile_no',$value)->first();
+        $preTransactionList = $user->preTransaction->pluck('pre_transaction_id');
+        return $builder->whereIn('pre_transaction_id', $preTransactionList);
     }
 }

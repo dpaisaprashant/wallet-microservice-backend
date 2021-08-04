@@ -37,9 +37,12 @@ class userNumberFilter extends FilterAbstract {
 //                return $query->where('mobile_no',$value);
 //            });
 //        });
-        $user = User::has('preTransaction')->where('mobile_no',$value)->pluck('id');
-        $preTransactions = PreTransaction::where('user_id',$user)->pluck('pre_transaction_id');
+//        $user = User::has('preTransaction')->where('mobile_no',$value)->pluck('id');
+//        $preTransactions = PreTransaction::where('user_id',$user)->pluck('pre_transaction_id');
 //        dd($pretransactions);
-        return $builder->whereIn('reference_no', $preTransactions);
+
+        $user = User::with('preTransaction')->where('mobile_no',$value)->first();
+        $preTransactionList = $user->preTransaction->pluck('pre_transaction_id');
+        return $builder->whereIn('reference_no', $preTransactionList);
     }
 }

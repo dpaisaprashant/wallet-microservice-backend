@@ -262,9 +262,8 @@
                                             <td>
                                                 {{ $requestInfo->url }}
                                             </td>
-                                            <td>
-                                                
-                                                <span class="badge {{$requestInfo->status=="STARTED" ? "badge-success" : "badge-primary"}}">{{ $requestInfo->status }}</span>
+                                            <td>                    
+                                                <span class="badge {{($requestInfo->status=="STARTED") ? "badge-success" : (($requestInfo->status=="COMPLETE") ? "badge-primary" : 'badge-danger')}}">{{ $requestInfo->status }}</span>
                                             </td>      
                                             <td class="center">{{ $requestInfo->created_at }}</td>  
                                             <td>

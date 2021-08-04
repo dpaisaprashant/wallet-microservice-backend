@@ -3,76 +3,33 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Microservice\PreTransaction;
+use App\Filters\NPSAccountLinkLoad\NPSAccountLinkLoadFilters;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
+use App\Traits\BelongsToUser;
 
 class NPSAccountLinkLoad extends Model
 {
-    CONST STATUS_COMPLETED = 'COMPLETED';
-    CONST STATUS_VALIDATED = 'VALIDATED';
+    use BelongsToUser;
 
-    protected $guarded = [];
+    protected $connection = 'nps-accountlink';
+    protected $table = "load_wallet";
 
-    protected $connection = 'nps';
-    protected $table = "nps_load_transactions";
-
-    protected $casts = [
-        "amount" => "integer"
-    ];
-
-    protected $appends = [
-        "model",
-        "type",
-        "pre_transaction_status",
-        "vendor"
-    ];
-
-    public function getTypeAttribute()
+    // protected $casts = [
+    //     "amount" => "integer",
+    //     "load_time_stamp" => "datetime"
+    // ];
+    
+    public function scopeFilter(Builder $builder, Request $request, array $filters = [])
     {
-        return "credit";
+        return (new NPSAccountLinkLoadFilters($request))->add($filters)->filter($builder);
     }
 
-    public function getModelAttribute()
-    {
-        return NpsLoadTransaction::class;
-    }
-
-    public function getVendorAttribute()
-    {
-        return $this->payment_mode;
-    }
-
-    public function getPreTransactionStatusAttribute()
-    {
-        if ($this->status == self::STATUS_COMPLETED){
-            return true;
-        }
-        return false;
+  
+    public function preTransaction(){
+        return $this->belongsTo(PreTransaction::class,'reference_id','pre_transaction_id');
     }
 
 
-    public function response()
-    {
-        return $this->hasOne(NpsTransactionResponse::class, "load_id");
-    }
-
-    /**
-     * Check Gateway Ref No
-     *
-     * @param string $value
-     * @return object
-     */
-    public function checkGatewayRef($value)
-    {
-        return $this->where('gateway_ref_no', $value)->lockForUpdate()->first();
-    }
-
-    /**
-     * Check If the transsaction id exists
-     *
-     * @param string $value
-     * @return object
-     */
-    public function checkTransactionId($value)
-    {
-        return $this->where('transaction_id', $value)->lockForUpdate()->first();
-    }
 }

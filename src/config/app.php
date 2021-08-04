@@ -186,7 +186,10 @@ return [
         App\Wallet\Architecture\ArchitectureServiceProvider::class,
         App\Wallet\TransactionClearance\ClearanceServiceProvider::class,
         App\Wallet\BFIMerchant\BFIMerchantServiceProvider::class,
-        App\Wallet\WalletIP\WalletIPServiceProvider::class
+        App\Wallet\WalletIP\WalletIPServiceProvider::class,
+        App\Wallet\NPSAccountLinkLoad\NPSAccountLinkLoadServiceProvider::class,
+        App\Wallet\LinkedAccounts\LinkedAccountsServiceProvider::class
+
 
 
     ],

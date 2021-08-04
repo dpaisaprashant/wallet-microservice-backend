@@ -464,4 +464,9 @@ class User extends Authenticatable
     {
         return $this->morphMany(SingleUserCommission::class, 'userCommissionable', 'user_type', 'user_id', 'id');
     }
+
+    public function preTransaction()
+    {
+        return $this->hasMany(PreTransaction::class, 'user_id', 'id');
+    }
 }

@@ -152,8 +152,6 @@ class User extends Authenticatable
         return $this->hasOne(Agent::class,'user_id');
     }
 
-
-
     public function preTransactions()
     {
         return $this->hasMany(PreTransaction::class);

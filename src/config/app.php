@@ -186,7 +186,8 @@ return [
         App\Wallet\Architecture\ArchitectureServiceProvider::class,
         App\Wallet\TransactionClearance\ClearanceServiceProvider::class,
         App\Wallet\BFIMerchant\BFIMerchantServiceProvider::class,
-        App\Wallet\WalletIP\WalletIPServiceProvider::class
+        App\Wallet\WalletIP\WalletIPServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
 
     ],
@@ -243,6 +244,7 @@ return [
         'FCM'      => LaravelFCM\Facades\FCM::class,
         'FCMGroup' => LaravelFCM\Facades\FCMGroup::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

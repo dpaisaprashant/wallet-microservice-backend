@@ -16,6 +16,7 @@ use App\Models\NchlLoadTransaction;
 use App\Models\NICAsiaCyberSourceLoadTransaction;
 use App\Models\NPSAccountLinkLoad;
 use App\Models\NpsLoadTransaction;
+use App\Models\PaymentNepalLoadTransaction;
 use App\Models\User;
 use App\Models\UserLoadTransaction;
 use App\Models\UserMerchantEventTicketPayment;
@@ -97,7 +98,8 @@ class Controller extends BaseController
             NchlLoadTransaction::class => "NCHL LOAD",
             NchlAggregatedPayment::class => "NCHL AGGREGATED PAYMENT",
             NchlBankTransfer::class => "BANK TRANSFER",
-            NICAsiaCyberSourceLoadTransaction::class => "CARD LOAD",
+            //NICAsiaCyberSourceLoadTransaction::class => "CARD LOAD",
+            PaymentNepalLoadTransaction::class => "CARD LOAD",
             UserToUserFundTransfer::class => "USER TO USER FUND TRANSFER",
             FundRequest::class => "USER TO USER FUND REQUEST",
             MerchantTransaction::class => "USER TO MERCHANT FUND TRANSFER",

@@ -103,7 +103,7 @@
                     </tr>
                     <tr>
                         <td>
-                            @if($user->should_change_password == 0)
+                            {{--@if($user->should_change_password == 0)
 
                                 <a data-toggle="modal" href="#modal-should-change-password">
                                     <button style="margin-top: 5px;" class="btn btn-danger m-t-n-xs"
@@ -151,7 +151,7 @@
                             @else
                                 <button style="margin-top: 5px;" class="btn btn-success m-t-n-xs " disabled><strong>Password
                                         Change Forced</strong></button>
-                            @endif
+                            @endif--}}
                         </td>
 
                         <td>

@@ -3,6 +3,7 @@
 namespace App\Models\Microservice;
 
 use App\Filters\PreTransaction\PreTransactionFilters;
+use App\Models\BfiToUserFundTransfer;
 use App\Models\KhaltiUserTransaction;
 use App\Models\LoadTestFund;
 use App\Models\NchlBankTransfer;
@@ -96,8 +97,13 @@ class PreTransaction extends Model
         return $this->hasOne(NICAsiaCyberSourceLoadTransaction::class,'pre_transaction_id','pre_transaction_id');
     }
 
-    public function UserToBFIFundTransfer(){
+    public function userToBFIFundTransfer(){
         return $this->hasOne(UserToBfiFundTransfer::class,'from_pre_transaction_id','pre_transaction_id');
     }
+
+    public function bfiToUserFundTransfer(){
+        return $this->hasOne(BfiToUserFundTransfer::class,'to_pre_transaction_id','pre_transaction_id');
+    }
+
 
 }

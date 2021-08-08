@@ -21,4 +21,8 @@ class BfiToUserFundTransfer extends Model
         return $this->belongsTo(BFIUser::class,'user_id');
     }
 
+    public function bfiCheckPayment(){
+        return $this->belongsTo(BfiGatewayCheckPayment::class,'process_id','process_id');
+    }
+
 }

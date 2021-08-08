@@ -31,7 +31,7 @@
                         </div>--}}
 
                         <div class="col-sm-6" style="margin-top: 30px;">
-                            <h5>From User: {{ $userToBfiFundTransferCheckPaymentDetails->bfiUser->bfi_name ?? 'Null' }}</h5>
+                            <h5>From User:</h5>{{ $userToBfiFundTransferCheckPaymentDetails->bfiUser->bfi_name ?? 'Null' }}
                             <address>
                                 <strong></strong><br>
                                 Email: {{ $userToBfiFundTransferCheckPaymentDetails->bfiUser->email ?? 'Null'}}<br>

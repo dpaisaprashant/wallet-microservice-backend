@@ -17,7 +17,8 @@ class BFIToUserFundTransferController extends Controller{
     }
 
     public function checkPayment($id){
-        $bfiToUserFundTransfer = BfiToUserFundTransfer::where('id',$id)->first();
-        return view('BFIMerchant::BFIUserFundTransfer.detailBFIUserFundTransfer',compact('bfiToUserFundTransfer'));
+        $bfiToUserFundTransfer = BfiToUserFundTransfer::with('bfiUser')->where('id',$id)->first();
+        $userDetails = optional(optional(optional($bfiToUserFundTransfer->bfiUser)->bfiMerchant)->merchant)->user;
+        return view('BFIMerchant::BFIUserFundTransfer.detailBFIUserFundTransfer',compact('bfiToUserFundTransfer','userDetails'));
     }
 }

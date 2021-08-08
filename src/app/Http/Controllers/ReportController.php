@@ -48,9 +48,9 @@ class ReportController extends Controller
     }
 
     public function walletEndBalance(WalletEndBalanceRepository $repository,Request $request){
-        $date = $request->get('till');
+        $date = $request->get('date_till');
         $datas = $repository->getWalletEndBalance($date);
-        $totalSum = $repository->getTotalWalletEndBalanceAmount($date) / 100;
+        $totalSum = $repository->getTotalWalletEndBalanceAmount($date);
         if($datas != null) {
             $totalCount = count($datas);
         }else{

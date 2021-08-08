@@ -2,13 +2,13 @@
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8">
-            <h2>Check Payment Detail</h2>
+            <h2>BFI to user check payment detail</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
                 </li>
                 <li class="breadcrumb-item active">
-                    <strong>Check payment detail</strong>
+                    <strong>BFI to user check payment detail</strong>
                 </li>
             </ol>
         </div>
@@ -31,33 +31,27 @@
                         </div>--}}
 
                         <div class="col-sm-6" style="margin-top: 30px;">
-                            <h5>From User: </h5>
+                            <h5>From User: {{ optional($bfiToUserFundTransfer->bfiUser)->bfi_name  }}</h5>
                             <address>
                                 <strong></strong><br>
                                 Wallet id : {{ $bfiToUserFundTransfer->wallet_id }}<br>
-                                Email: <br>
-                                Contact
-                                Number: <br>
-                                From Pre Transaction Id :
+                                Email: {{ optional($bfiToUserFundTransfer->bfiUser)->email }}<br>
+                                From Pre Transaction Id : @if($bfiToUserFundTransfer->from_pre_transaction_id == null)
+                                    <span class="badge badge-danger">Null</span><br>
+                                @else
+                                    {{ $bfiToUserFundTransfer->from_pre_transaction_id }}<br>
+                                @endif
+                                To Pre Transaction Id : @if($bfiToUserFundTransfer->to_pre_transaction_id == null)
+                                    <span class="badge badge-danger">Null</span><br>
+                                @else
+                                    {{ $bfiToUserFundTransfer->to_pre_transaction_id }}<br>
+                                @endif
 
-                                Amount : <br>
-                                From User: <br>
-                                To User: <br>
-                                To User Name : <br>
-                                To User Email :
+                                Amount : {{ $bfiToUserFundTransfer->amount }}<br>
+                                To User Number: {{ $userDetails->mobile_no }}<br>
+                                To User Name : {{ $userDetails->name }}<br>
+                                To User Email : {{ $userDetails->email }}
                             </address>
-
-                            {{--                            @isset($transaction->userTransaction)--}}
-                            {{--                                <address>--}}
-                            {{--                                    <strong>Amount: Rs. {{ $transaction->userTransaction->amount }}<br></strong>--}}
-                            {{--                                    @if(!empty($transaction->userTransaction->commission))--}}
-                            {{--                                        <strong>Commission: Rs. {{ ($transaction->userTransaction->commission['before_amount'] - $transaction->userTransaction->commission['after_amount']) }}<br></strong>--}}
-                            {{--                                    @else--}}
-                            {{--                                        <strong>Commission: Rs. 0 </strong>--}}
-                            {{--                                    @endif--}}
-
-                            {{--                                </address>--}}
-                            {{--                            @endisset--}}
                         </div>
 
                         <div class="col-sm-6 text-right" style="margin-top: 20px;">
@@ -69,7 +63,7 @@
                                 $checkPaymentDate = explode(' ', optional($bfiToUserFundTransfer->bfiCheckPayment)->created_at);
                                 $bfiToUserFundTransferDate = explode(' ', $bfiToUserFundTransfer->created_at);
                                 ?>
-                                <span><strong>Check Payment Date : </strong> </span><br/>
+                                <span><strong>Check Payment Date : </strong> {{ date('d M Y',strtotime($checkPaymentDate[0])) }}</span><br/>
                                 <span><strong>BFI to User fund Transfer Date</strong> : {{ date('d M Y',strtotime($bfiToUserFundTransferDate[0])) }} </span>
 
                             </p>
@@ -79,30 +73,30 @@
                     <hr>
 
 
-               {{--     <?php
+                         <?php
 
-                    $step1 = false;
-                    if (optional($userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment)->status == "SUCCESS") {
-                        $step1 = true;
-                    }else{
-                        $step1 = false;
-                    }
+                         $step1 = false;
+                         if (optional($bfiToUserFundTransfer->bfiCheckPayment)->status == "SUCCESS") {
+                             $step1 = true;
+                         }else{
+                             $step1 = false;
+                         }
 
-                    $step2 = false;
+                         $step2 = false;
 
-                    if($userToBfiFundTransferCheckPaymentDetails->status == "SUCCESS"){
-                        $step2 = true;
-                    }else{
-                        $step2 = false;
-                    }
+                         if($bfiToUserFundTransfer->status == "SUCCESS"){
+                             $step2 = true;
+                         }else{
+                             $step2 = false;
+                         }
 
-                    $step3 = false;
-                    if($userToBfiFundTransferCheckPaymentDetails->status == "SUCCESS" && $userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment->status == "SUCCESS"){
-                        $step3 = true;
-                    }else{
-                        $step3 = false;
-                    }
-                    ?>--}}
+                         $step3 = false;
+                         if($bfiToUserFundTransfer->status == "SUCCESS" && optional($bfiToUserFundTransfer->bfiCheckPayment)->status == "SUCCESS"){
+                             $step3 = true;
+                         }else{
+                             $step3 = false;
+                         }
+                         ?>
 
 
                     <div class="row">
@@ -111,7 +105,7 @@
                                 <div class="row example-basic">
                                     <div class="col-md-12 example-title">
                                         <h2>Check Payment Steps</h2>
-                                        <p>Steps involved for the User to bfi fund transfer to complete</p>
+                                        <p>Steps involved for the BFI to user fund transfer to complete</p>
                                     </div>
                                     <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2">
                                         <ul class="timeline">
@@ -130,114 +124,114 @@
                                                         <div class="col-md-6">
                                                             <address>
                                                                 <strong>Transaction
-                                                                    ID:</strong>
+                                                                    ID:</strong> {{ optional($bfiToUserFundTransfer->bfiCheckPayment)->transaction_id }}
                                                                 <br>
                                                                 <strong>Bfi
-                                                                    Id:</strong>
-                                                                <br>
-                                                                <strong>Wallet
-                                                                    Id:</strong>
+                                                                    Id:</strong> {{ optional($bfiToUserFundTransfer->bfiCheckPayment)->bfi_id }}
                                                                 <br>
                                                                 <strong>Status:</strong>
-
+                                                                @if(optional($bfiToUserFundTransfer->bfiCheckPayment)->status == 'SUCCESS')
+                                                                    <span class="badge badge-primary">Success</span>
+                                                                    @elseif(optional($bfiToUserFundTransfer->bfiCheckPayment)->status == "PROCESSING")
+                                                                    <span class="badge badge-danger">Processing</span>
+                                                                @endif
                                                                 <br>
                                                                 <br>
                                                                 <strong>Request from bfi</strong><br>
-                                                               {{-- <?php $request_from_bfi = json_decode($userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment->request_from_bfi, true)?>
-                                                                @if(! is_array($request_from_bfi))
-                                                                    <?php $request_from_bfi = json_decode($request_from_bfi) ?>
-                                                                @endif
-                                                                @if($request_from_bfi != null)
-                                                                    <?php foreach ($request_from_bfi as $key => $value) { ?>
+                                                                 <?php $request_from_bfi = json_decode(optional($bfiToUserFundTransfer->bfiCheckPayment)->request_from_bfi, true)?>
+                                                                 @if(! is_array($request_from_bfi))
+                                                                     <?php $request_from_bfi = json_decode($request_from_bfi) ?>
+                                                                 @endif
+                                                                 @if($request_from_bfi != null)
+                                                                     <?php foreach ($request_from_bfi as $key => $value) { ?>
 
-                                                                    {{ $key }} :
-                                                                    @if($key == 'amount' )
-                                                                        Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
-                                                                    @else
-                                                                        {{ $value }}<br>
-                                                                    @endif
+                                                                     {{ $key }} :
+                                                                     @if($key == 'amount' )
+                                                                         Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                                     @else
+                                                                         {{ $value }}<br>
+                                                                     @endif
 
-                                                                    <?php }?>
-                                                                @endif--}}
+                                                                     <?php }?>
+                                                                 @endif
                                                                 <br><br>
                                                                 <strong>Response to bfi</strong><br>
-                                                               {{-- <?php $response_to_bfi = json_decode($userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment->response_to_bfi, true)?>
-                                                                @if(! is_array($response_to_bfi))
-                                                                    <?php $response_to_bfi = json_decode($response_to_bfi) ?>
-                                                                @endif
-                                                                @if($response_to_bfi != null)
-                                                                    <?php foreach ($response_to_bfi as $key => $value) { ?>
+                                                                 <?php $response_to_bfi = json_decode(optional($bfiToUserFundTransfer->bfiCheckPayment)->response_to_bfi, true)?>
+                                                                 @if(! is_array($response_to_bfi))
+                                                                     <?php $response_to_bfi = json_decode($response_to_bfi) ?>
+                                                                 @endif
+                                                                 @if($response_to_bfi != null)
+                                                                     <?php foreach ($response_to_bfi as $key => $value) { ?>
 
-                                                                    {{ $key }} :
-                                                                    @if($key == 'amount' )
-                                                                        Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
-                                                                    @else
-                                                                        @if(!is_array($value))
-                                                                            {{ $value }}<br>
-                                                                        @else
-                                                                            @foreach($value as $key=>$newValue)
-                                                                                {{ $key }} :
-                                                                                {{ $newValue }}<br>
-                                                                            @endforeach
-                                                                        @endif
-                                                                    @endif
+                                                                     {{ $key }} :
+                                                                     @if($key == 'amount' )
+                                                                         Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                                     @else
+                                                                         @if(!is_array($value))
+                                                                             {{ $value }}<br>
+                                                                         @else
+                                                                             @foreach($value as $key=>$newValue)
+                                                                                 {{ $key }} :
+                                                                                 {{ $newValue }}<br>
+                                                                             @endforeach
+                                                                         @endif
+                                                                     @endif
 
-                                                                    <?php }?>
-                                                                @endif--}}
+                                                                     <?php }?>
+                                                                 @endif
                                                                 <br><br>
                                                                 <strong>Request to wallet</strong><br>
-                                                              {{--  <?php $request_to_wallet = json_decode($userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment->request_to_wallet, true)?>
-                                                                @if(! is_array($request_to_wallet))
-                                                                    <?php $request_to_wallet = json_decode($request_to_wallet) ?>
-                                                                @endif
-                                                                @if($request_to_wallet != null)
-                                                                    <?php foreach ($request_to_wallet as $key => $value) { ?>
+                                                                  <?php $request_to_wallet = json_decode(optional($bfiToUserFundTransfer->bfiCheckPayment)->request_to_wallet, true)?>
+                                                                  @if(! is_array($request_to_wallet))
+                                                                      <?php $request_to_wallet = json_decode($request_to_wallet) ?>
+                                                                  @endif
+                                                                  @if($request_to_wallet != null)
+                                                                      <?php foreach ($request_to_wallet as $key => $value) { ?>
 
-                                                                    {{ $key }} :
-                                                                    @if($key == 'amount' )
-                                                                        Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
-                                                                    @else
-                                                                        @if(!is_array($value))
-                                                                            {{ $value }}<br>
-                                                                        @else
-                                                                            @foreach($value as $key=>$newValue)
-                                                                                {{ $key }} :
-                                                                                {{ $newValue }}<br>
-                                                                            @endforeach
-                                                                        @endif
-                                                                    @endif
+                                                                      {{ $key }} :
+                                                                      @if($key == 'amount' )
+                                                                          Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                                      @else
+                                                                          @if(!is_array($value))
+                                                                              {{ $value }}<br>
+                                                                          @else
+                                                                              @foreach($value as $key=>$newValue)
+                                                                                  {{ $key }} :
+                                                                                  {{ $newValue }}<br>
+                                                                              @endforeach
+                                                                          @endif
+                                                                      @endif
 
-                                                                    <?php }?>
-                                                                @endif--}}
+                                                                      <?php }?>
+                                                                  @endif
 
                                                                 <br><br>
                                                                 <strong>Response from wallet</strong><br>
-                                                              {{--  <?php $response_from_wallet = json_decode($userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment->response_from_wallet, true)?>
-                                                                @if(! is_array($response_from_wallet))
-                                                                    <?php $response_from_wallet = json_decode($response_from_wallet) ?>
-                                                                @endif
-                                                                @if($response_from_wallet != null)
-                                                                    <?php foreach ($response_from_wallet as $key => $value) { ?>
+                                                                  <?php $response_from_wallet = json_decode(optional($bfiToUserFundTransfer->bfiCheckPayment)->response_from_wallet, true)?>
+                                                                  @if(! is_array($response_from_wallet))
+                                                                      <?php $response_from_wallet = json_decode($response_from_wallet) ?>
+                                                                  @endif
+                                                                  @if($response_from_wallet != null)
+                                                                      <?php foreach ($response_from_wallet as $key => $value) { ?>
 
-                                                                    {{ $key }} :
-                                                                    @if($key == 'amount' )
-                                                                        Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
-                                                                    @else
-                                                                        @if(!is_array($value))
-                                                                            {{ $value }}<br>
-                                                                        @else
-                                                                            @foreach($value as $key=>$newValue)
-                                                                                {{ $key }} :
-                                                                                @if(!is_array($newValue))
-                                                                                    {{ $newValue }}<br>
-                                                                                @endif
-                                                                            @endforeach
-                                                                        @endif
-                                                                    @endif
+                                                                      {{ $key }} :
+                                                                      @if($key == 'amount' )
+                                                                          Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                                      @else
+                                                                          @if(!is_array($value))
+                                                                              {{ $value }}<br>
+                                                                          @else
+                                                                              @foreach($value as $key=>$newValue)
+                                                                                  {{ $key }} :
+                                                                                  @if(!is_array($newValue))
+                                                                                      {{ $newValue }}<br>
+                                                                                  @endif
+                                                                              @endforeach
+                                                                          @endif
+                                                                      @endif
 
-                                                                    <?php }?>
-                                                                @endif
---}}
+                                                                      <?php }?>
+                                                                  @endif
 
                                                             </address>
                                                         </div>
@@ -297,135 +291,135 @@
                                             <li class="timeline-item">
                                                 <div class="timeline-marker step2"></div>
                                                 <div class="timeline-content">
-                                                    <h2 class="timeline-title">User to bfi fund transfer</h2>
+                                                    <h2 class="timeline-title">BFI to user fund transfer</h2>
                                                     <p>
 
                                                     <div class="row">
                                                         <div class="col-md-6">
                                                             <address>
                                                                 <strong>Transaction
-                                                                    ID:</strong>
+                                                                    ID:</strong> {{ $bfiToUserFundTransfer->transaction_id }}
                                                                 <br>
                                                                 <strong>Bfi
-                                                                    Id:</strong>
+                                                                    Id:</strong> {{ $bfiToUserFundTransfer->bfi_id }}
                                                                 <br>
                                                                 <strong>Wallet
-                                                                    Id:</strong>
+                                                                    Id:</strong> {{ $bfiToUserFundTransfer->wallet_id }}
                                                                 <br>
                                                                 <strong>Status:</strong>
-                                                                {{--@if($userToBfiFundTransferCheckPaymentDetails->status == "SUCCESS")
+                                                                @if($bfiToUserFundTransfer->status == "SUCCESS")
                                                                     <span class="badge badge-primary">Success</span><br>
-                                                                @elseif($userToBfiFundTransferCheckPaymentDetails->status == "PROCESSING")
+                                                                @elseif($bfiToUserFundTransfer->status == "PROCESSING")
                                                                     <span class="badge badge-success">Processing</span>
                                                                     <br>
                                                                 @endif
-                                                                @if(isset($userToBfiFundTransferCheckPaymentDetails->purpose) == true)
+                                                                @if(isset($bfiToUserFundTransfer->purpose) == true)
                                                                     <strong>Purpose
-                                                                        : </strong>{{ $userToBfiFundTransferCheckPaymentDetails->purpose }}
+                                                                        : </strong>{{ $bfiToUserFundTransfer->purpose }}
                                                                     <br>
                                                                 @endif
-                                                                @if(isset($userToBfiFundTransferCheckPaymentDetails->transaction_detail) == true)
+                                                                @if(isset($bfiToUserFundTransfer->transaction_detail) == true)
                                                                     <strong>Transaction Detail
-                                                                        : </strong>{{ $userToBfiFundTransferCheckPaymentDetails->transaction_detail }}
+                                                                        : </strong>{{ $bfiToUserFundTransfer->transaction_detail }}
                                                                     <br>
-                                                                @endif--}}
+                                                                @endif
                                                                 <br>
                                                                 <br>
                                                                 <strong>Request from bfi</strong><br>
-{{--                                                                <?php $request_from_bfi = json_decode($userToBfiFundTransferCheckPaymentDetails->request_from_bfi, true)?>--}}
-{{--                                                                @if(! is_array($request_from_bfi))--}}
-{{--                                                                    <?php $request_from_bfi = json_decode($request_from_bfi) ?>--}}
-{{--                                                                @endif--}}
-{{--                                                                @if($request_from_bfi != null)--}}
-{{--                                                                    <?php foreach ($request_from_bfi as $key => $value) { ?>--}}
+                                                                <?php $request_from_bfi = json_decode($bfiToUserFundTransfer->request_from_bfi, true)?>
+                                                                @if(! is_array($request_from_bfi))
+                                                                    <?php $request_from_bfi = json_decode($request_from_bfi) ?>
+                                                                @endif
+                                                                @if($request_from_bfi != null)
+                                                                    <?php foreach ($request_from_bfi as $key => $value) { ?>
 
-{{--                                                                    {{ $key }} :--}}
-{{--                                                                    @if($key == 'amount' )--}}
-{{--                                                                        Rs. {{ empty($value) ? 0 : $value / 100 }}<br>--}}
-{{--                                                                    @else--}}
-{{--                                                                        {{ $value }}<br>--}}
-{{--                                                                    @endif--}}
+                                                                    {{ $key }} :
+                                                                    @if($key == 'amount' )
+                                                                        Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                                    @else
+                                                                        {{ $value }}<br>
+                                                                    @endif
 
-{{--                                                                    <?php }?>--}}
-{{--                                                                @endif--}}
+                                                                    <?php }?>
+                                                                @endif
                                                                 <br><br>
                                                                 <strong>Response to bfi</strong><br>
-{{--                                                                <?php $response_to_bfi = json_decode($userToBfiFundTransferCheckPaymentDetails->response_to_bfi, true)?>--}}
-{{--                                                                @if(! is_array($response_to_bfi))--}}
-{{--                                                                    <?php $response_to_bfi = json_decode($response_to_bfi) ?>--}}
-{{--                                                                @endif--}}
-{{--                                                                @if($response_to_bfi != null)--}}
-{{--                                                                    <?php foreach ($response_to_bfi as $key => $value) { ?>--}}
+                                                                <?php $response_to_bfi = json_decode($bfiToUserFundTransfer->response_to_bfi, true)?>
+                                                                @if(! is_array($response_to_bfi))
+                                                                    <?php $response_to_bfi = json_decode($response_to_bfi) ?>
+                                                                @endif
+                                                                @if($response_to_bfi != null)
+                                                                    <?php foreach ($response_to_bfi as $key => $value) { ?>
 
-{{--                                                                    {{ $key }} :--}}
-{{--                                                                    @if($key == 'amount' )--}}
-{{--                                                                        Rs. {{ empty($value) ? 0 : $value / 100 }}<br>--}}
-{{--                                                                    @else--}}
-{{--                                                                        @if(!is_array($value))--}}
-{{--                                                                            {{ $value }}<br>--}}
-{{--                                                                        @else--}}
-{{--                                                                            @foreach($value as $key=>$newValue)--}}
-{{--                                                                                {{ $key }} :--}}
-{{--                                                                                {{ $newValue }}<br>--}}
-{{--                                                                            @endforeach--}}
-{{--                                                                        @endif--}}
-{{--                                                                    @endif--}}
+                                                                    {{ $key }} :
+                                                                    @if($key == 'amount' )
+                                                                        Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                                    @else
+                                                                        @if(!is_array($value))
+                                                                            {{ $value }}<br>
+                                                                        @else
+                                                                            @foreach($value as $key=>$newValue)
+                                                                                {{ $key }} :
+                                                                                {{ $newValue }}<br>
+                                                                            @endforeach
+                                                                        @endif
+                                                                    @endif
 
-{{--                                                                    <?php }?>--}}
-{{--                                                                @endif--}}
+                                                                    <?php }?>
+                                                                @endif
                                                                 <br><br>
                                                                 <strong>Request to wallet</strong><br>
-{{--                                                                <?php $request_to_wallet = json_decode($userToBfiFundTransferCheckPaymentDetails->request_to_wallet, true)?>--}}
-{{--                                                                @if(! is_array($request_to_wallet))--}}
-{{--                                                                    <?php $request_to_wallet = json_decode($request_to_wallet) ?>--}}
-{{--                                                                @endif--}}
-{{--                                                                @if($request_to_wallet != null)--}}
-{{--                                                                    <?php foreach ($request_to_wallet as $key => $value) { ?>--}}
+                                                                <?php $request_to_wallet = json_decode($bfiToUserFundTransfer->request_to_wallet, true)?>
+                                                                @if(! is_array($request_to_wallet))
+                                                                    <?php $request_to_wallet = json_decode($request_to_wallet) ?>
+                                                                @endif
+                                                                @if($request_to_wallet != null)
+                                                                    <?php foreach ($request_to_wallet as $key => $value) { ?>
 
-{{--                                                                    {{ $key }} :--}}
-{{--                                                                    @if($key == 'amount' )--}}
-{{--                                                                        Rs. {{ empty($value) ? 0 : $value / 100 }}<br>--}}
-{{--                                                                    @else--}}
-{{--                                                                        @if(!is_array($value))--}}
-{{--                                                                            {{ $value }}<br>--}}
-{{--                                                                        @else--}}
-{{--                                                                            @foreach($value as $key=>$newValue)--}}
-{{--                                                                                {{ $key }} :--}}
-{{--                                                                                {{ $newValue }}<br>--}}
-{{--                                                                            @endforeach--}}
-{{--                                                                        @endif--}}
-{{--                                                                    @endif--}}
+                                                                    {{ $key }} :
+                                                                    @if($key == 'amount' )
+                                                                        Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                                    @else
+                                                                        @if(!is_array($value))
+                                                                            {{ $value }}<br>
+                                                                        @else
+                                                                            @foreach($value as $key=>$newValue)
+                                                                                {{ $key }} :
+                                                                                {{ $newValue }}<br>
+                                                                            @endforeach
+                                                                        @endif
+                                                                    @endif
 
-{{--                                                                    <?php }?>--}}
-{{--                                                                @endif--}}
+                                                                    <?php }?>
+                                                                @endif
 
                                                                 <br><br>
                                                                 <strong>Response from wallet</strong><br>
-{{--                                                                <?php $response_from_wallet = json_decode($userToBfiFundTransferCheckPaymentDetails->response_from_wallet, true)?>--}}
-{{--                                                                @if(! is_array($response_from_wallet))--}}
-{{--                                                                    <?php $response_from_wallet = json_decode($response_from_wallet) ?>--}}
-{{--                                                                @endif--}}
-{{--                                                                @if($response_from_wallet != null)--}}
-{{--                                                                    <?php foreach ($response_from_wallet as $key => $value) { ?>--}}
+                                                                <?php $response_from_wallet = json_decode($bfiToUserFundTransfer->response_from_wallet, true)?>
+                                                                @if(! is_array($response_from_wallet))
+                                                                    <?php $response_from_wallet = json_decode($response_from_wallet) ?>
+                                                                @endif
+                                                                @if($response_from_wallet != null)
+                                                                    <?php foreach ($response_from_wallet as $key => $value) { ?>
 
-{{--                                                                    {{ $key }} :--}}
-{{--                                                                    @if($key == 'amount' )--}}
-{{--                                                                        Rs. {{ empty($value) ? 0 : $value / 100 }}<br>--}}
-{{--                                                                    @else--}}
-{{--                                                                        @if(!is_array($value))--}}
-{{--                                                                            {{ $value }}<br>--}}
-{{--                                                                        @else--}}
-{{--                                                                            @foreach($value as $key=>$newValue)--}}
-{{--                                                                                {{ $key }} :--}}
-{{--                                                                                @if(!is_array($newValue))--}}
-{{--                                                                                    {{ $newValue }}<br>--}}
-{{--                                                                                @endif--}}
-{{--                                                                            @endforeach--}}
-{{--                                                                        @endif--}}
-{{--                                                                    @endif--}}
+                                                                    {{ $key }} :
+                                                                    @if($key == 'amount' )
+                                                                        Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                                    @else
+                                                                        @if(!is_array($value))
+                                                                            {{ $value }}<br>
+                                                                        @else
+                                                                            @foreach($value as $key=>$newValue)
+                                                                                {{ $key }} :
+                                                                                @if(!is_array($newValue))
+                                                                                    {{ $newValue }}<br>
+                                                                                @endif
+                                                                            @endforeach
+                                                                        @endif
+                                                                    @endif
 
-{{--                                                                    <?php }?>--}}
-{{--                                                                @endif--}}
+                                                                    <?php }?>
+                                                                @endif
 
 
                                                             </address>
@@ -492,13 +486,13 @@
                                             <li class="timeline-item">
                                                 <div class="timeline-marker step3"></div>
                                                 <div class="timeline-content">
-                                                    <h2 class="timeline-title">User to bfi fund transfer</h2>
+                                                    <h2 class="timeline-title">BFI to user fund transfer</h2>
                                                     <p>
-{{--                                                        @if($step3)--}}
-{{--                                                            User to bfi fund transfer fund transfer Complete--}}
-{{--                                                        @else--}}
-{{--                                                            User to bfi fund transfer fund transfer not complete--}}
-{{--                                                        @endif--}}
+                                                        @if($step3)
+                                                            BFI to user fund transfer fund transfer Complete
+                                                        @else
+                                                            BFI to user fund transfer fund transfer not complete
+                                                        @endif
                                                     </p>
                                                 </div>
                                             </li>
@@ -847,7 +841,7 @@
         }
 
 
-{{--        @if($step1 == true)--}}
+                @if($step1 == true)
             .step1::before {
             background: green;
         }
@@ -855,18 +849,19 @@
         .step1::after {
             background: green;
         }
-{{--        @elseif($step1 == false)--}}
-{{--             .step1::before {--}}
-{{--            background: red;--}}
-{{--        }--}}
 
-{{--        .step1::after {--}}
-{{--            background: red;--}}
-{{--        }--}}
-{{--        @endif--}}
+                @elseif($step1 == false)
+             .step1::before {
+            background: red;
+        }
+
+        .step1::after {
+            background: red;
+        }
+        @endif
 
 
-{{--        @if($step2 == true)--}}
+        @if($step2 == true)
 
             .step2::before {
             background: green;
@@ -877,20 +872,20 @@
         }
 
 
-{{--        @else--}}
-{{--            .step2::before {--}}
-{{--            background: red;--}}
-{{--        }--}}
+                @else
+            .step2::before {
+            background: red;
+        }
 
-{{--        .step2::after {--}}
-{{--            background: red;--}}
-{{--        }--}}
+        .step2::after {
+            background: red;
+        }
 
-{{--        @endif--}}
+        @endif
 
 
 
-{{--        @if($step3)--}}
+        @if($step3)
             .step3::before {
             background: green;
         }
@@ -898,7 +893,7 @@
         .step3::after {
             background: green;
         }
-{{--        @endif--}}
+                @endif
     </style>
 @endsection
 

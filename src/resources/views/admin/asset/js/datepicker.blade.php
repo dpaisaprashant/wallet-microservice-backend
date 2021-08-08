@@ -9,6 +9,15 @@
             keyboardNavigation: false,
         });
 
+        $(".date_till").datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            format: 'dd M, yyyy',
+            keyboardNavigation: false,
+        });
+
+
+
     </script>
 
     <script>

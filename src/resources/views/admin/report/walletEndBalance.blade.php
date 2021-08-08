@@ -44,7 +44,7 @@
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </span>
-                                                <input type="datetime-local" class="form-control" placeholder="till" name="till" autocomplete="off" value="{{ !empty($_GET['till']) ? $_GET['till'] : '' }}">
+                                                <input type="datetime-local" class="form-control date_till" placeholder="date_till" name="date_till" autocomplete="off" value="{{ !empty($_GET['date_till']) ? $_GET['date_till'] : '' }}">
                                             </div>
                                         </div>
 
@@ -69,20 +69,23 @@
 
         <div class="row">
             <div class="col-lg-12">
-                @if(!empty($_GET['till']))
+                @if(!empty($_GET['date_till']))
                     <div class="ibox ">
                         <div class="ibox-title">
-                            <h5>Wallet end report balance till {{ $_GET['till'] }}</h5>
+                            <h5>Wallet end report balance till {{ $_GET['date_till'] }}</h5>
                         </div>
                         <div class="ibox-content">
                             <h5><b>Total Count:</b>
                                 {{$totalCount}}
                             </h5>
                             <h5><b>Wallet End Balance:</b> Rs.
-                             {{ $totalSum->sum('balance') }}
+                             {{ $totalSum->sum('balance') / 100}}
+                            </h5>
+                            <h5><b>Wallet End Bonus Balance:</b> Rs.
+                                {{ $totalSum->sum('bonus_balance') / 100}}
                             </h5>
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover dataTables-example" title="Complete transactions list">
+                                <table class="table table-striped table-bordered table-hover dataTables-example" title="Wallet end balance report">
                                     <thead>
                                     <tr>
                                         <th>S.No.</th>

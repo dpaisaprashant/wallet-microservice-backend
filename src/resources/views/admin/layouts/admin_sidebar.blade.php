@@ -211,19 +211,6 @@ $url = url()->current();
                 </li>
             @endcan
 
-            @can('View wallet transaction type')
-                <li @if(preg_match('/vendor-transactions/i', $url)) class="active" @endif>
-                    <a href="{{route('wallet.transaction.type.view')}}"><i class="fa fa-history"></i> <span
-                            class="nav-label">Wallet Transaction Type</span></a>
-                </li>
-            @endcan
-
-            @can('View wallet permission transaction type')
-                <li @if(preg_match('/vendor-transactions/i', $url)) class="active" @endif>
-                    <a href="{{route('wallet.permission.transaction.type.view')}}"><i class="fa fa-history"></i> <span
-                            class="nav-label">Wallet Permission Transaction Type</span></a>
-                </li>
-            @endcan
 
 
             @if(auth()->user()->hasPermissionTo('View BFI Merchant') || auth()->user()->hasPermissionTo('View BFI user') || auth()->user()->hasPermissionTo('View bfi execute payment') || auth()->user()->hasPermissionTo('View bfi to user fund transfer') || auth()->user()->hasPermissionTo('View user to bfi fund transfer'))
@@ -257,11 +244,6 @@ $url = url()->current();
             @endif
 
 
-            @can('View wallet service')
-                <li @if($url == route('wallet.service.view')) class="active" @endif>
-                    <a href="{{route('wallet.service.view')}}"><i class="fa fa-history"></i> <span class="nav-label">Wallet Services</span></a>
-                </li>
-            @endcan
 
             @if(auth()->user()->hasPermissionTo('Agent view') || auth()->user()->hasPermissionTo('Agent create'))
                 <li @if($url == route('agent.view') || $url == route('agent.create')) class="active" @endif>
@@ -443,6 +425,7 @@ $url = url()->current();
                 <li><a href="{{ route('requestinfo.index') }}"><i class="fa fa-info-circle"></i> View Requests Info</a></li>
                 @endcan
             @endif
+
 
             @if(auth()->user()->hasAnyPermission(['Clearance npay', 'Clearance paypoint']))
                 <li @if($url == route('clearance.transactions') || $url == route('clearance.generate')) class="active" @endif>
@@ -813,6 +796,30 @@ $url = url()->current();
                     </ul>
                 </li>
             @endif
+
+            @if(auth()->user()->hasAnyPermission(['View wallet service', 'Yearly report view','Report paypoint','Report npay','Report nchl load','Report referral','Report register using referral user','Report subscriber daily','Report reconciliation','Report nrb active and inactive user','Report non bank payment','Report wallet end balance','Report admin kyc','Report commission']))
+                <li @if(preg_match('/report/i', $url)) class="active" @endif>
+                    <a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">Developers option</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        @can('View wallet service')
+                            <li><a href="{{route('wallet.service.view')}}">Wallet Service</a></li>
+                        @endcan
+                        @can('View wallet permission transaction type')
+                            <li><a href="{{route('wallet.permission.transaction.type.view')}}">Wallet Permission Transaction Type</a></li>
+                        @endcan
+                        @can('View wallet transaction type')
+                            <li><a href="{{route('wallet.transaction.type.view')}}">Wallet Transaction Type</a></li>
+                        @endcan
+                        @can('View seeder list')
+                            <li><a href="{{ route('view.seeder') }}">Run seeder</a></li>
+                        @endcan
+
+
+                    </ul>
+                </li>
+            @endif
+
         </ul>
     </div>
 </nav>

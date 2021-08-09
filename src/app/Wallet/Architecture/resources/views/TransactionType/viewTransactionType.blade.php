@@ -245,8 +245,11 @@
                                         <a href="{{route('wallet.transaction.type.edit',$walletTransactionType->id)}}"
                                            class="btn btn-success btn-sm"><i class="fa fa-edit"></i></a>
                                         @endcan
-                                        <a href="{{route('wallet.transaction.type.delete',$walletTransactionType->id)}}"
-                                           class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                                            <form action=" {{ route('wallet.transaction.type.delete',$walletTransactionType->id) }}" method="POST">
+                                                @csrf
+                                        <button
+                                           class="btn btn-sm btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                            </form>
                                     </td>
                                 </tr>
                             @endforeach

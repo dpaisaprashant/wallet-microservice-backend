@@ -61,7 +61,7 @@ Route::group(['prefix' => 'admin/architecture', 'middleware' => ['web','auth']],
     Route::post('/add-wallet-transaction-type',[WalletTypeTransactionController::class,'store'])->name('wallet.transaction.type.store');//Storing wallet transaction type
     Route::get('/edit-wallet-transaction-type/{id}',[WalletTypeTransactionController::class,'edit'])->name('wallet.transaction.type.edit');//Edit wallet transaction type
     Route::post('/edit-wallet-transaction-type/{id}',[WalletTypeTransactionController::class,'update'])->name('wallet.transaction.type.update');//Updating wallet transaction type
-    Route::get('/delete-wallet-transaction-type/{id}',[WalletTypeTransactionController::class,'delete'])->name('wallet.transaction.type.delete');//Delete wallet transaction type
+    Route::post('/delete-wallet-transaction-type/{id}',[WalletTypeTransactionController::class,'delete'])->name('wallet.transaction.type.delete');//Delete wallet transaction type
 
 
 

@@ -10,10 +10,6 @@
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Transactions</strong>
-                </li>
-
-                <li class="breadcrumb-item active">
                     <strong>Linked Accounts</strong>
                 </li>
             </ol>
@@ -67,7 +63,7 @@
 
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <input type="text" name="mobile_number" placeholder="Mobile Number"
+                                                <input type="text" name="mobile_number" placeholder="Linked Account Mobile Number"
                                                        class="form-control"
                                                        value="{{ !empty($_GET['mobile_number']) ? $_GET['mobile_number'] : '' }}">
                                             </div>
@@ -124,12 +120,12 @@
 
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <input type="text" name="user_phone_number" placeholder="User Phone Number"
+                                                <input type="text" name="user_phone_number" placeholder="Wallet User Phone Number"
                                                        class="form-control"
                                                        value="{{ !empty($_GET['user_phone_number']) ? $_GET['user_phone_number'] : '' }}">
                                             </div>
                                         </div>
-                                        
+
                                     </div>
 
                                     <div class="row" style="margin-top: 20px;">
@@ -163,7 +159,7 @@
                                                        value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
                                             </div>
                                         </div>
-                                       
+
                                     </div>
 
                                     <div style="margin-top: 10px;">
@@ -173,10 +169,10 @@
                                     </div>
 
                                     <div>
-                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
-                                                type="submit" style="margin-right: 10px;"
-                                                formaction="{{ route('npsaccountlinkload.excel') }}">
-                                            <strong>Excel</strong></button>
+{{--                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"--}}
+{{--                                                type="submit" style="margin-right: 10px;"--}}
+{{--                                                formaction="{{ route('npsaccountlinkload.excel') }}">--}}
+{{--                                            <strong>Excel</strong></button>--}}
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
                                 </form>
@@ -206,14 +202,14 @@
                                         <th>Account Number</th>
                                         <th>Bank Code</th>
                                         <th>Date of Birth</th>
-                                        <th>Mobile Number</th>
+                                        <th>Linked Account Mobile Number</th>
                                         <th>Reference ID</th>
                                         <th>Register Date</th>
                                         <th>Register Status</th>
                                         <th>Time Stamp</th>
                                         <th>Token</th>
                                         <th>User ID</th>
-                                        <th>User Phone Number</th>
+                                        <th>Wallet User Phone Number</th>
                                         <th>Verified Status</th>
                                         <th>Verified Time Stamp</th>
                                         <th>Created At</th>

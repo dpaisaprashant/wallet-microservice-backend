@@ -99,25 +99,49 @@
                                             </div>
                                         </div>
 
+{{--                                        <div class="col-md-3">--}}
+{{--                                            <div class="input-group date">--}}
+{{--                                                <span class="input-group-addon">--}}
+{{--                                                    <i class="fa fa-calendar"></i>--}}
+{{--                                                </span>--}}
+{{--                                                <input id="date_from_load" type="text" class="form-control date_from_load"--}}
+{{--                                                       placeholder="From Load Time Stamp" name="from_load" autocomplete="off"--}}
+{{--                                                       value="{{ !empty($_GET['from_load']) ? $_GET['from_load'] : '' }}">--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+
+{{--                                        <div class="col-md-3">--}}
+{{--                                            <div class="input-group date">--}}
+{{--                                                <span class="input-group-addon">--}}
+{{--                                                    <i class="fa fa-calendar"></i>--}}
+{{--                                                </span>--}}
+{{--                                                <input id="date_to_load" type="text" class="form-control date_to_load"--}}
+{{--                                                       placeholder="To Load Time Stamp" name="to_load" autocomplete="off"--}}
+{{--                                                       value="{{ !empty($_GET['to_load']) ? $_GET['to_load'] : '' }}">--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+
                                         <div class="col-md-3">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
+                                                    <i class="fa fa-dollar"></i>
                                                 </span>
-                                                <input id="date_from_load" type="text" class="form-control date_from_load"
-                                                       placeholder="From Load Time Stamp" name="from_load" autocomplete="off"
-                                                       value="{{ !empty($_GET['from_load']) ? $_GET['from_load'] : '' }}">
+                                                <input type="number" class="form-control"
+                                                       placeholder="From Amount" name="from_amount"
+                                                       autocomplete="off"
+                                                       value="{{ !empty($_GET['from_amount']) ? $_GET['from_amount'] : '' }}">
                                             </div>
                                         </div>
 
                                         <div class="col-md-3">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
+                                                    <i class="fa fa-dollar"></i>
                                                 </span>
-                                                <input id="date_to_load" type="text" class="form-control date_to_load"
-                                                       placeholder="To Load Time Stamp" name="to_load" autocomplete="off"
-                                                       value="{{ !empty($_GET['to_load']) ? $_GET['to_load'] : '' }}">
+                                                <input type="number" class="form-control"
+                                                       placeholder="To Amount" name="to_amount"
+                                                       autocomplete="off"
+                                                       value="{{ !empty($_GET['to_amount']) ? $_GET['to_amount'] : '' }}">
                                             </div>
                                         </div>
                                     </div>
@@ -142,29 +166,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3">
-                                            <div class="input-group date">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-dollar"></i>
-                                                </span>
-                                                <input type="number" class="form-control"
-                                                        placeholder="From Amount" name="from_amount"
-                                                        autocomplete="off"
-                                                        value="{{ !empty($_GET['from_amount']) ? $_GET['from_amount'] : '' }}">
-                                            </div>
-                                        </div>
 
-                                        <div class="col-md-3">
-                                            <div class="input-group date">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-dollar"></i>
-                                                </span>
-                                                <input type="number" class="form-control"
-                                                        placeholder="To Amount" name="to_amount"
-                                                        autocomplete="off"
-                                                        value="{{ !empty($_GET['to_amount']) ? $_GET['to_amount'] : '' }}">
-                                            </div>
-                                        </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <input type="text" name="phone_number" placeholder="User Phone Number"
@@ -210,7 +212,7 @@
                                     <thead>
                                     <tr>
                                         <th>S.No.</th>
-                                        <th>Amount</th>
+                                        <th>Amount (NRs.)</th>
                                         <th>Gateway Transaction ID</th>
                                         <th>Load Status</th>
                                         <th>Load Time Stamp</th>

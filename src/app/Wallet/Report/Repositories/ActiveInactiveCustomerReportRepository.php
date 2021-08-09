@@ -160,7 +160,6 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
         $test= $this->inactiveFor6To12MonthsCustomerBuilder()
             ->filter($this->request)
             ->get();
-        dd($test);
     }
 
     public function inactiveFor6To12MonthsUserBalance()

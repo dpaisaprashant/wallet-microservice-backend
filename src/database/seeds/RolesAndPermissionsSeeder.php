@@ -363,6 +363,10 @@ class RolesAndPermissionsSeeder extends Seeder
             //Cellpay
             'Cellpay user transaction view',
 
+            //Account_Link
+            'View load wallet',
+            'Generate load wallet excel',
+            'View nps linked account',
 
             ];
 

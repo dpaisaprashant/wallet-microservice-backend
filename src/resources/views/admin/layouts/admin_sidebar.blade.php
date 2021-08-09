@@ -120,6 +120,9 @@ $url = url()->current();
                     <a href="{{ route('user.view') }}"><i class="fa fa-users"></i> <span class="nav-label">Users</span></a>
                 </li>
             @endcan
+            @can('View nps linked account')
+                <li><a href="{{ route('linkedaccounts.view') }}"><i class="fa fa-link"></i> <span class="nav-label">Linked Accounts</span></a></li>
+            @endcan
 
             {{-- @can('Group force password change')
                  <li @if(preg_match('/force-password/i', $url)) class="active" @endif>
@@ -408,9 +411,8 @@ $url = url()->current();
                         @can('Nicasia cybersource view')
                             <li><a href="{{ route('nicAsia.viewCyberSourceLoad') }}">NIC Asia Transaction</a></li>
                         @endcan
-
-                        @can('View request info')
-                            <li><a href="{{ route('requestinfo.index') }}">View Requests Info</a></li>
+                        @can('View load wallet')
+                            <li><a href="{{ route('npsaccountlinkload.view') }}">NPS Load Wallet</a></li>
                         @endcan
 
 

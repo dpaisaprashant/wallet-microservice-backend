@@ -20,6 +20,7 @@ use App\Wallet\TransactionClearance\Clearance\Strategy\NicAsiaCybersourceClearan
 use App\Wallet\TransactionClearance\Clearance\Strategy\NPayLoadClearanceStrategy;
 use App\Wallet\TransactionClearance\Clearance\Strategy\NtcPaymentClearanceStrategy;
 use App\Wallet\TransactionClearance\Clearance\Strategy\PaypointClearanceStrategy;
+use App\Wallet\TransactionClearance\Clearance\Strategy\NpsLoadClearanceStrategy;
 
 class ClearanceTransactionTypeResolver
 {
@@ -49,6 +50,8 @@ class ClearanceTransactionTypeResolver
                 return new NPayLoadClearanceStrategy();
             case NtcRetailerToCustomerTransaction::class:
                 return new NtcPaymentClearanceStrategy();
+            case NpsLoadClearanceStrategy::class:
+                return new NpsLoadClearanceStrategy();
         }
     }
 

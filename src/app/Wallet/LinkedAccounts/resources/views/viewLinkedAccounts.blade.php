@@ -76,39 +76,6 @@
                                     </div>
 
                                     <div class="row" style="margin-top: 20px">
-
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <input type="text" name="reference_id" placeholder="Reference ID"
-                                                       class="form-control"
-                                                       value="{{ !empty($_GET['reference_id']) ? $_GET['reference_id'] : '' }}">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <div class="input-group date">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
-                                                </span>
-                                                <input id="date_from" type="text" class="form-control date_from"
-                                                       placeholder="From Created At" name="from" autocomplete="off"
-                                                       value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <div class="input-group date">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
-                                                </span>
-                                                <input id="date_to" type="text" class="form-control date_to"
-                                                       placeholder="To Created At" name="to" autocomplete="off"
-                                                       value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row" style="margin-top: 20px;">
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <select data-placeholder="Select Verified Status...." class="chosen-select"
@@ -162,6 +129,41 @@
                                                        value="{{ !empty($_GET['user_phone_number']) ? $_GET['user_phone_number'] : '' }}">
                                             </div>
                                         </div>
+                                        
+                                    </div>
+
+                                    <div class="row" style="margin-top: 20px;">
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <input type="text" name="reference_id" placeholder="Reference ID"
+                                                       class="form-control"
+                                                       value="{{ !empty($_GET['reference_id']) ? $_GET['reference_id'] : '' }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="input-group date">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                                <input id="date_from" type="text" class="form-control date_from"
+                                                       placeholder="From Created At" name="from" autocomplete="off"
+                                                       value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="input-group date">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                                <input id="date_to" type="text" class="form-control date_to"
+                                                       placeholder="To Created At" name="to" autocomplete="off"
+                                                       value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
+                                            </div>
+                                        </div>
+                                       
                                     </div>
 
                                     <div style="margin-top: 10px;">

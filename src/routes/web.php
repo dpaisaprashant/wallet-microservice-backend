@@ -131,7 +131,7 @@ Route::group(['prefix' => 'admin'], function () {
 
         //Unlock User Bulk Attempts
         Route::post('/user/update-login-attempt-bulk/{id}', 'LockedUserController@updateLoginAttemptsBulk')->name('user.loginAttemptsUpdateBulk')->middleware('permission:Locked user login attempt enable');
-        
+
         Route::get('/user/profile/filter/transaction', 'UserController@filterTransaction')->name('filter.profile.transaction');
 
         Route::post('/user/profile/user-graph-data', 'UserController@userYearlyGraph')->name('user.yearly.graph');
@@ -477,11 +477,11 @@ Route::group(['prefix' => 'admin'], function () {
 
         //Contact Us
         Route::match(['get', 'post'],'frontend/contact-us', 'Frontend\ContactController@index')->name('frontend.contact')->middleware('permission:Frontend contact view');
-    
-        //RequestInfo 
+
+        //RequestInfo
         Route::get('request-info', 'RequestInfoController@index')->name('requestinfo.index')->middleware('permission:View request info');
 
-        Route::get('/excel/request-info', 'PhpSpreadSheetController@requestInfo')->name('requestinfo.excel');
+        Route::get('/excel/request-info', 'PhpSpreadSheetController@requestInfo')->name('requestinfo.excel')->middleware('permission:View request info');
 
     });
 });

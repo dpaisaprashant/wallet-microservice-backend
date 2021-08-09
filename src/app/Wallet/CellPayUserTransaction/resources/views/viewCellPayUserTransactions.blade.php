@@ -266,11 +266,9 @@
                                     <td>{{$cellPayUserTransaction->account}}</td>
                                     <td>
                                         @foreach($preTransactions as $preTransaction)
-                                            @foreach($users as $user)
-                                                @if($cellPayUserTransaction->reference_no == $preTransaction->pre_transaction_id and $preTransaction->user_id == $user->id)
-                                                    {{$user->mobile_no}}
+                                                @if($cellPayUserTransaction->reference_no == $preTransaction->pre_transaction_id)
+                                                    {{$preTransaction->user->mobile_no}}
                                                 @endif
-                                            @endforeach
                                         @endforeach
                                     </td>
                                     <td>{{$cellPayUserTransaction->amount}}</td>

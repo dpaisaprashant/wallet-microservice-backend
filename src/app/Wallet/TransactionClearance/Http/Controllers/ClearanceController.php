@@ -60,13 +60,15 @@ class ClearanceController extends Controller
         $resolvedTransaction = $clearanceTypeResolver->resolve();
         $transactions = $resolvedTransaction->compare($excelTransactions);
         $comparedTransactions = $transactions["comparedTransactions"] ?? [];
+        $unmatchedAmounts = $transactions["unmatchedAmounts"] ?? [];
+        $unmatchedTransactionFees = $transactions["unmatchedTransactionFees"] ?? [];
         $excelTransactionsNotFoundInWallet = $transactions["excelTransactionsNotFoundInWallet"] ?? [];
         $walletTransactionsNotFoundInExcel = $transactions["walletTransactionsNotFoundInExcel"] ?? [];
         $transactionName = $resolvedTransaction->transactionName();
 
         return view("Clearance::clearance.compareTransactionList")
             ->with(compact('comparedTransactions', 'excelTransactionsNotFoundInWallet', 'transactionType',
-                'walletTransactionsNotFoundInExcel', 'fromDate', 'toDate', 'transactionName'));
+                'walletTransactionsNotFoundInExcel', 'fromDate', 'toDate', 'transactionName','unmatchedTransactionFees','unmatchedAmounts'));
 
     }
 }

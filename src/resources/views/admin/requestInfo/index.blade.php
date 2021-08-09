@@ -3,14 +3,14 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>All Transactions</h2>
+            <h2>All Requests</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Transactions</strong>
+                    <strong>Requests</strong>
                 </li>
 
                 <li class="breadcrumb-item active">
@@ -56,23 +56,7 @@
                                                        value="{{ !empty($_GET['user_id']) ? $_GET['user_id'] : '' }}">
                                             </div>
                                         </div>
-
-                                        {{-- <div class="col-md-3">
-                                            <div class="form-group">
-                                                <input type="text" name="description" placeholder="Description"
-                                                       class="form-control"
-                                                       value="{{ !empty($_GET['description']) ? $_GET['description'] : '' }}">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <input type="text" name="url" placeholder="URL"
-                                                       class="form-control"
-                                                       value="{{ !empty($_GET['url']) ? $_GET['url'] : '' }}">
-                                            </div>
-                                        </div> --}}
-                                      
+                                                                    
                                     </div>
 
                                     <div class="row" style="margin-top: 20px">
@@ -214,7 +198,7 @@
                                     <div>
                                         <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
                                                 type="submit" style="margin-right: 10px;"
-                                                formaction="{{-- route('transaction.requestInfo.excel') --}}">
+                                                formaction="{{ route('requestinfo.excel') }}">
                                             <strong>Excel</strong></button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
@@ -278,13 +262,12 @@
                                             <td>
                                                 {{ $requestInfo->url }}
                                             </td>
-                                            <td>
-                                                
-                                                <span class="badge {{$requestInfo->status=="STARTED" ? "badge-success" : "badge-primary"}}">{{ $requestInfo->status }}</span>
+                                            <td>                    
+                                                <span class="badge {{($requestInfo->status=="STARTED") ? "badge-success" : (($requestInfo->status=="COMPLETE") ? "badge-primary" : 'badge-danger')}}">{{ $requestInfo->status }}</span>
                                             </td>      
                                             <td class="center">{{ $requestInfo->created_at }}</td>  
                                             <td>
-                                                @include('admin.transaction.requestInfo.requestInfoActionButtons', ['requestInfo' => $requestInfo])
+                                                @include('admin.requestInfo.requestInfoActionButtons', ['requestInfo' => $requestInfo])
                                             </td>
                                         </tr>
                                     @endforeach

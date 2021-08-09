@@ -489,7 +489,15 @@ Route::group(['prefix' => 'admin'], function () {
         Route::match(['get', 'post'],'frontend/contact-us', 'Frontend\ContactController@index')->name('frontend.contact')->middleware('permission:Frontend contact view');
 
         //RequestInfo
-        Route::get('transaction/request-info', 'RequestInfoController@index')->name('requestinfo.index')->middleware('permission:View request info');
 
+
+        Route::get('request-info', 'RequestInfoController@index')->name('requestinfo.index')->middleware('permission:View request info');
+
+        Route::get('/excel/request-info', 'PhpSpreadSheetController@requestInfo')->name('requestinfo.excel')->middleware('permission:View request info');
+
+
+        //Run seeder
+        Route::get('/view-seeder-table','SeederController@index')->name('view.seeder')->middleware('permission:View seeder list');
+        Route::post('/view-seeder-table/{className}','SeederController@runSeeder')->name('seeder.run')->middleware('permission:Run seeder');
     });
 });

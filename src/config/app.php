@@ -191,6 +191,9 @@ return [
         App\Wallet\CellPayUserTransaction\CellPayUserTransactionServiceProvider::class,
         App\Wallet\Microservice\MicroserviceServiceProvider::class,
         App\Wallet\NicAsia\NICAsiaCyberSourceLoadTransactionServiceProvider::class,
+        App\Wallet\NPSAccountLinkLoad\NPSAccountLinkLoadServiceProvider::class,
+        App\Wallet\LinkedAccounts\LinkedAccountsServiceProvider::class
+
 
 
     ],

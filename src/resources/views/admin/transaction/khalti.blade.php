@@ -97,7 +97,7 @@
                                                 <select data-placeholder="Choose vendor..."
                                                         class="chosen-select" tabindex="2" name="vendor">
                                                     <option value="" selected disabled>Select Vendor...</option>
-
+                                                    <option value="All">All</option>
                                                     @if(!empty($_GET['vendor']))
                                                         @foreach($vendorNames as $vendorName)
                                                             <option value="{{$vendorName}}"
@@ -106,6 +106,7 @@
                                                         @endforeach
 
                                                     @else
+
                                                         @foreach($vendorNames as $vendorName)
                                                             <option value="{{$vendorName}}">{{$vendorName}}</option>
                                                         @endforeach
@@ -230,6 +231,7 @@
                                         <th>Vendor</th>
                                         <th>Status</th>
                                         <th>State</th>
+                                        <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -239,13 +241,19 @@
                                             <td>{{ $loop->index + ($khaltiTransactions->perPage() * ($khaltiTransactions->currentPage() - 1)) + 1 }}</td>
                                             <td>{{ $khaltiTransaction->account }}</td>
                                             <td>Rs {{ $khaltiTransaction->amount }}</td>
-                                            <td>{{optional($khaltiTransaction->user)->mobile_no}}</td>
+                                            <td>{{ optional(optional($khaltiTransaction->preTransaction)->user)->name ?? 'Null'}}</td>
                                             <td>{{$khaltiTransaction->message}}</td>
                                             <td>{{$khaltiTransaction->reference_no}}</td>
                                             <td>{{$khaltiTransaction->service}}</td>
                                             <td>{{$khaltiTransaction->vendor}}</td>
                                             <td>{{$khaltiTransaction->status}}</td>
                                             <td>@include('admin.transaction.khalti.state',['khaltiTransaction' => $khaltiTransaction])</td>
+                                            <td>
+                                                @can('View khalti detail page')
+                                                    <a href="{{ route('khalti.specific',$khaltiTransaction->id) }}"
+                                                       class="btn btn-icon btn-sm btn-primary"><i class="fa fa-eye"></i></a>
+                                                @endcan
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>

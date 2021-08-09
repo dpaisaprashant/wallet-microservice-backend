@@ -272,6 +272,7 @@
                                     <th>Response to bfi</th>
                                     <th>Request to wallet</th>
                                     <th>Response from wallet</th>
+                                    <th>Check payment details</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -320,20 +321,21 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @include('admin.include.BfiExecutePayment.bfiExecutePaymentInfo',['id' => $bfiToUserFundTransfer->id,'bank_transaction_id'=>$bfiToUserFundTransfer->bank_transaction_id,'bank_transaction_date'=>$bfiToUserFundTransfer->bank_transaction_date,'initiating_account' => $bfiToUserFundTransfer->initiating_account,'initiating_account_name'=>$bfiToUserFundTransfer->initiating_account_name,'remarks'=>$bfiToUserFundTransfer->remarks])
+                                            @include('BFIMerchant::include.BfiExecutePayment.bfiExecutePaymentInfo',['id' => $bfiToUserFundTransfer->id,'bank_transaction_id'=>$bfiToUserFundTransfer->bank_transaction_id,'bank_transaction_date'=>$bfiToUserFundTransfer->bank_transaction_date,'initiating_account' => $bfiToUserFundTransfer->initiating_account,'initiating_account_name'=>$bfiToUserFundTransfer->initiating_account_name,'remarks'=>$bfiToUserFundTransfer->remarks])
                                         </td>
                                         <td>
-                                            @include('admin.include.BfiExecutePayment.requestFromBfi',['id'=>$bfiToUserFundTransfer->id,'request_from_bfi' => $bfiToUserFundTransfer->request_from_bfi])
+                                            @include('BFIMerchant::include.BfiExecutePayment.requestFromBfi',['id'=>$bfiToUserFundTransfer->id,'request_from_bfi' => $bfiToUserFundTransfer->request_from_bfi])
                                         </td>
                                         <td>
-                                            @include('admin.include.BfiExecutePayment.responseToBfi',['id'=>$bfiToUserFundTransfer->id,'response_to_bfi'=>$bfiToUserFundTransfer->response_to_bfi])
+                                            @include('BFIMerchant::include.BfiExecutePayment.responseToBfi',['id'=>$bfiToUserFundTransfer->id,'response_to_bfi'=>$bfiToUserFundTransfer->response_to_bfi])
                                         </td>
                                         <td>
-                                            @include('admin.include.BfiExecutePayment.requestToWallet',['id'=>$bfiToUserFundTransfer->id,'request_to_wallet'=>$bfiToUserFundTransfer->request_to_wallet])
+                                            @include('BFIMerchant::include.BfiExecutePayment.requestToWallet',['id'=>$bfiToUserFundTransfer->id,'request_to_wallet'=>$bfiToUserFundTransfer->request_to_wallet])
                                         </td>
                                         <td>
-                                            @include('admin.include.BfiExecutePayment.responseFromWallet',['id'=>$bfiToUserFundTransfer->id,'response_from_wallet'=>$bfiToUserFundTransfer->response_from_wallet])
+                                            @include('BFIMerchant::include.BfiExecutePayment.responseFromWallet',['id'=>$bfiToUserFundTransfer->id,'response_from_wallet'=>$bfiToUserFundTransfer->response_from_wallet])
                                         </td>
+                                        <td><a href="{{ route('view.bfi.to.user.check.payment',$bfiToUserFundTransfer->id) }}" class="btn btn-icon btn-sm btn-primary"><i class="fa fa-eye"></i></a></td>
                                     </tr>
                                 @endforeach
                                 </tbody>

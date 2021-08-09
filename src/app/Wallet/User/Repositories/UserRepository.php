@@ -35,8 +35,7 @@ class UserRepository
 
     private function wallerBalanceSorted()
     {
-        $unsortedUsers = User::with('wallet', 'userType','merchant','agent')->filter($this->request)->get();
-
+        $unsortedUsers = User::with('wallet', 'userType','merchant','agent')->whereHas('userType')->filter($this->request)->get();
         $users = $unsortedUsers->map(function ($value, $key) {
             $value['balance'] = $value->wallet->balance;
             return $value;
@@ -47,8 +46,7 @@ class UserRepository
 
     private function transactionPaymentSorted()
     {
-        $unsortedUsers = User::with('wallet', 'userType','merchant','agent')->filter($this->request)->get();
-
+        $unsortedUsers = User::with('wallet', 'userType','merchant','agent')->whereHas('userType')->filter($this->request)->get();
         $users = $unsortedUsers->map(function (User $value, $key) {
             $value['amount_sum'] = $value->totalTransactionPaymentAmount();
             return $value;
@@ -59,8 +57,7 @@ class UserRepository
 
     private function transactionLoadSorted()
     {
-        $unsortedUsers = User::with('wallet', 'userType','merchant','agent')->filter($this->request)->get();
-
+        $unsortedUsers = User::with('wallet', 'userType','merchant','agent')->whereHas('userType')->filter($this->request)->get();
         $users = $unsortedUsers->map(function (User $value, $key) {
             $value['amount_sum'] = (float) $value->totalLoadFundAmount();
             return $value;
@@ -71,12 +68,13 @@ class UserRepository
 
     private function sortedUsers()
     {
-        return User::with('wallet', 'userType','merchant','agent')->filter($this->request)->paginate($this->length);
+        return User::with('wallet', 'userType','merchant','agent')->whereHas('userType')->filter($this->request)->paginate($this->length);
     }
 
     private function latestUsers()
     {
-        return User::with('wallet', 'userType','merchant','agent')->latest()->filter($this->request)->paginate($this->length);
+        return User::with('wallet', 'userType','merchant','agent')->whereHas('userType')->latest()->filter($this->request)->paginate($this->length);
+
     }
 
     public function paginatedUsers()

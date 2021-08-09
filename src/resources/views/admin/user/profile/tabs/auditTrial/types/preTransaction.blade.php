@@ -1,4 +1,5 @@
 <tr class="gradeC">
+
     <td>{{ $loop->index + ($allAudits->perPage() * ($allAudits->currentPage() - 1)) + 1 }}</td>
     <?php $date = explode(' ', $event->created_at) ?>
     <td>{{ $date[0] }}</td>
@@ -28,6 +29,7 @@
         {{ $event->description }}
 
     </td>
+
     <td>
         <?php $transaction = json_decode($event->json_response, true) ?>
         @if(is_array($transaction) && isset($transaction['transaction']) && isset($transaction['transaction']['vendor']))
@@ -68,7 +70,6 @@
 
     <td>Rs. {{ $event->current_balance }}</td>
     <td>Rs. {{ $event->current_bonus_balance }}</td>
-
     <td>
         @if($event->status == 'FAILED')
             @include('admin.transaction.preTransaction.response', ['transaction' => $event])
@@ -81,24 +82,26 @@
                     <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button>
                 </a>
             @endif
-        @elseif($event->microservice_type == 'NCHL' && $event->service_type == 'BANK_TRANSFER')
-            @if(!empty($event->nchlBankTransfer))
-                @include('admin.transaction.nchlBankTransfer.response', ['transaction' => $event->nchlBankTransfer])
-                <a href="{{ route('nchl.bankTransfer.detail', $event->nchlBankTransfer->id) }}">
-                    <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button>
-                </a>
-            @endif
-        @elseif($event->microservice_type == 'NCHL')
-            @if(!empty($event->nchlLoadTransaction))
-                @include('admin.transaction.nchlLoadTransaction.response', ['transaction' => $event->nchlLoadTransaction])
-                <a href="{{ route('nchl.loadTransaction.detail', $event->nchlLoadTransaction->id) }}">
-                    <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button>
-                </a>
-            @endif
+            {{--          @elseif($event->microservice_type == 'NCHL' && $event->service_type == 'BANK_TRANSFER')
+                          @if(!empty($event->nchlBankTransfer))
+                              @include('admin.transaction.nchlBankTransfer.response', ['transaction' => $event->nchlBankTransfer])
+                              <a href="{{ route('nchl.bankTransfer.detail', $event->nchlBankTransfer->id) }}">
+                                  <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button>
+                              </a>
+                          @endif
+                      @elseif($event->microservice_type == 'NCHL')
+                          @if(!empty($event->nchlLoadTransaction))
+                              @include('admin.transaction.nchlLoadTransaction.response', ['transaction' => $event->nchlLoadTransaction])
+                              <a href="{{ route('nchl.loadTransaction.detail', $event->nchlLoadTransaction->id) }}">
+                                  <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button>
+                              </a>
+                          @endif--}}
         @elseif($event->microservice_type == 'KHALTI')
             @if(!empty($event->khaltiUserTransaction))
+                {{--                    {{ dd($event->khaltiUserTransaction) }}--}}
                 <a href="{{ route('khalti.payment.detail', $event->khaltiUserTransaction->id) }}">
                     <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button>
+
                 </a>
             @endif
         @elseif(!empty($event->transactionEvent))
@@ -108,6 +111,29 @@
                     <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button>
                 </a>
             @endif
+        @endif
+
+        {{--        @if($event->vendor == "KHALTI")--}}
+        {{--            @if(isset($event->khaltiUserTransaction))--}}
+        {{--                <a href="{{ route('khalti.specific',$event->khaltiUserTransaction->id) }}">--}}
+        {{--                    <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-info"></i></button>--}}
+        {{--                </a>--}}
+        {{--            @endif--}}
+        {{--        @endif--}}
+
+        @if($event->microservice_type == "BFI")
+            @if(!empty($event->userToBFIFundTransfer))
+                <a href="{{ route('user.to.bfi.fund.transfer.check.payment', $event->userToBFIFundTransfer->id) }}">
+                    <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button>
+                </a>
+            @endif
+
+            @if(!empty($event->bfiToUserFundTransfer))
+                <a href="{{ route('view.bfi.to.user.check.payment', $event->bfiToUserFundTransfer->id) }}">
+                    <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button>
+                </a>
+            @endif
+
         @endif
 
 

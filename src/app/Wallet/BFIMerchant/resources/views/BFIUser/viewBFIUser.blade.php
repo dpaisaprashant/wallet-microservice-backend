@@ -135,7 +135,7 @@
                                             @can('View secret key')
                                                 @if(isset($bfiUser->UserApiDetail->secret_key) == true)
                                                     {{--                                            <a href="" id="secret-key" class="btn btn-icon btn-sm btn-warning"><i class="fa fa-eye"></i></a>--}}
-                                                    @include('admin.include.secret',['secret' => $bfiUser->UserApiDetail->secret_key])
+                                                    @include('BFIMerchant::include.secret',['secret' => $bfiUser->UserApiDetail->secret_key])
                                                 @endif
                                             @endcan
                                             @can('Add ip')
@@ -149,6 +149,41 @@
                                                    title="Change Status"><i
                                                         class="fa fa-edit"></i></a>
                                             @endcan
+                                                <button class="btn btn-icon btn-danger m-t-n-xs" title="PDF" target="__blank" data-toggle="modal" data-target="#exampleModal">
+                                                    <i class="fa fa-file"></i>
+                                                </button>
+
+                                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="passowrd verify">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Enter Password</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form method="POST" action="{{ route('pdf.bfi.user.view',$bfiUser->id) }}">
+                                                                @csrf
+                                                            <div class="modal-body">
+
+                                                                    <div class="form-group">
+                                                                        <label for="recipient-name" class="col-form-label">Enter api password:</label>
+                                                                        <input type="password" class="form-control" name="api_password">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="message-text" class="col-form-label">Enter portal password:</label>
+                                                                        <input type="password" class="form-control" name="portal_password">
+                                                                    </div>
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-primary">Confirm</button>
+                                                            </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                         </td>
                                     </tr>
                                 @endforeach

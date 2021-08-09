@@ -6,6 +6,7 @@ namespace App\Wallet\TransactionClearance\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\TransactionEvent;
+use App\Models\UserTransaction;
 use App\Traits\CollectionPaginate;
 use App\Wallet\TransactionClearance\Clearance\Resolver\ClearanceTransactionTypeResolver;
 use App\Wallet\TransactionEvent\Repository\TransactionEventRepository;
@@ -58,8 +59,6 @@ class ClearanceController extends Controller
         $clearanceTypeResolver = new ClearanceTransactionTypeResolver($transactionType);
         $resolvedTransaction = $clearanceTypeResolver->resolve();
         $transactions = $resolvedTransaction->compare($excelTransactions);
-
-
         $comparedTransactions = $transactions["comparedTransactions"] ?? [];
         $excelTransactionsNotFoundInWallet = $transactions["excelTransactionsNotFoundInWallet"] ?? [];
         $walletTransactionsNotFoundInExcel = $transactions["walletTransactionsNotFoundInExcel"] ?? [];

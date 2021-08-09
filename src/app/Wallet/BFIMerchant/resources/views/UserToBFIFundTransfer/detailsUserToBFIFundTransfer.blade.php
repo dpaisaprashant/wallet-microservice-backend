@@ -31,7 +31,7 @@
                         </div>--}}
 
                         <div class="col-sm-6" style="margin-top: 30px;">
-                            <h5>From User: {{ $userToBfiFundTransferCheckPaymentDetails->bfiUser->bfi_name ?? 'Null' }}</h5>
+                            <h5>From User:</h5>{{ $userToBfiFundTransferCheckPaymentDetails->bfiUser->bfi_name ?? 'Null' }}
                             <address>
                                 <strong></strong><br>
                                 Email: {{ $userToBfiFundTransferCheckPaymentDetails->bfiUser->email ?? 'Null'}}<br>
@@ -49,7 +49,7 @@
                                 @else
                                     {{ $userToBfiFundTransferCheckPaymentDetails->to_pre_transaction_id }}<br>
                                 @endif
-                                Amount : {{ ($userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment->amount)/100 }}<br>
+                                Amount : {{ (optional($userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment)->amount)/100 }}<br>
                                 From User: {{ $userToBfiFundTransferCheckPaymentDetails->wallet_id ?? 'Null'}}<br>
                                 To User: {{$userDetails->mobile_no ?? 'Null'}}<br>
                                 To User Name : {{ $userDetails->name ?? 'Null'}}<br>
@@ -71,11 +71,11 @@
 
                         <div class="col-sm-6 text-right" style="margin-top: 20px;">
                             <h4>Process Id</h4>
-                            <h4 class="text-navy">{{ $userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment->process_id }}</h4>
+                            <h4 class="text-navy">{{ optional($userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment)->process_id }}</h4>
 
                             <p style="margin-top: 20px;">
                                 <?php
-                                $checkPaymentDate = explode(' ', $userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment->created_at);
+                                $checkPaymentDate = explode(' ', optional($userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment)->created_at);
                                 $bfiToUserFundTransferDate = explode(' ', $userToBfiFundTransferCheckPaymentDetails->created_at);
                                 ?>
                                 <span><strong>Check Payment Date : </strong>{{ date('d M, Y', strtotime($checkPaymentDate[0]))}} </span><br/>
@@ -91,7 +91,7 @@
                     <?php
 
                     $step1 = false;
-                    if ($userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment->status == "SUCCESS") {
+                    if (optional($userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment)->status == "SUCCESS") {
                         $step1 = true;
                     }else{
                         $step1 = false;
@@ -154,9 +154,9 @@
                                                                     <span class="badge badge-success">Processing</span>
                                                                     <br>
                                                                 @endif
-                                                                @if(isset($userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment->purpose) == true)
+                                                                @if(isset(optional($userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment)->purpose) == true)
                                                                     <strong>Purpose
-                                                                        : </strong>{{ $userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment->purpose }}
+                                                                        : </strong>{{ optional($userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment)->purpose }}
                                                                     <br>
                                                                 @endif
                                                                 @if(isset($userToBfiFundTransferCheckPaymentDetails->bfiCheckPayment->transaction_detail) == true)

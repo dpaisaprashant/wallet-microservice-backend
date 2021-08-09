@@ -11,8 +11,8 @@
 @endif
 @if($user->agent != null)
     <span class="badge badge-danger">Agent type :
-                                                    @if($user->agentType() != null)
-            {{ $user->agentType() }}
+                                                    @if($user->agent != null)
+            {{ $user->agent->agentType->name }}
         @endif
                                                 </span>
 @endif

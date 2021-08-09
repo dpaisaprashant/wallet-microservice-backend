@@ -29,7 +29,7 @@ class RequestInfoController extends Controller
 
         $requestInfos = RequestInfo::filter($request)->paginate(20);
         
-        return view('admin.transaction.requestInfo.index')->with(compact('requestInfos'));
+        return view('admin.requestInfo.index')->with(compact('requestInfos'));
 
     }
 

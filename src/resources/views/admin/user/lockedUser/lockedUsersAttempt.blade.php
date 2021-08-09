@@ -30,18 +30,17 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox ">
-                    <div class="ibox-title" >
-
-                        <h5 style="float:left;">List of login attempts</h5>
-                        
-                        @can('Locked user login attempts view')                        
-                        <form action="{{ route('user.loginAttemptsUpdateBulk',$user->id) }}" method="post">
-                            @csrf      
-                            <button title="Unlock User" rel="{{ $user->id }}" class="resetB btn btn-sm btn-primary btn-xs" style="float:right;"><i class="fa fa-unlock"><i class="fa fa-user"></i></i> Unlock</button>
+                    <div class="ibox-title">
+                        <h5 style="float: left">List of login attempts</h5>
+                        @can('Locked user login attempts view')
+                        <div style="float:right; margin-top: -5px">
+                        <form action="{{ route('user.loginAttemptsUpdateBulk',$user->id) }}" method="post" >
+                            @csrf
+                            <button title="Unlock User" rel="{{ $user->id }}" class="resetB btn btn-sm btn-primary btn-xs"><i class="fa fa-unlock"><i class="fa fa-user"></i></i> Unlock</button>
                             <button id="resetBtnB-{{ $user->id }}" style="display: none" type="submit" href="{{ route('user.loginAttemptsUpdateBulk', $user->id) }}"  class="resetBtn"></button>
-                        </form>                             
+                        </form>
+                        </div>
                         @endcan
-                        
                     </div>
                     <div class="ibox-content">
 

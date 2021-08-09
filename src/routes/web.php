@@ -131,7 +131,7 @@ Route::group(['prefix' => 'admin'], function () {
 
         //Unlock User Bulk Attempts
         Route::post('/user/update-login-attempt-bulk/{id}', 'LockedUserController@updateLoginAttemptsBulk')->name('user.loginAttemptsUpdateBulk')->middleware('permission:Locked user login attempt enable');
-        
+
         Route::get('/user/profile/filter/transaction', 'UserController@filterTransaction')->name('filter.profile.transaction');
 
         Route::post('/user/profile/user-graph-data', 'UserController@userYearlyGraph')->name('user.yearly.graph');
@@ -168,6 +168,10 @@ Route::group(['prefix' => 'admin'], function () {
          */
         Route::get('/banks/list', 'BankListController@bankList')->name('bankList')->middleware('permission:Bank list view');
         Route::get('/banks/profile', 'BankListController@profile')->name('bank.profile')->middleware('permission:Bank list profile');
+
+        /**
+         *
+         *
 
         /**
          * Transactions
@@ -208,9 +212,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/transaction/nchl-load-transaction', 'TransactionController@nchlLoadTransaction')->name('nchl.loadTransaction')->middleware('permission:Transaction nchl load');
         Route::get('transaction/nchl-load-transaction/detail/{id}', 'TransactionController@nchlLoadTransactionDetail')->name('nchl.loadTransaction.detail');
 
-        //NicAsia CyberSource
-        Route::get('transaction/nicasia-cybesource-load-transaction','TransactionController@nicAsiaCyberSourceLoad')->name('nicasia.cyberSourceLoad')->middleware('permission:Nicasia cybersource load transaction');
-        Route::get('transaction/nicasia-cybesource-load-transaction/detail/{id}', 'TransactionController@nicAsiaCyberSourceLoadDetail')->name('nicasia.cyberSourceLoadTransaction.detail');
+//        //NicAsia CyberSource
+//        Route::get('transaction/nicasia-cybesource-load-transaction','TransactionController@nicAsiaCyberSourceLoad')->name('nicasia.cyberSourceLoad')->middleware('permission:Nicasia cybersource load transaction');
+//        Route::get('transaction/nicasia-cybesource-load-transaction/detail/{id}', 'TransactionController@nicAsiaCyberSourceLoadDetail')->name('nicasia.cyberSourceLoadTransaction.detail');
 
         //Khalti
         Route::get('transaction/khalti-payment-transaction/detail/{id}', 'TransactionController@khaltiPaymentDetail')->name('khalti.payment.detail');
@@ -228,7 +232,8 @@ Route::group(['prefix' => 'admin'], function () {
 
         //Khalti transaction report
 
-        Route::get('/transaction/khalti','TransactionController@khaltiTransaction')->name('khalti.transaction');
+        Route::get('/transaction/khalti','TransactionController@khaltiTransaction')->name('khalti.transaction')->middleware('permission:View khalti details');
+        Route::get('/transaction/khalti/{id}','TransactionController@khaltiSpecificDetail')->name('khalti.specific')->middleware('permission:View khalti detail page');
 
         /**
          * Clearance
@@ -384,6 +389,11 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/sparrow-sms/detail', 'SparrowSMSController@detail')->name('sparrow.detail')->middleware('permission:Sparrow SMS detail view');
 
         /**
+         * Miracle Info sms
+         */
+        Route::get('/miracle-info-sms','MiracleInfoSMSController@index')->name('miracle-info.view')->middleware('permission:Miracle info SMS view');
+
+        /**
          * Terms and Condition
          */
         Route::get('/terms-and-condition/', 'TermsAndConditionController@view')->name('termsAndCondition.view')->middleware('permission:Terms and condition view');
@@ -477,9 +487,14 @@ Route::group(['prefix' => 'admin'], function () {
 
         //Contact Us
         Route::match(['get', 'post'],'frontend/contact-us', 'Frontend\ContactController@index')->name('frontend.contact')->middleware('permission:Frontend contact view');
-    
-        //RequestInfo 
-        Route::get('transaction/request-info', 'RequestInfoController@index')->name('requestinfo.index')->middleware('permission:View request info');
+
+        //RequestInfo
+
+
+        Route::get('request-info', 'RequestInfoController@index')->name('requestinfo.index')->middleware('permission:View request info');
+
+        Route::get('/excel/request-info', 'PhpSpreadSheetController@requestInfo')->name('requestinfo.excel')->middleware('permission:View request info');
+
 
     });
 });

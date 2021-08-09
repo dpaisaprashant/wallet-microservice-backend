@@ -26,8 +26,7 @@ class PreTransactionController extends Controller
             $microservice_types = PreTransaction::groupBy('microservice_type')->pluck('microservice_type');
             $transaction_types = PreTransaction::groupBy('transaction_type')->pluck('transaction_type');
             $preTransactions = PreTransaction::filter(request())->paginate(10);
-            $usersUnique = User::has('preTransaction')->groupBy('mobile_no')->select('id','mobile_no')->get();
-            $users =  User::has('preTransaction')->select('id','mobile_no')->get();
+
             return view('Microservice::preTransactions.preTransactionView')->with(
                 compact(
                     'preTransactions',
@@ -35,8 +34,6 @@ class PreTransactionController extends Controller
                     'service_types',
                     'microservice_types',
                     'transaction_types',
-                    'users',
-                    'usersUnique'
                 )
             );
 //        }

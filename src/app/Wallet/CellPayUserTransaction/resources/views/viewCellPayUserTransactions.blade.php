@@ -264,13 +264,15 @@
                                 <tr class="gradeC">
                                     <td>{{$loop->index + ($cellPayUserTransactions->perPage() * ($cellPayUserTransactions->currentPage() - 1)) + 1 }}</td>
                                     <td>{{$cellPayUserTransaction->account}}</td>
-                                    <td>
-                                        @foreach($preTransactions as $preTransaction)
-                                                @if($cellPayUserTransaction->reference_no == $preTransaction->pre_transaction_id)
-                                                    {{$preTransaction->user->mobile_no}}
-                                                @endif
-                                        @endforeach
-                                    </td>
+{{--                                    <td>--}}
+{{--                                        @foreach($preTransactions as $preTransaction)--}}
+{{--                                                @if($cellPayUserTransaction->reference_no == $preTransaction->pre_transaction_id)--}}
+{{--                                                    {{$preTransaction->cellPayUserTransaction->account}}--}}
+{{--                                                @endif--}}
+{{--                                        @endforeach--}}
+{{--                                    </td>--}}
+                                    <td>{{optional(optional($cellPayUserTransaction->preTransaction)->user)->mobile_no}}</td>
+{{--                                    {{dd($cellPayUserTransaction)}}--}}
                                     <td>{{$cellPayUserTransaction->amount}}</td>
                                     <td>{{$cellPayUserTransaction->description}}</td>
                                     <td>{{$cellPayUserTransaction->reference_no}}</td>

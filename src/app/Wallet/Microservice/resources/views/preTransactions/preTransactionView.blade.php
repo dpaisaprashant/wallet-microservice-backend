@@ -38,21 +38,9 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label for="user_number">User Number</label>
-                                            <select data-placeholder="Select User Number" class="chosen-select"
-                                                    tabindex="2" name="user_number">
-                                                <option value="" selected disabled>Select User Number...</option>
-                                                <option value="">All</option>
-                                                @if(!empty($_GET['user_number']))
-                                                    @foreach($usersUnique as $userUnique)
-                                                                    <option value="{{$userUnique->id}}"
-                                                                            @if($_GET['user_number']  == $userUnique->id) selected @endif >{{$userUnique->mobile_no}}</option>
-                                                    @endforeach
-                                                @else
-                                                    @foreach($usersUnique as $userUnique)
-                                                        <option value="{{$userUnique->id}}">{{$userUnique->mobile_no}}</option>
-                                                    @endforeach
-                                                @endif
-                                            </select>
+                                            <input type="number" name="user_number" placeholder="Enter User Number"
+                                                   class="form-control"
+                                                   value="{{ !empty($_GET['user_number']) ? $_GET['user_number'] : '' }}">
                                         </div>
 
                                         <div class="col-md-6">
@@ -337,13 +325,7 @@
                             @foreach($preTransactions as $preTransaction)
                                     <tr class="gradeC">
                                             <td>{{ $loop->index + ($preTransactions->perPage() * ($preTransactions->currentPage() - 1)) + 1 }}</td>
-                                            <td>
-                                                @foreach($users as $user)
-                                                    @if($user->id == $preTransaction->user_id)
-                                                        {{$user->mobile_no}}
-                                                    @endif
-                                                @endforeach
-                                            </td>
+                                            <td>{{optional($preTransaction->user)->mobile_no}}</td>
                                             <td>{{ $preTransaction->pre_transaction_id }}</td>
                                             <td>Rs. {{$preTransaction->amount}}</td>
                                             <td>{{$preTransaction->description}}</td>

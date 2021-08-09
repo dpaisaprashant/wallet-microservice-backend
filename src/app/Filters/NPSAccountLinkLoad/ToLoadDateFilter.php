@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filters\RequestInfo;
+namespace App\Filters\NPSAccountLinkLoad;
 
 use App\Filters\FilterAbstract;
 use Illuminate\Database\Eloquent\Builder;
 
-class VendorFilter extends FilterAbstract {
+class ToLoadDateFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -26,13 +26,12 @@ class VendorFilter extends FilterAbstract {
     public function filter(Builder $builder, $value)
     {
         //$value = $this->resolveFilterValue($value);
-    
         if ($value === null) {
             return $builder;
         }
 
-      
+        return $builder->whereRaw("STR_TO_DATE(?, '%d-%m-%Y')", '<= ?', [date('d-m-Y', strtotime($value))]);
+        // return $builder->whereDate('load_time_stamp', '<=' ,date('Y-m-d', strtotime(str_replace(',', ' ', $value))));
 
-        return $builder->where('vendor',$value);
     }
 }

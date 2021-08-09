@@ -413,9 +413,11 @@ $url = url()->current();
                             <li><a href="{{ route('requestinfo.index') }}">View Requests Info</a></li>
                         @endcan
 
-                        @can('Cellpay user transaction view')
+
+                  {{--      @can('Cellpay user transaction view')
                             <li><a href="{{route('cellPayUserTransaction.view')}}">CellPay Transactions</a></li>
-                            @endcan
+                            @endcan--}}
+
                     </ul>
                 </li>
             @endif
@@ -434,6 +436,12 @@ $url = url()->current();
                         @endcan--}}
                     </ul>
                 </li>
+            @endif
+
+            @if(auth()->user()->hasAnyPermission(['View request info']))
+                @can('View request info')
+                <li><a href="{{ route('requestinfo.index') }}"><i class="fa fa-info-circle"></i> View Requests Info</a></li>
+                @endcan
             @endif
 
             @if(auth()->user()->hasAnyPermission(['Clearance npay', 'Clearance paypoint']))

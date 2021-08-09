@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filters\RequestInfo;
+namespace App\Filters\LinkedAccounts;
 
 use App\Filters\FilterAbstract;
 use Illuminate\Database\Eloquent\Builder;
 
-class VendorFilter extends FilterAbstract {
+class ReferenceIdFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -31,8 +31,7 @@ class VendorFilter extends FilterAbstract {
             return $builder;
         }
 
-      
-
-        return $builder->where('vendor',$value);
+        return $builder->where('reference_id','LIKE', "%{$value}%")->get();
     }
+    
 }

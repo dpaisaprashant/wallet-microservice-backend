@@ -20,8 +20,6 @@ class RequestInfoFilters extends FiltersAbstract
         'service_type' => ServiceTypeFilter::class,
         'microservice_type' => MicroServiceTypeFilter::class,
         'latest_date' => LatestDateFilter::class,
-
-
     ];
 
 

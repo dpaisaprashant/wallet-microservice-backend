@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filters\RequestInfo;
+namespace App\Filters\LinkedAccounts;
 
 use App\Filters\FilterAbstract;
 use Illuminate\Database\Eloquent\Builder;
 
-class VendorFilter extends FilterAbstract {
+class VerifiedStatusFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -26,13 +26,9 @@ class VendorFilter extends FilterAbstract {
     public function filter(Builder $builder, $value)
     {
         //$value = $this->resolveFilterValue($value);
-    
         if ($value === null) {
             return $builder;
         }
-
-      
-
-        return $builder->where('vendor',$value);
+        return $builder->where('verified_status',$value);
     }
 }

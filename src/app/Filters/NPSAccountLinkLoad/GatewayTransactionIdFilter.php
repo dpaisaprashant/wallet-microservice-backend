@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filters\RequestInfo;
+namespace App\Filters\NPSAccountLinkLoad;
 
 use App\Filters\FilterAbstract;
 use Illuminate\Database\Eloquent\Builder;
 
-class VendorFilter extends FilterAbstract {
+class GatewayTransactionIdFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -29,10 +29,10 @@ class VendorFilter extends FilterAbstract {
     
         if ($value === null) {
             return $builder;
-        }
+        }      
 
-      
-
-        return $builder->where('vendor',$value);
+        return $builder->where('gateway_transaction_id','LIKE', "%{$value}%")->get();
     }
+
+    
 }

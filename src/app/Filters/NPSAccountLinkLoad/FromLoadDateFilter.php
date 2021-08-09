@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filters\RequestInfo;
+namespace App\Filters\NPSAccountLinkLoad;
 
 use App\Filters\FilterAbstract;
 use Illuminate\Database\Eloquent\Builder;
 
-class VendorFilter extends FilterAbstract {
+class FromLoadDateFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -26,13 +26,12 @@ class VendorFilter extends FilterAbstract {
     public function filter(Builder $builder, $value)
     {
         //$value = $this->resolveFilterValue($value);
-    
         if ($value === null) {
             return $builder;
         }
-
-      
-
-        return $builder->where('vendor',$value);
+        // date('d-m-Y', strtotime($user->from_date));
+        // ->whereRaw('Date(created_at) = CURDATE()')->get();
+        return $builder->whereRaw("(STR_TO_DATE(load_time_stamp,'%m/%d/%y'))");
+        // return $builder->whereRaw('Date('load_time_stamp', '>=' ,date('Y-m-d', strtotime(str_replace(',', ' ', $value)))));
     }
 }

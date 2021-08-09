@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filters\RequestInfo;
+namespace App\Filters\NPSAccountLinkLoad;
 
 use App\Filters\FilterAbstract;
 use Illuminate\Database\Eloquent\Builder;
 
-class VendorFilter extends FilterAbstract {
+class LoadStatusFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -31,8 +31,6 @@ class VendorFilter extends FilterAbstract {
             return $builder;
         }
 
-      
-
-        return $builder->where('vendor',$value);
+        return $builder->where('load_status',$value);
     }
 }

@@ -170,6 +170,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'Sparrow SMS view',
             'Sparrow SMS detail view',
 
+            'Miracle info SMS view',
+
             'General page setting view',
             'General page setting create',
             'General page setting update',
@@ -317,13 +319,13 @@ class RolesAndPermissionsSeeder extends Seeder
             'Add BFI user',
 
 
-
             'Add blocked ip',
             'Delete blocked ip',
             'Edit blocked ip',
             'View blocked ip',
 
             'View request info',
+
 
             'View and update agent type hierarchy cashback',
 
@@ -338,8 +340,27 @@ class RolesAndPermissionsSeeder extends Seeder
 
             'View pre-transactions',
 
+
             'View khalti details',
-            'View khalti detail page'
+            'View khalti detail page',
+
+            'Add whitelisted ip',
+            'Delete whitelisted ip',
+            'Edit whitelisted ip',
+            'View whitelisted ip',
+
+
+            'View and update agent type hierarchy cashback',
+
+            'View bfi execute payment',
+            'View bfi to user fund transfer',
+            'View user to bfi fund transfer',
+
+            // NicAsia
+            'Nicasia cybersource view',
+
+            //Cellpay
+            'Cellpay user transaction view',
 
             ];
 

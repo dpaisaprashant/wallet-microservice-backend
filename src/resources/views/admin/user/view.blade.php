@@ -360,72 +360,72 @@
                                 </thead>
                                 <tbody>
                                 @foreach($users as $user)
-                                    <tr class="gradeX">
-                                        <td>{{ $loop->index + ($users->perPage() * ($users->currentPage() - 1)) + 1 }}</td>
-                                        <td>
-                                            {{--<img alt="image"  src="img/profile_small.jpg" style="">--}}
-                                            <a @can('User profile') href="{{route('user.profile', $user->id)}}" @endcan>{{ $user->name }}</a>
-                                        </td>
-                                        <td>
-                                            @if(!empty($user->phone_verified_at))
-                                                <i class="fa fa-check-circle" style="color: green;"></i>
-                                                &nbsp;{{ $user->mobile_no }}
-                                            @else
-                                                <i class="fa fa-times-circle" style="color: red;"></i>
-                                                &nbsp;{{ $user->mobile_no }}
-                                            @endif
-                                        </td>
-                                        {{--<td class="center">
-                                            @if(!empty($user->email_verified_at))
-                                                <i class="fa fa-check-circle" style="color: green;"></i> &nbsp;{{ $user->email }}
-                                            @else
-                                                <i class="fa fa-times-circle" style="color: red;"></i>&nbsp;{{ $user->email }}
-                                            @endif
-                                        </td>--}}
-                                        <td>
-                                            @include('admin.user.kyc.status', ['kyc' => $user->kyc])
-                                        </td>
-                                        <td>Rs. {{ $user->wallet->balance }}</td>
-                                        <td>
-                                           @include('admin.user.userType.displayUserTypes',['user' => $user])
-                                        </td>
-                                        <td>Rs. {{ $user->wallet->bonus_balance }}</td>
+                                        <tr class="gradeX">
+                                            <td>{{ $loop->index + ($users->perPage() * ($users->currentPage() - 1)) + 1 }}</td>
+                                            <td>
+                                                {{--<img alt="image"  src="img/profile_small.jpg" style="">--}}
+                                                <a @can('User profile') href="{{route('user.profile', $user->id)}}" @endcan>{{ $user->name }}</a>
+                                            </td>
+                                            <td>
+                                                @if(!empty($user->phone_verified_at))
+                                                    <i class="fa fa-check-circle" style="color: green;"></i>
+                                                    &nbsp;{{ $user->mobile_no }}
+                                                @else
+                                                    <i class="fa fa-times-circle" style="color: red;"></i>
+                                                    &nbsp;{{ $user->mobile_no }}
+                                                @endif
+                                            </td>
+                                            {{--<td class="center">
+                                                @if(!empty($user->email_verified_at))
+                                                    <i class="fa fa-check-circle" style="color: green;"></i> &nbsp;{{ $user->email }}
+                                                @else
+                                                    <i class="fa fa-times-circle" style="color: red;"></i>&nbsp;{{ $user->email }}
+                                                @endif
+                                            </td>--}}
+                                            <td>
+                                                @include('admin.user.kyc.status', ['kyc' => $user->kyc])
+                                            </td>
+                                            <td>Rs. {{ $user->wallet->balance }}</td>
+                                            <td>
+                                                @include('admin.user.userType.displayUserTypes',['user' => $user])
+                                            </td>
+                                            <td>Rs. {{ $user->wallet->bonus_balance }}</td>
 
-                                        {{--<td>Rs. {{ $user->getFundSendAmount() }}</td>
+                                            {{--<td>Rs. {{ $user->getFundSendAmount() }}</td>
 
-                                        <td>Rs. {{ $user->getFundReceiveAmount() }}</td>
+                                            <td>Rs. {{ $user->getFundReceiveAmount() }}</td>
 
-                                        <td>Rs. {{ $user->getTotalPaymentAmount() }}</td>
+                                            <td>Rs. {{ $user->getTotalPaymentAmount() }}</td>
 
-                                        <td>Rs. {{ $user->getTotalLoadedAmount() }}</td>--}}
+                                            <td>Rs. {{ $user->getTotalLoadedAmount() }}</td>--}}
 
-                                        {{--<td>{{ count($user->userTransactionEvents) }}</td>--}}
+                                            {{--<td>{{ count($user->userTransactionEvents) }}</td>--}}
 
-                                        {{--<td>Rs. {{ $user->getTotalCashBack() }}</td>--}}
+                                            {{--<td>Rs. {{ $user->getTotalCashBack() }}</td>--}}
 
-                                        <td class="center">
-                                            @can('User profile')
+                                            <td class="center">
+                                                @can('User profile')
+                                                    <a style="margin-top: 5px;"
+                                                       href="{{route('user.profile', $user->id)}}"
+                                                       class="btn btn-sm btn-icon btn-primary m-t-n-xs"
+                                                       title="user profile"><i class="fa fa-eye"></i></a>
+                                                @endcan
+
+                                                @can('User transactions')
+                                                    <a style="margin-top: 5px;"
+                                                       href="{{route('user.transaction', $user->id)}}"
+                                                       class="btn btn-sm btn-icon btn-info m-t-n-xs"
+                                                       title="user transactions"><i
+                                                            class="fa fa-credit-card"></i></a>
+                                                @endcan
+
                                                 <a style="margin-top: 5px;"
-                                                   href="{{route('user.profile', $user->id)}}"
-                                                   class="btn btn-sm btn-icon btn-primary m-t-n-xs"
-                                                   title="user profile"><i class="fa fa-eye"></i></a>
-                                            @endcan
+                                                   href="{{route('user.bank.accounts', $user->id)}}"
+                                                   class="btn btn-sm btn-icon btn-warning m-t-n-xs"
+                                                   title="user bank accounts"><i class="fa fa-bank"></i></a>
 
-                                            @can('User transactions')
-                                                <a style="margin-top: 5px;"
-                                                   href="{{route('user.transaction', $user->id)}}"
-                                                   class="btn btn-sm btn-icon btn-info m-t-n-xs"
-                                                   title="user transactions"><i
-                                                        class="fa fa-credit-card"></i></a>
-                                            @endcan
-
-                                            <a style="margin-top: 5px;"
-                                               href="{{route('user.bank.accounts', $user->id)}}"
-                                               class="btn btn-sm btn-icon btn-warning m-t-n-xs"
-                                               title="user bank accounts"><i class="fa fa-bank"></i></a>
-
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
                                 @endforeach
                                 </tbody>
                             </table>

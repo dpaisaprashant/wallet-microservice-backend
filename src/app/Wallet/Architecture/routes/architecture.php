@@ -65,9 +65,13 @@ Route::group(['prefix' => 'admin/architecture', 'middleware' => ['web','auth']],
 
 
 
+
     //Agent Tyoe Hierarchy Cashback
     Route::get('/view-agent-type-hierarchy-cashback',[AgentTypeHierarchyCashbackController::class,'index'])->name('view.agent.type.hierarchy.cashback');
     Route::post('/update-agent-type-hierarchy-cashback',[AgentTypeHierarchyCashbackController::class,'update'])->name('update.agent.type.hierarchy.cashback');
+
+
+    //Wallet Services
 
 
     Route::get('/view-wallet-service',[WalletServiceController::class,'index'])->name('wallet.service.view')->middleware('permission:View wallet service');//View wallet service
@@ -76,6 +80,11 @@ Route::group(['prefix' => 'admin/architecture', 'middleware' => ['web','auth']],
     Route::get('/edit-wallet-service/{id}',[WalletServiceController::class,'edit'])->name('wallet.service.edit')->middleware('permission:Edit wallet service');//edit wallet service
     Route::post('/edit-wallet-service/{id}',[WalletServiceController::class,'update'])->name('wallet.service.update')->middleware('permission:Edit wallet service');//update wallet service
     Route::get('/delete-wallet-service/{id}',[WalletServiceController::class,'delete'])->name('wallet.service.delete')->middleware('permission:Delete wallet service');//delete wallet service
+
+
+    //Agent Tyoe Hierarchy Cashback
+    Route::get('/view-agent-type-hierarchy-cashback',[AgentTypeHierarchyCashbackController::class,'index'])->name('view.agent.type.hierarchy.cashback');
+    Route::post('/update-agent-type-hierarchy-cashback',[AgentTypeHierarchyCashbackController::class,'update'])->name('update.agent.type.hierarchy.cashback');
 
 
 });

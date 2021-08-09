@@ -218,7 +218,7 @@
 
 
 
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <select data-placeholder="Select Pre-Transaction status..."
                                                         class="chosen-select" tabindex="2" name="status">
@@ -247,7 +247,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-10">
+                                        <div class="col-md-12">
                                             <label for="transaction_number">Pre Transaction Amount</label>
                                             {{--                                            <input type="text" name="transaction_number" class="ionrange_number">--}}
                                             <div class="row">

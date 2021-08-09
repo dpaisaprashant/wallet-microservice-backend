@@ -29,9 +29,10 @@ class RequestIdFilter extends FilterAbstract {
     
         if ($value === null) {
             return $builder;
-        }
-
+        }      
 
         return $builder->where('request_id',$value);
     }
+
+    
 }

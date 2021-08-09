@@ -344,6 +344,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'View khalti details',
             'View khalti detail page',
 
+
             'Add whitelisted ip',
             'Delete whitelisted ip',
             'Edit whitelisted ip',
@@ -361,6 +362,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
             //Cellpay
             'Cellpay user transaction view',
+
 
             ];
 

@@ -403,13 +403,13 @@ $url = url()->current();
                             <li><a href="{{ route('nchl.bankTransfer') }}">NCHL Bank Transfer</a></li>
                         @endcan
 
-                        @can('Nicasia cybersource load transaction')
+                        {{--@can('Nicasia cybersource load transaction')
                             <li><a href="{{ route('nicasia.cyberSourceLoad') }}">All card load transaction</a></li>
-                        @endcan
+                        @endcan--}}
 
-                        @can('Nicasia cybersource view')
+                       {{-- @can('Nicasia cybersource view')
                             <li><a href="{{ route('nicAsia.viewCyberSourceLoad') }}">NIC Asia Transaction</a></li>
-                        @endcan
+                        @endcan--}}
 
                         @can('View request info')
                             <li><a href="{{ route('requestinfo.index') }}">View Requests Info</a></li>

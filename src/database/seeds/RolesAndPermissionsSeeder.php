@@ -367,6 +367,9 @@ class RolesAndPermissionsSeeder extends Seeder
             'View nps linked account',
             'Excel nps linked account',
 
+            //Run seeder
+            'View seeder list',
+            'Run seeder'
             ];
 
         //get users having all permissions

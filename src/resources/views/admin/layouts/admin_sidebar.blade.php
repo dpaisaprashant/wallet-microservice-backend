@@ -405,6 +405,7 @@ $url = url()->current();
 
                         @can('Nicasia cybersource load transaction')
                             <li><a href="{{ route('nicasia.cyberSourceLoad') }}">All card load transaction</a></li>
+                        @endcan
 
                         @can('Nicasia cybersource view')
                             <li><a href="{{ route('nicAsia.viewCyberSourceLoad') }}">NIC Asia Transaction</a></li>

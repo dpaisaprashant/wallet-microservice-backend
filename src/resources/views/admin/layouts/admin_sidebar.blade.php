@@ -417,7 +417,6 @@ $url = url()->current();
                         @can('Cellpay user transaction view')
                             <li><a href="{{route('cellPayUserTransaction.view')}}">CellPay Transactions</a></li>
                         @endcan
-
                     </ul>
                 </li>
             @endif

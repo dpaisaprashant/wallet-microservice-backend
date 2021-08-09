@@ -403,7 +403,6 @@ $url = url()->current();
                             <li><a href="{{ route('nicAsia.viewCyberSourceLoad') }}">NIC Asia Transaction</a></li>
                         @endcan
 
-
                         @can('View request info')
                             <li><a href="{{ route('requestinfo.index') }}">View Requests Info</a></li>
                         @endcan

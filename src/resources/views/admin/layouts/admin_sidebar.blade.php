@@ -402,16 +402,15 @@ $url = url()->current();
                         @can('Nicasia cybersource view')
                             <li><a href="{{ route('nicAsia.viewCyberSourceLoad') }}">NIC Asia Transaction</a></li>
                         @endcan
-<<<<<<< HEAD
+
 
                         @can('View request info')
                             <li><a href="{{ route('requestinfo.index') }}">View Requests Info</a></li>
                         @endcan
-=======
+
                         @can('Cellpay user transaction view')
                             <li><a href="{{route('cellPayUserTransaction.view')}}">CellPay Transactions</a></li>
                             @endcan
->>>>>>> af35ffa1c354cc3484d81d7e2e723bfde745be88
                     </ul>
                 </li>
             @endif

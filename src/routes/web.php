@@ -171,10 +171,7 @@ Route::group(['prefix' => 'admin'], function () {
 
         /**
          *
-         * Pre Transactions
-         */
-        Route::get('/PreTransaction','PreTransactionController@index')->name('preTransaction.view')->middleware('permission:View pre-transactions');
-
+         *
 
         /**
          * Transactions
@@ -215,9 +212,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/transaction/nchl-load-transaction', 'TransactionController@nchlLoadTransaction')->name('nchl.loadTransaction')->middleware('permission:Transaction nchl load');
         Route::get('transaction/nchl-load-transaction/detail/{id}', 'TransactionController@nchlLoadTransactionDetail')->name('nchl.loadTransaction.detail');
 
-        //NicAsia CyberSource
-        Route::get('transaction/nicasia-cybesource-load-transaction','TransactionController@nicAsiaCyberSourceLoad')->name('nicasia.cyberSourceLoad')->middleware('permission:Nicasia cybersource load transaction');
-        Route::get('transaction/nicasia-cybesource-load-transaction/detail/{id}', 'TransactionController@nicAsiaCyberSourceLoadDetail')->name('nicasia.cyberSourceLoadTransaction.detail');
+//        //NicAsia CyberSource
+//        Route::get('transaction/nicasia-cybesource-load-transaction','TransactionController@nicAsiaCyberSourceLoad')->name('nicasia.cyberSourceLoad')->middleware('permission:Nicasia cybersource load transaction');
+//        Route::get('transaction/nicasia-cybesource-load-transaction/detail/{id}', 'TransactionController@nicAsiaCyberSourceLoadDetail')->name('nicasia.cyberSourceLoadTransaction.detail');
 
         //Khalti
         Route::get('transaction/khalti-payment-transaction/detail/{id}', 'TransactionController@khaltiPaymentDetail')->name('khalti.payment.detail');
@@ -390,6 +387,11 @@ Route::group(['prefix' => 'admin'], function () {
          */
         Route::get('/sparrow-sms', 'SparrowSMSController@index')->name('sparrow.view')->middleware('permission:Sparrow SMS view');
         Route::get('/sparrow-sms/detail', 'SparrowSMSController@detail')->name('sparrow.detail')->middleware('permission:Sparrow SMS detail view');
+
+        /**
+         * Miracle Info sms
+         */
+        Route::get('/miracle-info-sms','MiracleInfoSMSController@index')->name('miracle-info.view')->middleware('permission:Miracle info SMS view');
 
         /**
          * Terms and Condition

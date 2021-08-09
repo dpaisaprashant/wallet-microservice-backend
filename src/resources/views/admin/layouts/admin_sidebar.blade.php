@@ -1,4 +1,3 @@
-'
 <?php
 $url = url()->current();
 //$today = \Carbon\Carbon::now()->format('d M, Y');
@@ -400,13 +399,19 @@ $url = url()->current();
                         @can('Transaction nchl bank transfer')
                             <li><a href="{{ route('nchl.bankTransfer') }}">NCHL Bank Transfer</a></li>
                         @endcan
-                        @can('Nicasia cybersource load transaction')
-                            <li><a href="{{ route('nicasia.cyberSourceLoad') }}">All card load transaction</a></li>
+                        @can('Nicasia cybersource view')
+                            <li><a href="{{ route('nicAsia.viewCyberSourceLoad') }}">NIC Asia Transaction</a></li>
                         @endcan
+<<<<<<< HEAD
 
                         @can('View request info')
                             <li><a href="{{ route('requestinfo.index') }}">View Requests Info</a></li>
                         @endcan
+=======
+                        @can('Cellpay user transaction view')
+                            <li><a href="{{route('cellPayUserTransaction.view')}}">CellPay Transactions</a></li>
+                            @endcan
+>>>>>>> af35ffa1c354cc3484d81d7e2e723bfde745be88
                     </ul>
                 </li>
             @endif
@@ -642,6 +647,13 @@ $url = url()->current();
                                 <a href="{{ route('sparrow.detail') }}"> <span class="nav-label"> SMS Detail</span></a>
                             </li>
                         @endcan
+
+                            @can('Miracle info SMS view')
+                                <li>
+                                <a href="{{route('miracle-info.view')}}"><span class="nav-label">Miracle Info SMS</span></a>
+                                </li>
+                            @endcan
+
                     </ul>
                 </li>
             @endif

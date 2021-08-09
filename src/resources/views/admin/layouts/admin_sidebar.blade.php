@@ -361,6 +361,12 @@ $url = url()->current();
                 </li>
                 @endcan
 
+            @can('View request info')
+                <li @if($url == route('requestinfo.index')) class="active" @endif>
+                    <a href="{{route('requestinfo.index')}}"><i class="fa fa-handshake-o"></i> <span
+                            class="nav-label">Requests Info</span></a>
+                </li>
+            @endcan
 
 
             @if(auth()->user()->hasAnyPermission(['Complete transaction view', 'Fund transfer view', 'Fund request view', 'EBanking view', 'Paypoint view','Transaction nps view','Transaction nchl bank transfer','Transaction nchl load','Nicasia cybersource load transaction']))
@@ -415,9 +421,9 @@ $url = url()->current();
                             <li><a href="{{ route('requestinfo.index') }}">View Requests Info</a></li>
                         @endcan
 
-                        @can('Cellpay user transaction view')
+                        {{--@can('Cellpay user transaction view')
                             <li><a href="{{route('cellPayUserTransaction.view')}}">CellPay Transactions</a></li>
-                        @endcan
+                        @endcan--}}
                     </ul>
                 </li>
             @endif

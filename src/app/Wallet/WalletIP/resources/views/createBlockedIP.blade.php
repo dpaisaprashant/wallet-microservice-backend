@@ -29,7 +29,7 @@
                     </div>
                     <div class="ibox-content">
                         <form method="post" enctype="multipart/form-data" id="blockedIPForm">
-                            @csrf                            
+                            @csrf
 
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">IP</label>
@@ -38,7 +38,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group  row">   
+                            <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Description</label>
                                 <div class="col-sm-10">
                                     <input name="description" type="text" class="form-control" required>
@@ -58,13 +58,33 @@
                                     <input name="block_duration" type="date" class="form-control">
                                 </div>
                             </div>
-                            
+
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Status</label>
                                 <div class="col-sm-10">
                                     <input name="status" type="text" class="form-control" required>
                                 </div>
-                            </div>              
+                            </div>
+
+                            <div class="form-group">
+                                <select data-placeholder="Choose transaction type..."
+                                        class="chosen-select" tabindex="2" name="transaction_type">
+                                    <option value="" selected disabled>Select Status...
+                                    </option>
+                                    <option value="">All</option>
+                                    @if(!empty($_GET['status']))
+                                        @foreach($status as $key => $stat)
+                                            <option value="{{ $key }}"
+                                                    @if($_GET['status'] == $key) selected @endif>{{ $stat }}</option>
+                                        @endforeach
+                                    @else
+                                        @foreach($status as $key => $transactionType)
+                                            <option value="{{ $key }}"> {{ $transactionType }} </option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                            </div>
 
                             <div class="hr-line-dashed"></div>
 
@@ -86,13 +106,61 @@
 
 @endsection
 
+{{--@section('styles')--}}
+{{--    @include('admin.asset.css.select2')--}}
+{{--    @include('admin.asset.css.datepicker')--}}
+{{--@endsection--}}
+
+{{--@section('scripts')--}}
+{{--    @include('admin.asset.js.select2')--}}
+{{--    @include('admin.asset.js.datepicker')--}}
+{{--@endsection--}}
+
+
 @section('styles')
-    @include('admin.asset.css.select2')
+    @include('admin.asset.css.chosen')
     @include('admin.asset.css.datepicker')
+    @include('admin.asset.css.datatable')
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/css/ion.rangeSlider.min.css"/>
 @endsection
 
 @section('scripts')
-    @include('admin.asset.js.select2')
-    @include('admin.asset.js.datepicker')
-@endsection
 
+    @include('admin.asset.js.chosen')
+    @include('admin.asset.js.datepicker')
+    @include('admin.asset.js.datatable')
+    <script>
+        @if(!empty($_GET))
+        $(document).ready(function (e) {
+            let a = "Showing {{ $transactions->firstItem() }} to {{ $transactions->lastItem() }} of {{ $transactions->total() }} entries";
+            $('.dataTables_info').text(a);
+        });
+        @endif
+    </script>
+
+    <!-- IonRangeSlider -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js"></script>
+    <script>
+        let amount = @if(!empty($_GET['amount'])) `{{ $_GET['amount'] }}`;
+        @else '0;100000'; @endif
+        let split = amount.split(';');
+        $(".ionrange_amount").ionRangeSlider({
+            type: "double",
+            grid: true,
+            min: 0,
+            max: 100000,
+            from: split[0],
+            to: split[1],
+            prefix: "Rs."
+        });
+    </script>
+
+    <script>
+        $('#excel').submit(function (e) {
+            e.preventDefault();
+            let url = $(this).attr('action').val();
+        });
+    </script>
+
+@endsection

@@ -10,6 +10,9 @@ class MerchantType extends Model
 {
     protected $connection = 'dpaisa';
 
+    CONST TYPE_NORMAL = 'normal';
+
+
     public function merchants()
     {
         return $this->hasMany(Merchant::class, 'merchant_type_id');
@@ -18,5 +21,14 @@ class MerchantType extends Model
     public function walletTransactionTypeCashbacks()
     {
         return $this->morphMany(WalletTransactionTypeCashback::class, 'transactionCashbackable' , 'user_type', 'user_type_id');
+    }
+
+    public function getNormalUserTypeId()
+    {
+        $userType = $this->where('name', self::TYPE_NORMAL)->first();
+        if (empty($userType)) {
+            $userType = $this->create(['name' => self::TYPE_NORMAL]);
+        }
+        return $userType->id;
     }
 }

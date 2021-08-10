@@ -224,10 +224,10 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($NPSAccountLinkLoads as $npsAccountLinkLoad)
+                                    @foreach($npsAccountLinkLoads as $npsAccountLinkLoad)
 
                                         <tr class="gradeC">
-                                            <td>{{ $loop->index + ($NPSAccountLinkLoads->perPage() * ($NPSAccountLinkLoads->currentPage() - 1)) + 1 }}</td>
+                                            <td>{{ $loop->index + ($npsAccountLinkLoads->perPage() * ($npsAccountLinkLoads->currentPage() - 1)) + 1 }}</td>
                                             <td>{{ $npsAccountLinkLoad->amount }}</td>
                                             <td>{{ $npsAccountLinkLoad->gateway_transaction_id }}</td>
                                             <td>
@@ -246,14 +246,14 @@
                                             <td>{{ $npsAccountLinkLoad->linked_accounts_id }}</td>
                                             <td>{{ $npsAccountLinkLoad->created_at }}</td>
                                             <td>
-                                                @include('NPSAccountLinkLoad::transactionRemarks', ['NPSAccountLinkLoad' => $npsAccountLinkLoad])
-                                                @include('NPSAccountLinkLoad::jsonButtons', ['NPSAccountLinkLoad' => $npsAccountLinkLoad])
+                                                @include('NPSAccountLinkLoad::transactionRemarks', ['npsAccountLinkLoad' => $npsAccountLinkLoad])
+                                                @include('NPSAccountLinkLoad::jsonButtons', ['npsAccountLinkLoad' => $npsAccountLinkLoad])
                                             </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
-                                {{ $NPSAccountLinkLoads->appends(request()->query())->links() }}
+                                {{ $npsAccountLinkLoads->appends(request()->query())->links() }}
                             </div>
                         </div>
                     </div>
@@ -280,7 +280,7 @@
     <script>
         @if(!empty($_GET))
         $(document).ready(function (e) {
-            let a = "Showing {{ $NPSAccountLinkLoads->firstItem() }} to {{ $NPSAccountLinkLoads->lastItem() }} of {{ $NPSAccountLinkLoads->total() }} entries";
+            let a = "Showing {{ $npsAccountLinkLoads->firstItem() }} to {{ $npsAccountLinkLoads->lastItem() }} of {{ $npsAccountLinkLoads->total() }} entries";
             $('.dataTables_info').text(a);
         });
         @endif

@@ -217,9 +217,9 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($LinkedAccounts as $linkedAccount)
+                                    @foreach($linkedAccounts as $linkedAccount)
                                         <tr class="gradeC">
-                                            <td>{{ $loop->index + ($LinkedAccounts->perPage() * ($LinkedAccounts->currentPage() - 1)) + 1 }}</td>
+                                            <td>{{ $loop->index + ($linkedAccounts->perPage() * ($linkedAccounts->currentPage() - 1)) + 1 }}</td>
                                             <td>{{ $linkedAccount->account_name }}</td>
                                             <td>{{ $linkedAccount->account_number }}</td>
                                             <td>{{ $linkedAccount->bank_code }}</td>
@@ -244,13 +244,13 @@
                                             <td>{{ $linkedAccount->verified_time_stamp }}</td>
                                             <td>{{ $linkedAccount->created_at }}</td>
                                             <td>
-                                                @include('LinkedAccounts::jsonButtons', ['LinkedAccount' => $linkedAccount])
+                                                @include('LinkedAccounts::jsonButtons', ['linkedAccount' => $linkedAccount])
                                             </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
-                                {{ $LinkedAccounts->appends(request()->query())->links() }}
+                                {{ $linkedAccounts->appends(request()->query())->links() }}
                             </div>
                         </div>
                     </div>
@@ -276,7 +276,7 @@
     <script>
         @if(!empty($_GET))
         $(document).ready(function (e) {
-            let a = "Showing {{ $LinkedAccounts->firstItem() }} to {{ $LinkedAccounts->lastItem() }} of {{ $LinkedAccounts->total() }} entries";
+            let a = "Showing {{ $linkedAccounts->firstItem() }} to {{ $linkedAccounts->lastItem() }} of {{ $linkedAccounts->total() }} entries";
             $('.dataTables_info').text(a);
         });
         @endif

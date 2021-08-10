@@ -13,20 +13,20 @@ use Illuminate\Support\Facades\View;
 
 class NPSAccountLinkLoadController extends Controller
 {
-   
+
 
     public function view(Request $request)
     {
-        
+
         $load_status = NPSAccountLinkLoad::groupBy('load_status')->pluck('load_status')->toArray();
-       
+
         View::share('load_status', $load_status);
 
-        $NPSAccountLinkLoads = NPSAccountLinkLoad::with('preTransaction')->filter($request)->paginate(20);
-        
-        return view('NPSAccountLinkLoad::viewNPSAccountLinkLoad',compact('NPSAccountLinkLoads'));
+        $npsAccountLinkLoads = NPSAccountLinkLoad::with('preTransaction')->filter($request)->paginate(20);
+
+        return view('NPSAccountLinkLoad::viewNPSAccountLinkLoad',compact('npsAccountLinkLoads'));
     }
 
-   
-    
+
+
 }

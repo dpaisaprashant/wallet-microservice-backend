@@ -10,9 +10,9 @@
                         <h3 class="m-t-none m-b">Transaction Remarks</h3>
                         <hr>
                         @if(!empty($npsAccountLinkLoad->transaction_remarks || $npsAccountLinkLoad->transaction_remarks_2 || $npsAccountLinkLoad->transaction_remarks_3))
-                            @if(!empty($NPSAccountLinkLoad->transaction_remarks))
+                            @if(!empty($npsAccountLinkLoad->transaction_remarks))
                             <dl class="m-t-none m-b">
-                                <dl class="text-left">{{$NPSAccountLinkLoad->transaction_remarks}}</dl>
+                                <dl class="text-left">{{$npsAccountLinkLoad->transaction_remarks}}</dl>
                             </dl>
                             @endif
                             @if(!empty($npsAccountLinkLoad->transaction_remarks_2))

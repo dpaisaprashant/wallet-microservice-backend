@@ -4,6 +4,7 @@ namespace App\Filters\PreTransaction\PreTransactionFilters;
 
 
 use App\Filters\FilterAbstract;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 
 class UsersFilter extends FilterAbstract {
@@ -30,6 +31,9 @@ class UsersFilter extends FilterAbstract {
         if ($value === null) {
             return $builder;
         }
-        return $builder->where('user_id',$value);
+//        return $builder->where('user_id',$value);
+        $user = User::where('mobile_no',$value)->get();
+        $user_id = $user->pluck('id');
+        return $builder->whereIn('user_id', $user_id);
     }
 }

@@ -215,16 +215,7 @@
                                             <td>{{$key+1}}</td>
                                             <td>{{$NicTransaction->reference_number}}</td>
                                             <td>{{$NicTransaction->pre_transaction_id}}</td>
-{{--                                            <td>{{$NicTransaction->user['mobile_no']}}</td>--}}
-                                            <td>
-                                                @foreach($preTransactions as $preTransaction)
-                                                    @foreach($users as $user)
-                                                        @if($NicTransaction->pre_transaction_id == $preTransaction->pre_transaction_id and $preTransaction->user_id == $user->id)
-                                                            {{$user->mobile_no}}
-                                                        @endif
-                                                    @endforeach
-                                                @endforeach
-                                            </td>
+                                            <td>{{optional(optional($NicTransaction->preTransaction)->user)->mobile_no}}</td>
                                             <td>{{$NicTransaction->transaction_uuid}}</td>
                                             <td>{{$NicTransaction->amount}}</td>
                                             <td>@include('NicAsia::status',['NicTransaction' => $NicTransaction])</td>

@@ -363,7 +363,7 @@ $url = url()->current();
 
 
 
-            @if(auth()->user()->hasAnyPermission(['Complete transaction view', 'Fund transfer view', 'Fund request view', 'EBanking view', 'Paypoint view','Transaction nps view','Transaction nchl bank transfer','Transaction nchl load','Nicasia cybersource load transaction']))
+            @if(auth()->user()->hasAnyPermission(['Complete transaction view', 'Fund transfer view', 'Fund request view', 'EBanking view', 'Paypoint view','Transaction nps view','Transaction nchl bank transfer','Transaction nchl load','Nicasia cybersource load transaction','Cellpay user transaction view','Nicasia cybersource view']))
                 <li @if($url == route('transaction.complete') || $url == route('transaction.userToUserFundTransfer') || $url == route('fundRequest') || $url == route('eBanking') || $url == route('paypoint'))class="active" @endif>
                     <a href="#"><i class="fa fa-credit-card"></i> <span class="nav-label">Transactions</span><span
                             class="fa arrow"></span></a>

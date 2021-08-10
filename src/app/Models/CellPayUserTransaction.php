@@ -43,7 +43,7 @@ class CellPayUserTransaction extends Model
 
     public function preTransaction()
     {
-        return $this->belongsTo(PreTransaction::class, 'pre_transaction_id', 'reference_no');
+        return $this->belongsTo(PreTransaction::class, 'reference_no', 'pre_transaction_id');
     }
 
     public function scopeFilter(Builder $builder, Request $request, array $filters = [])

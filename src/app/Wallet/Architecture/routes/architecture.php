@@ -79,7 +79,7 @@ Route::group(['prefix' => 'admin/architecture', 'middleware' => ['web','auth']],
     Route::post('/add-wallet-service',[WalletServiceController::class,'store'])->name('wallet.service.store')->middleware('permission:Add wallet service');//Storing wallet service
     Route::get('/edit-wallet-service/{id}',[WalletServiceController::class,'edit'])->name('wallet.service.edit')->middleware('permission:Edit wallet service');//edit wallet service
     Route::post('/edit-wallet-service/{id}',[WalletServiceController::class,'update'])->name('wallet.service.update')->middleware('permission:Edit wallet service');//update wallet service
-    Route::get('/delete-wallet-service/{id}',[WalletServiceController::class,'delete'])->name('wallet.service.delete')->middleware('permission:Delete wallet service');//delete wallet service
+    Route::post('/delete-wallet-service/{id}',[WalletServiceController::class,'delete'])->name('wallet.service.delete')->middleware('permission:Delete wallet service');//delete wallet service
 
 
     //Agent Tyoe Hierarchy Cashback

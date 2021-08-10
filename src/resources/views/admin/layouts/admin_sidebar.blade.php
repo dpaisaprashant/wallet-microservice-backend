@@ -364,15 +364,13 @@ $url = url()->current();
                 </li>
                 @endcan
 
-            @can('View request info')
-                <li @if($url == route('requestinfo.index')) class="active" @endif>
-                    <a href="{{route('requestinfo.index')}}"><i class="fa fa-handshake-o"></i> <span
-                            class="nav-label">Requests Info</span></a>
-                </li>
-            @endcan
+            @if(auth()->user()->hasAnyPermission(['View request info']))
+                @can('View request info')
+                    <li><a href="{{ route('requestinfo.index') }}"><i class="fa fa-info-circle"></i> Requests Info</a></li>
+                @endcan
+            @endif
 
-
-            @if(auth()->user()->hasAnyPermission(['Complete transaction view', 'Fund transfer view', 'Fund request view', 'EBanking view', 'Paypoint view','Transaction nps view','Transaction nchl bank transfer','Transaction nchl load','Nicasia cybersource load transaction']))
+            @if(auth()->user()->hasAnyPermission(['Complete transaction view', 'Fund transfer view', 'Fund request view', 'EBanking view', 'Paypoint view','Transaction nps view','Transaction nchl bank transfer','Transaction nchl load','Nicasia cybersource load transaction','View load wallet']))
                 <li @if($url == route('transaction.complete') || $url == route('transaction.userToUserFundTransfer') || $url == route('fundRequest') || $url == route('eBanking') || $url == route('paypoint'))class="active" @endif>
                     <a href="#"><i class="fa fa-credit-card"></i> <span class="nav-label">Transactions</span><span
                             class="fa arrow"></span></a>
@@ -438,12 +436,6 @@ $url = url()->current();
                         @endcan--}}
                     </ul>
                 </li>
-            @endif
-
-            @if(auth()->user()->hasAnyPermission(['View request info']))
-                @can('View request info')
-                <li><a href="{{ route('requestinfo.index') }}"><i class="fa fa-info-circle"></i> View Requests Info</a></li>
-                @endcan
             @endif
 
             @if(auth()->user()->hasAnyPermission(['Clearance npay', 'Clearance paypoint']))

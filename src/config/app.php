@@ -54,6 +54,8 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'logo' => env('APP_LOGO', 'http://localhost'),
+
     'core_url' => env('CORE_URL', ''),
 
     'asset_url' => env('ASSET_URL', null),

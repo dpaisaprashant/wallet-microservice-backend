@@ -217,34 +217,34 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($LinkedAccounts as $LinkedAccount)
+                                    @foreach($LinkedAccounts as $linkedAccount)
                                         <tr class="gradeC">
                                             <td>{{ $loop->index + ($LinkedAccounts->perPage() * ($LinkedAccounts->currentPage() - 1)) + 1 }}</td>
-                                            <td>{{ $LinkedAccount->account_name }}</td>
-                                            <td>{{ $LinkedAccount->account_number }}</td>
-                                            <td>{{ $LinkedAccount->bank_code }}</td>
-                                            <td>{{ $LinkedAccount->dob }}</td>
-                                            <td>{{ $LinkedAccount->mobile_number }}</td>
-                                            <td>{{ $LinkedAccount->reference_id }}</td>
-                                            <td>{{ $LinkedAccount->register_date }}</td>
+                                            <td>{{ $linkedAccount->account_name }}</td>
+                                            <td>{{ $linkedAccount->account_number }}</td>
+                                            <td>{{ $linkedAccount->bank_code }}</td>
+                                            <td>{{ $linkedAccount->dob }}</td>
+                                            <td>{{ $linkedAccount->mobile_number }}</td>
+                                            <td>{{ $linkedAccount->reference_id }}</td>
+                                            <td>{{ $linkedAccount->register_date }}</td>
                                             <td>
-                                                <span class="badge {{$LinkedAccount->register_status=="Success" ? "badge-primary" : "badge-danger"}}">{{ $LinkedAccount->register_status }}</span>
+                                                <span class="badge {{$linkedAccount->register_status=="Success" ? "badge-primary" : "badge-danger"}}">{{ $linkedAccount->register_status }}</span>
                                             </td>
-                                            <td>{{ $LinkedAccount->time_stamp }}</td>
-                                            <td>{{ $LinkedAccount->token }}</td>
-                                            <td>{{ $LinkedAccount->user_id }}</td>
-                                            @if(!empty($LinkedAccount->user->mobile_no))
-                                                <td>{{ $LinkedAccount->user->mobile_no }}</td>
+                                            <td>{{ $linkedAccount->time_stamp }}</td>
+                                            <td>{{ $linkedAccount->token }}</td>
+                                            <td>{{ $linkedAccount->user_id }}</td>
+                                            @if(!empty($linkedAccount->user->mobile_no))
+                                                <td>{{ $linkedAccount->user->mobile_no }}</td>
                                             @else
                                                 <td>No Data</td>
                                             @endif
                                             <td>
-                                                <span class="badge {{$LinkedAccount->verified_status=="Success" ? "badge-primary" : "badge-danger"}}">{{ $LinkedAccount->verified_status }}</span>
+                                                <span class="badge {{$linkedAccount->verified_status=="Success" ? "badge-primary" : "badge-danger"}}">{{ $linkedAccount->verified_status }}</span>
                                             </td>
-                                            <td>{{ $LinkedAccount->verified_time_stamp }}</td>
-                                            <td>{{ $LinkedAccount->created_at }}</td>
+                                            <td>{{ $linkedAccount->verified_time_stamp }}</td>
+                                            <td>{{ $linkedAccount->created_at }}</td>
                                             <td>
-                                                @include('LinkedAccounts::jsonButtons', ['LinkedAccount' => $LinkedAccount])
+                                                @include('LinkedAccounts::jsonButtons', ['LinkedAccount' => $linkedAccount])
                                             </td>
                                         </tr>
                                     @endforeach

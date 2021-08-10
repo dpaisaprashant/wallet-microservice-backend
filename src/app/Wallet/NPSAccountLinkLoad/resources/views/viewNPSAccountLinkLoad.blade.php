@@ -98,29 +98,6 @@
                                                        value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
                                             </div>
                                         </div>
-
-{{--                                        <div class="col-md-3">--}}
-{{--                                            <div class="input-group date">--}}
-{{--                                                <span class="input-group-addon">--}}
-{{--                                                    <i class="fa fa-calendar"></i>--}}
-{{--                                                </span>--}}
-{{--                                                <input id="date_from_load" type="text" class="form-control date_from_load"--}}
-{{--                                                       placeholder="From Load Time Stamp" name="from_load" autocomplete="off"--}}
-{{--                                                       value="{{ !empty($_GET['from_load']) ? $_GET['from_load'] : '' }}">--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-
-{{--                                        <div class="col-md-3">--}}
-{{--                                            <div class="input-group date">--}}
-{{--                                                <span class="input-group-addon">--}}
-{{--                                                    <i class="fa fa-calendar"></i>--}}
-{{--                                                </span>--}}
-{{--                                                <input id="date_to_load" type="text" class="form-control date_to_load"--}}
-{{--                                                       placeholder="To Load Time Stamp" name="to_load" autocomplete="off"--}}
-{{--                                                       value="{{ !empty($_GET['to_load']) ? $_GET['to_load'] : '' }}">--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-
                                         <div class="col-md-3">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
@@ -144,6 +121,28 @@
                                                        value="{{ !empty($_GET['to_amount']) ? $_GET['to_amount'] : '' }}">
                                             </div>
                                         </div>
+
+{{--                                        <div class="col-md-3">--}}
+{{--                                            <div class="input-group date">--}}
+{{--                                                <span class="input-group-addon">--}}
+{{--                                                    <i class="fa fa-calendar"></i>--}}
+{{--                                                </span>--}}
+{{--                                                <input id="date_from_load" type="text" class="form-control date_from_load"--}}
+{{--                                                       placeholder="From Load Time Stamp" name="from_load" autocomplete="off"--}}
+{{--                                                       value="{{ !empty($_GET['from_load']) ? $_GET['from_load'] : '' }}">--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+
+{{--                                        <div class="col-md-3">--}}
+{{--                                            <div class="input-group date">--}}
+{{--                                                <span class="input-group-addon">--}}
+{{--                                                    <i class="fa fa-calendar"></i>--}}
+{{--                                                </span>--}}
+{{--                                                <input id="date_to_load" type="text" class="form-control date_to_load"--}}
+{{--                                                       placeholder="To Load Time Stamp" name="to_load" autocomplete="off"--}}
+{{--                                                       value="{{ !empty($_GET['to_load']) ? $_GET['to_load'] : '' }}">--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
                                     </div>
 
                                     <div class="row" style="margin-top: 40px;">
@@ -212,7 +211,7 @@
                                     <thead>
                                     <tr>
                                         <th>S.No.</th>
-                                        <th>Amount (NRs.)</th>
+                                        <th>Amount</th>
                                         <th>Gateway Transaction ID</th>
                                         <th>Load Status</th>
                                         <th>Load Time Stamp</th>
@@ -225,30 +224,30 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($NPSAccountLinkLoads as $NPSAccountLinkLoad)
+                                    @foreach($NPSAccountLinkLoads as $npsAccountLinkLoad)
 
                                         <tr class="gradeC">
                                             <td>{{ $loop->index + ($NPSAccountLinkLoads->perPage() * ($NPSAccountLinkLoads->currentPage() - 1)) + 1 }}</td>
-                                            <td>{{ $NPSAccountLinkLoad->amount }}</td>
-                                            <td>{{ $NPSAccountLinkLoad->gateway_transaction_id }}</td>
+                                            <td>{{ $npsAccountLinkLoad->amount }}</td>
+                                            <td>{{ $npsAccountLinkLoad->gateway_transaction_id }}</td>
                                             <td>
-                                                <span class="badge {{$NPSAccountLinkLoad->load_status=="Transaction Success" ? "badge-primary" : "badge-danger"}}">{{ $NPSAccountLinkLoad->load_status }}</span>
+                                                <span class="badge {{$npsAccountLinkLoad->load_status=="Transaction Success" ? "badge-primary" : "badge-danger"}}">{{ $npsAccountLinkLoad->load_status }}</span>
                                             </td>
-                                            <td>{{ $NPSAccountLinkLoad->load_time_stamp }}</td>
-                                            <td>{{ $NPSAccountLinkLoad->merchant_txn_id }}</td>
-                                            <td>{{ $NPSAccountLinkLoad->reference_id }}</td>
+                                            <td>{{ $npsAccountLinkLoad->load_time_stamp }}</td>
+                                            <td>{{ $npsAccountLinkLoad->merchant_txn_id }}</td>
+                                            <td>{{ $npsAccountLinkLoad->reference_id }}</td>
                                             <td>
-                                                @if(!empty($NPSAccountLinkLoad->preTransaction->user->mobile_no))
-                                                    {{ $NPSAccountLinkLoad->preTransaction->user->mobile_no }}
+                                                @if(!empty($npsAccountLinkLoad->preTransaction->user->mobile_no))
+                                                    {{ $npsAccountLinkLoad->preTransaction->user->mobile_no }}
                                                 @else
                                                     No Data
                                                 @endif
                                             </td>
-                                            <td>{{ $NPSAccountLinkLoad->linked_accounts_id }}</td>
-                                            <td>{{ $NPSAccountLinkLoad->created_at }}</td>
+                                            <td>{{ $npsAccountLinkLoad->linked_accounts_id }}</td>
+                                            <td>{{ $npsAccountLinkLoad->created_at }}</td>
                                             <td>
-                                                @include('NPSAccountLinkLoad::transactionRemarks', ['NPSAccountLinkLoad' => $NPSAccountLinkLoad])
-                                                @include('NPSAccountLinkLoad::jsonButtons', ['NPSAccountLinkLoad' => $NPSAccountLinkLoad])
+                                                @include('NPSAccountLinkLoad::transactionRemarks', ['NPSAccountLinkLoad' => $npsAccountLinkLoad])
+                                                @include('NPSAccountLinkLoad::jsonButtons', ['NPSAccountLinkLoad' => $npsAccountLinkLoad])
                                             </td>
                                         </tr>
                                     @endforeach

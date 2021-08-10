@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class WalletServiceController extends Controller{
 
     public function index(){
-        $services = WalletService::paginate(10);
+        $services = WalletService::latest()->paginate(10);
         return view('Architecture::WalletService.viewWalletService')->with(compact('services'));
     }
 

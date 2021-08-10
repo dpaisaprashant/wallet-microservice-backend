@@ -15,7 +15,7 @@ class CellPayUserTransactionController extends Controller{
 public function index(){
     $service_types = CellPayUserTransaction::groupBy('service_type')->pluck('service_type');
     $vendors = CellPayUserTransaction::groupBy('vendor')->pluck('vendor');
-    $cellPayUserTransactions = CellPayUserTransaction::with('preTransaction')->filter(request())->paginate(10);
+    $cellPayUserTransactions = CellPayUserTransaction::with('preTransaction')->filter(request())->latest()->paginate(10);
 
     return view('CellPayUserTransaction::viewCellPayUserTransactions')->with(compact('cellPayUserTransactions','service_types','vendors',));
 }

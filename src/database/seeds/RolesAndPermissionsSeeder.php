@@ -359,6 +359,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
             // NicAsia
             'Nicasia cybersource view',
+            'Nicasia cybersource detail',
 
             //Cellpay
             'Cellpay user transaction view',

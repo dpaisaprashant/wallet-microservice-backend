@@ -367,7 +367,7 @@
                                                                     @if($key == 'amount' )
                                                                         Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
                                                                     @else
-                                                                        {{ $value }}<br>
+                                                                        {{ print_r($value) }}<br>
                                                                     @endif
 
                                                                     <?php }?>

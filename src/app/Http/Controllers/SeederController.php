@@ -19,6 +19,8 @@ class SeederController extends Controller
         if(!in_array($className.'.php',$seederFileName)){
             return redirect()->route('view.seeder')->with('error','Seeder class not found');
         }
+        //uncomment below line if you face error like STDIN not defined
+//        define('STDIN',fopen("php://stdin","r"));
         $status = \Artisan::call('db:seed',['--class' => $className,'--force'=>true]);
         if($status == 0){
             return redirect()->route('view.seeder')->with('success',$className." successfully executed");

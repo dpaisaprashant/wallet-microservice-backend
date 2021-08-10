@@ -19,7 +19,7 @@ class SeederController extends Controller
         if(!in_array($className.'.php',$seederFileName)){
             return redirect()->route('view.seeder')->with('error','Seeder class not found');
         }
-        $status = \Artisan::call('db:seed',['--class' => $className]);
+        $status = \Artisan::call('db:seed',['--class' => $className,'--force'=>true]);
         if($status == 0){
             return redirect()->route('view.seeder')->with('success',$className." successfully executed");
         }else{

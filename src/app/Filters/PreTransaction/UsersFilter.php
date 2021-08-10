@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Filters\PreTransaction\PreTransactionFilters;
+namespace App\Filters\PreTransaction;
 
 
 use App\Filters\FilterAbstract;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 
-class PreTransactionStatusFilter extends FilterAbstract {
+class UsersFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -30,14 +31,9 @@ class PreTransactionStatusFilter extends FilterAbstract {
         if ($value === null) {
             return $builder;
         }
-        if ($value == "SUCCESS"){
-            return $builder->where("status","SUCCESS");
-        }
-        elseif($value == "FAILED"){
-            return $builder->where("status","FAILED");
-        }
-        elseif($value == "NULL"){
-            return $builder->where("status",null);
-        }
+//        return $builder->where('user_id',$value);
+        $user = User::where('mobile_no',$value)->get();
+        $user_id = $user->pluck('id');
+        return $builder->whereIn('user_id', $user_id);
     }
 }

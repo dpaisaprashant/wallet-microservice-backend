@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Filters\PreTransaction\PreTransactionFilters;
+namespace App\Filters\PreTransaction;
 
 
 use App\Filters\FilterAbstract;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 
-class UsersFilter extends FilterAbstract {
+class FromPreTransactionAmountFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -31,9 +30,6 @@ class UsersFilter extends FilterAbstract {
         if ($value === null) {
             return $builder;
         }
-//        return $builder->where('user_id',$value);
-        $user = User::where('mobile_no',$value)->get();
-        $user_id = $user->pluck('id');
-        return $builder->whereIn('user_id', $user_id);
+        return $builder->where('amount' ,'>=' ,$value*100);
     }
 }

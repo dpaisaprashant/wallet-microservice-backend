@@ -206,6 +206,8 @@
                                         <th>Reason code</th>
                                         <th>Signed datetime</th>
                                         <th>Response datetime</th>
+                                        <th>Request</th>
+                                        <th>Response</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -234,8 +236,11 @@
                                             @endif
                                             <td>
                                                 @include('NicAsia::request',['NicTransaction' => $NicTransaction])
+                                            </td>
+                                            <td>
                                                 @include('NicAsia::response',['NicTransaction' => $NicTransaction])
                                             </td>
+                                            <td>Action</td>
                                         </tr>
                                     @endforeach
                                     </tbody>

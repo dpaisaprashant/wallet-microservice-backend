@@ -2,10 +2,11 @@
 
 namespace App\Filters\PreTransaction;
 
+
 use App\Filters\FilterAbstract;
 use Illuminate\Database\Eloquent\Builder;
 
-class FromDateFilter extends FilterAbstract {
+class PreTransactionServiceTypeFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -29,8 +30,6 @@ class FromDateFilter extends FilterAbstract {
         if ($value === null) {
             return $builder;
         }
-
-
-        return $builder->whereDate('created_at', '>=' ,date('Y-m-d', strtotime(str_replace(',', ' ', $value))));
+        return $builder->where('service_type',$value);
     }
 }

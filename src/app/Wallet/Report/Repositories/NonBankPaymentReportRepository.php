@@ -4,7 +4,9 @@
 namespace App\Wallet\Report\Repositories;
 
 
+use App\Models\CellPayUserTransaction;
 use App\Models\FundRequest;
+use App\Models\KhaltiUserTransaction;
 use App\Models\NchlAggregatedPayment;
 use App\Models\NchlBankTransfer;
 use App\Models\NchlLoadTransaction;
@@ -16,12 +18,13 @@ use App\Models\UserReferralBonusTransaction;
 use App\Models\UserToUserFundTransfer;
 use App\Models\UserTransaction;
 use App\Wallet\Commission\Models\Commission;
+use Illuminate\Http\Request;
 
 class NonBankPaymentReportRepository extends AbstractReportRepository
 {
 
     public function getBillPaymentNumber(){
-        $billPaymentTotalNumber = TransactionEvent::whereIn('transaction_type',[UserTransaction::class,NchlAggregatedPayment::class])
+        $billPaymentTotalNumber = TransactionEvent::whereIn('transaction_type',$this->billPayment)
             ->filter($this->request)
             ->count();
         return $billPaymentTotalNumber;

@@ -21,6 +21,8 @@ class UserFilters extends FiltersAbstract
         'transaction_loaded' => TransactionLoadedFilter::class,
         'sort' => SortFilter::class,
         'from' => FromDateFilter::class,
+        'from_agent_created_at' => FromAgentDateFilter::class,
+        'to_agent_created_at' => ToAgentDateFilter::class,
         'to' => ToDateFilter::class,
         'verification' => VerificationFilter::class,
         'referral_code' => ReferralFilter::class,

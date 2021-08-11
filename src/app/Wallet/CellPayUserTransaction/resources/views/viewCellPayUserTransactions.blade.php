@@ -231,9 +231,9 @@
             </div>
         </div>
 
-    </div>
 
-    <div class="row">
+
+        <div class="row">
         <div class="col-lg-12">
             <div class="ibox ">
                 @include('admin.asset.notification.notify')
@@ -256,6 +256,11 @@
                                 <th>Transfer Type Id</th>
                                 <th>Date</th>
                                 <th>Status</th>
+                                <th>Specials</th>
+                                <th>Errors</th>
+                                <th>Request</th>
+                                <th>Response</th>
+                                <th>Other</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -292,11 +297,26 @@
                                     </td>
                                     <td>
                                         @include('CellPayUserTransaction::specialsCellPayUserTransactions',['$cellPayUserTransaction'=>$cellPayUserTransaction])
+                                    </td>
+                                    <td>
                                         @include('CellPayUserTransaction::errorDataCellPayUserTransactions',['$cellPayUserTransaction'=>$cellPayUserTransaction])
-                                        @include('CellPayUserTransaction::otherInfoCellPayUserTransactions',['$cellPayUserTransaction'=>$cellPayUserTransaction])
+                                    </td>
+                                    <td>
                                         @include('CellPayUserTransaction::jsonRequestCellPayUserTransactions',['$cellPayUserTransaction'=>$cellPayUserTransaction])
+                                    </td>
+                                    <td>
                                         @include('CellPayUserTransaction::jsonResponseCellPayUserTransactions',['$cellPayUserTransaction'=>$cellPayUserTransaction])
-
+                                    </td>
+                                    <td>
+                                        @include('CellPayUserTransaction::otherInfoCellPayUserTransactions',['$cellPayUserTransaction'=>$cellPayUserTransaction])
+                                    </td>
+                                    <td>
+{{--                                        @can('Nicasia cybersource detail')--}}
+                                            <a href="{{route('cellPayUserTransaction.detail',$cellPayUserTransaction->id)}}">
+                                                <button class="btn btn-primary btn-icon" type="button"><i
+                                                        class="fa fa-eye"></i></button>
+                                            </a>
+{{--                                        @endcan--}}
                                     </td>
                                 </tr>
                             @endforeach
@@ -308,6 +328,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 @endsection

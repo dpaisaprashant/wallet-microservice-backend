@@ -311,12 +311,12 @@
                                         @include('CellPayUserTransaction::otherInfoCellPayUserTransactions',['$cellPayUserTransaction'=>$cellPayUserTransaction])
                                     </td>
                                     <td>
-{{--                                        @can('Nicasia cybersource detail')--}}
+                                        @can('Cellpay user transaction detail')
                                             <a href="{{route('cellPayUserTransaction.detail',$cellPayUserTransaction->id)}}">
                                                 <button class="btn btn-primary btn-icon" type="button"><i
                                                         class="fa fa-eye"></i></button>
                                             </a>
-{{--                                        @endcan--}}
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach

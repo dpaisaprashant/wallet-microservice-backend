@@ -31,7 +31,7 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
     }
 
     public function getBillPaymentValue(){
-        $billPaymentTotalValue = TransactionEvent::whereIn('transaction_type',[UserTransaction::class,NchlAggregatedPayment::class])
+        $billPaymentTotalValue = TransactionEvent::whereIn('transaction_type',$this->billPayment)
             ->filter($this->request)
             ->sum('amount');
         return $billPaymentTotalValue;
@@ -60,14 +60,14 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
     }
 
     public function getCashInNumber(){
-        $cashInTotalNumber = TransactionEvent::whereIn('transaction_type',[UserLoadTransaction::class,NchlLoadTransaction::class,NICAsiaCyberSourceLoadTransaction::class])
+        $cashInTotalNumber = TransactionEvent::whereIn('transaction_type',$this->cashIn)
             ->filter($this->request)
             ->count();
         return $cashInTotalNumber;
     }
 
     public function getCashInValue(){
-        $cashInTotalValue = TransactionEvent::whereIn('transaction_type',[UserLoadTransaction::class,NchlLoadTransaction::class,NICAsiaCyberSourceLoadTransaction::class])
+        $cashInTotalValue = TransactionEvent::whereIn('transaction_type',$this->cashIn)
             ->filter($this->request)
             ->sum('amount');
         return $cashInTotalValue;

@@ -7,15 +7,17 @@ networks:
   linked-account-integration-project_spring-boot-mysql-network :
     external: true
   wallet-microservice-paypoint_laravel:
-     external: true
-  # wallet-microservice-nchl_laravel:
-  #   external: true
+    external: true
+  wallet-microservice-nchl_laravel:
+    external: true
   # wallet-microservice-cybersource_laravel:
   #   external: true
   wallet-microservice-npay_laravel:
-     external: true
+    external: true
   wallet-microservice-nps_laravel:
-     external: true
+    external: true
+  wallet-microservice-khalti_spring-boot-mysql-network:
+    external: true
   # wallet-microservice-merchant_laravel:
   #   external: true
 
@@ -40,8 +42,9 @@ services:
       - laravel
       - wallet-microservice-core_laravel
       - linked-account-integration-project_spring-boot-mysql-network
+      - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paypoint_laravel
-      # - wallet-microservice-nchl_laravel
+      - wallet-microservice-nchl_laravel
       # - wallet-microservice-cybersource_laravel
       - wallet-microservice-npay_laravel
       - wallet-microservice-nps_laravel
@@ -67,8 +70,9 @@ services:
       - laravel
       - wallet-microservice-core_laravel
       - linked-account-integration-project_spring-boot-mysql-network
+      - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paypoint_laravel
-      # - wallet-microservice-nchl_laravel
+      - wallet-microservice-nchl_laravel
       # - wallet-microservice-cybersource_laravel
       - wallet-microservice-npay_laravel
       - wallet-microservice-nps_laravel
@@ -88,8 +92,9 @@ services:
       - laravel
       - wallet-microservice-core_laravel
       - linked-account-integration-project_spring-boot-mysql-network
+      - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paypoint_laravel
-      # - wallet-microservice-nchl_laravel
+      - wallet-microservice-nchl_laravel
       # - wallet-microservice-cybersource_laravel
       - wallet-microservice-npay_laravel
       - wallet-microservice-nps_laravel
@@ -110,8 +115,9 @@ services:
       - laravel
       - wallet-microservice-core_laravel
       - linked-account-integration-project_spring-boot-mysql-network
+      - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paypoint_laravel
-      # - wallet-microservice-nchl_laravel
+      - wallet-microservice-nchl_laravel
       # - wallet-microservice-cybersource_laravel
       - wallet-microservice-npay_laravel
       - wallet-microservice-nps_laravel
@@ -134,8 +140,9 @@ services:
       - laravel
       - wallet-microservice-core_laravel
       - linked-account-integration-project_spring-boot-mysql-network
+      - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paypoint_laravel
-      # - wallet-microservice-nchl_laravel
+      - wallet-microservice-nchl_laravel
       # - wallet-microservice-cybersource_laravel
       - wallet-microservice-npay_laravel
       - wallet-microservice-nps_laravel
@@ -156,8 +163,9 @@ services:
       - laravel
       - wallet-microservice-core_laravel
       - linked-account-integration-project_spring-boot-mysql-network
+      - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paypoint_laravel
-      # - wallet-microservice-nchl_laravel
+      - wallet-microservice-nchl_laravel
       # - wallet-microservice-cybersource_laravel
       - wallet-microservice-npay_laravel
       - wallet-microservice-nps_laravel

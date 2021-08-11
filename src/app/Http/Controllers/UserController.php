@@ -128,7 +128,7 @@ class UserController extends Controller
 
         if($request->user()->hasPermissionTo('Users view')  && !$request->user()->hasPermissionTo('Merchant dashboard')) {
             if($user->merchant){
-                abort(403,'You dont have permission');
+                abort(403,'You dont have permission the right permission');
             }
         }
 

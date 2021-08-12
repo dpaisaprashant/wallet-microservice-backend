@@ -14,12 +14,12 @@
         @elseif(isset($event->nchlLoadTransaction))
             <b>Transaction
                 Id:</b> {{  $event->nchlLoadTransaction['transaction_id'] }}
-        @elseif(isset($event->nicAsiaCyberSourceLoad) )
+        {{--@elseif(isset($event->nicAsiaCyberSourceLoad) )
             <b>Reference
                 No:</b>{{ $event->nicAsiaCyberSourceLoad['reference_number'] }}
             <br>
             <b>Transaction
-                UID:</b>{{$event->nicAsiaCyberSourceLoad['transaction_uuid'] }}
+                UID:</b>{{$event->nicAsiaCyberSourceLoad['transaction_uuid'] }}--}}
         @elseif(isset($event->nchlBankTransfer))
             <b>Transaction Id:</b>{{ $event->nchlBankTransfer['transaction_id'] }}
             @elseif(isset($event->nchlAggregatePayment))

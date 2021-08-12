@@ -20,7 +20,7 @@ class WalletBackendAPIController extends Controller{
         $microservice
             ->setUrl("nginx_nchl/api/microservice/nchl/report/by-id");
         $response = $microservice->processRequest();
-        dd($response);
+
         return view('admin.transaction.nchlBankTransfer.apiResponse',compact('response'));
     }
 

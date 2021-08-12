@@ -45,7 +45,6 @@ class MicroserviceJSONAbstractClass
 
 
             $requestJson = array_merge(request()->all(), $this->apiParam);
-
             $client = new Client();
             $response = $client->request($this->httpMethod, $this->url, [
                 'json' => $requestJson

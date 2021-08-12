@@ -192,8 +192,7 @@ return [
         App\Wallet\Microservice\MicroserviceServiceProvider::class,
         App\Wallet\NicAsia\NICAsiaCyberSourceLoadTransactionServiceProvider::class,
         App\Wallet\NPSAccountLinkLoad\NPSAccountLinkLoadServiceProvider::class,
-        App\Wallet\LinkedAccounts\LinkedAccountsServiceProvider::class,
-        App\Wallet\WalletBackendAPI\WalletBackendAPIServiceProvider::class
+        App\Wallet\LinkedAccounts\LinkedAccountsServiceProvider::class
 
 
 

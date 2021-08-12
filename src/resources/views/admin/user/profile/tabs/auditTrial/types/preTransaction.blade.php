@@ -6,9 +6,9 @@
     <td>{{ $date[1] }}</td>
     <td>{{$event->pre_transaction_id == null ? '---' : $event->pre_transaction_id}}
         <br>
-        @if(isset($event->userTransaction) )
-            <b>RefStan :</b> {{ $event->userTransaction['refStan']  }}
-        @elseif(isset($event->userLoadTransaction))
+        {{--@if(isset($event->userTransaction) )
+            <b>RefStan :</b> {{ $event->userTransaction['refStan']  }}--}}
+        @if(isset($event->userLoadTransaction))
             <b>Gateway Ref
                 No:</b> {{ $event->userLoadTransaction['gateway_ref_no'] }}
         @elseif(isset($event->nchlLoadTransaction))

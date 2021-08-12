@@ -39,9 +39,10 @@ class MicroserviceJSONAbstractClass
         return $this;
     }
 
-    public function makeRequest()
+    public function makeRequest($endpoint="")
     {
         try {
+
 
             $requestJson = array_merge(request()->all(), $this->apiParam);
 
@@ -50,19 +51,23 @@ class MicroserviceJSONAbstractClass
                 'json' => $requestJson
             ]);
 
+
             return $response->getBody()->getContents();
 
         } catch (ClientException $e) {
+
             Log::info('Client Exception');
             Log::info($e);
 
             DB::commit();
         } catch (\Exception $e) {
+
             Log::info('Unknown Exception');
             Log::info($e);
 
             DB::commit();
         }catch(ConnectException $e){
+
             Log::info('Connection Exception');
             Log::info($e);
         }

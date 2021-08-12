@@ -256,6 +256,7 @@
                                         <th style="width: 1%">Account</th>
                                         <th style="width: 1%">Request</th>
                                         <th style="width: 1%">Response</th>
+                                        <th>NCHL Status</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
@@ -302,6 +303,12 @@
 
                                             <td>
                                                 @include('admin.transaction.nchlBankTransfer.response')
+                                            </td>
+                                            <td>
+                                                <form action="{{ route('nchlById',$transaction->transaction_id) }}" method="POST">
+                                                    @csrf
+                                                    <button class="btn btn-primary btn-sm"><i class="fa fa-server"></i></button>
+                                                </form>
                                             </td>
                                             <td>
                                                 <a href="{{ route('nchl.bankTransfer.detail', $transaction->id) }}">

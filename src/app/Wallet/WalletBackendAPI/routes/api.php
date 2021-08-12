@@ -13,4 +13,4 @@ use App\Wallet\WalletBackendAPI\Http\Controllers\WalletBackendAPIController;
 */
 
 
-Route::post('/microservice/nchl/report/byId',[WalletBackendAPIController::class,'byId']);
+Route::post('/microservice/nchl/report/byId/{id}',[WalletBackendAPIController::class,'byId'])->name('nchlById');

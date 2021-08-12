@@ -15,13 +15,13 @@ use Illuminate\Http\Request;
 
 class WalletBackendAPIController extends Controller{
 
-    public function byId(Request $request){
-
-        $microservice = new RequestMicroService($request);
+    public function byId(Request $request,$id){
+        $microservice = new RequestMicroService($request,$id);
         $microservice
             ->setUrl("nginx_nchl/api/microservice/nchl/report/by-id");
         $response = $microservice->processRequest();
-        return $response;
+        dd($response);
+        return view('admin.transaction.nchlBankTransfer.apiResponse',compact('response'));
     }
 
 }

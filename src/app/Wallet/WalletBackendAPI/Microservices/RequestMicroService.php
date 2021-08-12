@@ -18,8 +18,10 @@ class RequestMicroService extends MicroserviceJSONAbstractClass
     private $jsonRequest = [];
     private $jsonResponse = [];
 
-    public function __construct(Request $request){
-        $this->setRequestParam($request->request_param);
+    public function __construct(Request $request,$id){
+        $this->setRequestParam([
+            'batch_id' => $id
+        ]);
         $this->setJsonRequest($request->all());
 
     }
@@ -39,10 +41,15 @@ class RequestMicroService extends MicroserviceJSONAbstractClass
 
         $requestInfo = $this->apiParam;
         $requestInfo['request_param'] = json_encode($requestInfo['request_param']);
+
+
         $data = array_merge($requestInfo,[
             'url' => $this->url,
             'jsonRequest' => $this->jsonRequest
         ]);
+
+
+
 
     }
 
@@ -56,7 +63,9 @@ class RequestMicroService extends MicroserviceJSONAbstractClass
     public function processRequest(){
         $this->preRequest();
         $response = $this->jsonResponse = $this->makeRequest();
+
         $this->postRequest();
+
         return $response;
 
 

@@ -145,7 +145,7 @@
                                     <th>Email</th>
                                     <th>KYC status</th>
                                     <th>User type</th>
-                                    <th>status changed on</th>
+                                    <th>Status changed on</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>

@@ -6,22 +6,27 @@
     <td>{{ $date[1] }}</td>
     <td>{{$event->pre_transaction_id == null ? '---' : $event->pre_transaction_id}}
         <br>
-        @if($event->vendor == "PAYPOINT")
-            <b>RefStan :</b> {{ isset($event->userTransaction) ? $event->userTransaction['refStan'] : '' }}
-        @elseif($event->vendor == "NPAY")
+        @if(isset($event->userTransaction) )
+            <b>RefStan :</b> {{ $event->userTransaction['refStan']  }}
+        @elseif(isset($event->userLoadTransaction))
             <b>Gateway Ref
-                No:</b> {{isset($event->userLoadTransaction) ? $event->userLoadTransaction['gateway_ref_no'] : ''}}
-        @elseif($event->vendor == "NCHL_LOAD")
+                No:</b> {{ $event->userLoadTransaction['gateway_ref_no'] }}
+        @elseif(isset($event->nchlLoadTransaction))
             <b>Transaction
-                Id:</b> {{isset($event->nchlLoadTransaction) ? $event->nchlLoadTransaction['transaction_id'] : ''}}
-        @elseif($event->vendor == "NIC_ASIA_LOAD")
+                Id:</b> {{  $event->nchlLoadTransaction['transaction_id'] }}
+        @elseif(isset($event->nicAsiaCyberSourceLoad) )
             <b>Reference
-                No:</b>{{isset($event->nicAsiaCyberSourceLoad) ? $event->nicAsiaCyberSourceLoad['reference_number'] : ''}}
+                No:</b>{{ $event->nicAsiaCyberSourceLoad['reference_number'] }}
             <br>
             <b>Transaction
-                UID:</b>{{isset($event->nicAsiaCyberSourceLoad) ? $event->nicAsiaCyberSourceLoad['transaction_uuid'] : ''}}
-        @elseif($event->vendor == "NCHL BANK TRANSFER")
-            <b>Transaction Id:</b>{{isset($event->nchlBankTransfer) ? $event->nchlBankTransfer['transaction_id'] : ''}}
+                UID:</b>{{$event->nicAsiaCyberSourceLoad['transaction_uuid'] }}
+        @elseif(isset($event->nchlBankTransfer))
+            <b>Transaction Id:</b>{{ $event->nchlBankTransfer['transaction_id'] }}
+            @elseif(isset($event->nchlAggregatePayment))
+            <b>Transaction Id:</b>{{ $event->nchlAggregatePayment['transaction_id'] }}<br>
+            <b>Ref Id:</b>{{  $event->nchlAggregatePayment['ref_id']  }}<br>
+        @elseif(isset($event->khaltiUserTransaction))
+            <b>Account : </b>{{  $event->khaltiUserTransaction['account'] }}
         @endif
 
     </td>

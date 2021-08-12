@@ -105,7 +105,6 @@ class UserController extends Controller
 
     public function profile($id, Request $request)
     {
-
         $length = 15;
         $activeTab = 'kyc';
         if ($request->has('user-load-fund') || $request->transaction_type === 'user-load-fund') {
@@ -126,6 +125,12 @@ class UserController extends Controller
 
         //$user = User::with(['userLoadTransactions', 'userLoginHistories', 'userCheckPayment', 'fromFundTransfers', 'receiveFundTransfers', 'fromFundRequests', 'receiveFundRequests', 'kyc', 'wallet'])->findOrFail($id);
         $user = User::with(['userReferral', 'userReferralLimit','merchant','bankAccount','preTransactions', 'requestInfos', 'userLoginHistories', 'fromFundTransfers', 'receiveFundTransfers', 'fromFundRequests', 'receiveFundRequests', 'kyc', 'wallet', 'agent', 'userReferralBonus'])->findOrFail($id);
+
+        if($request->user()->hasPermissionTo('Users view')  && !$request->user()->hasPermissionTo('Merchant dashboard')) {
+            if($user->merchant){
+                abort(403,'You dont have permission the right permission');
+            }
+        }
 
         if($request->user()->hasPermissionTo('View agent profile') && !$request->user()->hasPermissionTo('User profile')) {
             if(!$user->isValidAgentOrSubAgent()){

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filters\PreTransaction\PreTransactionFilters;
+namespace App\Filters\PreTransaction;
 
 
 use App\Filters\FilterAbstract;
 use Illuminate\Database\Eloquent\Builder;
 
-class PreTransactionDateFrom extends FilterAbstract {
+class PreTransactionStatusFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -30,6 +30,14 @@ class PreTransactionDateFrom extends FilterAbstract {
         if ($value === null) {
             return $builder;
         }
-        return $builder->whereDate('created_at', '>=' ,date('Y-m-d', strtotime(str_replace(',', ' ', $value))));
+        if ($value == "SUCCESS"){
+            return $builder->where("status","SUCCESS");
+        }
+        elseif($value == "FAILED"){
+            return $builder->where("status","FAILED");
+        }
+        elseif($value == "NULL"){
+            return $builder->where("status",null);
+        }
     }
 }

@@ -2,10 +2,11 @@
 
 namespace App\Filters\PreTransaction;
 
+
 use App\Filters\FilterAbstract;
 use Illuminate\Database\Eloquent\Builder;
 
-class ToDateFilter extends FilterAbstract {
+class PreTransactionIdFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -29,9 +30,6 @@ class ToDateFilter extends FilterAbstract {
         if ($value === null) {
             return $builder;
         }
-
-
-        return $builder->whereDate('created_at', '<=' ,date('Y-m-d', strtotime(str_replace(',', ' ', $value))));
-
+        return $builder->where('pre_transaction_id',$value);
     }
 }

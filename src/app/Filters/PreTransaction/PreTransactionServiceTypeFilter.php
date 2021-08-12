@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filters\PreTransaction\PreTransactionFilters;
+namespace App\Filters\PreTransaction;
 
 
 use App\Filters\FilterAbstract;

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filters\PreTransaction\PreTransactionFilters;
+namespace App\Filters\PreTransaction;
 
 
 use App\Filters\FilterAbstract;
 use Illuminate\Database\Eloquent\Builder;
 
-class UsersFilter extends FilterAbstract {
+class PreTransactionDateFrom extends FilterAbstract {
 
 
     public function mapping()
@@ -30,6 +30,6 @@ class UsersFilter extends FilterAbstract {
         if ($value === null) {
             return $builder;
         }
-        return $builder->where('user_id',$value);
+        return $builder->whereDate('created_at', '>=' ,date('Y-m-d', strtotime(str_replace(',', ' ', $value))));
     }
 }

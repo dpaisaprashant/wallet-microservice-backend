@@ -44,7 +44,7 @@
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </span>
-                                                <input type="datetime-local" class="form-control date_till" placeholder="date_till" name="date_till" autocomplete="off" value="{{ !empty($_GET['date_till']) ? $_GET['date_till'] : '' }}">
+                                                <input type="text" class="form-control date_till" placeholder="date_till" name="date_till" autocomplete="off" value="{{ !empty($_GET['date_till']) ? $_GET['date_till'] : '' }}">
                                             </div>
                                         </div>
 

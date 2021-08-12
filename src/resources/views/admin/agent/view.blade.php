@@ -99,7 +99,7 @@
                                                         <i class="fa fa-calendar"></i>
                                                     </span>
                                                 <input id="date_load_from" type="text" class="form-control date_from"
-                                                       placeholder="From" name="from" autocomplete="off"
+                                                       placeholder="From" name="from_agent_created_at" autocomplete="off"
                                                        value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}">
                                             </div>
                                         </div>
@@ -183,15 +183,17 @@
                                     <th>Agent status</th>
                                     <th>Reference Code</th>
                                     <th>Wallet Balance</th>
-                                    <th>Total <br>Payment Amount</th>
-                                    <th>Total <br>Loaded Amount</th>
+                                    <th>Agent Created At</th>
+                                    {{--<th>Total <br>Payment Amount</th>
+                                    <th>Total <br>Loaded Amount</th>--}}
                                     {{-- <th>No. of <br>Transactions</th>--}}
-                                    <th>Total <br>CashBack Amount</th>
+                                  {{--  <th>Total <br>CashBack Amount</th>--}}
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($users as $user)
+
                                     <tr class="gradeX">
                                         <td>{{ $loop->index + ($users->perPage() * ($users->currentPage() - 1)) + 1 }}</td>
                                         <td>
@@ -241,14 +243,15 @@
                                         </td>
                                         <td>Rs. {{ $user->wallet->balance }}</td>
 
-
+{{--
                                         <td>Rs. {{ $user->getTotalPaymentAmount() }}</td>
 
-                                        <td>Rs. {{ $user->getTotalLoadedAmount() }}</td>
+                                        <td>Rs. {{ $user->getTotalLoadedAmount() }}</td>--}}
 
                                         {{--<td>{{ count($user->userTransactionEvents) }}</td>--}}
 
-                                        <td>Rs. {{ $user->getTotalCashBack() }}</td>
+                                        {{--<td>Rs. {{ $user->getTotalCashBack() }}</td>--}}
+                                        <td>{{ \Carbon\Carbon::parse($user->agent->created_at)->format('F d Y') }}</td>
 
                                         <td class="center">
                                             @if(auth()->user()->hasAnyPermission(['User profile','View agent profile']))

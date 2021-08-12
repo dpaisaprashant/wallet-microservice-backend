@@ -115,7 +115,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/merchant-details/kyc/{id}',[\App\Http\Controllers\Merchant\MerchantController::class,'merchantDetailKyc'])->name('merchant.kyc.detail');
         Route::get('/merchant-change-kyc-status',[\App\Http\Controllers\Merchant\MerchantController::class,'changeKYCStatus'])->name('merchant.changeKYCStatus');
 
-        Route::get('/users/profile/{id}', 'UserController@profile')->name('user.profile')->middleware('permission:User profile|View agent profile');
+        Route::get('/users/profile/{id}', 'UserController@profile')->name('user.profile')->middleware('permission:User profile|View agent profile|Merchant profile');
         Route::get('/users/kyc/{id}', 'UserController@kyc')->name('user.kyc')->middleware('permission:User KYC view');
         Route::get('/users/transactions/{id}', 'UserController@transaction')->name('user.transaction')->middleware('permission:User transactions');
 

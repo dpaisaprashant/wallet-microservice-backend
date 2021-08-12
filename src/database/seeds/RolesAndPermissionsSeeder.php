@@ -231,6 +231,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
             'Merchant dashboard',
             'Merchant locked view',
+            'Merchant profile',
 
             'Architecture vendor transaction',
 

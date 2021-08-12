@@ -105,6 +105,7 @@ class UserController extends Controller
 
     public function profile($id, Request $request)
     {
+
         $length = 15;
         $activeTab = 'kyc';
         if ($request->has('user-load-fund') || $request->transaction_type === 'user-load-fund') {
@@ -131,21 +132,21 @@ class UserController extends Controller
 
             //merchant
             if ($user->merchant) {
-                if (!$admin->hasPermissionTo('Merchant dashboard')) {
-                    abort(403,'User does not have the right permissions.');
+                if (!$admin->hasPermissionTo('Merchant profile')) {
+                    abort(403,'User does not have the right permissions to view merchant profile.');
                 }
             }
 
             //agent
             if ($user->agent) { //has row in agents table but is a verified agent
                 if (!$admin->hasPermissionTo('View agent profile')) {
-                    abort(403,'User does not have the right permissions.');
+                    abort(403,'User does not have the right permissions to view agent profile');
                 }
             }
 
             //normal user
             if (empty($user->agent) && empty($user->merchant)) {
-                abort(403,'User does not have the right permissions.');
+                abort(403,'User does not have the right permissions to view user profile');
             }
         }
 

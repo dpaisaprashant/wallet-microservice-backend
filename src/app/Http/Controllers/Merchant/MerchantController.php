@@ -77,6 +77,7 @@ class MerchantController extends Controller
 
     public function profile($id, Request $request)
     {
+
         $length = 15;
         $activeTab = 'kyc';
         if ($request->has('user-load-fund') || $request->transaction_type === 'user-load-fund') {

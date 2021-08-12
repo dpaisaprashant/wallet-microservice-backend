@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filters\PreTransaction;
+namespace App\Filters\User;
 
 use App\Filters\FilterAbstract;
 use Illuminate\Database\Eloquent\Builder;
 
-class FromDateFilter extends FilterAbstract {
+class FromAgentDateFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -30,7 +30,11 @@ class FromDateFilter extends FilterAbstract {
             return $builder;
         }
 
+        return $builder->whereHas('agent',function($query) use ($value){
+            $query->whereDate('created_at', '>=' ,date('Y-m-d', strtotime(str_replace(',', ' ', $value))));
+        });
 
-        return $builder->whereDate('created_at', '>=' ,date('Y-m-d', strtotime(str_replace(',', ' ', $value))));
+
+
     }
 }

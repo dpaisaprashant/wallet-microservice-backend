@@ -450,6 +450,7 @@ class User extends Authenticatable
         return false;
     }
 
+
     public function agentStatus()
     {
         return optional($this->agent)->status;

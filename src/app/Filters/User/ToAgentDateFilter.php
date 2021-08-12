@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Filters\PreTransaction\PreTransactionFilters;
-
+namespace App\Filters\User;
 
 use App\Filters\FilterAbstract;
 use Illuminate\Database\Eloquent\Builder;
 
-class PreTransactionMicroServiceTypeFilter extends FilterAbstract {
+class ToAgentDateFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -30,6 +29,12 @@ class PreTransactionMicroServiceTypeFilter extends FilterAbstract {
         if ($value === null) {
             return $builder;
         }
-        return $builder->where('microservice_type',$value);
+
+        return $builder->whereHas('agent',function($query) use ($value){
+            $query->whereDate('created_at', '<=' ,date('Y-m-d', strtotime(str_replace(',', ' ', $value))));
+        });
+
+
+
     }
 }

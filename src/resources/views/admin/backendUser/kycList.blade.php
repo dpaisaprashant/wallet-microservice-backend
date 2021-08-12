@@ -195,6 +195,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            {{ $lists->appends(request()->query())->links() }}
                         </div>
 
                     </div>

@@ -14,7 +14,7 @@ use App\Models\UserType;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Log;
 
-class AgentHierarchyCashbackSeeder extends Seeder
+class AgentHierarchyTitleCashbackSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -240,7 +240,7 @@
                             <h5><b>Total Amount Sum:</b> Rs. {{$totalNchlLoadBankTransferTransactionSum}}</h5>
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover dataTables-example"
-                                       title="NPay transactions list">
+                                       title="NCHL Bank Transfer List">
                                     <thead>
                                     <tr>
                                         <th>S.No.</th>
@@ -307,7 +307,8 @@
                                             <td>
                                                 <form action="{{ route('nchlById',$transaction->transaction_id) }}" method="POST">
                                                     @csrf
-                                                    <button class="btn btn-primary btn-sm"><i class="fa fa-server"></i></button>
+                                                    <button class="btn btn-primary btn-icon" type="submit"><i class="fa fa-eye"></i></button>
+                                                    <input type="hidden" name="microservice" value="NCHL">
                                                 </form>
                                             </td>
                                             <td>

@@ -1,81 +1,70 @@
+@extends('admin.layouts.admin_design')
+@section('content')
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>NCHL Response</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ route('admin.dashboard') }}">Home</a>
+                </li>
 
-{{dd($response)}}
-{{--@if(!empty($transaction->request))--}}
-{{--    <a data-toggle="modal" href="#modal-form-nchl-bank-transfer-request-debtor{{$transaction->id}}"><button class="btn btn-warning btn-icon" type="button"><i class="fa fa-info"></i></button></a>--}}
-{{--    <div id="modal-form-nchl-bank-transfer-request-debtor{{ $transaction->id }}" class="modal fade" aria-hidden="true">--}}
-{{--        <div class="modal-dialog">--}}
-{{--            <div class="modal-content">--}}
-{{--                <div class="modal-body">--}}
-{{--                    <div class="row">--}}
-{{--                        <div class="col-sm-12">--}}
-{{--                            <h3 class="m-t-none m-b">Debtor Request Info</h3>--}}
-{{--                            <hr>--}}
-{{--                            <dl class="row m-t-md">--}}
+                <li class="breadcrumb-item active">
+                    <strong>NCHL response</strong>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-2">
 
-{{--                                <?php--}}
-{{--                                $request =  json_decode($transaction->request, true);--}}
-{{--                                $debtorRequest = $request['cipsBatchDetail'] ?? [];--}}
-{{--                                $creditorRequest = $request['cipsTransactionDetailList'][0] ?? [];--}}
-{{--                                ?>--}}
+        </div>
+    </div>
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h5>NCHL Response</h5>
 
+                    </div>
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover dataTables-example"
+                                   title="NCHL Response">
+                                <thead>
+                                <tr>
+                                    <th>Key</th>
+                                    <th>Value</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @php
+                                    $jsonDecoded = json_decode($response);
+                                @endphp
+                                @if($jsonDecoded != null)
+                                    @foreach($jsonDecoded as $key=>$response)
 
+                                        <tr>
+                                            <td>
+                                                {{$key}}
+                                            </td>
+                                            @if(!is_array($response))
+                                                <td>{{ !is_array($response) ? $response : '' }}</td>
+                                            @else
+                                                <td> {{ print_r($response) }}</td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="2">No response</td>
+                                    </tr>
+                                @endif
+                                </tbody>
+                            </table>
 
-{{--                                <?php foreach ($debtorRequest as $key => $value) { ?>--}}
-
-{{--                                <dt class="col-md-5 text-right">{{ $key }}</dt>--}}
-{{--                                <dd class="col-md-6">--}}
-{{--                                    @if($key == 'txnAmt')--}}
-{{--                                        {{ $value / 100 }}--}}
-{{--                                    @else--}}
-{{--                                        <?php print_r($value) ?>--}}
-
-{{--                                    @endif--}}
-{{--                                </dd>--}}
-
-
-{{--                                <?php }?>--}}
-
-{{--                            </dl>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-
-{{--    <a data-toggle="modal" href="#modal-form-nchl-bank-transfer-request-creditor{{$transaction->id}}"><button class="btn btn-warning btn-icon" type="button"><i class="fa fa-info"></i></button></a>--}}
-{{--    <div id="modal-form-nchl-bank-transfer-request-creditor{{ $transaction->id }}" class="modal fade" aria-hidden="true">--}}
-{{--        <div class="modal-dialog">--}}
-{{--            <div class="modal-content">--}}
-{{--                <div class="modal-body">--}}
-{{--                    <div class="row">--}}
-{{--                        <div class="col-sm-12">--}}
-{{--                            <h3 class="m-t-none m-b">Creditor Request Info</h3>--}}
-{{--                            <hr>--}}
-{{--                            <dl class="row m-t-md">--}}
-
-
-{{--                                <?php foreach ($creditorRequest as $key => $value) { ?>--}}
-
-{{--                                @if(!empty($value))--}}
-{{--                                    <dt class="col-md-5 text-right">{{ $key }}</dt>--}}
-{{--                                    <dd class="col-md-6">--}}
-{{--                                        @if($key == 'txnAmt')--}}
-{{--                                            {{ $value / 100 }}--}}
-{{--                                        @else--}}
-{{--                                            <?php print_r($value) ?>--}}
-
-{{--                                        @endif--}}
-{{--                                    </dd>--}}
-{{--                                @endif--}}
-{{--                                <?php }?>--}}
-
-{{--                            </dl>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--@endif--}}
-
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection

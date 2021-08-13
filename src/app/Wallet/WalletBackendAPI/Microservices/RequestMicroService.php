@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Log;
 
 class RequestMicroService extends MicroserviceJSONAbstractClass
 {
-
+    private $microservice;
     private $requestParam = [];
     private $jsonRequest = [];
     private $jsonResponse = [];
@@ -24,6 +24,11 @@ class RequestMicroService extends MicroserviceJSONAbstractClass
         ]);
         $this->setJsonRequest($request->all());
 
+    }
+
+    public function setMicroService($microservice){
+        $this->microservice = $microservice;
+        return $this;
     }
 
     public function setRequestParam($requestParam){
@@ -37,39 +42,23 @@ class RequestMicroService extends MicroserviceJSONAbstractClass
     }
 
     public function preRequest(){
-        $this->addApiParam('request_param',$this->requestParam);
+        $this->addApiParam('microservice',$this->microservice)
+            ->addApiParam('request_param',$this->requestParam);
 
         $requestInfo = $this->apiParam;
         $requestInfo['request_param'] = json_encode($requestInfo['request_param']);
 
-
+        $this->setBaseUrl(config('microservices.'.$this->microservice));
         $data = array_merge($requestInfo,[
             'url' => $this->url,
             'jsonRequest' => $this->jsonRequest
         ]);
-
-
-
-
-
-    }
-
-    public function postRequest(){
-        $data = [
-            'status' => 'COMPLETED',
-            'json_response' => $this->jsonResponse,
-        ];
     }
 
     public function processRequest(){
         $this->preRequest();
         $response = $this->jsonResponse = $this->makeRequest();
-
-        $this->postRequest();
-
         return $response;
-
-
     }
 
 }

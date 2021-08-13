@@ -1,4 +1,5 @@
 <?php
+
 use App\Wallet\WalletBackendAPI\Http\Controllers\WalletBackendAPIController;
 
 /*
@@ -12,5 +13,8 @@ use App\Wallet\WalletBackendAPI\Http\Controllers\WalletBackendAPIController;
 |
 */
 
+Route::group(['middleware' => ['web','auth']], function () {
+    Route::post('/microservice/nchl/report/byId/{id}', [WalletBackendAPIController::class, 'byId'])->name('nchlById');
+});
 
-Route::post('/microservice/nchl/report/byId/{id}',[WalletBackendAPIController::class,'byId'])->name('nchlById');
+

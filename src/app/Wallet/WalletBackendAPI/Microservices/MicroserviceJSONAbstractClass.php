@@ -22,6 +22,8 @@ class MicroserviceJSONAbstractClass
 
     protected $apiParam = [];
 
+    protected $baseUrl;
+
     public function setHttpMethod($httpMethod)
     {
         $this->httpMethod = $httpMethod;
@@ -33,6 +35,11 @@ class MicroserviceJSONAbstractClass
         return $this;
     }
 
+    public function setBaseUrl($baseUrl){
+        $this->baseUrl = $baseUrl;
+        return $this;
+    }
+
     public function addApiParam($key, $value)
     {
         $this->apiParam[$key] = $value;
@@ -41,12 +48,11 @@ class MicroserviceJSONAbstractClass
 
     public function makeRequest($endpoint="")
     {
+
         try {
-
-
             $requestJson = array_merge(request()->all(), $this->apiParam);
             $client = new Client();
-            $response = $client->request($this->httpMethod, $this->url, [
+            $response = $client->request($this->httpMethod,$this->baseUrl.$this->url, [
                 'json' => $requestJson
             ]);
 

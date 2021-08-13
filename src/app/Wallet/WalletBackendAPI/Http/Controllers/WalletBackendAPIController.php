@@ -16,12 +16,14 @@ use Illuminate\Http\Request;
 class WalletBackendAPIController extends Controller{
 
     public function byId(Request $request,$id){
+        $microServiceType = $request->get('microservice');
         $microservice = new RequestMicroService($request,$id);
         $microservice
-            ->setUrl("nginx_nchl/api/microservice/nchl/report/by-id");
-        $response = $microservice->processRequest();
+            ->setMicroService($microServiceType)
+            ->setUrl("/nchl/report/by-id");
 
-        return view('admin.transaction.nchlBankTransfer.apiResponse',compact('response'));
+        $response = $microservice->processRequest();
+        return view('admin.transaction.nchlBankTransfer.apiResponse',compact('response','id'));
     }
 
 }

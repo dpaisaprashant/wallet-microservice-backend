@@ -1,17 +1,17 @@
 <?php
 
 
-namespace App\Wallet\Microservice;
+namespace App\Wallet\WalletAPI;
 
 
-use App\Logging\MongoErrorLoggerHandler;
+//use App\Logging\MongoErrorLoggerHandler;
 use App\Models\Microservice\RequestInfo;
 use App\Wallet\Helpers\TransactionIdGenerator;
 use App\Wallet\Traits\CheckValidJson;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-class RequestInfoMicroservice extends MicroserviceJSONAbstract
+class BackendWalletAPIMicroservice extends BackendWalletAPIJSONAbstract
 {
 
     use CheckValidJson;
@@ -43,10 +43,9 @@ class RequestInfoMicroservice extends MicroserviceJSONAbstract
             ->setSpecial2($request->special2)
             ->setSpecial3($request->special3)
             ->setSpecial4($request->special4)
-            ->setJsonRequest($request->all())
-            ->setRequestParam($request->request_param);
-        //$this->requestId = TransactionIdGenerator::generate(19);
-        $this->requestId = $this->preTransactionId = resolve(MongoErrorLoggerHandler::class)->getLogRequestId();
+            ->setJsonRequest($request->all());
+//            ->setRequestParam($requestParamArr['cipsBatchDetail']['batchId']);
+        $this->requestId = TransactionIdGenerator::generate(19);
     }
 
     public function getRequestId()
@@ -64,6 +63,7 @@ class RequestInfoMicroservice extends MicroserviceJSONAbstract
     {
         $this->userId = $userId;
         return $this;
+
     }
 
     public function setDescription($description)
@@ -155,39 +155,21 @@ class RequestInfoMicroservice extends MicroserviceJSONAbstract
             ->addParam('request_param', $this->requestParam);
 
         $this->setBaseUrl(config('microservices.' . $this->microservice));
-
         $requestInfo = $this->apiParams;
         $requestInfo['request_param'] = json_encode($requestInfo['request_param']);
         $data = array_merge($requestInfo, [
-            'user_id' => auth()->user()->id,
+//            'user_id' => auth()->user()->id,
             'url' => $this->url,
             'json_request' => json_encode($this->jsonRequest),
-            //'json_response' => json_encode($this->jsonResponse)
         ]);
-
         unset($data['reference'], $data['linked_ref_id']);
-        RequestInfo::create($data);
+        return $data;
     }
-
-
-
-
-    private function postRequest()
-    {
-        $data = [
-            'status' => 'COMPLETE',
-            'json_response' => $this->isValidJson($this->jsonResponse) ? $this->jsonResponse : json_encode($this->jsonResponse),
-        ];
-
-        RequestInfo::whereRequestId($this->requestId)->update($data);
-    }
-
 
     public function processRequest($endpoint = "")
     {
         $this->preRequest();
         $response = $this->jsonResponse = $this->makeRequest();
-        $this->postRequest();
         Log::info("Response Json", [$response]);
         return $response;
     }

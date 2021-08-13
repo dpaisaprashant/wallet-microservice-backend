@@ -304,10 +304,21 @@
                                                 @include('admin.transaction.nchlBankTransfer.response')
                                             </td>
                                             <td>
-                                                <a href="{{ route('nchl.bankTransfer.detail', $transaction->id) }}">
-                                                    <button class="btn btn-primary btn-icon" type="button"><i
-                                                            class="fa fa-eye"></i></button>
-                                                </a>
+
+                                                <form action="{{ route('walletapi.report', $transaction->transaction_id) }}" method="post">
+                                                    @csrf
+                                                    <a href="{{ route('nchl.bankTransfer.detail', $transaction->id) }}" title="Transaction Detail">
+                                                        <button class="btn btn-primary btn-icon" type="button"><i
+                                                                class="fa fa-eye"></i></button>
+
+                                                    <button class="btn btn-primary btn-icon" type="submit" title="API Details">
+                                                            <i class="fa fa-database"></i></button>
+
+
+                                                    </a>
+                                                </form>
+
+
                                             </td>
                                         </tr>
                                     @endforeach

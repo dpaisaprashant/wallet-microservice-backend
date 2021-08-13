@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Wallet\Microservice;
+namespace App\Wallet\WalletAPI;
 
 
 use App\Wallet\Architecture\Exceptions\AddBalanceToUserException;
@@ -14,7 +14,7 @@ use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class MicroserviceJSONAbstract
+class BackendWalletAPIJSONAbstract
 {
     protected $apiParams = [];
 
@@ -60,15 +60,12 @@ class MicroserviceJSONAbstract
     public function makeRequest($endpoint = "")
     {
         try {
-
             $requestJson = (array_merge(request()->all(), $this->apiParams));
             Log::info("Request Json", $requestJson);
-
             $client = new Client();
             $response = $client->request($this->httpMethod, $this->baseUrl . $this->url, [
                 'json' => $requestJson
             ]);
-
             return $response->getBody()->getContents();
         }catch (ClientException $e) {
             Log::info("Client Exception");
@@ -102,7 +99,7 @@ class MicroserviceJSONAbstract
             Log::info($e);
 
             $preTransactionId = $this->apiParams['pre_transaction_id'] ?? null;
-            throw new AddBalanceToUserException($e->getMessage(), $preTransactionId);
+//            throw new AddBalanceToUserException($e->getMessage(), $preTransactionId);
 
         } catch (\Exception $e) {
             Log::info("Unknown Exception");

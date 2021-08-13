@@ -1,89 +1,57 @@
 @extends('admin.layouts.admin_design')
+
 @section('content')
-    <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-lg-10">
-            <h2>Wallet APIs</h2>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{{ route('admin.dashboard') }}">Home</a>
-                </li>
-                <li class="breadcrumb-item active">
-                    <strong>Wallet APIs</strong>
-                </li>
-            </ol>
-        </div>
-        <div class="col-lg-2">
-        </div>
-    </div>
-    <div class="wrapper wrapper-content animated fadeInRight">
-
-        @include('admin.asset.notification.notify')
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox ">
-                    <div class="ibox-title">
-                        <h5>Wallet APIs</h5>
-{{--                        @can('Add blocked ip')--}}
-{{--                            <a href="--}}{{-- route('blockedip.create') --}}{{--" class="btn btn-sm btn-primary btn-xs"--}}
-{{--                               style="float: right;margin-top: -5px;">Block an IP</a>--}}
-{{--                        @endcan--}}
-                    </div>
-                    <div class="ibox-content">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover dataTables-example">
-                                <thead>
+    <div class="row">
+        <div class="col-sm-12">
+            <hr>
+            <h3 class="m-t-none m-b">NCHL API</h3>
+            <hr>
+            <dl class="row m-t-md">
+                <dd class="col-lg-offset-1"></dd>
+                @php
+                    $response = $nchlAPI;
+                @endphp
+                @if(!empty($response))
+                    @if (is_array($response) || is_object($response))
+                        <table class="table table-bordered center"
+                               style="width: 95%;  margin-left: auto; margin-right: auto;">
+                            <thead>
+                            <tr>
+                                <th scope="col" style="background-color: #2f4050 !important; color:ghostwhite;">Key</th>
+                                <th scope="col" style="background-color: #2f4050 !important; color: ghostwhite;">Value
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($response as $key=>$value)
                                 <tr>
-                                    <th>S.No.</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <td>{{$key}}</td>
+                                    @if(is_array($value))
+                                        @foreach($value as $secondKey=>$secondValue)
+                                            <td>{{$secondKey}} : <br>
+                                                @if(is_array($secondValue))
+                                                    @foreach($secondValue as $thirdKey=>$thirdValue)
+                                                        {{$thirdKey}} : {{$thirdValue}} <br>
+                                                    @endforeach
+                                                @else
+                                                    {{$secondValue}}<br></td>
+                                                @endif
+                                        @endforeach
+                                    @else
+                                        <td>{{$value}}</td>
+                                    @endif
                                 </tr>
-                                </thead>
-                                <tbody>
-{{--                                @foreach($walletAPIs as $key=>$walletAPI)--}}
-{{--                                    <tr>--}}
-{{--                                        <td> {{ $key+1 }}</td>--}}
-{{--                                        <td> {{ $walletAPI->ip }}</td>--}}
-{{--                                        <td> {{ $walletAPI->description }}</td>--}}
-{{--                                        <td> {{ $walletAPI->blocked_at }}</td>--}}
-{{--                                        <td> {{ $walletAPI->block_duration }}</td>--}}
-{{--                                        <td> {{ $walletAPI->status }}</td>--}}
-{{--                                        <td class="center">--}}
-{{--                                            @can('Delete blocked ip')--}}
-{{--                                            <form action="{{ route('blockedip.delete',$blockedIP->id) }}" method="POST">--}}
-{{--                                                @csrf--}}
-{{--                                                <button--}}
-{{--                                                    class="reset btn btn-sm btn-danger m-t-n-xs"--}}
-{{--                                                    rel="{{ $blockedIP->id }}"><i--}}
-{{--                                                        class="fa fa-trash"></i>--}}
-{{--                                                </button>--}}
-
-{{--                                                <button id="resetBtn-{{ $blockedIP->id }}"--}}
-{{--                                                    style="display: none" type="submit"--}}
-{{--                                                    href="{{ route('blockedip.delete',$blockedIP->id) }}"--}}
-{{--                                                    class="resetBtn btn btn-sm btn-danger m-t-n-xs">--}}
-{{--                                                <i class="fa fa-trash"></i></button>--}}
-
-{{--                                                @can('Edit blocked ip')--}}
-{{--                                                <a href="{{ route('blockedip.edit',$blockedIP->id)}}" class="btn btn-success btn-sm m-t-n-xs"><i class="fa fa-edit"></i></a>--}}
-{{--                                                @endcan--}}
-{{--                                            </form>--}}
-
-{{--                                            @endcan--}}
-
-{{--                                        </td>--}}
-{{--                                    </tr>--}}
-{{--                                @endforeach--}}
-                                </tbody>
-                            </table>
-
-{{--                            {{ $blockedIPs->appends(request()->query())->links() }}--}}
-                        </div>
-
-                    </div>
-                </div>
-            </div>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    @endif
+                @else
+                    <dl class="text-left">No Data</dl>
+                @endif
+            </dl>
         </div>
     </div>
+
 @endsection
 
 @section('styles')

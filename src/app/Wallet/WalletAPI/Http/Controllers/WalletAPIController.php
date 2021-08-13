@@ -24,9 +24,9 @@ class WalletAPIController extends Controller
 
     public function view()
     {
-//        $walletAPIs =  WalletAPI::orderBy('created_at','DESC')->paginate(20);
+//        $walletAPI =
 
-        return view('WalletAPI::viewWalletAPI');
+//        return view('WalletAPI::viewWalletAPI',compact('walletAPI'));
     }
 
 

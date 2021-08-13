@@ -129,7 +129,7 @@ $url = url()->current();
              @endcan--}}
 
 
-            @can('Merchant dashboard')
+            @can('Merchant profile')
                 <li @if(preg_match('/merchans/i', $url)) class="active" @endif>
                     <a href="{{ route('merchant.view') }}"><i class="fa fa-cart-plus"></i> <span
                             class="nav-label">Merchants</span></a>

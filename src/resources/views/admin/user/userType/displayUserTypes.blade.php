@@ -9,7 +9,7 @@
 
                                             </span><br>
 @endif
-@if($user->agent != null && $user->isValidAgentOrSubAgent == true)
+@if($user->agent != null && $user->isValidAgentOrSubAgent())
     <span class="badge badge-danger">Agent type :
                                                     @if($user->agent != null)
             {{ optional($user->agent->agentType)->name }}

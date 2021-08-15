@@ -15,7 +15,7 @@
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Edit Agent</strong>
+                    <strong>Update Agent</strong>
                 </li>
             </ol>
         </div>
@@ -256,7 +256,7 @@
                             </div>
 
                             <div class="hr-line-dashed"></div>
-                            <button class="btn btn-sm btn-primary m-t-n-xs" type="submit"><strong>Edit Agent</strong>
+                            <button class="btn btn-sm btn-primary m-t-n-xs" type="submit"><strong>Save Agent</strong>
                             </button>
                         </form>
                     </div>

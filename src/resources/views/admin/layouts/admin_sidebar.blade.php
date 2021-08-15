@@ -549,7 +549,7 @@ $url = url()->current();
                         @can('Report commission')
                             <li><a href="{{ route('commission.report') }}">Commission report</a></li>
                         @endcan
-
+                        <li><a href="{{route('report.mismatchedUserBalance')}}">Mismatched User Balance</a></li>
                     </ul>
                 </li>
             @endif

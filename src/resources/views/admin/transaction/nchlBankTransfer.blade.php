@@ -308,6 +308,13 @@
                                                     <button class="btn btn-primary btn-icon" type="button"><i
                                                             class="fa fa-eye"></i></button>
                                                 </a>
+                                                <form action="{{ route('wallet.api.nchl.response', $transaction->transaction_id) }}" method="post" style="display: inline">
+                                                    @csrf
+
+                                                        <button class="btn btn-primary btn-icon" type="submit"><i
+                                                                class="fa fa-eye"></i></button>
+
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

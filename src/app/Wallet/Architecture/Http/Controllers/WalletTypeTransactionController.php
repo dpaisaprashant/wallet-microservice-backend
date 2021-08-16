@@ -18,6 +18,8 @@ class WalletTypeTransactionController extends Controller{
     }
 
     public function store(Request $request){
+
+
         if($request->get('service_enabled') == "Enabled"){
             $service_enabled = 1;
         }else{
@@ -40,6 +42,26 @@ class WalletTypeTransactionController extends Controller{
             $validate_limit = 1;
         }else{
             $validate_limit = 0;
+        }
+
+        $WalletTypeTransactionCount = WalletTransactionType::where('transaction_type','=',$request->get('transaction_type'))
+            ->where('user_type','=',$request->get('user_type'))
+            ->where('vendor','=',$request->get('vendor'))
+            ->where('transaction_category','=',$request->get('transaction_category'))
+            ->where('service_type','=',$request->get('service_type'))
+            ->where('service','=',$request->get('service'))
+            ->where('service_enabled', '=', $service_enabled)
+            ->where('validate_balance', '=', $validate_balance)
+            ->where('validate_kyc', '=', $validate_kyc)
+            ->where('validate_limit', '=', $validate_limit)
+            ->where('limit_type', '=', $request->get('limit_type'))
+            ->where('microservice', '=', $request->get('microservice'))
+            ->where('payment_type', '=', $request->get('payment_type'))
+            ->count();
+
+
+        if($WalletTypeTransactionCount > 0){
+            return redirect()->route('wallet.transaction.type.view')->with('error','Wallet transaction type already exists');
         }
 
 

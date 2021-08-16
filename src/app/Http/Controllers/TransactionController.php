@@ -154,28 +154,13 @@ class TransactionController extends Controller
         return view('admin.transaction.detail.nchlAggregatedPaymentDetail')->with(compact('transaction'));
     }
 
-    //NIC ASIA CYBERSOURCE LOAD TRANSACTION
-    public function nicAsiaCyberSourceLoadDetail($id, NicAsiaCyberSourceRepository $repository)
-    {
-        $transaction = $repository->detail($id);
-        return view('admin.transaction.detail.nicAsiaCyberSourceLoadDetail')->with(compact('transaction'));
-    }
 
-    public function nicAsiaCyberSourceLoad(NicAsiaCyberSourceRepository $repository, Request $request)
-    {
-        if(!empty($_GET)) {
-            $totalNicAisaTransactionCount = $repository->getTotalNicAisaTransactionCount();
-            $totalNicAisaTransactionSum = $repository->getTotalNicAisaTransactionSum();
-            $transactions = $repository->paginatedTransactions();
-            return view('admin.transaction.nicAsiaCyberSourceLoad', compact('transactions', 'totalNicAisaTransactionCount', 'totalNicAisaTransactionSum'));
-        }
-        return view('admin.transaction.nicAsiaCyberSourceLoad');
-    }
 
     //KHALTI
     public function khaltiPaymentDetail($id, KhaltiRepository $repository)
     {
         $transaction = $repository->detail($id);
+
         return view('admin.transaction.detail.khaltiDetail')->with(compact('transaction'));
     }
 
@@ -223,5 +208,10 @@ class TransactionController extends Controller
         }
         $vendorNames = $repository->getVendorName();
         return view('admin.transaction.khalti')->with(compact('vendorNames'));
+    }
+
+    public function khaltiSpecificDetail($id){
+        $khaltiTransaction = KhaltiUserTransaction::with('preTransaction')->find($id);
+        return view('admin.transaction.khalti.details',compact('khaltiTransaction'));
     }
 }

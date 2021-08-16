@@ -15,6 +15,7 @@ use App\Traits\CollectionPaginate;
 use App\Wallet\Helpers\TransactionIdGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use PDF;
 
 class BFIUserController extends Controller
 {
@@ -109,6 +110,26 @@ class BFIUserController extends Controller
         }else{
             return redirect()->route('bfi.user.view')->with('error', 'Something went wrong please try again later');
         }
+    }
+
+    public function createPDF(Request $request,$id){
+        $bfiUsers = BFIUser::with('UserApiDetail')->findOrFail($id);
+        $entered_api_password = $request->get('api_password');
+        $entered_portal_password = $request->get('portal_password');
+
+        if(Hash::check($entered_api_password , $bfiUsers->api_password)){
+            if(Hash::check($entered_portal_password , $bfiUsers->portal_password)){
+                view()->share('bfiUser',$bfiUsers);
+                $pdf = PDF::loadView('BFIMerchant::BFIUser.Pdf.bfiUserPdf',['bfiUsers'=>$bfiUsers,'api_password'=>$entered_api_password,'portal_password'=>$entered_portal_password]);
+                return $pdf->download($bfiUsers->bfi_name.'.pdf');
+            }else{
+                return redirect()->route('bfi.user.view')->with('error','Incorrect Portal Password');
+            }
+        }else{
+            return redirect()->route('bfi.user.view')->with('error','Incorrect Api Password');
+        }
+
+
     }
 
 }

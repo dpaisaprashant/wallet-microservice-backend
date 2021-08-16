@@ -110,12 +110,12 @@ Route::group(['prefix' => 'admin'], function () {
 
 
         Route::get('unverified-merchant-kyc-user',[\App\Http\Controllers\Merchant\MerchantController::class,'unverifiedMerchantKYCView'])->name('merchant.unverifiedMerchantKYC.view');
-        Route::get('/merchants',[\App\Http\Controllers\Merchant\MerchantController::class,'view'])->name('merchant.view');
+        Route::get('/merchants',[\App\Http\Controllers\Merchant\MerchantController::class,'view'])->name('merchant.view')->middleware('permission:Merchant dashboard');
 
         Route::get('/merchant-details/kyc/{id}',[\App\Http\Controllers\Merchant\MerchantController::class,'merchantDetailKyc'])->name('merchant.kyc.detail');
         Route::get('/merchant-change-kyc-status',[\App\Http\Controllers\Merchant\MerchantController::class,'changeKYCStatus'])->name('merchant.changeKYCStatus');
 
-        Route::get('/users/profile/{id}', 'UserController@profile')->name('user.profile')->middleware('permission:User profile|View agent profile');
+        Route::get('/users/profile/{id}', 'UserController@profile')->name('user.profile')->middleware('permission:User profile|View agent profile|Merchant profile');
         Route::get('/users/kyc/{id}', 'UserController@kyc')->name('user.kyc')->middleware('permission:User KYC view');
         Route::get('/users/transactions/{id}', 'UserController@transaction')->name('user.transaction')->middleware('permission:User transactions');
 
@@ -128,6 +128,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/user/locked', 'LockedUserController@index')->name('user.locked.list')->middleware('permission:Locked users view');
         Route::get('/user/login-attempts/{id}', 'LockedUserController@loginAttempts')->name('user.login.attempts')->middleware('permission:Locked user login attempts view');
         Route::post('/user/update-login-attempt', 'LockedUserController@updateLoginAttempts')->name('user.loginAttemptsUpdate')->middleware('permission:Locked user login attempt enable');
+
+        //Unlock User Bulk Attempts
+        Route::post('/user/update-login-attempt-bulk/{id}', 'LockedUserController@updateLoginAttemptsBulk')->name('user.loginAttemptsUpdateBulk')->middleware('permission:Locked user login attempt enable');
 
         Route::get('/user/profile/filter/transaction', 'UserController@filterTransaction')->name('filter.profile.transaction');
 
@@ -165,6 +168,10 @@ Route::group(['prefix' => 'admin'], function () {
          */
         Route::get('/banks/list', 'BankListController@bankList')->name('bankList')->middleware('permission:Bank list view');
         Route::get('/banks/profile', 'BankListController@profile')->name('bank.profile')->middleware('permission:Bank list profile');
+
+        /**
+         *
+         *
 
         /**
          * Transactions
@@ -205,9 +212,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/transaction/nchl-load-transaction', 'TransactionController@nchlLoadTransaction')->name('nchl.loadTransaction')->middleware('permission:Transaction nchl load');
         Route::get('transaction/nchl-load-transaction/detail/{id}', 'TransactionController@nchlLoadTransactionDetail')->name('nchl.loadTransaction.detail');
 
-        //NicAsia CyberSource
-        Route::get('transaction/nicasia-cybesource-load-transaction','TransactionController@nicAsiaCyberSourceLoad')->name('nicasia.cyberSourceLoad')->middleware('permission:Nicasia cybersource load transaction');
-        Route::get('transaction/nicasia-cybesource-load-transaction/detail/{id}', 'TransactionController@nicAsiaCyberSourceLoadDetail')->name('nicasia.cyberSourceLoadTransaction.detail');
+//        //NicAsia CyberSource
+//        Route::get('transaction/nicasia-cybesource-load-transaction','TransactionController@nicAsiaCyberSourceLoad')->name('nicasia.cyberSourceLoad')->middleware('permission:Nicasia cybersource load transaction');
+//        Route::get('transaction/nicasia-cybesource-load-transaction/detail/{id}', 'TransactionController@nicAsiaCyberSourceLoadDetail')->name('nicasia.cyberSourceLoadTransaction.detail');
 
         //Khalti
         Route::get('transaction/khalti-payment-transaction/detail/{id}', 'TransactionController@khaltiPaymentDetail')->name('khalti.payment.detail');
@@ -225,7 +232,8 @@ Route::group(['prefix' => 'admin'], function () {
 
         //Khalti transaction report
 
-        Route::get('/transaction/khalti','TransactionController@khaltiTransaction')->name('khalti.transaction');
+        Route::get('/transaction/khalti','TransactionController@khaltiTransaction')->name('khalti.transaction')->middleware('permission:View khalti details');
+        Route::get('/transaction/khalti/{id}','TransactionController@khaltiSpecificDetail')->name('khalti.specific')->middleware('permission:View khalti detail page');
 
         /**
          * Clearance
@@ -381,6 +389,11 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/sparrow-sms/detail', 'SparrowSMSController@detail')->name('sparrow.detail')->middleware('permission:Sparrow SMS detail view');
 
         /**
+         * Miracle Info sms
+         */
+        Route::get('/miracle-info-sms','MiracleInfoSMSController@index')->name('miracle-info.view')->middleware('permission:Miracle info SMS view');
+
+        /**
          * Terms and Condition
          */
         Route::get('/terms-and-condition/', 'TermsAndConditionController@view')->name('termsAndCondition.view')->middleware('permission:Terms and condition view');
@@ -474,5 +487,17 @@ Route::group(['prefix' => 'admin'], function () {
 
         //Contact Us
         Route::match(['get', 'post'],'frontend/contact-us', 'Frontend\ContactController@index')->name('frontend.contact')->middleware('permission:Frontend contact view');
+
+        //RequestInfo
+
+
+        Route::get('request-info', 'RequestInfoController@index')->name('requestinfo.index')->middleware('permission:View request info');
+
+        Route::get('/excel/request-info', 'PhpSpreadSheetController@requestInfo')->name('requestinfo.excel')->middleware('permission:View request info');
+
+
+        //Run seeder
+        Route::get('/view-seeder-table','SeederController@index')->name('view.seeder')->middleware('permission:View seeder list');
+        Route::post('/view-seeder-table/{className}','SeederController@runSeeder')->name('seeder.run')->middleware('permission:Run seeder');
     });
 });

@@ -73,10 +73,9 @@ class BackendUsersController extends Controller
 
     public function kycList(Request $request)
     {
+
         $user = Admin::whereId(auth()->user()->id)->firstOrFail();
-
         $lists = $user->kycList($user, $request);
-
         return view('admin.backendUser.kycList')->with(compact('lists'));
     }
 

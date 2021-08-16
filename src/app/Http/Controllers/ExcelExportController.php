@@ -381,5 +381,4 @@ class ExcelExportController extends Controller
         return $export->exportExcelCollection();
     }
 
-
 }

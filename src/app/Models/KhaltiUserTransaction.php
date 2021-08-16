@@ -46,7 +46,7 @@ class KhaltiUserTransaction extends Model
 
     public function preTransaction()
     {
-        return $this->belongsTo(PreTransaction::class, 'reference_no', 'pre_transaction_id');
+        return $this->belongsTo(PreTransaction::class, 'reference_no','pre_transaction_id');
     }
 
 

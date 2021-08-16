@@ -1,4 +1,4 @@
-@extends('admin.layouts.admin_design')
+'@extends('admin.layouts.admin_design')
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
@@ -142,39 +142,82 @@
                 @include('admin.asset.notification.notify')
                 <div class="ibox-title">
                     <h5>List of wallet service</h5>
-                    @can('Add wallet transaction type')
-                        <a href="{{route('wallet.transaction.type.create')}}"
-                           class="btn btn-primary btn-sm float-right">Add
-                            Wallet Service</a>
+                    @can('Add wallet service')
+                            <div class="ibox-tools" style="top: 8px;">
+                                <a href="{{ route('wallet.service.create') }}">
+                                    <button class="btn btn-primary" type="button"><i class="fa fa-plus"></i> Add
+                                        Wallet Service
+                                    </button>
+                                </a>
+                            </div>
                     @endcan
                 </div>
                 <div class="ibox-content">
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover dataTables-example"
-                               title="Dpasis user's list">
+                               title="Wallet Service List">
                             <thead>
                             <tr>
                                 <th>S.No.</th>
-                                <th>Transaction type</th>
-                                <th>User type</th>
-                                <th>Vendor</th>
-                                <th>Transaction category</th>
-                                <th>Service type</th>
                                 <th>Service</th>
-                                <th>Service enabled</th>
-                                <th>Validate balance</th>
-                                <th>Validate kyc</th>
-                                <th>Validate limit</th>
-                                <th>Limit type</th>
-                                <th>Micro service</th>
-                                <th>Payment type</th>
-                                <th>Action</th>
+                                <th>Micro Service URL</th>
+                                <th>Wallet Transaction Type </th>
+                                <th>Payment Validated</th>
+                                <th>Payment Handeled</th>
+                                <th>Actions</th>
+
                             </tr>
                             </thead>
                             <tbody>
+                                @foreach($services as $service)
+                                <tr class="gradeX">
+                                    <td>{{ $loop->index + ($services->perPage() * ($services->currentPage() - 1)) + 1 }}</td>
+                                    <td>
+                                        &nbsp;{{ $service->service }}
+                                    </td>
+                                    <td>{{ $service->core_to_microservice_url }}</td>
+                                    <td>{{optional($service->walletTransactionType)->transaction_type}}</td>
+                                    <td>
+                                        @if($service->validate_payment == 1)
+                                            <span class="badge badge-primary">Valid</span>
+                                        @else
+                                            <span class="badge badge-danger">Invalid</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($service->handle_payment == 1)
+                                            <span class="badge badge-primary">Handeled</span>
+                                        @else
+                                            <span class="badge badge-danger">Unhandeled</span>
+                                        @endif
+                                    </td>
+                                    <td class="-align-center">
+                                        @can('Edit wallet service')
+                                            <a style="margin-right: 5px; display: inline; height: 3px;width: 3px"
+                                               href="{{route('wallet.service.edit', $service->id)}}"
+                                                   class="btn btn-sm btn-primary m-t-n-xs"
+                                                   title="user profile">
+                                                <i class="fa fa-pencil"></i>
+                                            </a>
+
+
+                                        @endcan
+
+                                        @can('Delete wallet service')
+                                                <form action="{{ route('wallet.service.delete',$service->id) }}" method="post" style="display: inline">
+                                                    @csrf
+                                                    <input id="resetValue" type="hidden" name="admin_id" value="{{ $service->id }}">
+                                                    <button href="{{ route('backendUser.role', $service->id) }}" class="reset btn btn-sm btn-danger m-t-n-xs" rel="{{ $service->id }}"><i class="fa fa-trash"></i></button>
+                                                    <button id="resetBtn-{{ $service->id }}" style="display: none" type="submit" href="{{ route('backendUser.role', $service->id) }}"  class="resetBtn btn btn-sm btn-danger m-t-n-xs"><i class="fa fa-trash"></i></button>
+                                                </form>
+                                            @endcan
+                                    </td>
+                                </tr>
+                                @endforeach
 
                             </tbody>
                         </table>
+                        {{ $services->appends(request()->query())->links() }}
                     </div>
 
                 </div>
@@ -195,9 +238,31 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/css/ion.rangeSlider.min.css"/>
 
+    @include('admin.asset.css.sweetalert')
 @endsection
 
 @section('scripts')
+
+    @include('admin.asset.js.sweetalert')
+    <script>
+        $('.reset').on('click', function (e) {
+            e.preventDefault();
+            let userId = $(this).attr('rel');
+            swal({
+                title: "Are you sure?",
+                text: "Wallet service will be deleted'",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete service",
+                closeOnConfirm: false
+            }, function () {
+                $('#resetBtn-' + userId).trigger('click');
+                swal.close();
+
+            })
+        });
+    </script>
 
     @include('admin.asset.js.datepicker')
 
@@ -205,6 +270,14 @@
 
     @include('admin.asset.js.datatable')
 
+    @include('admin.asset.js.sweetalert')
+
+    <script>
+        $(document).ready(function (e) {
+            let a = "Showing {{ $services->firstItem() }} to {{ $services->lastItem() }} of {{ $services->total() }} entries";
+            $('.dataTables_info').text(a);
+        });
+    </script>
 
 @endsection
 

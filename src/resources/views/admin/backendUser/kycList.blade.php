@@ -145,7 +145,7 @@
                                     <th>Email</th>
                                     <th>KYC status</th>
                                     <th>User type</th>
-                                    <th>status changed on</th>
+                                    <th>Status changed on</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -195,6 +195,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            {{ $lists->appends(request()->query())->links() }}
                         </div>
 
                     </div>

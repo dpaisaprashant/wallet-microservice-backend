@@ -37,9 +37,15 @@ class SubscriberReportRepository extends AbstractReportRepository
         })->filter($this->request)->count();
     }
 
+    public function totalKycRejectedSubscriber(){
+        return User::whereHas('kyc',function ($query) {
+            $query->where('accept',UserKyc::ACCEPT_REJECTED);
+        })->filter($this->request)->count();
+    }
+
     public function totalNonKycSubscriber()
     {
-        return User::doesnthave('kyc')->filter($this->request)->count();
+        return User::doesnthave('kyc')->filter($this->request)->count() + $this->totalKycPendingSubscriber() + $this->totalKycRejectedSubscriber();
     }
 
     public function totalSubscriberMainBalance()

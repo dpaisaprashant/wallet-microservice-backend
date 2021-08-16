@@ -152,10 +152,11 @@ class User extends Authenticatable
         return $this->hasOne(Agent::class,'user_id');
     }
 
+    public function preTransactions(){
+        return $this->hasMany(PreTransaction::class);
+    }
 
-
-    public function preTransactions()
-    {
+    public function preTransaction(){
         return $this->hasMany(PreTransaction::class);
     }
 
@@ -449,6 +450,7 @@ class User extends Authenticatable
         return false;
     }
 
+
     public function agentStatus()
     {
         return optional($this->agent)->status;
@@ -464,4 +466,5 @@ class User extends Authenticatable
     {
         return $this->morphMany(SingleUserCommission::class, 'userCommissionable', 'user_type', 'user_id', 'id');
     }
+
 }

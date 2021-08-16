@@ -185,7 +185,15 @@ return [
         App\Wallet\Merchant\MerchantServiceProvider::class,
         App\Wallet\Architecture\ArchitectureServiceProvider::class,
         App\Wallet\TransactionClearance\ClearanceServiceProvider::class,
-        App\Wallet\BFIMerchant\BFIMerchantServiceProvider::class
+        App\Wallet\BFIMerchant\BFIMerchantServiceProvider::class,
+        App\Wallet\WalletIP\WalletIPServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
+        App\Wallet\CellPayUserTransaction\CellPayUserTransactionServiceProvider::class,
+        App\Wallet\Microservice\MicroserviceServiceProvider::class,
+        App\Wallet\NicAsia\NICAsiaCyberSourceLoadTransactionServiceProvider::class,
+        App\Wallet\NPSAccountLinkLoad\NPSAccountLinkLoadServiceProvider::class,
+        App\Wallet\LinkedAccounts\LinkedAccountsServiceProvider::class
+
 
 
     ],
@@ -242,6 +250,7 @@ return [
         'FCM'      => LaravelFCM\Facades\FCM::class,
         'FCMGroup' => LaravelFCM\Facades\FCMGroup::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

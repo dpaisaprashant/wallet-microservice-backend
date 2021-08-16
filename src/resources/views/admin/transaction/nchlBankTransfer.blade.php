@@ -215,6 +215,9 @@
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
                                                 formaction="{{ route('nchl.bankTransfer') }}"><strong>Filter</strong>
                                         </button>
+                                        <button class="btn btn-sm btn-warning float-right m-t-n-xs" style="margin-right: 8px;" type="submit"
+                                                formaction="{{ route('walletapi.compare') }}"><strong>Compare</strong>
+                                        </button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
                                     {{--<div>

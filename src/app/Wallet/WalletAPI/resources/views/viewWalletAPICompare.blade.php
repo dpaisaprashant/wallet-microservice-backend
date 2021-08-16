@@ -3,8 +3,7 @@
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Clearance Compare for <b>{{-- $transactionName --}}</b> from <b>{{-- $fromDate --}}</b> to
-                <b>{{-- $toDate --}}</b></h2>
+            <h2>Transaction Comparison for Wallet and NCHL API </h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -83,9 +82,7 @@
                             <h5>Compared Transactions from Wallet</h5>
                         </div>
                         <div class="ibox-content">
-                            {{--<h5><b>Total Count:</b> {{ $totalTransactionCount }}</h5>
-                            <h5><b>Total Amount Sum:</b> Rs. {{ $totalTransactionAmountSum }}</h5>
-                            <h5><b>Total Fee Sum:</b> Rs. {{ $totalTransactionFeeSum }}</h5>--}}
+
                             <div class="table-responsive" id="comparedTransactionId">
                                 <table class="table table-striped table-bordered table-hover dataTables-example"
                                        title="clearance transactions">
@@ -140,9 +137,7 @@
                             <h5>Compared Transactions from API</h5>
                         </div>
                         <div class="ibox-content">
-                            {{--<h5><b>Total Count:</b> {{ $totalTransactionCount }}</h5>
-                            <h5><b>Total Amount Sum:</b> Rs. {{ $totalTransactionAmountSum }}</h5>
-                            <h5><b>Total Fee Sum:</b> Rs. {{ $totalTransactionFeeSum }}</h5>--}}
+
                             <div class="table-responsive" id="comparedTransactionId">
                                 <table class="table table-striped table-bordered table-hover dataTables-example"
                                        title="clearance transactions">
@@ -150,7 +145,7 @@
                                     <tr>
                                         <th>S.No.</th>
                                         <th>Transaction ID</th>
-                                        {{--                                        <th>Bank</th>--}}
+                                        {{--<th>Bank</th>--}}
                                         <th>Amount</th>
                                         <th>Debit Status</th>
                                         <th>Credit Status</th>
@@ -187,9 +182,7 @@
                             <h5>Transactions in which status is success in wallet but not in API</h5>
                         </div>
                         <div class="ibox-content">
-                            {{--<h5><b>Total Count:</b> {{ $totalTransactionCount }}</h5>
-                            <h5><b>Total Amount Sum:</b> Rs. {{ $totalTransactionAmountSum }}</h5>
-                            <h5><b>Total Fee Sum:</b> Rs. {{ $totalTransactionFeeSum }}</h5>--}}
+
                             <div class="table-responsive" id="transactionInWalletButNotInExcelId">
                                 <table class="table table-striped table-bordered table-hover dataTables-example"
                                        title="clearance transactions">
@@ -261,9 +254,6 @@
                             <h5>Transactions in which debit status do not match</h5>
                         </div>
                         <div class="ibox-content">
-                            {{--<h5><b>Total Count:</b> {{ $totalTransactionCount }}</h5>
-                            <h5><b>Total Amount Sum:</b> Rs. {{ $totalTransactionAmountSum }}</h5>
-                            <h5><b>Total Fee Sum:</b> Rs. {{ $totalTransactionFeeSum }}</h5>--}}
                             <div class="table-responsive" id="transactionInWalletButNotInExcelId">
                                 <table class="table table-striped table-bordered table-hover dataTables-example"
                                        title="clearance transactions">
@@ -318,10 +308,10 @@
                                         @if(!empty($credit_mismatch))
                                             <tr>
                                                 <td>{{$loop->index+1}}</td>
-                                                <td>{{optional($credit_mismatch)->pre_transaction_id}}</td>
-                                                <td>{{optional($credit_mismatch)->transaction_id}}</td>
-                                                <td>{{optional($credit_mismatch)->credit_status}}</td>
-                                                <td>{{optional($credit_mismatch)->credit_response_message}}</td>
+                                                <td>{{$credit_mismatch->pre_transaction_id}}</td>
+                                                <td>{{$credit_mismatch->transaction_id}}</td>
+                                                <td>{{$credit_mismatch->credit_status}}</td>
+                                                <td>{{$credit_mismatch->credit_response_message}}</td>
                                             </tr>
                                         @endif
                                     @endforeach
@@ -340,9 +330,7 @@
                             <h4>Transactions in which amount does not match</h4>
                         </div>
                         <div class="ibox-content">
-                            {{--<h5><b>Total Count:</b> {{ $totalTransactionCount }}</h5>
-                            <h5><b>Total Amount Sum:</b> Rs. {{ $totalTransactionAmountSum }}</h5>
-                            <h5><b>Total Fee Sum:</b> Rs. {{ $totalTransactionFeeSum }}</h5>--}}
+
                             <div class="table-responsive" id="transactionInWalletButNotInExcelId">
                                 <table class="table table-striped table-bordered table-hover dataTables-example"
                                        title="clearance transactions">

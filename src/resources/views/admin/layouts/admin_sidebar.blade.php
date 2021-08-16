@@ -121,7 +121,8 @@ $url = url()->current();
                 </li>
             @endcan
             @can('View nps linked account')
-                <li><a href="{{ route('linkedaccounts.view') }}"><i class="fa fa-link"></i> <span class="nav-label">Linked Accounts</span></a></li>
+                <li><a href="{{ route('linkedaccounts.view') }}"><i class="fa fa-link"></i> <span class="nav-label">Linked Accounts</span></a>
+                </li>
             @endcan
 
             {{-- @can('Group force password change')
@@ -202,7 +203,8 @@ $url = url()->current();
 
             @can('Architecture vendor transaction')
                 <li @if(preg_match('/vendor-transactions/i', $url)) class="active" @endif>
-                    <a href="#"><i class="fa fa-history"></i> <span class="nav-label">Commission and Cashback</span><span
+                    <a href="#"><i class="fa fa-history"></i> <span
+                            class="nav-label">Commission and Cashback</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         @foreach($walletVendors as $vendor)
@@ -357,12 +359,12 @@ $url = url()->current();
 
 
 
-               @can('View pre-transactions')
+            @can('View pre-transactions')
                 <li @if($url == route('preTransaction.view')) class="active" @endif>
                     <a href="{{route('preTransaction.view')}}"><i class="fa fa-handshake-o"></i> <span
                             class="nav-label">Pre Transactions</span></a>
                 </li>
-                @endcan
+            @endcan
 
             @if(auth()->user()->hasAnyPermission(['View request info']))
                 @can('View request info')
@@ -396,7 +398,7 @@ $url = url()->current();
                             <li><a href="{{ route('nps') }}">Nps Web/Mobile Banking</a></li>
                         @endcan
                         @can('View khalti details')
-                        <li><a href="{{ route('khalti.transaction') }}">Khalti</a></li>
+                            <li><a href="{{ route('khalti.transaction') }}">Khalti</a></li>
                         @endcan
                         @can('Paypoint view')
                             <li><a href="{{ route('paypoint') }}">Paypoint Transactions</a></li>
@@ -415,9 +417,9 @@ $url = url()->current();
                         @endcan
 
 
-                  {{--      @can('Cellpay user transaction view')
-                            <li><a href="{{route('cellPayUserTransaction.view')}}">CellPay Transactions</a></li>
-                            @endcan--}}
+                        {{--      @can('Cellpay user transaction view')
+                                  <li><a href="{{route('cellPayUserTransaction.view')}}">CellPay Transactions</a></li>
+                                  @endcan--}}
 
                     </ul>
                 </li>
@@ -568,22 +570,24 @@ $url = url()->current();
 
 
             @if(auth()->user()->hasAnyPermission(['View blocked ip', 'View whitelisted ip']))
-            <li @if(preg_match('/report/i', $url)) class="active" @endif>
-                <a href="#"><i class="fa fa-server"></i> <span class="nav-label">Block / Whitelist IPs</span><span
-                    class="fa arrow"></span></a>
-            <ul class="nav nav-second-level collapse">
-            @can('View blocked ip')
-            <li @if($url == route('blockedip.view')) class="active" @endif>
-                <a href="{{ route('blockedip.view') }}"><i class="fa fa-lock"></i> <span class="nav-label">Block IP</span></a>
-            </li>
-            @endcan
-            @can('View whitelisted ip')
-            <li @if($url == route('whitelistedIP.view')) class="active" @endif>
-                <a href="{{ route('whitelistedIP.view') }}"><i class="fa fa-check-square"></i> <span class="nav-label">Whitelist IP</span></a>
-            </li>
-            @endcan
-            </ul>
-            </li>
+                <li @if(preg_match('/report/i', $url)) class="active" @endif>
+                    <a href="#"><i class="fa fa-server"></i> <span class="nav-label">Block / Whitelist IPs</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        @can('View blocked ip')
+                            <li @if($url == route('blockedip.view')) class="active" @endif>
+                                <a href="{{ route('blockedip.view') }}"><i class="fa fa-lock"></i> <span
+                                        class="nav-label">Block IP</span></a>
+                            </li>
+                        @endcan
+                        @can('View whitelisted ip')
+                            <li @if($url == route('whitelistedIP.view')) class="active" @endif>
+                                <a href="{{ route('whitelistedIP.view') }}"><i class="fa fa-check-square"></i> <span
+                                        class="nav-label">Whitelist IP</span></a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
 
             @endif
 
@@ -655,11 +659,11 @@ $url = url()->current();
                             </li>
                         @endcan
 
-                            @can('Miracle info SMS view')
-                                <li>
+                        @can('Miracle info SMS view')
+                            <li>
                                 <a href="{{route('miracle-info.view')}}"><span class="nav-label">Miracle Info SMS</span></a>
-                                </li>
-                            @endcan
+                            </li>
+                        @endcan
 
                     </ul>
                 </li>

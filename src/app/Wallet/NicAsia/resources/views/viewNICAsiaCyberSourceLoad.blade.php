@@ -240,7 +240,14 @@
                                             <td>
                                                 @include('NicAsia::response',['NicTransaction' => $NicTransaction])
                                             </td>
-                                            <td>Action</td>
+                                            <td>
+                                                @can('Nicasia cybersource detail')
+                                                    <a href="{{ route('nicAsia.detailCyberSourceLoad', $NicTransaction->id) }}">
+                                                        <button class="btn btn-primary btn-icon" type="button"><i
+                                                                class="fa fa-eye"></i></button>
+                                                    </a>
+                                                @endcan
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>

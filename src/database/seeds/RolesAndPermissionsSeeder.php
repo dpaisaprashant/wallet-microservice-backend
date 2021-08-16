@@ -369,6 +369,9 @@ class RolesAndPermissionsSeeder extends Seeder
             'View nps linked account',
             'Excel nps linked account',
 
+            //Mismtached user balance and bonus balance
+            'View mismatched user balance and bonus balance',
+
             //Run seeder
             'View seeder list',
             'Run seeder'

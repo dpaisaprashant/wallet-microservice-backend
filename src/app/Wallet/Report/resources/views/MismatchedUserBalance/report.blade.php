@@ -39,29 +39,17 @@
                                 <form role="form" method="get">
 
                                     <div class="row">
-
-
                                         <div class="col-md-6">
-                                            <div class="input-group date">
-                                                    <span class="input-group-addon">
-                                                        <i class="fa fa-calendar"></i>
-                                                    </span>
-                                                <input id="date_load_from" type="text" class="form-control date_from" placeholder="From" name="from" autocomplete="off" value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="input-group date">
-                                                    <span class="input-group-addon">
-                                                        <i class="fa fa-calendar"></i>
-                                                    </span>
-                                                <input id="date_load_to" type="text" class="form-control date_to" placeholder="To" name="to" autocomplete="off" value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
+                                            <div class="form-group">
+                                                <input type="text" name="user_name"
+                                                       placeholder="User Name" class="form-control"
+                                                       value="{{ !empty($_GET['user_name']) ? $_GET['user_name'] : '' }}">
                                             </div>
                                         </div>
                                     </div>
                                     <br>
                                     <div>
-                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="#"><strong>Generate Report</strong></button>
+                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="#"><strong>Generate Mismatch Report</strong></button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
                                      <div>
@@ -93,27 +81,33 @@
                                         <th>Mobile Number</th>
                                         <th>Balance In Wallet</th>
                                         <th>Balance In Latest Transaction</th>
+                                        <th>Bonus Balance In Wallet</th>
+                                        <th>Bonus Balance In Latest Transaction</th>
                                     </tr>
                                     </thead>
                                     <tbody>
 
                                     @foreach($users as $user)
                                         @if($user->latestUserTransactionEvent)
-                                            @if(!($user->latestUserTransactionEvent->balance == $user->wallet->balance))
+                                            @if(($user->latestUserTransactionEvent->balance != $user->wallet->balance) or ($user->latestUserTransactionEvent->bonus_balance != $user->wallet->bonus_balance))
                                             <tr class="gradeX">
                                                 <td>{{ $loop->index +  1 }}</td>
                                                 <td>{{$user->name}}</td>
                                                 <td>{{$user->mobile_no}}</td>
                                                 <td>{{$user->wallet->balance}}</td>
                                                 <td>{{$user->latestUserTransactionEvent->balance}}</td>
+                                                <td>{{$user->wallet->bonus_balance}}</td>
+                                                <td>{{$user->latestUserTransactionEvent->bonus_balance}}</td>
                                             </tr>
                                             @endif
-                                        @elseif($user->wallet->balance > 0)
+                                        @elseif(($user->wallet->balance > 0) or($user->wallet->bonus_balance > 0))
                                                 <tr class="gradeX">
                                                     <td>{{ $loop->index +  1 }}</td>
                                                     <td>{{$user->name}}</td>
                                                     <td>{{$user->mobile_no}}</td>
                                                     <td>{{$user->wallet->balance}}</td>
+                                                    <td>0</td>
+                                                    <td>{{$user->wallet->bonus_balance}}</td>
                                                     <td>0</td>
                                                 </tr>
                                         @endif

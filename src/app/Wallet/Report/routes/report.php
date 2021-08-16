@@ -30,5 +30,5 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web','auth']], funct
     Route::get('/adminKyc',[AdminKycController::class,'getAdminData'])->name('report.adminKyc')->middleware('permission:Report admin kyc');
 
     // Mismatches user balances
-    Route::match(['get', 'post'],'mismatched-user-balances', [MismatchedUserBalanceController::class, 'report'])->name('report.mismatchedUserBalance');
+    Route::match(['get', 'post'],'mismatched-user-balances', [MismatchedUserBalanceController::class, 'report'])->name('report.mismatchedUserBalance')->middleware('permission:View mismatched user balance and bonus balance');
 });

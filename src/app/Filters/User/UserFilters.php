@@ -24,7 +24,8 @@ class UserFilters extends FiltersAbstract
         'to' => ToDateFilter::class,
         'verification' => VerificationFilter::class,
         'referral_code' => ReferralFilter::class,
-        'kyc_status' => KycFilter::class
+        'kyc_status' => KycFilter::class,
+        'user_name' =>MismatchFilter::class,
     ];
 
 

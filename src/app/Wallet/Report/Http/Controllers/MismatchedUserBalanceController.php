@@ -13,7 +13,7 @@ class MismatchedUserBalanceController extends Controller
 {
     public function report(){
 
-        $users = User::with('latestUserTransactionEvent','wallet')->get();
+        $users = User::filter(request())->with('latestUserTransactionEvent','wallet')->get();
 //        dd($users);
         return view('WalletReport::MismatchedUserBalance/report')->with(compact('users'));
     }

@@ -56,7 +56,7 @@
                                     </div>
                                     <br>
                                     <div>
-                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="#"><strong>Generate Mismatch Report</strong></button>
+                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{route('report.mismatchedUserBalance')}}"><strong>Generate Mismatch Report</strong></button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
                                      <div>
@@ -75,7 +75,7 @@
             <div class="col-lg-12">
                     <div class="ibox ">
                         <div class="ibox-title">
-                            <h5>Mismatched User Balance:  {{ $_GET['user_name'] }}</h5>
+                            <h5>Mismatched User Balance</h5>
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">
@@ -94,30 +94,15 @@
                                     <tbody>
 
                                     @foreach($users as $user)
-                                        @if($user->latestUserTransactionEvent)
-                                            @if(($user->latestUserTransactionEvent->balance != $user->wallet->balance) or ($user->latestUserTransactionEvent->bonus_balance != $user->wallet->bonus_balance))
                                             <tr class="gradeX">
                                                 <td>{{ $loop->index +  1 }}</td>
                                                 <td>{{$user->name}}</td>
                                                 <td>{{$user->mobile_no}}</td>
                                                 <td>{{$user->wallet->balance}}</td>
-                                                <td>{{$user->latestUserTransactionEvent->balance}}</td>
+                                                <td>@if($user->latestUserTransactionEvent){{$user->latestUserTransactionEvent->balance}}@else 0 @endif</td>
                                                 <td>{{$user->wallet->bonus_balance}}</td>
-                                                <td>{{$user->latestUserTransactionEvent->bonus_balance}}</td>
+                                                <td>@if($user->latestUserTransactionEvent){{$user->latestUserTransactionEvent->bonus_balance}}@else 0 @endif</td>
                                             </tr>
-                                            @endif
-                                        @elseif(($user->wallet->balance > 0) or($user->wallet->bonus_balance > 0))
-                                                <tr class="gradeX">
-                                                    <td>{{ $loop->index +  1 }}</td>
-                                                    <td>{{$user->name}}</td>
-                                                    <td>{{$user->mobile_no}}</td>
-                                                    <td>{{$user->wallet->balance}}</td>
-                                                    <td>0</td>
-                                                    <td>{{$user->wallet->bonus_balance}}</td>
-                                                    <td>0</td>
-                                                </tr>
-                                        @endif
-
                                     @endforeach
                                     </tbody>
                                 </table>

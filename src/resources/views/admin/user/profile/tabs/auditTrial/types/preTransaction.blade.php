@@ -25,8 +25,8 @@
             @elseif(isset($event->nchlAggregatePayment))
             <b>Transaction Id:</b>{{ $event->nchlAggregatePayment['transaction_id'] }}<br>
             <b>Ref Id:</b>{{  $event->nchlAggregatePayment['ref_id']  }}<br>
-        @elseif(isset($event->khaltiUserTransaction))
-            <b>Account : </b>{{  $event->khaltiUserTransaction['account'] }}
+       {{-- @elseif(isset($event->khaltiUserTransaction))
+            <b>Account : </b>{{  $event->khaltiUserTransaction['account'] }}--}}
         @endif
 
     </td>

@@ -70,7 +70,6 @@ class NCHLController extends Controller
         foreach ($transactions as $transaction) {
             $id = $transaction->transaction_id;
             $nchlAPI= $this->getNchlAPI($request,$id);
-//            dd($nchlAPI);
             $nchlAPIs[] = $nchlAPI;
 
             if ((optional($transaction)->debit_status) != ($nchlAPI['debitStatus'] ?? null)) {
@@ -87,7 +86,7 @@ class NCHLController extends Controller
                 $amount_mismatches[] = $transaction;
                 $amount_mismatches_api[] = $nchlAPI;
             }
-//dd($this->walletStatus($transaction));
+
             if (($this->walletStatus($transaction)) =='success' && ($this->compareStatus($nchlAPI)) == 'failed') {
                 $wallet_status_mismatches[] = $transaction;
                 $wallet_status_mismatches_api[] = $nchlAPI;
@@ -99,9 +98,6 @@ class NCHLController extends Controller
             }
 
         }
-
-//        dd($nchlAPIs);
-//        dd($_GET['from']);
 
         return view('WalletAPI::viewWalletAPICompare', compact('nchlAPIs',
                                                                   'debit_mismatches',

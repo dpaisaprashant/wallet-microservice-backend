@@ -576,14 +576,12 @@ $url = url()->current();
                     <ul class="nav nav-second-level collapse">
                         @can('View blocked ip')
                             <li @if($url == route('blockedip.view')) class="active" @endif>
-                                <a href="{{ route('blockedip.view') }}"><i class="fa fa-lock"></i> <span
-                                        class="nav-label">Block IP</span></a>
+                                <a href="{{ route('blockedip.view') }}"><i class="fa fa-lock"></i> Block IP</a>
                             </li>
                         @endcan
                         @can('View whitelisted ip')
                             <li @if($url == route('whitelistedIP.view')) class="active" @endif>
-                                <a href="{{ route('whitelistedIP.view') }}"><i class="fa fa-check-square"></i> <span
-                                        class="nav-label">Whitelist IP</span></a>
+                                <a href="{{ route('whitelistedIP.view') }}"><i class="fa fa-check-square"></i> Whitelist IP</a>
                             </li>
                         @endcan
                     </ul>

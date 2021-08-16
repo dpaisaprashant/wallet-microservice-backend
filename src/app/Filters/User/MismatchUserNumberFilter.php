@@ -5,7 +5,7 @@ namespace App\Filters\User;
 use App\Filters\FilterAbstract;
 use Illuminate\Database\Eloquent\Builder;
 
-class MismatchFilter extends FilterAbstract {
+class MismatchUserNumberFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -30,6 +30,6 @@ class MismatchFilter extends FilterAbstract {
             return $builder;
         }
 
-        return $builder->where('name','like','%'.$value.'%');
+        return $builder->where('mobile_no',$value);
     }
 }

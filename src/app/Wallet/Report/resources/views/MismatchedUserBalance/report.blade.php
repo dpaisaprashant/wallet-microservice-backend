@@ -46,6 +46,13 @@
                                                        value="{{ !empty($_GET['user_name']) ? $_GET['user_name'] : '' }}">
                                             </div>
                                         </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="number" name="mobile_no"
+                                                       placeholder="Mobile Number" class="form-control"
+                                                       value="{{ !empty($_GET['mobile_no']) ? $_GET['mobile_no'] : '' }}">
+                                            </div>
+                                        </div>
                                     </div>
                                     <br>
                                     <div>
@@ -66,10 +73,9 @@
 
         <div class="row">
             <div class="col-lg-12">
-{{--                @if(!empty($_GET['from']) && !empty($_GET['to']))--}}
                     <div class="ibox ">
                         <div class="ibox-title">
-{{--                            <h5>Mismatched User Balance {{ $_GET['from'] . ' to ' . $_GET['to'] }}</h5>--}}
+                            <h5>Mismatched User Balance:  {{ $_GET['user_name'] }}</h5>
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">
@@ -119,7 +125,6 @@
 
                         </div>
                     </div>
-{{--                @endif--}}
             </div>
         </div>
     </div>

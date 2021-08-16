@@ -25,7 +25,8 @@ class UserFilters extends FiltersAbstract
         'verification' => VerificationFilter::class,
         'referral_code' => ReferralFilter::class,
         'kyc_status' => KycFilter::class,
-        'user_name' =>MismatchFilter::class,
+        'user_name' =>MismatchUserFilter::class,
+        'mobile_no'=>MismatchUserNumberFilter::class,
     ];
 
 

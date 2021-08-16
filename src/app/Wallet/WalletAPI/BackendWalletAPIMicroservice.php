@@ -146,7 +146,7 @@ class BackendWalletAPIMicroservice extends BackendWalletAPIJSONAbstract
             ->addParam('vendor', $this->vendor ?? "")
             ->addParam('service_type', $this->serviceType ?? "")
             ->addParam('microservice_type', $this->microservice)
-            ->addParam('status', $this->status = 'STARTED')
+            ->addParam('status', $this->status)
             ->addParam('special1', $this->special1)
             ->addParam('special2', $this->special2)
             ->addParam('special3', $this->special3)

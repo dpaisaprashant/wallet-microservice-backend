@@ -366,7 +366,8 @@ $url = url()->current();
 
             @if(auth()->user()->hasAnyPermission(['View request info']))
                 @can('View request info')
-                    <li><a href="{{ route('requestinfo.index') }}"><i class="fa fa-info-circle"></i> Requests Info</a></li>
+                    <li><a href="{{ route('requestinfo.index') }}"><i class="fa fa-info-circle"></i><span
+                                class="nav-label">Requests Info</span></a></li>
                 @endcan
             @endif
 

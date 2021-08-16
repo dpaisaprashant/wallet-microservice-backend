@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Wallet\Report\Corn\CheckUserBalanceMismatch;
 use App\Wallet\Session\AdminSession;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -14,7 +15,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+//
     ];
 
     /**
@@ -29,6 +30,7 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
 
         $schedule->call(new AdminSession)->everyMinute();
+        $schedule->call(new CheckUserBalanceMismatch)->hourly();
     }
 
     /**

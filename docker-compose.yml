@@ -8,8 +8,8 @@ networks:
     external: true
   wallet-microservice-nchl_laravel:
     external: true
-  wallet-microservice-cybersource_laravel:
-    external: true
+#  wallet-microservice-cybersource_laravel:
+#    external: true
   wallet-microservice-npay_laravel:
     external: true
   wallet-microservice-nps_laravel:
@@ -37,7 +37,7 @@ services:
       - wallet-microservice-core_laravel
       - wallet-microservice-paypoint_laravel
       - wallet-microservice-nchl_laravel
-      - wallet-microservice-cybersource_laravel
+#      - wallet-microservice-cybersource_laravel
       - wallet-microservice-npay_laravel
       - wallet-microservice-nps_laravel
 
@@ -62,7 +62,7 @@ services:
       - wallet-microservice-core_laravel
       - wallet-microservice-paypoint_laravel
       - wallet-microservice-nchl_laravel
-      - wallet-microservice-cybersource_laravel
+#      - wallet-microservice-cybersource_laravel
       - wallet-microservice-npay_laravel
       - wallet-microservice-nps_laravel
 
@@ -81,7 +81,7 @@ services:
       - wallet-microservice-core_laravel
       - wallet-microservice-paypoint_laravel
       - wallet-microservice-nchl_laravel
-      - wallet-microservice-cybersource_laravel
+#      - wallet-microservice-cybersource_laravel
       - wallet-microservice-npay_laravel
       - wallet-microservice-nps_laravel
 
@@ -101,7 +101,7 @@ services:
       - wallet-microservice-core_laravel
       - wallet-microservice-paypoint_laravel
       - wallet-microservice-nchl_laravel
-      - wallet-microservice-cybersource_laravel
+#      - wallet-microservice-cybersource_laravel
       - wallet-microservice-npay_laravel
       - wallet-microservice-nps_laravel
     entrypoint: ['composer', '--ignore-platform-reqs']
@@ -123,7 +123,7 @@ services:
       - wallet-microservice-core_laravel
       - wallet-microservice-paypoint_laravel
       - wallet-microservice-nchl_laravel
-      - wallet-microservice-cybersource_laravel
+#      - wallet-microservice-cybersource_laravel
       - wallet-microservice-npay_laravel
       - wallet-microservice-nps_laravel
 
@@ -143,7 +143,7 @@ services:
       - wallet-microservice-core_laravel
       - wallet-microservice-paypoint_laravel
       - wallet-microservice-nchl_laravel
-      - wallet-microservice-cybersource_laravel
+#      - wallet-microservice-cybersource_laravel
       - wallet-microservice-npay_laravel
       - wallet-microservice-nps_laravel
 

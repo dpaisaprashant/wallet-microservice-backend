@@ -12,14 +12,17 @@ use Illuminate\Http\Request;
 
 class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
 {
-    protected $sixMonthBeforeTodayDate;
-    protected $twelveMonthBeforeTodayDate;
+//    protected $sixMonthBeforeTodayDate;
+//    protected $twelveMonthBeforeTodayDate;
+    protected $sixMonthsBeforeFromDate;
+    protected $twelveMonthsBeforeFromDate;
 
     public function __construct(Request $request)
     {
         parent::__construct($request);
-        $this->sixMonthBeforeTodayDate = Carbon::now()->subMonths(6)->toDateString();
-        $this->twelveMonthBeforeTodayDate = Carbon::now()->subMonths(12)->toDateString();
+        dd(date($_GET['from'])->format('Y-m-d'));
+        $this->sixMonthsBeforeFromDate = Carbon::now()->subMonths(6)->toDateString();
+        $this->twelveMonthsBeforeFromDate = Carbon::now()->subMonths(12)->toDateString();
     }
 
     private function activeCustomerBuilder()

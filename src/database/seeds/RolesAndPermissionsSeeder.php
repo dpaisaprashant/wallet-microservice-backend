@@ -170,6 +170,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'Sparrow SMS view',
             'Sparrow SMS detail view',
 
+            'Miracle info SMS view',
+
             'General page setting view',
             'General page setting create',
             'General page setting update',
@@ -229,6 +231,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
             'Merchant dashboard',
             'Merchant locked view',
+            'Merchant profile',
 
             'Architecture vendor transaction',
 
@@ -283,8 +286,96 @@ class RolesAndPermissionsSeeder extends Seeder
             'Api log',
 
             'Merchant event list',
-            'Merchant pending event list'
+            'Merchant pending event list',
 
+            'Add cashback to user type',
+            'Add cashback to agent type',
+            'Add cashback to merchant type',
+
+            'Add commission to user type',
+            'Add commission to agent type',
+            'Add commission to merchant type',
+
+            'Add cashback to single user',
+            'Add commission to single user',
+
+            'Add wallet transaction type',
+            'View wallet transaction type',
+            'Edit wallet transaction type',
+
+            'View agent profile',
+
+            'View wallet permission transaction type',
+            'Add wallet permission transaction type',
+            'Delete wallet permission transaction type',
+
+            'View BFI Merchant',
+            'Add BFI Merchant',
+            'Delete BFI Merchant',
+
+            'View BFI user',
+            'View secret key',
+            'Add ip',
+            'Edit BFI user status',
+            'Add BFI user',
+
+
+            'Add blocked ip',
+            'Delete blocked ip',
+            'Edit blocked ip',
+            'View blocked ip',
+
+            'View request info',
+
+
+            'View and update agent type hierarchy cashback',
+
+            'View bfi execute payment',
+            'View bfi to user fund transfer',
+            'View user to bfi fund transfer',
+
+            'Add wallet service',
+            'View wallet service',
+            'Edit wallet service',
+            'Delete wallet service',
+
+            'View pre-transactions',
+
+
+            'View khalti details',
+            'View khalti detail page',
+
+
+            'Add whitelisted ip',
+            'Delete whitelisted ip',
+            'Edit whitelisted ip',
+            'View whitelisted ip',
+
+
+            'View and update agent type hierarchy cashback',
+
+            'View bfi execute payment',
+            'View bfi to user fund transfer',
+            'View user to bfi fund transfer',
+
+            // NicAsia
+            'Nicasia cybersource view',
+            'Nicasia cybersource detail',
+
+            //Cellpay
+            'Cellpay user transaction view',
+            'Cellpay user transaction detail',
+
+            //NPSLinked account
+            'View nps linked account',
+            'Excel nps linked account',
+
+            //Mismtached user balance and bonus balance
+            'View mismatched user balance and bonus balance',
+
+            //Run seeder
+            'View seeder list',
+            'Run seeder'
             ];
 
         //get users having all permissions

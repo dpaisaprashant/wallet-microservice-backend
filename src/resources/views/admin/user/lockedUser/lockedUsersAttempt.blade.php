@@ -31,7 +31,16 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>List of login attempts</h5>
+                        <h5 style="float: left">List of login attempts</h5>
+                        @can('Locked user login attempts view')
+                        <div style="float:right; margin-top: -5px">
+                        <form action="{{ route('user.loginAttemptsUpdateBulk',$user->id) }}" method="post" >
+                            @csrf
+                            <button title="Unlock User" rel="{{ $user->id }}" class="resetB btn btn-sm btn-primary btn-xs"><i class="fa fa-unlock"><i class="fa fa-user"></i></i> Unlock</button>
+                            <button id="resetBtnB-{{ $user->id }}" style="display: none" type="submit" href="{{ route('user.loginAttemptsUpdateBulk', $user->id) }}"  class="resetBtn"></button>
+                        </form>
+                        </div>
+                        @endcan
                     </div>
                     <div class="ibox-content">
 
@@ -131,6 +140,25 @@
             }, function () {
                 console.log(userId);
                 $('#resetBtn-' + userId).trigger('click');
+                swal.close();
+            })
+        });
+    </script>
+    <script>
+        $('.resetB').on('click', function (e) {
+            e.preventDefault();
+            let userId = $(this).attr('rel');
+            swal({
+                title: "Are you sure?",
+                text: "This user will be enabled",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#18a689",
+                confirmButtonText: "Yes, Enable User",
+                closeOnConfirm: false
+            }, function () {
+                console.log(userId);
+                $('#resetBtnB-' + userId).trigger('click');
                 swal.close();
             })
         });

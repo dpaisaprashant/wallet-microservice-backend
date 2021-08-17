@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Agent;
 use App\Models\AgentType;
 
+use App\Models\Architecture\AgentTypeHierarchyCashback;
 use App\Models\Architecture\WalletTransactionTypeCashback;
 use App\Models\Architecture\WalletTransactionTypeCommission;
 use App\Models\Setting;
@@ -45,7 +46,8 @@ class AgentTypeController extends Controller
             return redirect()->route('agent.type.view')->with('success', 'Agent Type created successfully');
         }
 
-        $parentAgents = AgentType::where('agent_type_id', null)->latest()->get();
+        //$parentAgents = AgentType::where('agent_type_id', null)->latest()->get();
+        $parentAgents = AgentType::latest()->get();
 
         return view('admin.agentType.create')->with(compact('parentAgents'));
     }
@@ -65,7 +67,8 @@ class AgentTypeController extends Controller
             return redirect()->back()->with('success', 'Agent Type updated successfully');
 
         }
-        $parentAgents = AgentType::where('agent_type_id', null)->where('id', '!=', $agentType->id)->latest()->get();
+        //$parentAgents = AgentType::where('agent_type_id', null)->where('id', '!=', $agentType->id)->latest()->get();
+        $parentAgents = AgentType::where('id', '!=', $agentType->id)->latest()->get();
 
         return view('admin.agentType.update')->with(compact('agentType', 'parentAgents'));
 
@@ -122,6 +125,10 @@ class AgentTypeController extends Controller
 
             WalletTransactionTypeCommission::where('user_type', AgentType::class)
                 ->where('user_type_id', $agentType->id)
+                ->delete();
+
+            AgentTypeHierarchyCashback::where('agent_type_id', $agentType->id)
+                ->orWhere('parent_agent_type_id', $agentType->id)
                 ->delete();
 
             $agentType->delete();

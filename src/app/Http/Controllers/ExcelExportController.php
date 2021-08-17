@@ -53,7 +53,6 @@ class ExcelExportController extends Controller
             ->setGeneratorModel(TransactionEvent::class)
             ->setRequest($request)
             ->setResource(TransactionEventResource::class);
-
         return $export->exportExcel();
     }
 
@@ -381,6 +380,5 @@ class ExcelExportController extends Controller
 
         return $export->exportExcelCollection();
     }
-
 
 }

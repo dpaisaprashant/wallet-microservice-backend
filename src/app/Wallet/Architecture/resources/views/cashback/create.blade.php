@@ -33,7 +33,8 @@
                             @endif
 
                             | <span class="font-bold">Vendor: </span> {{ $walletTransactionType->vendor }}
-                            | <span class="font-bold">Transaction Category: </span> {{ $walletTransactionType->transaction_category }}
+                            | <span
+                                class="font-bold">Transaction Category: </span> {{ $walletTransactionType->transaction_category }}
                             | <span class="font-bold">Service Type: </span> {{ $walletTransactionType->service_type }}
                             @isset($walletTransactionType->service)
                                 | <span class="font-bold">Service: </span> {{ $walletTransactionType->service }}</h3>
@@ -43,7 +44,8 @@
 
                         <div class="alert alert-warning">
                             <i class="fa fa-info-circle"></i>
-                            If a cash back for transaction having same <b>User Type</b>, <b>User Type Name</b>, <b>Slab From</b> and
+                            If a cash back for transaction having same <b>User Type</b>, <b>User Type Name</b>, <b>Slab
+                                From</b> and
                             <b>Slab To</b> is created then the existing cashback will be updated using these new values
                         </div>
 
@@ -59,15 +61,18 @@
                         <h5>Add new cashback</h5>
                     </div>
                     <div class="ibox-content">
-                        <form method="post" action="{{ route('architecture.transaction.cashback.create', $walletTransactionType->id) }}" enctype="multipart/form-data">
+                        <form method="post"
+                              action="{{ route('architecture.transaction.cashback.create', $walletTransactionType->id) }}"
+                              enctype="multipart/form-data">
                             @csrf
                             @if(count($availableTitles) > 0)
                                 <div class="form-group  row"><label class="col-sm-2 col-form-label">Title</label>
                                     <div class="col-sm-10">
-                                        <select data-placeholder="Choose Title..." class="chosen-select"  tabindex="2" name="title" required>
+                                        <select data-placeholder="Choose Title..." class="chosen-select" tabindex="2"
+                                                name="title" required>
                                             <option value="" selected disabled>-- Select Title --</option>
                                             @foreach($availableTitles as $key => $title)
-                                                <option value="{{ $title }}" >{{ $title }}</option>
+                                                <option value="{{ $title }}">{{ $title }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -86,10 +91,11 @@
 
                             <div class="form-group  row"><label class="col-sm-2 col-form-label">User Type</label>
                                 <div class="col-sm-10">
-                                    <select id="selectUserType" data-placeholder="ChooseUser Type..." class="chosen-select"  tabindex="2" name="user_type" required>
+                                    <select id="selectUserType" data-placeholder="ChooseUser Type..."
+                                            class="chosen-select" tabindex="2" name="user_type" required>
                                         <option value="" selected disabled>-- Select User Type --</option>
                                         @foreach($userTypes as $key => $userType)
-                                            <option value="{{ $userType }}" >{{ $key }}</option>
+                                            <option value="{{ $userType }}">{{ $key }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -97,7 +103,8 @@
 
                             <div class="form-group  row"><label class="col-sm-2 col-form-label">User Type Name</label>
                                 <div class="col-sm-10">
-                                    <select id="selectUserTypeName" data-placeholder="ChooseUser Type..." class="chosen-select"  tabindex="2" name="user_type_id" required>
+                                    <select id="selectUserTypeName" data-placeholder="ChooseUser Type..."
+                                            class="chosen-select" tabindex="2" name="user_type_id" required>
                                         <option value="" selected disabled>-- Select User Type Name--</option>
                                         {{--@foreach($userTypes as $key => $userType)
                                             <option value="{{ $userType }}" >{{ $key }}</option>
@@ -125,21 +132,22 @@
                             </div>
 
                             <div class="hr-line-dashed"></div>
-                                <div class="form-group  row">
-                                    <label class="col-sm-2 col-form-label">Cashback Service (description)</label>
-                                    <div class="col-sm-10">
-                                        <input name="description" type="text" class="form-control">
-                                        <small>Empty for default</small>
-                                    </div>
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Cashback Service (description)</label>
+                                <div class="col-sm-10">
+                                    <input name="description" type="text" class="form-control">
+                                    <small>Empty for default</small>
                                 </div>
+                            </div>
                             <div class="hr-line-dashed"></div>
 
                             <div class="form-group  row"><label class="col-sm-2 col-form-label">Cashback Type</label>
                                 <div class="col-sm-10">
-                                    <select id="selectCashbackType" data-placeholder="Choose Cashback Type..." class="chosen-select"  tabindex="2" name="cashback_type" required>
+                                    <select id="selectCashbackType" data-placeholder="Choose Cashback Type..."
+                                            class="chosen-select" tabindex="2" name="cashback_type" required>
                                         <option value="" selected disabled>-- Select Cashback Type --</option>
-                                        <option value="FLAT" >FLAT</option>
-                                        <option value="PERCENTAGE" >PERCENTAGE</option>
+                                        <option value="FLAT">FLAT</option>
+                                        <option value="PERCENTAGE">PERCENTAGE</option>
                                     </select>
                                 </div>
                             </div>
@@ -147,7 +155,8 @@
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Cashback Value</label>
                                 <div class="col-sm-10">
-                                    <input name="cashback_value" type="number" min="0" step='0.1' class="form-control" required>
+                                    <input name="cashback_value" type="number" min="0" step='0.1' class="form-control"
+                                           required>
                                     <small>Flat amount in paisa</small>
                                 </div>
                             </div>
@@ -177,8 +186,9 @@
     @include('admin.asset.js.chosen')
 
     <script>
-        $('#selectUserType').on('change', function (e){
+        $('#selectUserType').on('change', function (e) {
             let userType = $(this).val();
+            alert(userType);
             let url = `{{ route('architecture.userType.list') }}`
 
 
@@ -186,10 +196,10 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url:url,
-                method:"POST",
-                data: { user_type: userType},
-                dataType:'JSON',
+                url: url,
+                method: "POST",
+                data: {user_type: userType},
+                dataType: 'JSON',
                 cache: false,
                 async: true,
                 beforeSend: function () {

@@ -264,6 +264,7 @@
                                         <th>Service Type</th>
                                         <th>Amount</th>
                                         <th>Fee</th>
+                                        <th>Cashback amount</th>
                                         <th>Status</th>
                                         <th>Date</th>
                                         <th>Action</th>
@@ -296,6 +297,9 @@
                                             <td class="center">Rs. {{ $transaction->amount }}</td>
                                             <td class="center">
                                                 Rs. {{ $transaction->fee }}
+                                            </td>
+                                            <td>
+                                                Rs. {{ $transaction->cashback_amount }}
                                             </td>
                                             <td>
                                                 <span class="badge badge-primary">Complete</span>

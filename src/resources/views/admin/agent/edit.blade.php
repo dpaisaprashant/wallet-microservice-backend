@@ -33,37 +33,43 @@
                         <div class="col-md-12">
                             @include('admin.asset.notification.notify')
                         </div>
-                        <form method="post" action="{{ route('agent.edit', $agent->id) }}" enctype="multipart/form-data" id="agentForm">
+                        <form method="post" action="{{ route('agent.edit', $agent->id) }}" enctype="multipart/form-data"
+                              id="agentForm">
                             @csrf
                             <div class="form-group  row"><label class="col-sm-2 col-form-label">Mobile No.</label>
                                 <div class="col-sm-10">
-                                    <input name="mobile_no" value="{{ $agent->user->mobile_no }}" type="text" class="form-control" disabled>
+                                    <input name="mobile_no" value="{{ $agent->user->mobile_no }}" type="text"
+                                           class="form-control" disabled>
                                 </div>
                             </div>
 
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Business PAN</label>
                                 <div class="col-sm-10">
-                                    <input name="business_pan" value="{{ $agent->business_pan }}" type="text" class="form-control" disabled>
+                                    <input name="business_pan" value="{{ $agent->business_pan }}" type="text"
+                                           class="form-control" disabled>
                                 </div>
                             </div>
 
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Business Name</label>
                                 <div class="col-sm-10">
-                                    <input name="business_name" value="{{ $agent->business_name }}" type="text" class="form-control" disabled>
+                                    <input name="business_name" value="{{ $agent->business_name }}" type="text"
+                                           class="form-control" disabled>
                                 </div>
                             </div>
 
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Agent Type</label>
                                 <div class="col-sm-10">
-                                    <select id="agentStatus" data-placeholder="Choose Agent Type..." class="chosen-select"  tabindex="2" name="agent_type_id" required>
+                                    <select id="agentStatus" data-placeholder="Choose Agent Type..."
+                                            class="chosen-select" tabindex="2" name="agent_type_id" required>
                                         <option value="" selected disabled>Agent Type</option>
                                         @foreach($agentTypes as $type)
-                                        <option value="{{ $type->id }}"{{ $type->id == $agent->agent_type_id ? "selected" : "" }}>
-                                            {{ ucwords(strtolower($type->name)) }}
-                                        </option>
+                                            <option
+                                                value="{{ $type->id }}"{{ $type->id == $agent->agent_type_id ? "selected" : "" }}>
+                                                {{ ucwords(strtolower($type->name)) }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -72,7 +78,8 @@
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Agent Status</label>
                                 <div class="col-sm-10">
-                                    <select id="agentStatus" data-placeholder="Choose Status..." class="chosen-select"  tabindex="2" name="status" required>
+                                    <select id="agentStatus" data-placeholder="Choose Status..." class="chosen-select"
+                                            tabindex="2" name="status" required>
                                         <option value="" selected disabled>Status.</option>
                                         <option
                                             value="{{ \App\Models\Agent::STATUS_ACCEPTED }}"
@@ -102,7 +109,8 @@
 
                             <div class="form-group  row"><label class="col-sm-2 col-form-label">Institution Type</label>
                                 <div class="col-sm-10">
-                                    <select data-placeholder="Choose Mobile No..." class="chosen-select"  tabindex="2" name="institution_type" required>
+                                    <select data-placeholder="Choose Mobile No..." class="chosen-select" tabindex="2"
+                                            name="institution_type" required>
                                         <option value="" selected disabled>Institution Type</option>
                                         <option value="{{ \App\Models\Agent::INSTITUTION_TYPE_COMPANY }}"
                                             {{ \App\Models\Agent::INSTITUTION_TYPE_COMPANY == $agent->institution_type ? "selected" : "" }}
@@ -111,6 +119,95 @@
                                             {{ \App\Models\Agent::INSTITUTION_TYPE_INDIVIDUAL == $agent->institution_type ? "selected" : "" }}
                                         >{{ \App\Models\Agent::INSTITUTION_TYPE_INDIVIDUAL }}</option>
                                     </select>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Business owner
+                                    citizenship front</label>
+                                <div class="col-sm-10">
+                                    @if(isset($agent->business_owner_citizenship_front))
+                                        <a href="{{ config('dpaisa-api-url.admin_documentation_url') . $agent->business_owner_citizenship_front}}"
+                                           target="_blank">
+                                            <img class="d-block w-100"
+                                                 src="{{ config('dpaisa-api-url.admin_documentation_url') . $agent->business_owner_citizenship_front}}"
+                                                 alt="Business owner citizenship front"
+                                                 style="max-width: 300px;max-height: 300px;object-fit: cover">
+                                        </a>
+                                    @else
+                                        <p>Photo Unavalable</p>
+                                    @endif
+
+                                </div>
+                            </div>
+
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Business owner
+                                    citizenship back</label>
+                                <div class="col-sm-10">
+                                    @if(isset($agent->business_owner_citizenship_back))
+                                        <a href="{{ config('dpaisa-api-url.admin_documentation_url') . $agent->business_owner_citizenship_back}}"
+                                           target="_blank">
+                                            <img class="d-block w-100"
+                                                 src="{{ config('dpaisa-api-url.admin_documentation_url') . $agent->business_owner_citizenship_back}}"
+                                                 style="max-width: 300px;max-height: 300px;object-fit: cover"
+                                                 alt="Business owner citizenship back">
+                                        </a>
+
+                                    @else
+                                        <p>Photo Unavailable</p>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">PP photo</label>
+                                <div class="col-sm-10">
+                                    @if(isset($agent->pp_photo))
+                                        <a href="{{ config('dpaisa-api-url.admin_documentation_url') . $agent->pp_photo}}"
+                                           target="_blank">
+                                            <img class="d-block w-100"
+                                                 src="{{ config('dpaisa-api-url.admin_documentation_url') . $agent->pp_photo}}"
+                                                 style="max-width: 300px;max-height: 300px;object-fit: cover"
+                                                 alt="PP Photo">
+                                        </a>
+                                    @else
+                                        <p>Photo Unavailable</p>
+                                    @endif
+
+                                </div>
+                            </div>
+
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Tax clearance
+                                    certificate</label>
+                                <div class="col-sm-10">
+                                    @if(isset($agent->tax_clearance_certificate))
+                                        <a href="{{ config('dpaisa-api-url.admin_documentation_url') . $agent->tax_clearance_certificate}}"
+                                           target="_blank">
+                                            <img class="d-block w-100"
+                                                 src="{{ config('dpaisa-api-url.admin_documentation_url') . $agent->tax_clearance_certificate}}"
+                                                 style="max-width: 300px;max-height: 300px;object-fit: cover"
+                                                 alt="Tax clearance certificate">
+                                        </a>
+                                    @else
+                                        <p>Photo Unavailable</p>
+                                    @endif
+
+                                </div>
+                            </div>
+
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Pan vat document</label>
+                                <div class="col-sm-10">
+                                    @if(isset($agent->pan_vat_document))
+                                    <a href="{{ config('dpaisa-api-url.admin_documentation_url') . $agent->pan_vat_document}}"
+                                       target="_blank">
+                                        <img class="d-block w-100"
+                                             src="{{ config('dpaisa-api-url.admin_documentation_url') . $agent->pan_vat_document}}"
+                                             style="max-width: 300px;max-height: 300px;object-fit: cover"
+                                             alt="Pan vat document">
+                                    </a>
+                                    @else
+                                        <p>Photo Unavailable</p>
+                                    @endif
+
                                 </div>
                             </div>
 
@@ -151,8 +248,6 @@
                             </div>--}}
 
 
-
-
                             <div id="reasonDiv" class="form-group row" style="display: none">
                                 <label class="col-sm-2 col-form-label">Rejection Reason</label>
                                 <div class="col-sm-10">
@@ -161,7 +256,8 @@
                             </div>
 
                             <div class="hr-line-dashed"></div>
-                            <button class="btn btn-sm btn-primary m-t-n-xs" type="submit"><strong>Edit Agent</strong></button>
+                            <button class="btn btn-sm btn-primary m-t-n-xs" type="submit"><strong>Edit Agent</strong>
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -177,7 +273,7 @@
     <link href="{{ asset('admin/css/plugins/summernote/summernote-bs4.css') }}" rel="stylesheet">
 
     <style>
-        .note-editing-area{
+        .note-editing-area {
             height: 150px;
         }
     </style>
@@ -219,13 +315,13 @@
 
     <script>
         $('#agentStatus').on('change', function (e) {
-            let status = $("#agentStatus option:selected" ).val();
+            let status = $("#agentStatus option:selected").val();
             let reason = $('#reasonDiv');
 
             if (status === 'REJECTED') {
                 reason.show()
                 $('#reason').prop('required', true)
-                return ;
+                return;
             }
             $('#reason').prop('required', false)
             reason.hide()

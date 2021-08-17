@@ -1,13 +1,16 @@
 @extends('admin.layouts.admin_design')
 @section('content')
+
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row m-b-lg m-t-lg">
             <div class="col-md-4" style="margin-top: 20px;">
                 <div class="profile-image">
                     @isset($user->kyc['p_photo'])
-                        <img src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['p_photo'] }}" class="rounded-circle circle-border m-b-md" alt="profile">
+                        <img src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['p_photo'] }}"
+                             class="rounded-circle circle-border m-b-md" alt="profile">
                     @else
-                        <img src="{{ asset('admin/img/a4.jpg') }}" class="rounded-circle circle-border m-b-md" alt="profile">
+                        <img src="{{ asset('admin/img/a4.jpg') }}" class="rounded-circle circle-border m-b-md"
+                             alt="profile">
                     @endisset
                 </div>
                 <div class="profile-info">
@@ -41,14 +44,24 @@
                         <h5>User KYC Details</h5>
                     </div>
                     <div class="ibox-content">
-
-                        <form id="kycForm" action="{{ route('user.changeKYCStatus') }}" method="post">
+                        @if($user->merchant()->first())
+                            <form id="kycForm" action="{{ route('merchant.changeKYCStatus') }}" method="post">
+                            @else
+                                    <form id="kycForm" action="{{ route('user.changeKYCStatus') }}" method="post">
+                                @endif
                             @csrf
                             <div class="row">
                                 <div class="col-md-7">
                                     <dl class="row m-t-md">
                                         @if(!empty($user->kyc))
                                             @if($user->kyc->status == 1 && $user->kyc->accept == 1)
+                                                <div class="col-12">
+                                                    <div class="i-checks">
+                                                        <input type="checkbox" class="select-all" id="select-all">&nbsp;&nbsp;
+                                                        <label id="selectdata" for="select-all"><b>Select
+                                                                All</b></label>
+                                                    </div>
+                                                </div>
                                                 <dt class="col-md-3 text-right">Verification Status</dt>
                                                 <dd class="col-md-8">
                                                     <div class="row">
@@ -65,7 +78,8 @@
                                                                     <input type="hidden" value="{{ $user->kyc->id }}"
                                                                            name="kyc">
                                                                     <input type="hidden" value="accepted" name="status">
-                                                                    <input type="hidden" value="accepted" name="accept_status">
+                                                                    <input type="hidden" value="accepted"
+                                                                           name="accept_status">
                                                                     <button rel="{{ route('user.changeKYCStatus') }}"
                                                                             id="accept" class="btn btn-primary btn-sm"
                                                                             type="submit">Accept
@@ -137,6 +151,14 @@
 
                                                 </dd>
                                             @else
+                                                <div class="col-12">
+                                                    <div class="i-checks">
+                                                        <input type="checkbox" class="select-all" id="select-all">&nbsp;&nbsp;
+                                                        <label id="selectdata" for="select-all"><b>Select
+                                                                all</b></label>
+                                                    </div>
+
+                                                </div>
                                                 <dt class="col-md-3 text-right"
                                                     style="margin-top: auto; margin-bottom: auto;">Verification Status
                                                 </dt>
@@ -162,8 +184,10 @@
                                                                          @csrf--}}
                                                                     <input type="hidden" value="{{ $user->kyc->id }}"
                                                                            name="kyc">
-                                                                    <input type="hidden" value="accepted" name="status" id="acceptInputValue">
-                                                                    <input type="hidden" value="" name="accept_status" id="acceptStatusInput">
+                                                                    <input type="hidden" value="accepted" name="status"
+                                                                           id="acceptInputValue">
+                                                                    <input type="hidden" value="" name="accept_status"
+                                                                           id="acceptStatusInput">
                                                                     <button rel="{{ route('user.changeKYCStatus') }}"
                                                                             id="accept" class="btn btn-primary btn-sm"
                                                                             type="submit">Accept
@@ -239,7 +263,8 @@
                                                 <div class="i-checks">
                                                     <label>
                                                         <input type="checkbox"
-                                                               name="first_name" {{ optional($user->kyc->kycValidation)->first_name ? "checked" : "" }}>
+                                                               name="first_name"
+                                                               class="check" {{ optional($user->kyc->kycValidation)->first_name ? "checked" : "" }}>
                                                         <i></i> First Name
                                                     </label>
                                                 </div>
@@ -250,7 +275,8 @@
                                                 <div class="i-checks">
                                                     <label>
                                                         <input type="checkbox"
-                                                               name="middle_name" {{ optional($user->kyc->kycValidation)->middle_name ? "checked" : "" }}>
+                                                               name="middle_name"
+                                                               class="check" {{ optional($user->kyc->kycValidation)->middle_name ? "checked" : "" }}>
                                                         <i></i> Middle Name
                                                     </label>
                                                 </div>
@@ -556,6 +582,88 @@
                                                 </div>
                                             </dt>
                                             <dd class="col-md-8">{{ $user->kyc->id_photo_back }}</dd>
+
+                                            @if($user->merchant()->first())
+                                                <dt class="col-md-3 text-right">
+                                                    <div class="i-checks">
+                                                        <label>
+                                                            <input type="checkbox"
+                                                                   name="company_name" {{ optional($user->kyc->kycValidation)->company_name ? "checked" : "" }}>
+                                                            <i></i>Company name
+                                                        </label>
+                                                    </div>
+                                                </dt>
+                                                <dd class="col-md-8">{{ $user->kyc->company_name }}</dd>
+
+                                                <dt class="col-md-3 text-right">
+                                                    <div class="i-checks">
+                                                        <label>
+                                                            <input type="checkbox"
+                                                                   name="company_address" {{ optional($user->kyc->kycValidation)->company_address ? "checked" : "" }}>
+                                                            <i></i>Company address
+                                                        </label>
+                                                    </div>
+                                                </dt>
+                                                <dd class="col-md-8">{{ $user->kyc->company_address }}</dd>
+
+
+                                                <dt class="col-md-3 text-right">
+                                                    <div class="i-checks">
+                                                        <label>
+                                                            <input type="checkbox"
+                                                                   name="company_vat_pin_number" {{ optional($user->kyc->kycValidation)->company_vat_pin_number ? "checked" : "" }}>
+                                                            <i></i>Company VAT PIN number
+                                                        </label>
+                                                    </div>
+                                                </dt>
+                                                <dd class="col-md-8">{{ $user->kyc->company_vat_pin_number }}</dd>
+
+
+                                                <dt class="col-md-3 text-right">
+                                                    <div class="i-checks">
+                                                        <label>
+                                                            <input type="checkbox"
+                                                                   name="company_logo" {{ optional($user->kyc->kycValidation)->company_logo ? "checked" : "" }}>
+                                                            <i></i>Company Logo
+                                                        </label>
+                                                    </div>
+                                                </dt>
+                                                <dd class="col-md-8">{{ $user->kyc->company_logo }}</dd>
+
+                                                <dt class="col-md-3 text-right">
+                                                    <div class="i-checks">
+                                                        <label>
+                                                            <input type="checkbox"
+                                                                   name="company_document" {{ optional($user->kyc->kycValidation)->company_document ? "checked" : "" }}>
+                                                            <i></i>Company Document
+                                                        </label>
+                                                    </div>
+                                                </dt>
+                                                <dd class="col-md-8">{{ $user->kyc->company_document }}</dd>
+
+                                                <dt class="col-md-3 text-right">
+                                                    <div class="i-checks">
+                                                        <label>
+                                                            <input type="checkbox"
+                                                                   name="company_vat_document" {{ optional($user->kyc->kycValidation)->company_vat_document ? "checked" : "" }}>
+                                                            <i></i>Company VAT Document
+                                                        </label>
+                                                    </div>
+                                                </dt>
+                                                <dd class="col-md-8">{{ $user->kyc->company_vat_document }}</dd>
+
+                                                <dt class="col-md-3 text-right">
+                                                    <div class="i-checks">
+                                                        <label>
+                                                            <input type="checkbox"
+                                                                   name="company_tax_clearance_document" {{ optional($user->kyc->kycValidation)->company_tax_clearance_document ? "checked" : "" }}>
+                                                            <i></i>Company Tax Clearance Document
+                                                        </label>
+                                                    </div>
+                                                </dt>
+                                                <dd class="col-md-8">{{ $user->kyc->company_tax_clearance_document }}</dd>
+
+                                            @endif
                                         @else
                                             <dt class="col-md-3 text-right" style="font-size: 16px;">KYC form not
                                                 filled
@@ -567,54 +675,148 @@
                                 @if(!empty($user->kyc))
                                     <div class="col-md-5">
                                         <h3>Documents</h3>
-                                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                                            <ol class="carousel-indicators">
-                                                <li data-target="#carouselExampleIndicators" data-slide-to="0"
-                                                    class="active"></li>
-                                                <li data-target="#carouselExampleIndicators" data-slide-to="1"
-                                                    class=""></li>
-                                            </ol>
-                                            <div class="carousel-inner">
-                                                <div class="carousel-item active">
+                                        <div class="col-12">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    {{--                                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_front'] }}"--}}
+                                                    {{--                                                       target="_blank">--}}
+                                                    {{--                                                        <img class="d-block w-100"--}}
+                                                    {{--                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_front'] }}"--}}
+                                                    {{--                                                             alt="First slide">--}}
+                                                    {{--                                                        <div class="carousel-caption d-none d-md-block">--}}
+                                                    {{--                                                            <p style="color: black; font-weight: bold;">--}}
+                                                    {{--                                                                DOCUMENT FRONT--}}
+                                                    {{--                                                            </p>--}}
+                                                    {{--                                                        </div>--}}
+                                                    {{--                                                    </a>--}}
                                                     <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_front'] }}"
                                                        target="_blank">
-                                                        <img class="d-block w-100"
-                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_front'] }}"
-                                                             alt="First slide">
-                                                        <div class="carousel-caption d-none d-md-block">
-                                                            <p style="color: black; font-weight: bold;">
-                                                                DOCUMENT FRONT
-                                                            </p>
-                                                        </div>
+                                                        <img
+                                                            src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_front'] }}"
+                                                            alt="">
+                                                        <p style="color: black; font-weight: bold;">
+                                                            &nbsp;DOCUMENT FRONT
+                                                        </p>
                                                     </a>
-
                                                 </div>
 
-                                                <div class="carousel-item">
+                                                <div class="col-12">
+                                                    {{--                                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_back'] }}"--}}
+                                                    {{--                                                       target="_blank">--}}
+                                                    {{--                                                        <img class="d-block w-100"--}}
+                                                    {{--                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_back'] }}"--}}
+                                                    {{--                                                             alt="First slide">--}}
+                                                    {{--                                                        <div class="carousel-caption d-none d-md-block">--}}
+                                                    {{--                                                            <p style="color: black; font-weight: bold;">--}}
+                                                    {{--                                                                DOCUMENT BACK--}}
+                                                    {{--                                                            </p>--}}
+                                                    {{--                                                        </div>--}}
+                                                    {{--                                                    </a>--}}
                                                     <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_back'] }}"
-                                                       target="_blank">
-                                                        <img class="d-block w-100"
-                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_back'] }}"
-                                                             alt="First slide">
-                                                        <div class="carousel-caption d-none d-md-block">
-                                                            <p style="color: black; font-weight: bold;">
-                                                                DOCUMENT BACK
-                                                            </p>
-                                                        </div>
-                                                    </a>
-
+                                                       target="_blank"></a>
+                                                    <img
+                                                        src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_back'] }}"
+                                                        alt="">
+                                                    <p style="color: black; font-weight: bold;">
+                                                        &nbsp;DOCUMENT BACK
+                                                    </p>
                                                 </div>
+
+                                                @if($user->merchant()->first())
+
+                                                    <div class="col-12">
+                                                        {{--                                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $merchant->kyc['id_photo_back'] }}"--}}
+                                                        {{--                                                       target="_blank">--}}
+                                                        {{--                                                        <img class="d-block w-100"--}}
+                                                        {{--                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $merchant->kyc['id_photo_back'] }}"--}}
+                                                        {{--                                                             alt="First slide">--}}
+                                                        {{--                                                        <div class="carousel-caption d-none d-md-block">--}}
+                                                        {{--                                                            <p style="color: black; font-weight: bold;">--}}
+                                                        {{--                                                                DOCUMENT BACK--}}
+                                                        {{--                                                            </p>--}}
+                                                        {{--                                                        </div>--}}
+                                                        {{--                                                    </a>--}}
+                                                        <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_document'] }}"
+                                                           target="_blank"></a>
+                                                        <img
+                                                            src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_document'] }}"
+                                                            alt="">
+                                                        <p style="color: black; font-weight: bold;">
+                                                            &nbsp;COMPANY DOCUMENT
+                                                        </p>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        {{--                                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $merchant->kyc['id_photo_back'] }}"--}}
+                                                        {{--                                                       target="_blank">--}}
+                                                        {{--                                                        <img class="d-block w-100"--}}
+                                                        {{--                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $merchant->kyc['id_photo_back'] }}"--}}
+                                                        {{--                                                             alt="First slide">--}}
+                                                        {{--                                                        <div class="carousel-caption d-none d-md-block">--}}
+                                                        {{--                                                            <p style="color: black; font-weight: bold;">--}}
+                                                        {{--                                                                DOCUMENT BACK--}}
+                                                        {{--                                                            </p>--}}
+                                                        {{--                                                        </div>--}}
+                                                        {{--                                                    </a>--}}
+                                                        <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_logo'] }}"
+                                                           target="_blank">
+                                                            <img
+                                                                src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_logo'] }}"
+                                                                alt="">
+                                                            <p style="color: black; font-weight: bold;">
+                                                                &nbsp;COMPANY LOGO
+                                                            </p>
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        {{--                                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $merchant->kyc['id_photo_back'] }}"--}}
+                                                        {{--                                                       target="_blank">--}}
+                                                        {{--                                                        <img class="d-block w-100"--}}
+                                                        {{--                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $merchant->kyc['id_photo_back'] }}"--}}
+                                                        {{--                                                             alt="First slide">--}}
+                                                        {{--                                                        <div class="carousel-caption d-none d-md-block">--}}
+                                                        {{--                                                            <p style="color: black; font-weight: bold;">--}}
+                                                        {{--                                                                DOCUMENT BACK--}}
+                                                        {{--                                                            </p>--}}
+                                                        {{--                                                        </div>--}}
+                                                        {{--                                                    </a>--}}
+                                                        <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_vat_document'] }}"
+                                                           target="_blank">
+                                                            <img
+                                                                src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_vat_document'] }}"
+                                                                alt="">
+                                                            <p style="color: black; font-weight: bold;">
+                                                                &nbsp;COMPANY VAT DOCUMENT
+                                                            </p>
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        {{--                                                    <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $merchant->kyc['id_photo_back'] }}"--}}
+                                                        {{--                                                       target="_blank">--}}
+                                                        {{--                                                        <img class="d-block w-100"--}}
+                                                        {{--                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $merchant->kyc['id_photo_back'] }}"--}}
+                                                        {{--                                                             alt="First slide">--}}
+                                                        {{--                                                        <div class="carousel-caption d-none d-md-block">--}}
+                                                        {{--                                                            <p style="color: black; font-weight: bold;">--}}
+                                                        {{--                                                                DOCUMENT BACK--}}
+                                                        {{--                                                            </p>--}}
+                                                        {{--                                                        </div>--}}
+                                                        {{--                                                    </a>--}}
+                                                        <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_tax_clearance_document'] }}"
+                                                           target="_blank">
+                                                            <img
+                                                                src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_tax_clearance_document'] }}"
+                                                                alt="">
+                                                            <p style="color: black; font-weight: bold;">
+                                                                &nbsp;COMPANY TAX CLEARANCE DOCUMENT
+                                                            </p>
+                                                        </a>
+                                                    </div>
+
+                                                @endif
                                             </div>
-                                            <a class="carousel-control-prev" href="#carouselExampleIndicators"
-                                               role="button" data-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="sr-only">Previous</span>
-                                            </a>
-                                            <a class="carousel-control-next" href="#carouselExampleIndicators"
-                                               role="button" data-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="sr-only">Next</span>
-                                            </a>
                                         </div>
 
 
@@ -702,6 +904,25 @@
 
             })
         });
+
+
+        var checkAll = $('.select-all');
+        var checkboxes = $('input[type="checkbox"]');
+
+
+        checkAll.on('ifChecked ifUnchecked', function (event) {
+
+            if (event.type == "ifChecked") {
+                $('input[type="checkbox"]').iCheck('check');
+                $('#selectdata').html('<b>Deselect all</b>');
+            } else {
+                $('input[type="checkbox"]').iCheck('uncheck');
+                $('#selectdata').html('<b>Select all</b>');
+            }
+
+        });
+
+
     </script>
 @endsection
 

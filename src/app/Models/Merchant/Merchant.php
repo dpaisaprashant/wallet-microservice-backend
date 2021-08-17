@@ -11,6 +11,8 @@ use App\Models\MerchantNchlBankTransfer;
 use App\Models\MerchantNchlLoadTransaction;
 use App\Models\MerchantTransaction;
 use App\Models\MerchantTransactionEvent;
+use App\Models\UserType;
+use App\Traits\BelongsToUser;
 use App\Wallet\Commission\Models\Commission;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -19,7 +21,7 @@ use Illuminate\Notifications\Notifiable;
 
 class Merchant extends Model
 {
-    use Notifiable;
+    use BelongsToUser, Notifiable;
 
     const LOCK_MINUTES = 60;
 
@@ -35,6 +37,11 @@ class Merchant extends Model
     public function wallet()
     {
         return $this->hasOne(MerchantWallet::class);
+    }
+
+    public function merchantType()
+    {
+        return $this->belongsTo(MerchantType::class, 'merchant_type_id');
     }
 
     public function kyc()

@@ -6,6 +6,10 @@ use App\Events\SaveFCMNotificationEvent;
 use App\Events\SendFcmNotification;
 use App\Models\Admin;
 use App\Models\AdminUserKYC;
+use App\Models\Agent;
+use App\Models\AgentType;
+use App\Models\Merchant\Merchant;
+use App\Models\Merchant\MerchantType;
 use App\Models\NICAsiaCyberSourceLoadTransaction;
 use App\Models\TransactionEvent;
 use App\Models\User;
@@ -15,6 +19,7 @@ use App\Models\UserLoadTransaction;
 use App\Models\UserReferral;
 use App\Models\UserReferralBonus;
 use App\Models\UserReferralLimit;
+use App\Models\UserType;
 use App\Traits\CollectionPaginate;
 use App\Wallet\AuditTrail\AuditTrial;
 use App\Wallet\AuditTrail\Behaviors\BAll;
@@ -35,7 +40,7 @@ class UserController extends Controller
 
     private function allAudits($user, $request)
     {
-        $IBehaviour = new BAll();
+        $IBehaviour = new BAll(); //get audit data from all transactions/user activity tables
         $auditTrial = new AuditTrial($IBehaviour);
         return $this->collectionPaginate(50, $auditTrial->setRequest($request)->createTrial($user), $request, 'all-audit-trials');
     }
@@ -97,6 +102,7 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+
     public function profile($id, Request $request)
     {
 
@@ -116,37 +122,62 @@ class UserController extends Controller
             $activeTab = 'userLoginHistoryAudit';
         }
 
+
+
         //$user = User::with(['userLoadTransactions', 'userLoginHistories', 'userCheckPayment', 'fromFundTransfers', 'receiveFundTransfers', 'fromFundRequests', 'receiveFundRequests', 'kyc', 'wallet'])->findOrFail($id);
-        $user = User::with(['userReferral', 'userReferralLimit', 'preTransactions', 'requestInfos', 'userLoginHistories', 'fromFundTransfers', 'receiveFundTransfers', 'fromFundRequests', 'receiveFundRequests', 'kyc', 'wallet', 'agent', 'userReferralBonus'])->findOrFail($id);
+        $user = User::with(['userReferral', 'userReferralLimit','merchant','bankAccount','preTransactions', 'requestInfos', 'userLoginHistories', 'fromFundTransfers', 'receiveFundTransfers', 'fromFundRequests', 'receiveFundRequests', 'kyc', 'wallet', 'agent', 'userReferralBonus'])->findOrFail($id);
 
-        //Audit Trial section
-        $allAudits = $this->allAudits($user, $request);
-        //$nPayAudits = $this->nPayAudits($user);
-        // $payPointAudits = $this->payPointAudits($user);
-        $loginHistoryAudits = $this->loginHistoryAudits($user);
+        $admin = $request->user();
+        if (!$admin->hasPermissionTo('User profile')) {
 
-        //$userLoadTransactions = UserLoadTransaction::with('commission')->where('user_id', $user->id)->where('status', 'COMPLETED')->latest()->filter($request)->paginate($length,['*'], 'user-load-fund');
-        $loadPTIds = TransactionEvent::where('transaction_type', UserLoadTransaction::class)->where('user_id', $user->id)->pluck('pre_transaction_id');
-        $userLoadTransactions = UserLoadTransaction::with('commission')->whereIn('pre_transaction_id', $loadPTIds)->where('status', 'COMPLETED')->latest()->filter($request)->paginate($length, ['*'], 'user-load-fund');
-        $userTransactionEvents = TransactionEvent::where('user_id', $user->id)->latest()->filter($request)->paginate($length, ['*'], 'user-transaction-event');
-        $userTransactionStatements = TransactionEvent::where('user_id', $user->id)->latest()->filter($request)->paginate($length, ['*'], 'user-transaction-statement');
-        $loadFundSum = $user->loadedFundSum();
-        $userLoadCommission = (new UserCommissionValue())->getUserCommission($user->id, NICAsiaCyberSourceLoadTransaction::class);
-        $user_id = UserKYC::where('user_id', $id)->first();
+            //merchant
+            if ($user->merchant) {
+                if (!$admin->hasPermissionTo('Merchant profile')) {
+                    abort(403,'User does not have the right permissions to view merchant profile.');
+                }
+            }
 
-        if ($user_id != null) {
-            $ids = $user_id->id;
-            $admin = AdminUserKYC::where('kyc_id', $ids)->orderBy('created_at', 'DESC')->first();
-            $admin_id = optional($admin)->admin_id;
-            $admin_details = Admin::where('id', $admin_id)->first();
-        } else {
-            $admin_details = collect(array('nodata'));
-            $admin = collect(array('nodata'));
-            $admin_data = collect(array('nodata'));
+            //agent
+            if ($user->agent) { //has row in agents table but is a verified agent
+                if (!$admin->hasPermissionTo('View agent profile')) {
+                    abort(403,'User does not have the right permissions to view agent profile');
+                }
+            }
+
+            //normal user
+            if (empty($user->agent) && empty($user->merchant)) {
+                abort(403,'User does not have the right permissions to view user profile');
+            }
         }
 
+            //Audit Trial section
+            $allAudits = $this->allAudits($user, $request);
+            //$nPayAudits = $this->nPayAudits($user);
+            // $payPointAudits = $this->payPointAudits($user);
+            $loginHistoryAudits = $this->loginHistoryAudits($user);
 
-        return view('admin.user.profile')->with(compact('userLoadCommission', 'admin_details', 'admin', 'loginHistoryAudits', 'allAudits', 'user', 'loadFundSum', 'activeTab', 'userLoadTransactions', 'userTransactionStatements', 'userTransactionEvents'));
+            //$userLoadTransactions = UserLoadTransaction::with('commission')->where('user_id', $user->id)->where('status', 'COMPLETED')->latest()->filter($request)->paginate($length,['*'], 'user-load-fund');
+            $loadPTIds = TransactionEvent::where('transaction_type', UserLoadTransaction::class)->where('user_id', $user->id)->pluck('pre_transaction_id');
+            $userTransactionEvents = TransactionEvent::where('user_id', $user->id)->latest()->filter($request)->paginate($length, ['*'], 'user-transaction-event');
+            $userTransactionStatements = TransactionEvent::where('user_id', $user->id)->latest()->filter($request)->paginate($length, ['*'], 'user-transaction-statement');
+            $loadFundSum = $user->loadedFundSum();
+            $userLoadCommission = (new UserCommissionValue())->getUserCommission($user->id, NICAsiaCyberSourceLoadTransaction::class);
+            $user_id = UserKYC::where('user_id', $id)->first();
+
+            if ($user_id != null) {
+                $ids = $user_id->id;
+                $admin = AdminUserKYC::where('kyc_id', $ids)->orderBy('created_at', 'DESC')->first();
+                $admin_id = optional($admin)->admin_id;
+                $admin_details = Admin::where('id', $admin_id)->first();
+            } else {
+                $admin_details = collect(array('nodata'));
+                $admin = collect(array('nodata'));
+                $admin_data = collect(array('nodata'));
+            }
+
+
+
+        return view('admin.user.profile')->with(compact('userLoadCommission', 'admin_details', 'admin', 'loginHistoryAudits', 'allAudits', 'user', 'loadFundSum', 'activeTab', 'userTransactionStatements', 'userTransactionEvents'));
     }
 
 

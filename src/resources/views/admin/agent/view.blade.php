@@ -99,7 +99,7 @@
                                                         <i class="fa fa-calendar"></i>
                                                     </span>
                                                 <input id="date_load_from" type="text" class="form-control date_from"
-                                                       placeholder="From" name="from" autocomplete="off"
+                                                       placeholder="From" name="from_agent_created_at" autocomplete="off"
                                                        value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}">
                                             </div>
                                         </div>
@@ -176,22 +176,24 @@
                                     <th>Institution Type</th>
                                     <th>Business Name</th>
                                     <th>Business PAN</th>
-                                   {{-- <th>Cash Out Type | Value </th>
-                                    <th>Cash In Type | Value </th>--}}
+                                    {{-- <th>Cash Out Type | Value </th>
+                                     <th>Cash In Type | Value </th>--}}
                                     {{--<th>Business Doc</th>--}}
                                     {{--<th>Email</th>--}}
                                     <th>Agent status</th>
                                     <th>Reference Code</th>
                                     <th>Wallet Balance</th>
-                                    <th>Total <br>Payment Amount</th>
-                                    <th>Total <br>Loaded Amount</th>
+                                    <th>Agent Created At</th>
+                                    {{--<th>Total <br>Payment Amount</th>
+                                    <th>Total <br>Loaded Amount</th>--}}
                                     {{-- <th>No. of <br>Transactions</th>--}}
-                                    <th>Total <br>CashBack Amount</th>
+                                  {{--  <th>Total <br>CashBack Amount</th>--}}
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($users as $user)
+
                                     <tr class="gradeX">
                                         <td>{{ $loop->index + ($users->perPage() * ($users->currentPage() - 1)) + 1 }}</td>
                                         <td>
@@ -241,22 +243,23 @@
                                         </td>
                                         <td>Rs. {{ $user->wallet->balance }}</td>
 
-
+{{--
                                         <td>Rs. {{ $user->getTotalPaymentAmount() }}</td>
 
-                                        <td>Rs. {{ $user->getTotalLoadedAmount() }}</td>
+                                        <td>Rs. {{ $user->getTotalLoadedAmount() }}</td>--}}
 
                                         {{--<td>{{ count($user->userTransactionEvents) }}</td>--}}
 
-                                        <td>Rs. {{ $user->getTotalCashBack() }}</td>
+                                        {{--<td>Rs. {{ $user->getTotalCashBack() }}</td>--}}
+                                        <td>{{ \Carbon\Carbon::parse($user->agent->created_at)->format('F d Y') }}</td>
 
                                         <td class="center">
-                                            @can('User profile')
-                                                <a style="margin-top: 5px;" href="{{route('user.profile', $user->id)}}"
-                                                   class="btn btn-sm btn-icon btn-primary m-t-n-xs"
-                                                   title="user profile"><i class="fa fa-eye"></i></a>
-                                            @endcan
-
+                                            @if(auth()->user()->hasAnyPermission(['User profile','View agent profile']))
+                                                    <a style="margin-top: 5px;"
+                                                       href="{{route('user.profile', $user->id)}}"
+                                                       class="btn btn-sm btn-icon btn-primary m-t-n-xs"
+                                                       title="user profile"><i class="fa fa-eye"></i></a>
+                                            @endif
                                             @can('User transactions')
                                                 <a style="margin-top: 5px;"
                                                    href="{{route('user.transaction', $user->id)}}"

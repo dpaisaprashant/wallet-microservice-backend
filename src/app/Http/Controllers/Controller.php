@@ -3,16 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Architecture\WalletTransactionType;
+use App\Models\BfiExecutePayment;
+use App\Models\BfiGatewayDebitExecutePayment;
+use App\Models\BfiToUserFundTransfer;
 use App\Models\FundRequest;
 use App\Models\KhaltiUserTransaction;
+use App\Models\Merchant\Merchant;
 use App\Models\MerchantTransaction;
 use App\Models\NchlAggregatedPayment;
 use App\Models\NchlBankTransfer;
 use App\Models\NchlLoadTransaction;
 use App\Models\NICAsiaCyberSourceLoadTransaction;
+use App\Models\NPSAccountLinkLoad;
 use App\Models\NpsLoadTransaction;
+use App\Models\User;
 use App\Models\UserLoadTransaction;
 use App\Models\UserMerchantEventTicketPayment;
+use App\Models\UserToBfiFundTransfer;
 use App\Models\UserToUserFundTransfer;
 use App\Models\UserTransaction;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -95,8 +102,20 @@ class Controller extends BaseController
             FundRequest::class => "USER TO USER FUND REQUEST",
             MerchantTransaction::class => "USER TO MERCHANT FUND TRANSFER",
             UserMerchantEventTicketPayment::class => "EVENT TICKET PAYMENT",
+            NPSAccountLinkLoad::class => "ACCOUNT LINK LOAD",
+            BfiToUserFundTransfer::class => "BFI TO USER FUND TRANSFER",
+            UserToBfiFundTransfer::class => "USER TO BFI FUND TRANSFER",
+            BfiExecutePayment::class => "USER CREDIT BY BFI",
+            BfiGatewayDebitExecutePayment::class => "USER DEBIT BY BFI"
         ];
 
+        $userTypes = [
+            User::class => 'USER',
+            Merchant::class => 'MERCHANT'
+        ];
+
+
+        View::share('userTypes', $userTypes);
         View::share('transactionTypes', $transactionTypes);
     }
 }

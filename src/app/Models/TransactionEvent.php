@@ -19,7 +19,7 @@ class TransactionEvent extends Model
     protected $guarded = [];
     //protected $with = ['current_balance'];
 
-    protected $appends = ["fee"];
+    protected $appends = ["fee", "cashback_amount"];
 
     /**
      * @param $amount
@@ -46,6 +46,11 @@ class TransactionEvent extends Model
     public function getBonusBalanceAttribute($balance)
     {
         return ($balance/100);
+    }
+
+    public function getCashbackAmountAttribute(){
+
+        return optional($this->commission)->transactions->amount ?? 0;
     }
 
 
@@ -141,6 +146,10 @@ class TransactionEvent extends Model
     public function refundTransaction()
     {
         return $this->hasOne(LoadTestFund::class, 'pre_transaction_id', 'pre_transaction_id');
+    }
+
+    public function preTransaction(){
+        return $this->hasMany(PreTransaction::class,"pre_transaction_id",'pre_transaction_id');
     }
 
 }

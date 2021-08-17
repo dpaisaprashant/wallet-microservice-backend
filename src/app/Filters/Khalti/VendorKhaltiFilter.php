@@ -29,8 +29,9 @@ class VendorKhaltiFilter extends FilterAbstract {
         if ($value === null) {
             return $builder;
         }
-
-
+        if($value == 'All'){
+            return $builder->where('vendor','!=',null);
+        }
         return $builder->where('vendor',$value);
 
     }

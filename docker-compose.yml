@@ -96,6 +96,7 @@ services:
       - wallet-microservice-nps_laravel
       - wallet-microservice-merchant_laravel
       - wallet-microservice-ntc_laravel
+
   composer:
     build:
       context: .

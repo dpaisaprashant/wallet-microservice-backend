@@ -15,7 +15,7 @@ class KhaltiPaymentClearanceStrategy extends AbstractClearanceCompareStrategy
 
     public function clearanceInfo()
     {
-        return "Use reference as linked_id";
+        return "Use reference no as linked_id";
     }
 
     public function transactionName()
@@ -30,7 +30,7 @@ class KhaltiPaymentClearanceStrategy extends AbstractClearanceCompareStrategy
             ->filter(request())
             ->get()
             ->transform(function ($value) {
-                $value->linked_id = $value->transactionable->reference;
+                $value->linked_id = $value->transactionable->reference_no;
                 return $value;
             });
     }

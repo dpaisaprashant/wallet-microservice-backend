@@ -45,4 +45,13 @@ class LockedUserController extends Controller
         UserLoginHistory::where('id', $request->attempt_id)->update(['status' => 1, 'tmp_enabled' => 1]);
         return redirect()->back();
     }
+
+    public function updateLoginAttemptsBulk(Request $request,$id)
+    {
+//        $user= UserLoginHistory::latest()->take(6)->update(['status' => 1, 'tmp_enabled' => 1]);
+
+        $user= UserLoginHistory::where("created_at", ">", now()->subMinutes(User::LOCK_MINUTES))->update(['status' => 1, 'tmp_enabled' => 1]);
+
+        return redirect()->back();
+    }
 }

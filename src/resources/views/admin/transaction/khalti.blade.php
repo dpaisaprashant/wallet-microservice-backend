@@ -34,21 +34,7 @@
                                 <form role="form" method="get">
                                     <div class="row">
 
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <input type="text" name="uid" placeholder="User Transaction ID"
-                                                       class="form-control"
-                                                       value="{{ !empty($_GET['uid']) ? $_GET['uid'] : '' }}">
-                                            </div>
-                                        </div>
 
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <input type="text" name="transaction_id" placeholder="Transaction ID"
-                                                       class="form-control"
-                                                       value="{{ !empty($_GET['transaction_id']) ? $_GET['transaction_id'] : '' }}">
-                                            </div>
-                                        </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <input type="text" name="user" placeholder="Email or Number"
@@ -56,19 +42,6 @@
                                                        value="{{ !empty($_GET['user']) ? $_GET['user'] : '' }}">
                                             </div>
                                         </div>
-
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <input type="text" name="bank" placeholder="Bank" class="form-control"
-                                                       value="{{ !empty($_GET['bank']) ? $_GET['bank'] : '' }}">
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-
-                                    <div class="row">
-
 
                                         <div class="col-md-3">
                                             <div class="input-group date">
@@ -97,7 +70,7 @@
                                                 <select data-placeholder="Choose vendor..."
                                                         class="chosen-select" tabindex="2" name="vendor">
                                                     <option value="" selected disabled>Select Vendor...</option>
-
+                                                    <option value="All">All</option>
                                                     @if(!empty($_GET['vendor']))
                                                         @foreach($vendorNames as $vendorName)
                                                             <option value="{{$vendorName}}"
@@ -106,6 +79,7 @@
                                                         @endforeach
 
                                                     @else
+
                                                         @foreach($vendorNames as $vendorName)
                                                             <option value="{{$vendorName}}">{{$vendorName}}</option>
                                                         @endforeach
@@ -115,30 +89,10 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <div class="form-group">
-                                                    <select data-placeholder="Sort By..." class="chosen-select"
-                                                            tabindex="2" name="sort">
-                                                        <option value="" selected disabled>Sort By...</option>
-                                                        @if(!empty($_GET['sort']))
-                                                            <option value="date"
-                                                                    @if($_GET['sort'] == 'date') selected @endif>Latest
-                                                                Date
-                                                            </option>
-                                                            <option value="amount"
-                                                                    @if($_GET['sort'] == 'amount') selected @endif>
-                                                                Highest amount
-                                                            </option>
-                                                        @else
-                                                            <option value="date">Latest Date</option>
-                                                            <option value="amount">Highest Amount</option>
-                                                        @endif
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
+
+
                                     </div>
+
 
                                     <div class="row">
                                         <div class="col-md-6 mt-3">
@@ -223,29 +177,39 @@
                                         <th>S.No.</th>
                                         <th>Account</th>
                                         <th>Amount</th>
-                                        <th>User</th>
+                                        <th>Mobile no</th>
                                         <th>Message</th>
                                         <th>Reference No</th>
                                         <th>Service</th>
                                         <th>Vendor</th>
                                         <th>Status</th>
                                         <th>State</th>
+                                        <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-
                                     @foreach($khaltiTransactions as $khaltiTransaction)
                                         <tr>
                                             <td>{{ $loop->index + ($khaltiTransactions->perPage() * ($khaltiTransactions->currentPage() - 1)) + 1 }}</td>
                                             <td>{{ $khaltiTransaction->account }}</td>
-                                            <td>Rs {{ $khaltiTransaction->amount }}</td>
-                                            <td>{{optional($khaltiTransaction->user)->mobile_no}}</td>
+                                            <td>Rs
+
+                                                {{$khaltiTransaction->amount}}
+
+                                            </td>
+                                            <td> <a @can('User profile') href="{{route('user.profile', optional($khaltiTransaction->user)->id)}}" @endcan>{{ $khaltiTransaction->user->mobile_no }}</a></td>
                                             <td>{{$khaltiTransaction->message}}</td>
                                             <td>{{$khaltiTransaction->reference_no}}</td>
                                             <td>{{$khaltiTransaction->service}}</td>
                                             <td>{{$khaltiTransaction->vendor}}</td>
                                             <td>{{$khaltiTransaction->status}}</td>
                                             <td>@include('admin.transaction.khalti.state',['khaltiTransaction' => $khaltiTransaction])</td>
+                                            <td>
+                                                @can('View khalti detail page')
+                                                    <a href="{{ route('khalti.specific',$khaltiTransaction->id) }}"
+                                                       class="btn btn-icon btn-sm btn-primary"><i class="fa fa-eye"></i></a>
+                                                @endcan
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>

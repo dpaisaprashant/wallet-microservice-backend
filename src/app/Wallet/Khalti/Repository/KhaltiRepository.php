@@ -66,6 +66,6 @@ class KhaltiRepository
     }
 
     public function getKhaltiTotalTransactionSum(){
-        return KhaltiUserTransaction::filter($this->request)->sum('amount') / 100;
+        return KhaltiUserTransaction::filter($this->request)->sum('amount');
     }
 }

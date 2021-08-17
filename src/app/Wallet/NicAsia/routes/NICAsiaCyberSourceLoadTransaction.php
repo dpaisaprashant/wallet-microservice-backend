@@ -2,7 +2,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Wallet\NicAsia\Http\Controllers\NICAsiaCyberSourceLoadTransactionController;
 
-Route::group(['prefix' => 'admin/cellPay-Transactions', 'middleware' => ['web','auth']], function () {
+Route::group(['prefix' => 'admin/nicAsia-Transactions', 'middleware' => ['web','auth']], function () {
     //NicAsia CyberSource
     Route::get('transaction/nicasia-cybesource-load-transaction',[NICAsiaCyberSourceLoadTransactionController::class,'index'])->name('nicAsia.viewCyberSourceLoad')->middleware('permission:Nicasia cybersource view');
     Route::get('transaction/nicasia-cybesource-load-transaction/detail/{id}',[NICAsiaCyberSourceLoadTransactionController::class,'nicDetail'])->name('nicAsia.detailCyberSourceLoad')->middleware('permission:Nicasia cybersource detail');

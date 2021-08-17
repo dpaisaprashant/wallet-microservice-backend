@@ -16,6 +16,7 @@ class MismatchedUserBalanceController extends Controller
     {
         $repository = new MismatchedUserBalanceRepository($request);
         $users = $repository->getMismatchedBalanceUser();
+//        dd($users);
         return view('WalletReport::MismatchedUserBalance/report')->with(compact('users'));
     }
 

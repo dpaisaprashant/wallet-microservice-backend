@@ -20,30 +20,47 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
     public function __construct(Request $request)
     {
         parent::__construct($request);
-        dd(date($_GET['from'])->format('Y-m-d'));
-        $this->sixMonthsBeforeFromDate = Carbon::now()->subMonths(6)->toDateString();
-        $this->twelveMonthsBeforeFromDate = Carbon::now()->subMonths(12)->toDateString();
+//        if (!empty($_GET['from'])) {
+//        $from_convert = strtotime($_GET['from']);
+//        $from = date('Y-m-d', $from_convert);
+//    }
+//        if (!empty($_GET['to'])) {
+//            $to_convert = strtotime($_GET['to']);
+//            $to = date('Y-m-d', $to_convert);
+//        }
+//
+//        $transactions = $repository->paginatedTransactions()->whereBetween('created_at', [Carbon::now()->subMonths(12)->format('Y-m-d'), Carbon::now()->format('Y-m-d')]);
+//        if (!empty($_GET['from']) && !empty($_GET['to'])) {
+//            $transactions = $repository->paginatedTransactions()->whereBetween('created_at', [$from, $to]);
+//        }
+//        dd(date($_GET['from'])->format('Y-m-d'));
+
+        $from_convert = strtotime($_GET['from']);
+        $from = date('Y-m-d', $from_convert);
+
+        $this->sixMonthsBeforeFromDate = $from->subMonths(6)->toDateString();
+        $this->twelveMonthsBeforeFromDate = $from->subMonths(12)->toDateString();
     }
 
     private function activeCustomerBuilder()
     {
         return User::with('latestLoginAttempt')->whereHas('latestLoginAttempt', function ($query) {
-            return $query->whereDate('created_at', '>', $this->sixMonthBeforeTodayDate);
+            return $query->whereDate('created_at', '>', $this->sixMonthsBeforeFromDate);
         });
     }
 
     private function inactiveFor6to12MonthsCustomerBuilder()
     {
-        return User::with('latestLoginAttempt')->whereHas('latestLoginAttempt', function ($query) {
-            return $query->whereDate('created_at', '<=', $this->sixMonthBeforeTodayDate)
-                ->whereDate('created_at', '>', $this->twelveMonthBeforeTodayDate);
+        return User::with('latestUserTransactionEvent')->whereHas('latestUserTransactionEvent', function ($query) {
+            return $query->whereDate('created_at', '<=', $this->sixMonthsBeforeFromDate)
+                ->whereDate('created_at', '>', $this->twelveMonthsBeforeFromDate);
         });
     }
 
     private function inactiveForMoreThan12MonthsCustomerBuilder()
     {
         return  User::whereHas('latestLoginAttempt', function ($query) {
-            return $query->whereDate('created_at', '<=', $this->twelveMonthBeforeTodayDate);
+            return $query->whereDate('created_at', '<=', $this->twelveMonthsBeforeFromDate);
         });
     }
 

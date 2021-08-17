@@ -240,7 +240,17 @@
                                         <tr>
                                             <td>{{ $loop->index + ($khaltiTransactions->perPage() * ($khaltiTransactions->currentPage() - 1)) + 1 }}</td>
                                             <td>{{ $khaltiTransaction->account }}</td>
-                                            <td>Rs {{ $khaltiTransaction->amount }}</td>
+                                            <td>Rs
+                                                @if($khaltiTransaction->amount)
+                                                    @if(is_numeric($khaltiTransaction->amount))
+                                                        {{ $khaltiTransaction->amount / 100 }}
+                                                    @else
+                                                        {{ substr($khaltiTransaction->amount,1) }}
+                                                    @endif
+                                                @elseif(empty($khaltiTransaction->amount))
+                                                        0
+                                                @endif
+                                            </td>
                                             <td>{{ optional(optional($khaltiTransaction->preTransaction)->user)->name ?? 'Null'}}</td>
                                             <td>{{$khaltiTransaction->message}}</td>
                                             <td>{{$khaltiTransaction->reference_no}}</td>

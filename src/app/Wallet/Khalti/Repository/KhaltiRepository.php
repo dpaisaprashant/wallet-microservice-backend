@@ -32,12 +32,12 @@ class KhaltiRepository
     private function latestTransactions()
     {
 
-        return KhaltiUserTransaction::with('user', 'transactions','preTransaction')->filter(request())->paginate($this->length);
+        return KhaltiUserTransaction::with('user', 'transactions','preTransaction')->orderBy('created_at','DESC')->filter(request())->paginate($this->length);
     }
 
     private function sortedTransactions()
     {
-        return KhaltiUserTransaction::with('user','transactions','preTransaction')->filter(request())->paginate($this->length);
+        return KhaltiUserTransaction::with('user','transactions','preTransaction')->orderBy('created_at','DESC')->filter(request())->paginate($this->length);
     }
 
     public function paginatedTransactions()

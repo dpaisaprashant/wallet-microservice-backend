@@ -14,7 +14,6 @@ class MismatchedUserBalanceRepository extends AbstractReportRepository
         $users = User::filter(request())->with('latestUserTransactionEvent','wallet')
             ->get()
             ->transform(function ($user) {
-
                 //if
                 if ($user->latestUserTransactionEvent) {
                     if (($user->latestUserTransactionEvent->balance != $user->wallet->balance) || ($user->latestUserTransactionEvent->bonus_balance != $user->wallet->bonus_balance)) {

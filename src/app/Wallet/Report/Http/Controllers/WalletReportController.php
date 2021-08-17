@@ -5,8 +5,10 @@ namespace App\Wallet\Report\Http\Controllers;
 
 
 use App\Http\Controllers\Controller;
+use App\Wallet\Report\Repositories\IndividualReconciliationReportRepositry;
 use App\Wallet\Report\Repositories\NchlLoadReportRepository;
 use App\Wallet\Report\Repositories\ReconciliationReportRepository;
+use App\Wallet\Report\Traits\IndividualReconciliationReportGenerator;
 use App\Wallet\Report\Traits\ReconciliationReportGenerator;
 use Illuminate\Http\Request;
 
@@ -31,6 +33,7 @@ class WalletReportController extends Controller
 
         return view('WalletReport::reconciliation.report')->with(compact('totalAmounts', 'totalLoadAmount', 'totalPaymentAmount','totalWalletBalance','totalBonusBalance','mainBalance'));
     }
+
 
     public function customerActivityReport(Request $request)
     {

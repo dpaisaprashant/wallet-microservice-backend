@@ -24,7 +24,12 @@ class WalletReportController extends Controller
         $totalLoadAmount = $repository->totalLoadAmount() / 100;
         $totalPaymentAmount = $repository->totalPaymentAmount() / 100;
 
-        return view('WalletReport::reconciliation.report')->with(compact('totalAmounts', 'totalLoadAmount', 'totalPaymentAmount'));
+        $totalWalletBalance = $repository->totalWalletBalanceAmount() / 100;
+        $totalBonusBalance = $repository->totalBonusBalanceAmount() / 100;
+
+        $mainBalance = $repository->totalMainBalanceAmount() / 100;
+
+        return view('WalletReport::reconciliation.report')->with(compact('totalAmounts', 'totalLoadAmount', 'totalPaymentAmount','totalWalletBalance','totalBonusBalance','mainBalance'));
     }
 
     public function customerActivityReport(Request $request)

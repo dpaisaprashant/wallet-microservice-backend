@@ -130,21 +130,21 @@ class ReconciliationReportRepository extends AbstractReportRepository
 
     public function totalWalletBalanceAmount()
     {
-        return Wallet::sum('balance')->filter($this->request);
+        return Wallet::filter($this->request)->sum('balance');
     }
 
     public function totalMainBalanceAmount(){
-        return Wallet::sum('balance')->filter($this->request) + Wallet::sum('bonus_balance')->filter($this->request);
+        return Wallet::filter($this->request)->sum('balance') + Wallet::filter($this->request)->sum('bonus_balance');
     }
 
     public function totalBonusBalanceAmount()
     {
-        return Wallet::sum('bonus_balance')->filter($this->request);
+        return Wallet::filter($this->request)->sum('bonus_balance');
     }
 
     public function totalWalletBalanceCount()
     {
-        return Wallet::count()->filter($this->request);
+        return Wallet::filter($this->request)->count();
     }
 
     public function totalTestFundsAmount()

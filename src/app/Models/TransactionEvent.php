@@ -133,6 +133,11 @@ class TransactionEvent extends Model
         return $user;
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
+
 
     public function selectedMonthTransactions($year, $month, $transactionType)
     {

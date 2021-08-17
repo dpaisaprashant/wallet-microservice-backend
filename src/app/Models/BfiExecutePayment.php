@@ -19,6 +19,13 @@ class BfiExecutePayment extends Model
     protected $guarded = [];
 
     protected $table = 'bfi_gateway_execute_payments';
+    
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->table = "bfi_gateway_execute_payments";
+        $this->connection = "bfi";
+    }
 
     public function getAmountAttribute($amount){
         return ($amount/100);

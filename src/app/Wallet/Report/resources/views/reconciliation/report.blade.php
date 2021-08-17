@@ -85,7 +85,7 @@
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover dataTables-example" title="SajiloPay user's list">
+                                <table class="table table-striped table-bordered table-hover dataTables-example" title="Reconciliation Report">
                                     <thead>
                                     <tr>
                                         <th>S.No.</th>
@@ -123,28 +123,30 @@
                                     </tr>
 
                                     <tr>
-                                        <td></td>
-                                        <td></td>
+                                        <td><b>Total Wallet Balance</b></td>
+                                        <td>Rs. {{ $totalWalletBalance }}</td>
                                         <td></td>
                                         <td><b>Total Amount Loaded to Wallet</b></td>
                                         <td>Rs. {{ $totalLoadAmount }}</td>
                                     </tr>
 
                                     <tr>
-                                        <td></td>
-                                        <td></td>
+                                        <td><b>Total Bonus Balance</b></td>
+                                        <td>Rs. {{ $totalBonusBalance }}</td>
                                         <td></td>
                                         <td><b>Total Payment from Wallet</b></td>
                                         <td>Rs. {{ $totalPaymentAmount }}</td>
                                     </tr>
 
                                     <tr>
-                                        <td></td>
-                                        <td></td>
+                                        <td><b>Total Main Balance</b></td>
+                                        <td> Rs. {{ $mainBalance }}</td>
                                         <td></td>
                                         <td><b>Total Loaded - Total Payment</b></td>
                                         <td>Rs. {{ $totalLoadAmount - $totalPaymentAmount }}</td>
                                     </tr>
+
+
                                     </tfoot>
                                 </table>
                             </div>

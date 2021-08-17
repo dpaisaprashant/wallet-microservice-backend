@@ -16,6 +16,9 @@ networks:
     external: true
   wallet-microservice-merchant_laravel:
     external: true
+  wallet-microservice-ntc_laravel:
+    external: true
+
 
 
 services:
@@ -44,6 +47,7 @@ services:
       - wallet-microservice-npay_laravel
       - wallet-microservice-nps_laravel
       - wallet-microservice-merchant_laravel
+      - wallet-microservice-ntc_laravel
 
   mysql:
     image: mysql:5.7.29
@@ -70,6 +74,7 @@ services:
       - wallet-microservice-npay_laravel
       - wallet-microservice-nps_laravel
       - wallet-microservice-merchant_laravel
+      - wallet-microservice-ntc_laravel
 
   php:
     build:
@@ -90,7 +95,7 @@ services:
       - wallet-microservice-npay_laravel
       - wallet-microservice-nps_laravel
       - wallet-microservice-merchant_laravel
-
+      - wallet-microservice-ntc_laravel
   composer:
     build:
       context: .
@@ -112,6 +117,7 @@ services:
       - wallet-microservice-npay_laravel
       - wallet-microservice-nps_laravel
       - wallet-microservice-merchant_laravel
+      - wallet-microservice-ntc_laravel
     entrypoint: ['composer', '--ignore-platform-reqs']
 
   artisan:
@@ -136,6 +142,7 @@ services:
       - wallet-microservice-npay_laravel
       - wallet-microservice-nps_laravel
       - wallet-microservice-merchant_laravel
+      - wallet-microservice-ntc_laravel
 
   phpmyadmin:
     depends_on:
@@ -158,6 +165,7 @@ services:
       - wallet-microservice-npay_laravel
       - wallet-microservice-nps_laravel
       - wallet-microservice-merchant_laravel
+      - wallet-microservice-ntc_laravel
 
   mongo:
     container_name: mongo-backend

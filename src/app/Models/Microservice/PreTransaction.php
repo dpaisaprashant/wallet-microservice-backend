@@ -33,6 +33,8 @@ class PreTransaction extends Model
     CONST MICROSERVICE_PAYPOINT = 'PAYPOINT';
     CONST MICROSERVICE_NCHL = 'NCHL';
 
+    CONST TRANSACTION_TYPE_DEBIT = 'debit';
+    CONST TRANSACTION_TYPE_CREDIT = 'credit';
     /**
      * @param $amount
      * @return float|int

@@ -148,4 +148,8 @@ class TransactionEvent extends Model
         return $this->hasOne(LoadTestFund::class, 'pre_transaction_id', 'pre_transaction_id');
     }
 
+    public function preTransaction(){
+        return $this->hasMany(PreTransaction::class,"pre_transaction_id",'pre_transaction_id');
+    }
+
 }

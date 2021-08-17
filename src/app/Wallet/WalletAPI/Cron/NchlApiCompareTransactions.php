@@ -19,15 +19,27 @@ class NchlApiCompareTransactions
         $repository = new NchlApiValidationRepository();
         $disputedTransactions = $repository->getDisputedTransactions(request(), $repo);
 
-        foreach($disputedTransactions['wallet_status_mismatches'] as $disputedTransaction){
+        foreach ($disputedTransactions['wallet_status_mismatches'] as $disputedTransaction) {
             //notify developers
-            Log::info("Transaction in which status is success in wallet but not in API: PreTransactionID =", [$disputedTransaction->pre_transaction_id]);
-            Log::info("BatchID =", [$disputedTransaction->transaction_id]);
+            $data = [
+                'Transaction in which status is success in Wallet but not in API',
+                'Pre-Transaction ID' => $disputedTransaction->pre_transaction_id,
+                'Batch ID' => $disputedTransaction->transaction_id
+            ];
+            $val = json_encode($data);
+            Log::info($val . PHP_EOL);
         }
-        foreach($disputedTransactions['nchl_status_mismatches'] as $disputedTransaction){
+        foreach ($disputedTransactions['nchl_status_mismatches'] as $disputedTransaction) {
             //notify developers
-            if(!empty($disputedTransaction->transaction_id)){
-                Log::info("Transaction in which status is success in API but not in Wallet: BatchID =", [$disputedTransaction->transaction_id]);
+            if (!empty($disputedTransaction->transaction_id)) {
+
+                $data = [
+                    'Transaction in which status is success in API but not in Wallet',
+                    'Pre-Transaction ID' => $disputedTransaction->pre_transaction_id,
+                    'Batch ID' => $disputedTransaction->transaction_id
+                ];
+                $val = json_encode($data);
+                Log::info($val . PHP_EOL);
             }
         }
 

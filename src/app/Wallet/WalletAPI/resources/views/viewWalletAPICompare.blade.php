@@ -95,7 +95,7 @@
                                         <th>Transaction ID</th>
                                         <th>User Mobile Number</th>
                                         <th>Bank</th>
-                                        <th>Amount</th>
+                                        <th>Amount (NRs.)</th>
                                         <th>Debit Status</th>
                                         <th>Credit Status</th>
                                     </tr>
@@ -114,7 +114,7 @@
                                             <td>{{ $transaction->bank }}</td>
 
                                             <td>
-                                                Rs. {{ $transaction->amount ?? 0}}
+                                               {{ $transaction->amount ?? 0}}
                                             </td>
 
                                             <td>
@@ -148,7 +148,7 @@
                                     <tr>
                                         <th>S.No.</th>
                                         <th>Transaction ID</th>
-                                        <th>Amount</th>
+                                        <th>Amount (NRs.)</th>
                                         <th>Debit Status</th>
                                         <th>Credit Status</th>
                                     </tr>
@@ -160,7 +160,7 @@
                                                 <td>{{$loop->index+1}}</td>
                                                 <td>{{ $nchlAPI['batchId'] }}</td>
                                                 <td>
-                                                    Rs. {{ $nchlAPI['batchAmount']}}
+                                                    {{ $nchlAPI['batchAmount']}}
                                                 </td>
                                                 <td>
                                                     {{ $nchlAPI['debitStatus'] }}
@@ -337,7 +337,7 @@
                                         <th>S.No.</th>
                                         <th>Pre Transaction Id</th>
                                         <th>Transaction Id</th>
-                                        <th>Amount</th>
+                                        <th>Amount (NRs.)</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -365,17 +365,6 @@
     </div>
 @endsection
 
-{{--@section('styles')--}}
-
-
-{{--    @include('admin.asset.css.datatable')--}}
-{{--@endsection--}}
-
-{{--@section('scripts')--}}
-{{--    @include('admin.asset.js.datatableWithPaging')--}}
-{{--@endsection--}}
-
-
 @section('styles')
     @include('admin.asset.css.chosen')
     @include('admin.asset.css.datatable')
@@ -400,20 +389,7 @@
 
     <!-- IonRangeSlider -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js"></script>
-    <script>
-        let amount = @if(!empty($_GET['amount'])) `{{ $_GET['amount'] }}`;
-        @else '0;100000'; @endif
-        let split = amount.split(';');
-        $(".ionrange_amount").ionRangeSlider({
-            type: "double",
-            grid: true,
-            min: 0,
-            max: 100000,
-            from: split[0],
-            to: split[1],
-            prefix: "Rs."
-        });
-    </script>
+
 @endsection
 
 

@@ -197,7 +197,7 @@ class User extends Authenticatable
 
     public function latestUserTransactionEvent()
     {
-        return $this->hasOne(TransactionEvent::class,'user_id')->latest();
+        return $this->hasOne(TransactionEvent::class,'user_id')->latest()->orderByDesc('id');
     }
 
     public function fromFundTransfers() {

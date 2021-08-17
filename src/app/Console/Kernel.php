@@ -5,6 +5,8 @@ namespace App\Console;
 use App\Wallet\Session\AdminSession;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Wallet\WalletAPI\Cron\NchlApiCompareTransactions;
+
 
 class Kernel extends ConsoleKernel
 {
@@ -29,6 +31,7 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
 
         $schedule->call(new AdminSession)->everyMinute();
+        $schedule->call(new NchlApiCompareTransactions)->everyMinute();
     }
 
     /**

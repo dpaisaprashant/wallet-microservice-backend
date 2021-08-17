@@ -35,7 +35,7 @@
                             <div class="col-sm-12">
                                 <form role="form" method="get">
                                     <div class="row">
-                                        <div class="col-md-3">
+                                        <div class="col-md-6">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
@@ -46,7 +46,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3">
+                                        <div class="col-md-6">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
@@ -80,9 +80,11 @@
                     <div class="ibox ">
                         <div class="ibox-title">
                             <h5>Compared Transactions from Wallet</h5>
+
                         </div>
                         <div class="ibox-content">
-
+                            <h5><b>Total Count:</b> {{$disputedTransactions['totalTransactionCount']}}</h5>
+                            <h5><b>Total Amount Sum:</b> Rs. {{$disputedTransactions['totalAmount']}}</h5>
                             <div class="table-responsive" id="comparedTransactionId">
                                 <table class="table table-striped table-bordered table-hover dataTables-example"
                                        title="clearance transactions">
@@ -99,7 +101,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($transactions as $transaction)
+                                    @foreach($disputedTransactions['transactions'] as $transaction)
                                         <tr class="gradeC">
                                             <td>{{$loop->index+1}}</td>
                                             <td>{{ $transaction->pre_transaction_id }}</td>
@@ -137,7 +139,8 @@
                             <h5>Compared Transactions from API</h5>
                         </div>
                         <div class="ibox-content">
-
+                            <h5><b>Total Count:</b> {{$disputedTransactions['totalTransactionCountAPI']}}</h5>
+                            <h5><b>Total Amount Sum:</b> Rs. {{$disputedTransactions['totalAmountAPI']}}</h5>
                             <div class="table-responsive" id="comparedTransactionId">
                                 <table class="table table-striped table-bordered table-hover dataTables-example"
                                        title="clearance transactions">
@@ -145,14 +148,13 @@
                                     <tr>
                                         <th>S.No.</th>
                                         <th>Transaction ID</th>
-                                        {{--<th>Bank</th>--}}
                                         <th>Amount</th>
                                         <th>Debit Status</th>
                                         <th>Credit Status</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($nchlAPIs as $nchlAPI)
+                                    @foreach($disputedTransactions['nchlAPIs'] as $nchlAPI)
                                         @if(!empty($nchlAPI))
                                             <tr class="gradeC">
                                                 <td>{{$loop->index+1}}</td>
@@ -191,17 +193,15 @@
                                         <th>S.No.</th>
                                         <th>Pre Transaction Id</th>
                                         <th>Transaction Id</th>
-                                        <th>Status</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($wallet_status_mismatches as $wallet_status_mismatch)
+                                    @foreach($disputedTransactions['wallet_status_mismatches'] as $wallet_status_mismatch)
                                         @if(!empty($wallet_status_mismatch))
                                             <tr>
                                                 <td>{{$loop->index+1}}</td>
                                                 <td>{{$wallet_status_mismatch->pre_transaction_id}}</td>
                                                 <td>{{$wallet_status_mismatch->transaction_id}}</td>
-                                                <td>{{$wallet_status_mismatch->walletStatus}}</td>
                                             </tr>
                                         @endif
                                     @endforeach
@@ -225,17 +225,15 @@
                                         <th>S.No.</th>
                                         <th>Pre Transaction Id</th>
                                         <th>Transaction Id</th>
-                                        <th>Status</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($nchl_status_mismatches as $nchl_status_mismatch)
+                                    @foreach($disputedTransactions['nchl_status_mismatches'] as $nchl_status_mismatch)
                                         @if(!empty($nchl_status_mismatch))
                                             <tr>
                                                 <td>{{$loop->index+1}}</td>
                                                 <td>{{$nchl_status_mismatch->pre_transaction_id}}</td>
                                                 <td>{{$nchl_status_mismatch->transaction_id}}</td>
-                                                <td>{{$nchl_status_mismatch->nchlStatus}}</td>
                                             </tr>
                                         @endif
                                     @endforeach
@@ -267,7 +265,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($debit_mismatches as $debit_mismatch)
+                                    @foreach($disputedTransactions['debit_mismatches'] as $debit_mismatch)
                                         @if(!empty($debit_mismatch))
                                             <tr>
                                                 <td>{{$loop->index+1}}</td>
@@ -304,7 +302,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($credit_mismatches as $credit_mismatch)
+                                    @foreach($disputedTransactions['credit_mismatches'] as $credit_mismatch)
                                         @if(!empty($credit_mismatch))
                                             <tr>
                                                 <td>{{$loop->index+1}}</td>
@@ -343,7 +341,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($amount_mismatches as $amount_mismatch)
+                                    @foreach($disputedTransactions['amount_mismatches'] as $amount_mismatch)
                                         @if(!empty($amount_mismatch))
                                             <tr>
                                                 <td>{{$loop->index+1}}</td>

@@ -2,15 +2,7 @@
 
 namespace App\Wallet\WalletAPI\Repositories;
 
-use App\Events\CreditTransactionCompleteEvent;
-use App\Http\Requests\NCHL\NchlProcessLoadRequest;
-use App\Models\Microservice\PreTransaction;
-use App\Models\TransactionEvent;
-use App\Models\User;
-use App\Wallet\Architecture\Builders\WalletTransactionTypeValidationBuilder;
 use App\Wallet\WalletAPI\BackendWalletAPIMicroservice;
-use App\Wallet\WalletAPI\PreTransactionMicroservice;
-use App\Wallet\Microservice\Response\CreditResponse;
 use Illuminate\Http\Request;
 use App\Wallet\NCHL\Repository\NchlBankTransferRepository;
 use Carbon\Carbon;
@@ -100,6 +92,8 @@ class NchlApiValidationRepository
                 $totalAmountAPI += $nchlAPI['batchAmount'];
             }
         }
+
+//        $data = $this->paginate($nchl_status_mismatches);
 
         $disputedTransactions = ['wallet_status_mismatches' => $wallet_status_mismatches,
             'wallet_status_mismatch_api' => $wallet_status_mismatches_api,

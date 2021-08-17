@@ -124,10 +124,10 @@
                                                 {{ $transaction->credit_status }}
                                             </td>
                                         </tr>
+
                                     @endforeach
                                     </tbody>
                                 </table>
-
                             </div>
                         </div>
                     </div>
@@ -184,7 +184,6 @@
                             <h5>Transactions in which status is success in wallet but not in API</h5>
                         </div>
                         <div class="ibox-content">
-
                             <div class="table-responsive" id="transactionInWalletButNotInExcelId">
                                 <table class="table table-striped table-bordered table-hover dataTables-example"
                                        title="clearance transactions">
@@ -239,7 +238,6 @@
                                     @endforeach
                                     </tbody>
                                 </table>
-
                             </div>
                         </div>
                     </div>
@@ -378,14 +376,14 @@
     @include('admin.asset.js.chosen')
     @include('admin.asset.js.datepicker')
     @include('admin.asset.js.datatable')
-    {{--    <script>--}}
-    {{--        @if(!empty($_GET))--}}
-    {{--        $(document).ready(function (e) {--}}
-    {{--            let a = "Showing {{ $transactions->firstItem() }} to {{ $transactions->lastItem() }} of {{ $transactions->total() }} entries";--}}
-    {{--            $('.dataTables_info').text(a);--}}
-    {{--        });--}}
-    {{--        @endif--}}
-    {{--    </script>--}}
+{{--        <script>--}}
+{{--            @if(!empty($_GET))--}}
+{{--            $(document).ready(function (e) {--}}
+{{--                let a = "Showing {{ $transactions->firstItem() }} to {{ $transactions->lastItem() }} of {{ $transactions->total() }} entries";--}}
+{{--                $('.dataTables_info').text(a);--}}
+{{--            });--}}
+{{--            @endif--}}
+{{--        </script>--}}
 
     <!-- IonRangeSlider -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js"></script>

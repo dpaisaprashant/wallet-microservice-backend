@@ -25,10 +25,10 @@ class KhaltiUserTransaction extends Model
      * @param $amount
      * @return float|int
      */
-    public function getAmountAttribute($amount)
+  /*  public function getAmountAttribute($amount)
     {
         return ($amount/100);
-    }
+    }*/
 
     protected $casts = [
         "amount" => "number"

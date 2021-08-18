@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use App\Filters\Transaction\TransactionFilters;
 use App\Traits\WalletDetails;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class Wallet extends Model
 {
@@ -11,6 +14,10 @@ class Wallet extends Model
 
     protected $table = "wallets";
     protected $connection = 'dpaisa';
+
+    protected $appends = [
+        'main_balance'
+    ];
 
 
     /**
@@ -27,9 +34,19 @@ class Wallet extends Model
         return ($balance/100);
     }
 
+    public function getMainBalanceAttribute()
+    {
+        return $this->attributes['balance'] + $this->attributes['bonus_balance'];
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class,'user_id','id');
+    }
+
+    public function scopeFilter(Builder $builder, Request $request, array $filters = [])
+    {
+        return (new TransactionFilters($request))->add($filters)->filter($builder);
     }
 
 }

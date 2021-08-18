@@ -397,9 +397,15 @@ $url = url()->current();
                         @endcan
 
 
+
                         {{--      @can('Cellpay user transaction view')
                                   <li><a href="{{route('cellPayUserTransaction.view')}}">CellPay Transactions</a></li>
                                   @endcan--}}
+
+                        @can('Cellpay user transaction view')
+                            <li><a href="{{route('cellPayUserTransaction.view')}}">CellPay Transactions</a></li>
+                            @endcan
+
 
                     </ul>
                 </li>
@@ -555,7 +561,9 @@ $url = url()->current();
                         @can('Report commission')
                             <li><a href="{{ route('commission.report') }}">Commission report</a></li>
                         @endcan
-
+                            @can('View mismatched user balance and bonus balance')
+                                <li><a href="{{route('report.mismatchedUserBalance')}}">Mismatched User Balance</a></li>
+                            @endcan
                     </ul>
                 </li>
             @endif

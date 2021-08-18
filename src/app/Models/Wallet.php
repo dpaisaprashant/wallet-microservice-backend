@@ -2,7 +2,12 @@
 
 namespace App\Models;
 
+
 use App\Filters\Transaction\TransactionFilters;
+
+use App\Filters\User\UserFilters;
+use App\Filters\Wallet\WalletFilters;
+
 use App\Traits\WalletDetails;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -34,9 +39,16 @@ class Wallet extends Model
         return ($balance/100);
     }
 
+
     public function getMainBalanceAttribute()
     {
         return $this->attributes['balance'] + $this->attributes['bonus_balance'];
+    }
+
+    public function scopeFilter(Builder $builder, Request $request, array $filters = [])
+    {
+        return (new WalletFilters($request))->add($filters)->filter($builder);
+
     }
 
     public function user()
@@ -44,9 +56,9 @@ class Wallet extends Model
         return $this->belongsTo(User::class,'user_id','id');
     }
 
-    public function scopeFilter(Builder $builder, Request $request, array $filters = [])
+  /*  public function scopeFilter(Builder $builder, Request $request, array $filters = [])
     {
         return (new TransactionFilters($request))->add($filters)->filter($builder);
-    }
+    }*/
 
 }

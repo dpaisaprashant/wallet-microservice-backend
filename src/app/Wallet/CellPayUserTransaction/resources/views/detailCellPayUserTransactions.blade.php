@@ -2,13 +2,13 @@
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8">
-            <h2>Transaction Detail</h2>
+            <h2>CellPay Transaction Detail</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                    Transaction
+                    Cell Pay Transaction
                 </li>
                 <li class="breadcrumb-item active">
                     <strong>Detail</strong>
@@ -44,9 +44,9 @@
                             <span>Bank:</span>
                             <address>
                                 <strong>{{ "Connect IPS" }}</strong><br>
-                                Transaction Id: {{ $transaction->transaction_uuid }}<br>
-                                Reference Number: {{ $transaction->reference_reference_number }}<br>
-                                Status:@include('NicAsia::status',['NicTransaction' => $transaction])
+                                Transaction Id: {{ $transaction->transaction_id }}<br>
+                                Reference Number: {{ $transaction->reference_no }}<br>
+{{--                                Status:@include('NicAsia::status',['NicTransaction' => $transaction])--}}
                             </address>
 
                             <address>
@@ -58,7 +58,7 @@
 
                         <div class="col-sm-6 text-right" style="margin-top: 20px;">
                             <h4>Transaction ID.</h4>
-                            <h4 class="text-navy">#{{ $transaction->transaction_uuid }}</h4>
+                            <h4 class="text-navy">#{{ $transaction->transaction_id }}</h4>
 
                             <p style="margin-top: 20px;">
                                 <?php
@@ -89,13 +89,13 @@
                         }
 
 
-                        if (strtoupper($transaction->status) == 'SUCCESS') {
+                        if (strtoupper($transaction->status) == 'true') {
                                 $step1= true;
                                 $step2 = true;
                                 $step3 = true;
                                 $step4 = true;
 
-                        }elseif ($transaction->status == 'ERROR' ) {
+                        }elseif ($transaction->status == 'false' ) {
                             $step3NoResponse = true;
                         } else {
                             $step3Error = true;
@@ -126,8 +126,8 @@
                                                <div class="timeline-content">
                                                    <h2 class="timeline-title">Create Transaction</h2>
                                                    <p>
-                                                       <strong>Transaction ID: </strong> {{ $transaction->transaction_uuid }} <br>
-                                                       <strong>Reference Number: </strong> {{ $transaction->reference_number }}
+                                                       <strong>Transaction ID: </strong> {{ $transaction->transaction_id }} <br>
+                                                       <strong>Reference Number: </strong> {{ $transaction->reference_no }}
                                                        <br>
                                                        <strong>Status: </strong> {{ strtoupper($transaction->status ?? 'NOT COMPLETED') }}
                                                    </p>
@@ -144,28 +144,33 @@
                                                <div class="timeline-content">
                                                    <h2 class="timeline-title">Transaction Request</h2>
                                                    <p>
-                                                       <strong>Transaction ID: </strong> {{ $transaction->transaction_uuid }} <br>
-                                                       <strong>Reference Number: </strong> {{ $transaction->reference_number }}
+                                                       <strong>Transaction ID: </strong> {{ $transaction->transaction_id }} <br>
+                                                       <strong>Reference Number: </strong> {{ $transaction->reference_no }}
                                                        <br>
                                                        <strong>Status: </strong> {{ strtoupper($transaction->status ?? 'NOT COMPLETED') }}
-                                                       @if(!empty($transaction->json_request))
+                                                       @if(!empty($transaction->request))
                                                            <br>
                                                            <strong>Response</strong>
 
                                                    <address>
-                                                       <?php $response =  json_decode($transaction->json_request, true)?>
+                                                       <?php $request =  json_decode($transaction->request, true)?>
+                                                           @if(is_array($request))
+{{--<!--                                                               --><?php //$request = json_decode($request) ?>--}}
+                                                           <?php foreach ($request as $key => $value) { ?>
+                                                               @if($key != 'auth_response' || $key != 'payer_authentication_proof_xml' || $key != 'signed_field_names')
+                                                                   <b>{{$key}}</b> :
 
-                                                       <?php foreach ($response as $key => $value) { ?>
-                                                       @if($key != 'auth_response' || $key != 'payer_authentication_proof_xml' || $key != 'signed_field_names')
-                                                           <b>{{$key}}</b> :
-
-                                                           @if($key == 'txnAmt')
-                                                               {{ $value / 100 }} <br>
+                                                                   @if($key == 'txnAmt')
+                                                                       {{ $value / 100 }} <br>
+                                                                   @else
+                                                                       {{ $value }} <br>
+                                                                   @endif
+                                                               @endif
+                                                           <?php }?>
                                                            @else
-                                                               {{ $value }} <br>
+                                                               {{(string)$transaction->request}}
                                                            @endif
-                                                       @endif
-                                                       <?php }?>
+
                                                    </address>
 
                                                    @endif
@@ -183,8 +188,8 @@
                                                <div class="timeline-content">
                                                    <h2 class="timeline-title">Transaction Response</h2>
                                                    <p>
-                                                       <strong>Transaction Id: </strong> {{ $transaction->transaction_uuid }} <br>
-                                                       <strong>Reference Number: </strong> {{ $transaction->reference_number }}
+                                                       <strong>Transaction Id: </strong> {{ $transaction->transaction_id }} <br>
+                                                       <strong>Reference Number: </strong> {{ $transaction->reference_no }}
                                                        <br>
                                                        <strong>Status: </strong> {{ strtoupper($transaction->status ?? 'NOT COMPLETED') }}
 
@@ -198,25 +203,28 @@
                                                                @endif
                                                            @endif
 
-                                                       @if(!empty($transaction->json_response))
+                                                       @if(!empty($transaction->response))
                                                            <br>
                                                            <strong>Response</strong>
 
                                                            <address>
-                                                       <?php $response =  json_decode($transaction->json_response, true)?>
+                                                       <?php $response =  json_decode($transaction->response, true)?>
+                                                           @if(is_array($response))
+                                                               <?php foreach ($response as $key => $value) { ?>
+                                                                   @if($key != 'auth_response' || $key != 'payer_authentication_proof_xml' || $key != 'signed_field_names')
+                                                                       <b>{{ $key }}</b> :
 
-                                                       <?php foreach ($response as $key => $value) { ?>
-                                                       @if($key != 'auth_response' || $key != 'payer_authentication_proof_xml' || $key != 'signed_field_names')
-                                                           <b>{{ $key }}</b> :
-
-                                                           @if($key == 'txnAmt')
-                                                               {{ $value / 100 }}<br>
+                                                                       @if($key == 'txnAmt')
+                                                                           {{ $value / 100 }}<br>
+                                                                       @else
+                                                                           {{ $value }}<br>
+                                                                       @endif
+                                                                   @endif
+                                                               <?php }?>
                                                            @else
-                                                               {{ $value }}<br>
+                                                               {{(string)$transaction->response}}
                                                            @endif
-                                                       @endif
-                                                       <?php }?>
-                                                           </address>
+                                                   </address>
 
                                                    @endif
                                                    </p>
@@ -234,8 +242,8 @@
                                                <div class="timeline-content">
                                                    <h2 class="timeline-title">Transaction Successful</h2>
                                                    <p>
-                                                       <strong>Transaction Id: </strong> {{ $transaction->transaction_uuid }} <br>
-                                                       <strong>Reference Number: </strong> {{ $transaction->reference_number }}
+                                                       <strong>Transaction Id: </strong> {{ $transaction->transaction_id }} <br>
+                                                       <strong>Reference Number: </strong> {{ $transaction->reference_no }}
                                                        <br>
                                                        <strong>Status: </strong> {{ strtoupper($transaction->status ?? 'NOT COMPLETED') }}
                                                    </p>

@@ -360,13 +360,18 @@ class RolesAndPermissionsSeeder extends Seeder
 
             // NicAsia
             'Nicasia cybersource view',
+            'Nicasia cybersource detail',
 
             //Cellpay
             'Cellpay user transaction view',
+            'Cellpay user transaction detail',
 
             //NPSLinked account
             'View nps linked account',
             'Excel nps linked account',
+
+            //Mismtached user balance and bonus balance
+            'View mismatched user balance and bonus balance',
 
             //Run seeder
             'View seeder list',

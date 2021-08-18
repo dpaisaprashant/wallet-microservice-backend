@@ -32,7 +32,7 @@ class User extends Authenticatable
 
     const AGENT = 'agent';
 
-    const LOCK_MINUTES =  60;
+    const LOCK_MINUTES =  360;
     /**
      * The attributes that are mass assignable.
      *

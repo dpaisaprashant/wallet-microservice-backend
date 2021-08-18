@@ -31,6 +31,7 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
         $billPaymentTotalValue = TransactionEvent::whereIn('transaction_type',[UserTransaction::class,NchlAggregatedPayment::class])
             ->filter($this->request)
             ->sum('amount');
+        
         return $billPaymentTotalValue;
     }
 

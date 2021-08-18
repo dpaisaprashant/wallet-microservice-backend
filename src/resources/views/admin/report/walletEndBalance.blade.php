@@ -78,20 +78,23 @@
                             <h5><b>Total Count:</b>
                                 {{$totalCount}}
                             </h5>
-                            <h5><b>Wallet End Balance:</b> Rs.
-                             {{ $totalSum->sum('balance') }}
+                            <h5><b>Wallet End Main Balance:</b> Rs.
+                             {{ $totalSum->sum('balance') / 100 }}
+                            </h5>
+                            <h5><b>Wallet End Bonus Balance:</b> Rs.
+                                {{ $totalSum->sum('bonus_balance') / 100 }}
                             </h5>
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover dataTables-example" title="Complete transactions list">
                                     <thead>
                                     <tr>
                                         <th>S.No.</th>
-                                        <th>Account</th>
-                                        <th>Description</th>
+                                        {{--<th>Account</th>--}}
+                                        {{--<th>Description</th>
                                         <th>Vendor</th>
                                         <th>Service Type</th>
                                         <th>User Id</th>
-                                        <th>Pre Transaction Id</th>
+                                        <th>Pre Transaction Id</th>--}}
                                         <th>Phone</th>
                                         <th>Date</th>
                                         <th>Balance</th>
@@ -102,18 +105,18 @@
                                         @foreach($datas as $data)
                                             <tr>
                                                 <td>{{$loop->index+1}}</td>
-                                                <td>{{$data->account}}</td>
-                                                <td>
+                                                {{--<td>{{$data->account}}</td>--}}
+                                                {{--<td>
                                                     @if($data->description == null)
                                                         <span class="badge badge-danger">Empty</span>
                                                         @else
                                                         {{$data->description}}
                                                     @endif
-                                                </td>
-                                                <td>{{$data->vendor}}</td>
+                                                </td>--}}
+                                                {{--<td>{{$data->vendor}}</td>
                                                 <td>{{$data->service_type}}</td>
                                                 <td>{{$data->user_id}}</td>
-                                                <td>{{$data->pre_transaction_id}}</td>
+                                                <td>{{$data->pre_transaction_id}}</td>--}}
                                                 <td>{{$data->number}}</td>
                                                 <td>{{$data->created_at}}</td>
                                                 <td>{{$data->balance}}</td>

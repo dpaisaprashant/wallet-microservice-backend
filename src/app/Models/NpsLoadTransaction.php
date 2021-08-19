@@ -17,6 +17,8 @@ class NpsLoadTransaction extends Model
     use BelongsToPreTransaction,MorphOneCommission,BelongsToUseThroughMicroservice,BelongsToUser;
     CONST STATUS_COMPLETED = 'COMPLETED';
     CONST STATUS_VALIDATED = 'VALIDATED';
+    CONST STATUS_PENDING = 'PENDING';
+    CONST STATUS_FAILED = 'FAILED';
 
     protected $guarded = [];
 

@@ -108,6 +108,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('unverified-kyc-user', 'UserController@unverifiedKYCView')->name('user.unverifiedKYC.view')->middleware('permission:Unverified KYC users view'); // Unverified KYC view
         Route::post('change-kyc-status', 'UserController@changeKYCStatus')->name('user.changeKYCStatus')->middleware('permission:KYC accept|KYC reject'); // Change KYC status
 
+        Route::get('/transaction/nps','TransactionController@nps')->name('nps')->middleware('permission:Transaction nps view');
 
         Route::get('/users/profile/{id}', 'UserController@profile')->name('user.profile')->middleware('permission:User profile');
         Route::get('/users/kyc/{id}', 'UserController@kyc')->name('user.kyc')->middleware('permission:User KYC view');

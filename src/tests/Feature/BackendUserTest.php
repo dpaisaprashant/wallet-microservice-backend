@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -13,6 +14,7 @@ class BackendUserTest extends TestCase
      *
      * @return void
      */
+    use DatabaseTransactions;
    /* public function testExample()
     {
         $response = $this->get('/');
@@ -20,9 +22,8 @@ class BackendUserTest extends TestCase
         $response->assertStatus(200);
     }*/
 
-
-    public function test_admin_user_backend(){
-        $response = $this->get('/admin/backend-user');
-        $response->assertStatus(302);
+    /** @test */
+    public function admin_user_backend_view_from_the_database(){
+        $response = $this->get('/admin/backend-user')->assertRedirect('/admin/login');
     }
 }

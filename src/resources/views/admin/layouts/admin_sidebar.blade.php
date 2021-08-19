@@ -536,10 +536,10 @@ $url = url()->current();
                         @can('Report reconciliation')
                             <li><a href="{{ route('report.reconciliation') }}">Reconciliation Report</a></li>
                         @endcan
-                        @can('Report reconciliation')
+                      {{--  @can('Report reconciliation')
                             <li><a href="{{ route('mismatched.reconciliation') }}">Mismatchced Reconciliation Report</a>
                             </li>
-                        @endcan
+                        @endcan--}}
                         {{--<li><a href="{{ route('report.user.reconciliation') }}">User Reconciliation Report</a></li>--}}
                         @can('Report nrb active and inactive user')
                             <li><a href="{{ route('report.nrb.activeInactiveUser') }}">NRB Active/Inactive User

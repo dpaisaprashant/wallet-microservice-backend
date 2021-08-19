@@ -528,5 +528,34 @@ class ReconciliationReportRepository extends AbstractReportRepository
          +$this->totaluserSendsFundToBfiAmount() +$this->totalbfiSendFundToUserAmount()+$this->totalUserSendsBalanceToOtherUserAmount();
     }
 
+    public function totalIndividualWalletBalance(){
+        $users = User::with('wallet')->latest()->get();
+        $walletMainBalance = [];
+        foreach($users as $user){
+            $walletMainBalance[$user->mobile_no]= $user->wallet->bonus_balance + $user->wallet->balance;
+        }
+
+        $individualLoadAmount = $this->totalIndividualLoadAmount();
+        $individualPaymentAmount = $this->totalIndividualPaymentAmount();
+      /*  dd($individualLoadAmount,TransactionEvent::sum('amount'));*/
+    }
+
+    public function totalIndividualLoadAmount(){
+        return TransactionEvent::where('transaction_type',CellPayUserTransaction::class)->with('preTransaction')
+            ->whereHas('preTransaction',function ($query){
+                return $query->where('transaction_type',PreTransaction::TRANSACTION_TYPE_CREDIT);
+            })
+            ->sum('amount');
+
+    }
+
+    public function totalIndividualPaymentAmount(){
+        return TransactionEvent::with('preTransaction')
+            ->whereHas('preTransaction',function($query){
+                return $query->where('transaction_type',PreTransaction::TRANSACTION_TYPE_DEBIT);
+            })
+            ->sum('amount');
+    }
+
 
 }

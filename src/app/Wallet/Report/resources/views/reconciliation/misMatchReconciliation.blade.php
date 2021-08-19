@@ -1,3 +1,4 @@
+{{--
 @extends('admin.layouts.admin_design')
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
@@ -46,7 +47,9 @@
 
                                 @foreach($misMatchArray as $key=>$value)
                                     <tr>
-                                        {{--{{ dd($value['walletMainBalance']) }}--}}
+                                        --}}
+{{--{{ dd($value['walletMainBalance']) }}--}}{{--
+
                                         <td>{{ $key+1 }}</td>
                                         <td><a href="{{ route('report.reconciliation',['individual_user_number' => $value['mobileNumber']]) }}">{{ $value['mobileNumber'] }}</a></td>
                                         <td>Rs. {{ $value['walletMainBalance'] }}</td>
@@ -90,3 +93,4 @@
 
 
 
+--}}

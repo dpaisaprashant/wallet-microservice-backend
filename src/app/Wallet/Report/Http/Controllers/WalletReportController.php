@@ -65,14 +65,18 @@ class WalletReportController extends Controller
             $item[$value->wallet->id] = $value->wallet->balance + $value->wallet->bonus_balance;
         }*/
 //        dd($item);
-        $users = User::with('wallet')->latest()->get();
+      /*  $users = User::with('wallet')->latest()->get();
         $misMatchArray = [];
+        $repository = new ReconciliationReportRepository($request);
+
+
         foreach($users as $user){
             $walletMainBalance = $user->wallet->main_balance;
             $request->merge([
                 'individual_user_number' => $user->mobile_no,
             ]);
             $repository = new ReconciliationReportRepository($request);
+
             $userMainBalance = $repository->totalLoadAmount() - $repository->totalPaymentAmount();
             if($walletMainBalance != $userMainBalance){
                 $misMatchArray[] = array(
@@ -84,7 +88,7 @@ class WalletReportController extends Controller
 
         }
 
-        return view('WalletReport::reconciliation.misMatchReconciliation',compact('misMatchArray'));
+        return view('WalletReport::reconciliation.misMatchReconciliation',compact('misMatchArray'));*/
     }
 
     public function customerActivityReport(Request $request)

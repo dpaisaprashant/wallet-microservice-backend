@@ -201,6 +201,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('transaction/nchl-bank-transfer/detail/{id}', 'TransactionController@nchlBankTransferDetail')->name('nchl.bankTransfer.detail');
 
         //Nchl Aggregated
+        Route::get('/transaction/nchl-aggregate-payment','TransactionController@nchlAggregatedPayment')->name('nchl.aggregatePayment');
         Route::get('transaction/nchl-aggregated-payment/detail/{id}', 'TransactionController@nchlAggregatedPaymentDetail')->name('nchl.aggregatedPayment.detail');
 
         //Reimburse

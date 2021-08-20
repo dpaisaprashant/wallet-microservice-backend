@@ -388,6 +388,7 @@ $url = url()->current();
                         @can('Transaction nchl bank transfer')
                             <li><a href="{{ route('nchl.bankTransfer') }}">NCHL Bank Transfer</a></li>
                         @endcan
+                            <li><a href="{{ route('nchl.aggregatePayment') }}">NCHL Aggregated Payment</a></li>
                         @can('Nicasia cybersource view')
                             <li><a href="{{ route('nicAsia.viewCyberSourceLoad') }}">NIC Asia Transaction</a></li>
                         @endcan

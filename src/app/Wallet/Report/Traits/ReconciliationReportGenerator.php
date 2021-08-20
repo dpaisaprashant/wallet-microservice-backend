@@ -33,7 +33,7 @@ trait ReconciliationReportGenerator
             'CellPay' => [
                 "amount" => $repository->totalCellPayAmount() / 100,
                 "count" => $repository->totalCellPayCount(),
-                "transaction_type" => "Debit"
+                "transaction_type" => "debit"
             ],
 
             'NPS' => [
@@ -57,6 +57,18 @@ trait ReconciliationReportGenerator
             'TestFund' => [
                 "amount" => $repository->totalTestFundsAmount() / 100,
                 "count" => $repository->totalTestFundsCount(),
+                "transaction_type" => "credit"
+            ],
+
+            'User sends balance from other User' => [
+                "amount" => $repository->totalUserSendsBalanceToOtherUserAmount() / 100,
+                "count" => $repository->totalUserSendsBalanceToOtherUserCount(),
+                "transaction_type" => "debit"
+            ],
+
+            'User receives balance from other User' => [
+                "amount" => $repository->totalUserRecevicesBalanceFromOtherUserAmount() / 100,
+                "count" => $repository->totalUserRecevicesBalanceFromOtherUserCount(),
                 "transaction_type" => "credit"
             ],
 
@@ -205,4 +217,6 @@ trait ReconciliationReportGenerator
             ],
         ];
     }
+
+
 }

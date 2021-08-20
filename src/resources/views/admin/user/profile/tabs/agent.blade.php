@@ -73,8 +73,8 @@
 
                             @isset($user->agent['business_document'])
                             <div class="carousel-item active">
-                                <a href="{{ config('dpaisa-api-url.agent_url') . $user->agent['business_document'] }}" target="_blank">
-                                    <img class="d-block w-100" src="{{ config('dpaisa-api-url.agent_url') . $user->agent['business_document'] }}" alt="First slide">
+                                <a href="{{ config('dpaisa-api-url.admin_documentation_url') . $user->agent['business_document'] }}" target="_blank">
+                                    <img class="d-block w-100" src="{{ config('dpaisa-api-url.admin_documentation_url') . $user->agent['business_document'] }}" alt="First slide">
                                     <div class="carousel-caption d-none d-md-block">
                                         <p style="color: black; font-weight: bold;">
                                             BUSINESS DOCUMENT
@@ -86,8 +86,8 @@
 
                             @isset($user->agent['business_owner_citizenship_front'])
                             <div class="carousel-item @if(empty($user->agent['business_document'])) active @endif">
-                                <a href="{{ config('dpaisa-api-url.agent_url') . $user->agent['business_owner_citizenship_front'] }}" target="_blank">
-                                    <img class="d-block w-100" src="{{ config('dpaisa-api-url.agent_url') . $user->agent['business_owner_citizenship_front'] }}" alt="First slide">
+                                <a href="{{ config('dpaisa-api-url.admin_documentation_url') . $user->agent['business_owner_citizenship_front'] }}" target="_blank">
+                                    <img class="d-block w-100" src="{{ config('dpaisa-api-url.admin_documentation_url') . $user->agent['business_owner_citizenship_front'] }}" alt="First slide">
                                     <div class="carousel-caption d-none d-md-block">
                                         <p style="color: black; font-weight: bold;">
                                            BUSINESS OWNER CITIZENSHIP FRONT
@@ -99,8 +99,8 @@
 
                             @isset($user->agent['business_owner_citizenship_back'])
                             <div class="carousel-item">
-                                <a href="{{ config('dpaisa-api-url.agent_url') . $user->agent['business_owner_citizenship_back'] }}" target="_blank">
-                                    <img class="d-block w-100" src="{{ config('dpaisa-api-url.agent_url') . $user->agent['business_owner_citizenship_back'] }}" alt="First slide">
+                                <a href="{{ config('dpaisa-api-url.admin_documentation_url') . $user->agent['business_owner_citizenship_back'] }}" target="_blank">
+                                    <img class="d-block w-100" src="{{ config('dpaisa-api-url.admin_documentation_url') . $user->agent['business_owner_citizenship_back'] }}" alt="First slide">
                                     <div class="carousel-caption d-none d-md-block">
                                         <p style="color: black; font-weight: bold;">
                                             BUSINESS OWNER CITIZENSHIP BACK
@@ -112,8 +112,8 @@
 
                             @isset($user->agent['pp_photo'])
                             <div class="carousel-item">
-                                <a href="{{ config('dpaisa-api-url.agent_url') . $user->agent['pp_photo'] }}" target="_blank">
-                                    <img class="d-block w-100" src="{{ config('dpaisa-api-url.agent_url') . $user->agent['pp_photo'] }}" alt="First slide">
+                                <a href="{{ config('dpaisa-api-url.admin_documentation_url') . $user->agent['pp_photo'] }}" target="_blank">
+                                    <img class="d-block w-100" src="{{ config('dpaisa-api-url.admin_documentation_url') . $user->agent['pp_photo'] }}" alt="First slide">
                                     <div class="carousel-caption d-none d-md-block">
                                         <p style="color: black; font-weight: bold;">
                                             PP PHOTO
@@ -125,8 +125,8 @@
 
                             @isset($user->agent['pan_vat_document'])
                                     <div class="carousel-item">
-                                        <a href="{{ config('dpaisa-api-url.agent_url') . $user->agent['pan_vat_document'] }}" target="_blank">
-                                            <img class="d-block w-100" src="{{ config('dpaisa-api-url.agent_url') . $user->agent['pan_vat_document'] }}" alt="First slide">
+                                        <a href="{{ config('dpaisa-api-url.admin_documentation_url') . $user->agent['pan_vat_document'] }}" target="_blank">
+                                            <img class="d-block w-100" src="{{ config('dpaisa-api-url.admin_documentation_url') . $user->agent['pan_vat_document'] }}" alt="First slide">
                                             <div class="carousel-caption d-none d-md-block">
                                                 <p style="color: black; font-weight: bold;">
                                                     PAN/VAT DOCUMENT
@@ -138,8 +138,8 @@
 
                             @isset($user->agent['tax_clearance_certificate'])
                             <div class="carousel-item">
-                                <a href="{{ config('dpaisa-api-url.agent_url') . $user->agent['tax_clearance_certificate'] }}" target="_blank">
-                                    <img class="d-block w-100" src="{{ config('dpaisa-api-url.agent_url') . $user->agent['tax_clearance_certificate'] }}" alt="First slide">
+                                <a href="{{ config('dpaisa-api-url.admin_documentation_url') . $user->agent['tax_clearance_certificate'] }}" target="_blank">
+                                    <img class="d-block w-100" src="{{ config('dpaisa-api-url.admin_documentation_url') . $user->agent['tax_clearance_certificate'] }}" alt="First slide">
                                     <div class="carousel-caption d-none d-md-block">
                                         <p style="color: black; font-weight: bold;">
                                             TAX CLEARANCE CERTIFICATE

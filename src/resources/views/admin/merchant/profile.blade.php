@@ -46,7 +46,7 @@
                         <td>
                             <strong>
                                 <button type="button" class="btn btn-warning m-r-sm">12</button>
-                            </strong> D-Paisa Points
+                            </strong> icash Points
                         </td>
                         <td>
                             @if(empty($merchant->kyc))
@@ -129,7 +129,7 @@
                         <h3 class="font-bold no-margins">
                            Total balance in wallet
                         </h3>
-                        <small>Money saved in d-paisa wallet</small>
+                        <small>Money saved in icash wallet</small>
                     </div>
 
                 </div>

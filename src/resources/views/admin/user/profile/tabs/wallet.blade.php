@@ -8,7 +8,7 @@
             <dt class="col-md-3 text-right">Bonous Amount</dt>
             <dd class="col-md-8">100</dd>
 
-            <dt class="col-md-3 text-right">D-Paisa Points</dt>
+            <dt class="col-md-3 text-right">icash Points</dt>
             <dd class="col-md-8">25</dd>
 
             <dt class="col-md-3 text-right">Last transaction</dt>

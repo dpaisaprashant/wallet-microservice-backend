@@ -29,13 +29,13 @@ class StatusFilter extends FilterAbstract {
         if ($value === null) {
             return $builder;
         }
-
-        if ($value == 'accepted') {
+//        dd($value);
+     /*   if ($value == '1') {
             $builder->where('user_k_y_c_s.status','=',1)->whereAccept(1);
-        } elseif ($value == 'rejected') {
+        } elseif ($value == '0') {
             $builder->where('user_k_y_c_s.status','=',0)->whereAccept(0);
-        }
+        }*/
 
-        return $builder;
+     /*   return $builder;*/
     }
 }

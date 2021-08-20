@@ -34,24 +34,26 @@ class MisMatchUserReconciliation
                     'userId' => $user->id
                 );
             }
-            foreach($misMatchArray as $key=>$value){
-                \Log::info(
-                    [
-                        'User Id:',
-                        $value['userId'],
 
-                        'Mobile Number:',
-                        $value['mobileNumber'],
+        }
 
-                        'Wallet Main Balance:',
-                        $value['walletMainBalance'],
 
-                        'User Main Balance:',
-                        $value['userMainBalance'],
-                    ]
-                );
-            }
+        foreach($misMatchArray as $key=>$value){
+            \Log::info(
+                [
+                    'User Id:',
+                    $value['userId'],
 
+                    'Mobile Number:',
+                    $value['mobileNumber'],
+
+                    'Wallet Main Balance:',
+                    $value['walletMainBalance'],
+
+                    'User Main Balance:',
+                    $value['userMainBalance'],
+                ]
+            );
         }
 
     }

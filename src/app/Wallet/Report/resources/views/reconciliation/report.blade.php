@@ -26,7 +26,7 @@
             <div class="col-lg-12">
                 <div class="ibox">
                     <div class="ibox-title collapse-link">
-                        <h5>Select Date</h5>
+                        <h5>Filter</h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -41,7 +41,7 @@
                                     <div class="row">
 
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="input-group date">
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
@@ -50,12 +50,21 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="input-group date">
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </span>
                                                 <input id="date_load_to" type="text" class="form-control date_to" placeholder="To" name="to" autocomplete="off" value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="input-group date">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </span>
+                                                <input id="individual_user_number" type="text" class="form-control individual_user_number" placeholder="Mobile Number" name="individual_user_number" autocomplete="off" value="{{ !empty($_GET['individual_user_number']) ? $_GET['individual_user_number'] : '' }}">
                                             </div>
                                         </div>
                                     </div>
@@ -78,10 +87,14 @@
 
         <div class="row">
             <div class="col-lg-12">
-                @if(!empty($_GET['from']) && !empty($_GET['to']))
+                @if(!empty($_GET))
                     <div class="ibox ">
                         <div class="ibox-title">
-                            <h5>Reconciliation report from {{ $_GET['from'] . ' to ' . $_GET['to'] }}</h5>
+                            @if(!empty($_GET['individual_user_number']))
+                            <h5>Reconciliation report of user {{ $_GET['individual_user_number']  }}</h5>
+                            @else
+                                <h5>Reconciliation report</h5>
+                                @endif
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">

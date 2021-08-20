@@ -22,6 +22,7 @@ use App\Models\NtcRetailerToCustomerTransaction;
 use App\Models\PaymentNepalLoadTransaction;
 use App\Models\TransactionEvent;
 use App\Models\UsedUserReferral;
+use App\Models\User;
 use App\Models\UserLoadTransaction;
 use App\Models\UserMerchantEventTicketPayment;
 use App\Models\UserReferralBonusTransaction;
@@ -130,21 +131,21 @@ class ReconciliationReportRepository extends AbstractReportRepository
 
     public function totalWalletBalanceAmount()
     {
-        return Wallet::sum('balance');
+        return Wallet::filter($this->request)->sum('balance');
     }
 
     public function totalMainBalanceAmount(){
-        return Wallet::sum('balance') + Wallet::sum('bonus_balance');
+        return Wallet::filter($this->request)->sum('balance') + Wallet::filter($this->request)->sum('bonus_balance');
     }
 
     public function totalBonusBalanceAmount()
     {
-        return Wallet::sum('bonus_balance');
+        return Wallet::filter($this->request)->sum('bonus_balance');
     }
 
     public function totalWalletBalanceCount()
     {
-        return Wallet::count();
+        return Wallet::filter($this->request)->count();
     }
 
     public function totalTestFundsAmount()
@@ -380,6 +381,37 @@ class ReconciliationReportRepository extends AbstractReportRepository
         return TransactionEvent::whereNotIn('transaction_type', [UserToUserFundTransfer::class, FundRequest::class])->count();
     }
 
+    //User to user fund transfer
+    public function totalUserSendsBalanceToOtherUserAmount(){
+        return TransactionEvent::where('transaction_type',UserToUserFundTransfer::class)->whereHas('preTransaction',function ($query){
+            return $query->where('transaction_type',PreTransaction::TRANSACTION_TYPE_DEBIT);
+        })->filter($this->request)->sum('amount');
+    }
+
+    public function totalUserSendsBalanceToOtherUserCount(){
+        return TransactionEvent::where('transaction_type',UserToUserFundTransfer::class)->whereHas('preTransaction',function ($query){
+            return $query->where('transaction_type',PreTransaction::TRANSACTION_TYPE_DEBIT);
+        })->filter($this->request)->count();
+    }
+
+    public function totalUserRecevicesBalanceFromOtherUserAmount(){
+        return TransactionEvent::where('transaction_type',UserToUserFundTransfer::class)->whereHas('preTransaction',function ($query){
+            return $query->where('transaction_type',PreTransaction::TRANSACTION_TYPE_CREDIT);
+        })->filter($this->request)->sum('amount');
+    }
+
+    public function totalUserRecevicesBalanceFromOtherUserCount(){
+        return TransactionEvent::where('transaction_type',UserToUserFundTransfer::class)->whereHas('preTransaction',function ($query){
+            return $query->where('transaction_type',PreTransaction::TRANSACTION_TYPE_CREDIT);
+        })->filter($this->request)->count();
+    }
+
+
+
+    public function totalUserToUserFundTransferCount(){
+        return TransactionEvent::where('transaction_type',UserToUserFundTransfer::class)->filter($this->request)->count();
+    }
+
     //NTC direct
     public function totalNtcDirectCount(){
         return TransactionEvent::where('transaction_type',NtcRetailerToCustomerTransaction::class)
@@ -483,7 +515,7 @@ class ReconciliationReportRepository extends AbstractReportRepository
             + $this->totalNicAsiaCyberSourceLoadAmount() + ($this->totalRoundOffAmount() * 100) + $this->totalPaymentNepalAmount() +
             $this->totalNPSAccountLinkAmount() + $this->totalMerchantReceiveFromUserAmount()
             + $this->totalBFICreditAmount() + $this->totalUserReceiveFundFromUserAmount() + $this->totalBfiReceiveFundFromUserAmount()
-            +$this->totalRefundAmount();
+            +$this->totalRefundAmount()+$this->totalUserRecevicesBalanceFromOtherUserAmount();
     }
 
     //Debit Transaction
@@ -493,7 +525,37 @@ class ReconciliationReportRepository extends AbstractReportRepository
             + $this->totalCommissionAmount() + $this->totalUserSendToMerchantAmount()
             + $this->totalNchlAggregatedPaymentAmount() + $this->totalUserToMerchantEventTicketPaymentAmount()
             + $this->totalKhaltiTransactionAmount()+$this->totalCellPayAmount()+$this->totalNtcDirectAmount()+$this->totalBFIDebitAmount()
-         +$this->totaluserSendsFundToBfiAmount() +$this->totalbfiSendFundToUserAmount();
+         +$this->totaluserSendsFundToBfiAmount() +$this->totalbfiSendFundToUserAmount()+$this->totalUserSendsBalanceToOtherUserAmount();
     }
+
+    public function totalIndividualWalletBalance(){
+        $users = User::with('wallet')->latest()->get();
+        $walletMainBalance = [];
+        foreach($users as $user){
+            $walletMainBalance[$user->mobile_no]= $user->wallet->bonus_balance + $user->wallet->balance;
+        }
+
+        $individualLoadAmount = $this->totalIndividualLoadAmount();
+        $individualPaymentAmount = $this->totalIndividualPaymentAmount();
+      /*  dd($individualLoadAmount,TransactionEvent::sum('amount'));*/
+    }
+
+    public function totalIndividualLoadAmount(){
+        return TransactionEvent::where('transaction_type',CellPayUserTransaction::class)->with('preTransaction')
+            ->whereHas('preTransaction',function ($query){
+                return $query->where('transaction_type',PreTransaction::TRANSACTION_TYPE_CREDIT);
+            })
+            ->sum('amount');
+
+    }
+
+    public function totalIndividualPaymentAmount(){
+        return TransactionEvent::with('preTransaction')
+            ->whereHas('preTransaction',function($query){
+                return $query->where('transaction_type',PreTransaction::TRANSACTION_TYPE_DEBIT);
+            })
+            ->sum('amount');
+    }
+
 
 }

@@ -6,6 +6,7 @@ use App\Models\Architecture\WalletTransactionType;
 use App\Models\BfiExecutePayment;
 use App\Models\BfiGatewayDebitExecutePayment;
 use App\Models\BfiToUserFundTransfer;
+use App\Models\CellPayUserTransaction;
 use App\Models\FundRequest;
 use App\Models\KhaltiUserTransaction;
 use App\Models\Merchant\Merchant;
@@ -92,6 +93,7 @@ class Controller extends BaseController
         $transactionTypes = [
             UserTransaction::class => "PAYPOINT",
             KhaltiUserTransaction::class => "KHALTI",
+            CellPayUserTransaction::class => "CELLPAY",
             UserLoadTransaction::class => "NPAY",
             NpsLoadTransaction::class => "NPS",
             NchlLoadTransaction::class => "NCHL LOAD",

@@ -375,7 +375,9 @@ class RolesAndPermissionsSeeder extends Seeder
 
             //Run seeder
             'View seeder list',
-            'Run seeder'
+            'Run seeder',
+
+            'View nchl aggregated payment',
             ];
 
         //get users having all permissions

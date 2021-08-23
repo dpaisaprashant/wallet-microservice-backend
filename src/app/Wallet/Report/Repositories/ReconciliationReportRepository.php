@@ -150,8 +150,8 @@ class ReconciliationReportRepository extends AbstractReportRepository
 
     public function totalTestFundsAmount()
     {
-        return TransactionEvent::with('transactionable')->where('transaction_type',LoadTestFund::class)->whereHasMorph('transactionable',LoadTestFund::class,function ($query){
-
+        return TransactionEvent::with('transactionable')->where('transaction_type',LoadTestFund::class)
+            ->whereHasMorph('transactionable',LoadTestFund::class,function ($query){
             return $query->where('pre_transaction_id',null);
         })->filter($this->request)->sum('amount');
     }

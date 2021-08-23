@@ -188,8 +188,8 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-
                                     @foreach($khaltiTransactions as $khaltiTransaction)
+
                                         <tr>
                                             <td>{{ $loop->index + ($khaltiTransactions->perPage() * ($khaltiTransactions->currentPage() - 1)) + 1 }}</td>
                                             <td>{{ $khaltiTransaction->account }}</td>
@@ -198,7 +198,13 @@
                                                 {{$khaltiTransaction->amount}}
 
                                             </td>
-                                            <td> <a @can('User profile') href="{{route('user.profile', optional($khaltiTransaction->user)->id)}}" @endcan>{{ optional($khaltiTransaction->user)->mobile_no }}</a></td>
+                                            <td>
+                                                @if(optional(optional($khaltiTransaction->preTransaction)->user)->id != null)
+                                                <a @can('User profile') href="{{route('user.profile', $khaltiTransaction->preTransaction->user->id)}}" @endcan>
+                                                    @else
+                                                        <a @can('User profile') href="#" @endcan>
+                                                        @endif
+                                                            {{ optional(optional($khaltiTransaction->preTransaction)->user)->mobile_no }}</a></a></td>
                                             <td>{{$khaltiTransaction->message}}</td>
                                             <td>{{$khaltiTransaction->reference_no}}</td>
                                             <td>{{$khaltiTransaction->service}}</td>

@@ -44,7 +44,7 @@ class UserKhaltiFilter extends FilterAbstract {
 //
 //        dd($a);
         $preTransactionId = User::with('preTransaction')->where('mobile_no',$value)->first();
-      /*  dd($preTransactionId->preTransaction->pre_transaction_id);*/
+
         return $builder->where('reference_no', $preTransactionId->preTransaction->pre_transaction_id);
     }
 }

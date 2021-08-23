@@ -199,7 +199,7 @@
 
                                             </td>
                                             <td>
-                                                @if(optional(optional($khaltiTransaction->preTransaction)->user)->id != null)
+                                                @if(optional(optional($khaltiTransaction->preTransaction)->user)->id)
                                                 <a @can('User profile') href="{{route('user.profile', $khaltiTransaction->preTransaction->user->id)}}" @endcan>
                                                     @else
                                                         <a @can('User profile') href="#" @endcan>

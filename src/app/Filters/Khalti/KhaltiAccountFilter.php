@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filters\UserTransaction;
+namespace App\Filters\Khalti;
 
 use App\Filters\FilterAbstract;
 use App\Models\Microservice\PreTransaction;
@@ -8,7 +8,7 @@ use App\Models\Microservice\RequestInfo;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 
-class UserFilter extends FilterAbstract {
+class KhaltiAccountFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -33,15 +33,6 @@ class UserFilter extends FilterAbstract {
             return $builder;
         }
 
-        $user = User::where('email', $value)->orWhere('mobile_no', $value)->value('id');
-        //if (! $user) return $builder;
-
-        $preTransactionList = PreTransaction::whereUserId($user)->pluck('pre_transaction_id');
-
-        $requestInfoList = RequestInfo::whereUserId($user)->pluck('request_id');
-
-        return $builder->whereIn('pre_transaction_id', $preTransactionList)
-            ->orWhereIn('request_id', $requestInfoList);
-
+        return $builder->where('account',  $value);
     }
 }

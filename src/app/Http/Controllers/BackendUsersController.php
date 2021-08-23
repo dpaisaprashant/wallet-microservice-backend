@@ -71,13 +71,13 @@ class BackendUsersController extends Controller
         return view('admin.backendUser.roles')->with(compact('user', 'allRoles'));
     }
 
-    public function kycList(Request $request)
+   public function kycList(Request $request)
     {
-
         $user = Admin::whereId(auth()->user()->id)->firstOrFail();
         $lists = $user->kycList($user, $request);
         return view('admin.backendUser.kycList')->with(compact('lists'));
     }
+
 
     public function resetPassword(Request $request)
     {

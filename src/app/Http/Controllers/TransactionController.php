@@ -148,6 +148,14 @@ class TransactionController extends Controller
     }
 
     //NCHL AGGREGATED PAYMENT
+    public function nchlAggregatedPayment(NchlAggregatedPaymentRepository $repository){
+        $nchlAggregatedPayments = $repository->paginatedTransactions();
+        $nchlAggregatedTotalCount = $repository->nchlAggregatePaymentTotalCount();
+        $nchlAggregatedTotalAmount = $repository->nchlAggregatePaymentTotalAmount();
+        $nchlAggregatedTotalFee = $repository->nchlAggregatePaymentTotalFee();
+        return view('admin.transaction.nchlAggregatedTransaction',compact('nchlAggregatedPayments','nchlAggregatedTotalCount','nchlAggregatedTotalAmount','nchlAggregatedTotalFee'));
+    }
+
     public function nchlAggregatedPaymentDetail($id, NchlAggregatedPaymentRepository $repository)
     {
         $transaction = $repository->detail($id);

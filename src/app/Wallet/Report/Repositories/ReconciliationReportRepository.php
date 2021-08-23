@@ -411,6 +411,33 @@ class ReconciliationReportRepository extends AbstractReportRepository
     public function totalUserToUserFundTransferCount(){
         return TransactionEvent::where('transaction_type',UserToUserFundTransfer::class)->filter($this->request)->count();
     }
+    //Fund Request
+    //credit transaction because user is requesting fund from other user
+    public function totalUserRequestFundFromOtherUserAmount(){
+        return TransactionEvent::where('transaction_type',FundRequest::class)->whereHas('preTransaction',function ($query){
+            return $query->where('transaction_type',PreTransaction::TRANSACTION_TYPE_CREDIT);
+        })->filter($this->request)->sum('amount');
+    }
+
+    public function totalUserRequestFundFromOtherUserCount(){
+        return TransactionEvent::where('transaction_type',FundRequest::class)->whereHas('preTransaction',function ($query){
+            return $query->where('transaction_type',PreTransaction::TRANSACTION_TYPE_CREDIT);
+        })->filter($this->request)->count();
+    }
+
+    //Fund Request
+    //debit transaction because user sends fund to other user
+    public function totalUserSendsFundToOtherUserAmount(){
+        return TransactionEvent::where('transaction_type',FundRequest::class)->whereHas('preTransaction',function ($query){
+            return $query->where('transaction_type',PreTransaction::TRANSACTION_TYPE_DEBIT);
+        })->filter($this->request)->sum('amount');
+    }
+
+    public function totalUserSendsFundToOtherUserCount(){
+        return TransactionEvent::where('transaction_type',FundRequest::class)->whereHas('preTransaction',function ($query){
+            return $query->where('transaction_type',PreTransaction::TRANSACTION_TYPE_DEBIT);
+        })->filter($this->request)->count();
+    }
 
     //NTC direct
     public function totalNtcDirectCount(){
@@ -515,7 +542,7 @@ class ReconciliationReportRepository extends AbstractReportRepository
             + $this->totalNicAsiaCyberSourceLoadAmount() + ($this->totalRoundOffAmount() * 100) + $this->totalPaymentNepalAmount() +
             $this->totalNPSAccountLinkAmount() + $this->totalMerchantReceiveFromUserAmount()
             + $this->totalBFICreditAmount() + $this->totalUserReceiveFundFromUserAmount() + $this->totalBfiReceiveFundFromUserAmount()
-            +$this->totalRefundAmount()+$this->totalUserRecevicesBalanceFromOtherUserAmount();
+            +$this->totalRefundAmount()+$this->totalUserRecevicesBalanceFromOtherUserAmount() + $this->totalUserRequestFundFromOtherUserAmount();
     }
 
     //Debit Transaction
@@ -525,7 +552,7 @@ class ReconciliationReportRepository extends AbstractReportRepository
             + $this->totalCommissionAmount() + $this->totalUserSendToMerchantAmount()
             + $this->totalNchlAggregatedPaymentAmount() + $this->totalUserToMerchantEventTicketPaymentAmount()
             + $this->totalKhaltiTransactionAmount()+$this->totalCellPayAmount()+$this->totalNtcDirectAmount()+$this->totalBFIDebitAmount()
-         +$this->totaluserSendsFundToBfiAmount() +$this->totalbfiSendFundToUserAmount()+$this->totalUserSendsBalanceToOtherUserAmount();
+         +$this->totaluserSendsFundToBfiAmount() +$this->totalbfiSendFundToUserAmount()+$this->totalUserSendsBalanceToOtherUserAmount()+$this->totalUserSendsFundToOtherUserAmount();
     }
 
     public function totalIndividualWalletBalance(){

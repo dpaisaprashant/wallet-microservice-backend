@@ -60,7 +60,7 @@ trait ReconciliationReportGenerator
                 "transaction_type" => "credit"
             ],
 
-            'User sends balance from other User' => [
+            'User sends balance to other User' => [
                 "amount" => $repository->totalUserSendsBalanceToOtherUserAmount() / 100,
                 "count" => $repository->totalUserSendsBalanceToOtherUserCount(),
                 "transaction_type" => "debit"
@@ -70,6 +70,18 @@ trait ReconciliationReportGenerator
                 "amount" => $repository->totalUserRecevicesBalanceFromOtherUserAmount() / 100,
                 "count" => $repository->totalUserRecevicesBalanceFromOtherUserCount(),
                 "transaction_type" => "credit"
+            ],
+
+            "User receives balance from other user after request fund" => [
+                "amount" => $repository->totalUserRequestFundFromOtherUserAmount(),
+                "count" => $repository->totalUserRequestFundFromOtherUserCount(),
+                "transaction_type" => "credit"
+            ],
+
+            "User sends balance to other user after request fund" => [
+                "amount" => $repository->totalUserSendsFundToOtherUserAmount(),
+                "count" => $repository->totalUserSendsFundToOtherUserCount(),
+                "transaction_type" => 'debit',
             ],
 
             /*'Refund' => [

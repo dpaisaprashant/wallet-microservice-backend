@@ -392,8 +392,10 @@ $url = url()->current();
                             <li><a href="{{ route('nchl.bankTransfer') }}">NCHL Bank Transfer</a></li>
                         @endcan
 
+                        @can('View nchl aggregated payment')
                             <li><a href="{{ route('nchl.aggregatePayment') }}">NCHL Aggregated Payment</a></li>
-                       {{-- @can('Nicasia cybersource view')
+                        @endcan
+                        {{-- @can('Nicasia cybersource view')
                             <li><a href="{{ route('nicAsia.viewCyberSourceLoad') }}">NIC Asia Transaction</a></li>
                         @endcan--}}
 
@@ -533,10 +535,10 @@ $url = url()->current();
                         @can('Report reconciliation')
                             <li><a href="{{ route('report.reconciliation') }}">Reconciliation Report</a></li>
                         @endcan
-                      {{--  @can('Report reconciliation')
-                            <li><a href="{{ route('mismatched.reconciliation') }}">Mismatchced Reconciliation Report</a>
-                            </li>
-                        @endcan--}}
+                        {{--  @can('Report reconciliation')
+                              <li><a href="{{ route('mismatched.reconciliation') }}">Mismatchced Reconciliation Report</a>
+                              </li>
+                          @endcan--}}
                         {{--<li><a href="{{ route('report.user.reconciliation') }}">User Reconciliation Report</a></li>--}}
                         @can('Report nrb active and inactive user')
                             <li><a href="{{ route('report.nrb.activeInactiveUser') }}">NRB Active/Inactive User
@@ -558,9 +560,9 @@ $url = url()->current();
                         @can('Report commission')
                             <li><a href="{{ route('commission.report') }}">Commission report</a></li>
                         @endcan
-                            @can('View mismatched user balance and bonus balance')
-                                <li><a href="{{route('report.mismatchedUserBalance')}}">Mismatched User Balance</a></li>
-                            @endcan
+                        @can('View mismatched user balance and bonus balance')
+                            <li><a href="{{route('report.mismatchedUserBalance')}}">Mismatched User Balance</a></li>
+                        @endcan
                     </ul>
                 </li>
             @endif

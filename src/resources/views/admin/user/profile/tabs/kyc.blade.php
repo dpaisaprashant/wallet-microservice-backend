@@ -27,11 +27,23 @@
                         @endif
                         <br>
                             <dt class="col-md-3 text-right">First Name</dt>
-                            <dd class="col-md-8">{{$user->kyc->first_name == null ? 'Not available' : $user->kyc->first_name}}</dd>
+                            <dd class="col-md-8">{{$user->kyc->first_name == null ? 'Not available' : $user->kyc->first_name}}
+                                @if($user->kyc->kycValidation->first_name==0)
+                                    <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
+                                @endif
+                            </dd>
                             <dt class="col-md-3 text-right">Middle Name</dt>
-                            <dd class="col-md-8">{{$user->kyc->middle_name == null ? ' ' : $user->kyc->middle_name}}</dd>
+                            <dd class="col-md-8">{{$user->kyc->middle_name == null ? ' ' : $user->kyc->middle_name}}
+                                @if($user->kyc->kycValidation->middle_name==0)
+                                    <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
+                                @endif
+                            </dd>
                             <dt class="col-md-3 text-right">Last Name</dt>
-                            <dd class="col-md-8">{{$user->kyc->last_name == null ? 'Not available' : $user->kyc->last_name}}</dd>
+                            <dd class="col-md-8">{{$user->kyc->last_name == null ? 'Not available' : $user->kyc->last_name}}
+                                @if($user->kyc->kycValidation->last_name==0)
+                                    <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
+                                @endif
+                            </dd>
 
 
                         @if(/*$user->kyc->status == 1 */ true)
@@ -83,7 +95,11 @@
 
 
                         <dt class="col-md-3 text-right">Date of birth</dt>
-                        <dd class="col-md-8">{{ $user->kyc->date_of_birth }}</dd>
+                        <dd class="col-md-8">{{ $user->kyc->date_of_birth }}
+                            @if($user->kyc->kycValidation->date_of_birth==0)
+                                <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
+                            @endif
+                        </dd>
 
 
 
@@ -96,66 +112,142 @@
                             @elseif($user->kyc->gender == 'o')
                                 Other
                             @endif
+                            @if($user->kyc->kycValidation->gender==0)
+                                <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
+                            @endif
+
                         </dd>
 
                         <dt class="col-md-3 text-right">Address</dt>
-                        <dd class="col-md-8">{{ $user->kyc->municipality }}, {{ $user->kyc->district }}, Nepal</dd>
+                        <dd class="col-md-8">{{ $user->kyc->municipality }}, {{ $user->kyc->district }}, Nepal
+                            @if($user->kyc->kycValidation->municipality==0 || $user->kyc->kycValidation->district==0)
+                                <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
+                            @endif
+                        </dd>
 
                         <dt class="col-md-3 text-right">Father's Name</dt>
-                        <dd class="col-md-8">{{ $user->kyc->fathers_name }}</dd>
+                        <dd class="col-md-8">{{ $user->kyc->fathers_name }}
+                            @if($user->kyc->kycValidation->fathers_name==0)
+                                <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
+                            @endif
+                        </dd>
 
                         <dt class="col-md-3 text-right">Mother's Name</dt>
-                        <dd class="col-md-8">{{ $user->kyc->mothers_name }}</dd>
+                        <dd class="col-md-8">{{ $user->kyc->mothers_name }}
+                            @if($user->kyc->kycValidation->mothers_name==0)
+                                <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
+                            @endif
+                        </dd>
 
                         <dt class="col-md-3 text-right">Grandfathers's Name</dt>
-                        <dd class="col-md-8">{{ $user->kyc->grand_fathers_name }}</dd>
+                        <dd class="col-md-8">{{ $user->kyc->grand_fathers_name }}
+                            @if($user->kyc->kycValidation->grand_fathers_name==0)
+                                <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
+                            @endif
+                        </dd>
 
                         <dt class="col-md-3 text-right">Occupation</dt>
-                        <dd class="col-md-8">{{ $user->kyc->occupation }}</dd>
+                        <dd class="col-md-8">{{ $user->kyc->occupation }}
+                            @if($user->kyc->kycValidation->occupation ==0)
+                                <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
+                            @endif
+                        </dd>
 
                         <dt class="col-md-3 text-right">Identity Type</dt>
                         <dd class="col-md-8">{{ $user->kyc->documentationType() }}</dd>
 
                         <dt class="col-md-3 text-right">Identity Number</dt>
-                        <dd class="col-md-8">{{ $user->kyc->id_no }}</dd>
+                        <dd class="col-md-8">{{ $user->kyc->id_no }}
+                            @if($user->kyc->kycValidation->id_no==0)
+                                <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
+                            @endif
+                        </dd>
 
                         <dt class="col-md-3 text-right">Identity Issue Date</dt>
-                        <dd class="col-md-8">{{ date('M d, Y', strtotime($user->kyc->c_issued_date)) }}</dd>
+                        <dd class="col-md-8">{{ date('M d, Y', strtotime($user->kyc->c_issued_date)) }}
+                            @if($user->kyc->kycValidation->c_issued_date==0)
+                                <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
+                            @endif
+                        </dd>
 
                         <dt class="col-md-3 text-right">Identity Issue From</dt>
-                        <dd class="col-md-8">{{ $user->kyc->c_issued_from }}</dd>
+                        <dd class="col-md-8">{{ $user->kyc->c_issued_from }}
+                            @if($user->kyc->kycValidation->c_issued_from==0)
+                                <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
+                            @endif
+                        </dd>
 
                             <dt class="col-md-3 text-right">Province</dt>
-                            <dd class="col-md-8">{{ $user->kyc->province }}</dd>
+                            <dd class="col-md-8">{{ $user->kyc->province }}
+                            @if($user->kyc->kycValidation->province==0)
+                                <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
+                            @endif
+                            </dd>
 
                             <dt class="col-md-3 text-right">Zone</dt>
-                            <dd class="col-md-8">{{ $user->kyc->zone }}</dd>
+                            <dd class="col-md-8">{{ $user->kyc->zone }}
+                            @if($user->kyc->kycValidation->zone==0)
+                                <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
+                            @endif
+                            </dd>
 
                             <dt class="col-md-3 text-right">District</dt>
-                            <dd class="col-md-8">{{ $user->kyc->district }}</dd>
+                            <dd class="col-md-8">{{ $user->kyc->district }}
+                            @if($user->kyc->kycValidation->district==0)
+                                <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
+                            @endif
+                            </dd>
 
                             <dt class="col-md-3 text-right">Municipality</dt>
-                            <dd class="col-md-8">{{ $user->kyc->municipality }}</dd>
+                            <dd class="col-md-8">{{ $user->kyc->municipality }}
+                            @if($user->kyc->kycValidation->municipality==0)
+                                <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
+                            @endif
+                            </dd>
 
                             <dt class="col-md-3 text-right">Ward No.</dt>
-                            <dd class="col-md-8">{{ $user->kyc->ward_no }}</dd>
+                            <dd class="col-md-8">{{ $user->kyc->ward_no }}
+                            @if($user->kyc->kycValidation->ward_no==0)
+                                <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
+                            @endif
+                            </dd>
 
 
 
                             <dt class="col-md-3 text-right">Tmp Province</dt>
-                            <dd class="col-md-8">{{ $user->kyc->tmp_province }}</dd>
+                            <dd class="col-md-8">{{ $user->kyc->tmp_province }}
+                            @if($user->kyc->kycValidation->tmp_province==0)
+                                <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
+                            @endif
+                            </dd>
 
                             <dt class="col-md-3 text-right">Tmp Zone</dt>
-                            <dd class="col-md-8">{{ $user->kyc->tmp_zone }}</dd>
+                            <dd class="col-md-8">{{ $user->kyc->tmp_zone }}
+                            @if($user->kyc->kycValidation->tmp_zone==0)
+                                <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
+                            @endif
+                            </dd>
 
                             <dt class="col-md-3 text-right">Tmp District</dt>
-                            <dd class="col-md-8">{{ $user->kyc->tmp_district }}</dd>
+                            <dd class="col-md-8">{{ $user->kyc->tmp_district }}
+                            @if($user->kyc->kycValidation->tmp_district==0)
+                                <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
+                            @endif
+                            </dd>
 
                             <dt class="col-md-3 text-right">Tmp Municipality</dt>
-                            <dd class="col-md-8">{{ $user->kyc->tmp_municipality }}</dd>
+                            <dd class="col-md-8">{{ $user->kyc->tmp_municipality }}
+                            @if($user->kyc->kycValidation->tmp_municipality==0)
+                                <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
+                            @endif
+                            </dd>
 
                             <dt class="col-md-3 text-right">Tmp Ward No.</dt>
-                            <dd class="col-md-8">{{ $user->kyc->tmp_ward_no }}</dd>
+                            <dd class="col-md-8">{{ $user->kyc->tmp_ward_no }}
+                            @if($user->kyc->kycValidation->tmp_ward_no==0)
+                                <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
+                            @endif
+                            </dd>
 
 
                     @else

@@ -421,7 +421,7 @@
                                     <tr class="gradeX">
                                     <td>{{ $loop->index + ($merchants->perPage() * ($merchants->currentPage() - 1)) + 1 }}</td>
                                     <td>
-                                         <a href="{{route('merchant.profile', $merchant->id)}}">{{ $merchant->name }}</a>
+                                         <a href="{{route('user.profile', $merchant->id)}}">{{ $merchant->name }}</a>
                                     </td>
                                     <td>
                                         @if(!empty($merchant->phone_verified_at))

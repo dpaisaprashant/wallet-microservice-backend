@@ -195,6 +195,11 @@ class User extends Authenticatable
         return $this->hasMany(TransactionEvent::class, 'user_id');
     }
 
+    public function latestUserTransactionEvent()
+    {
+        return $this->hasOne(TransactionEvent::class,'user_id')->latest()->orderByDesc('id');
+    }
+
     public function fromFundTransfers() {
         return $this->hasMany(UserToUserFundTransfer::class, 'from_user');
     }
@@ -449,6 +454,7 @@ class User extends Authenticatable
         }
         return false;
     }
+
 
     public function agentStatus()
     {

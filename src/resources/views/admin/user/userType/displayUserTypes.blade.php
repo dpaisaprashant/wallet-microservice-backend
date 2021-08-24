@@ -5,14 +5,14 @@
 
 @if($user->merchant != null)
     <span class="badge badge-primary">Merchant type :
-                                                    {{ $user->merchant->merchantType->name }}
+                                                    {{ optional($user->merchant->merchantType)->name }}
 
                                             </span><br>
 @endif
-@if($user->agent != null)
+@if($user->agent != null && $user->isValidAgentOrSubAgent())
     <span class="badge badge-danger">Agent type :
                                                     @if($user->agent != null)
-            {{ $user->agent->agentType->name }}
+            {{ optional($user->agent->agentType)->name }}
         @endif
                                                 </span>
 @endif

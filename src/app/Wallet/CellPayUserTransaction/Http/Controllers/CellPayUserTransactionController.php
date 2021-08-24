@@ -12,14 +12,17 @@ use Illuminate\Http\Request;
 
 class CellPayUserTransactionController extends Controller{
 
-public function index(){
-    $service_types = CellPayUserTransaction::groupBy('service_type')->pluck('service_type');
-    $vendors = CellPayUserTransaction::groupBy('vendor')->pluck('vendor');
-    $cellPayUserTransactions = CellPayUserTransaction::filter(request())->paginate(10);
-    $usersUnique = User::has('preTransaction')->groupBy('mobile_no')->select('id','mobile_no')->get();
-    $users =  User::select('id','mobile_no')->get();
-    $preTransactions = PreTransaction::select('user_id','pre_transaction_id')->get();
-    return view('CellPayUserTransaction::viewCellPayUserTransactions')->with(compact('cellPayUserTransactions','service_types','vendors','users','preTransactions','usersUnique',));
-}
+    public function index(){
+        $service_types = CellPayUserTransaction::groupBy('service_type')->pluck('service_type');
+        $vendors = CellPayUserTransaction::groupBy('vendor')->pluck('vendor');
+        $cellPayUserTransactions = CellPayUserTransaction::with('preTransaction')->filter(request())->latest()->paginate(10);
+
+        return view('CellPayUserTransaction::viewCellPayUserTransactions')->with(compact('cellPayUserTransactions','service_types','vendors',));
+    }
+
+    public function cellPayDetail($id){
+        $transaction = CellPayUserTransaction::findorFail($id);
+        return view('CellPayUserTransaction::detailCellPayUserTransactions')->with(compact('transaction'));
+    }
 
 }

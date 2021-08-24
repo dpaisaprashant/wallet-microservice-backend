@@ -110,12 +110,12 @@ Route::group(['prefix' => 'admin'], function () {
 
 
         Route::get('unverified-merchant-kyc-user',[\App\Http\Controllers\Merchant\MerchantController::class,'unverifiedMerchantKYCView'])->name('merchant.unverifiedMerchantKYC.view');
-        Route::get('/merchants',[\App\Http\Controllers\Merchant\MerchantController::class,'view'])->name('merchant.view');
+        Route::get('/merchants',[\App\Http\Controllers\Merchant\MerchantController::class,'view'])->name('merchant.view')->middleware('permission:Merchant dashboard');
 
         Route::get('/merchant-details/kyc/{id}',[\App\Http\Controllers\Merchant\MerchantController::class,'merchantDetailKyc'])->name('merchant.kyc.detail');
         Route::get('/merchant-change-kyc-status',[\App\Http\Controllers\Merchant\MerchantController::class,'changeKYCStatus'])->name('merchant.changeKYCStatus');
 
-        Route::get('/users/profile/{id}', 'UserController@profile')->name('user.profile')->middleware('permission:User profile|View agent profile');
+        Route::get('/users/profile/{id}', 'UserController@profile')->name('user.profile')->middleware('permission:User profile|View agent profile|Merchant profile');
         Route::get('/users/kyc/{id}', 'UserController@kyc')->name('user.kyc')->middleware('permission:User KYC view');
         Route::get('/users/transactions/{id}', 'UserController@transaction')->name('user.transaction')->middleware('permission:User transactions');
 
@@ -201,6 +201,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('transaction/nchl-bank-transfer/detail/{id}', 'TransactionController@nchlBankTransferDetail')->name('nchl.bankTransfer.detail');
 
         //Nchl Aggregated
+        Route::get('/transaction/nchl-aggregate-payment','TransactionController@nchlAggregatedPayment')->name('nchl.aggregatePayment')->middleware('permission:View nchl aggregated payment');
         Route::get('transaction/nchl-aggregated-payment/detail/{id}', 'TransactionController@nchlAggregatedPaymentDetail')->name('nchl.aggregatedPayment.detail');
 
         //Reimburse
@@ -496,5 +497,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/excel/request-info', 'PhpSpreadSheetController@requestInfo')->name('requestinfo.excel')->middleware('permission:View request info');
 
 
+        //Run seeder
+        Route::get('/view-seeder-table','SeederController@index')->name('view.seeder')->middleware('permission:View seeder list');
+        Route::post('/view-seeder-table/{className}','SeederController@runSeeder')->name('seeder.run')->middleware('permission:Run seeder');
     });
 });

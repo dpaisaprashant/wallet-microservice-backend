@@ -248,7 +248,6 @@
                                     <tbody>
 
                                     @foreach($npsLoadTransactions as $npsLoadTransaction)
-
                                         <tr>
                                             <td>{{ $loop->index + ($npsLoadTransactions->perPage() * ($npsLoadTransactions->currentPage() - 1)) + 1 }}</td>
                                             <td>{{optional($npsLoadTransaction->transactions)->uid ?? '---'}}</td>
@@ -260,7 +259,15 @@
                                             <td>{{$npsLoadTransaction->gateway_ref_no}}</td>
                                             <td class="center">Rs {{$npsLoadTransaction->amount}}</td>
                                             <td>Rs {{$npsLoadTransaction->transaction_fee ?? 0}}</td>
-                                            <td>@include('admin.transaction.nps.status',['npsLoadTransaction'=>$npsLoadTransaction])</td>
+                                            <td>
+                                                @if(isset($npsLoadTransaction->preTransaction->transactionEvent))
+
+                                                    <span class="badge badge-primary">Complete</span>
+                                                @else
+                                                    <span class="badge badge-danger">Incomplete</span>
+                                                @endif
+                                            </td>
+
                                             <td>{{$npsLoadTransaction->created_at}}</td>
                                             <td>{{$npsLoadTransaction->response}}</td>
                                             <td>Action</td>

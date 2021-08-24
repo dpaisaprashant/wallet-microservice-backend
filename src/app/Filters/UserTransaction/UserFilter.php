@@ -34,10 +34,10 @@ class UserFilter extends FilterAbstract {
         }
 
         $user = User::where('email', $value)->orWhere('mobile_no', $value)->value('id');
-
         //if (! $user) return $builder;
 
         $preTransactionList = PreTransaction::whereUserId($user)->pluck('pre_transaction_id');
+
         $requestInfoList = RequestInfo::whereUserId($user)->pluck('request_id');
 
         return $builder->whereIn('pre_transaction_id', $preTransactionList)

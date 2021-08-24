@@ -5,11 +5,14 @@ use App\Wallet\Report\Http\Controllers\SubscriberReportController;
 use App\Wallet\Report\Http\Controllers\UserWalletReportController;
 use App\Wallet\Report\Http\Controllers\WalletReportController;
 use App\Wallet\Report\Http\Controllers\AdminKycController;
+use App\Wallet\Report\Http\Controllers\MismatchedUserBalanceController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'admin/report', 'middleware' => ['web','auth']], function () {
 
     Route::match(['get', 'post'],'reconciliation-report', [WalletReportController::class, 'reconciliationReport'])->name('report.reconciliation')->middleware('permission:Report reconciliation');
+
+
     Route::match(['get', 'post'],'users-reconciliation-report', [UserWalletReportController::class, 'userReconciliationReport'])->name('report.user.reconciliation');
 
     Route::match(['get', 'post'],'customer-activity-report', [WalletReportController::class, 'customerActivityReport'])->name('report.clientActivity');
@@ -27,4 +30,7 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web','auth']], funct
 
     //AdminKyc
     Route::get('/adminKyc',[AdminKycController::class,'getAdminData'])->name('report.adminKyc')->middleware('permission:Report admin kyc');
+
+    // Mismatches user balances
+    Route::match(['get', 'post'],'mismatched-user-balances', [MismatchedUserBalanceController::class, 'report'])->name('report.mismatchedUserBalance')->middleware('permission:View mismatched user balance and bonus balance');
 });

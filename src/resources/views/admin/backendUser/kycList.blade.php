@@ -69,8 +69,12 @@
                                                 <select data-placeholder="Choose transaction status..."
                                                         class="chosen-select" tabindex="2" name="change_status">
                                                     <option value="" selected disabled>Select Status...</option>
-                                                    <option value="">All</option>
+
                                                     @if(!empty($_GET['change_status']))
+                                                        <option value="all"
+                                                                @if($_GET['change_status'] == 'all') selected @endif>
+                                                            All
+                                                        </option>
                                                         <option value="accepted"
                                                                 @if($_GET['change_status']  == 'accepted') selected @endif >
                                                             Accepted
@@ -79,9 +83,15 @@
                                                                 @if($_GET['change_status'] == 'rejected') selected @endif>
                                                             Rejected
                                                         </option>
+                                                        <option value="notverified"
+                                                                @if($_GET['change_status'] == 'notverified') selected @endif>
+                                                            Not verified
+                                                        </option>
                                                     @else
+                                                        <option value="all">All</option>
                                                         <option value="accepted">Accepted</option>
                                                         <option value="rejected">Rejected</option>
+                                                        <option value="notverified">Not verified</option>
                                                     @endif
                                                 </select>
                                             </div>
@@ -145,7 +155,7 @@
                                     <th>Email</th>
                                     <th>KYC status</th>
                                     <th>User type</th>
-                                    <th>status changed on</th>
+                                    <th>Status changed on</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -195,6 +205,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            {{ $lists->appends(request()->query())->links() }}
                         </div>
 
                     </div>

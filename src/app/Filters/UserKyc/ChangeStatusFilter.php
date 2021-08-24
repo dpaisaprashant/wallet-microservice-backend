@@ -30,6 +30,16 @@ class ChangeStatusFilter extends FilterAbstract {
             return $builder;
         }
 
-        return $builder->where('admin_user_k_y_c.status', strtoupper($value));
+
+        if($value == "accepted"){
+            return $builder->where('accept','1');
+        }elseif($value == "rejected"){
+            return $builder->where('accept','0');
+        }elseif($value == "notverified"){
+            return $builder->where('accept',null);
+        }elseif($value == "all"){
+            return $builder->where('id','!=',null);
+        }
+
     }
 }

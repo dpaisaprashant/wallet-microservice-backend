@@ -11,12 +11,12 @@ use Illuminate\Http\Request;
 class WalletServiceController extends Controller{
 
     public function index(){
-        $services = WalletService::paginate(10);
+        $services = WalletService::latest()->paginate(10);
         return view('Architecture::WalletService.viewWalletService')->with(compact('services'));
     }
 
     public function create(){
-        $all_wallet_transaction_id = WalletTransactionType::get();
+        $all_wallet_transaction_id = WalletTransactionType::select('id','transaction_type')->groupBy('transaction_type')->get();
         return view('Architecture::WalletService.createWalletService')->with(compact('all_wallet_transaction_id'));
     }
 
@@ -36,7 +36,7 @@ class WalletServiceController extends Controller{
         // }else{
         //     $handle_payment = 0;
         // }
-        
+
         $valid = FALSE;
         foreach($all_wallet_transaction_id as $wallet_transaction_id)
         {
@@ -46,7 +46,7 @@ class WalletServiceController extends Controller{
             }
             else{
                 $valid = FALSE;
-            }   
+            }
         }
 
         if($valid == FALSE){
@@ -72,7 +72,7 @@ class WalletServiceController extends Controller{
 
     public function edit($id){
         $selectedWalletService = WalletService::findorFail($id);
-        $all_wallet_transaction_id = WalletTransactionType::get();
+        $all_wallet_transaction_id = WalletTransactionType::select('id','transaction_type')->groupBy('transaction_type')->get();
         return view('Architecture::WalletService.editWalletService')->with(compact('all_wallet_transaction_id','selectedWalletService'));
     }
 
@@ -88,7 +88,7 @@ class WalletServiceController extends Controller{
             }
             else{
                 $valid = FALSE;
-            }   
+            }
         }
 
         if($valid == FALSE){
@@ -101,7 +101,7 @@ class WalletServiceController extends Controller{
         $selectedWalletService->wallet_transaction_type_id = $request->get('wallet_transaction_type_id');
         $selectedWalletService->validate_payment=$request->get('validate_payment');
         $selectedWalletService->handle_payment=$request->get('handle_payment');
-        
+
 
         $status = $selectedWalletService->save();
         if($status == true){
@@ -119,6 +119,5 @@ class WalletServiceController extends Controller{
         }else{
             return redirect()->route('wallet.service.view')->with('error', 'Something went wrong!Please try again later');
         }
-
     }
 }

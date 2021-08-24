@@ -133,6 +133,11 @@ class TransactionEvent extends Model
         return $user;
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
+
 
     public function selectedMonthTransactions($year, $month, $transactionType)
     {
@@ -146,6 +151,10 @@ class TransactionEvent extends Model
     public function refundTransaction()
     {
         return $this->hasOne(LoadTestFund::class, 'pre_transaction_id', 'pre_transaction_id');
+    }
+
+    public function preTransaction(){
+        return $this->hasMany(PreTransaction::class,"pre_transaction_id",'pre_transaction_id');
     }
 
 }

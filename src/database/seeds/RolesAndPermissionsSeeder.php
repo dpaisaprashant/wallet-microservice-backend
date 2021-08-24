@@ -231,6 +231,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
             'Merchant dashboard',
             'Merchant locked view',
+            'Merchant profile',
 
             'Architecture vendor transaction',
 
@@ -359,15 +360,25 @@ class RolesAndPermissionsSeeder extends Seeder
 
             // NicAsia
             'Nicasia cybersource view',
+            'Nicasia cybersource detail',
 
             //Cellpay
             'Cellpay user transaction view',
+            'Cellpay user transaction detail',
 
             //Account_Link
             'View load wallet',
             'Generate load wallet excel',
             'View nps linked account',
 
+            //Mismtached user balance and bonus balance
+            'View mismatched user balance and bonus balance',
+
+            //Run seeder
+            'View seeder list',
+            'Run seeder',
+
+            'View nchl aggregated payment',
             ];
 
         //get users having all permissions

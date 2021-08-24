@@ -693,6 +693,7 @@
                                                        target="_blank">
                                                         <img
                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_front'] }}"
+                                                            style="max-width: 500px;object-fit: cover"
                                                             alt="">
                                                         <p style="color: black; font-weight: bold;">
                                                             &nbsp;DOCUMENT FRONT
@@ -716,6 +717,7 @@
                                                        target="_blank"></a>
                                                     <img
                                                         src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_back'] }}"
+                                                        style="max-width: 500px;object-fit: cover"
                                                         alt="">
                                                     <p style="color: black; font-weight: bold;">
                                                         &nbsp;DOCUMENT BACK
@@ -740,6 +742,7 @@
                                                            target="_blank"></a>
                                                         <img
                                                             src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_document'] }}"
+                                                            style="max-width: 500px;object-fit: cover"
                                                             alt="">
                                                         <p style="color: black; font-weight: bold;">
                                                             &nbsp;COMPANY DOCUMENT
@@ -762,6 +765,7 @@
                                                            target="_blank">
                                                             <img
                                                                 src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_logo'] }}"
+                                                                style="max-width: 500px;object-fit: cover"
                                                                 alt="">
                                                             <p style="color: black; font-weight: bold;">
                                                                 &nbsp;COMPANY LOGO
@@ -785,6 +789,7 @@
                                                            target="_blank">
                                                             <img
                                                                 src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_vat_document'] }}"
+                                                                style="max-width: 500px;object-fit: cover"
                                                                 alt="">
                                                             <p style="color: black; font-weight: bold;">
                                                                 &nbsp;COMPANY VAT DOCUMENT
@@ -808,6 +813,7 @@
                                                            target="_blank">
                                                             <img
                                                                 src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_tax_clearance_document'] }}"
+                                                                style="max-width: 500px;object-fit: cover"
                                                                 alt="">
                                                             <p style="color: black; font-weight: bold;">
                                                                 &nbsp;COMPANY TAX CLEARANCE DOCUMENT

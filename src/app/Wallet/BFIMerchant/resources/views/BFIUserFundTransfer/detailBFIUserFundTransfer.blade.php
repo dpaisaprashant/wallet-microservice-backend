@@ -48,9 +48,9 @@
                                 @endif
 
                                 Amount : {{ $bfiToUserFundTransfer->amount }}<br>
-                                To User Number: {{ $userDetails->mobile_no }}<br>
-                                To User Name : {{ $userDetails->name }}<br>
-                                To User Email : {{ $userDetails->email }}
+                                To User Number: {{ $userDetails->mobile_no ?? 'Null'}}<br>
+                                To User Name : {{ $userDetails->name ?? 'Null'}}<br>
+                                To User Email : {{ $userDetails->email ?? 'Null' }}
                             </address>
                         </div>
 

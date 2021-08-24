@@ -35,9 +35,9 @@
                         <div class="col-sm-6" style="margin-top: 30px;">
                             <h5>User:</h5>
                             <address>
-                                <strong>{{ $transaction->user['name']}}</strong><br>
-                                Email: {{ $transaction->user['email'] }}<br>
-                                Contact Number: {{ $transaction->user['mobile_no'] }}
+                                <strong>{{ optional($transaction->user)['name']}}</strong><br>
+                                Email: {{ optional($transaction->user)['email'] }}<br>
+                                Contact Number: {{ optional($transaction->user)['mobile_no'] }}
                             </address>
 
 
@@ -46,7 +46,7 @@
                                 <strong>{{ "Connect IPS" }}</strong><br>
                                 Transaction Id: {{ $transaction->transaction_uuid }}<br>
                                 Reference Number: {{ $transaction->reference_reference_number }}<br>
-                                Status:     @include('admin.transaction.nicAsiaCyberSourceTransaction.status')
+                                Status:@include('NicAsia::status',['NicTransaction' => $transaction])
                             </address>
 
                             <address>

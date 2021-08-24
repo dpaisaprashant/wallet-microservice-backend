@@ -127,12 +127,28 @@ class UserController extends Controller
         //$user = User::with(['userLoadTransactions', 'userLoginHistories', 'userCheckPayment', 'fromFundTransfers', 'receiveFundTransfers', 'fromFundRequests', 'receiveFundRequests', 'kyc', 'wallet'])->findOrFail($id);
         $user = User::with(['userReferral', 'userReferralLimit','merchant','bankAccount','preTransactions', 'requestInfos', 'userLoginHistories', 'fromFundTransfers', 'receiveFundTransfers', 'fromFundRequests', 'receiveFundRequests', 'kyc', 'wallet', 'agent', 'userReferralBonus'])->findOrFail($id);
 
-        if($request->user()->hasPermissionTo('View agent profile') && !$request->user()->hasPermissionTo('User profile')) {
-            if(!$user->isValidAgentOrSubAgent()){
-                abort(403,'User does not have the right permissions.');
+        $admin = $request->user();
+        if (!$admin->hasPermissionTo('User profile')) {
+
+            //merchant
+            if ($user->merchant) {
+                if (!$admin->hasPermissionTo('Merchant profile')) {
+                    abort(403,'User does not have the right permissions to view merchant profile.');
+                }
+            }
+
+            //agent
+            if ($user->agent) { //has row in agents table but is a verified agent
+                if (!$admin->hasPermissionTo('View agent profile')) {
+                    abort(403,'User does not have the right permissions to view agent profile');
+                }
+            }
+
+            //normal user
+            if (empty($user->agent) && empty($user->merchant)) {
+                abort(403,'User does not have the right permissions to view user profile');
             }
         }
-
 
             //Audit Trial section
             $allAudits = $this->allAudits($user, $request);

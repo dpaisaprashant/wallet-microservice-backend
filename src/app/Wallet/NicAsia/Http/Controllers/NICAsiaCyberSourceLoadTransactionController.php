@@ -32,11 +32,14 @@ class NICAsiaCyberSourceLoadTransactionController extends Controller{
 //        return view('admin.transaction.nicAsiaCyberSourceLoad');
 //    }
 
-public function index(){
-    $users = User::has('preTransaction')->select('id','mobile_no')->get();
-    $preTransactions = PreTransaction::select('pre_transaction_id','user_id')->get();
-    $NicTransactions = NICAsiaCyberSourceLoadTransaction::filter(request())->paginate(10);
-    return view('NicAsia::viewNICAsiaCyberSourceLoad')->with(compact('NicTransactions','users','preTransactions'));
-}
+    public function index(){
+        $NicTransactions = NICAsiaCyberSourceLoadTransaction::filter(request())->latest()->paginate(10);
+        return view('NicAsia::viewNICAsiaCyberSourceLoad')->with(compact('NicTransactions',));
+    }
+
+    public function nicDetail($id){
+        $transaction = NICAsiaCyberSourceLoadTransaction::findorFail($id);
+        return view('NicAsia::nicAsiaCyberSourceLoadDetail')->with(compact('transaction'));
+    }
 
 }

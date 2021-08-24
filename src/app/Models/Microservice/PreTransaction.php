@@ -8,6 +8,7 @@ use App\Models\BfiToUserFundTransfer;
 use App\Models\CellPayUserTransaction;
 use App\Models\KhaltiUserTransaction;
 use App\Models\LoadTestFund;
+use App\Models\NchlAggregatedPayment;
 use App\Models\NchlBankTransfer;
 use App\Models\NchlLoadTransaction;
 use App\Models\NICAsiaCyberSourceLoadTransaction;
@@ -32,6 +33,8 @@ class PreTransaction extends Model
     CONST MICROSERVICE_PAYPOINT = 'PAYPOINT';
     CONST MICROSERVICE_NCHL = 'NCHL';
 
+    CONST TRANSACTION_TYPE_DEBIT = 'debit';
+    CONST TRANSACTION_TYPE_CREDIT = 'credit';
     /**
      * @param $amount
      * @return float|int
@@ -83,6 +86,10 @@ class PreTransaction extends Model
     public function nchlLoadTransaction()
     {
         return $this->hasOne(NchlLoadTransaction::class, 'pre_transaction_id', 'pre_transaction_id');
+    }
+
+    public function nchlAggregatePayment(){
+        return $this->hasOne(NchlAggregatedPayment::class,'pre_transaction_id','pre_transaction_id');
     }
 
     public function transactionEvent()

@@ -10,6 +10,7 @@ use App\Traits\MorphOneTransaction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use App\Models\Microservice\PreTransaction;
 
 class NchlAggregatedPayment extends Model
 {
@@ -27,6 +28,10 @@ class NchlAggregatedPayment extends Model
     public function getAmountAttribute($amount)
     {
         return ($amount/100);
+    }
+
+    public function preTransaction(){
+        return $this->belongsTo(PreTransaction::class,'pre_transaction_id','pre_transaction_id');
     }
 
     public function getCommissionAmountAttribute()

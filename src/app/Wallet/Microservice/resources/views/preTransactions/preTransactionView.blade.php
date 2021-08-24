@@ -38,21 +38,9 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label for="user_number">User Number</label>
-                                            <select data-placeholder="Select User Number" class="chosen-select"
-                                                    tabindex="2" name="user_number">
-                                                <option value="" selected disabled>Select User Number...</option>
-                                                <option value="">All</option>
-                                                @if(!empty($_GET['user_number']))
-                                                    @foreach($usersUnique as $userUnique)
-                                                                    <option value="{{$userUnique->id}}"
-                                                                            @if($_GET['user_number']  == $userUnique->id) selected @endif >{{$userUnique->mobile_no}}</option>
-                                                    @endforeach
-                                                @else
-                                                    @foreach($usersUnique as $userUnique)
-                                                        <option value="{{$userUnique->id}}">{{$userUnique->mobile_no}}</option>
-                                                    @endforeach
-                                                @endif
-                                            </select>
+                                            <input type="number" name="user_number" placeholder="Enter User Number"
+                                                   class="form-control"
+                                                   value="{{ !empty($_GET['user_number']) ? $_GET['user_number'] : '' }}">
                                         </div>
 
                                         <div class="col-md-6">
@@ -300,19 +288,16 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    @include('admin.asset.notification.notify')
 
-    </div>
-
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="ibox ">
-                @include('admin.asset.notification.notify')
-
-                <div class="ibox-content">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover dataTables-example"
-                               title="Pre Transaction list">
-                            <thead>
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover dataTables-example"
+                                   title="Pre Transaction list">
+                                <thead>
                                 <tr>
                                     <th>S.No.</th>
                                     <th>User Number</th>
@@ -332,63 +317,60 @@
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($preTransactions as $preTransaction)
+                                </thead>
+                                <tbody>
+                                @foreach($preTransactions as $preTransaction)
                                     <tr class="gradeC">
-                                            <td>{{ $loop->index + ($preTransactions->perPage() * ($preTransactions->currentPage() - 1)) + 1 }}</td>
-                                            <td>
-                                                @foreach($users as $user)
-                                                    @if($user->id == $preTransaction->user_id)
-                                                        {{$user->mobile_no}}
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                            <td>{{ $preTransaction->pre_transaction_id }}</td>
-                                            <td>Rs. {{$preTransaction->amount}}</td>
-                                            <td>{{$preTransaction->description}}</td>
-                                            <td>
-                                                {{ $preTransaction->vendor }}
-                                            </td>
-                                            <td>
-                                                {{ $preTransaction->service_type }}
-                                            </td>
-                                            <td>{{ $preTransaction->microservice_type }}</td>
-                                            <td>{{ $preTransaction->transaction_type }}</td>
-                                            <td>{{ $preTransaction->url }}</td>
-                                            <td>{{ $preTransaction->before_balance }}</td>
-                                            <td>{{ $preTransaction->after_balance }}</td>
-                                            <td>{{ $preTransaction->before_bonus_balance }}</td>
-                                            <td>{{ $preTransaction->after_bonus_balance }}</td>
-                                            <td>{{$preTransaction->created_at}}</td>
+                                        <td>{{ $loop->index + ($preTransactions->perPage() * ($preTransactions->currentPage() - 1)) + 1 }}</td>
+                                        <td>{{optional($preTransaction->user)->mobile_no}}</td>
+                                        <td>{{ $preTransaction->pre_transaction_id }}</td>
+                                        <td>Rs. {{$preTransaction->amount}}</td>
+                                        <td>{{$preTransaction->description}}</td>
+                                        <td>
+                                            {{ $preTransaction->vendor }}
+                                        </td>
+                                        <td>
+                                            {{ $preTransaction->service_type }}
+                                        </td>
+                                        <td>{{ $preTransaction->microservice_type }}</td>
+                                        <td>{{ $preTransaction->transaction_type }}</td>
+                                        <td>{{ $preTransaction->url }}</td>
+                                        <td>{{ $preTransaction->before_balance }}</td>
+                                        <td>{{ $preTransaction->after_balance }}</td>
+                                        <td>{{ $preTransaction->before_bonus_balance }}</td>
+                                        <td>{{ $preTransaction->after_bonus_balance }}</td>
+                                        <td>{{$preTransaction->created_at}}</td>
 
-                                            <td>
-                                                @if($preTransaction->status=="FAILED")
+                                        <td>
+                                            @if($preTransaction->status=="FAILED")
                                                 <span class="badge badge-danger">{{$preTransaction->status}}</span>
-                                                @elseif($preTransaction->status=="SUCCESS")
+                                            @elseif($preTransaction->status=="SUCCESS")
                                                 <span class="badge badge-primary">{{$preTransaction->status}}</span>
-                                                @else
+                                            @else
                                                 <span class="badge badge-secondary">Null</span>
-                                                @endif
-                                            </td>
-                                            <td>
+                                            @endif
+                                        </td>
+                                        <td>
                                             @include('Microservice::preTransactions.preTransactionJsonRequest', ['preTransaction' => $preTransaction])
                                             @include('Microservice::preTransactions.preTransactionJsonResponse', ['preTransaction' => $preTransaction])
                                             @include('Microservice::preTransactions.preTransactionRequestParameter', ['preTransaction' => $preTransaction])
                                             @include('Microservice::preTransactions.preTransactionSpecials', ['preTransaction' => $preTransaction])
 
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                            </tbody>
-                        </table>
-                        {{ $preTransactions->appends(request()->query())->links() }}
-                    </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                            {{ $preTransactions->appends(request()->query())->links() }}
+                        </div>
 
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+
 
 @endsection
 @section('styles')

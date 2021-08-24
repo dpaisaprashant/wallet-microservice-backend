@@ -54,6 +54,8 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'logo' => env('APP_LOGO', 'http://localhost'),
+
     'core_url' => env('CORE_URL', ''),
 
     'asset_url' => env('ASSET_URL', null),
@@ -192,7 +194,8 @@ return [
         App\Wallet\Microservice\MicroserviceServiceProvider::class,
         App\Wallet\NicAsia\NICAsiaCyberSourceLoadTransactionServiceProvider::class,
         App\Wallet\NPSAccountLinkLoad\NPSAccountLinkLoadServiceProvider::class,
-        App\Wallet\LinkedAccounts\LinkedAccountsServiceProvider::class
+        App\Wallet\LinkedAccounts\LinkedAccountsServiceProvider::class,
+        App\Wallet\WalletAPI\WalletAPIServiceProvider::class
 
 
 

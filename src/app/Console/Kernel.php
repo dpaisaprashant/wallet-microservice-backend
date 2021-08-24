@@ -8,6 +8,8 @@ use App\Wallet\Report\Corn\MisMatchUserReconciliation;
 use App\Wallet\Session\AdminSession;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Wallet\WalletAPI\Cron\NchlApiCompareTransactions;
+
 
 class Kernel extends ConsoleKernel
 {
@@ -33,6 +35,7 @@ class Kernel extends ConsoleKernel
         $schedule->call(new MisMatchUserReconciliation())->everyFifteenMinutes();
         $schedule->call(new AdminSession)->everyMinute();
         $schedule->call(new CheckUserBalanceMismatch)->hourly();
+        $schedule->call(new NchlApiCompareTransactions)->everyMinute();
     }
 
     /**

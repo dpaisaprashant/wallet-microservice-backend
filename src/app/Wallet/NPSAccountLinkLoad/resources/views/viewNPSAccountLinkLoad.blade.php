@@ -39,11 +39,13 @@
                     <div class="ibox-content">
                         <div class="row">
                             <div class="col-sm-12">
-                                <form role="form" method="get" action="{{ route('npsaccountlinkload.view') }}" id="filter">
+                                <form role="form" method="get" action="{{ route('npsaccountlinkload.view') }}"
+                                      id="filter">
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <input type="text" name="gateway_transaction_id" placeholder="Gateway Transaction ID"
+                                                <input type="text" name="gateway_transaction_id"
+                                                       placeholder="Gateway Transaction ID"
                                                        class="form-control"
                                                        value="{{ !empty($_GET['gateway_transaction_id']) ? $_GET['gateway_transaction_id'] : '' }}">
                                             </div>
@@ -67,7 +69,8 @@
 
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <input type="text" name="linked_accounts_id" placeholder="Linked Account ID"
+                                                <input type="text" name="linked_accounts_id"
+                                                       placeholder="Linked Account ID"
                                                        class="form-control"
                                                        value="{{ !empty($_GET['linked_accounts_id']) ? $_GET['linked_accounts_id'] : '' }}">
                                             </div>
@@ -98,28 +101,51 @@
                                                        value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
                                             </div>
                                         </div>
-
                                         <div class="col-md-3">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
+                                                    <i class="fa fa-dollar"></i>
                                                 </span>
-                                                <input id="date_from_load" type="text" class="form-control date_from_load"
-                                                       placeholder="From Load Time Stamp" name="from_load" autocomplete="off"
-                                                       value="{{ !empty($_GET['from_load']) ? $_GET['from_load'] : '' }}">
+                                                <input type="number" class="form-control"
+                                                       placeholder="From Amount" name="from_amount"
+                                                       autocomplete="off"
+                                                       value="{{ !empty($_GET['from_amount']) ? $_GET['from_amount'] : '' }}">
                                             </div>
                                         </div>
 
                                         <div class="col-md-3">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
+                                                    <i class="fa fa-dollar"></i>
                                                 </span>
-                                                <input id="date_to_load" type="text" class="form-control date_to_load"
-                                                       placeholder="To Load Time Stamp" name="to_load" autocomplete="off"
-                                                       value="{{ !empty($_GET['to_load']) ? $_GET['to_load'] : '' }}">
+                                                <input type="number" class="form-control"
+                                                       placeholder="To Amount" name="to_amount"
+                                                       autocomplete="off"
+                                                       value="{{ !empty($_GET['to_amount']) ? $_GET['to_amount'] : '' }}">
                                             </div>
                                         </div>
+
+                                        {{--                                        <div class="col-md-3">--}}
+                                        {{--                                            <div class="input-group date">--}}
+                                        {{--                                                <span class="input-group-addon">--}}
+                                        {{--                                                    <i class="fa fa-calendar"></i>--}}
+                                        {{--                                                </span>--}}
+                                        {{--                                                <input id="date_from_load" type="text" class="form-control date_from_load"--}}
+                                        {{--                                                       placeholder="From Load Time Stamp" name="from_load" autocomplete="off"--}}
+                                        {{--                                                       value="{{ !empty($_GET['from_load']) ? $_GET['from_load'] : '' }}">--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </div>--}}
+
+                                        {{--                                        <div class="col-md-3">--}}
+                                        {{--                                            <div class="input-group date">--}}
+                                        {{--                                                <span class="input-group-addon">--}}
+                                        {{--                                                    <i class="fa fa-calendar"></i>--}}
+                                        {{--                                                </span>--}}
+                                        {{--                                                <input id="date_to_load" type="text" class="form-control date_to_load"--}}
+                                        {{--                                                       placeholder="To Load Time Stamp" name="to_load" autocomplete="off"--}}
+                                        {{--                                                       value="{{ !empty($_GET['to_load']) ? $_GET['to_load'] : '' }}">--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </div>--}}
                                     </div>
 
                                     <div class="row" style="margin-top: 40px;">
@@ -131,7 +157,7 @@
                                                     @if(!empty($_GET['load_status']))
                                                         @foreach($load_status as $stat)
                                                             <option value="{{$stat}}"
-                                                                @if($_GET['load_status']  == $stat) selected @endif >{{$stat}}</option>
+                                                                    @if($_GET['load_status']  == $stat) selected @endif >{{$stat}}</option>
                                                         @endforeach
                                                     @else
                                                         @foreach($load_status as $stat)
@@ -142,29 +168,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3">
-                                            <div class="input-group date">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-dollar"></i>
-                                                </span>
-                                                <input type="number" class="form-control"
-                                                        placeholder="From Amount" name="from_amount"
-                                                        autocomplete="off"
-                                                        value="{{ !empty($_GET['from_amount']) ? $_GET['from_amount'] : '' }}">
-                                            </div>
-                                        </div>
 
-                                        <div class="col-md-3">
-                                            <div class="input-group date">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-dollar"></i>
-                                                </span>
-                                                <input type="number" class="form-control"
-                                                        placeholder="To Amount" name="to_amount"
-                                                        autocomplete="off"
-                                                        value="{{ !empty($_GET['to_amount']) ? $_GET['to_amount'] : '' }}">
-                                            </div>
-                                        </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <input type="text" name="phone_number" placeholder="User Phone Number"
@@ -176,7 +180,8 @@
 
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
-                                                formaction="{{ route('npsaccountlinkload.view') }}"><strong>Filter</strong>
+                                                formaction="{{ route('npsaccountlinkload.view') }}">
+                                            <strong>Filter</strong>
                                         </button>
                                     </div>
 
@@ -223,36 +228,44 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($NPSAccountLinkLoads as $NPSAccountLinkLoad)
+                                    @foreach($npsAccountLinkLoads as $npsAccountLinkLoad)
 
                                         <tr class="gradeC">
-                                            <td>{{ $loop->index + ($NPSAccountLinkLoads->perPage() * ($NPSAccountLinkLoads->currentPage() - 1)) + 1 }}</td>
-                                            <td>{{ $NPSAccountLinkLoad->amount }}</td>
-                                            <td>{{ $NPSAccountLinkLoad->gateway_transaction_id }}</td>
+                                            <td>{{ $loop->index + ($npsAccountLinkLoads->perPage() * ($npsAccountLinkLoads->currentPage() - 1)) + 1 }}</td>
+                                            <td>{{ $npsAccountLinkLoad->amount }}</td>
+                                            <td>{{ $npsAccountLinkLoad->gateway_transaction_id }}</td>
                                             <td>
-                                                <span class="badge {{$NPSAccountLinkLoad->load_status=="Transaction Success" ? "badge-primary" : "badge-danger"}}">{{ $NPSAccountLinkLoad->load_status }}</span>
+                                                <span
+                                                    class="badge {{$npsAccountLinkLoad->load_status=="Transaction Success" ? "badge-primary" : "badge-danger"}}">{{ $npsAccountLinkLoad->load_status }}</span>
                                             </td>
-                                            <td>{{ $NPSAccountLinkLoad->load_time_stamp }}</td>
-                                            <td>{{ $NPSAccountLinkLoad->merchant_txn_id }}</td>
-                                            <td>{{ $NPSAccountLinkLoad->reference_id }}</td>
+                                            <td>{{ $npsAccountLinkLoad->load_time_stamp }}</td>
+                                            <td>{{ $npsAccountLinkLoad->merchant_txn_id }}</td>
+                                            <td>{{ $npsAccountLinkLoad->reference_id }}</td>
                                             <td>
-                                                @if(!empty($NPSAccountLinkLoad->preTransaction->user->mobile_no))
-                                                    {{ $NPSAccountLinkLoad->preTransaction->user->mobile_no }}
+                                                @if(!empty($npsAccountLinkLoad->preTransaction->user->mobile_no))
+                                                    {{ $npsAccountLinkLoad->preTransaction->user->mobile_no }}
                                                 @else
                                                     No Data
                                                 @endif
                                             </td>
-                                            <td>{{ $NPSAccountLinkLoad->linked_accounts_id }}</td>
-                                            <td>{{ $NPSAccountLinkLoad->created_at }}</td>
+                                            <td>{{ $npsAccountLinkLoad->linked_accounts_id }}</td>
+                                            <td>{{ $npsAccountLinkLoad->created_at }}</td>
                                             <td>
-                                                @include('NPSAccountLinkLoad::transactionRemarks', ['NPSAccountLinkLoad' => $NPSAccountLinkLoad])
-                                                @include('NPSAccountLinkLoad::jsonButtons', ['NPSAccountLinkLoad' => $NPSAccountLinkLoad])
+                                                @include('NPSAccountLinkLoad::transactionRemarks', ['npsAccountLinkLoad' => $npsAccountLinkLoad])
+                                                @include('NPSAccountLinkLoad::jsonButtons', ['npsAccountLinkLoad' => $npsAccountLinkLoad])
+
+                                                <a href="{{ route('npsaccountlinkload.detail', $npsAccountLinkLoad->id) }}">
+                                                    <button class="btn btn-primary btn-icon" type="button"><i
+                                                            class="fa fa-eye"></i></button>
+                                                </a>
+
+                                                {{--                                                @include('NPSAccountLinkLoad::transactionReport', ['npsAccountLinkLoad' => $npsAccountLinkLoad])--}}
                                             </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
-                                {{ $NPSAccountLinkLoads->appends(request()->query())->links() }}
+                                {{ $npsAccountLinkLoads->appends(request()->query())->links() }}
                             </div>
                         </div>
                     </div>
@@ -279,7 +292,7 @@
     <script>
         @if(!empty($_GET))
         $(document).ready(function (e) {
-            let a = "Showing {{ $NPSAccountLinkLoads->firstItem() }} to {{ $NPSAccountLinkLoads->lastItem() }} of {{ $NPSAccountLinkLoads->total() }} entries";
+            let a = "Showing {{ $npsAccountLinkLoads->firstItem() }} to {{ $npsAccountLinkLoads->lastItem() }} of {{ $npsAccountLinkLoads->total() }} entries";
             $('.dataTables_info').text(a);
         });
         @endif

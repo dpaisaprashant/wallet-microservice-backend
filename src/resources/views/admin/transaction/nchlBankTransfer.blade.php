@@ -215,6 +215,9 @@
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
                                                 formaction="{{ route('nchl.bankTransfer') }}"><strong>Filter</strong>
                                         </button>
+                                        <button class="btn btn-sm btn-warning float-right m-t-n-xs" style="margin-right: 8px;" type="submit"
+                                                formaction="{{ route('walletapi.compare') }}"><strong>Compare</strong>
+                                        </button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
                                     {{--<div>
@@ -304,10 +307,21 @@
                                                 @include('admin.transaction.nchlBankTransfer.response')
                                             </td>
                                             <td>
-                                                <a href="{{ route('nchl.bankTransfer.detail', $transaction->id) }}">
-                                                    <button class="btn btn-primary btn-icon" type="button"><i
-                                                            class="fa fa-eye"></i></button>
-                                                </a>
+
+                                                <form action="{{ route('walletapi.report', $transaction->transaction_id) }}" method="post">
+                                                    @csrf
+                                                    <a href="{{ route('nchl.bankTransfer.detail', $transaction->id) }}" title="Transaction Detail">
+                                                        <button class="btn btn-primary btn-icon" type="button"><i
+                                                                class="fa fa-eye"></i></button>
+
+                                                    <button class="btn btn-primary btn-icon" type="submit" title="API Details">
+                                                            <i class="fa fa-database"></i></button>
+
+
+                                                    </a>
+                                                </form>
+
+
                                             </td>
                                         </tr>
                                     @endforeach

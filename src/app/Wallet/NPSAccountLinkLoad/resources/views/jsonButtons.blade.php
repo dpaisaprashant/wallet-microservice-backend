@@ -1,3 +1,5 @@
-@include('NPSAccountLinkLoad::jsonRequest', ['NPSAccountLinkLoad' => $NPSAccountLinkLoad])
+@include('NPSAccountLinkLoad::jsonRequest', ['NPSAccountLinkLoad' => $npsAccountLinkLoad])
 
-@include('NPSAccountLinkLoad::jsonResponse', ['NPSAccountLinkLoad' => $NPSAccountLinkLoad])
+@include('NPSAccountLinkLoad::jsonResponse', ['NPSAccountLinkLoad' => $npsAccountLinkLoad])
+
+

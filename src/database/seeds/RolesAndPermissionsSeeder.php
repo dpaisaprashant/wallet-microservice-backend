@@ -97,6 +97,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'User KYC view',
             'KYC accept',
             'KYC reject',
+            'Edit user kyc',
 
             'Complete transaction view',
 

@@ -188,11 +188,73 @@ class UserController extends Controller
         return view('admin.user.kyc')->with(compact('user', 'admin'));
     }
 
+    public function EditKyc($id)
+    {
+        $user = User::with('kyc')->findOrFail($id);
+        $admin = 'admin';
+        return view('admin.user.EditKyc')->with(compact('user','admin'));
+    }
+
+    public function UpdateKyc(Request $request, $id)
+    {
+//        dd($request->first_name);
+        $selectedUserKYC = UserKYC::where('user_id','=',$id)->first();
+        $selectedUserKYC->first_name = $request->first_name;
+        $selectedUserKYC->middle_name = $request->middle_name;
+        $selectedUserKYC->last_name = $request->last_name;
+        $selectedUserKYC->date_of_birth = $request->dob;
+        $selectedUserKYC->fathers_name = $request->fathers_name;
+        $selectedUserKYC->mothers_name = $request->mothers_name;
+        $selectedUserKYC->grand_fathers_name = $request->grandfather_name;
+        $selectedUserKYC->spouse_name = $request->spouse_name;
+        $selectedUserKYC->email = $request->email;
+        $selectedUserKYC->occupation = $request->occupation;
+        $selectedUserKYC->province = $request->province;
+        $selectedUserKYC->zone = $request->zone;
+        $selectedUserKYC->district = $request->district;
+        $selectedUserKYC->municipality = $request->municipality;
+        $selectedUserKYC->ward_no = $request->ward_no;
+        $selectedUserKYC->tmp_province = $request->tmp_province;
+        $selectedUserKYC->tmp_zone = $request->tmp_zone;
+        $selectedUserKYC->tmp_district = $request->tmp_district;
+        $selectedUserKYC->tmp_municipality = $request->tmp_municipality;
+        $selectedUserKYC->tmp_ward_no = $request->tmp_ward_no;
+        $selectedUserKYC->document_type = $request->document_type;
+        $selectedUserKYC->id_no = $request->id_no;
+        $selectedUserKYC->c_issued_date = $request->c_issued_date;
+        $selectedUserKYC->c_issued_from = $request->c_issued_from;
+        $selectedUserKYC->p_photo = $request->p_photo;
+        $selectedUserKYC->id_photo_front = $request->id_photo_front;
+        $selectedUserKYC->id_photo_back = $request->id_photo_back;
+        $selectedUserKYC->o_photo = $request->o_photo;
+        $selectedUserKYC->gender = $request->gender;
+        //merchant
+
+            $selectedUserKYC->company_name = $request->company_name;
+            $selectedUserKYC->company_address = $request->company_address;
+            $selectedUserKYC->company_vat_pin_number = $request->company_vat_pin_number;
+            $selectedUserKYC->company_document = $request->company_document;
+            $selectedUserKYC->company_logo = $request->company_logo;
+            $selectedUserKYC->company_vat_document = $request->company_vat_document;
+            $selectedUserKYC->company_tax_clearance_document = $request->company_tax_clearance_document;
+
+
+        $status = $selectedUserKYC->save();
+        $user = User::with('kyc')->findOrFail($id);
+        $admin = 'admin';
+        if($status == true){
+            return redirect()->route('user.kyc',$id)->with(compact('user','admin'))->with('success','Wallet Service updated successfully');
+        }else{
+            return redirect()->route('user.kyc',$id)->with(compact('user','admin'))->with('error', 'Something went wrong!Please try again later');
+        }
+    }
+
+
+
     public function userYearlyGraph(Request $request)
     {
         $now = Carbon::now();
         $year = $now->format('Y');
-
         //get current year transaction
         $transactions = TransactionEvent::where('user_id', $request->user_id)
             ->with('transactionable')

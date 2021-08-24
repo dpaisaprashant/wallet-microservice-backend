@@ -117,6 +117,8 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::get('/users/profile/{id}', 'UserController@profile')->name('user.profile')->middleware('permission:User profile|View agent profile|Merchant profile');
         Route::get('/users/kyc/{id}', 'UserController@kyc')->name('user.kyc')->middleware('permission:User KYC view');
+        Route::get('/users/edit-kyc/{id}', 'UserController@EditKyc')->name('user.editKyc')->middleware('permission:Edit user kyc');
+        Route::post('/users/edit-kyc/{id}', 'UserController@UpdateKyc')->name('user.updateKyc')->middleware('permission:Edit user kyc');
         Route::get('/users/transactions/{id}', 'UserController@transaction')->name('user.transaction')->middleware('permission:User transactions');
 
         Route::post('/user/deactivate', 'UserController@deactivateUser')->name('user.deactivate')->middleware('permission:User deactivate'); //deactivate user

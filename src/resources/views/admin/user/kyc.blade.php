@@ -714,7 +714,7 @@
                                                     {{--                                                        </div>--}}
                                                     {{--                                                    </a>--}}
                                                     <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_back'] }}"
-                                                       target="_blank"></a>
+                                                       target="_blank">
                                                     <img
                                                         src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_back'] }}"
                                                         style="max-width: 500px;object-fit: cover"
@@ -722,6 +722,7 @@
                                                     <p style="color: black; font-weight: bold;">
                                                         &nbsp;DOCUMENT BACK
                                                     </p>
+                                                    </a>
                                                 </div>
 
                                                 @if($user->merchant()->first())

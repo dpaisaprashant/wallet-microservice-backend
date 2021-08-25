@@ -107,9 +107,9 @@
                                                     </dd>
 
                                                     <dt class="col-md-3 text-right">
-                                                        <label for="dob">Date Of Birth:</label>
+                                                        <label for="date_of_birth">Date Of Birth:</label>
                                                     <dd class="col-md-8">
-                                                        <input type="text" class="form-control form-control-sm" name="dob" value="{{ $user->kyc->date_of_birth }}" required>
+                                                        <input type="text" class="form-control form-control-sm" name="date_of_birth" value="{{ $user->kyc->date_of_birth }}" required>
                                                     </dd>
 
                                                     <dt class="col-md-3 text-right">
@@ -149,10 +149,10 @@
                                                     </dd>
 
                                                     <dt class="col-md-3 text-right">
-                                                        <label for="grandfather_name">Grandfather's Name:</label>
+                                                        <label for="grand_fathers_name">Grandfather's Name:</label>
                                                     </dt>
                                                     <dd class="col-md-8">
-                                                        <input type="text" class="form-control form-control-sm" name="grandfather_name" value="{{ $user->kyc->grand_fathers_name }}" required>
+                                                        <input type="text" class="form-control form-control-sm" name="grand_fathers_name" value="{{ $user->kyc->grand_fathers_name }}" required>
                                                     </dd>
 
 
@@ -364,6 +364,7 @@
                                                     <div class="col-sm-4 col-sm-offset-2" style="float:right">
                                                         <button class="btn btn-primary btn-sm" type="submit">Submit</button>
                                                     </div>
+
 
                                             </form>
                                         @else

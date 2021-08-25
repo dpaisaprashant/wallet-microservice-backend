@@ -178,6 +178,13 @@ $url = url()->current();
                 </li>
             @endcan
 
+            @can('View admin edited kyc')
+            <li @if(preg_match('/admin-updated-user-kyc/i', $url)) class="active" @endif>
+                <a href="{{route('user.showAdminUpdatedKyc')}}"><i class="fa fa-user-secret"></i> <span
+                        class="nav-label">Admin Updated KYC List</span></a>
+            </li>
+            @endcan
+
             @can('Unverified KYC users view')
                 <li @if($url == route('user.unverifiedKYC.view')) class="active" @endif>
                     <a href="{{ route('user.unverifiedKYC.view') }}"><i class="fa fa-user-times"></i> <span

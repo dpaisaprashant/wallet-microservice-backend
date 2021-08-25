@@ -107,6 +107,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('kyc-not-filled-user', 'UserController@kycNotFilledView')->name('user.kycNotFilled.view')->middleware('permission:KYC not filled users view'); // KYC not filled user view page
         Route::get('unverified-kyc-user', 'UserController@unverifiedKYCView')->name('user.unverifiedKYC.view')->middleware('permission:Unverified KYC users view'); // Unverified KYC view
         Route::post('change-kyc-status', 'UserController@changeKYCStatus')->name('user.changeKYCStatus')->middleware('permission:KYC accept|KYC reject'); // Change KYC status
+        Route::get('admin-updated-user-kyc', 'UserController@showAdminUpdatedKyc')->name('user.showAdminUpdatedKyc')->middleware('permission:View admin edited kyc'); // Change KYC status
 
 
         Route::get('unverified-merchant-kyc-user',[\App\Http\Controllers\Merchant\MerchantController::class,'unverifiedMerchantKYCView'])->name('merchant.unverifiedMerchantKYC.view');

@@ -340,14 +340,14 @@ $url = url()->current();
             @can('View pre-transactions')
                 <li @if($url == route('preTransaction.view')) class="active" @endif>
                     <a href="{{route('preTransaction.view')}}"><i class="fa fa-handshake-o"></i> <span
-                            class="nav-label">Pre Transactions</span></a>
+                            class="nav-label"> Pre Transactions</span></a>
                 </li>
             @endcan
 
             @if(auth()->user()->hasAnyPermission(['View request info']))
                 @can('View request info')
                     <li><a href="{{ route('requestinfo.index') }}"><i class="fa fa-info-circle"></i><span
-                                class="nav-label"> Requests Info</span></a></li>
+                                class="nav-label">&nbsp Requests Info</span></a></li>
                 @endcan
             @endif
 
@@ -567,14 +567,12 @@ $url = url()->current();
                     <ul class="nav nav-second-level collapse">
                         @can('View blocked ip')
                             <li @if($url == route('blockedip.view')) class="active" @endif>
-                                <a href="{{ route('blockedip.view') }}"><i class="fa fa-lock"></i> <span
-                                        class="nav-label">Block IP</span></a>
+                                <a href="{{ route('blockedip.view') }}"><i class="fa fa-lock"></i> Block IP</a>
                             </li>
                         @endcan
                         @can('View whitelisted ip')
                             <li @if($url == route('whitelistedIP.view')) class="active" @endif>
-                                <a href="{{ route('whitelistedIP.view') }}"><i class="fa fa-check-square"></i> <span
-                                        class="nav-label">Whitelist IP</span></a>
+                                <a href="{{ route('whitelistedIP.view') }}"><i class="fa fa-check-square"></i> Whitelist IP</a>
                             </li>
                         @endcan
                     </ul>

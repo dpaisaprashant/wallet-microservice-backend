@@ -344,12 +344,12 @@ $url = url()->current();
                 </li>
             @endcan
 
-            @can('View request info')
-                <li @if($url == route('requestinfo.index')) class="active" @endif>
-                    <a href="{{route('requestinfo.index')}}"><i class="fa fa-handshake-o"></i> <span
-                            class="nav-label">Requests Info</span></a>
-                </li>
-            @endcan
+            @if(auth()->user()->hasAnyPermission(['View request info']))
+                @can('View request info')
+                    <li><a href="{{ route('requestinfo.index') }}"><i class="fa fa-info-circle"></i><span
+                                class="nav-label"> Requests Info</span></a></li>
+                @endcan
+            @endif
 
 
             @if(auth()->user()->hasAnyPermission(['Complete transaction view', 'Fund transfer view', 'Fund request view', 'EBanking view', 'Paypoint view','Transaction nps view','Transaction nchl bank transfer','Transaction nchl load','Nicasia cybersource load transaction','Cellpay user transaction view','Nicasia cybersource view']))
@@ -395,10 +395,6 @@ $url = url()->current();
                             <li><a href="{{ route('nicAsia.viewCyberSourceLoad') }}">NIC Asia Transaction</a></li>
                         @endcan
 
-                        @can('View request info')
-                            <li><a href="{{ route('requestinfo.index') }}">View Requests Info</a></li>
-                        @endcan
-
 
 
                         {{--      @can('Cellpay user transaction view')
@@ -429,14 +425,6 @@ $url = url()->current();
                     </ul>
                 </li>
             @endif
-
-            @if(auth()->user()->hasAnyPermission(['View request info']))
-                @can('View request info')
-                    <li><a href="{{ route('requestinfo.index') }}"><i class="fa fa-info-circle"></i> View Requests Info</a>
-                    </li>
-                @endcan
-            @endif
-
 
             @if(auth()->user()->hasAnyPermission(['Clearance npay', 'Clearance paypoint']))
                 <li @if($url == route('clearance.transactions') || $url == route('clearance.generate')) class="active" @endif>

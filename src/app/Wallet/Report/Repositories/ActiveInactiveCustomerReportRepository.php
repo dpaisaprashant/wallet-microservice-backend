@@ -32,9 +32,9 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
     private function inactiveFor6to12MonthsCustomerBuilder()
     {
         return User::with('latestLoginAttempt')->whereHas('latestLoginAttempt', function ($query) {
-            return $query->whereDate('created_at', '<=', $this->sixMonthBeforeTodayDate)
-                ->whereDate('created_at', '>', $this->twelveMonthBeforeTodayDate);
+            return $query->whereBetween('created_at', [$this->twelveMonthBeforeTodayDate,$this->sixMonthBeforeTodayDate]);
         });
+
     }
 
     private function inactiveForMoreThan12MonthsCustomerBuilder()
@@ -49,9 +49,7 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
     {
         return $this->activeCustomerBuilder()
             ->filter($this->request)
-            ->whereHas('kyc', function ($query) {
-                return $query->where('gender', UserKYC::MALE);
-            })
+            ->where('gender', 'm')
             ->count();
     }
 
@@ -60,9 +58,10 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
         $users =  $this->activeCustomerBuilder()
             ->with('wallet')
             ->filter($this->request)
-            ->whereHas('kyc', function ($query) {
-                return $query->where('gender', UserKYC::MALE);
-            })
+            ->where('gender','m')
+//            ->whereHas('kyc', function ($query) {
+//                return $query->where('gender', UserKYC::MALE);
+//            })
             ->get();
         $sum = 0;
         foreach ($users as $user){
@@ -75,9 +74,7 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
     {
         return $this->activeCustomerBuilder()
             ->filter($this->request)
-            ->whereHas('kyc', function ($query) {
-                return $query->where('gender', UserKYC::FEMALE);
-            })
+            ->where('gender','f')
             ->count();
     }
 
@@ -86,9 +83,7 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
         $users =  $this->activeCustomerBuilder()
             ->with('wallet')
             ->filter($this->request)
-            ->whereHas('kyc', function ($query) {
-                return $query->where('gender', UserKYC::FEMALE);
-            })
+            ->where('gender','f')
             ->get();
         $sum = 0;
         foreach ($users as $user){
@@ -102,11 +97,8 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
         $users =  $this->activeCustomerBuilder()
             ->with('wallet')
             ->filter($this->request)
-            ->whereHas('kyc', function ($query) {
-                return $query->where('gender', UserKYC::OTHER);
-            })
+            ->where('gender','o')
             ->count();
-
         return $users;
     }
 
@@ -115,9 +107,7 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
         $users =  $this->activeCustomerBuilder()
             ->with('wallet')
             ->filter($this->request)
-            ->whereHas('kyc', function ($query) {
-                return $query->where('gender', UserKYC::OTHER);
-            })
+            ->where('gender','o')
             ->get();
 
         $sum = 0;
@@ -131,23 +121,24 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
 
     public function activeUnknownUserCount()
     {
-        return $userWithoutKYC = $this->activeCustomerBuilder()
+        return $userWithoutGender = $this->activeCustomerBuilder()
             ->with('wallet')
-            ->doesntHave('kyc')
+//            ->doesntHave('kyc')
             ->filter($this->request)
+            ->where('gender', null)
             ->count();
     }
 
     public function activeUnknownUserBalance()
     {
-        $userWithoutKYC = $this->activeCustomerBuilder()
+        $userWithoutGender = $this->activeCustomerBuilder()
             ->with('wallet')
             ->filter($this->request)
-            ->doesntHave('kyc')
+            ->where('gender', null)
             ->get();
 
         $sum = 0;
-        foreach ($userWithoutKYC as $user){
+        foreach ($userWithoutGender as $user){
             $sum += $user->wallet->balance;
         }
         return $sum;
@@ -166,9 +157,9 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
     //INACTIVE 6 to 12 months
     public function inactiveFor6To12MonthsUserCount()
     {
-        return $this->inactiveFor6To12MonthsCustomerBuilder()
+        $test= $this->inactiveFor6To12MonthsCustomerBuilder()
             ->filter($this->request)
-            ->count();
+            ->get();
     }
 
     public function inactiveFor6To12MonthsUserBalance()

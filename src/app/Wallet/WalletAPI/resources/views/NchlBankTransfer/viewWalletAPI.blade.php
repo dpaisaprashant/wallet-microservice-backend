@@ -35,7 +35,7 @@
                                                     @endforeach
                                                 @else
                                                     {{$secondValue}}<br></td>
-                                                @endif
+                                            @endif
                                         @endforeach
                                     @else
                                         <td>{{$value}}</td>
@@ -46,7 +46,7 @@
                         </table>
                     @endif
                 @else
-                    <dl class="text-left">No Data</dl>
+                    <dl class="text-left" style="margin-left: 20px">No Data</dl>
                 @endif
             </dl>
         </div>
@@ -54,40 +54,7 @@
 
 @endsection
 
-@section('styles')
-    @include('admin.asset.css.datatable')
-    @include('admin.asset.css.chosen')
 
-@endsection
-
-@section('scripts')
-    @include('admin.asset.js.chosen')
-
-    @include('admin.asset.css.sweetalert')
-    <!-- Page-Level Scripts -->
-    @include('admin.asset.js.datatable')
-    @include('admin.asset.js.sweetalert')
-    <script>
-        $('.reset').on('click', function (e) {
-            e.preventDefault();
-            let blockedIP_Id = $(this).attr('rel');
-            swal({
-                title: "Are you sure?",
-                text: "Blocked IP will be deleted",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes",
-                closeOnConfirm: false
-            }, function () {
-                $('#resetBtn-' + blockedIP_Id).trigger('click');
-                swal.close();
-
-            })
-        });
-    </script>
-
-@endsection
 
 
 

@@ -308,12 +308,22 @@
                                             </td>
 
                                             <td>
-                                                @can('Paypoint detail')
-                                                    <a href="{{ route('paypoint.detail', $transaction->id) }}">
-                                                        <button class="btn btn-primary btn-icon" type="button"><i
-                                                                class="fa fa-eye"></i></button>
-                                                    </a>
-                                                @endcan
+                                                <form
+                                                    action="{{ route('paypointTransferApi.report', $transaction->refStan) }}"
+                                                    method="post">
+                                                    @csrf
+                                                    @can('Paypoint detail')
+                                                        <a href="{{ route('paypoint.detail', $transaction->id) }}">
+                                                            <button class="btn btn-primary btn-icon" type="button"><i
+                                                                    class="fa fa-eye"></i></button>
+
+                                                            <button class="btn btn-primary btn-icon" type="submit"
+                                                                    title="API Details">
+                                                                <i class="fa fa-database"></i></button>
+                                                        </a>
+                                                    @endcan
+                                                </form>
+
                                             </td>
                                         </tr>
                                     @endforeach

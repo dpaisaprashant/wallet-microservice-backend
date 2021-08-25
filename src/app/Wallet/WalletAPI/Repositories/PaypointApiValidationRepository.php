@@ -3,20 +3,18 @@
 namespace App\Wallet\WalletAPI\Repositories;
 
 use App\Wallet\WalletAPI\BackendWalletAPIMicroservice;
-use App\Wallet\WalletAPI\Microservice\NchlMicroservice;
+use App\Wallet\WalletAPI\Microservice\PaypointMicroservice;
 use Illuminate\Http\Request;
-use App\Wallet\NCHL\Repository\NchlBankTransferRepository;
+use App\Wallet\Paypoint\Repository\PayPointRepository;
 use Carbon\Carbon;
 
-class NchlApiValidationRepository
+class PaypointApiValidationRepository
 {
-    public function getDisputedTransactions(Request $request, NchlBankTransferRepository $repository)
+    public function getDisputedTransactions(Request $request, PayPointRepository $repository)
     {
-        $debit_mismatches = array();
-        $credit_mismatches[] = null;
         $amount_mismatches[] = null;
         $wallet_status_mismatches = array();
-        $nchl_status_mismatches[] = null;
+        $paypoint_success_mismatches[] = null;
 
         if (!empty($_GET['from'])) {
             $from_convert = strtotime($_GET['from']);
@@ -31,64 +29,44 @@ class NchlApiValidationRepository
         if (!empty($_GET['from']) && !empty($_GET['to'])) {
             $transactions = $repository->paginatedTransactions()->whereBetween('created_at', [$from, $to]);
         }
-        $nchlAPIs = array();
-        $nchlMicroservice = new NchlMicroservice();
 
+        $paypointAPIs = array();
+        $paypointMicroservice = new PaypointMicroservice();
 
         foreach ($transactions as $transaction) {
             $id = $transaction->transaction_id;
-            $nchlAPI = $nchlMicroservice->getNchlAPI($request, $id);
-            $nchlAPIs[] = $nchlAPI;
+            $paypointAPI = $paypointMicroservice->getPaypointAPI($request, $id);
+            $paypointAPIs[] = $paypointAPI;
 
-            if ((optional($transaction)->debit_status) != ($nchlAPI['debitStatus'] ?? null)) {
-                $debit_mismatches[] = $transaction;
-//                $debit_mismatch_api[] = $nchlAPI;
-            }
-
-            if ((optional($transaction)->credit_status) != ($nchlAPI['cipsTransactionDetailList']['0']['creditStatus'] ?? null)) {
-                $credit_mismatches[] = $transaction;
-                $credit_mismatches_api[] = $nchlAPI;
-            }
-
-            if ((optional($transaction)->amount) != ($nchlAPI['cipsTransactionDetailList']['0']['amount'] ?? null)) {
+            if ((optional($transaction)->amount) != ($paypointAPI['ResultMessage']['Amount'] ?? null)) {
                 $amount_mismatches[] = $transaction;
-                $amount_mismatches_api[] = $nchlAPI;
             }
 
-            if (($this->walletStatus($transaction)) == 'success' && ($this->compareStatus($nchlAPI)) == 'failed') {
-                $wallet_status_mismatches[] = $transaction;
-                $wallet_status_mismatches_api[] = $nchlAPI;
+            if ($transaction->code == 000 && ($paypointAPI['@attributes']['Result'] ?? null) != 000) {
+                $wallet_success_mismatches[] = $transaction;
             }
 
-            if (($this->walletStatus($transaction)) == 'failed' && ($this->compareStatus($nchlAPI)) == 'success') {
-                $nchl_status_mismatches[] = $transaction;
-                $nchl_status_mismatches_api[] = $nchlAPI;
+            if ($transaction->code != 000 && $paypointAPI['@attributes']['Result'] == 000) {
+                $api_success_mismatches[] = $transaction;
             }
 
         }
         $totalTransactionCount = count($transactions);
-        $totalTransactionCountAPI = count($nchlAPIs);
+        $totalTransactionCountAPI = count($paypointAPIs);
         $totalAmount = $transactions->sum('amount');
         $totalAmountAPI = 0;
-        foreach ($nchlAPIs as $nchlAPI) {
-            if (isset($nchlAPI['batchAmount'])) {
-                $totalAmountAPI += $nchlAPI['batchAmount'];
+        foreach ($paypointAPIs as $paypointAPI) {
+            if (isset($paypointAPI['ResultMessage']['Amount'])) {
+                $totalAmountAPI += $paypointAPI['ResultMessage']['Amount'];
             }
         }
 
 //        $data = $this->paginate($nchl_status_mismatches);
 
-        $disputedTransactions = ['wallet_status_mismatches' => $wallet_status_mismatches,
-            'wallet_status_mismatch_api' => $wallet_status_mismatches_api,
-            'nchl_status_mismatches' => $nchl_status_mismatches,
-            'nchl_status_mismatches_api' => $nchl_status_mismatches_api,
-            'debit_mismatches' => $debit_mismatches,
-            'debit_mismatches_api' => $debit_mismatch_api,
-            'credit_mismatches' => $credit_mismatches,
-            'credit_mismatches_api' => $credit_mismatches_api,
+        $disputedTransactions = ['wallet_success_mismatches' => $wallet_status_mismatches,
+            'paypoint_success_mismatches' => $paypoint_success_mismatches,
             'amount_mismatches' => $amount_mismatches,
-            'amount_mismatches_api' => $amount_mismatches_api,
-            'nchlAPIs' => $nchlAPIs,
+            'paypointAPIs' => $paypointAPIs,
             'transactions' => $transactions,
             'totalTransactionCount' => $totalTransactionCount,
             'totalTransactionCountAPI' => $totalTransactionCountAPI,

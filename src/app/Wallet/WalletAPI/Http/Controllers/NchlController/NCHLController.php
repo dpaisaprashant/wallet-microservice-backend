@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Wallet\WalletAPI\Http\Controllers;
+namespace App\Wallet\WalletAPI\Http\Controllers\NchlController;
 
+use App\Wallet\WalletAPI\Microservice\NchlMicroservice;
 use App\Wallet\WalletAPI\Repositories\NchlApiValidationRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -15,10 +16,10 @@ class NCHLController extends Controller
 {
     public function byId(Request $request, $id)
     {
-        $repository = new NchlApiValidationRepository();
-        $nchlAPI = $repository->getNchlAPI($request, $id);
+        $nchlMicroservice = new NchlMicroservice();
+        $nchlAPI = $nchlMicroservice->getNchlAPI($request, $id);
 
-        return view('WalletAPI::viewWalletAPI', compact('nchlAPI'));
+        return view('WalletAPI::NchlBankTransfer/viewWalletAPI', compact('nchlAPI'));
     }
 
     public function compareTransactions(Request $request, NchlBankTransferRepository $repo)
@@ -27,7 +28,7 @@ class NCHLController extends Controller
         $disputedTransactions = $repository->getDisputedTransactions($request, $repo);
 
 
-        return view('WalletAPI::viewWalletAPICompare', compact('disputedTransactions'));
+        return view('WalletAPI::NchlBankTransfer/viewWalletAPICompare', compact('disputedTransactions'));
 
     }
 

@@ -3,7 +3,7 @@
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Transaction Comparison for Wallet and NCHL API </h2>
+            <h2>Transaction Comparison for Wallet and Paypoint API </h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -23,7 +23,7 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title collapse-link">
-                        <h5>Filter Bank Transfers</h5>
+                        <h5>Filter Paypoint Transfers</h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -60,7 +60,7 @@
                                     <br>
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
-                                                formaction="{{ route('walletapi.compare') }}"><strong>Filter</strong>
+                                                formaction="{{ route('paypointTransferApi.compare') }}"><strong>Filter</strong>
                                         </button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
@@ -74,7 +74,7 @@
             </div>
         </div>
 
-        @if(!empty($_GET))
+        @if(!empty($_GET['from']) && !empty($_GET['to']))
             <div class="row">
                 <div class="col-lg-6">
                     <div class="ibox ">

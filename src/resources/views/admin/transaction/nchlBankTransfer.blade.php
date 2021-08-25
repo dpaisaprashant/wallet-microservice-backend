@@ -216,7 +216,7 @@
                                                 formaction="{{ route('nchl.bankTransfer') }}"><strong>Filter</strong>
                                         </button>
                                         <button class="btn btn-sm btn-warning float-right m-t-n-xs" style="margin-right: 8px;" type="submit"
-                                                formaction="{{ route('walletapi.compare') }}"><strong>Compare</strong>
+                                                formaction="{{ route('nchlBankTransferApi.compare') }}"><strong>Compare with API</strong>
                                         </button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
@@ -308,7 +308,7 @@
                                             </td>
                                             <td>
 
-                                                <form action="{{ route('walletapi.report', $transaction->transaction_id) }}" method="post">
+                                                <form action="{{ route('nchlBankTransferApi.report', $transaction->transaction_id) }}" method="post">
                                                     @csrf
                                                     <a href="{{ route('nchl.bankTransfer.detail', $transaction->id) }}" title="Transaction Detail">
                                                         <button class="btn btn-primary btn-icon" type="button"><i

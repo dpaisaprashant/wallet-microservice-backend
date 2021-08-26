@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Wallet\WalletAPI\Http\Controllers\NchlController;
+namespace App\Wallet\WalletAPI\Http\Controllers\NchlControllers;
 
 use App\Wallet\WalletAPI\Microservice\NchlMicroservice;
 use App\Wallet\WalletAPI\Repositories\NchlApiValidationRepository;

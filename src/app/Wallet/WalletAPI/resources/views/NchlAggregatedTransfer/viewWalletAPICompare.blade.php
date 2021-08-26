@@ -3,7 +3,7 @@
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Transaction Comparison for Wallet and Paypoint API </h2>
+            <h2>Transaction Comparison for Wallet and NCHL API </h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -23,7 +23,7 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title collapse-link">
-                        <h5>Filter Paypoint Transfers</h5>
+                        <h5>Filter Bank Transfers</h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -60,7 +60,8 @@
                                     <br>
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
-                                                formaction="{{ route('paypointTransferApi.compare') }}"><strong>Filter</strong>
+                                                formaction="{{ route('nchlBankTransferApi.compare') }}">
+                                            <strong>Filter</strong>
                                         </button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
@@ -93,30 +94,35 @@
                                         <th>S.No.</th>
                                         <th>Pre Transaction Id</th>
                                         <th>Transaction ID</th>
-                                        <th>RefStan</th>
-                                        <th>Bill Number</th>
+                                        <th>User Mobile Number</th>
+                                        <th>Bank</th>
                                         <th>Amount (NRs.)</th>
-                                        <th>Status</th>
-                                        <th>Created At</th>
+                                        <th>Debit Status</th>
+                                        <th>Credit Status</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-
                                     @foreach($disputedTransactions['transactions'] as $transaction)
                                         <tr class="gradeC">
                                             <td>{{$loop->index+1}}</td>
                                             <td>{{ $transaction->pre_transaction_id }}</td>
                                             <td>{{ $transaction->transaction_id }}</td>
-                                            <td>{{ $transaction->refStan }}</td>
-                                            <td>{{ $transaction->bill_number }}</td>
                                             <td>
-                                               {{ $transaction->amount ?? 0}}
+                                                @if(!empty($transaction->user))
+                                                    <a @can('User profile') href="{{route('user.profile', $transaction->user_id)}}" @endcan>{{ $transaction->user['mobile_no']}}</a>
+                                                @endif
+                                            </td>
+                                            <td>{{ $transaction->bank }}</td>
+
+                                            <td>
+                                                {{ $transaction->amount ?? 0}}
+                                            </td>
+
+                                            <td>
+                                                {{ $transaction->debit_status }}
                                             </td>
                                             <td>
-                                                {{ $transaction->code }}
-                                            </td>
-                                            <td>
-                                                {{ $transaction->created_at }}
+                                                {{ $transaction->credit_status }}
                                             </td>
                                         </tr>
 
@@ -142,29 +148,25 @@
                                     <thead>
                                     <tr>
                                         <th>S.No.</th>
-                                        <th>RefStan</th>
-                                        <th>BillNumber</th>
-                                        <th>Company</th>
+                                        <th>Transaction ID</th>
                                         <th>Amount (NRs.)</th>
-                                        <th>Status</th>
+                                        <th>Debit Status</th>
+                                        <th>Credit Status</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-{{--                                    {{dd($disputedTransactions['paypointAPIs'][0])}}--}}
-                                    @foreach($disputedTransactions['paypointAPIs'] as $paypointAPI)
-                                        @if(!empty($paypointAPI))
+                                    @foreach($disputedTransactions['nchlAPIs'] as $nchlAPI)
+                                        @if(!empty($nchlAPI))
                                             <tr class="gradeC">
                                                 <td>{{$loop->index+1}}</td>
-                                                <td>{{ $paypointAPI['ResultMessage']['Transaction']['RefStan'] }}</td>
+                                                <td>{{ $nchlAPI['batchId'] }}</td>
                                                 <td>
-                                                    {{ $paypointAPI['ResultMessage']['Transaction']['BillNumber']}}
+                                                    {{ $nchlAPI['batchAmount']}}
                                                 </td>
                                                 <td>
-                                                    {{ $paypointAPI['ResultMessage']['Transaction']['Company']['Name'] }}
+                                                    {{ $nchlAPI['debitStatus'] }}
                                                 </td>
-                                                <td>{{ $paypointAPI['ResultMessage']['Transaction']['Amount'] }}</td>
-                                                <td>{{ $paypointAPI['@attributes']['Result'] }}</td>
-
+                                                <td>{{ $nchlAPI['cipsTransactionDetailList']['0']['creditStatus'] }}</td>
                                             </tr>
                                         @endif
                                     @endforeach
@@ -191,17 +193,15 @@
                                         <th>S.No.</th>
                                         <th>Pre Transaction Id</th>
                                         <th>Transaction Id</th>
-                                        <th>Status Code</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($disputedTransactions['wallet_success_mismatches'] as $wallet_success_mismatch)
-                                        @if(!empty($wallet_success_mismatch))
+                                    @foreach($disputedTransactions['wallet_status_mismatches'] as $wallet_status_mismatch)
+                                        @if(!empty($wallet_status_mismatch))
                                             <tr>
                                                 <td>{{$loop->index+1}}</td>
-                                                <td>{{$wallet_success_mismatch->pre_transaction_id}}</td>
-                                                <td>{{$wallet_success_mismatch->transaction_id}}</td>
-                                                <td>{{$wallet_success_mismatch->code}}</td>
+                                                <td>{{$wallet_status_mismatch->pre_transaction_id}}</td>
+                                                <td>{{$wallet_status_mismatch->transaction_id}}</td>
                                             </tr>
                                         @endif
                                     @endforeach
@@ -225,18 +225,15 @@
                                         <th>S.No.</th>
                                         <th>Pre Transaction Id</th>
                                         <th>Transaction Id</th>
-                                        <th>Status Code</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($disputedTransactions['paypoint_success_mismatches'] as $paypoint_success_mismatch)
-                                        @if(!empty($paypoint_success_mismatch))
-                                    {{dd($paypoint_success_mismatch)}}
+                                    @foreach($disputedTransactions['nchl_status_mismatches'] as $nchl_status_mismatch)
+                                        @if(!empty($nchl_status_mismatch))
                                             <tr>
                                                 <td>{{$loop->index+1}}</td>
-                                                <td>{{$paypoint_success_mismatch->pre_transaction_id}}</td>
-                                                <td>{{$paypoint_success_mismatch->transaction_id}}</td>
-                                                <td>{{$paypoint_success_mismatch->code}}</td>
+                                                <td>{{$nchl_status_mismatch->pre_transaction_id}}</td>
+                                                <td>{{$nchl_status_mismatch->transaction_id}}</td>
                                             </tr>
                                         @endif
                                     @endforeach
@@ -247,7 +244,82 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5>Transactions in which debit status do not match</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="table-responsive" id="transactionInWalletButNotInExcelId">
+                                <table class="table table-striped table-bordered table-hover dataTables-example"
+                                       title="clearance transactions">
+                                    <thead>
+                                    <tr>
+                                        <th>S.No.</th>
+                                        <th>Pre Transaction Id</th>
+                                        <th>Transaction Id</th>
+                                        <th>Debit Status</th>
+                                        <th>Debit Response Message</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($disputedTransactions['debit_mismatches'] as $debit_mismatch)
+                                        @if(!empty($debit_mismatch))
+                                            <tr>
+                                                <td>{{$loop->index+1}}</td>
+                                                <td>{{$debit_mismatch->pre_transaction_id}}</td>
+                                                <td>{{$debit_mismatch->transaction_id}}</td>
+                                                <td>{{$debit_mismatch->debit_status}}</td>
+                                                <td>{{$debit_mismatch->debit_response_message}}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                    </tbody>
+                                </table>
 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5>Transactions in which credit status do not match</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="table-responsive" id="transactionInWalletButNotInExcelId">
+                                <table class="table table-striped table-bordered table-hover dataTables-example"
+                                       title="clearance transactions">
+                                    <thead>
+                                    <tr>
+                                        <th>S.No.</th>
+                                        <th>Pre Transaction Id</th>
+                                        <th>Transaction Id</th>
+                                        <th>Credit Status</th>
+                                        <th>Credit Response Message</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($disputedTransactions['credit_mismatches'] as $credit_mismatch)
+                                        @if(!empty($credit_mismatch))
+                                            <tr>
+                                                <td>{{$loop->index+1}}</td>
+                                                <td>{{$credit_mismatch->pre_transaction_id}}</td>
+                                                <td>{{$credit_mismatch->transaction_id}}</td>
+                                                <td>{{$credit_mismatch->credit_status}}</td>
+                                                <td>{{$credit_mismatch->credit_response_message}}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-lg-6">
                     <div class="ibox ">
@@ -305,14 +377,14 @@
     @include('admin.asset.js.chosen')
     @include('admin.asset.js.datepicker')
     @include('admin.asset.js.datatable')
-{{--        <script>--}}
-{{--            @if(!empty($_GET))--}}
-{{--            $(document).ready(function (e) {--}}
-{{--                let a = "Showing {{ $transactions->firstItem() }} to {{ $transactions->lastItem() }} of {{ $transactions->total() }} entries";--}}
-{{--                $('.dataTables_info').text(a);--}}
-{{--            });--}}
-{{--            @endif--}}
-{{--        </script>--}}
+    {{--        <script>--}}
+    {{--            @if(!empty($_GET))--}}
+    {{--            $(document).ready(function (e) {--}}
+    {{--                let a = "Showing {{ $transactions->firstItem() }} to {{ $transactions->lastItem() }} of {{ $transactions->total() }} entries";--}}
+    {{--                $('.dataTables_info').text(a);--}}
+    {{--            });--}}
+    {{--            @endif--}}
+    {{--        </script>--}}
 
     <!-- IonRangeSlider -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js"></script>

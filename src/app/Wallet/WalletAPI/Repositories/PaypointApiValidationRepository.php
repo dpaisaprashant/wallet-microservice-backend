@@ -34,7 +34,7 @@ class PaypointApiValidationRepository
         $paypointMicroservice = new PaypointMicroservice();
 
         foreach ($transactions as $transaction) {
-            $id = $transaction->transaction_id;
+            $id = $transaction->refStan;
             $paypointAPI = $paypointMicroservice->getPaypointAPI($request, $id);
             $paypointAPIs[] = $paypointAPI;
 
@@ -42,11 +42,11 @@ class PaypointApiValidationRepository
                 $amount_mismatches[] = $transaction;
             }
 
-            if ($transaction->code == 000 && ($paypointAPI['@attributes']['Result'] ?? null) != 000) {
+            if ($transaction->code == 000 && ($paypointAPI['@attributes']['Result'] ?? 'no data') != 000) {
                 $wallet_success_mismatches[] = $transaction;
             }
 
-            if ($transaction->code != 000 && $paypointAPI['@attributes']['Result'] == 000) {
+            if ($transaction->code != 000 && ($paypointAPI['@attributes']['Result'] ?? 'no data') == 000) {
                 $api_success_mismatches[] = $transaction;
             }
 

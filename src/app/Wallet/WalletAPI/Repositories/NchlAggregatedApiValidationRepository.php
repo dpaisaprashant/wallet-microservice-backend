@@ -5,12 +5,12 @@ namespace App\Wallet\WalletAPI\Repositories;
 use App\Wallet\WalletAPI\BackendWalletAPIMicroservice;
 use App\Wallet\WalletAPI\Microservice\NchlMicroservice;
 use Illuminate\Http\Request;
-use App\Wallet\NCHL\Repository\NchlBankTransferRepository;
+use App\Wallet\NCHL\Repository\NchlAggregatedPaymentRepository;
 use Carbon\Carbon;
 
-class NchlApiValidationRepository
+class NchlAggregatedApiValidationRepository
 {
-    public function getDisputedTransactions(Request $request, NchlBankTransferRepository $repository)
+    public function getDisputedTransactions(Request $request, NchlAggregatedPaymentRepository $repository)
     {
         $debit_mismatches = array();
         $credit_mismatches[] = null;

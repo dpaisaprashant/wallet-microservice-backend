@@ -78,9 +78,7 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
-
 
                                     <div class="row">
                                         <div class="col-md-3">
@@ -132,7 +130,6 @@
                                                 </select>
                                             </div>
                                         </div>
-
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <select data-placeholder="Choose transaction credit status..."
@@ -160,10 +157,7 @@
                                                 </select>
                                             </div>
                                         </div>
-
-
                                     </div>
-
                                     <div class="row">
                                         <div class="col-md-6 mt-3">
                                             <label for="ionrange_balance">Amount</label>
@@ -180,7 +174,6 @@
                                                                value="{{ !empty($_GET['from_amount']) ? $_GET['from_amount'] : '' }}">
                                                     </div>
                                                 </div>
-
                                                 <div class="col-md-6">
                                                     <div class="input-group date">
                                                 <span class="input-group-addon">
@@ -206,7 +199,6 @@
                                                                value="{{ !empty($_GET['pre_transaction_id']) ? $_GET['pre_transaction_id'] : '' }}">
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -215,8 +207,10 @@
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
                                                 formaction="{{ route('nchl.bankTransfer') }}"><strong>Filter</strong>
                                         </button>
-                                        <button class="btn btn-sm btn-warning float-right m-t-n-xs" style="margin-right: 8px;" type="submit"
-                                                formaction="{{ route('nchlBankTransferApi.compare') }}"><strong>Compare with API</strong>
+                                        <button class="btn btn-sm btn-warning float-right m-t-n-xs"
+                                                style="margin-right: 8px;" type="submit"
+                                                formaction="{{ route('nchlBankTransferApi.compare') }}"><strong>Compare
+                                                with API</strong>
                                         </button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
@@ -269,7 +263,6 @@
                                             <td>{{ $transaction->pre_transaction_id }}</td>
                                             <td>{{ $transaction->transaction_id }}</td>
                                             <td>
-
                                                 @if(!empty($transaction->user))
                                                     <a @can('User profile') href="{{route('user.profile', $transaction->user_id)}}" @endcan>{{ $transaction->user['mobile_no']}}</a>
                                                 @endif
@@ -283,62 +276,49 @@
                                             <td>
                                                 Rs. {{ $transaction->commission_amount }}
                                             </td>
-
                                             <td>
                                                 @include('admin.transaction.nchlBankTransfer.debitStatus')
                                             </td>
-
                                             <td>
                                                 @include('admin.transaction.nchlBankTransfer.creditStatus')
                                             </td>
-
-
                                             <td class="center">{{ $transaction->updated_at }}</td>
-
                                             <td>
                                                 @include('admin.transaction.nchlBankTransfer.account')
                                             </td>
-
                                             <td>
                                                 @include('admin.transaction.nchlBankTransfer.request')
                                             </td>
-
                                             <td>
                                                 @include('admin.transaction.nchlBankTransfer.response')
                                             </td>
                                             <td>
-
-                                                <form action="{{ route('nchlBankTransferApi.report', $transaction->transaction_id) }}" method="post">
+                                                <form
+                                                    action="{{ route('nchlBankTransferApi.report', $transaction->transaction_id) }}"
+                                                    method="post">
                                                     @csrf
-                                                    <a href="{{ route('nchl.bankTransfer.detail', $transaction->id) }}" title="Transaction Detail">
+                                                    <a href="{{ route('nchl.bankTransfer.detail', $transaction->id) }}"
+                                                       title="Transaction Detail">
                                                         <button class="btn btn-primary btn-icon" type="button"><i
                                                                 class="fa fa-eye"></i></button>
-
-                                                    <button class="btn btn-primary btn-icon" type="submit" title="API Details">
+                                                        <button class="btn btn-primary btn-icon" type="submit"
+                                                                title="API Details">
                                                             <i class="fa fa-database"></i></button>
-
-
                                                     </a>
                                                 </form>
-
-
                                             </td>
                                         </tr>
                                     @endforeach
-
                                     </tbody>
-
                                 </table>
                                 {{ $transactions->appends(request()->query())->links() }}
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         @endif
     </div>
-
 
 @endsection
 

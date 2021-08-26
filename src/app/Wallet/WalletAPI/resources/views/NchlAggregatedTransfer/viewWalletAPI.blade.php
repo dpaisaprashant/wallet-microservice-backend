@@ -9,7 +9,7 @@
             <dl class="row m-t-md">
                 <dd class="col-lg-offset-1"></dd>
                 @php
-                    $response = $nchlAPI;
+                    $response = $nchlAggregatedAPI;
                 @endphp
                 @if(!empty($response))
                     @if (is_array($response) || is_object($response))

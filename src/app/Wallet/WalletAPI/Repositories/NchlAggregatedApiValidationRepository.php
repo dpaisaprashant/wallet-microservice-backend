@@ -2,21 +2,24 @@
 
 namespace App\Wallet\WalletAPI\Repositories;
 
+use App\Traits\CollectionPaginate;
 use App\Wallet\WalletAPI\BackendWalletAPIMicroservice;
-use App\Wallet\WalletAPI\Microservice\NchlMicroservice;
+use App\Wallet\WalletAPI\Microservice\NchlAggregatedMicroservice;
 use Illuminate\Http\Request;
 use App\Wallet\NCHL\Repository\NchlAggregatedPaymentRepository;
 use Carbon\Carbon;
 
 class NchlAggregatedApiValidationRepository
 {
+    use CollectionPaginate;
+
     public function getDisputedTransactions(Request $request, NchlAggregatedPaymentRepository $repository)
     {
         $debit_mismatches = array();
         $credit_mismatches[] = null;
         $amount_mismatches[] = null;
-        $wallet_status_mismatches = array();
-        $nchl_status_mismatches[] = null;
+        $wallet_success_mismatches = array();
+        $nchl_success_mismatches[] = null;
 
         if (!empty($_GET['from'])) {
             $from_convert = strtotime($_GET['from']);
@@ -29,15 +32,14 @@ class NchlAggregatedApiValidationRepository
 
         $transactions = $repository->paginatedTransactions()->whereBetween('created_at', [Carbon::now()->subMonths(12)->format('Y-m-d'), Carbon::now()->format('Y-m-d')]);
         if (!empty($_GET['from']) && !empty($_GET['to'])) {
-            $transactions = $repository->paginatedTransactions()->whereBetween('created_at', [$from, $to]);
+            $transactions = $repository->latestTransactionsUnpaginated()->whereBetween('created_at', [$from, $to])->get();
         }
         $nchlAPIs = array();
-        $nchlMicroservice = new NchlMicroservice();
-
-
+        $nchlMicroservice = new NchlAggregatedMicroservice();
+//dd($transactions);
         foreach ($transactions as $transaction) {
             $id = $transaction->transaction_id;
-            $nchlAPI = $nchlMicroservice->getNchlAPI($request, $id);
+            $nchlAPI = $nchlMicroservice->getNchlAggregatedAPI($request, $id);
             $nchlAPIs[] = $nchlAPI;
 
             if ((optional($transaction)->debit_status) != ($nchlAPI['debitStatus'] ?? null)) {
@@ -54,14 +56,15 @@ class NchlAggregatedApiValidationRepository
             }
 
             if (($this->walletStatus($transaction)) == 'success' && ($this->compareStatus($nchlAPI)) == 'failed') {
-                $wallet_status_mismatches[] = $transaction;
+                $wallet_success_mismatches[] = $transaction;
             }
 
             if (($this->walletStatus($transaction)) == 'failed' && ($this->compareStatus($nchlAPI)) == 'success') {
-                $nchl_status_mismatches[] = $transaction;
+                $nchl_success_mismatches[] = $transaction;
             }
 
         }
+
         $totalTransactionCount = count($transactions);
         $totalTransactionCountAPI = count($nchlAPIs);
         $totalAmount = $transactions->sum('amount');
@@ -73,9 +76,9 @@ class NchlAggregatedApiValidationRepository
         }
 
 //        $data = $this->paginate($nchl_status_mismatches);
-
-        $disputedTransactions = ['wallet_status_mismatches' => $wallet_status_mismatches,
-            'nchl_status_mismatches' => $nchl_status_mismatches,
+$transactions= $transactions->paginate(15);
+        $disputedTransactions = ['wallet_status_mismatches' => $wallet_success_mismatches,
+            'nchl_status_mismatches' => $nchl_success_mismatches,
             'debit_mismatches' => $debit_mismatches,
             'credit_mismatches' => $credit_mismatches,
             'amount_mismatches' => $amount_mismatches,

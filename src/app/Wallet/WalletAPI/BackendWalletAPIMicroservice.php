@@ -163,7 +163,6 @@ class BackendWalletAPIMicroservice extends BackendWalletAPIJSONAbstract
         $this->setBaseUrl(config('microservices.' . $this->microservice));
         $requestInfo = $this->apiParams;
         $requestInfo['request_param'] = json_encode($requestInfo['request_param']);
-//        $requestInfo['refStan'] = json_encode($requestInfo['refStan']);
         $data = array_merge($requestInfo, [
 //            'user_id' => auth()->user()->id,
             'url' => $this->url,

@@ -102,6 +102,13 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
             ->get();
         $totalBalance = 0;
         if (!empty($users)) {
+            $latestUserTransactionEvent = User::with('latestUserTransactionEvent')->where(function ($q) {
+                return $q->whereHas('latestUserTransactionEvent', function ($query) {
+                    return $query->whereDate('created_at', '<=', Carbon::parse($this->from));
+                });
+                });
+            dd($latestUserTransactionEvent);
+
             foreach ($users as $user) {
                 //latest transaction of all active users before selected date and six months before selected date
                 $latestUserTransactionEvent = $user->userTransactionEvents->where('created_at', '<=', Carbon::parse($this->from))->last();

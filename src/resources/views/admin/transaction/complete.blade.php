@@ -131,20 +131,29 @@
                                     <div class="row" style="margin-top: 40px;">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <select data-placeholder="Sort By..." class="chosen-select" tabindex="2"
-                                                        name="sort">
-                                                    <option value="" selected disabled>Sort By...</option>
-                                                    @if(!empty($_GET['sort']))
-                                                        <option value="date"
-                                                                @if($_GET['sort'] == 'date') selected @endif>Latest Date
+                                                <select data-placeholder="User Type..." class="chosen-select"
+                                                        tabindex="2"
+                                                        name="user_type">
+                                                    <option value="" selected disabled>User Type...</option>
+                                                    @if(!empty($_GET['user_type']))
+                                                        <option value="all"
+                                                                @if($_GET['user_type'] == 'all') selected @endif>All
                                                         </option>
-                                                        <option value="amount"
-                                                                @if($_GET['sort'] == 'amount') selected @endif>Highest
-                                                            amount
+                                                        <option value="user"
+                                                                @if($_GET['user_type'] == 'user') selected @endif>User
+                                                        </option>
+                                                        <option value="merchant"
+                                                                @if($_GET['user_type'] == 'merchant') selected @endif>
+                                                            Merchant
+                                                        </option>
+                                                        <option value="agent"
+                                                                @if($_GET['user_type'] == 'agent') selected @endif>Agent
                                                         </option>
                                                     @else
-                                                        <option value="date">Latest Date</option>
-                                                        <option value="amount">Amount</option>
+                                                        <option value="all">All</option>
+                                                        <option value="user">User</option>
+                                                        <option value="merchant">Merchant</option>
+                                                        <option value="agent">Agent</option>
                                                     @endif
                                                 </select>
                                             </div>
@@ -266,11 +275,13 @@
                                         <th>Fee</th>
                                         <th>Cashback amount</th>
                                         <th>Status</th>
+                                        <th>User Type</th>
                                         <th>Date</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
+
                                     @foreach($transactions as $transaction)
                                         <tr class="gradeC">
                                             <td>{{ $loop->index + ($transactions->perPage() * ($transactions->currentPage() - 1)) + 1 }}</td>
@@ -303,6 +314,15 @@
                                             </td>
                                             <td>
                                                 <span class="badge badge-primary">Complete</span>
+                                            </td>
+                                            <td>
+                                                @if($transaction->user->userType != null)
+                                                    <span class="badge badge-primary">User</span>
+                                                    @elseif($transaction->user->merchant != null)
+                                                    <span class="badge badge-danger">Merchant</span>
+                                                    @elseif($transaction->user->agent != null && $transaction->user->isValidAgentOrSubAgent())
+                                                    <span class="badge badge-pill">Agent</span>
+                                                @endif
                                             </td>
                                             <td class="center">{{ $transaction->created_at }}</td>
                                             <td>

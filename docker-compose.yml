@@ -12,6 +12,8 @@ networks:
     external: true
   wallet-microservice-paymentnepal_spring-boot-mysql-network:
     external: true
+  linked-account-integration-project_spring-boot-mysql-network:
+    external: true
 
 
 services:
@@ -37,6 +39,7 @@ services:
       - wallet-microservice-nps_laravel
       - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paymentnepal_spring-boot-mysql-network
+      - linked-account-integration-project_spring-boot-mysql-network
 
   mysql:
     image: mysql:5.7.29
@@ -61,6 +64,7 @@ services:
       - wallet-microservice-nps_laravel
       - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paymentnepal_spring-boot-mysql-network
+      - linked-account-integration-project_spring-boot-mysql-network
 
   php:
     build:
@@ -79,6 +83,7 @@ services:
       - wallet-microservice-nps_laravel
       - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paymentnepal_spring-boot-mysql-network
+      - linked-account-integration-project_spring-boot-mysql-network
 
   composer:
     build:
@@ -98,6 +103,7 @@ services:
       - wallet-microservice-nps_laravel
       - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paymentnepal_spring-boot-mysql-network
+      - linked-account-integration-project_spring-boot-mysql-network
 
     entrypoint: ['composer', '--ignore-platform-reqs']
 
@@ -120,6 +126,7 @@ services:
       - wallet-microservice-nps_laravel
       - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paymentnepal_spring-boot-mysql-network
+      - linked-account-integration-project_spring-boot-mysql-network
 
   phpmyadmin:
     depends_on:
@@ -139,6 +146,7 @@ services:
       - wallet-microservice-nps_laravel
       - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paymentnepal_spring-boot-mysql-network
+      - linked-account-integration-project_spring-boot-mysql-network
 
 
   mongo:

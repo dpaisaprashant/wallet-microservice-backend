@@ -29,7 +29,7 @@
                     </div>
                     <div class="ibox-content">
                         <form method="post" enctype="multipart/form-data" id="blockedIPForm">
-                            @csrf                            
+                            @csrf
 
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">IP</label>
@@ -38,7 +38,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group  row">   
+                            <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Description</label>
                                 <div class="col-sm-10">
                                     <input name="description" type="text" class="form-control" required>
@@ -58,13 +58,16 @@
                                     <input name="block_duration" type="date" class="form-control">
                                 </div>
                             </div>
-                            
-                            <div class="form-group  row">
+
+                            <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Status</label>
                                 <div class="col-sm-10">
-                                    <input name="status" type="text" class="form-control" required>
+                                    <select data-placeholder="Select Status..." class="chosen-select" tabindex="2" name="status">
+                                        <option>Active</option>
+                                        <option>Inactive</option>
+                                    </select>
                                 </div>
-                            </div>              
+                            </div>
 
                             <div class="hr-line-dashed"></div>
 
@@ -73,8 +76,6 @@
                                     <button class="btn btn-primary btn-sm" type="submit">Block IP</button>
                                 </div>
                             </div>
-
-
                         </form>
                     </div>
                 </div>
@@ -87,12 +88,20 @@
 @endsection
 
 @section('styles')
-    @include('admin.asset.css.select2')
+    @include('admin.asset.css.chosen')
     @include('admin.asset.css.datepicker')
+    @include('admin.asset.css.datatable')
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/css/ion.rangeSlider.min.css"/>
 @endsection
 
 @section('scripts')
-    @include('admin.asset.js.select2')
-    @include('admin.asset.js.datepicker')
-@endsection
 
+    @include('admin.asset.js.chosen')
+    @include('admin.asset.js.datepicker')
+    @include('admin.asset.js.datatable')
+
+
+    <!-- IonRangeSlider -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js"></script>
+@endsection

@@ -13,30 +13,28 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use \PhpOffice\PhpSpreadsheet\Cell\DataType;
 use Illuminate\Support\Facades\Storage;
 use App\Models\NPSAccountLinkLoad;
+use App\Models\User;
 
 class PhpSpreadSheetController extends Controller
-{    
+{
    public function requestInfo(Request $request){
-     
-       
+
         $spreadsheet = new Spreadsheet();
         $Excel_writer = new Xlsx($spreadsheet);
-        
-        $spreadsheet->setActiveSheetIndex(0);      
+
+        $spreadsheet->setActiveSheetIndex(0);
         $activeSheet = $spreadsheet->getActiveSheet();
 
         //Logo
-        $activeSheet->mergeCells("A1:J4");   
+        $activeSheet->mergeCells("A1:J4");
 
-        // if(config('redirect.logo') == 'sajilopay'){
-        //     $image =  public_path('img/sajilopay_logo.png');
-        // } elseif(config('redirect.logo') == 'icash'){
-        //     $image =  public_path('img/icash_logo.png');
-        // } elseif(config('redirect.logo') == 'dpaisa') {
-        //     $image =  public_path('img/dpaisa_logo.png');
-        // } 
-
-        $image =  public_path('img/logo.png');
+       if(config('app.logo') == 'sajilopay'){
+           $image =  public_path('img/sajilopaylogo.png');
+       } elseif(config('app.logo') == 'icash'){
+           $image =  public_path('img/icashlogo.png');
+       } elseif(config('app.logo') == 'dpaisa') {
+           $image =  public_path('img/dpaisalogo.png');
+       }
 
         $drawing = new Drawing();
         $drawing->setName('Logo');
@@ -48,35 +46,35 @@ class PhpSpreadSheetController extends Controller
 
         //Title
         $activeSheet->setCellValue('A5', 'Requests Info Report');
-        $activeSheet->getStyle('A5')->getFont()->setBold(1)->setSize(16);
+        $activeSheet->getStyle('A5')->getFont()->setBold(1)->setSize(16);;
         $activeSheet->mergeCells("A5:J6");
 
         $activeSheet->setCellValue('A7', 'Filtered Options');
-        $activeSheet->getStyle('A7')->getFont()->setBold(1)->setSize(12);
-        $activeSheet->mergeCells("A7:B7");
+        $activeSheet->getStyle('A7')->getFont()->setBold(1)->setSize(12);;
+        $activeSheet->mergeCells("A7:J7");
 
         //Filtered Options
-      
+
         $total = count($request->all());
         $test = $request->all();
-            
+
         if(count($test) > 0) {
             $filter = 8;
             foreach($test as $key=>$value){
                 $activeSheet->setCellValue('A'.$filter , $key);
-                $cellRange='A' .$filter. ':B'.$filter;
+                $cellRange='A' .$filter. ':C'.$filter;
                 $activeSheet->mergeCells($cellRange);
                 $activeSheet->setCellValue('C'.$filter , $value);
-                $cell_Range='C' .$filter. ':D'.$filter;
+                $cell_Range='D' .$filter. ':F'.$filter;
                 $activeSheet->mergeCells($cell_Range);
                 $filter++;
             }
         }
-        
+
         foreach (range('A','J') as $col) {
             $activeSheet->getColumnDimension($col)->setAutoSize(true);
          }
-       
+
         $activeSheet->setCellValue('A17', 'ID');
         $activeSheet->setCellValue('B17', 'Request ID');
         $activeSheet->setCellValue('C17', 'User ID');
@@ -96,10 +94,10 @@ class PhpSpreadSheetController extends Controller
         $activeSheet->getStyle('G17')->getFont()->setBold(1)->setSize(12);
         $activeSheet->getStyle('H17')->getFont()->setBold(1)->setSize(12);
         $activeSheet->getStyle('I17')->getFont()->setBold(1)->setSize(12);
-        $activeSheet->getStyle('J17')->getFont()->setBold(1)->setSize(12);    
+        $activeSheet->getStyle('J17')->getFont()->setBold(1)->setSize(12);
 
         $query = RequestInfo::filter(request())->get();
-        
+
         if($query->count() > 0) {
             $i = 18;
             foreach($query as $row){
@@ -128,26 +126,23 @@ class PhpSpreadSheetController extends Controller
     }
 
     public function NPSAccountLinkLoad(Request $request){
-     
-       
+
         $spreadsheet = new Spreadsheet();
         $Excel_writer = new Xlsx($spreadsheet);
-        
-        $spreadsheet->setActiveSheetIndex(0);      
+
+        $spreadsheet->setActiveSheetIndex(0);
         $activeSheet = $spreadsheet->getActiveSheet();
 
         //Logo
-        $activeSheet->mergeCells("A1:J4");   
+        $activeSheet->mergeCells("A1:J4");
 
-        // if(config('redirect.logo') == 'sajilopay'){
-        //     $image =  public_path('img/sajilopay_logo.png');
-        // } elseif(config('redirect.logo') == 'icash'){
-        //     $image =  public_path('img/icash_logo.png');
-        // } elseif(config('redirect.logo') == 'dpaisa') {
-        //     $image =  public_path('img/dpaisa_logo.png');
-        // } 
-
-        $image =  public_path('img/logo.png');
+         if(config('app.logo') == 'sajilopay'){
+             $image =  public_path('img/sajilopaylogo.png');
+         } elseif(config('app.logo') == 'icash'){
+             $image =  public_path('img/icashlogo.png');
+         } elseif(config('app.logo') == 'dpaisa') {
+             $image =  public_path('img/dpaisalogo.png');
+         }
 
         $drawing = new Drawing();
         $drawing->setName('Logo');
@@ -164,30 +159,30 @@ class PhpSpreadSheetController extends Controller
 
         $activeSheet->setCellValue('A7', 'Filtered Options');
         $activeSheet->getStyle('A7')->getFont()->setBold(1)->setSize(12);
-        $activeSheet->mergeCells("A7:B7");
+        $activeSheet->mergeCells("A7:J7");
 
-        //Filtered Options
-      
+        //For Filtered Options
+
         $total = count($request->all());
-        $test = $request->all();
-            
-        if(count($test) > 0) {
-            $filter = 8;
-            foreach($test as $key=>$value){
-                $activeSheet->setCellValue('A'.$filter , $key);
-                $cellRange='A' .$filter. ':B'.$filter;
+        $filterRow = $request->all();
+
+        if(count($filterRow) > 0) {
+            $rowIndex = 8;
+            foreach($filterRow as $key=>$value){
+                $activeSheet->setCellValue('A'.$rowIndex , $key);
+                $cellRange='A' .$rowIndex. ':C'.$rowIndex;
                 $activeSheet->mergeCells($cellRange);
-                $activeSheet->setCellValue('C'.$filter , $value);
-                $cell_Range='C' .$filter. ':D'.$filter;
+                $activeSheet->setCellValue('C'.$rowIndex , $value);
+                $cell_Range='D' .$rowIndex. ':F'.$rowIndex;
                 $activeSheet->mergeCells($cell_Range);
-                $filter++;
+                $rowIndex++;
             }
         }
-        
+
         foreach (range('A','J') as $col) {
             $activeSheet->getColumnDimension($col)->setAutoSize(true);
          }
-       
+
         $activeSheet->setCellValue('A17', 'ID');
         $activeSheet->setCellValue('B17', 'Amount');
         $activeSheet->setCellValue('C17', 'Gateway Transaction ID');
@@ -198,6 +193,11 @@ class PhpSpreadSheetController extends Controller
         $activeSheet->setCellValue('H17', 'User Phone Number');
         $activeSheet->setCellValue('I17', 'Linked Account ID');
         $activeSheet->setCellValue('J17', 'Created At');
+
+//        foreach (range('A17','J17') as $col) {
+//            $activeSheet-> ->setBold(1)->setSize(12);
+//        }
+
         $activeSheet->getStyle('A17')->getFont()->setBold(1)->setSize(12);
         $activeSheet->getStyle('B17')->getFont()->setBold(1)->setSize(12);
         $activeSheet->getStyle('C17')->getFont()->setBold(1)->setSize(12);
@@ -207,24 +207,24 @@ class PhpSpreadSheetController extends Controller
         $activeSheet->getStyle('G17')->getFont()->setBold(1)->setSize(12);
         $activeSheet->getStyle('H17')->getFont()->setBold(1)->setSize(12);
         $activeSheet->getStyle('I17')->getFont()->setBold(1)->setSize(12);
-        $activeSheet->getStyle('J17')->getFont()->setBold(1)->setSize(12);    
+        $activeSheet->getStyle('J17')->getFont()->setBold(1)->setSize(12);
 
-        $query = NPSAccountLinkLoad::filter(request())->get();
-        
-        if($query->count() > 0) {
-            $i = 18;
-            foreach($query as $row){
-                $activeSheet->setCellValue('A'.$i , $row['id']);
-                $activeSheet->setCellValueExplicit('B'.$i , $row['amount'], DataType::TYPE_STRING);
-                $activeSheet->setCellValue('C'.$i , $row['gateway_transaction_id']);
-                $activeSheet->setCellValue('D'.$i , $row['load_status']);
-                $activeSheet->setCellValue('E'.$i , $row['load_time_stamp']);
-                $activeSheet->setCellValue('F'.$i , $row['merchant_txn_id']);
-                $activeSheet->setCellValue('G'.$i , $row['reference_id']);
-                $activeSheet->setCellValue('H'.$i , $row['phone_no']);
-                $activeSheet->setCellValue('I'.$i , $row['linked_id']);
-                $activeSheet->setCellValue('J'.$i , $row['created_at']);
-                $i++;
+        $npsAccountLinkLoad = NPSAccountLinkLoad::with('preTransaction')->filter(request())->get();
+
+        if($npsAccountLinkLoad->count() > 0) {
+            $index = 18;
+            foreach($npsAccountLinkLoad as $row){
+                $activeSheet->setCellValue('A'.$index , $row['id']);
+                $activeSheet->setCellValueExplicit('B'.$index , $row['amount'], DataType::TYPE_STRING);
+                $activeSheet->setCellValue('C'.$index , $row['gateway_transaction_id']);
+                $activeSheet->setCellValue('D'.$index , $row['load_status']);
+                $activeSheet->setCellValue('E'.$index , $row['load_time_stamp']);
+                $activeSheet->setCellValue('F'.$index , $row['merchant_txn_id']);
+                $activeSheet->setCellValue('G'.$index , $row['reference_id']);
+                $activeSheet->setCellValue('H'.$index , optional(optional($row->preTransaction)->user)->mobile_no);
+                $activeSheet->setCellValue('I'.$index , $row['linked_id']);
+                $activeSheet->setCellValue('J'.$index , $row['created_at']);
+                $index++;
             }
         }
 

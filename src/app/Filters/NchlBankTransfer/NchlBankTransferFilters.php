@@ -22,6 +22,7 @@ class NchlBankTransferFilters extends  FiltersAbstract {
         'sort' => SortFilter::class,
         'user' => UserFilter::class,
         'pre_transaction_id' => NchlBankTransferPreTransactionFilter::class,
+        'api_credit_status' => CompareApiStatusFilter::class,
     ];
 
     /**

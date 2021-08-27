@@ -86,9 +86,9 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
     public function latestUserTransactionEvent($users)
     {
         $latestUserTransactionEvents = $users->with(['userTransactionEvents' => function ($query) {
-            return $query->where('created_at', '<=', Carbon::parse($this->from))->orderBy('created_at', 'desc');
+            return $query->whereDate('created_at', '<=', Carbon::parse($this->from))->orderBy('created_at', 'desc');
         }])->whereHas('userTransactionEvents', function ($q) {
-            return $q->where('created_at', '<=', Carbon::parse($this->from));
+            return $q->whereDate('created_at', '<=', Carbon::parse($this->from));
         })->get();
         return $latestUserTransactionEvents;
     }
@@ -222,11 +222,9 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
         $users = $this->inactiveFor6To12MonthsCustomerBuilder();
         $totalBalance = 0;
 
-
-        if (!empty($users) || count($users) != 0) {
-
+        if (count($users) != 0) {
             foreach ($users as $user) {
-                $latestUserTransactionEvent = $user->userTransactionEvents->sortBy('created_at',true);
+                $latestUserTransactionEvent = $user->userTransactionEvents->where('created_at', '<=', Carbon::parse($this->from))->sortBy('created_at', true);
                 if (count($latestUserTransactionEvent)!= 0) {
                     $totalBalance += $latestUserTransactionEvent[0]->balance + $latestUserTransactionEvent[0]->bonus_balance;
                 }
@@ -248,9 +246,9 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
         $users = $this->inactiveForMoreThan12MonthsCustomerBuilder();
         $totalBalance = 0;
 
-        if (!empty($users) || count($users) != 0) {
+        if (count($users) != 0) {
             foreach ($users as $user) {
-                $latestUserTransactionEvent = $user->userTransactionEvents->sortBy('created_at',true);
+                $latestUserTransactionEvent = $user->userTransactionEvents->where('created_at', '<=', Carbon::parse($this->from))->sortBy('created_at', true);
                 if (count($latestUserTransactionEvent)!= 0) {
                     $totalBalance += $latestUserTransactionEvent[0]->balance + $latestUserTransactionEvent[0]->bonus_balance;
                 }

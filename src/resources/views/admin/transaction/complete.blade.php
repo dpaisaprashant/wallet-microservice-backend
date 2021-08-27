@@ -275,7 +275,7 @@
                                         <th>Fee</th>
                                         <th>Cashback amount</th>
                                         <th>Status</th>
-                                        <th>User Type</th>
+                                        {{--<th>UserType</th>--}}
                                         <th>Date</th>
                                         <th>Action</th>
                                     </tr>
@@ -297,7 +297,11 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a @can('User profile') href="{{route('user.profile', $transaction->user_id)}}" @endcan> {{ $transaction->user['mobile_no'] }} </a>
+                                                <a @can('User profile') href="{{route('user.profile', $transaction->user_id)}}" @endcan> {{ $transaction->user['mobile_no'] }} <br>
+
+
+
+                                                </a>
                                             </td>
                                             <td>
                                                 {{ $transaction->vendor }}
@@ -315,7 +319,7 @@
                                             <td>
                                                 <span class="badge badge-primary">Complete</span>
                                             </td>
-                                            <td>
+                                        {{--    <td>
                                                 @if($transaction->user->userType != null)
                                                     <span class="badge badge-primary">User</span>
                                                     @elseif($transaction->user->merchant != null)
@@ -323,7 +327,7 @@
                                                     @elseif($transaction->user->agent != null && $transaction->user->isValidAgentOrSubAgent())
                                                     <span class="badge badge-pill">Agent</span>
                                                 @endif
-                                            </td>
+                                            </td>--}}
                                             <td class="center">{{ $transaction->created_at }}</td>
                                             <td>
                                                 @include('admin.transaction.transactionActionButtons', ['transaction' => $transaction])

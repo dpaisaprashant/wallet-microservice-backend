@@ -7,7 +7,7 @@ use App\Wallet\NCHL\Repository\NchlBankTransferRepository;
 use App\Wallet\WalletAPI\Repositories\NchlApiValidationRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use App\Wallet\WalletAPI\Http\Controllers\NCHLController;
+use App\Wallet\WalletAPI\Http\Controllers\NchlControllers;
 
 class NchlApiCompareTransactions
 {

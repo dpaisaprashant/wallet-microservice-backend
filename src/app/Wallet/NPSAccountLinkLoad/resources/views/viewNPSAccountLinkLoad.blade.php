@@ -255,7 +255,7 @@
                                                 @include('NPSAccountLinkLoad::jsonButtons', ['npsAccountLinkLoad' => $npsAccountLinkLoad])
 
                                                 <a href="{{ route('npsaccountlinkload.detail', $npsAccountLinkLoad->id) }}">
-                                                    <button class="btn btn-primary btn-icon" type="button"><i
+                                                    <button class="btn btn-primary btn-icon" type="button" title="Transaction Details"><i
                                                             class="fa fa-eye"></i></button>
                                                 </a>
 

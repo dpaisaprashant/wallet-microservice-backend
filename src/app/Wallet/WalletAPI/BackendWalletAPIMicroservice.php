@@ -5,7 +5,6 @@ namespace App\Wallet\WalletAPI;
 
 
 //use App\Logging\MongoErrorLoggerHandler;
-use App\Models\Microservice\RequestInfo;
 use App\Wallet\Helpers\TransactionIdGenerator;
 use App\Wallet\Traits\CheckValidJson;
 use Illuminate\Http\Request;
@@ -138,6 +137,12 @@ class BackendWalletAPIMicroservice extends BackendWalletAPIJSONAbstract
         return $this;
     }
 
+    public function setRefStan($refStan)
+    {
+        $this->refStan = $refStan;
+        return $this;
+    }
+
     private function preRequest()
     {
         $this->addParam('reference', $this->requestId)
@@ -152,7 +157,8 @@ class BackendWalletAPIMicroservice extends BackendWalletAPIJSONAbstract
             ->addParam('special3', $this->special3)
             ->addParam('special4', $this->special4)
             ->addParam('user_id', $this->userId ?? "")
-            ->addParam('request_param', $this->requestParam);
+            ->addParam('request_param', $this->requestParam)
+            ->addParam('refStan', $this->refStan ?? "");
 
         $this->setBaseUrl(config('microservices.' . $this->microservice));
         $requestInfo = $this->apiParams;

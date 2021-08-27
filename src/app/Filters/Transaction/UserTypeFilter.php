@@ -40,7 +40,7 @@ class UserTypeFilter extends FilterAbstract {
         }elseif($value == 'agent'){
             return $builder->whereHas('user',function ($query){
                 return $query->whereHas('agent',function($query){
-                    return $query->whereHas('agentType');
+                    return $query->where('status','ACCEPTED');
                 });
             });
         }elseif($value == 'all'){

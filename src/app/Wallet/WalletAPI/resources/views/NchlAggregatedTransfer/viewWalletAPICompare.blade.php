@@ -60,7 +60,8 @@
                                     <br>
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
-                                                formaction="{{ route('walletapi.compare') }}"><strong>Filter</strong>
+                                                formaction="{{ route('nchlBankTransferApi.compare') }}">
+                                            <strong>Filter</strong>
                                         </button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
@@ -74,7 +75,7 @@
             </div>
         </div>
 
-        @if(!empty($_GET))
+        @if(!empty($_GET['from']) && !empty($_GET['to']))
             <div class="row">
                 <div class="col-lg-6">
                     <div class="ibox ">
@@ -114,7 +115,7 @@
                                             <td>{{ $transaction->bank }}</td>
 
                                             <td>
-                                               {{ $transaction->amount ?? 0}}
+                                                {{ $transaction->amount ?? 0}}
                                             </td>
 
                                             <td>
@@ -376,14 +377,14 @@
     @include('admin.asset.js.chosen')
     @include('admin.asset.js.datepicker')
     @include('admin.asset.js.datatable')
-{{--        <script>--}}
-{{--            @if(!empty($_GET))--}}
-{{--            $(document).ready(function (e) {--}}
-{{--                let a = "Showing {{ $transactions->firstItem() }} to {{ $transactions->lastItem() }} of {{ $transactions->total() }} entries";--}}
-{{--                $('.dataTables_info').text(a);--}}
-{{--            });--}}
-{{--            @endif--}}
-{{--        </script>--}}
+    {{--        <script>--}}
+    {{--            @if(!empty($_GET))--}}
+    {{--            $(document).ready(function (e) {--}}
+    {{--                let a = "Showing {{ $transactions->firstItem() }} to {{ $transactions->lastItem() }} of {{ $transactions->total() }} entries";--}}
+    {{--                $('.dataTables_info').text(a);--}}
+    {{--            });--}}
+    {{--            @endif--}}
+    {{--        </script>--}}
 
     <!-- IonRangeSlider -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js"></script>

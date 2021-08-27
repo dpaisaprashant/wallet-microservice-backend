@@ -3,6 +3,8 @@
 namespace App\Filters\NchlAggregatedPayment;
 
 use App\Filters\FilterAbstract;
+use App\Models\Microservice\PreTransaction;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 
 class UserFilter extends FilterAbstract {
@@ -30,10 +32,8 @@ class UserFilter extends FilterAbstract {
             return $builder;
         }
 
-        return $builder->whereHas('user', function ($query) use ($value){
-            $query->where(function ($query) use ($value) {
-                $query->where('email', $value)->orWhere('mobile_no', $value);
-            });
-        });
+        $userId = User::where('mobile_no',$value)->value('id');
+        $preTransactionIds = PreTransaction::where('user_id',$userId)->pluck('pre_transaction_id');
+        return $builder->whereIn('pre_transaction_id',$preTransactionIds);
     }
 }

@@ -9,7 +9,11 @@
 
 @elseif($transaction->transaction_type == 'App\Models\UserTransaction')
     @include('admin.transaction.paypoint.detail', ['transaction' => $transaction->transactionable])
-    <a href="{{ route('paypoint.detail', $transaction->transactionable->checkTransaction->id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+    @if(optional(optional($transaction->transactionable)->checkTransaction)->id != null)
+        <a href="{{ route('paypoint.detail', $transaction->transactionable->checkTransaction->id) }}">    <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+
+            @endif
+
 
 @elseif($transaction->transaction_type == 'App\Models\FundRequest')
 

@@ -540,6 +540,10 @@ $url = url()->current();
                                 <a href="{{ route('sparrow.detail') }}"> <span class="nav-label"> SMS Detail</span></a>
                             </li>
                         @endcan
+{{--                                todo:: update permissions--}}
+                            <li>
+                                <a href="{{route('miracle-info.view')}}"><span class="nav-label">Miracle Info SMS</span></a>
+                            </li>
                     </ul>
                 </li>
             @endif

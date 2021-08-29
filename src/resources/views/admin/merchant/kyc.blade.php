@@ -877,7 +877,7 @@
                 text: "KYC for this merchant will be verified",
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#18a689",
+                confirmButtonColor: "#3366ff",
                 confirmButtonText: "Yes, accept KYC!",
                 closeOnConfirm: true,
                 closeOnClickOutside: true

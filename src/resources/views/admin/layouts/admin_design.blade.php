@@ -8,13 +8,13 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>DPaisa Admin Panel</title>
+    <title>SajiloPay Admin Panel</title>
 
-    <link href="{{ asset('admin/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('admin/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('admin/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
-    <link href="{{ asset('admin/css/animate.css') }}" rel="stylesheet">
-    <link href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('admin/css/animate.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('admin/css/style.css') }}" rel="stylesheet">
 
     <style>
 
@@ -73,8 +73,8 @@
         }
 
         .btn-success:hover, .btn-success:focus, .btn-success:active {
-            background-color: #18a689 !important;
-            border-color: #18a689 !important;
+            background-color: #3366ff !important;
+            border-color: #3366ff !important;
         }
 
     </style>
@@ -106,15 +106,15 @@
 </div>
 
 <!-- Mainly scripts -->
-<script src="{{ asset('admin/js/jquery-3.1.1.min.js') }} " ></script>
-<script src="{{ asset('admin/js/popper.min.js') }} " ></script>
-<script src="{{ asset('admin/js/bootstrap.js') }} " ></script>
-<script src="{{ asset('admin/js/plugins/metisMenu/jquery.metisMenu.js') }} " ></script>
-<script src="{{ asset('admin/js/plugins/slimscroll/jquery.slimscroll.min.js') }} " ></script>
+<script src="{{ secure_asset('admin/js/jquery-3.1.1.min.js') }} " ></script>
+<script src="{{ secure_asset('admin/js/popper.min.js') }} " ></script>
+<script src="{{ secure_asset('admin/js/bootstrap.js') }} " ></script>
+<script src="{{ secure_asset('admin/js/plugins/metisMenu/jquery.metisMenu.js') }} " ></script>
+<script src="{{ secure_asset('admin/js/plugins/slimscroll/jquery.slimscroll.min.js') }} " ></script>
 
 <!-- Custom and plugin javascript -->
-<script src="{{ asset('admin/js/inspinia.js') }} " ></script>
-<script src="{{ asset('admin/js/plugins/pace/pace.min.js') }} " ></script>
+<script src="{{ secure_asset('admin/js/inspinia.js') }} " ></script>
+<script src="{{ secure_asset('admin/js/plugins/pace/pace.min.js') }} " ></script>
 
 <script>
     $('form').attr('autocomplete','off');

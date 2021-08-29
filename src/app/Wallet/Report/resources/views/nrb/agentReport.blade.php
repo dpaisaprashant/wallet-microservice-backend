@@ -44,7 +44,9 @@
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </span>
-                                                <input id="date_load_from" type="text" class="form-control date_from" placeholder="From" name="from" autocomplete="off" value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}">
+                                                <input id="date_load_from" type="text" class="form-control date_from"
+                                                       placeholder="From" name="from" autocomplete="off"
+                                                       value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}">
                                             </div>
                                         </div>
 
@@ -53,19 +55,42 @@
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </span>
-                                                <input id="date_load_to" type="text" class="form-control date_to" placeholder="To" name="to" autocomplete="off" value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
+                                                <input id="date_load_to" type="text" class="form-control date_to"
+                                                       placeholder="To" name="to" autocomplete="off"
+                                                       value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
                                             </div>
                                         </div>
                                     </div>
                                     <br>
                                     <div>
-                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('report.agent') }}"><strong>Generate Report</strong></button>
+                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
+                                                formaction="{{ route('report.agent') }}"><strong>Generate
+                                                Report</strong></button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
                                     {{-- <div>
                                          <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs" type="submit" style="margin-right: 10px;" formaction="{{ route('user.excel') }}"><strong>Excel</strong></button>
                                      </div>--}}
                                 </form>
+
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px;">
+
+                            <div class="col-sm-12">
+                                <div class="alert alert-warning" style="width: 100%">
+                                    <i class="fa fa-info-circle"></i>&nbsp;
+                                    <b>Bill Payments</b> includes transactions done by Khalti such as Topup, Internet Payments, NEA Payments etc and
+                                    NCHL Aggregate Payment such as Mero share, Credit Card Payment,Demat Fees, Broker Fees etc.
+                                    <br>
+                                    <i class="fa fa-info-circle"></i>&nbsp;
+                                    <b>P2P Transfer</b> includes transactions where agent transfer funds to wallet merchants such as Remittance,Audan,Chirayu etc.<br>
+                                    <i class="fa fa-info-circle"></i>&nbsp;
+                                    <b>Cash In</b> includes transaction where agent sends fund to other users<br>
+                                    <i class="fa fa-info-circle"></i>&nbsp;
+                                    <b>Others</b> includes bank transfer transactions
+                                </div>
                             </div>
 
                         </div>
@@ -83,7 +108,8 @@
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover dataTables-example" title="Agent report from {{ $_GET['from'] . ' to ' . $_GET['to'] }}">
+                                <table class="table table-striped table-bordered table-hover dataTables-example"
+                                       title="Agent report from {{ $_GET['from'] . ' to ' . $_GET['to'] }}">
                                     <thead>
                                     <tr>
                                         <th>S.No</th>
@@ -100,21 +126,21 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($agents as $agent)
-                                            <tr class="gradeX">
-                                                <td>{{ $loop->index + ($agents->perPage() * ($agents->currentPage() - 1)) + 1 }}</td>
-                                                <td>{{ $agent->reference_code }}</td>
-                                                <td>{{ $agent->user->name }}</td>
-                                                <td>{{ $agent->totalSubAgent }}</td>
-                                                <td>{{ $agent->previousReportingBalance }}</td>
-                                                <td>{{ $agent->currentReportingBalance }}</td>
-                                                <td>{{ $agent->billPayment }}</td>
-                                                <td>{{ $agent->p2pTransfer }}</td>
-                                                <td>{{ $agent->cashIn }}</td>
-                                                <td>{{ $agent->others }}</td>
-                                                <td>{{ $agent->total }}</td>
-                                            </tr>
-                                        @endforeach
+                                    @foreach($agents as $agent)
+                                        <tr class="gradeX">
+                                            <td>{{ $loop->index + ($agents->perPage() * ($agents->currentPage() - 1)) + 1 }}</td>
+                                            <td>{{ $agent->reference_code }}</td>
+                                            <td>{{ $agent->user->name }}</td>
+                                            <td>{{ $agent->totalSubAgent }}</td>
+                                            <td>{{ $agent->previousReportingBalance }}</td>
+                                            <td>{{ $agent->currentReportingBalance }}</td>
+                                            <td>{{ $agent->billPayment }}</td>
+                                            <td>{{ $agent->p2pTransfer }}</td>
+                                            <td>{{ $agent->cashIn }}</td>
+                                            <td>{{ $agent->others }}</td>
+                                            <td>{{ $agent->total }}</td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                     {{ $agents->appends(request()->query())->links() }}
                                 </table>

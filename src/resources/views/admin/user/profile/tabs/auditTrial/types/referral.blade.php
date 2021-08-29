@@ -29,7 +29,7 @@
             @endif
         </td>
     @endif
-    <td>DPAISA</td>
+    <td>SAJILOPAY</td>
     <td>
         @if($event->status == \App\Models\UsedUserReferral::STATUS_COMPLETE)
             <span class="badge badge-primary">{{$event->status}}</span>

@@ -83,7 +83,7 @@
                     <div class="ibox-content">
 
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover dataTables-example" title="Dpaisa Audit Trial - Nchl Bank Transfer">
+                            <table class="table table-striped table-bordered table-hover dataTables-example" title="SajiloPay Audit Trial - Nchl Bank Transfer">
                                 <thead>
                                 <tr>
                                     <th>#</th>

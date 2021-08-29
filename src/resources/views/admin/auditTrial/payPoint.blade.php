@@ -83,7 +83,7 @@
                     </div>
                     <div class="ibox-content">
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover dataTables-example" title="Dpaisa Audit Trial - PayPoint">
+                            <table class="table table-striped table-bordered table-hover dataTables-example" title="SajiloPay Audit Trial - PayPoint">
                                 <thead>
                                 <tr>
                                     <th>#</th>

@@ -71,7 +71,7 @@
                         <td>
                             <strong>
                                 <button type="button" class="btn btn-warning m-r-sm">12</button>
-                            </strong> D-Paisa Points
+                            </strong>Sajilo Points
                         </td>
                         <td>
                             @if(empty($user->kyc))
@@ -211,7 +211,7 @@
                         <h3 class="font-bold no-margins">
                             Total balance in wallet
                         </h3>
-                        <small>Money saved in d-paisa wallet</small>
+                        <small>Money saved in SajiloPay wallet</small>
                     </div>
 
                 </div>
@@ -366,7 +366,7 @@
                 text: "This user will be activated",
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#18a689",
+                confirmButtonColor: "#3366ff",
                 confirmButtonText: "Yes, activate user!",
                 closeOnConfirm: true,
                 closeOnClickOutside: true

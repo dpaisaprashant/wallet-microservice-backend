@@ -3,6 +3,7 @@
 namespace App\Filters\Transaction;
 
 use App\Filters\FilterAbstract;
+use App\Models\NpsLoadTransaction;
 use App\Models\UserLoadTransaction;
 use App\Models\UserTransaction;
 use Illuminate\Database\Eloquent\Builder;
@@ -31,12 +32,13 @@ class IdFilter extends FilterAbstract {
             return $builder;
         }
 
-        $userTransaction = UserTransaction::where('refStan', $value)->first();
+        //$userTransaction = UserTransaction::where('refStan', $value)->first();
 
+        $npsLoadTransaction = NpsLoadTransaction::where('transaction_id', $value)->first();
         $userLoadTransaction = UserLoadTransaction::where('transaction_id', $value)->first();
 
-        if($userTransaction){
-            $builder->where("transaction_id", $userTransaction->id)->where('transaction_type', '=', 'App\Models\UserTransaction');
+        if($npsLoadTransaction){
+            $builder->where("transaction_id", $npsLoadTransaction->id)->where('transaction_type', '=', 'App\Models\NpsLoadTransaction');
         } elseif ($userLoadTransaction) {
             $builder->where("transaction_id", $userLoadTransaction->id)->where('transaction_type', '=', 'App\Models\UserLoadTransaction');
         }

@@ -134,7 +134,7 @@
                 text: "This user's attempt will be enabled",
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#18a689",
+                confirmButtonColor: "#3366ff",
                 confirmButtonText: "Yes, enable login attempt",
                 closeOnConfirm: false
             }, function () {

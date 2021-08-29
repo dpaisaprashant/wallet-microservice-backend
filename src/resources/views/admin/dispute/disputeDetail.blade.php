@@ -96,7 +96,7 @@
                                                 @if($disputeDetail->vendor_type == \App\Models\Dispute::VENDOR_TYPE_PAYPOINT)
                                                     <option value="PAYPOINT">PAYPOINT</option>
                                                 @endif
-                                                <option value="DPAISA">DPAISA</option>
+                                                <option value="SAJILOPAY">SAJILOPAY</option>
                                             </select>
                                         </div>
                                     </div>
@@ -320,7 +320,7 @@
                 text: "Dispute handle for this transaction will be approved",
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#18a689",
+                confirmButtonColor: "#3366ff",
                 confirmButtonText: "Yes, approve",
                 closeOnConfirm: true,
                 closeOnClickOutside: true
@@ -361,7 +361,7 @@
                 text: "Dispute handle for this transaction will be approved",
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#18a689",
+                confirmButtonColor: "#3366ff",
                 confirmButtonText: "Yes, approve",
                 closeOnConfirm: true,
                 closeOnClickOutside: true

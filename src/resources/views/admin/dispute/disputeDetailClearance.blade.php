@@ -413,7 +413,7 @@
                 text: "Dispute handle for this transaction will be approved",
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#18a689",
+                confirmButtonColor: "#3366ff",
                 confirmButtonText: "Yes, approve",
                 closeOnConfirm: true,
                 closeOnClickOutside: true

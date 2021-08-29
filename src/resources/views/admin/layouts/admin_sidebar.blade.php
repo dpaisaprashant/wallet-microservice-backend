@@ -32,20 +32,20 @@ $url = url()->current();
                             <li><a href="{{ route('admin.dashboard.kyc') }}">KYC</a></li>
                         @endcan
 
-                        @can('Stat Dashboard paypoint')
+                        {{--@can('Stat Dashboard paypoint')
                             <li><a href="{{ route('admin.dashboard.paypoint') }}">PayPoint</a></li>
-                        @endcan
+                        @endcan--}}
 
                         {{--@can('Stat Dashboard npay')
                             <li><a href="{{ route('admin.dashboard.npay') }}">NPay</a></li>
                         @endcan--}}
-                        @can('Dashboard NCHL bank transfer')
+                        {{--@can('Dashboard NCHL bank transfer')
                             <li><a href="{{ route('admin.dashboard.nchl.bankTransfer') }}">NCHL Bank Transfer</a></li>
-                        @endcan
-                        @can('Dashboard NCHL load transaction')
+                        @endcan--}}
+                        {{--@can('Dashboard NCHL load transaction')
                             <li><a href="{{ route('admin.dashboard.nchl.loadTransaction') }}">NCHL Load Transaction</a>
                             </li>
-                        @endcan
+                        @endcan--}}
 
                     </ul>
                 </li>
@@ -136,21 +136,21 @@ $url = url()->current();
                 </li>
             @endcan
 
-            @if(auth()->user()->hasPermissionTo('Merchant event list') || auth()->user()->hasPermissionTo('Merchant pending event list'))
-                <li @if(preg_match('/event/i', $url)) class="active" @endif>
-                    <a href="#"><i class="fa fa-birthday-cake"></i> <span class="nav-label">Merchant Events</span><span
-                            class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        @can('Merchant event list')
-                            <li><a href="{{ route('merchant.event.list') }}">All Events</a></li>
-                        @endcan
-                        @can('Merchant pending event list')
-                            <li><a href="{{ route('merchant.event.pendingList') }}">Pending Events</a></li>
-                        @endcan
-                    </ul>
-                </li>
-            @endif
 
+            {{--@if(auth()->user()->hasPermissionTo('Merchant event list') || auth()->user()->hasPermissionTo('Merchant pending event list'))
+            <li @if(preg_match('/event/i', $url)) class="active" @endif>
+                <a href="#"><i class="fa fa-birthday-cake"></i> <span class="nav-label">Merchant Events</span><span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    @can('Merchant event list')
+                        <li><a href="{{ route('merchant.event.list') }}">All Events</a></li>
+                    @endcan
+                    @can('Merchant pending event list')
+                        <li><a href="{{ route('merchant.event.pendingList') }}">Pending Events</a></li>
+                    @endcan
+                </ul>
+            </li>
+            @endif--}}
 
             @can('Deactivate users view')
                 <li @if($url == route('user.deactivate.list')) class="active" @endif>
@@ -165,11 +165,11 @@ $url = url()->current();
                 </li>
             @endcan
 
-            @can('Merchant locked view')
+            {{--@can('Merchant locked view')
                 <li @if($url == route('merchant.locked.list')) class="active" @endif>
                     <a href="{{ route('merchant.locked.list') }}"><i class="fa fa-lock"></i> <span class="nav-label">Locked Merchants</span></a>
                 </li>
-            @endcan
+            @endcan--}}
 
             @can('KYC not filled users view')
                 <li @if(preg_match('/kyc-not-filled-user/i', $url)) class="active" @endif>
@@ -254,9 +254,9 @@ $url = url()->current();
                         @can('Agent view')
                             <li><a href="{{ route('agent.view') }}">View Agent</a></li>
                         @endcan
-                        @can('Agent create')
+                        {{--@can('Agent create')
                             <li><a href="{{ route('agent.create') }}">Create Agent</a></li>
-                        @endcan
+                        @endcan--}}
                     </ul>
                 </li>
             @endif
@@ -376,41 +376,37 @@ $url = url()->current();
                         @can('Transaction nps view')
                             <li><a href="{{ route('nps') }}">Nps Web/Mobile Banking</a></li>
                         @endcan
+
                         @can('View khalti details')
                             <li><a href="{{ route('khalti.transaction') }}">Khalti</a></li>
                         @endcan
-                        @can('Paypoint view')
+
+                        {{--@can('Paypoint view')
                             <li><a href="{{ route('paypoint') }}">Paypoint Transactions</a></li>
-                        @endcan
+                        @endcan--}}
+
                         @can('Transaction nchl load')
                             <li><a href="{{ route('nchl.loadTransaction') }}">NCHL Load</a></li>
                         @endcan
                         @can('Transaction nchl bank transfer')
                             <li><a href="{{ route('nchl.bankTransfer') }}">NCHL Bank Transfer</a></li>
                         @endcan
+
                         @can('View nchl aggregated payment')
                             <li><a href="{{ route('nchl.aggregatePayment') }}">NCHL Aggregated Payment</a></li>
                         @endcan
-                        @can('Nicasia cybersource view')
+                        {{-- @can('Nicasia cybersource view')
                             <li><a href="{{ route('nicAsia.viewCyberSourceLoad') }}">NIC Asia Transaction</a></li>
-                        @endcan
+                        @endcan--}}
 
-
-
-                        {{--      @can('Cellpay user transaction view')
-                                  <li><a href="{{route('cellPayUserTransaction.view')}}">CellPay Transactions</a></li>
-                                  @endcan--}}
-
-                        @can('Cellpay user transaction view')
+                        {{--@can('Cellpay user transaction view')
                             <li><a href="{{route('cellPayUserTransaction.view')}}">CellPay Transactions</a></li>
-                        @endcan
-
-
+                        @endcan--}}
                     </ul>
                 </li>
             @endif
 
-            @if(auth()->user()->hasAnyPermission(['Failed paypoint view', 'Failed npay view']))
+            {{--@if(auth()->user()->hasAnyPermission(['Failed paypoint view', 'Failed npay view']))
                 <li @if($url == route('userTransaction.failed') || $url == route('userLoadTransaction.failed')) class="active" @endif>
                     <a href="#"><i class="fa fa-recycle"></i> <span class="nav-label">Failed Transactions</span><span
                             class="fa arrow"></span></a>
@@ -419,12 +415,12 @@ $url = url()->current();
                             <li><a href="{{ route('userTransaction.failed') }}">Failed Paypoint Transactions</a></li>
                         @endcan
 
-                        {{--@can('Failed npay view')
+                        @can('Failed npay view')
                         <li><a href="{{ route('userLoadTransaction.failed') }}">Failed NPay Transactions</a></li>
-                        @endcan--}}
+                        @endcan
                     </ul>
                 </li>
-            @endif
+            @endif--}}
 
             @if(auth()->user()->hasAnyPermission(['Clearance npay', 'Clearance paypoint']))
                 <li @if($url == route('clearance.transactions') || $url == route('clearance.generate')) class="active" @endif>
@@ -451,7 +447,7 @@ $url = url()->current();
                 </li>
             @endif--}}
 
-            @if(auth()->user()->hasAnyPermission(['Dispute view', 'Dispute create']))
+            {{--@if(auth()->user()->hasAnyPermission(['Dispute view', 'Dispute create']))
                 <li @if(preg_match('/dispute/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-times-rectangle"></i> <span class="nav-label">Single Dispute</span><span
                             class="fa arrow"></span></a>
@@ -465,7 +461,7 @@ $url = url()->current();
                         @endcan
                     </ul>
                 </li>
-            @endif
+            @endif--}}
 
             @if(auth()->user()->hasAnyPermission(['View all audit trial', 'View npay audit trial', 'View paypoint audit trial','View nchl bank transfer audit trail','View nchl load transaction audit trail']))
                 <li @if($url == route('auditTrail.all') || $url == route('auditTrail.nPay') || $url == route('auditTrail.payPoint')) class="active" @endif>
@@ -476,13 +472,13 @@ $url = url()->current();
                             <li><a href="{{ route('auditTrail.all') }}">All</a></li>
                         @endcan
 
-                        {{--@can('View npay audit trial')
+                        @can('View npay audit trial')
                             <li><a href="{{ route('auditTrail.nPay') }}">NPay</a></li>
-                        @endcan--}}
-
-                        @can('View paypoint audit trial')
-                            <li><a href="{{ route('auditTrail.payPoint') }}">PayPoint</a></li>
                         @endcan
+
+                        {{--@can('View paypoint audit trial')
+                            <li><a href="{{ route('auditTrail.payPoint') }}">PayPoint</a></li>
+                        @endcan--}}
                         @can('View nchl bank transfer audit trail')
                             <li><a href="{{ route('auditTrail.nchl.bankTransfer') }}">NCHL Bank Transfer</a></li>
                         @endcan
@@ -504,9 +500,9 @@ $url = url()->current();
                         @can('Yearly report view')
                             <li><a href="{{ route('report.yearly') }}">Yearly Report</a></li>
                         @endcan
-                        @can('Report paypoint')
+                        {{--@can('Report paypoint')
                             <li><a href="{{ route('report.paypoint') }}">PayPoint Report</a></li>
-                        @endcan
+                        @endcan--}}
                         @can('Report npay')
                             <li><a href="{{ route('report.npay') }}">NPay Report</a></li>
                         @endcan
@@ -715,9 +711,10 @@ $url = url()->current();
                             <li><a href="{{ route('settings.nps') }}">NPS Setting</a></li>
                         @endcan
 
-                        @can('Paypoint setting view')
+                        {{--@can('Paypoint setting view')
                             <li><a href="{{ route('settings.paypoint') }}">Paypoint Setting</a></li>
-                        @endcan
+                        @endcan--}}
+
                         @can('Nchl load setting view')
                             <li><a href="{{ route('settings.nchl.load') }}">NCHL Load Setting</a></li>
                         @endcan

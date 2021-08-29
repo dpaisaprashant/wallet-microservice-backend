@@ -14,6 +14,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web','auth']], function () 
     //NCHL Aggregated Transfer
     Route::post('/transaction/nchl/aggregated/report/{id}', [NchlAggregatedController::class, 'byId'])->name('nchlAggregatedTransferApi.report');
     Route::get('/transaction/nchl/aggregated/report/compare', [NchlAggregatedController::class, 'compareTransactions'])->name('nchlAggregatedTransferApi.compare');
+    Route::post('/transaction/nchl/aggregated/report/by-date', [NchlAggregatedController::class, 'byDate'])->name('nchlAggregatedTransferApiByDate.report');
 
     //Paypoint Bank Transfer
     Route::post('/transaction/paypoint/report/{id}', [PaypointController::class, 'byId'])->name('paypointTransferApi.report');

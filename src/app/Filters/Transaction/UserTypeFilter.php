@@ -30,14 +30,23 @@ class UserTypeFilter extends FilterAbstract {
             return $builder;
         }
         if($value == 'user'){
-            return $builder->whereHas('user',function($query){
-                return $query->whereHas('userType');
+            return $builder->whereHas('user',function ($query){
+                return $query->whereHas('userType')->doesntHave('agent',function($query){
+                    return $query->where('status','!=','ACCEPTED');
+                });
+
             });
         }elseif($value == 'merchant'){
             return $builder->whereHas('user',function ($query){
                 return $query->whereHas('merchant');
             });
         }elseif($value == 'agent'){
+       /*     $a = $builder->whereHas('user',function ($query){
+                return $query->whereHas('agent',function($query){
+                    return $query->where('status','ACCEPTED');
+                });
+            })->get();
+            dd($a[0]);*/
             return $builder->whereHas('user',function ($query){
                 return $query->whereHas('agent',function($query){
                     return $query->where('status','ACCEPTED');

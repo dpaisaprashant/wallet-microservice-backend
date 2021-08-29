@@ -25,7 +25,7 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
 
     public function getBillPaymentNumber()
     {
-        $billPaymentTotalNumber = TransactionEvent::whereIn('transaction_type', $this->billPayment)->whereHas('user', function ($query) {
+        $billPaymentTotalNumber = TransactionEvent::whereIn('transaction_type', $this->billPayment)/*->whereHas('user', function ($query) {
 
             return $query->where(function($query){
                 return $query->doesntHave('agent')
@@ -35,7 +35,7 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
                     });
                 });
             });
-        })
+        })*/
             ->filter($this->request)
             ->count();
         return $billPaymentTotalNumber;
@@ -44,7 +44,7 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
     public function getBillPaymentValue()
     {
         /*dd(TransactionEvent::whereIn('transaction_type',$this->billPayment)->filter($this->request)->sum('amount'));*/
-        $billPaymentTotalValue = TransactionEvent::whereIn('transaction_type', $this->billPayment)->whereHas('user', function ($query) {
+        $billPaymentTotalValue = TransactionEvent::whereIn('transaction_type', $this->billPayment)/*->whereHas('user', function ($query) {
 
             return $query->where(function($query){
                 return $query->doesntHave('agent')
@@ -54,7 +54,7 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
                         });
                     });
             });
-        })
+        })*/
             ->filter($this->request)
             ->sum('amount');
         return $billPaymentTotalValue;
@@ -63,7 +63,7 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
     public function getTransferNumber()
     {
         $transferTotalNumber = TransactionEvent::where('transaction_type', UserToUserFundTransfer::class)
-            ->whereHas('user', function ($query) {
+          /*  ->whereHas('user', function ($query) {
 
                 return $query->where(function($query){
                     return $query->doesntHave('agent')
@@ -73,10 +73,10 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
                             });
                         });
                 });
-            })
+            })*/
             ->filter($this->request)
             ->count();
-        $fundTotalRequestNumber = TransactionEvent::where('transaction_type', FundRequest::class)->whereHas('user', function ($query) {
+        $fundTotalRequestNumber = TransactionEvent::where('transaction_type', FundRequest::class)/*->whereHas('user', function ($query) {
 
             return $query->where(function($query){
                 return $query->doesntHave('agent')
@@ -86,7 +86,7 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
                         });
                     });
             });
-        })
+        })*/
             ->filter($this->request)
             ->count();
         return $transferTotalNumber + $fundTotalRequestNumber;
@@ -95,7 +95,7 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
     public function getTransferValue()
     {
         $transferTotalValue = TransactionEvent::where('transaction_type', UserToUserFundTransfer::class)
-            ->where('vendor', 'Transfer Fund')->whereHas('user', function ($query) {
+            ->where('vendor', 'Transfer Fund')/*->whereHas('user', function ($query) {
 
                 return $query->where(function($query){
                     return $query->doesntHave('agent')
@@ -105,11 +105,11 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
                             });
                         });
                 });
-            })
+            })*/
             ->filter($this->request)
             ->sum('amount');
         $fundTotalRequestValue = TransactionEvent::where('transaction_type', FundRequest::class)
-            ->filter($this->request)->whereHas('user', function ($query) {
+            ->filter($this->request)/*->whereHas('user', function ($query) {
 
                 return $query->where(function($query){
                     return $query->doesntHave('agent')
@@ -119,14 +119,14 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
                             });
                         });
                 });
-            })
+            })*/
             ->sum('amount');
         return $transferTotalValue + $fundTotalRequestValue;
     }
 
     public function getCashInNumber()
     {
-        $cashInTotalNumber = TransactionEvent::whereIn('transaction_type', $this->cashIn)->whereHas('user', function ($query) {
+        $cashInTotalNumber = TransactionEvent::whereIn('transaction_type', $this->cashIn)/*->whereHas('user', function ($query) {
 
             return $query->where(function($query){
                 return $query->doesntHave('agent')
@@ -136,7 +136,7 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
                         });
                     });
             });
-        })
+        })*/
             ->filter($this->request)
             ->count();
         return $cashInTotalNumber;
@@ -144,7 +144,7 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
 
     public function getCashInValue()
     {
-        $cashInTotalValue = TransactionEvent::whereIn('transaction_type', $this->cashIn)->whereHas('user', function ($query) {
+        $cashInTotalValue = TransactionEvent::whereIn('transaction_type', $this->cashIn)/*->whereHas('user', function ($query) {
 
             return $query->where(function($query){
                 return $query->doesntHave('agent')
@@ -154,7 +154,7 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
                         });
                     });
             });
-        })
+        })*/
             ->filter($this->request)
             ->sum('amount');
         return $cashInTotalValue;
@@ -162,7 +162,7 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
 
     public function getOfferNumber()
     {
-        $cashBackOfferTotalNumber = TransactionEvent::where('service_type', 'CASHBACK')->where('transaction_type', Commission::class)->whereHas('user', function ($query) {
+        $cashBackOfferTotalNumber = TransactionEvent::where('service_type', 'CASHBACK')->where('transaction_type', Commission::class)/*->whereHas('user', function ($query) {
 
             return $query->where(function($query){
                 return $query->doesntHave('agent')
@@ -172,10 +172,10 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
                         });
                     });
             });
-        })
+        })*/
             ->filter($this->request)
             ->count();
-        $referralTotalNumber = TransactionEvent::whereIn('transaction_type', [UsedUserReferral::class, UserReferralBonusTransaction::class])->whereHas('user', function ($query) {
+        $referralTotalNumber = TransactionEvent::whereIn('transaction_type', [UsedUserReferral::class, UserReferralBonusTransaction::class])/*->whereHas('user', function ($query) {
 
             return $query->where(function($query){
                 return $query->doesntHave('agent')
@@ -185,7 +185,7 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
                         });
                     });
             });
-        })
+        })*/
             ->filter($this->request)
             ->count();
         return $cashBackOfferTotalNumber + $referralTotalNumber;
@@ -194,7 +194,7 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
     public function getOfferValue()
     {
         $cashBackOfferTotalValue = TransactionEvent::where('service_type', 'CASHBACK')
-            ->where('transaction_type', Commission::class)->whereHas('user', function ($query) {
+            ->where('transaction_type', Commission::class)/*->whereHas('user', function ($query) {
 
                 return $query->where(function($query){
                     return $query->doesntHave('agent')
@@ -204,10 +204,10 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
                             });
                         });
                 });
-            })
+            })*/
             ->filter($this->request)
             ->sum('amount');
-        $referralTotalValue = TransactionEvent::whereIn('transaction_type', [UsedUserReferral::class, UserReferralBonusTransaction::class])->whereHas('user', function ($query) {
+        $referralTotalValue = TransactionEvent::whereIn('transaction_type', [UsedUserReferral::class, UserReferralBonusTransaction::class])/*->whereHas('user', function ($query) {
 
             return $query->where(function($query){
                 return $query->doesntHave('agent')
@@ -217,7 +217,7 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
                         });
                     });
             });
-        })
+        })*/
             ->filter($this->request)
             ->sum('amount');
         return $cashBackOfferTotalValue + $referralTotalValue;
@@ -226,7 +226,7 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
     public function getFeesChargesNumber()
     {
         $commissionTotalNumber = TransactionEvent::where('service_type', 'COMMISSION')
-            ->where('transaction_type', Commission::class)->whereHas('user', function ($query) {
+            ->where('transaction_type', Commission::class)/*->whereHas('user', function ($query) {
 
                 return $query->where(function($query){
                     return $query->doesntHave('agent')
@@ -236,7 +236,7 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
                             });
                         });
                 });
-            })
+            })*/
             ->filter($this->request)
             ->count();
         return $commissionTotalNumber;
@@ -244,7 +244,7 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
 
     public function getFeesChargesValue()
     {
-        $commissionTotalValue = TransactionEvent::where('service_type', 'COMMISSION')->where('transaction_type', Commission::class)->whereHas('user', function ($query) {
+        $commissionTotalValue = TransactionEvent::where('service_type', 'COMMISSION')->where('transaction_type', Commission::class)/*->whereHas('user', function ($query) {
 
             return $query->where(function($query){
                 return $query->doesntHave('agent')
@@ -254,7 +254,7 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
                         });
                     });
             });
-        })
+        })*/
             ->filter($this->request)
             ->sum('amount');
         return $commissionTotalValue;
@@ -262,7 +262,7 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
 
     public function getCashOutNumber()
     {
-        $cashOutTotalNumber = TransactionEvent::where('transaction_type', NchlBankTransfer::class)->whereHas('user', function ($query) {
+        $cashOutTotalNumber = TransactionEvent::where('transaction_type', NchlBankTransfer::class)/*->whereHas('user', function ($query) {
 
             return $query->where(function($query){
                 return $query->doesntHave('agent')
@@ -272,7 +272,7 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
                         });
                     });
             });
-        })
+        })*/
             ->filter($this->request)
             ->count();
         return $cashOutTotalNumber;
@@ -280,7 +280,7 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
 
     public function getCashOutValue()
     {
-        $cashOutTotalValue = TransactionEvent::where('transaction_type', NchlBankTransfer::class)->whereHas('user', function ($query) {
+        $cashOutTotalValue = TransactionEvent::where('transaction_type', NchlBankTransfer::class)/*->whereHas('user', function ($query) {
 
             return $query->where(function($query){
                 return $query->doesntHave('agent')
@@ -290,7 +290,7 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
                         });
                     });
             });
-        })
+        })*/
             ->filter($this->request)
             ->sum('amount');
         return $cashOutTotalValue;

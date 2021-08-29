@@ -96,12 +96,6 @@ class AgentReportRepository extends AbstractReportRepository
 
     public function otherPayment()
     {
-        /*$userId = $this->agent->user_id;
-        return TransactionEvent::where('user_id', $userId)
-          /*  ->whereIn('transaction_type', [MerchantTransaction::class])*/
-              ->whereIn('transaction_type',[NchlBankTransfer::class])
-            ->filter($this->request)
-            ->sum('amount');*/
         return 0;
     }
 

@@ -30,6 +30,7 @@ use App\Wallet\AuditTrail\Behaviors\BPayPoint;
 use App\Wallet\User\Repositories\UserKYCRepository;
 use App\Wallet\User\Repositories\UserRepository;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -179,6 +180,38 @@ class UserController extends Controller
 
 
         return view('admin.user.profile')->with(compact('userLoadCommission', 'admin_details', 'admin', 'loginHistoryAudits', 'allAudits', 'user', 'loadFundSum', 'activeTab', 'userTransactionStatements', 'userTransactionEvents'));
+    }
+
+    public function createUserKyc($id)
+    {
+        $user = User::findOrFail($id);
+        return view('admin.user.createUserKyc')->with(compact('user'));
+    }
+
+    public function storeUserKyc(Request $request, $id)
+    {
+        $userKyc = UserKYC::create($request->all());
+        $userKyc->user_id = $id;
+        $userKyc->status = 1;
+        $kyc_after_change = json_encode($userKyc);
+        $adminId = auth()->user()->id;
+        $user_kyc_id = $userKyc->id;
+        $status = $userKyc->save();
+        $user = User::with('kyc')->findOrFail($id);
+        $admin = 'admin';
+
+        if ($status){
+            $adminUpdateKyc = new AdminUpdateKyc();
+            $adminUpdateKyc->admin_id = $adminId;
+            $adminUpdateKyc->user_kyc_id = $user_kyc_id;
+            $adminUpdateKyc->kyc_after_change = $kyc_after_change;
+            $adminUpdateKyc->save();
+            return redirect()->route('user.kyc',$id)->with(compact('user','admin'))->with('success','Wallet Service updated successfully');
+        }
+        else{
+            return back()->with('error', 'Something went wrong!Please try again later');
+        }
+
     }
 
 

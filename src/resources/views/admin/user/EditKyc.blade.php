@@ -109,7 +109,7 @@
                                                     <dt class="col-md-3 text-right">
                                                         <label for="date_of_birth">Date Of Birth:</label>
                                                     <dd class="col-md-8">
-                                                        <input type="text" class="form-control form-control-sm" name="date_of_birth" value="{{ $user->kyc->date_of_birth }}" required>
+                                                        <input type="date" class="form-control form-control-sm" name="date_of_birth" value="{{ $user->kyc->date_of_birth }}" required>
                                                     </dd>
 
                                                     <dt class="col-md-3 text-right">
@@ -253,59 +253,68 @@
                                                     </dd>
 
                                                     <dt class="col-md-3 text-right">
-                                                        <label for="tmp_province">Tmp Province:</label>
+                                                        <label for="tmp_province">Temporary Province:</label>
                                                     </dt>
                                                     <dd class="col-md-8">
                                                         <input type="text" class="form-control form-control-sm" name="tmp_province" value="{{ $user->kyc->tmp_province }}" required>
                                                     </dd>
 
                                                     <dt class="col-md-3 text-right">
-                                                        <label for="tmp_zone">Tmp Zone:</label>
+                                                        <label for="tmp_zone">Temporary Zone:</label>
                                                     </dt>
                                                     <dd class="col-md-8">
                                                         <input type="text" class="form-control form-control-sm" name="tmp_zone" value="{{ $user->kyc->tmp_zone }}" required>
                                                     </dd>
 
                                                     <dt class="col-md-3 text-right">
-                                                        <label for="tmp_district">Tmp District:</label>
+                                                        <label for="tmp_district">Temporary District:</label>
                                                     </dt>
                                                     <dd class="col-md-8">
                                                         <input type="text" class="form-control form-control-sm" name="tmp_district" value="{{ $user->kyc->tmp_district }}" required>
                                                     </dd>
 
                                                     <dt class="col-md-3 text-right">
-                                                        <label for="tmp_municipality">Tmp Municipality:</label>
+                                                        <label for="tmp_municipality">Temporary Municipality:</label>
                                                     </dt>
                                                     <dd class="col-md-8">
                                                         <input type="text" class="form-control form-control-sm" name="tmp_municipality" value="{{ $user->kyc->tmp_municipality }}" required>
                                                     </dd>
 
                                                     <dt class="col-md-3 text-right">
-                                                        <label for="tmp_ward_no">Tmp Ward No:</label>
+                                                        <label for="tmp_ward_no">Temporary Ward No:</label>
                                                     </dt>
                                                     <dd class="col-md-8">
                                                         <input type="text" class="form-control form-control-sm" name="tmp_ward_no" value="{{ $user->kyc->tmp_ward_no }}" required>
                                                     </dd>
 
                                                     <dt class="col-md-3 text-right">
-                                                        <label for="p_photo">Passport size photo:</label>
+                                                        <label for="p_photo">Passport Size Photo: </label>
                                                     </dt>
                                                     <dd class="col-md-8">
-                                                        <input type="text" class="form-control form-control-sm" name="p_photo" value="{{ $user->kyc->p_photo }}" required>
+                                                        <div class="custom-file">
+                                                            <input name="p_photo"  type="file" class="custom-file-input" required>
+                                                            <label for="p_photo" class="custom-file-label">Upload Passport size photo...</label>
+                                                        </div>
                                                     </dd>
 
                                                     <dt class="col-md-3 text-right">
-                                                        <label for="id_photo_front">Document Front Photo:</label>
+                                                        <label for="id_photo_front">Document Front Photo: </label>
                                                     </dt>
                                                     <dd class="col-md-8">
-                                                        <input type="text" class="form-control form-control-sm" name="id_photo_front" value="{{ $user->kyc->id_photo_front }}" required>
+                                                        <div class="custom-file">
+                                                            <input name="id_photo_front"  type="file" class="custom-file-input" required>
+                                                            <label for="id_photo_front" class="custom-file-label">Upload Document Front Photo...</label>
+                                                        </div>
                                                     </dd>
 
                                                     <dt class="col-md-3 text-right">
-                                                        <label for="id_photo_back">Document Back Photo</label>
+                                                        <label for="id_photo_back">Document back Photo: </label>
                                                     </dt>
                                                     <dd class="col-md-8">
-                                                        <input type="text" class="form-control form-control-sm" name="id_photo_back" value="{{ $user->kyc->id_photo_back }}" required>
+                                                        <div class="custom-file">
+                                                            <input name="id_photo_back"  type="file" class="custom-file-input" required>
+                                                            <label for="id_photo_back" class="custom-file-label">Upload Document Back Photo...</label>
+                                                        </div>
                                                     </dd>
 
                                                     @if($user->merchant()->first())
@@ -332,41 +341,43 @@
 
 
                                                         <dt class="col-md-3 text-right">
-                                                            <label for="company_logo">Company Logo:</label>
+                                                            <label for="company_logo">Company Logo: </label>
                                                         </dt>
                                                         <dd class="col-md-8">
-                                                            <input type="text" class="form-control form-control-sm" name="company_logo" value="{{ $user->kyc->company_logo }}" required>
+                                                            <div class="custom-file">
+                                                                <input name="company_logo"  type="file" class="custom-file-input" required>
+                                                                <label for="company_logo" class="custom-file-label">Upload Company Logo...</label>
+                                                            </div>
                                                         </dd>
 
                                                         <dt class="col-md-3 text-right">
                                                             <label for="company_document">Company Document:</label>
                                                         </dt>
                                                         <dd class="col-md-8">
-                                                            <input type="text" class="form-control form-control-sm" name="company_document" value="{{ $user->kyc->company_document }}" required>
+                                                            <input name="company_document"  type="file" class="custom-file-input" required>
+                                                            <label for="company_document" class="custom-file-label">Upload Company Document...</label>
                                                         </dd>
 
                                                         <dt class="col-md-3 text-right">
                                                             <label for="company_vat_document">Company VAT Document:</label>
                                                         </dt>
                                                         <dd class="col-md-8">
-                                                            <input type="text" class="form-control form-control-sm" name="company_vat_document" value="{{ $user->kyc->company_vat_document }}" required>
+                                                            <input name="company_vat_document"  type="file" class="custom-file-input" required>
+                                                            <label for="company_vat_document" class="custom-file-label">Upload Company VAT Document...</label>
                                                         </dd>
 
                                                         <dt class="col-md-3 text-right">
                                                             <label for="company_tax_clearance_document">Company Tax Clearance Document:</label>
                                                         </dt>
                                                         <dd class="col-md-8">
-                                                            <input type="text" class="form-control form-control-sm" name="company_tax_clearance_document" value="{{ $user->kyc->company_tax_clearance_document }}" required>
+                                                            <input name="company_tax_clearance_document"  type="file" class="custom-file-input" required>
+                                                            <label for="company_tax_clearance_document" class="custom-file-label">Upload Company Tax Clearance Document...</label>
                                                         </dd>
                                                     @endif
-
 
                                                     <div class="col-sm-4 col-sm-offset-2" style="float:right">
                                                         <button class="btn btn-primary btn-sm" type="submit">Submit</button>
                                                     </div>
-
-
-                                            </form>
                                         @else
                                             <dt class="col-md-3 text-right" style="font-size: 16px;">KYC form not
                                                 filled
@@ -374,6 +385,9 @@
                                         @endif
                                     </dl>
                                 </div>
+                            </div>
+                        </form>
+                    </div>
 
                                 @if(!empty($user->kyc))
                                     <div class="col-md-5">

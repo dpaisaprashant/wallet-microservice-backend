@@ -17,8 +17,8 @@ class CreateAdminUpdateKycsTable extends Migration
             $table->id();
             $table->foreignId('admin_id');
             $table->foreignId('user_kyc_id');
-            $table->json('kyc_before_change');
-            $table->json('kyc_after_change');
+            $table->json('kyc_before_change')->nullable();
+            $table->json('kyc_after_change')->nullable();
             $table->timestamps();
         });
     }

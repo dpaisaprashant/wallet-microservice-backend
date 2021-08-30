@@ -29,7 +29,7 @@ class PaypointApiCompareTransactions
             $val = json_encode($data);
             Log::info($val . PHP_EOL);
         }
-        foreach ($disputedTransactions['nchl_success_mismatches'] as $disputedTransaction) {
+        foreach ($disputedTransactions['paypoint_success_mismatches'] as $disputedTransaction) {
             //notify developers
             if (!empty($disputedTransaction->transaction_id)) {
 

@@ -393,10 +393,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/sparrow-sms', 'SparrowSMSController@index')->name('sparrow.view')->middleware('permission:Sparrow SMS view');
         Route::get('/sparrow-sms/detail', 'SparrowSMSController@detail')->name('sparrow.detail')->middleware('permission:Sparrow SMS detail view');
 
-        /**
-         * Miracle Info sms
-         */
-        Route::get('/miracle-info-sms','MiracleInfoSMSController@index')->name('miracle-info.view')->middleware('permission:Miracle info SMS view');
+
 
         /**
          * Terms and Condition

@@ -47,7 +47,7 @@ class PaypointApiValidationRepository
             }
 
             if ($transaction->code != 000 && ($paypointAPI['@attributes']['Result'] ?? 'no data') == 000) {
-                $api_success_mismatches[] = $transaction;
+                $paypoint_success_mismatches[] = $transaction;
             }
 
         }

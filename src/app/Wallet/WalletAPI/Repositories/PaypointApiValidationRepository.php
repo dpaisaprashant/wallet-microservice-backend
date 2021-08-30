@@ -13,7 +13,7 @@ class PaypointApiValidationRepository
     public function getDisputedTransactions(Request $request, PayPointRepository $repository)
     {
         $amount_mismatches[] = null;
-        $wallet_status_mismatches = array();
+        $wallet_success_mismatches = array();
         $paypoint_success_mismatches[] = null;
 
         if (!empty($_GET['from'])) {
@@ -25,9 +25,9 @@ class PaypointApiValidationRepository
             $to = date('Y-m-d', $to_convert);
         }
 
-        $transactions = $repository->paginatedTransactions()->whereBetween('created_at', [Carbon::now()->subMonths(12)->format('Y-m-d'), Carbon::now()->format('Y-m-d')]);
+        $transactions = $repository->latestTransactionsUnpaginated()->whereBetween('created_at', [Carbon::now()->subMonths(6)->format('Y-m-d'), Carbon::now()->format('Y-m-d')])->get();
         if (!empty($_GET['from']) && !empty($_GET['to'])) {
-            $transactions = $repository->paginatedTransactions()->whereBetween('created_at', [$from, $to]);
+            $transactions = $repository->latestTransactionsUnpaginated()->whereBetween('created_at', [$from, $to])->get();
         }
 
         $paypointAPIs = array();
@@ -61,9 +61,7 @@ class PaypointApiValidationRepository
             }
         }
 
-//        $data = $this->paginate($nchl_status_mismatches);
-
-        $disputedTransactions = ['wallet_success_mismatches' => $wallet_status_mismatches,
+        $disputedTransactions = ['wallet_success_mismatches' => $wallet_success_mismatches,
             'paypoint_success_mismatches' => $paypoint_success_mismatches,
             'amount_mismatches' => $amount_mismatches,
             'paypointAPIs' => $paypointAPIs,

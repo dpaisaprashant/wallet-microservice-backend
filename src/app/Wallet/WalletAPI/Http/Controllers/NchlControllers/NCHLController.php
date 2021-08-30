@@ -22,15 +22,15 @@ class NCHLController extends Controller
         return view('WalletAPI::NchlBankTransfer/viewWalletAPI', compact('nchlAPI'));
     }
 
-    public function byDate(Request $request)
-    {
-        $dateFrom=$request->dateFrom;
-        $dateTo=$request->dateTo;
-        $nchlMicroservice = new NchlMicroservice();
-        $nchlAPI = $nchlMicroservice->getNchlAPIByDate($request, $dateFrom, $dateTo);
-
-        return view('WalletAPI::NchlBankTransfer/viewWalletAPICompare', compact('nchlAPI'));
-    }
+//    public function byDate(Request $request)
+//    {
+//        $dateFrom=$request->dateFrom;
+//        $dateTo=$request->dateTo;
+//        $nchlMicroservice = new NchlMicroservice();
+//        $nchlAPI = $nchlMicroservice->getNchlAPIByDate($request, $dateFrom, $dateTo);
+//
+//        return view('WalletAPI::NchlBankTransfer/viewWalletAPICompare', compact('nchlAPI'));
+//    }
 
     public function compareTransactions(Request $request, NchlBankTransferRepository $repo)
     {

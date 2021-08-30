@@ -98,4 +98,9 @@ class PayPointRepository
     public function getPayPointTransactionSum(){
         return UserTransaction::filter($this->request)->sum('amount') / 100;
     }
+
+    public function latestTransactionsUnpaginated()
+    {
+        return UserCheckPayment::with('userExecutePayment', 'userTransaction', 'user', 'preTransaction', 'requestInfo')->latest()->filter($this->request);
+    }
 }

@@ -231,7 +231,6 @@
                                     <tbody>
                                     @foreach($disputedTransactions['paypoint_success_mismatches'] as $paypoint_success_mismatch)
                                         @if(!empty($paypoint_success_mismatch))
-                                    {{dd($paypoint_success_mismatch)}}
                                             <tr>
                                                 <td>{{$loop->index+1}}</td>
                                                 <td>{{$paypoint_success_mismatch->pre_transaction_id}}</td>
@@ -304,7 +303,7 @@
 @section('scripts')
     @include('admin.asset.js.chosen')
     @include('admin.asset.js.datepicker')
-    @include('admin.asset.js.datatable')
+    @include('admin.asset.js.datatableWithPaging')
 {{--        <script>--}}
 {{--            @if(!empty($_GET))--}}
 {{--            $(document).ready(function (e) {--}}

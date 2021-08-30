@@ -23,15 +23,15 @@ class NchlAggregatedController extends Controller
         return view('WalletAPI::NchlAggregatedTransfer/viewWalletAPI', compact('nchlAggregatedAPI'));
     }
 
-    public function byDate(Request $request)
-    {
-        $dateFrom=$request->dateFrom;
-        $dateTo=$request->dateTo;
-        $nchlAggregatedMicroservice = new NchlAggregatedMicroservice();
-        $nchlAggregatedAPI = $nchlAggregatedMicroservice->getNchlAggregatedAPIByDate($request, $dateFrom, $dateTo);
-
-        return view('WalletAPI::NchlAggregatedTransfer/viewWalletAPI', compact('nchlAggregatedAPI'));
-    }
+//    public function byDate(Request $request)
+//    {
+//        $dateFrom=$request->dateFrom;
+//        $dateTo=$request->dateTo;
+//        $nchlAggregatedMicroservice = new NchlAggregatedMicroservice();
+//        $nchlAggregatedAPI = $nchlAggregatedMicroservice->getNchlAggregatedAPIByDate($request, $dateFrom, $dateTo);
+//
+//        return view('WalletAPI::NchlAggregatedTransfer/viewWalletAPI', compact('nchlAggregatedAPI'));
+//    }
 
     public function compareTransactions(Request $request, NchlAggregatedPaymentRepository $repo)
     {

@@ -59,29 +59,12 @@
                                     </div>
                                     <br>
                                     <div>
-
-{{--                                        <form--}}
-{{--                                            action="{{ route('nchlBankTransferApi.report', $transaction->transaction_id) }}"--}}
-{{--                                            method="post">--}}
-{{--                                            @csrf--}}
-{{--                                            <a href="{{ route('nchl.bankTransfer.detail', $transaction->id) }}"--}}
-{{--                                               title="Transaction Detail">--}}
-{{--                                                <button class="btn btn-primary btn-icon" type="button"><i--}}
-{{--                                                        class="fa fa-eye"></i></button>--}}
-{{--                                                <button class="btn btn-primary btn-icon" type="submit"--}}
-{{--                                                        title="API Details">--}}
-{{--                                                    <i class="fa fa-database"></i></button>--}}
-{{--                                            </a>--}}
-{{--                                        </form>--}}
-
-                                        <form action="{{ route('nchlAggregatedTransferApiByDate.report') }}" method="post">
-                                            @csrf
-
-                                            <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit">
-                                                <strong>Filter</strong>
-                                            </button>
-
-                                        </form>
+                                        {{--                                        <form action="{{ route('nchlAggregatedTransferApiByDate.report') }}" method="post">--}}
+                                        {{--                                            @csrf--}}
+                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit">
+                                            <strong>Filter</strong>
+                                        </button>
+                                        {{--                                        </form>--}}
 
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
@@ -107,7 +90,8 @@
                             <h5><b>Total Count:</b> {{$disputedTransactions['totalTransactionCount']}}</h5>
                             <h5><b>Total Amount Sum:</b> Rs. {{$disputedTransactions['totalAmount']}}</h5>
                             <div class="table-responsive" id="comparedTransactions">
-                                <table id="comparedTransactions" class="table table-responsive table-striped table-bordered table-hover dataTables-example"
+                                <table id="comparedTransactions"
+                                       class="table table-responsive table-striped table-bordered table-hover dataTables-example"
                                        title="clearance transactions">
                                     <thead>
                                     <tr>
@@ -122,7 +106,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($disputedTransactions['disputedTransactionsPaginated'] as $transaction)
+                                    @foreach($disputedTransactions['transactions'] as $transaction)
                                         <tr class="gradeC">
                                             <td>{{$loop->index+1}}</td>
                                             <td>{{ $transaction->pre_transaction_id }}</td>

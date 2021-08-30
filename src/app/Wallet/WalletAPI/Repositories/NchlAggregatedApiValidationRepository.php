@@ -36,9 +36,11 @@ class NchlAggregatedApiValidationRepository
             $this->to = date('Y-m-d', $to_convert);
         }
 
-        $transactions = $repository->paginatedTransactions()->whereBetween('created_at', [Carbon::now()->subMonths(6)->format('Y-m-d'), Carbon::now()->format('Y-m-d')]);
         if (!empty($_GET['from']) && !empty($_GET['to'])) {
             $transactions = $repository->latestTransactionsUnpaginated()->whereBetween('created_at', [$this->from, $this->to])->get();
+        }else {
+            $transactions = $repository->latestTransactionsUnpaginated()->whereBetween('created_at', [Carbon::now()->subMonths(6)->format('Y-m-d'), Carbon::now()->format('Y-m-d')]);
+
         }
         $nchlAPIs = array();
         $nchlMicroservice = new NchlAggregatedMicroservice();
@@ -73,7 +75,11 @@ class NchlAggregatedApiValidationRepository
                 }
             }
         }
-        $totalTransactionCount = count($transactions);
+        if (!empty($_GET['from']) && !empty($_GET['to'])) {
+            $totalTransactionCount = count($transactions);
+        }else{
+            $totalTransactionCount = count($transactions->get());
+        }
         $totalAmount = $transactions->sum('amount');
         $totalAmountAPI = 0;
         foreach ($comparedNchlAPIs as $nchlAPI) {
@@ -82,9 +88,6 @@ class NchlAggregatedApiValidationRepository
             }
         }
 
-//        $disputedTransactionsPaginated= $this->paginateArray($transactions);
-        $disputedTransactionsPaginated=$transactions;
-//        $data = $this->paginate($disputedTransactions);
         $disputedTransactions = ['wallet_success_mismatches' => $wallet_success_mismatches,
             'nchl_success_mismatches' => $nchl_success_mismatches,
             'debit_mismatches' => $debit_mismatches,
@@ -92,28 +95,12 @@ class NchlAggregatedApiValidationRepository
             'amount_mismatches' => $amount_mismatches,
             'comparedNchlAPIs' => $comparedNchlAPIs,
             'transactions' => $transactions,
-            'disputedTransactionsPaginated'=>$disputedTransactionsPaginated,
             'totalTransactionCount' => $totalTransactionCount,
             'totalAmount' => $totalAmount,
             'totalAmountAPI' => $totalAmountAPI,
         ];
         return $disputedTransactions;
     }
-
-    public function paginateArray($items, $perPage = 5, $page = null)
-
-    {
-        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
-
-        $items = $items instanceof Collection ? $items : Collection::make($items);
-
-//        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
-        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, [
-            'path' => Paginator::resolveCurrentPath()
-        ]);
-    }
-
-
 
     public function compareStatus($nchlAPI)
     {
@@ -129,7 +116,6 @@ class NchlAggregatedApiValidationRepository
         } else {
             $nchlStatus = 'failed';
         }
-
         return $nchlStatus;
     }
 

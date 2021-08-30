@@ -3,20 +3,20 @@
 
 namespace App\Wallet\WalletAPI\Cron;
 
-use App\Wallet\NCHL\Repository\NchlBankTransferRepository;
-use App\Wallet\WalletAPI\Repositories\NchlApiValidationRepository;
+use App\Wallet\NCHL\Repository\NchlAggregatedPaymentRepository;
+use App\Wallet\WalletAPI\Repositories\NchlAggregatedApiValidationRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Wallet\WalletAPI\Http\Controllers\NchlControllers;
 
-class NchlApiCompareTransactions
+class NchlAggregatedApiCompareTransactions
 {
 
     public function __invoke()
     {
-        $repo = new NchlBankTransferRepository(request());
+        $repo = new NchlAggregatedPaymentRepository(request());
 
-        $repository = new NchlApiValidationRepository();
+        $repository = new NchlAggregatedApiValidationRepository();
         $disputedTransactions = $repository->getDisputedTransactions(request(), $repo);
 
         foreach ($disputedTransactions['wallet_success_mismatches'] as $disputedTransaction) {

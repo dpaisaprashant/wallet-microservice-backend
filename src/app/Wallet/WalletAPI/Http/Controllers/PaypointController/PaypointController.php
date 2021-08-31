@@ -14,12 +14,14 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class PaypointController extends Controller
 {
-    public function byId(Request $request, $id)
+    public function byId(Request $request, $id, PayPointRepository $repo)
     {
+        $paypointTransaction = $repo->detailUsingRefStan($id);
+
         $paypointMicroservice = new PaypointMicroservice();
         $paypointAPI = $paypointMicroservice->getPaypointAPI($request, $id);
 
-        return view('WalletAPI::PaypointAPI/viewWalletAPI', compact('paypointAPI'));
+        return view('WalletAPI::PaypointAPI/viewWalletAPI', compact('paypointAPI','paypointTransaction'));
     }
 
     public function compareTransactions(Request $request, PayPointRepository $repo)

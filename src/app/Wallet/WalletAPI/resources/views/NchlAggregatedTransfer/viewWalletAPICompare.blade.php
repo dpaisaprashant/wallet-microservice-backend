@@ -3,7 +3,7 @@
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Transaction Comparison for Wallet and NCHL Aggregated Payments API </h2>
+            <h2>Transaction Comparison between NCHL Aggregated Payments API and Wallet </h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -100,7 +100,7 @@
                                         <th>Transaction ID</th>
                                         <th>User Mobile Number</th>
                                         <th>Bank</th>
-                                        <th>Amount (NRs.)</th>
+                                        <th>Amount (NRP)</th>
                                         <th>Debit Status</th>
                                         <th>Credit Status</th>
                                     </tr>
@@ -152,7 +152,7 @@
                                     <tr>
                                         <th>S.No.</th>
                                         <th>Transaction ID</th>
-                                        <th>Amount (NRs.)</th>
+                                        <th>Amount (NRP)</th>
                                         <th>Debit Status</th>
                                         <th>Credit Status</th>
                                     </tr>

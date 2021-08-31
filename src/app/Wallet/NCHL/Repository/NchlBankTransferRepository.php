@@ -68,4 +68,10 @@ class NchlBankTransferRepository
     {
         return NchlBankTransfer::with('preTransaction', 'transactions', 'commission')->latest()->filter($this->request);
     }
+
+    public function detailUsingBatchId($id)
+    {
+        return NchlBankTransfer::with('user', 'transactions', 'commission')->where('transaction_id', $id)->firstOrFail();
+    }
+
 }

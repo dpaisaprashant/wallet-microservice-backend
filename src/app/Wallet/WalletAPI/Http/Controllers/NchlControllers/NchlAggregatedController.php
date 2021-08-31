@@ -15,12 +15,14 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class NchlAggregatedController extends Controller
 {
-    public function byId(Request $request, $id)
+    public function byId(Request $request, $id, NchlAggregatedPaymentRepository $repo)
     {
+        $nchlAggregated = $repo->detailUsingBatchId($id);
+
         $nchlAggregatedMicroservice = new NchlAggregatedMicroservice();
         $nchlAggregatedAPI = $nchlAggregatedMicroservice->getNchlAggregatedAPI($request, $id);
 
-        return view('WalletAPI::NchlAggregatedTransfer/viewWalletAPI', compact('nchlAggregatedAPI'));
+        return view('WalletAPI::NchlAggregatedTransfer/viewWalletAPI', compact('nchlAggregatedAPI', 'nchlAggregated'));
     }
 
 //    public function byDate(Request $request)

@@ -25,7 +25,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web','auth']], function () 
 
 });
 
-//Route::post('/nchl/transaction/report/{id}', [PaypointController::class, 'byId'])->name('walletapi.report');
 
 
 

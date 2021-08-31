@@ -14,12 +14,14 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class NCHLController extends Controller
 {
-    public function byId(Request $request, $id)
+    public function byId(Request $request, $id, NchlBankTransferRepository $repo)
     {
+        $nchlBankTransfer = $repo->detailUsingBatchId($id);
+
         $nchlMicroservice = new NchlMicroservice();
         $nchlAPI = $nchlMicroservice->getNchlAPI($request, $id);
 
-        return view('WalletAPI::NchlBankTransfer/viewWalletAPI', compact('nchlAPI'));
+        return view('WalletAPI::NchlBankTransfer/viewWalletAPI', compact('nchlAPI','nchlBankTransfer'));
     }
 
 //    public function byDate(Request $request)

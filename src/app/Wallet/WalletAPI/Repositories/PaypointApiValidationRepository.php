@@ -37,8 +37,7 @@ class PaypointApiValidationRepository
             $id = $transaction->refStan;
             $paypointAPI = $paypointMicroservice->getPaypointAPI($request, $id);
             $paypointAPIs[] = $paypointAPI;
-
-            if ((optional($transaction)->amount) != ($paypointAPI['ResultMessage']['Amount'] ?? null)) {
+            if ((optional($transaction->userTransaction)->amount*100) != ($paypointAPI['ResultMessage']['Transaction']['Amount'] ?? null)) {
                 $amount_mismatches[] = $transaction;
             }
 
@@ -53,11 +52,16 @@ class PaypointApiValidationRepository
         }
         $totalTransactionCount = count($transactions);
         $totalTransactionCountAPI = count($paypointAPIs);
-        $totalAmount = $transactions->sum('amount');
+        $totalAmount = 0;
+        foreach ($transactions as $transaction) {
+            if (isset($transaction->userTransaction->amount)) {
+                $totalAmount += $transaction->userTransaction->amount;
+            }
+        }
         $totalAmountAPI = 0;
         foreach ($paypointAPIs as $paypointAPI) {
-            if (isset($paypointAPI['ResultMessage']['Amount'])) {
-                $totalAmountAPI += $paypointAPI['ResultMessage']['Amount'];
+            if (isset($paypointAPI['ResultMessage']['Transaction']['Amount'])) {
+                $totalAmountAPI += $paypointAPI['ResultMessage']['Transaction']['Amount'];
             }
         }
 
@@ -72,40 +76,5 @@ class PaypointApiValidationRepository
             'totalAmountAPI' => $totalAmountAPI,
         ];
         return $disputedTransactions;
-    }
-
-    public function compareStatus($nchlAPI)
-    {
-        if (empty($nchlAPI)) {
-            return "failed";
-        }
-
-        if ($nchlAPI['cipsTransactionDetailList']['0']['creditStatus'] == '000' || optional($nchlAPI['cipsTransactionDetailList']['0']['creditStatus']) == '999' || optional($nchlAPI['cipsTransactionDetailList']['0']['creditStatus']) == 'DEFER' &&
-            optional(($nchlAPI['debit_status']) == '000')) {
-            $nchlStatus = 'success';
-        } elseif ($nchlAPI['debitStatus'] == 'ENTR' || $nchlAPI['cipsTransactionDetailList']['0']['creditStatus'] == 'ENTR') {
-            $nchlStatus = 'success';
-        } else {
-            $nchlStatus = 'failed';
-        }
-
-        return $nchlStatus;
-    }
-
-    public function walletStatus($transaction)
-    {
-        if (empty($transaction)) {
-            return "failed";
-        }
-
-        if (($transaction->credit_status == '000' || $transaction->credit_status == '999' || $transaction->credit_status == 'DEFER') &&
-            ($transaction->debit_status == '000')) {
-            $walletStatus = 'success';
-        } elseif ($transaction->debit_status == 'ENTR' || $transaction->credit_status == 'ENTR') {
-            $walletStatus = 'success';
-        } else {
-            $walletStatus = 'failed';
-        }
-        return $walletStatus;
     }
 }

@@ -21,7 +21,7 @@ class NRBReportController extends Controller
     public function activeInactiveCustomerReport(Request $request)
     {
         $activityReports = [];
-        if(isset($_GET)) {
+        if(!empty($_GET)) {
             $repository = new ActiveInactiveCustomerReportRepository($request);
             $activityReports = [
                 'Active Customer Wallet' => [

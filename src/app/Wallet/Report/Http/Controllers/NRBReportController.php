@@ -20,52 +20,55 @@ class NRBReportController extends Controller
 
     public function activeInactiveCustomerReport(Request $request)
     {
-        $repository = new ActiveInactiveCustomerReportRepository($request);
-        $activityReports = [
-            'Active Customer Wallet' => [
-                'Male' => [
-                    'Number' => $repository->activeMaleUserCount(),
-                    'Value' =>'Rs.' . $repository->activeMaleUserBalance()
+        $activityReports = [];
+        if(isset($_GET)) {
+            $repository = new ActiveInactiveCustomerReportRepository($request);
+            $activityReports = [
+                'Active Customer Wallet' => [
+                    'Male' => [
+                        'Number' => $repository->activeMaleUserCount(),
+                        'Value' =>'Rs.' . $repository->activeMaleUserBalance()
+                    ],
+
+                    'Female' => [
+                        'Number' => $repository->activeFemaleUserCount(),
+                        'Value' => 'Rs.' . $repository->activeFemaleUserBalance()
+                    ],
+
+                    'Other' => [
+                        'Number' => $repository->activeOtherUserCount(),
+                        'Value' => 'Rs.' . $repository->activeOtherUserBalance()
+                    ],
+
+                    'Unknown' => [
+                        'Number' => $repository->activeUnknownUserCount(),
+                        'Value' => 'Rs.' . $repository->activeUnknownUserBalance()
+                    ],
+
+                    'Grand Total' => [
+                        'Number' => $repository->activeTotalUserCount(),
+                        'Value' => 'Rs.' . $repository->activeTotalUserBalance()
+                    ],
                 ],
 
-                'Female' => [
-                    'Number' => $repository->activeFemaleUserCount(),
-                    'Value' => 'Rs.' . $repository->activeFemaleUserBalance()
-                ],
+                'Inactive Customer Wallet' => [
+                    'Inactive (6-12 months)' => [
+                        'Number' => $repository->inactiveFor6To12MonthsUserCount(),
+                        'Value' => 'Rs.' . $repository->inactiveFor6To12MonthsUserBalance()
+                    ],
 
-                'Other' => [
-                    'Number' => $repository->activeOtherUserCount(),
-                    'Value' => 'Rs.' . $repository->activeOtherUserBalance()
-                ],
+                    'Inactive (> 12 months)' => [
+                        'Number' => $repository->inactiveForMoreThan12MonthsUserCount(),
+                        'Value' => 'Rs.' . $repository->inactiveForMoreThan12MonthsUserBalance()
+                    ],
 
-                'Unknown' => [
-                    'Number' => $repository->activeUnknownUserCount(),
-                    'Value' => 'Rs.' . $repository->activeUnknownUserBalance()
-                ],
-
-                'Grand Total' => [
-                    'Number' => $repository->activeTotalUserCount(),
-                    'Value' => 'Rs.' . $repository->activeTotalUserBalance()
-                ],
-            ],
-
-            'Inactive Customer Wallet' => [
-                'Inactive (6-12 months)' => [
-                    'Number' => $repository->inactiveFor6To12MonthsUserCount(),
-                    'Value' => 'Rs.' . $repository->inactiveFor6To12MonthsUserBalance()
-                ],
-
-                'Inactive (> 12 months)' => [
-                    'Number' => $repository->inactiveForMoreThan12MonthsUserCount(),
-                    'Value' => 'Rs.' . $repository->inactiveForMoreThan12MonthsUserBalance()
-                ],
-
-                'Grand Total' => [
-                    'Number' => $repository->inactiveTotalUserCount(),
-                    'Value' => 'Rs.' . $repository->inactiveTotalUserBalance()
+                    'Grand Total' => [
+                        'Number' => $repository->inactiveTotalUserCount(),
+                        'Value' => 'Rs.' . $repository->inactiveTotalUserBalance()
+                    ]
                 ]
-            ]
-        ];
+            ];
+        }
 
         return view('WalletReport::nrb.activeInactiveUserReport')->with(compact('activityReports'));
     }

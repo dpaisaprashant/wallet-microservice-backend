@@ -69,7 +69,7 @@
                                     </div>
 
                                     <div>
-                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('report.nrb.activeUser') }}"><strong>Generate Report</strong></button>
+                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs overlay" type="submit" formaction="{{ route('report.nrb.activeUser') }}"><strong>Generate Report</strong></button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
                                     {{-- <div>
@@ -153,6 +153,44 @@
     @include('admin.asset.js.chosen')
 
     @include('admin.asset.js.datatable')
+
+
+    <script>
+        $('#overlay').on('change', function (e){
+            let userType = $(this).val();
+            let url = `{{ route('report.nrb.activeUser') }}`
+
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url:url,
+                method:"POST",
+                data: { user_type: userType},
+                dataType:'JSON',
+                cache: false,
+                async: true,
+                beforeSend: function () {
+                    $("#overlay").fadeIn(300);
+                },
+                success: function (resp) {
+                    console.log(resp)
+
+                    $(".stats").fadeIn(300);
+                    $("#overlay").fadeOut(300);
+
+                },
+                error: function (resp) {
+                    console.log(resp);
+                    alert('error');
+
+                    $(".stats").fadeIn(300);
+                    $("#overlay").fadeOut(300);
+                }
+            });
+        });
+    </script>
 
 @endsection
 

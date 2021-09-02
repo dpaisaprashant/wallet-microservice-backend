@@ -21,4 +21,19 @@ class PaypointMicroservice
         return $paypointAPI;
     }
 
+    public function getPaypointAPIByDate(Request $request, $dateFrom,$dateTo)
+    {
+        $microservice = new BackendWalletAPIMicroservice($request);
+        $microservice->setServiceType("PAYPOINT")
+            ->setDescription("PAYPOINT Transaction by Date")
+            ->setVendor("PAYPOINT")
+            ->setMicroservice("PAYPOINT")
+            ->setUrl("/transaction/get")
+            ->setStartDate($dateFrom)
+            ->setEndDate($dateTo);
+        $response = $microservice->processRequest();
+        $paypointAPI = json_decode($response, true);
+        return $paypointAPI;
+    }
+
 }

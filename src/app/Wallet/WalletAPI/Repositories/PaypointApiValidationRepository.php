@@ -10,24 +10,30 @@ use Carbon\Carbon;
 
 class PaypointApiValidationRepository
 {
+    protected $from;
+    protected $to;
+
     public function getDisputedTransactions(Request $request, PayPointRepository $repository)
     {
         $amount_mismatches[] = null;
         $wallet_success_mismatches = array();
         $paypoint_success_mismatches[] = null;
+        $wallet_status_mismatches=array();
+        $wallet_status_mismatches_api=array();
 
         if (!empty($_GET['from'])) {
             $from_convert = strtotime($_GET['from']);
-            $from = date('Y-m-d', $from_convert);
+            $this->from = date('Y-m-d', $from_convert);
         }
         if (!empty($_GET['to'])) {
             $to_convert = strtotime($_GET['to']);
-            $to = date('Y-m-d', $to_convert);
+            $this->to = date('Y-m-d', $to_convert);
         }
 
-        $transactions = $repository->latestTransactionsUnpaginated()->whereBetween('created_at', [Carbon::now()->subMonths(6)->format('Y-m-d'), Carbon::now()->format('Y-m-d')])->get();
         if (!empty($_GET['from']) && !empty($_GET['to'])) {
-            $transactions = $repository->latestTransactionsUnpaginated()->whereBetween('created_at', [$from, $to])->get();
+            $transactions = $repository->latestTransactionsUnpaginated()->whereBetween('created_at', [$this->from, $this->to])->get();
+        } else {
+            $transactions = $repository->latestTransactionsUnpaginated()->whereBetween('created_at', [Carbon::now()->subMonths(6)->format('Y-m-d'), Carbon::now()->format('Y-m-d')])->get();
         }
 
         $paypointAPIs = array();
@@ -35,7 +41,7 @@ class PaypointApiValidationRepository
 
         foreach ($transactions as $transaction) {
             $id = $transaction->refStan;
-            $paypointAPI = $paypointMicroservice->getPaypointAPI($request, $id);
+            $paypointAPI = $paypointMicroservice->getPaypointAPIByDate($request, $id);
             $paypointAPIs[] = $paypointAPI;
             if ((optional($transaction->userTransaction)->amount*100) != ($paypointAPI['ResultMessage']['Transaction']['Amount'] ?? null)) {
                 $amount_mismatches[] = $transaction;
@@ -47,6 +53,10 @@ class PaypointApiValidationRepository
 
             if ($transaction->code != 000 && ($paypointAPI['@attributes']['Result'] ?? 'no data') == 000) {
                 $paypoint_success_mismatches[] = $transaction;
+            }
+            if($transaction->code == 000 && ($paypointAPI['@attributes']['Result'] ?? 'no data') != 000 || $transaction->code != 000 && ($paypointAPI['@attributes']['Result'] ?? 'no data') == 000){
+                $wallet_status_mismatches[]=$transaction;
+                $wallet_status_mismatches_api[]=$paypointAPI;
             }
 
         }
@@ -74,7 +84,10 @@ class PaypointApiValidationRepository
             'totalTransactionCountAPI' => $totalTransactionCountAPI,
             'totalAmount' => $totalAmount,
             'totalAmountAPI' => $totalAmountAPI,
+            'wallet_status_mismatches' => $wallet_status_mismatches,
+            'wallet_status_mismatches_api' => $wallet_status_mismatches_api
         ];
+//        dd($disputedTransactions['wallet_status_mismatches']);
         return $disputedTransactions;
     }
 }

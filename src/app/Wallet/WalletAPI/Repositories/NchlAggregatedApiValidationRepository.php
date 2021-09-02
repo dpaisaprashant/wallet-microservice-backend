@@ -26,6 +26,8 @@ class NchlAggregatedApiValidationRepository
         $amount_mismatches[] = null;
         $wallet_success_mismatches = array();
         $nchl_success_mismatches[] = null;
+        $wallet_status_mismatches_api=array();
+        $wallet_status_mismatches=array();
 
         if (!empty($_GET['from'])) {
             $from_convert = strtotime($_GET['from']);
@@ -38,18 +40,23 @@ class NchlAggregatedApiValidationRepository
 
         if (!empty($_GET['from']) && !empty($_GET['to'])) {
             $transactions = $repository->latestTransactionsUnpaginated()->whereBetween('created_at', [$this->from, $this->to])->get();
-        }else {
-            $transactions = $repository->latestTransactionsUnpaginated()->whereBetween('created_at', [Carbon::now()->subMonths(6)->format('Y-m-d'), Carbon::now()->format('Y-m-d')]);
-
+        } else {
+            $transactions = $repository->latestTransactionsUnpaginated()->whereBetween('created_at', [Carbon::now()->subMonths(6)->format('Y-m-d'), Carbon::now()->format('Y-m-d')])->get();
         }
+
         $nchlAPIs = array();
         $nchlMicroservice = new NchlAggregatedMicroservice();
-        $nchlAPIs = $nchlMicroservice->getNchlAggregatedAPIByDate($request,$this->from,$this->to);
+        if (!empty($_GET['from']) && !empty($_GET['to'])) {
+            $nchlAPIs = $nchlMicroservice->getNchlAggregatedAPIByDate($request, $this->from, $this->to);
+        } else {
+            $nchlAPIs = $nchlMicroservice->getNchlAggregatedAPIByDate($request, Carbon::now()->subMonths(6)->format('Y-m-d'), Carbon::now()->format('Y-m-d'));
+        }
         $comparedNchlAPIs = array();
+
         foreach ($transactions as $transaction) {
-            foreach($nchlAPIs as $nchlAPI){
-                if($nchlAPI['cipsBatchDetail']['batchId'] == $transaction->transaction_id){
-                    $comparedNchlAPIs[]=$nchlAPI;
+            foreach ($nchlAPIs as $nchlAPI) {
+                if ($nchlAPI['cipsBatchDetail']['batchId'] == $transaction->transaction_id) {
+                    $comparedNchlAPIs[] = $nchlAPI;
 
                     if ((optional($transaction)->debit_status) != ($nchlAPI['cipsBatchDetail']['debitStatus'] ?? null)) {
                         $debit_mismatches[] = $transaction;
@@ -72,13 +79,18 @@ class NchlAggregatedApiValidationRepository
                     if (($this->walletStatus($transaction)) == 'failed' && ($this->compareStatus($nchlAPI)) == 'success') {
                         $nchl_success_mismatches[] = $transaction;
                     }
+
+                    if (($this->walletStatus($transaction)) == 'success' && ($this->compareStatus($nchlAPI)) == 'failed' || ($this->walletStatus($transaction)) == 'failed' && ($this->compareStatus($nchlAPI)) == 'success') {
+                        $wallet_status_mismatches[] = $transaction;
+                        $wallet_status_mismatches_api[] = $nchlAPI;
+                    }
                 }
             }
         }
         if (!empty($_GET['from']) && !empty($_GET['to'])) {
             $totalTransactionCount = count($transactions);
-        }else{
-            $totalTransactionCount = count($transactions->get());
+        } else {
+            $totalTransactionCount = count($transactions);
         }
         $totalAmount = $transactions->sum('amount');
         $totalAmountAPI = 0;
@@ -98,7 +110,10 @@ class NchlAggregatedApiValidationRepository
             'totalTransactionCount' => $totalTransactionCount,
             'totalAmount' => $totalAmount,
             'totalAmountAPI' => $totalAmountAPI,
+            'wallet_status_mismatches_api' => $wallet_status_mismatches_api,
+            'wallet_status_mismatches' => $wallet_status_mismatches
         ];
+
         return $disputedTransactions;
     }
 

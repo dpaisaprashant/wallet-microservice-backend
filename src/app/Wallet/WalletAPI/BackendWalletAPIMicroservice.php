@@ -143,6 +143,18 @@ class BackendWalletAPIMicroservice extends BackendWalletAPIJSONAbstract
         return $this;
     }
 
+    public function setStartDate($startDate)
+    {
+        $this->startDate = $startDate;
+        return $this;
+    }
+
+    public function setEndDate($endDate)
+    {
+        $this->endDate = $endDate;
+        return $this;
+    }
+
     private function preRequest()
     {
         $this->addParam('reference', $this->requestId)

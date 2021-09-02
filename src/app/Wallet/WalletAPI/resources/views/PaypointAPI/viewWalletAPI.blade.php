@@ -63,7 +63,7 @@
         <div class="col-sm-12">
             <div class="ibox ">
                 <div class="ibox-title" style="width: 95%;  margin-top: 2%;margin-left: auto; margin-right: auto;">
-                    <h5>Response from NCHL API</h5>
+                    <h5>Response from PayPoint API</h5>
                 </div>
 
                 @php

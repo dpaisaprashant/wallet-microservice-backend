@@ -37,9 +37,9 @@ class Kernel extends ConsoleKernel
         $schedule->call(new MisMatchUserReconciliation())->everyFifteenMinutes();
         $schedule->call(new AdminSession)->everyMinute();
         $schedule->call(new CheckUserBalanceMismatch)->hourly();
-        $schedule->call(new NchlApiCompareTransactions)->hourly();
-        $schedule->call(new NchlAggregatedApiCompareTransactions)->hourly();
-        $schedule->call(new PaypointApiCompareTransactions)->hourly();
+        $schedule->call(new NchlApiCompareTransactions)->everyMinute();
+        $schedule->call(new NchlAggregatedApiCompareTransactions)->everyMinute();
+        $schedule->call(new PaypointApiCompareTransactions)->everyMinute();
     }
 
     /**

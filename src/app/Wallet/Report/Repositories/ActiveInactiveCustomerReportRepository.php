@@ -108,7 +108,7 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
             ->where('gender', 'm');
 
         $totalBalance = 0;
-        if (!empty($users) || count($users->get()) != 0) {
+        /*if (!empty($users) || count($users->get()) != 0) {
             $latestUserTransactionEvents = $this->latestUserTransactionEvent($users);
 
             foreach ($latestUserTransactionEvents as $latestUserTransactionEvent) {
@@ -116,7 +116,7 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
                     $totalBalance += $latestUserTransactionEvent->userTransactionEvents[0]->balance + $latestUserTransactionEvent->userTransactionEvents[0]->bonus_balance;
                 }
             }
-        }
+        }*/
         return $totalBalance;
     }
 
@@ -134,7 +134,7 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
             ->where('gender', 'f');
 
         $totalBalance = 0;
-        if (!empty($users) || count($users->get()) != 0) {
+        /*if (!empty($users) || count($users->get()) != 0) {
             $latestUserTransactionEvents = $this->latestUserTransactionEvent($users);
 
             foreach ($latestUserTransactionEvents as $latestUserTransactionEvent) {
@@ -142,7 +142,7 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
                     $totalBalance += $latestUserTransactionEvent->userTransactionEvents[0]->balance + $latestUserTransactionEvent->userTransactionEvents[0]->bonus_balance;
                 }
             }
-        }
+        }*/
         return $totalBalance;
     }
 
@@ -160,14 +160,14 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
             ->where('gender', 'o');
 
         $totalBalance = 0;
-        if (!empty($users) || count($users->get()) != 0) {
+        /*if (!empty($users) || count($users->get()) != 0) {
             $latestUserTransactionEvents = $this->latestUserTransactionEvent($users);
             foreach ($latestUserTransactionEvents as $latestUserTransactionEvent) {
                 if (!empty($latestUserTransactionEvent)) {
                     $totalBalance += $latestUserTransactionEvent->userTransactionEvents[0]->balance + $latestUserTransactionEvent->userTransactionEvents[0]->bonus_balance;
                 }
             }
-        }
+        }*/
 
         return $totalBalance;
     }
@@ -187,7 +187,7 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
             ->where('gender', '=', null);
 
         $totalBalance = 0;
-        if (!empty($users) || count($users->get()) != 0) {
+        /*if (!empty($users) || count($users->get()) != 0) {
             $latestUserTransactionEvents = $this->latestUserTransactionEvent($users);
 
             foreach ($latestUserTransactionEvents as $latestUserTransactionEvent) {
@@ -195,7 +195,7 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
                     $totalBalance += $latestUserTransactionEvent->userTransactionEvents[0]->balance + $latestUserTransactionEvent->userTransactionEvents[0]->bonus_balance;
                 }
             }
-        }
+        }*/
 
         return $totalBalance;
     }
@@ -222,14 +222,14 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
         $users = $this->inactiveFor6To12MonthsCustomerBuilder();
         $totalBalance = 0;
 
-        if (count($users) != 0) {
+        /*if (count($users) != 0) {
             foreach ($users as $user) {
                 $latestUserTransactionEvent = $user->userTransactionEvents->where('created_at', '<=', Carbon::parse($this->from))->sortBy('created_at', true);
                 if (count($latestUserTransactionEvent)!= 0) {
                     $totalBalance += $latestUserTransactionEvent[0]->balance + $latestUserTransactionEvent[0]->bonus_balance;
                 }
             }
-        }
+        }*/
         return $totalBalance;
     }
 
@@ -246,14 +246,14 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
         $users = $this->inactiveForMoreThan12MonthsCustomerBuilder();
         $totalBalance = 0;
 
-        if (count($users) != 0) {
+        /*if (count($users) != 0) {
             foreach ($users as $user) {
                 $latestUserTransactionEvent = $user->userTransactionEvents->where('created_at', '<=', Carbon::parse($this->from))->sortBy('created_at', true);
                 if (count($latestUserTransactionEvent)!= 0) {
                     $totalBalance += $latestUserTransactionEvent[0]->balance + $latestUserTransactionEvent[0]->bonus_balance;
                 }
             }
-        }
+        }*/
         return $totalBalance;
     }
 

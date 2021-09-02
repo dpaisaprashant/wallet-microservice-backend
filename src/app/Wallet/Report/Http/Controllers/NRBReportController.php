@@ -51,7 +51,7 @@ class NRBReportController extends Controller
                     ],
                 ],
 
-                'Inactive Customer Wallet' => [
+               /* 'Inactive Customer Wallet' => [
                     'Inactive (6-12 months)' => [
                         'Number' => $repository->inactiveFor6To12MonthsUserCount(),
                         'Value' => 'Rs.' . $repository->inactiveFor6To12MonthsUserBalance()
@@ -66,7 +66,7 @@ class NRBReportController extends Controller
                         'Number' => $repository->inactiveTotalUserCount(),
                         'Value' => 'Rs.' . $repository->inactiveTotalUserBalance()
                     ]
-                ]
+                ]*/
             ];
         }
 

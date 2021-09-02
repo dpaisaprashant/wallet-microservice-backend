@@ -44,7 +44,7 @@
                         <h5>Edit User KYC Details</h5>
                     </div>
                     <div class="ibox-content">
-                        <form method="post" action="{{route('user.updateKyc',$user->id)}}">
+                        <form method="post" action="{{route('user.updateKyc',$user->id)}}" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-md-7">
@@ -109,7 +109,12 @@
                                                     <dt class="col-md-3 text-right">
                                                         <label for="date_of_birth">Date Of Birth:</label>
                                                     <dd class="col-md-8">
-                                                        <input type="date" class="form-control form-control-sm" name="date_of_birth" value="{{ $user->kyc->date_of_birth }}" required>
+                                                    <div class="input-group date">
+                                                        <span class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </span>
+                                                        <input type="text" class="form-control date_from" name="date_of_birth" placeholder="Enter Date Of Birth" value="{{ $user->kyc->date_of_birth }}" required>
+                                                    </div>
                                                     </dd>
 
                                                     <dt class="col-md-3 text-right">
@@ -290,32 +295,51 @@
                                                     <dt class="col-md-3 text-right">
                                                         <label for="p_photo">Passport Size Photo: </label>
                                                     </dt>
-                                                    <dd class="col-md-8">
+                                                    <dd class="col-md-7">
                                                         <div class="custom-file">
-                                                            <input name="p_photo"  type="file" class="custom-file-input" required>
+                                                            <input name="p_photo"  type="file" class="custom-file-input">
                                                             <label for="p_photo" class="custom-file-label">Upload Passport size photo...</label>
                                                         </div>
                                                     </dd>
+                                                <dd class="col-md-1">
+                                                    <img
+                                                        src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['p_photo'] }}"
+                                                        style="max-width: 50px; max-height: 35px;object-fit: cover"
+                                                        alt="">
+                                                </dd>
 
                                                     <dt class="col-md-3 text-right">
                                                         <label for="id_photo_front">Document Front Photo: </label>
                                                     </dt>
-                                                    <dd class="col-md-8">
-                                                        <div class="custom-file">
-                                                            <input name="id_photo_front"  type="file" class="custom-file-input" required>
-                                                            <label for="id_photo_front" class="custom-file-label">Upload Document Front Photo...</label>
-                                                        </div>
+                                                    <dd class="col-md-7">
+
+                                                            <div class="custom-file">
+                                                                <input name="id_photo_front"  type="file" class="custom-file-input">
+                                                                <label for="id_photo_front" class="custom-file-label">Upload Document Front Photo...</label>
+                                                            </div>
+                                                    </dd>
+                                                    <dd class="col-md-1">
+                                                        <img
+                                                            src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_front'] }}"
+                                                            style="max-width: 50px; max-height: 35px; object-fit: cover"
+                                                            alt="">
                                                     </dd>
 
                                                     <dt class="col-md-3 text-right">
                                                         <label for="id_photo_back">Document back Photo: </label>
                                                     </dt>
-                                                    <dd class="col-md-8">
+                                                    <dd class="col-md-7">
                                                         <div class="custom-file">
-                                                            <input name="id_photo_back"  type="file" class="custom-file-input" required>
+                                                            <input name="id_photo_back"  type="file" class="custom-file-input">
                                                             <label for="id_photo_back" class="custom-file-label">Upload Document Back Photo...</label>
                                                         </div>
                                                     </dd>
+                                                <dd class="col-md-1">
+                                                    <img
+                                                        src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_back'] }}"
+                                                        style="max-width: 50px; max-height: 35px;object-fit: cover"
+                                                        alt="">
+                                                </dd>
 
                                                     @if($user->merchant()->first())
                                                         <dt class="col-md-3 text-right">
@@ -343,35 +367,59 @@
                                                         <dt class="col-md-3 text-right">
                                                             <label for="company_logo">Company Logo: </label>
                                                         </dt>
-                                                        <dd class="col-md-8">
+                                                        <dd class="col-md-7">
                                                             <div class="custom-file">
-                                                                <input name="company_logo"  type="file" class="custom-file-input" required>
+                                                                <input name="company_logo"  type="file" class="custom-file-input">
                                                                 <label for="company_logo" class="custom-file-label">Upload Company Logo...</label>
                                                             </div>
+                                                        </dd>
+                                                        <dd class="col-md-1">
+                                                            <img
+                                                                src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_logo'] }}"
+                                                                style="max-width: 50px; max-height: 35px;object-fit: cover"
+                                                                alt="">
                                                         </dd>
 
                                                         <dt class="col-md-3 text-right">
                                                             <label for="company_document">Company Document:</label>
                                                         </dt>
-                                                        <dd class="col-md-8">
-                                                            <input name="company_document"  type="file" class="custom-file-input" required>
+                                                        <dd class="col-md-7">
+                                                            <input name="company_document"  type="file" class="custom-file-input">
                                                             <label for="company_document" class="custom-file-label">Upload Company Document...</label>
+                                                        </dd>
+                                                        <dd class="col-md-1">
+                                                            <img
+                                                                src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_logo'] }}"
+                                                                style="max-width: 50px; max-height: 35px;object-fit: cover"
+                                                                alt="">
                                                         </dd>
 
                                                         <dt class="col-md-3 text-right">
                                                             <label for="company_vat_document">Company VAT Document:</label>
                                                         </dt>
-                                                        <dd class="col-md-8">
-                                                            <input name="company_vat_document"  type="file" class="custom-file-input" required>
+                                                        <dd class="col-md-7">
+                                                            <input name="company_vat_document"  type="file" class="custom-file-input">
                                                             <label for="company_vat_document" class="custom-file-label">Upload Company VAT Document...</label>
+                                                        </dd>
+                                                        <dd class="col-md-1">
+                                                            <img
+                                                                src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_vat_document'] }}"
+                                                                style="max-width: 50px; max-height: 35px;object-fit: cover"
+                                                                alt="">
                                                         </dd>
 
                                                         <dt class="col-md-3 text-right">
                                                             <label for="company_tax_clearance_document">Company Tax Clearance Document:</label>
                                                         </dt>
-                                                        <dd class="col-md-8">
-                                                            <input name="company_tax_clearance_document"  type="file" class="custom-file-input" required>
+                                                        <dd class="col-md-7">
+                                                            <input name="company_tax_clearance_document"  type="file" class="custom-file-input">
                                                             <label for="company_tax_clearance_document" class="custom-file-label">Upload Company Tax Clearance Document...</label>
+                                                        </dd>
+                                                        <dd class="col-md-1">
+                                                            <img
+                                                                src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['company_tax_clearance_document'] }}"
+                                                                style="max-width: 50px; max-height: 35px;object-fit: cover"
+                                                                alt="">
                                                         </dd>
                                                     @endif
 
@@ -385,10 +433,6 @@
                                         @endif
                                     </dl>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-
                                 @if(!empty($user->kyc))
                                     <div class="col-md-5">
                                         <h3>Documents</h3>
@@ -546,6 +590,11 @@
                                     </div>
                                 @endif
                             </div>
+                        </form>
+                    </div>
+
+
+                            </div>
                     </div>
                 </div>
     </div>
@@ -577,7 +626,7 @@
 @endsection
 
 @section('scripts')
-
+    @include('admin.asset.js.datepicker')
     @include('admin.asset.js.icheck')
     <!-- Sweet alert -->
     <script src="{{ asset('admin/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
@@ -644,6 +693,12 @@
         });
 
 
+    </script>
+    <script>
+        $('.custom-file-input').on('change', function () {
+            let fileName = $(this).val().split('\\').pop();
+            $(this).next('.custom-file-label').addClass("selected").html(fileName);
+        });
     </script>
 @endsection
 

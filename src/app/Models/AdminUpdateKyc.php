@@ -2,7 +2,11 @@
 
 namespace App\Models;
 
+use App\Filters\AdminUpdatedKyc\AdminUpdatedKYCFilters;
+use App\Filters\FiltersAbstract;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class AdminUpdateKyc extends Model
 {
@@ -16,6 +20,11 @@ class AdminUpdateKyc extends Model
 
     public function userKyc(){
         return $this->belongsTo(UserKYC::class,'user_kyc_id');
+    }
+
+    public function scopeFilter(Builder $builder, Request $request, array $filters = [])
+    {
+        return (new AdminUpdatedKYCFilters($request))->add($filters)->filter($builder);
     }
 
 

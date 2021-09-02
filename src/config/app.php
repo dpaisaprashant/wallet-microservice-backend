@@ -196,7 +196,7 @@ return [
         App\Wallet\NPSAccountLinkLoad\NPSAccountLinkLoadServiceProvider::class,
         App\Wallet\LinkedAccounts\LinkedAccountsServiceProvider::class,
         App\Wallet\WalletAPI\WalletAPIServiceProvider::class,
-        App\Wallet\MiracleInfoSms\MiracleInfoServiceProvider::class
+        App\Wallet\MiracleInfoSMS\MiracleInfoServiceProvider::class
     ],
 
     /*

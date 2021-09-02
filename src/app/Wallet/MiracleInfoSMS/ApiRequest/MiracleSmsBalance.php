@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Wallet\MiracleInfoSms\ApiRequest;
+namespace App\Wallet\MiracleInfoSMS\ApiRequest;
 
 
 use Illuminate\Support\Facades\Log;

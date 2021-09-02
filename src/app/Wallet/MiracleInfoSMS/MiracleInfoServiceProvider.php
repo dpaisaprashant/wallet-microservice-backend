@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Wallet\MiracleInfoSms;
+namespace App\Wallet\MiracleInfoSMS;
 
 
 use Illuminate\Support\ServiceProvider;

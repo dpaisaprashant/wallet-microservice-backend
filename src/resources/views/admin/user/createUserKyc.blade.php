@@ -44,7 +44,7 @@
                             <h5>Create User KYC Detail</h5>
                         </div>
                         <div class="ibox-content">
-                            <form method="post" action="{{route('user.storeUserKyc',$user->id)}}">
+                            <form method="post" action="{{route('user.storeUserKyc',$user->id)}}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-12">
@@ -80,7 +80,12 @@
                                                 <dt class="col-md-3 text-right">
                                                     <label for="date_of_birth">Date Of Birth:</label>
                                                 <dd class="col-md-8">
-                                                    <input type="date" class="form-control form-control-sm" name="date_of_birth" placeholder="Enter Date Of Birth" required>
+                                                    <div class="input-group date">
+                                                        <span class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </span>
+                                                        <input type="text" class="form-control date_from" name="date_of_birth" placeholder="Enter Date Of Birth" required>
+                                                    </div>
                                                 </dd>
 
                                                 <dt class="col-md-3 text-right">
@@ -368,6 +373,7 @@
 @section('scripts')
 
     @include('admin.asset.js.icheck')
+    @include('admin.asset.js.datepicker')
     <!-- Sweet alert -->
     <script src="{{ asset('admin/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
 

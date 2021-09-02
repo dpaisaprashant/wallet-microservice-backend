@@ -20,19 +20,111 @@
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-lg-12">
+                <div class="ibox">
+                    <div class="ibox-title collapse-link">
+                        <h5>Filter Admin Updated/Created Kycs</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content"
+                         @if( empty($_GET) || (!empty($_GET['page']) && count($_GET) === 1)  ) style="display: none" @endif>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <form role="form" method="get">
+
+                                    <div class="row">
+
+                                        <div class="col-md-6">
+                                            <label for="user_number">Admin Name</label>
+                                            <input type="text" name="admin_name" placeholder="Enter Admin Name"
+                                                   class="form-control"
+                                                   value="{{ !empty($_GET['admin_name']) ? $_GET['admin_name'] : '' }}">
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="user_number">User Number</label>
+                                            <input type="number" name="user_number" placeholder="Enter User Number"
+                                                   class="form-control"
+                                                   value="{{ !empty($_GET['user_number']) ? $_GET['user_number'] : '' }}">
+                                        </div>
+
+                                        <div class="col-md-4">
+                                                <label for="service_type" style="padding-top: 5px">Admin Action</label>
+                                                <select data-placeholder="Select Admin Action" class="chosen-select"
+                                                        tabindex="2" name="admin_action">
+                                                    <option value="" selected disabled>Select Admin Action ...</option>
+                                                    <option value="">All</option>
+                                                    @if(!empty($_GET['admin_action']))
+                                                        @if($_GET['admin_action']  == 'Created')
+                                                            <option value="Created" selected >Created</option>
+                                                            <option value="Updated">Updated</option>
+
+                                                        @else
+                                                            <option value="Updated" selected >Updated</option>
+                                                            <option value="Created">Created</option>
+
+                                                        @endif
+
+                                                    @else
+                                                        <option value="Created">Created</option>
+                                                        <option value="Updated">Updated</option>
+                                                    @endif
+                                                </select>
+                                        </div>
+
+
+                                        <div class="col-md-4" style="padding-top: 30px">
+                                            <div class="input-group date">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </span>
+                                                <input id="date_load_from" type="text" class="form-control date_from"
+                                                       placeholder="From" name="from" autocomplete="off"
+                                                       value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4" style="padding-top: 30px">
+                                            <div class="input-group date">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </span>
+                                                <input id="date_load_to" type="text" class="form-control date_to"
+                                                       placeholder="To" name="to" autocomplete="off"
+                                                       value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <br>
+                                    <div>
+                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
+                                                formaction="{{route('user.showAdminUpdatedKyc')}}"><strong>Filter</strong></button>
+                                    </div>
+
+                                    <div>
+                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
+                                                type="submit" style="margin-right: 10px;"
+                                                formaction="#"><strong>Excel</strong></button>
+                                    </div>
+                                    @include('admin.asset.components.clearFilterButton')
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
                 <div class="ibox ">
                     @include('admin.asset.notification.notify')
                     <div class="ibox-title">
-                        <h5>List of wallet service</h5>
-                        @can('Add wallet service')
-                            <div class="ibox-tools" style="top: 8px;">
-                                <a href="{{ route('wallet.service.create') }}">
-                                    <button class="btn btn-primary" type="button"><i class="fa fa-plus"></i> Add
-                                        Wallet Service
-                                    </button>
-                                </a>
-                            </div>
-                        @endcan
+                        <h5>List of Admin Updated/Created KYC</h5>
                     </div>
                     <div class="ibox-content">
                         <div class="table-responsive">
@@ -43,9 +135,10 @@
                                     <th>S.No.</th>
                                     <th>Admin</th>
                                     <th>User-Kyc</th>
+                                    <th>Admin Action</th>
                                     <th>user Kyc Before Edit</th>
                                     <th>User Kyc After Edit</th>
-                                    <th>Edited At</th>
+                                    <th>Date</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -56,9 +149,19 @@
                                             &nbsp;{{ $adminUpdatedKyc->admin->name}}
                                         </td>
                                         <td>{{ $adminUpdatedKyc->userKyc->user->mobile_no}}</td>
+                                        <td>
+                                            @php
+                                            $response = json_decode($adminUpdatedKyc->kyc_before_change)
+                                            @endphp
+                                            @if($response == null)
+                                                Created
+                                            @else
+                                                Updated
+                                            @endif
+                                        </td>
                                         <td>@include('admin.user.AdmindUpdateKycJsonDecode', ['adminUpdatedKyc' => $adminUpdatedKyc,'type'=>"before_change"])</td>
                                         <td>@include('admin.user.AdmindUpdateKycJsonDecode', ['adminUpdatedKyc' => $adminUpdatedKyc,'type'=>"after_change"])</td>
-                                        <td>{{$adminUpdatedKyc->updated_at}}</td>
+                                        <td>{{$adminUpdatedKyc->created_at}}</td>
                                     </tr>
                                 @endforeach
 

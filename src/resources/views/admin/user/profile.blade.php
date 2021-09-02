@@ -103,6 +103,14 @@
                     </tr>
                     <tr>
                         <td>
+                            @can('Edit user kyc')
+                                <a style="margin-top: 5px; width: 100px"
+                                   href="{{route('user.editKyc',$user->id)}}"
+                                   class="btn btn-sm btn-primary m-t-n-xs"
+                                   title="user profile">
+                                    <i class="fa fa-pencil"> EDIT</i>
+                                </a>
+                            @endcan
                             {{--@if($user->should_change_password == 0)
 
                                 <a data-toggle="modal" href="#modal-should-change-password">

@@ -29,6 +29,7 @@ use App\Wallet\AuditTrail\Behaviors\BNpay;
 use App\Wallet\AuditTrail\Behaviors\BPayPoint;
 use App\Wallet\User\Repositories\UserKYCRepository;
 use App\Wallet\User\Repositories\UserRepository;
+use App\Wallet\WalletAPI\Microservice\UploadImageToCoreMicroservice;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -190,14 +191,30 @@ class UserController extends Controller
 
     public function storeUserKyc(Request $request, $id)
     {
-        $userKyc = UserKYC::create($request->all());
+        $disk = "kyc_images";
+        $kycRequest = $request->all();
+
+//        dd($kycRequest);
+        foreach ($kycRequest as $key => $value) {
+            if ($request->hasFile($key)) {
+                $encoded_image = base64_encode(file_get_contents($request->file($key)->path()));
+                $uploadImage = new UploadImageToCoreMicroservice($encoded_image, $disk);
+                $uploadResponse = $uploadImage->uploadImageToCore();
+                $decodedUploadResponse = json_decode($uploadResponse);
+                $image_file_name = $decodedUploadResponse->filename;
+                $kycRequest[$key] = $image_file_name;
+            }
+        }
+
+        $userKyc = UserKYC::create($kycRequest);
+//        dd($userKyc);
+        $user = User::with('kyc')->findOrFail($id);
         $userKyc->user_id = $id;
         $userKyc->status = 1;
         $kyc_after_change = json_encode($userKyc);
         $adminId = auth()->user()->id;
         $user_kyc_id = $userKyc->id;
         $status = $userKyc->save();
-        $user = User::with('kyc')->findOrFail($id);
         $admin = 'admin';
 
         if ($status){
@@ -233,9 +250,25 @@ class UserController extends Controller
     {
         $selectedUserKYC = UserKYC::where('user_id','=',$id)->first();
         $kyc_before_change = json_encode($selectedUserKYC);
+        $disk = "kyc_images";
+        $kycRequest = $request->all();
+        $kycImageOnly = $request->allFiles();
+        foreach ($kycImageOnly as $key => $value) {
+            if ($request->hasFile($key)) {
+                $encoded_image = base64_encode(file_get_contents($request->file($key)->path()));
+                $uploadImage = new UploadImageToCoreMicroservice($encoded_image, $disk);
+                $uploadResponse = $uploadImage->uploadImageToCore();
+                $decodedUploadResponse = json_decode($uploadResponse);
+                $image_file_name = $decodedUploadResponse->filename;
+                $kycRequest[$key] = $image_file_name;
+            }
+            else{
+                $kycRequest[$key] = $selectedUserKYC->$key;
+            }
+        }
         $adminId = auth()->user()->id;
         $user_kyc_id = $selectedUserKYC->id;
-        $selectedUserKYC->update($request->all());
+        $selectedUserKYC->update($kycRequest);
         $status = $selectedUserKYC->save();
         $kyc_after_change = json_encode($selectedUserKYC);
         $user = User::with('kyc')->findOrFail($id);
@@ -255,7 +288,7 @@ class UserController extends Controller
 
     public function showAdminUpdatedKyc()
     {
-        $adminUpdatedKycs = AdminUpdateKyc::with('admin','userKyc')->latest()->paginate(10);
+        $adminUpdatedKycs = AdminUpdateKyc::filter(request())->with('admin','userKyc')->latest()->paginate(10);
         return view('admin.user.AdminUpdatedKyc')->with(compact('adminUpdatedKycs'));
     }
 

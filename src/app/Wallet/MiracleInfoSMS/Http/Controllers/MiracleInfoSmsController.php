@@ -1,11 +1,11 @@
 <?php
 
 
-namespace App\Wallet\MiracleInfoSms\Http\Controllers;
+namespace App\Wallet\MiracleInfoSMS\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\MiracleInfoSms\MiracleInfoSMS;
-use App\Wallet\MiracleInfoSms\ApiRequest\MiracleSmsBalance;
+use App\Wallet\MiracleInfoSMS\ApiRequest\MiracleSmsBalance;
 use Illuminate\Http\Request;
 
 class  MiracleInfoSmsController extends Controller

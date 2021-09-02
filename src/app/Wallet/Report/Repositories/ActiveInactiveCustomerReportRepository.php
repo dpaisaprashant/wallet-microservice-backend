@@ -43,42 +43,46 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
 
     private function inactiveFor6to12MonthsCustomerBuilder()
     {
-        $activeUsers = $this->activeCustomerBuilder()->get();
+        $activeUsers = $this->activeCustomerBuilder();
         //for comparing with active users
         if (!empty($activeUsers)) {
             $users = User::with('userTransactionEvents')->where(function ($q) {
                 return $q->whereHas('userTransactionEvents', function ($query) {
                     return $query->whereBetween('created_at', [$this->twelveMonthBeforeFromDate, $this->sixMonthBeforeFromDate]);
-                })->orWhereBetween('phone_verified_at', [$this->twelveMonthBeforeFromDate, $this->sixMonthBeforeFromDate]);
+                })->orWhereBetween('phone_verified_at', [$this->twelveMonthBeforeFromDate, $this->sixMonthBeforeFromDate])
+                ->whereNotBetween('phone_verified_at',[$this->sixMonthBeforeFromDate, Carbon::parse($this->from)]);
             });
-            return $users->get()->diff($activeUsers);
+//            return $users->get()->diff($activeUsers);
+            return $users;
         } else {
             return User::with('userTransactionEvents')->where(function ($q) {
                 return $q->whereHas('userTransactionEvents', function ($query) {
                     return $query->whereBetween('created_at', [$this->twelveMonthBeforeFromDate, $this->sixMonthBeforeFromDate]);
-                })->orWhereBetween('phone_verified_at', [$this->twelveMonthBeforeFromDate, $this->sixMonthBeforeFromDate])->get();
+                })->orWhereBetween('phone_verified_at', [$this->twelveMonthBeforeFromDate, $this->sixMonthBeforeFromDate]);
             });
         }
     }
 
     private function inactiveForMoreThan12MonthsCustomerBuilder()
     {
-        $activeUsers = $this->activeCustomerBuilder()->get();
+        $activeUsers = $this->activeCustomerBuilder();
         //for comparing with active users
         if (!empty($activeUsers)) {
             $users = User::with('userTransactionEvents')->where(function ($q) {
                 return $q->whereHas('userTransactionEvents', function ($query) {
                     return $query->whereDate('created_at', '<=', $this->twelveMonthBeforeFromDate);
-                })->orWhereDate('phone_verified_at', '<=', $this->twelveMonthBeforeFromDate);
+                })->orWhereDate('phone_verified_at', '<=', $this->twelveMonthBeforeFromDate)
+                ->whereNotBetween('phone_verified_at',[$this->twelveMonthBeforeFromDate, Carbon::parse($this->from)]);
             });
 
-            $inactiveUsers = $users->get()->diff($activeUsers);
-            return $inactiveUsers->diff($this->inactiveFor6to12MonthsCustomerBuilder());
+//            $inactiveUsers = $users->get()->diff($activeUsers);
+//            return $inactiveUsers->diff($this->inactiveFor6to12MonthsCustomerBuilder());
+            return $users;
         } else {
             return User::with('userTransactionEvents')->where(function ($q) {
                 return $q->whereHas('userTransactionEvents', function ($query) {
                     return $query->whereDate('created_at', '<=', $this->twelveMonthBeforeFromDate);
-                })->orWhereDate('phone_verified_at', '<=', $this->twelveMonthBeforeFromDate)->get();
+                })->orWhereDate('phone_verified_at', '<=', $this->twelveMonthBeforeFromDate);
             });
         }
     }
@@ -221,8 +225,7 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
     {
         $users = $this->inactiveFor6To12MonthsCustomerBuilder();
         $totalBalance = 0;
-
-        if (count($users) != 0) {
+        if (!empty($users)) {
             foreach ($users as $user) {
                 $latestUserTransactionEvent = $user->userTransactionEvents->where('created_at', '<=', Carbon::parse($this->from))->sortBy('created_at', true);
                 if (count($latestUserTransactionEvent)!= 0) {
@@ -246,7 +249,7 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
         $users = $this->inactiveForMoreThan12MonthsCustomerBuilder();
         $totalBalance = 0;
 
-        if (count($users) != 0) {
+        if (!empty($users)) {
             foreach ($users as $user) {
                 $latestUserTransactionEvent = $user->userTransactionEvents->where('created_at', '<=', Carbon::parse($this->from))->sortBy('created_at', true);
                 if (count($latestUserTransactionEvent)!= 0) {

@@ -436,4 +436,9 @@ class User extends Authenticatable
     {
         return $this->morphMany(SingleUserCommission::class, 'userCommissionable', 'user_type', 'user_id', 'id');
     }
+
+    public function latestUserTransactionEvent()
+    {
+        return $this->userTransactionEvents()->latest('created_at');
+    }
 }

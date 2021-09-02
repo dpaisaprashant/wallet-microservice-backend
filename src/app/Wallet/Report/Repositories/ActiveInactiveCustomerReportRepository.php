@@ -104,8 +104,8 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
 
     public function activeMaleUserBalance()
     {
-        $users = $this->activeCustomerBuilder()
-            ->where('gender', 'm');
+       /* $users = $this->activeCustomerBuilder()
+            ->where('gender', 'm');*/
 
         $totalBalance = 0;
         /*if (!empty($users) || count($users->get()) != 0) {
@@ -130,8 +130,8 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
 
     public function activeFemaleUserBalance()
     {
-        $users = $this->activeCustomerBuilder()
-            ->where('gender', 'f');
+        /*$users = $this->activeCustomerBuilder()
+            ->where('gender', 'f');*/
 
         $totalBalance = 0;
         /*if (!empty($users) || count($users->get()) != 0) {
@@ -156,8 +156,8 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
 
     public function activeOtherUserBalance()
     {
-        $users = $this->activeCustomerBuilder()
-            ->where('gender', 'o');
+        /*$users = $this->activeCustomerBuilder()
+            ->where('gender', 'o');*/
 
         $totalBalance = 0;
         /*if (!empty($users) || count($users->get()) != 0) {
@@ -183,8 +183,8 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
 
     public function activeUnknownUserBalance()
     {
-        $users = $this->activeCustomerBuilder()
-            ->where('gender', '=', null);
+        /*$users = $this->activeCustomerBuilder()
+            ->where('gender', '=', null);*/
 
         $totalBalance = 0;
         /*if (!empty($users) || count($users->get()) != 0) {
@@ -219,7 +219,7 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
 
     public function inactiveFor6To12MonthsUserBalance()
     {
-        $users = $this->inactiveFor6To12MonthsCustomerBuilder();
+        /*$users = $this->inactiveFor6To12MonthsCustomerBuilder();*/
         $totalBalance = 0;
 
         /*if (count($users) != 0) {
@@ -243,7 +243,7 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
 
     public function inactiveForMoreThan12MonthsUserBalance()
     {
-        $users = $this->inactiveForMoreThan12MonthsCustomerBuilder();
+        /*$users = $this->inactiveForMoreThan12MonthsCustomerBuilder();*/
         $totalBalance = 0;
 
         /*if (count($users) != 0) {

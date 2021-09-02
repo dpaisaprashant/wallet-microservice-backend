@@ -18,7 +18,7 @@ class NRBReportController extends Controller
 {
     use CollectionPaginate;
 
-    public function activeInactiveCustomerReport(Request $request)
+    public function activeCustomerReport(Request $request)
     {
         $activityReports = [];
         if(!empty($_GET)) {
@@ -70,7 +70,35 @@ class NRBReportController extends Controller
             ];
         }
 
-        return view('WalletReport::nrb.activeInactiveUserReport')->with(compact('activityReports'));
+        return view('WalletReport::nrb.activeUserReport')->with(compact('activityReports'));
+    }
+
+    public function inactiveCustomerReport(Request $request)
+    {
+        $activityReports = [];
+        if(!empty($_GET)) {
+            $repository = new ActiveInactiveCustomerReportRepository($request);
+            $activityReports = [
+                 'Inactive Customer Wallet' => [
+                     'Inactive (6-12 months)' => [
+                         'Number' => $repository->inactiveFor6To12MonthsUserCount(),
+                         'Value' => 'Rs.' . $repository->inactiveFor6To12MonthsUserBalance()
+                     ],
+
+                     'Inactive (> 12 months)' => [
+                         'Number' => $repository->inactiveForMoreThan12MonthsUserCount(),
+                         'Value' => 'Rs.' . $repository->inactiveForMoreThan12MonthsUserBalance()
+                     ],
+
+                     'Grand Total' => [
+                         'Number' => $repository->inactiveTotalUserCount(),
+                         'Value' => 'Rs.' . $repository->inactiveTotalUserBalance()
+                     ]
+                 ]
+            ];
+        }
+
+        return view('WalletReport::nrb.inactiveUserReport')->with(compact('activityReports'));
     }
 
     public function agentReport(Request $request)

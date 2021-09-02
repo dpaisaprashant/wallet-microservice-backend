@@ -219,17 +219,17 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
 
     public function inactiveFor6To12MonthsUserBalance()
     {
-        /*$users = $this->inactiveFor6To12MonthsCustomerBuilder();*/
+        $users = $this->inactiveFor6To12MonthsCustomerBuilder();
         $totalBalance = 0;
 
-        /*if (count($users) != 0) {
+        if (count($users) != 0) {
             foreach ($users as $user) {
                 $latestUserTransactionEvent = $user->userTransactionEvents->where('created_at', '<=', Carbon::parse($this->from))->sortBy('created_at', true);
                 if (count($latestUserTransactionEvent)!= 0) {
                     $totalBalance += $latestUserTransactionEvent[0]->balance + $latestUserTransactionEvent[0]->bonus_balance;
                 }
             }
-        }*/
+        }
         return $totalBalance;
     }
 
@@ -243,17 +243,17 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
 
     public function inactiveForMoreThan12MonthsUserBalance()
     {
-        /*$users = $this->inactiveForMoreThan12MonthsCustomerBuilder();*/
+        $users = $this->inactiveForMoreThan12MonthsCustomerBuilder();
         $totalBalance = 0;
 
-        /*if (count($users) != 0) {
+        if (count($users) != 0) {
             foreach ($users as $user) {
                 $latestUserTransactionEvent = $user->userTransactionEvents->where('created_at', '<=', Carbon::parse($this->from))->sortBy('created_at', true);
                 if (count($latestUserTransactionEvent)!= 0) {
                     $totalBalance += $latestUserTransactionEvent[0]->balance + $latestUserTransactionEvent[0]->bonus_balance;
                 }
             }
-        }*/
+        }
         return $totalBalance;
     }
 

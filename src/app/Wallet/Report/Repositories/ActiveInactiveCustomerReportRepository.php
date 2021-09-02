@@ -104,11 +104,11 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
 
     public function activeMaleUserBalance()
     {
-       /* $users = $this->activeCustomerBuilder()
-            ->where('gender', 'm');*/
+        $users = $this->activeCustomerBuilder()
+            ->where('gender', 'm');
 
         $totalBalance = 0;
-        /*if (!empty($users) || count($users->get()) != 0) {
+        if (!empty($users) || count($users->get()) != 0) {
             $latestUserTransactionEvents = $this->latestUserTransactionEvent($users);
 
             foreach ($latestUserTransactionEvents as $latestUserTransactionEvent) {
@@ -116,7 +116,7 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
                     $totalBalance += $latestUserTransactionEvent->userTransactionEvents[0]->balance + $latestUserTransactionEvent->userTransactionEvents[0]->bonus_balance;
                 }
             }
-        }*/
+        }
         return $totalBalance;
     }
 
@@ -130,11 +130,11 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
 
     public function activeFemaleUserBalance()
     {
-        /*$users = $this->activeCustomerBuilder()
-            ->where('gender', 'f');*/
+        $users = $this->activeCustomerBuilder()
+            ->where('gender', 'f');
 
         $totalBalance = 0;
-        /*if (!empty($users) || count($users->get()) != 0) {
+        if (!empty($users) || count($users->get()) != 0) {
             $latestUserTransactionEvents = $this->latestUserTransactionEvent($users);
 
             foreach ($latestUserTransactionEvents as $latestUserTransactionEvent) {
@@ -142,7 +142,7 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
                     $totalBalance += $latestUserTransactionEvent->userTransactionEvents[0]->balance + $latestUserTransactionEvent->userTransactionEvents[0]->bonus_balance;
                 }
             }
-        }*/
+        }
         return $totalBalance;
     }
 
@@ -156,18 +156,18 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
 
     public function activeOtherUserBalance()
     {
-        /*$users = $this->activeCustomerBuilder()
-            ->where('gender', 'o');*/
+        $users = $this->activeCustomerBuilder()
+            ->where('gender', 'o');
 
         $totalBalance = 0;
-        /*if (!empty($users) || count($users->get()) != 0) {
+        if (!empty($users) || count($users->get()) != 0) {
             $latestUserTransactionEvents = $this->latestUserTransactionEvent($users);
             foreach ($latestUserTransactionEvents as $latestUserTransactionEvent) {
                 if (!empty($latestUserTransactionEvent)) {
                     $totalBalance += $latestUserTransactionEvent->userTransactionEvents[0]->balance + $latestUserTransactionEvent->userTransactionEvents[0]->bonus_balance;
                 }
             }
-        }*/
+        }
 
         return $totalBalance;
     }
@@ -183,11 +183,11 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
 
     public function activeUnknownUserBalance()
     {
-        /*$users = $this->activeCustomerBuilder()
-            ->where('gender', '=', null);*/
+        $users = $this->activeCustomerBuilder()
+            ->where('gender', '=', null);
 
         $totalBalance = 0;
-        /*if (!empty($users) || count($users->get()) != 0) {
+        if (!empty($users) || count($users->get()) != 0) {
             $latestUserTransactionEvents = $this->latestUserTransactionEvent($users);
 
             foreach ($latestUserTransactionEvents as $latestUserTransactionEvent) {
@@ -195,7 +195,7 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
                     $totalBalance += $latestUserTransactionEvent->userTransactionEvents[0]->balance + $latestUserTransactionEvent->userTransactionEvents[0]->bonus_balance;
                 }
             }
-        }*/
+        }
 
         return $totalBalance;
     }

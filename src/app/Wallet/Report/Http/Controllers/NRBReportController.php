@@ -30,7 +30,7 @@ class NRBReportController extends Controller
                         'Value' =>'Rs.' . $repository->activeMaleUserBalance()
                     ],
 
-                   /* 'Female' => [
+                    'Female' => [
                         'Number' => $repository->activeFemaleUserCount(),
                         'Value' => 'Rs.' . $repository->activeFemaleUserBalance()
                     ],
@@ -48,7 +48,7 @@ class NRBReportController extends Controller
                     'Grand Total' => [
                         'Number' => $repository->activeTotalUserCount(),
                         'Value' => 'Rs.' . $repository->activeTotalUserBalance()
-                    ],*/
+                    ],
                 ],
 
                /* 'Inactive Customer Wallet' => [

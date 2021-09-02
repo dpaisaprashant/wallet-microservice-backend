@@ -449,8 +449,9 @@ $url = url()->current();
                         @endcan
                         {{--<li><a href="{{ route('report.user.reconciliation') }}">User Reconciliation Report</a></li>--}}
                         @can('Report nrb active and inactive user')
-                            <li><a href="{{ route('report.nrb.activeInactiveUser') }}">NRB Active/Inactive User
-                                    Report</a>
+                            <li><a href="{{ route('report.nrb.activeUser') }}">NRB Active User Report</a>
+                            </li>
+                            <li><a href="{{ route('report.nrb.inactiveUser') }}">NRB Inactive User Report</a>
                             </li>
                         @endcan
                         @can('Report nrb agent')

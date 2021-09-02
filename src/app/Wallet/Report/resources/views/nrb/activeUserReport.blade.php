@@ -2,7 +2,7 @@
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Active Inactive User Report</h2>
+            <h2>Active User Report</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -13,7 +13,7 @@
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Active Inactive User</strong>
+                    <strong>Active User</strong>
                 </li>
             </ol>
         </div>
@@ -46,7 +46,7 @@
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </span>
-                                                <input type="date" class="form-control" placeholder="From" name="select_date" autocomplete="off" value="{{ !empty($_GET['select_date']) ? $_GET['select_date'] : '' }}">
+                                                <input class="select_date form-control" placeholder="Select Date" name="select_date" autocomplete="off" value="{{ !empty($_GET['select_date']) ? $_GET['select_date'] : '' }}">
                                             </div>
                                         </div>
 
@@ -66,13 +66,10 @@
                                         <i class="fa fa-info-circle"></i>&nbsp; Note: <br><b>For Active Users</b><br></b>
                                         <b>Number</b> represents total number of active users (between selected date and six months before the selected date). <br>
                                         <b>Value</b> represents the sum of latest transaction balance of all active users till selected date.<br>
-                                        <b>For Inactive Users</b><br>
-                                        <b>Number</b> represents total number of inactive users for time periods (6-12 months) and (greater than 12 months) before the selected date. <br>
-                                        <b>Value</b> represents the sum of latest transaction balance of all inactive users for the respective time periods.<br>
                                     </div>
 
                                     <div>
-                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('report.nrb.activeInactiveUser') }}"><strong>Generate Report</strong></button>
+                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('report.nrb.activeUser') }}"><strong>Generate Report</strong></button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
                                     {{-- <div>
@@ -92,7 +89,7 @@
                 @if(!empty($_GET['select_date']))
                     <div class="ibox ">
                         <div class="ibox-title">
-                            <h5>Active Inactive User report from {{ \Carbon\Carbon::parse($_GET['select_date'])->subMonths(6)->format('Y-m-d') . ' to ' . $_GET['select_date'] }}</h5>
+                            <h5>Active User report from {{ \Carbon\Carbon::parse($_GET['select_date'])->subMonths(6)->format('Y-m-d') . ' to ' . $_GET['select_date'] }}</h5>
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">

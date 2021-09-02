@@ -30,3 +30,13 @@
             $(this).val('');
         });
     </script>
+
+    <script>
+        $(".select_date").datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            format: 'dd M, yyyy',
+            keyboardNavigation: false,
+        });
+
+    </script>

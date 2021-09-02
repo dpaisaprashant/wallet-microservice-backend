@@ -33,6 +33,7 @@ class PaypointMicroservice
             ->setEndDate($dateTo);
         $response = $microservice->processRequest();
         $paypointAPI = json_decode($response, true);
+        dd($paypointAPI);
         return $paypointAPI;
     }
 

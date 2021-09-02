@@ -23,25 +23,30 @@ class PaypointApiValidationRepository
 
         if (!empty($_GET['from'])) {
             $from_convert = strtotime($_GET['from']);
-            $this->from = date('Y-m-d', $from_convert);
+            $this->from = date('Y-m-d\TH:i:s', $from_convert);
         }
         if (!empty($_GET['to'])) {
             $to_convert = strtotime($_GET['to']);
-            $this->to = date('Y-m-d', $to_convert);
+            $this->to = date('Y-m-d\TH:i:s', $to_convert);
         }
 
         if (!empty($_GET['from']) && !empty($_GET['to'])) {
             $transactions = $repository->latestTransactionsUnpaginated()->whereBetween('created_at', [$this->from, $this->to])->get();
         } else {
-            $transactions = $repository->latestTransactionsUnpaginated()->whereBetween('created_at', [Carbon::now()->subMonths(6)->format('Y-m-d'), Carbon::now()->format('Y-m-d')])->get();
+            $transactions = $repository->latestTransactionsUnpaginated()->whereBetween('created_at', [Carbon::now()->subDays(7)->format('Y-m-d'), Carbon::now()->format('Y-m-d')])->get();
         }
 
         $paypointAPIs = array();
         $paypointMicroservice = new PaypointMicroservice();
 
         foreach ($transactions as $transaction) {
-            $id = $transaction->refStan;
-            $paypointAPI = $paypointMicroservice->getPaypointAPIByDate($request, $id);
+
+            if (!empty($_GET['from']) && !empty($_GET['to'])) {
+                $paypointAPI = $paypointMicroservice->getPaypointAPIByDate($request, $this->from, $this->to);
+            } else {
+                $paypointAPI = $paypointMicroservice->getPaypointAPIByDate($request, Carbon::now()->subDays(7)->format('Y-m-d'), Carbon::now()->format('Y-m-d'));
+            }
+
             $paypointAPIs[] = $paypointAPI;
             if ((optional($transaction->userTransaction)->amount*100) != ($paypointAPI['ResultMessage']['Transaction']['Amount'] ?? null)) {
                 $amount_mismatches[] = $transaction;
@@ -87,7 +92,6 @@ class PaypointApiValidationRepository
             'wallet_status_mismatches' => $wallet_status_mismatches,
             'wallet_status_mismatches_api' => $wallet_status_mismatches_api
         ];
-//        dd($disputedTransactions['wallet_status_mismatches']);
         return $disputedTransactions;
     }
 }

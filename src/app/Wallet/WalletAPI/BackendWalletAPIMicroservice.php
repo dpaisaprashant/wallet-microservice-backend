@@ -170,7 +170,9 @@ class BackendWalletAPIMicroservice extends BackendWalletAPIJSONAbstract
             ->addParam('special4', $this->special4)
             ->addParam('user_id', $this->userId ?? "")
             ->addParam('request_param', $this->requestParam)
-            ->addParam('refStan', $this->refStan ?? "");
+            ->addParam('refStan', $this->refStan ?? "")
+            ->addParam('startDate', $this->startDate ?? "")
+            ->addParam('endDate', $this->endDate ?? "");
 
         $this->setBaseUrl(config('microservices.' . $this->microservice));
         $requestInfo = $this->apiParams;

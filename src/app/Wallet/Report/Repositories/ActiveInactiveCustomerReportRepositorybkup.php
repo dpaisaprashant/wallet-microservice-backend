@@ -43,20 +43,24 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
 
     private function inactiveFor6to12MonthsCustomerBuilder()
     {
-
-            $latestTransactionEvent = \DB::connection('dpaisa')->select("SELECT transaction_events.*
-                FROM(SELECT MAX(id) as id,user_id,MAX(created_at) AS created_at
-                FROM transaction_events GROUP BY user_id HAVING created_at <= '2021-11-30' and created_at >= '2021-11-01')
-                    AS latest_transaction
-                JOIN transaction_events
-                ON transaction_events.created_at = latest_transaction.created_at
-           AND transaction_events.id = latest_transaction.id
-           AND transaction_events.user_id = latest_transaction.user_id");
-
-//        \DB::connection('dpaisa')->select("SELECT users.* from users JOIN transaction_events ON users.id = transaction_events.user_id");
-
-
-            dd($latestTransactionEvent);
+        $activeUsers = $this->activeCustomerBuilder();
+        //for comparing with active users
+        if (!empty($activeUsers)) {
+            $users = User::with('userTransactionEvents')->where(function ($q) {
+                return $q->whereHas('userTransactionEvents', function ($query) {
+                    return $query->whereBetween('created_at', [$this->twelveMonthBeforeFromDate, $this->sixMonthBeforeFromDate]);
+                })->orWhereBetween('phone_verified_at', [$this->twelveMonthBeforeFromDate, $this->sixMonthBeforeFromDate])
+                ->whereNotBetween('phone_verified_at',[$this->sixMonthBeforeFromDate, Carbon::parse($this->from)]);
+            });
+//            return $users->get()->diff($activeUsers);
+            return $users;
+        } else {
+            return User::with('userTransactionEvents')->where(function ($q) {
+                return $q->whereHas('userTransactionEvents', function ($query) {
+                    return $query->whereBetween('created_at', [$this->twelveMonthBeforeFromDate, $this->sixMonthBeforeFromDate]);
+                })->orWhereBetween('phone_verified_at', [$this->twelveMonthBeforeFromDate, $this->sixMonthBeforeFromDate]);
+            });
+        }
     }
 
     private function inactiveForMoreThan12MonthsCustomerBuilder()
@@ -219,12 +223,6 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
 
     public function inactiveFor6To12MonthsUserBalance()
     {
-
-
-
-
-
-
         $users = $this->inactiveFor6To12MonthsCustomerBuilder();
         $totalBalance = 0;
         if (!empty($users)) {

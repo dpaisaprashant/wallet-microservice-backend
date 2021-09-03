@@ -43,44 +43,65 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
 
     private function inactiveFor6to12MonthsCustomerBuilder()
     {
-
-            $latestTransactionEvent = \DB::connection('dpaisa')->select("SELECT transaction_events.*
-                FROM(SELECT MAX(id) as id,user_id,MAX(created_at) AS created_at
-                FROM transaction_events GROUP BY user_id HAVING created_at <= '2021-11-30' and created_at >= '2021-11-01')
-                    AS latest_transaction
-                JOIN transaction_events
-                ON transaction_events.created_at = latest_transaction.created_at
-           AND transaction_events.id = latest_transaction.id
-           AND transaction_events.user_id = latest_transaction.user_id");
-
-//        \DB::connection('dpaisa')->select("SELECT users.* from users JOIN transaction_events ON users.id = transaction_events.user_id");
+        $usersWithLatestTransaction = \DB::connection('dpaisa')->select("SELECT * FROM (SELECT transaction_events.* FROM (
+                    SELECT MAX(id) as id,user_id,MAX(created_at) AS created_at
+                    FROM transaction_events GROUP BY user_id HAVING created_at <= '$this->from'
+                ) AS latest_transaction
+                 JOIN transaction_events ON transaction_events.id = latest_transaction.id
+                WHERE latest_transaction.created_at BETWEEN '$this->twelveMonthBeforeFromDate' AND '$this->sixMonthBeforeFromDate') as latest_transaction_in_timeperiod
+                INNER JOIN users
+                ON users.id = latest_transaction_in_timeperiod.user_id;");
 
 
-            dd($latestTransactionEvent);
+//        SELECT * FROM (SELECT transaction_events.* FROM (
+//        SELECT MAX(id) as id,user_id,MAX(created_at) AS created_at
+//                    FROM transaction_events GROUP BY user_id HAVING created_at <= '2021-09-03'
+//                ) AS latest_transaction
+//                 JOIN transaction_events ON transaction_events.id = latest_transaction.id
+//                WHERE latest_transaction.created_at BETWEEN '2021-01-01' AND '2021-06-01') as latest_transaction_in_timeperiod
+//                INNER JOIN users
+//                ON users.id = latest_transaction_in_timeperiod.user_id;
+
+//dd($this->sixMonthBeforeFromDate);
+            return $usersWithLatestTransaction;
     }
 
     private function inactiveForMoreThan12MonthsCustomerBuilder()
     {
-        $activeUsers = $this->activeCustomerBuilder();
+//        $activeUsers = $this->activeCustomerBuilder();
         //for comparing with active users
-        if (!empty($activeUsers)) {
-            $users = User::with('userTransactionEvents')->where(function ($q) {
-                return $q->whereHas('userTransactionEvents', function ($query) {
-                    return $query->whereDate('created_at', '<=', $this->twelveMonthBeforeFromDate);
-                })->orWhereDate('phone_verified_at', '<=', $this->twelveMonthBeforeFromDate)
-                ->whereNotBetween('phone_verified_at',[$this->twelveMonthBeforeFromDate, Carbon::parse($this->from)]);
-            });
 
-//            $inactiveUsers = $users->get()->diff($activeUsers);
-//            return $inactiveUsers->diff($this->inactiveFor6to12MonthsCustomerBuilder());
-            return $users;
-        } else {
-            return User::with('userTransactionEvents')->where(function ($q) {
-                return $q->whereHas('userTransactionEvents', function ($query) {
-                    return $query->whereDate('created_at', '<=', $this->twelveMonthBeforeFromDate);
-                })->orWhereDate('phone_verified_at', '<=', $this->twelveMonthBeforeFromDate);
-            });
-        }
+        $usersWithLatestTransaction = \DB::connection('dpaisa')->select("SELECT * FROM (SELECT transaction_events.* FROM (
+                    SELECT MAX(id) as id,user_id,MAX(created_at) AS created_at
+                    FROM transaction_events GROUP BY user_id HAVING created_at <= '$this->from'
+                ) AS latest_transaction
+                 JOIN transaction_events ON transaction_events.id = latest_transaction.id
+                WHERE latest_transaction.created_at <= '$this->twelveMonthBeforeFromDate') as latest_transaction_in_timeperiod
+                INNER JOIN users
+                ON users.id = latest_transaction_in_timeperiod.user_id;");
+
+        return $usersWithLatestTransaction;
+
+
+//        if (!empty($activeUsers)) {
+//
+//            $users = User::with('userTransactionEvents')->where(function ($q) {
+//                return $q->whereHas('userTransactionEvents', function ($query) {
+//                    return $query->whereDate('created_at', '<=', $this->twelveMonthBeforeFromDate);
+//                })->orWhereDate('phone_verified_at', '<=', $this->twelveMonthBeforeFromDate)
+//                ->whereNotBetween('phone_verified_at',[$this->twelveMonthBeforeFromDate, Carbon::parse($this->from)]);
+//            });
+//
+////            $inactiveUsers = $users->get()->diff($activeUsers);
+////            return $inactiveUsers->diff($this->inactiveFor6to12MonthsCustomerBuilder());
+//            return $users;
+//        } else {
+//            return User::with('userTransactionEvents')->where(function ($q) {
+//                return $q->whereHas('userTransactionEvents', function ($query) {
+//                    return $query->whereDate('created_at', '<=', $this->twelveMonthBeforeFromDate);
+//                })->orWhereDate('phone_verified_at', '<=', $this->twelveMonthBeforeFromDate);
+//            });
+//        }
     }
 
     public function latestUserTransactionEvent($users)
@@ -213,26 +234,17 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
     //INACTIVE 6 to 12 months
     public function inactiveFor6To12MonthsUserCount()
     {
-        return $this->inactiveFor6to12MonthsCustomerBuilder()
-            ->count();
+        return count($this->inactiveFor6to12MonthsCustomerBuilder());
     }
 
     public function inactiveFor6To12MonthsUserBalance()
     {
-
-
-
-
-
-
         $users = $this->inactiveFor6To12MonthsCustomerBuilder();
         $totalBalance = 0;
+
         if (!empty($users)) {
             foreach ($users as $user) {
-                $latestUserTransactionEvent = $user->userTransactionEvents->where('created_at', '<=', Carbon::parse($this->from))->sortBy('created_at', true);
-                if (count($latestUserTransactionEvent)!= 0) {
-                    $totalBalance += $latestUserTransactionEvent[0]->balance + $latestUserTransactionEvent[0]->bonus_balance;
-                }
+                    $totalBalance += $user->balance + $user->bonus_balance;
             }
         }
         return $totalBalance;
@@ -242,23 +254,22 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
     //INACTIVE FOR MORE THAN 12 MONTHS
     public function inactiveForMoreThan12MonthsUserCount()
     {
-        return $this->inactiveForMoreThan12MonthsCustomerBuilder()
-            ->count();
+        return count($this->inactiveForMoreThan12MonthsCustomerBuilder());
     }
 
     public function inactiveForMoreThan12MonthsUserBalance()
     {
         $users = $this->inactiveForMoreThan12MonthsCustomerBuilder();
         $totalBalance = 0;
+//        $usersWithLatestTransaction
+
 
         if (!empty($users)) {
             foreach ($users as $user) {
-                $latestUserTransactionEvent = $user->userTransactionEvents->where('created_at', '<=', Carbon::parse($this->from))->sortBy('created_at', true);
-                if (count($latestUserTransactionEvent)!= 0) {
-                    $totalBalance += $latestUserTransactionEvent[0]->balance + $latestUserTransactionEvent[0]->bonus_balance;
-                }
+                $totalBalance += $user->balance + $user->bonus_balance;
             }
         }
+
         return $totalBalance;
     }
 

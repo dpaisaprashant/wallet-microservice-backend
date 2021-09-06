@@ -188,6 +188,10 @@
                                                    class="btn btn-sm btn-info m-t-n-xs" title="User Commissions"><i
                                                         class="fa fa-dollar"></i> User Commission</a>
                                             @endcan
+                                            <a style="margin-top: 5px;"
+                                               href="{{ route('walletBonus.index', $transactionType->id) }}"
+                                               class="btn btn-sm btn-warning m-t-n-xs" title="User Commissions"><i
+                                                    class="fa fa-dollar"></i>&nbsp;Bonus</a>
 
                                         </td>
                                     </tr>

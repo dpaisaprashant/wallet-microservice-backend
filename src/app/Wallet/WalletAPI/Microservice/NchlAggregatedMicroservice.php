@@ -15,7 +15,9 @@ class NchlAggregatedMicroservice
             ->setVendor("NCHL Aggregated Payment")
             ->setMicroservice("NCHL")
             ->setUrl("/nchl/report/by-id")
+            ->addParam()
             ->setRequestParam(['batch_id' => $id]);
+
         $response = $microservice->processRequest();
         $nchlAggregatedAPI = json_decode($response, true);
         return $nchlAggregatedAPI;

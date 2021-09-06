@@ -47,6 +47,24 @@ class WalletBonusController extends Controller
     }
 
     public function store($id,Request $request){
+        $repeatTitle = WalletTransactionBonus::where('title',$request->title)->count();
+
+        if($repeatTitle > 0){
+            $oldBonusPoint = WalletTransactionBonus::where('title',$request->title)->first();
+
+            $oldBonusPoint->title = $request->title;
+            $oldBonusPoint->wallet_transaction_type_id = $id;
+            $oldBonusPoint->user_type_id = $request->user_type_id;
+            $oldBonusPoint->user_type = $request->user_type;
+            $oldBonusPoint->point_type = $request->bonus_point_type;
+            $oldBonusPoint->point_value = $request->bonus_point_value;
+            $oldBonusPoint->slab_from = $request->slab_from;
+            $oldBonusPoint->slab_to = $request->slab_to;
+            $oldBonusPoint->description = $request->description;
+
+            $oldBonusPoint->save();
+            return redirect()->route('walletBonus.index', $id)->with('success', 'Bonus Point updated successfully');
+        }
         $bonusPoint = WalletTransactionBonus::create([
             'title' => $request->title,
             'wallet_transaction_type_id' => $id,

@@ -28,6 +28,7 @@
                     <div class="ibox-content">
                         <form method="post" action="{{ route('frontend.process.create') }}" enctype="multipart/form-data">
                             @csrf
+                            <input type="text" name="belongs_to" value="{{config('app.'.'name')}}" hidden>
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Title</label>
                                 <div class="col-sm-10">

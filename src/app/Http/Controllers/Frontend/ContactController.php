@@ -11,6 +11,7 @@ use Illuminate\Support\Arr;
 class ContactController extends Controller
 {
     use UploadImage;
+    private $disk = "public";
 
     public function index(Request $request)
     {
@@ -19,15 +20,15 @@ class ContactController extends Controller
         if ($request->isMethod('post')) {
 
             $data = Arr::except($request->all(), '_token');
-
-            if ($request->hasFile('logo')) {
-                $data['logo'] = $this->uploadImage(['logo' => $request->file('logo')], 'logo', 'app/public/uploads/frontend/');
-            }
+            $responseData = $this->uploadImageToCoreBase64($this->disk, $data, $request);
+//            if ($request->hasFile('logo')) {
+//                $data['logo'] = $this->uploadImage(['logo' => $request->file('logo')], 'logo', 'app/public/uploads/frontend/');
+//            }
 
             if (empty($contact)) {
-                FrontendContact::create($data);
+                FrontendContact::create($responseData);
             }
-            FrontendContact::where('id', 1)->update($data);
+            FrontendContact::where('id', 1)->update($responseData);
 
             return redirect()->route('frontend.contact')->with(compact('contact'));
         }

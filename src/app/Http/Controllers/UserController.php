@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\SaveFCMNotificationEvent;
 use App\Events\SendFcmNotification;
 use App\Models\Admin;
+use App\Models\AdminUpdateKyc;
 use App\Models\AdminUserKYC;
 use App\Models\Agent;
 use App\Models\AgentType;
@@ -23,6 +24,7 @@ use App\Models\UserReferralLimit;
 use App\Models\UserType;
 use App\Models\Wallet;
 use App\Traits\CollectionPaginate;
+use App\Traits\UploadImage;
 use App\Wallet\AuditTrail\AuditTrial;
 use App\Wallet\AuditTrail\Behaviors\BAll;
 use App\Wallet\AuditTrail\Behaviors\BLoginHistory;
@@ -30,13 +32,16 @@ use App\Wallet\AuditTrail\Behaviors\BNpay;
 use App\Wallet\AuditTrail\Behaviors\BPayPoint;
 use App\Wallet\User\Repositories\UserKYCRepository;
 use App\Wallet\User\Repositories\UserRepository;
+use App\Wallet\WalletAPI\Microservice\UploadImageToCoreMicroservice;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
 
     use CollectionPaginate;
+    use UploadImage;
 
     public $admin_data;
 
@@ -183,6 +188,55 @@ class UserController extends Controller
         return view('admin.user.profile')->with(compact('userLoadCommission', 'admin_details', 'admin', 'loginHistoryAudits', 'allAudits', 'user', 'loadFundSum', 'activeTab', 'userTransactionStatements', 'userTransactionEvents','userBonus','userBonusBalance'));
     }
 
+    public function createUserKyc($id)
+    {
+        $user = User::findOrFail($id);
+        return view('admin.user.createUserKyc')->with(compact('user'));
+    }
+
+    public function storeUserKyc(Request $request, $id)
+    {
+
+        $disk = "kyc_images";
+        $kycRequest = $request->all();
+
+        $responseData = $this->uploadImageToCoreBase64($disk, $kycRequest, $request);
+
+//        foreach ($kycRequest as $key => $value) {
+//            if ($request->hasFile($key)) {
+//                $encoded_image = base64_encode(file_get_contents($request->file($key)->path()));
+//                $uploadImage = new UploadImageToCoreMicroservice($encoded_image, $disk);
+//                $uploadResponse = $uploadImage->uploadImageToCore();
+//                $decodedUploadResponse = json_decode($uploadResponse);
+//                $image_file_name = $decodedUploadResponse->filename;
+//                $kycRequest[$key] = $image_file_name;
+//            }
+//        }
+
+        $userKyc = UserKYC::create($responseData);
+        $user = User::with('kyc')->findOrFail($id);
+        $userKyc->user_id = $id;
+        $userKyc->status = 1;
+        $kyc_after_change = json_encode($userKyc);
+        $adminId = auth()->user()->id;
+        $user_kyc_id = $userKyc->id;
+        $status = $userKyc->save();
+        $admin = 'admin';
+
+        if ($status){
+            $adminUpdateKyc = new AdminUpdateKyc();
+            $adminUpdateKyc->admin_id = $adminId;
+            $adminUpdateKyc->user_kyc_id = $user_kyc_id;
+            $adminUpdateKyc->kyc_after_change = $kyc_after_change;
+            $adminUpdateKyc->save();
+            return redirect()->route('user.kyc',$id)->with(compact('user','admin'))->with('success','Wallet Service updated successfully');
+        }
+        else{
+            return back()->with('error', 'Something went wrong!Please try again later');
+        }
+
+    }
+
 
     public function kyc($id)
     {
@@ -191,11 +245,69 @@ class UserController extends Controller
         return view('admin.user.kyc')->with(compact('user', 'admin'));
     }
 
+    public function EditKyc($id)
+    {
+        $user = User::with('kyc')->findOrFail($id);
+        $admin = 'admin';
+        return view('admin.user.EditKyc')->with(compact('user','admin'));
+    }
+
+    public function UpdateKyc(Request $request, $id)
+    {
+        $selectedUserKYC = UserKYC::where('user_id','=',$id)->first();
+        $kyc_before_change = json_encode($selectedUserKYC);
+        $disk = "kyc_images";
+        $kycRequest = $request->all();
+        $responseData = $this->uploadImageToCoreBase64($disk, $kycRequest,$request); // this is more efficient that the commented out code below
+        //note: the below code works just fine but is tedious can be deleted, for now i have just commented it out
+//        $kycImageOnly = $request->allFiles();
+//        foreach ($kycImageOnly as $key => $value) {
+//            if ($request->hasFile($key)) {
+//                $encoded_image = base64_encode(file_get_contents($request->file($key)->path()));
+//                $uploadImage = new UploadImageToCoreMicroservice($encoded_image, $disk);
+//                $uploadResponse = $uploadImage->uploadImageToCore();
+//                $decodedUploadResponse = json_decode($uploadResponse);
+//                $image_file_name = $decodedUploadResponse->filename;
+//                $kycRequest[$key] = $image_file_name;
+//            }
+//            else{
+//                $kycRequest[$key] = $selectedUserKYC->$key;
+//            }
+//        }
+        //note: the above code works just fine but is tedious can be deleted, for now i have just commented it out
+
+        $adminId = auth()->user()->id;
+        $user_kyc_id = $selectedUserKYC->id;
+        $selectedUserKYC->update($responseData);
+        $status = $selectedUserKYC->save();
+        $kyc_after_change = json_encode($selectedUserKYC);
+        $user = User::with('kyc')->findOrFail($id);
+        $admin = 'admin';
+        if($status == true){
+            $adminUpdateKyc = new AdminUpdateKyc();
+            $adminUpdateKyc->admin_id = $adminId;
+            $adminUpdateKyc->user_kyc_id = $user_kyc_id;
+            $adminUpdateKyc->kyc_before_change = $kyc_before_change;
+            $adminUpdateKyc->kyc_after_change = $kyc_after_change;
+            $adminUpdateKyc->save();
+            return redirect()->route('user.kyc',$id)->with(compact('user','admin'))->with('success','Wallet Service updated successfully');
+        }else{
+            return redirect()->route('user.kyc',$id)->with(compact('user','admin'))->with('error', 'Something went wrong!Please try again later');
+        }
+    }
+
+    public function showAdminUpdatedKyc()
+    {
+        $adminUpdatedKycs = AdminUpdateKyc::filter(request())->with('admin','userKyc')->latest()->paginate(10);
+        return view('admin.user.AdminUpdatedKyc')->with(compact('adminUpdatedKycs'));
+    }
+
+
+
     public function userYearlyGraph(Request $request)
     {
         $now = Carbon::now();
         $year = $now->format('Y');
-
         //get current year transaction
         $transactions = TransactionEvent::where('user_id', $request->user_id)
             ->with('transactionable')

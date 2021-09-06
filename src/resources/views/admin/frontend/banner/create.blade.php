@@ -36,6 +36,7 @@
                                 </div>
                             </div>
 
+                            <input type="text" name="belongs_to" value="{{config('app.'.'name')}}" hidden>
 
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Image</label>

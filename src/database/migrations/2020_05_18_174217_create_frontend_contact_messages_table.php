@@ -21,6 +21,7 @@ class CreateFrontendContactMessagesTable extends Migration
             $table->string('email');
             $table->text('message');
             $table->string('subject')->nullable();
+            $table->string('belongs_to');
             $table->timestamps();
         });
     }

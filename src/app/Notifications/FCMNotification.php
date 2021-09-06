@@ -38,7 +38,7 @@ class FCMNotification extends Notification
      * @param $title
      * @param $description
      */
-    public function __construct(User $user, $title, $description, $type)
+    public function __construct(User $user, $title, $description, $type, $image = null)
     {
         $this->user = $user;
         $this->title = $title;

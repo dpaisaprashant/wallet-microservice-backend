@@ -35,7 +35,8 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
 
     private function activeCustomerBuilder()
     {
-
+        $selectedDate= Carbon::parse($this->from)->endOfDay();
+        dd($selectedDate);
         $activeUsers = \DB::connection('dpaisa')->select("SELECT * FROM (
             SELECT transaction_events.id,transaction_events.user_id,transaction_events.created_at,transaction_events.balance,transaction_events.bonus_balance FROM (
         SELECT MAX(id) as id,user_id,MAX(created_at) as created_at from (SELECT * FROM transaction_events WHERE created_at <= '$this->from') as transaction_in_range GROUP BY user_id

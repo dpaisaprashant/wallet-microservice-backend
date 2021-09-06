@@ -462,24 +462,58 @@ Route::group(['prefix' => 'admin'], function () {
          */
         //header
         Route::match(['get', 'post'],'frontend/header', 'Frontend\HeaderController@index')->name('frontend.header')->middleware('permission:Frontend header view');
+        Route::get('frontend/multiple-headers','Frontend\HeaderController@MultipleHeadersIndex')->name('frontend.multipleHeader')->middleware('permission:Frontend header view');
+        Route::get('frontend/create/header','Frontend\HeaderController@create')->name('frontend.header.create')->middleware('permission:Frontend header create');
+        Route::post('frontend/create/header','Frontend\HeaderController@store')->name('frontend.header.create')->middleware('permission:Frontend header create');
+        Route::get('frontend/edit/header{id}','Frontend\HeaderController@edit')->name('frontend.header.edit')->middleware('permission:Frontend header update');
+        Route::post('frontend/edit/header{id}','Frontend\HeaderController@update')->name('frontend.header.edit')->middleware('permission:Frontend header update');
+        Route::post('frontend/delete/header','Frontend\HeaderController@delete')->name('frontend.header.delete')->middleware('permission:Frontend header delete');
+
+        // FAQ
+        //todo: create permission
+        Route::get('frontend/faq','Frontend\FaqController@index')->name('frontend.faq.index')->middleware('permission:Frontend faq view');
+        Route::match(['get', 'post'],'frontend/create/faq', 'Frontend\FaqController@create')->name('frontend.faq.create')->middleware('permission:Frontend faq create');
+        Route::match(['get', 'post'],'frontend/update/faq/{id}', 'Frontend\FaqController@update')->name('frontend.faq.update')->middleware('permission:Frontend faq update');
+        Route::post('frontend/delete/faq/','Frontend\FaqController@delete')->name('frontend.faq.delete')->middleware('permission:Frontend faq delete');
+
+        //NeWS
+        //todo: create permission
+        Route::get('frontend/news','Frontend\NewsController@index')->name('frontend.news.index')->middleware('permission:Frontend news view');
+        Route::match(['get', 'post'],'frontend/create/news', 'Frontend\NewsController@create')->name('frontend.news.create')->middleware('permission:Frontend news create');
+        Route::match(['get', 'post'],'frontend/update/news/{id}', 'Frontend\NewsController@update')->name('frontend.news.update')->middleware('permission:Frontend news update');
+        Route::post('frontend/delete/news/','Frontend\NewsController@delete')->name('frontend.news.delete')->middleware('permission:Frontend news delete');
+
+        //Solutions
+        //todo: create permission
+        Route::get('frontend/solutions','Frontend\SolutionController@index')->name('frontend.solution.index')->middleware('permission:Frontend solution view');
+        Route::match(['get', 'post'],'frontend/create/solution', 'Frontend\SolutionController@create')->name('frontend.solution.create')->middleware('permission:Frontend solution create');
+        Route::match(['get', 'post'],'frontend/update/solution/{id}', 'Frontend\SolutionController@update')->name('frontend.solution.update')->middleware('permission:Frontend solution update');
+        Route::post('frontend/delete/solution/','Frontend\SolutionController@delete')->name('frontend.solution.delete')->middleware('permission:Frontend solution delete');
+
+        //Partners
+        //todo: create permission
+        Route::get('frontend/partners','Frontend\PartnerController@index')->name('frontend.partner.index')->middleware('permission:Frontend partner view');
+        Route::match(['get', 'post'],'frontend/create/partner', 'Frontend\PartnerController@create')->name('frontend.partner.create')->middleware('permission:Frontend partner create');
+        Route::match(['get', 'post'],'frontend/update/partner/{id}', 'Frontend\PartnerController@update')->name('frontend.partner.update')->middleware('permission:Frontend partner update');
+        Route::post('frontend/delete/partner/','Frontend\PartnerController@delete')->name('frontend.partner.delete')->middleware('permission:Frontend partner delete');
 
         //services
         Route::get('frontend/services', 'Frontend\ServiceController@index')->name('frontend.service.index')->middleware('permission:Frontend service view');
-        Route::match(['get','post'],'frontend/service/create', 'Frontend\ServiceController@create')->name('frontend.service.create');
-        Route::match(['get','post'],'frontend/service/update/{id}', 'Frontend\ServiceController@update')->name('frontend.service.update');
-        Route::post('frontend/service/delete/', 'Frontend\ServiceController@delete')->name('frontend.service.delete');
+        Route::match(['get','post'],'frontend/service/create', 'Frontend\ServiceController@create')->name('frontend.service.create')->middleware('permission:Frontend service create');
+        Route::match(['get','post'],'frontend/service/update/{id}', 'Frontend\ServiceController@update')->name('frontend.service.update')->middleware('permission:Frontend service update');
+        Route::post('frontend/service/delete/', 'Frontend\ServiceController@delete')->name('frontend.service.delete')->middleware('permission:Frontend service delete');
 
         //abouts
         Route::get('frontend/abouts', 'Frontend\AboutController@index')->name('frontend.about.index')->middleware('permission:Frontend about view');
-        Route::match(['get','post'],'frontend/about/create', 'Frontend\AboutController@create')->name('frontend.about.create');
-        Route::match(['get','post'],'frontend/about/update/{id}', 'Frontend\AboutController@update')->name('frontend.about.update');
-        Route::post('frontend/about/delete/', 'Frontend\AboutController@delete')->name('frontend.about.delete');
+        Route::match(['get','post'],'frontend/about/create', 'Frontend\AboutController@create')->name('frontend.about.create')->middleware('permission:Frontend about create');
+        Route::match(['get','post'],'frontend/about/update/{id}', 'Frontend\AboutController@update')->name('frontend.about.update')->middleware('permission:Frontend about update');
+        Route::post('frontend/about/delete/', 'Frontend\AboutController@delete')->name('frontend.about.delete')->middleware('permission:Frontend about delete');
 
         //Process
         Route::get('frontend/processes', 'Frontend\ProcessController@index')->name('frontend.process.index')->middleware('permission:Frontend process view');
-        Route::match(['get','post'],'frontend/process/create', 'Frontend\ProcessController@create')->name('frontend.process.create');
-        Route::match(['get','post'],'frontend/process/update/{id}', 'Frontend\ProcessController@update')->name('frontend.process.update');
-        Route::post('frontend/process/delete/', 'Frontend\ProcessController@delete')->name('frontend.process.delete');
+        Route::match(['get','post'],'frontend/process/create', 'Frontend\ProcessController@create')->name('frontend.process.create')->middleware('permission:Frontend process create');
+        Route::match(['get','post'],'frontend/process/update/{id}', 'Frontend\ProcessController@update')->name('frontend.process.update')->middleware('permission:Frontend process update');
+        Route::post('frontend/process/delete/', 'Frontend\ProcessController@delete')->name('frontend.process.delete')->middleware('permission:Frontend process delete');
 
         //Banner
         Route::get('frontend/banner', 'Frontend\BannerController@index')->name('frontend.banner.index')->middleware('permission:Frontend banner view');

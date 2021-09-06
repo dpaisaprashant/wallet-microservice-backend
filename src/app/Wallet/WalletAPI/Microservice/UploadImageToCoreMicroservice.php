@@ -58,6 +58,7 @@ class UploadImageToCoreMicroservice extends BackendWalletAPIJSONAbstract
     public function processRequest()
     {
         $this->addParam('image',$this->image)
+            ->addParam('disk',$this->disk)
             ->addParam('upload_location',$this->upload_location)
             ->addParam('public_location',$this->public_location);
         $this->setBaseUrl(config('UploadFilesToCore.'."base_url"));

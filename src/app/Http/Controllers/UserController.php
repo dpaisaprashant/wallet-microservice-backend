@@ -22,6 +22,7 @@ use App\Models\UserReferralBonus;
 use App\Models\UserReferralLimit;
 use App\Models\UserType;
 use App\Traits\CollectionPaginate;
+use App\Traits\UploadImage;
 use App\Wallet\AuditTrail\AuditTrial;
 use App\Wallet\AuditTrail\Behaviors\BAll;
 use App\Wallet\AuditTrail\Behaviors\BLoginHistory;
@@ -38,6 +39,7 @@ class UserController extends Controller
 {
 
     use CollectionPaginate;
+    use UploadImage;
 
     public $admin_data;
 
@@ -191,23 +193,24 @@ class UserController extends Controller
 
     public function storeUserKyc(Request $request, $id)
     {
+
         $disk = "kyc_images";
         $kycRequest = $request->all();
 
-//        dd($kycRequest);
-        foreach ($kycRequest as $key => $value) {
-            if ($request->hasFile($key)) {
-                $encoded_image = base64_encode(file_get_contents($request->file($key)->path()));
-                $uploadImage = new UploadImageToCoreMicroservice($encoded_image, $disk);
-                $uploadResponse = $uploadImage->uploadImageToCore();
-                $decodedUploadResponse = json_decode($uploadResponse);
-                $image_file_name = $decodedUploadResponse->filename;
-                $kycRequest[$key] = $image_file_name;
-            }
-        }
+        $responseData = $this->uploadImageToCoreBase64($disk, $kycRequest, $request);
 
-        $userKyc = UserKYC::create($kycRequest);
-//        dd($userKyc);
+//        foreach ($kycRequest as $key => $value) {
+//            if ($request->hasFile($key)) {
+//                $encoded_image = base64_encode(file_get_contents($request->file($key)->path()));
+//                $uploadImage = new UploadImageToCoreMicroservice($encoded_image, $disk);
+//                $uploadResponse = $uploadImage->uploadImageToCore();
+//                $decodedUploadResponse = json_decode($uploadResponse);
+//                $image_file_name = $decodedUploadResponse->filename;
+//                $kycRequest[$key] = $image_file_name;
+//            }
+//        }
+
+        $userKyc = UserKYC::create($responseData);
         $user = User::with('kyc')->findOrFail($id);
         $userKyc->user_id = $id;
         $userKyc->status = 1;
@@ -252,23 +255,27 @@ class UserController extends Controller
         $kyc_before_change = json_encode($selectedUserKYC);
         $disk = "kyc_images";
         $kycRequest = $request->all();
-        $kycImageOnly = $request->allFiles();
-        foreach ($kycImageOnly as $key => $value) {
-            if ($request->hasFile($key)) {
-                $encoded_image = base64_encode(file_get_contents($request->file($key)->path()));
-                $uploadImage = new UploadImageToCoreMicroservice($encoded_image, $disk);
-                $uploadResponse = $uploadImage->uploadImageToCore();
-                $decodedUploadResponse = json_decode($uploadResponse);
-                $image_file_name = $decodedUploadResponse->filename;
-                $kycRequest[$key] = $image_file_name;
-            }
-            else{
-                $kycRequest[$key] = $selectedUserKYC->$key;
-            }
-        }
+        $responseData = $this->uploadImageToCoreBase64($disk, $kycRequest,$request); // this is more efficient that the commented out code below
+        //note: the below code works just fine but is tedious can be deleted, for now i have just commented it out
+//        $kycImageOnly = $request->allFiles();
+//        foreach ($kycImageOnly as $key => $value) {
+//            if ($request->hasFile($key)) {
+//                $encoded_image = base64_encode(file_get_contents($request->file($key)->path()));
+//                $uploadImage = new UploadImageToCoreMicroservice($encoded_image, $disk);
+//                $uploadResponse = $uploadImage->uploadImageToCore();
+//                $decodedUploadResponse = json_decode($uploadResponse);
+//                $image_file_name = $decodedUploadResponse->filename;
+//                $kycRequest[$key] = $image_file_name;
+//            }
+//            else{
+//                $kycRequest[$key] = $selectedUserKYC->$key;
+//            }
+//        }
+        //note: the above code works just fine but is tedious can be deleted, for now i have just commented it out
+
         $adminId = auth()->user()->id;
         $user_kyc_id = $selectedUserKYC->id;
-        $selectedUserKYC->update($kycRequest);
+        $selectedUserKYC->update($responseData);
         $status = $selectedUserKYC->save();
         $kyc_after_change = json_encode($selectedUserKYC);
         $user = User::with('kyc')->findOrFail($id);

@@ -21,6 +21,7 @@ class CreateFrontendProcessesTable extends Migration
                 $table->string('image')->nullable();
                 $table->text('description');
                 $table->integer('sequence');
+                $table->string('belongs_to');
                 $table->timestamps();
             });
         }

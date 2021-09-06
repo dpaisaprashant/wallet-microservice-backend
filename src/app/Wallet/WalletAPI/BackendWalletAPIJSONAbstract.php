@@ -131,7 +131,7 @@ abstract class BackendWalletAPIJSONAbstract
                     ],
                     [
                         'name' => "disk",
-                        "contents" => "kyc_images",
+                        "contents" => $requestJson['disk'],
                     ],
                 ]
             ]);

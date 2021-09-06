@@ -786,6 +786,9 @@ $url = url()->current();
                         @can('Frontend header view')
                             <li><a href="{{ route('frontend.header') }}">Headers</a></li>
                         @endcan
+                        @if(strtolower(config('app.'.'name')) == 'sajilopay')
+                            <li><a href="{{ route('frontend.multipleHeader') }}">Multiple Headers</a></li>
+                        @endif
 
                         @can('Frontend service view')
                             <li><a href="{{ route('frontend.service.index') }}">Services</a></li>
@@ -795,16 +798,44 @@ $url = url()->current();
                             <li><a href="{{ route('frontend.about.index') }}">Abouts</a></li>
                         @endcan
 
-                        @can('Frontend process view')
-                            <li><a href="{{ route('frontend.process.index') }}">Processes</a></li>
-                        @endcan
+                            @if(strtolower(config('app.'.'name')) == 'dpaisa')
+                                @can('Frontend process view')
+                                <li><a href="{{ route('frontend.process.index') }}">Processes</a></li>
+                                @endcan
+                            @endif
 
                         @can('Frontend banner view')
                             <li><a href="{{ route('frontend.banner.index') }}">Banners</a></li>
                         @endcan
-                        @can('Frontend contact view')
-                            <li><a href="{{ route('frontend.contact') }}">Contact</a></li>
-                        @endcan
+
+                            @if(strtolower(config('app.'.'name')) == 'dpaisa')
+                                @can('Frontend contact view')
+                                    <li><a href="{{ route('frontend.contact') }}">Contact</a></li>
+                                @endcan
+                            @endif
+
+                            @if(strtolower(config('app.'.'name')) == 'sajilopay' || strtolower(config('app.'.'name')) == 'icash' )
+                                @can('Frontend faq view')
+                                    <li><a href="{{route('frontend.faq.index')}}">FAQs</a></li>
+                                @endcan
+                            @endif
+
+                            @if(strtolower(config('app.'.'name')) == 'icash')
+                                @can('Frontend news view')
+                                <li><a href="{{route('frontend.news.index')}}">NEWS</a></li>
+                                @endcan
+                            @endif
+
+                            @if(strtolower(config('app.'.'name')) == 'sajilopay')
+                                @can('Frontend solution view')
+                                <li><a href="{{route('frontend.solution.index')}}">Solutions</a></li>
+                                @endcan
+                            @endif
+                            @if(strtolower(config('app.'.'name')) == 'sajilopay')
+                                @can('Frontend partner view')
+                                <li><a href="{{route('frontend.partner.index')}}">Partners</a></li>
+                                @endcan
+                            @endif
                     </ul>
                 </li>
             @endif

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Wallet\Microservice\Exceptions;
+namespace App\Wallet\WalletAPI\Exceptions;
 
 
 use App\Wallet\Traits\ApiResponder;

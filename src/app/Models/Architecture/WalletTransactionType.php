@@ -67,4 +67,8 @@ class WalletTransactionType extends Model
     {
         return $this->hasMany(WalletService::class);
     }
+
+    public function walletTransactionBonus(){
+        return $this->hasMany(WalletTransactionBonus::class);
+    }
 }

@@ -4,7 +4,7 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Create Wallet Transaction Type Cashback</h2>
+            <h2>Create Bonus Point</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -21,7 +21,7 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>Wallet Transaction Type</h5>
+                        <h5>Bonus Point</h5>
                     </div>
                     <div class="ibox-content">
                         <h3>
@@ -58,20 +58,20 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>Add new cashback</h5>
+                        <h5>Add new bonus point</h5>
                     </div>
                     <div class="ibox-content">
-                        <form method="post"
-                              action="{{ route('architecture.transaction.cashback.create', $walletTransactionType->id) }}"
+                        <form method="POST"
+                              action="{{ route('walletBonus.store', $walletTransactionType->id) }}"
                               enctype="multipart/form-data">
                             @csrf
-                            @if(count($availableTitles) > 0)
+                            @if(count($titleArray) > 0)
                                 <div class="form-group  row"><label class="col-sm-2 col-form-label">Title</label>
                                     <div class="col-sm-10">
                                         <select data-placeholder="Choose Title..." class="chosen-select" tabindex="2"
                                                 name="title" required>
                                             <option value="" selected disabled>-- Select Title --</option>
-                                            @foreach($availableTitles as $key => $title)
+                                            @foreach($titleArray as $key => $title)
                                                 <option value="{{ $title }}">{{ $title }}</option>
                                             @endforeach
                                         </select>
@@ -133,7 +133,7 @@
 
                             <div class="hr-line-dashed"></div>
                             <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Cashback Service (description)</label>
+                                <label class="col-sm-2 col-form-label">Bonus Point Service (description)</label>
                                 <div class="col-sm-10">
                                     <input name="description" type="text" class="form-control">
                                     <small>Empty for default</small>
@@ -141,11 +141,11 @@
                             </div>
                             <div class="hr-line-dashed"></div>
 
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Cashback Type</label>
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Bonus Point Type</label>
                                 <div class="col-sm-10">
-                                    <select id="selectCashbackType" data-placeholder="Choose Cashback Type..."
-                                            class="chosen-select" tabindex="2" name="cashback_type" required>
-                                        <option value="" selected disabled>-- Select Cashback Type --</option>
+                                    <select id="selectCashbackType" data-placeholder="Choose Bonus Point Type..."
+                                            class="chosen-select" tabindex="2" name="bonus_point_type" required>
+                                        <option value="" selected disabled>-- Select Bonus Point Type --</option>
                                         <option value="FLAT">FLAT</option>
                                         <option value="PERCENTAGE">PERCENTAGE</option>
                                     </select>
@@ -153,9 +153,9 @@
                             </div>
 
                             <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Cashback Value</label>
+                                <label class="col-sm-2 col-form-label">Bonus Point Value</label>
                                 <div class="col-sm-10">
-                                    <input name="cashback_value" type="number" min="0" step='0.1' class="form-control"
+                                    <input name="bonus_point_value" type="number" min="0" step='0.1' class="form-control"
                                            required>
                                     <small>Flat amount in paisa</small>
                                 </div>
@@ -222,8 +222,9 @@
 
                 },
                 error: function (resp) {
-                    console.log(resp);
                     alert('error');
+                    console.log(resp);
+                    alert(resp);
 
                     $(".stats").fadeIn(300);
                     $("#overlay").fadeOut(300);

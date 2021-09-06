@@ -433,6 +433,27 @@ $url = url()->current();
                 </li>
             @endif
 
+            @if(auth()->user()->hasAnyPermission(['Create non real time bank payment', 'View non real time bank payment']))
+                <li @if($url == route('nonRealTime.index') || $url == route('nonRealTime.view')) class="active" @endif>
+                    <a href="#"><i class="fa fa-recycle"></i> <span class="nav-label">Non real time bank payment</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        @can('Create non real time bank payment')
+                            <li><a href="{{ route('nonRealTime.index') }}"><span
+                                        class="nav-label">Create Non Real Time Bank Payment</span></a></li>
+                        @endcan
+
+                        @can('View non real time bank payment')
+                            <li><a href="{{ route('nonRealTime.view') }}"><span
+                                        class="nav-label">View Non Real Time Bank Payment</span></a></li>
+                        @endcan
+
+                    </ul>
+                </li>
+            @endif
+
+
+
             {{--@if(auth()->user()->hasAnyPermission(['Clearance npay view', 'Clearance paypoint view']))
                 <li @if($url == route('clearance.npayView') || $url == route('clearance.paypointView')) class="active" @endif>
                     <a href="#"><i class="fa fa-handshake-o"></i> <span class="nav-label">View Clearance</span><span
@@ -572,7 +593,8 @@ $url = url()->current();
                         @endcan
                         @can('View whitelisted ip')
                             <li @if($url == route('whitelistedIP.view')) class="active" @endif>
-                                <a href="{{ route('whitelistedIP.view') }}"><i class="fa fa-check-square"></i> Whitelist IP</a>
+                                <a href="{{ route('whitelistedIP.view') }}"><i class="fa fa-check-square"></i> Whitelist
+                                    IP</a>
                             </li>
                         @endcan
                     </ul>

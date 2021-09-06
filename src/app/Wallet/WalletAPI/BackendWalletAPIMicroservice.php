@@ -26,6 +26,10 @@ class BackendWalletAPIMicroservice extends BackendWalletAPIJSONAbstract
     private $special3;
     private $special4;
     private $status;
+
+    private $amount;
+    private $accountNumber;
+    private $accountName;
     private $jsonRequest = [];
     private $jsonResponse = [];
     private $requestParam = [];
@@ -45,6 +49,9 @@ class BackendWalletAPIMicroservice extends BackendWalletAPIJSONAbstract
             ->setJsonRequest($request->all());
 //            ->setRequestParam($requestParamArr['cipsBatchDetail']['batchId']);
         $this->requestId = TransactionIdGenerator::generate(19);
+    }
+    public function setBankId($bankId){
+
     }
 
     public function getRequestId()
@@ -162,12 +169,26 @@ class BackendWalletAPIMicroservice extends BackendWalletAPIJSONAbstract
 
         $this->setBaseUrl(config('microservices.' . $this->microservice));
         $requestInfo = $this->apiParams;
+        Log::info('Request info include the following data');
+        if(isset($requestInfo['bank_id'])){
+            $requestInfo['request_param'] = [
+                'bank_id' => $requestInfo['bank_id'],
+                'bank_name' => $requestInfo['bank_name'],
+                'branch_id' => $requestInfo['branch_id'],
+                'branch_name' => $requestInfo['branch_name'],
+                'amount' => $requestInfo['amount'],
+                'account_number' => $requestInfo['account_number'],
+                'account_name' => $requestInfo['account_name'],
+            ];
+        }
+        Log::info($requestInfo);
         $requestInfo['request_param'] = json_encode($requestInfo['request_param']);
         $data = array_merge($requestInfo, [
 //            'user_id' => auth()->user()->id,
             'url' => $this->url,
             'json_request' => json_encode($this->jsonRequest),
         ]);
+       /* dd($requestInfo);*/
         unset($data['reference'], $data['linked_ref_id']);
         return $data;
     }

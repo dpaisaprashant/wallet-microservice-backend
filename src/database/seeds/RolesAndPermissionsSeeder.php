@@ -379,6 +379,11 @@ class RolesAndPermissionsSeeder extends Seeder
             'Run seeder',
 
             'View nchl aggregated payment',
+
+            //Non Real Time Bank Payment
+            'Create non real time bank payment',
+            'View non real time bank payment',
+
             ];
 
         //get users having all permissions

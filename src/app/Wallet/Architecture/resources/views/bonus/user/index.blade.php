@@ -70,9 +70,9 @@
                                     <th>User</th>
                                     <th>Slab From</th>
                                     <th>Slab To</th>
-                                    <th>Cashback Service</th>
-                                    <th>Cashback Type</th>
-                                    <th>Cashback Value</th>
+                                    <th>Bonus Service</th>
+                                    <th>Bonus Type</th>
+                                    <th>Bonus Value</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -109,7 +109,7 @@
 
                                         <td>
                                             @if($bonus->point_type == 'FLAT')
-                                                Rs. {{ $bonus->point_value / 100 }}
+                                                Rs. {{ $bonus->point_value }}
                                             @else
                                                 {{ $bonus->point_value }}
                                             @endif

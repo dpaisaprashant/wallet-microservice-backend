@@ -15,6 +15,8 @@ class PaypointApiValidationRepository
 
     public function getDisputedTransactions(Request $request, PayPointRepository $repository)
     {
+
+
         $amount_mismatches[] = null;
         $wallet_success_mismatches = array();
         $paypoint_success_mismatches[] = null;
@@ -23,15 +25,18 @@ class PaypointApiValidationRepository
 
         if (!empty($_GET['from'])) {
             $from_convert = strtotime($_GET['from']);
-            $this->from = date('Y-m-d\TH:i:s', $from_convert);
+            $this->from = date('Y-m-d', $from_convert);
+            $convertedFrom =date('Y-m-d\TH:i:s', $from_convert);
+
         }
         if (!empty($_GET['to'])) {
             $to_convert = strtotime($_GET['to']);
-            $this->to = date('Y-m-d\TH:i:s', $to_convert);
+            $this->to = date('Y-m-d', $to_convert);
+            $convertedTo=date('Y-m-d\TH:i:s', $from_convert);
         }
-
         if (!empty($_GET['from']) && !empty($_GET['to'])) {
             $transactions = $repository->latestTransactionsUnpaginated()->whereBetween('created_at', [$this->from, $this->to])->get();
+
         } else {
             $transactions = $repository->latestTransactionsUnpaginated()->whereBetween('created_at', [Carbon::now()->subDays(7)->format('Y-m-d'), Carbon::now()->format('Y-m-d')])->get();
         }
@@ -42,9 +47,10 @@ class PaypointApiValidationRepository
         foreach ($transactions as $transaction) {
 
             if (!empty($_GET['from']) && !empty($_GET['to'])) {
-                $paypointAPI = $paypointMicroservice->getPaypointAPIByDate($request, $this->from, $this->to);
+                $paypointAPI = $paypointMicroservice->getPaypointAPIByDate($request, $convertedFrom, $convertedTo);
+
             } else {
-                $paypointAPI = $paypointMicroservice->getPaypointAPIByDate($request, Carbon::now()->subDays(7)->format('Y-m-d'), Carbon::now()->format('Y-m-d'));
+                $paypointAPI = $paypointMicroservice->getPaypointAPIByDate($request, Carbon::now()->subDays(7)->format('Y-m-d\TH:i:s'), Carbon::now()->format('Y-m-d\TH:i:s'));
             }
 
             $paypointAPIs[] = $paypointAPI;

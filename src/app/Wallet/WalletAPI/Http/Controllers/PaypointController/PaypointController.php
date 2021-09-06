@@ -28,7 +28,6 @@ class PaypointController extends Controller
     {
         $repository = new PaypointApiValidationRepository();
         $disputedTransactions = $repository->getDisputedTransactions($request, $repo);
-
         return view('WalletAPI::PaypointAPI/viewWalletAPICompare', compact('disputedTransactions'));
 
     }

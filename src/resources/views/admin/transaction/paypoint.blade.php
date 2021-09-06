@@ -258,6 +258,7 @@
                                     </thead>
                                     <tbody>
                                     @foreach($transactions as $transaction)
+
                                         <tr class="gradeC">
                                             <td>{{ $loop->index + ($transactions->perPage() * ($transactions->currentPage() - 1)) + 1 }}</td>
                                             <td>
@@ -314,6 +315,7 @@
                                             </td>
 
                                             <td>
+
                                                 <form
                                                     action="{{ route('paypointTransferApi.report', $transaction->refStan) }}"
                                                     method="post">

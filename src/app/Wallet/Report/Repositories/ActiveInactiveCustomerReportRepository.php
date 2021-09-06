@@ -29,7 +29,7 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
         parent::__construct($request);
         $this->from = date('Y-m-d', strtotime(str_replace(',', ' ', $request->select_date)));
         $this->to = date('Y-m-d', strtotime(str_replace(',', ' ', $request->to_transaction_event)));
-        $this->sixMonthBeforeFromDate = Carbon::parse($this->from)->subMonths(6)->toDateString();
+        $this->sixMonthBeforeFromDate = Carbon::parse($this->from)->subMonths(6)->endOfDay()->toDateString();
         $this->twelveMonthBeforeFromDate = Carbon::parse($this->from)->subMonths(12)->toDateString();
     }
 
@@ -37,17 +37,17 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
     {
 
         $activeUsers = \DB::connection('dpaisa')->select("SELECT * FROM (
-            SELECT transaction_events.* FROM (
+            SELECT transaction_events.id,transaction_events.user_id,transaction_events.created_at,transaction_events.balance,transaction_events.bonus_balance FROM (
         SELECT MAX(id) as id,user_id,MAX(created_at) as created_at from (SELECT * FROM transaction_events WHERE created_at <= '$this->from') as transaction_in_range GROUP BY user_id
         ) AS latest_transaction
         JOIN transaction_events ON transaction_events.id = latest_transaction.id
-        WHERE latest_transaction.created_at BETWEEN '$this->sixMonthBeforeFromDate' AND '$this->from'
+        WHERE latest_transaction.created_at > '$this->sixMonthBeforeFromDate' AND latest_transaction.created_at <='$this->from'
 	) as latest_transaction_in_timeperiod
     RIGHT JOIN users
     ON users.id = latest_transaction_in_timeperiod.user_id
     WHERE (
         (
-        (users.phone_verified_at BETWEEN '$this->sixMonthBeforeFromDate' AND '$this->from')
+        (users.phone_verified_at > '$this->sixMonthBeforeFromDate' AND users.phone_verified_at <= '$this->from')
                 AND
             NOT EXISTS(SELECT transaction_events.user_id,transaction_events.created_at
     FROM transaction_events WHERE users.id = transaction_events.user_id HAVING transaction_events.created_at <= '$this->from'
@@ -62,17 +62,17 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
     private function inactiveFor6to12MonthsCustomerBuilder()
     {
         $inactiveFor6to12MonthsUsers = \DB::connection('dpaisa')->select("SELECT * FROM (
-            SELECT transaction_events.* FROM (
+            SELECT transaction_events.id,transaction_events.user_id,transaction_events.created_at,transaction_events.balance,transaction_events.bonus_balance FROM (
         SELECT MAX(id) as id,user_id,MAX(created_at) as created_at from (SELECT * FROM transaction_events WHERE created_at <= '$this->from') as transaction_in_range GROUP BY user_id
         ) AS latest_transaction
         JOIN transaction_events ON transaction_events.id = latest_transaction.id
-        WHERE latest_transaction.created_at BETWEEN '$this->twelveMonthBeforeFromDate' AND '$this->sixMonthBeforeFromDate'
+        WHERE latest_transaction.created_at > '$this->twelveMonthBeforeFromDate' AND latest_transaction.created_at <='$this->sixMonthBeforeFromDate'
 	) as latest_transaction_in_timeperiod
     RIGHT JOIN users
     ON users.id = latest_transaction_in_timeperiod.user_id
     WHERE (
         (
-        (users.phone_verified_at BETWEEN '$this->twelveMonthBeforeFromDate' AND '$this->sixMonthBeforeFromDate')
+        (users.phone_verified_at > '$this->twelveMonthBeforeFromDate' AND users.phone_verified_at <= '$this->sixMonthBeforeFromDate')
                 AND
             NOT EXISTS(SELECT transaction_events.user_id,transaction_events.created_at
     FROM transaction_events WHERE users.id = transaction_events.user_id HAVING transaction_events.created_at <= '$this->from'
@@ -87,7 +87,7 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
     {
 
         $inactiveForMoreThan12MonthsUsers = \DB::connection('dpaisa')->select("SELECT * FROM (
-            SELECT transaction_events.* FROM (
+            SELECT transaction_events.id,transaction_events.user_id,transaction_events.created_at,transaction_events.balance,transaction_events.bonus_balance FROM (
         SELECT MAX(id) as id,user_id,MAX(created_at) as created_at from (SELECT * FROM transaction_events WHERE created_at <= '$this->from') as transaction_in_range GROUP BY user_id
         ) AS latest_transaction
         JOIN transaction_events ON transaction_events.id = latest_transaction.id

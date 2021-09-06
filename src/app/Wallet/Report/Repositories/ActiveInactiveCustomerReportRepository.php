@@ -29,7 +29,7 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
         parent::__construct($request);
         $this->from = date('Y-m-d', strtotime(str_replace(',', ' ', $request->select_date)));
         $this->to = date('Y-m-d', strtotime(str_replace(',', ' ', $request->to_transaction_event)));
-        $this->sixMonthBeforeFromDate = Carbon::parse($this->from)->subMonths(6)->endOfDay()->toDateString();
+        $this->sixMonthBeforeFromDate = Carbon::parse($this->from)->subMonths(6)->toDateString();
         $this->twelveMonthBeforeFromDate = Carbon::parse($this->from)->subMonths(12)->toDateString();
     }
 

@@ -70,8 +70,8 @@
                     <tr>
                         <td>
                             <strong>
-                                <button type="button" class="btn btn-warning m-r-sm">12</button>
-                            </strong> D-Paisa Points
+                                <button type="button" class="btn btn-warning m-r-sm">{{ $userBonus }}</button>
+                            </strong> Bonus Points
                         </td>
                         <td>
                             @if(empty($user->kyc))

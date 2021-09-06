@@ -89,7 +89,7 @@
                 @if(!empty($_GET['select_date']))
                     <div class="ibox ">
                         <div class="ibox-title">
-                            <h5>Active User report from {{ \Carbon\Carbon::parse($_GET['select_date'])->subMonths(6)->format('Y-m-d') . ' to ' . $_GET['select_date'] }}</h5>
+                            <h5>Active User report from {{ \Carbon\Carbon::parse($_GET['select_date'])->subMonths(6)->format('d F, Y') . ' to ' . $_GET['select_date'] }}</h5>
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">

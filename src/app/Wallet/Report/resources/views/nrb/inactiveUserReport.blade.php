@@ -2,7 +2,7 @@
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Active Inactive User Report</h2>
+            <h2>Inactive User Report</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -13,7 +13,7 @@
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Inactive User</strong>
+                    <strong>Inactive User Report</strong>
                 </li>
             </ol>
         </div>
@@ -90,7 +90,7 @@
                 @if(!empty($_GET['select_date']))
                     <div class="ibox ">
                         <div class="ibox-title">
-                            <h5>Inactive User report from {{ \Carbon\Carbon::parse($_GET['select_date'])->subMonths(6)->format('Y-m-d') . ' to ' . $_GET['select_date'] }}</h5>
+                            <h5>Inactive User report from {{ \Carbon\Carbon::parse($_GET['select_date'])->subMonths(6)->format('d F, Y') . ' to ' . $_GET['select_date'] }}</h5>
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">

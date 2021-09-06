@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\UserKYC;
 use App\Models\UserLoginHistory;
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Filters\User\UserFilters;
@@ -34,89 +35,98 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
 
     private function activeCustomerBuilder()
     {
-        return User::with('userTransactionEvents')->where(function ($q) {
-            return $q->whereHas('userTransactionEvents', function ($query) {
-                return $query->whereBetween('created_at', [$this->sixMonthBeforeFromDate, Carbon::parse($this->from)]);
-            })->orWhereBetween('phone_verified_at', [$this->sixMonthBeforeFromDate, Carbon::parse($this->from)]);
-        });
+
+        $activeUsers = \DB::connection('dpaisa')->select("SELECT * FROM (
+            SELECT transaction_events.* FROM (
+        SELECT MAX(id) as id,user_id,MAX(created_at) as created_at from (SELECT * FROM transaction_events WHERE created_at <= '$this->from') as transaction_in_range GROUP BY user_id
+        ) AS latest_transaction
+        JOIN transaction_events ON transaction_events.id = latest_transaction.id
+        WHERE latest_transaction.created_at BETWEEN '$this->sixMonthBeforeFromDate' AND '$this->from'
+	) as latest_transaction_in_timeperiod
+    RIGHT JOIN users
+    ON users.id = latest_transaction_in_timeperiod.user_id
+    WHERE (
+        (
+        (users.phone_verified_at BETWEEN '$this->sixMonthBeforeFromDate' AND '$this->from')
+                AND
+            NOT EXISTS(SELECT transaction_events.user_id,transaction_events.created_at
+    FROM transaction_events WHERE users.id = transaction_events.user_id HAVING transaction_events.created_at <= '$this->from'
+        ))
+            OR (latest_transaction_in_timeperiod.id IS NOT NULL)
+    	);");
+
+        return $activeUsers;
+
     }
 
     private function inactiveFor6to12MonthsCustomerBuilder()
     {
+        $inactiveFor6to12MonthsUsers = \DB::connection('dpaisa')->select("SELECT * FROM (
+            SELECT transaction_events.* FROM (
+        SELECT MAX(id) as id,user_id,MAX(created_at) as created_at from (SELECT * FROM transaction_events WHERE created_at <= '$this->from') as transaction_in_range GROUP BY user_id
+        ) AS latest_transaction
+        JOIN transaction_events ON transaction_events.id = latest_transaction.id
+        WHERE latest_transaction.created_at BETWEEN '$this->twelveMonthBeforeFromDate' AND '$this->sixMonthBeforeFromDate'
+	) as latest_transaction_in_timeperiod
+    RIGHT JOIN users
+    ON users.id = latest_transaction_in_timeperiod.user_id
+    WHERE (
+        (
+        (users.phone_verified_at BETWEEN '$this->twelveMonthBeforeFromDate' AND '$this->sixMonthBeforeFromDate')
+                AND
+            NOT EXISTS(SELECT transaction_events.user_id,transaction_events.created_at
+    FROM transaction_events WHERE users.id = transaction_events.user_id HAVING transaction_events.created_at <= '$this->from'
+        ))
+            OR (latest_transaction_in_timeperiod.id IS NOT NULL)
+    	);");
 
-        $usersWithLatestTransaction = \DB::connection('dpaisa')->select("SELECT * FROM (SELECT transaction_events.* FROM (
-        SELECT MAX(id) as id,user_id,MAX(created_at) AS created_at
-                    FROM transaction_events GROUP BY user_id HAVING created_at <= '$this->from'
-                ) AS latest_transaction
-                 JOIN transaction_events ON transaction_events.id = latest_transaction.id
-                WHERE latest_transaction.created_at BETWEEN '$this->twelveMonthBeforeFromDate' AND '$this->sixMonthBeforeFromDate') as latest_transaction_in_timeperiod
-                RIGHT JOIN users
-                ON users.id = latest_transaction_in_timeperiod.user_id
-                WHERE (((users.phone_verified_at BETWEEN '$this->twelveMonthBeforeFromDate' AND '$this->sixMonthBeforeFromDate') AND latest_transaction_in_timeperiod.id IS NULL)
-                OR (latest_transaction_in_timeperiod.id IS NOT NULL));");
-
-
-//        SELECT * FROM (SELECT transaction_events.* FROM (
-//        SELECT MAX(id) as id,user_id,MAX(created_at) AS created_at
-//                    FROM transaction_events GROUP BY user_id HAVING created_at <= '2021-09-03'
-//                ) AS latest_transaction
-//                 JOIN transaction_events ON transaction_events.id = latest_transaction.id
-//                WHERE latest_transaction.created_at BETWEEN '2021-01-01' AND '2021-06-01') as latest_transaction_in_timeperiod
-//                INNER JOIN users
-//                ON users.id = latest_transaction_in_timeperiod.user_id;
-
-            return $usersWithLatestTransaction;
+        return $inactiveFor6to12MonthsUsers;
     }
 
     private function inactiveForMoreThan12MonthsCustomerBuilder()
     {
 
-        $usersWithLatestTransaction = \DB::connection('dpaisa')->select("SELECT * FROM (SELECT transaction_events.* FROM (
-        SELECT MAX(id) as id,user_id,MAX(created_at) AS created_at
-                    FROM transaction_events GROUP BY user_id HAVING created_at <= '$this->from'
-                ) AS latest_transaction
-                 JOIN transaction_events ON transaction_events.id = latest_transaction.id
-                WHERE latest_transaction.created_at <= '$this->twelveMonthBeforeFromDate') as latest_transaction_in_timeperiod
-                RIGHT JOIN users
-                ON users.id = latest_transaction_in_timeperiod.user_id
-                WHERE (((users.phone_verified_at <= '$this->twelveMonthBeforeFromDate') AND latest_transaction_in_timeperiod.id IS NULL)
-                OR (latest_transaction_in_timeperiod.id IS NOT NULL));");
+        $inactiveForMoreThan12MonthsUsers = \DB::connection('dpaisa')->select("SELECT * FROM (
+            SELECT transaction_events.* FROM (
+        SELECT MAX(id) as id,user_id,MAX(created_at) as created_at from (SELECT * FROM transaction_events WHERE created_at <= '$this->from') as transaction_in_range GROUP BY user_id
+        ) AS latest_transaction
+        JOIN transaction_events ON transaction_events.id = latest_transaction.id
+        WHERE latest_transaction.created_at <= '$this->twelveMonthBeforeFromDate'
+	) as latest_transaction_in_timeperiod
+    RIGHT JOIN users
+    ON users.id = latest_transaction_in_timeperiod.user_id
+    WHERE (
+        (
+        (users.phone_verified_at <= '$this->twelveMonthBeforeFromDate')
+                AND
+            NOT EXISTS(SELECT transaction_events.user_id,transaction_events.created_at
+    FROM transaction_events WHERE users.id = transaction_events.user_id HAVING transaction_events.created_at <= '$this->from'
+        ))
+            OR (latest_transaction_in_timeperiod.id IS NOT NULL)
+    	);");
 
-        return $usersWithLatestTransaction;
+        return $inactiveForMoreThan12MonthsUsers;
     }
 
-    public function latestUserTransactionEvent($users)
-    {
-        $latestUserTransactionEvents = $users->with(['userTransactionEvents' => function ($query) {
-            return $query->whereDate('created_at', '<=', Carbon::parse($this->from))->orderBy('created_at', 'desc');
-        }])->whereHas('userTransactionEvents', function ($q) {
-            return $q->whereDate('created_at', '<=', Carbon::parse($this->from));
-        })->get();
-        return $latestUserTransactionEvents;
-    }
 
     //ACTIVE
     public function activeMaleUserCount()
     {
-        return $this->activeCustomerBuilder()
-            ->where('gender', 'm')
-            ->get()
-            ->count();
+        $total = 0;
+        foreach ($this->activeCustomerBuilder() as $user) {
+            if ($user->gender == 'm') {
+                $total++;
+            }
+        }
+        return $total;
     }
 
     public function activeMaleUserBalance()
     {
-        $users = $this->activeCustomerBuilder()
-            ->where('gender', 'm');
-
         $totalBalance = 0;
-        if (!empty($users) || count($users->get()) != 0) {
-            $latestUserTransactionEvents = $this->latestUserTransactionEvent($users);
-
-            foreach ($latestUserTransactionEvents as $latestUserTransactionEvent) {
-                if (!empty($latestUserTransactionEvent)) {
-                    $totalBalance += $latestUserTransactionEvent->userTransactionEvents[0]->balance + $latestUserTransactionEvent->userTransactionEvents[0]->bonus_balance;
-                }
+        foreach ($this->activeCustomerBuilder() as $user) {
+            if ($user->gender == 'm') {
+                $totalBalance += $user->balance + $user->bonus_balance;
             }
         }
         return $totalBalance;
@@ -124,25 +134,22 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
 
     public function activeFemaleUserCount()
     {
-        return $this->activeCustomerBuilder()
-            ->where('gender', '=', 'f')
-            ->get()
-            ->count();
+        $total = 0;
+        foreach ($this->activeCustomerBuilder() as $user) {
+            if ($user->gender == 'f') {
+                $total++;
+            }
+        }
+        return $total;
+
     }
 
     public function activeFemaleUserBalance()
     {
-        $users = $this->activeCustomerBuilder()
-            ->where('gender', 'f');
-
         $totalBalance = 0;
-        if (!empty($users) || count($users->get()) != 0) {
-            $latestUserTransactionEvents = $this->latestUserTransactionEvent($users);
-
-            foreach ($latestUserTransactionEvents as $latestUserTransactionEvent) {
-                if (!empty($latestUserTransactionEvent)) {
-                    $totalBalance += $latestUserTransactionEvent->userTransactionEvents[0]->balance + $latestUserTransactionEvent->userTransactionEvents[0]->bonus_balance;
-                }
+        foreach ($this->activeCustomerBuilder() as $user) {
+            if ($user->gender == 'f') {
+                $totalBalance += $user->balance + $user->bonus_balance;
             }
         }
         return $totalBalance;
@@ -150,24 +157,23 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
 
     public function activeOtherUserCount()
     {
-        return $this->activeCustomerBuilder()
-            ->where('gender', 'o')
-            ->get()
-            ->count();
+        $total = 0;
+        foreach ($this->activeCustomerBuilder() as $user) {
+            if ($user->gender == 'o') {
+                $total++;
+            }
+        }
+        return $total;
+
     }
 
     public function activeOtherUserBalance()
     {
-        $users = $this->activeCustomerBuilder()
-            ->where('gender', 'o');
 
         $totalBalance = 0;
-        if (!empty($users) || count($users->get()) != 0) {
-            $latestUserTransactionEvents = $this->latestUserTransactionEvent($users);
-            foreach ($latestUserTransactionEvents as $latestUserTransactionEvent) {
-                if (!empty($latestUserTransactionEvent)) {
-                    $totalBalance += $latestUserTransactionEvent->userTransactionEvents[0]->balance + $latestUserTransactionEvent->userTransactionEvents[0]->bonus_balance;
-                }
+        foreach ($this->activeCustomerBuilder() as $user) {
+            if ($user->gender == 'o') {
+                $totalBalance += $user->balance + $user->bonus_balance;
             }
         }
 
@@ -177,25 +183,25 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
 
     public function activeUnknownUserCount()
     {
-        return $this->activeCustomerBuilder()
-            ->where('gender', '=', null)
-            ->get()
-            ->count();
+
+        $total = 0;
+        foreach ($this->activeCustomerBuilder() as $user) {
+            if ($user->gender == null) {
+                $total++;
+            }
+        }
+        return $total;
+
+
     }
 
     public function activeUnknownUserBalance()
     {
-        $users = $this->activeCustomerBuilder()
-            ->where('gender', '=', null);
 
         $totalBalance = 0;
-        if (!empty($users) || count($users->get()) != 0) {
-            $latestUserTransactionEvents = $this->latestUserTransactionEvent($users);
-
-            foreach ($latestUserTransactionEvents as $latestUserTransactionEvent) {
-                if (!empty($latestUserTransactionEvent)) {
-                    $totalBalance += $latestUserTransactionEvent->userTransactionEvents[0]->balance + $latestUserTransactionEvent->userTransactionEvents[0]->bonus_balance;
-                }
+        foreach ($this->activeCustomerBuilder() as $user) {
+            if ($user->gender == null) {
+                $totalBalance += $user->balance + $user->bonus_balance;
             }
         }
 
@@ -224,7 +230,7 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
         $totalBalance = 0;
         if (!empty($users)) {
             foreach ($users as $user) {
-                    $totalBalance += $user->balance + $user->bonus_balance;
+                $totalBalance += $user->balance + $user->bonus_balance;
             }
         }
         return $totalBalance;

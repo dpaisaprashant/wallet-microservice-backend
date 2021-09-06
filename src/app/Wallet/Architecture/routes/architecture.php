@@ -12,6 +12,7 @@ use App\Wallet\Architecture\Http\Controllers\WalletTypeTransactionController;
 use Illuminate\Support\Facades\Route;
 use App\Wallet\Architecture\Http\Controllers\WalletPermissionTransactionTypeController;
 use App\Wallet\Architecture\Http\Controllers\AgentTypeHierarchyCashbackController;
+use App\Wallet\Architecture\Http\Controllers\WalletBonusController;
 
 Route::group(['prefix' => 'admin/architecture', 'middleware' => ['web','auth']], function () {
     Route::get('/vendor-transactions/{vendorName}', [WalletTransactionTypeController::class, 'vendorTransactions'])->name('architecture.vendor.transaction')->middleware('permission:Architecture vendor transaction');
@@ -82,9 +83,13 @@ Route::group(['prefix' => 'admin/architecture', 'middleware' => ['web','auth']],
     Route::post('/delete-wallet-service/{id}',[WalletServiceController::class,'delete'])->name('wallet.service.delete')->middleware('permission:Delete wallet service');//delete wallet service
 
 
-    //Agent Tyoe Hierarchy Cashback
+    //Agent Type Hierarchy Cashback
     Route::get('/view-agent-type-hierarchy-cashback',[AgentTypeHierarchyCashbackController::class,'index'])->name('view.agent.type.hierarchy.cashback');
     Route::post('/update-agent-type-hierarchy-cashback',[AgentTypeHierarchyCashbackController::class,'update'])->name('update.agent.type.hierarchy.cashback');
 
-
+    //Bonus
+    Route::get('/wallet-bonus-transaction/{walletTransaction}',[WalletBonusController::class,'index'])->name('walletBonus.index');
+    Route::get('/wallet-bonus-transaction/{walletTransaction}/create',[WalletBonusController::class,'create'])->name('walletBonus.create');
+    Route::post('/wallet-bonus-transaction/{walletTransaction}/store',[WalletBonusController::class,'store'])->name('walletBonus.store');
+    Route::post('/wallet-bonus-transaction/{walletTransaction}/delete',[WalletBonusController::class,'delete'])->name('walletBonus.delete');
 });

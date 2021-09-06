@@ -95,49 +95,49 @@
 
 
                                     <div class="row">
-                                        <div class="col-md-6 mt-3">
-                                            <label for="ionrange_balance">Amount</label>
-                                            {{--                                            <input type="text" name="amount" class="ionrange_amount">--}}
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="input-group date">
+                                        <div class="col-md-3">
+                                            <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-dollar"></i>
                                                 </span>
-                                                        <input type="number" class="form-control"
-                                                               placeholder="From Amount" name="from_amount"
-                                                               autocomplete="off"
-                                                               value="{{ !empty($_GET['from_amount']) ? $_GET['from_amount'] : '' }}">
-                                                    </div>
-                                                </div>
+                                                <input type="number" class="form-control"
+                                                       placeholder="From Amount" name="from_amount"
+                                                       autocomplete="off"
+                                                       value="{{ !empty($_GET['from_amount']) ? $_GET['from_amount'] : '' }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group date">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-dollar"></i>
+                                                </span>
+                                                <input type="number" class="form-control"
+                                                       placeholder="To Amount" name="to_amount"
+                                                       autocomplete="off"
+                                                       value="{{ !empty($_GET['to_amount']) ? $_GET['to_amount'] : '' }}">
+                                            </div>
+                                        </div>
 
-                                                <div class="col-md-6">
-                                                    <div class="input-group date">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-dollar"></i>
-                                                </span>
-                                                        <input type="number" class="form-control"
-                                                               placeholder="To Amount" name="to_amount"
-                                                               autocomplete="off"
-                                                               value="{{ !empty($_GET['to_amount']) ? $_GET['to_amount'] : '' }}">
-                                                    </div>
-                                                </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <input type="number" class="form-control"
+                                                       placeholder="Reference Number" name="reference_no"
+                                                       autocomplete="off"
+                                                       value="{{ !empty($_GET['reference_no']) ? $_GET['reference_no'] : '' }}">
                                             </div>
                                         </div>
-                                        <div class="col-md-6 mt-3">
-                                            <label for="ionrange_balance">Reference Number</label>
-                                            {{--                                            <input type="text" name="amount" class="ionrange_amount">--}}
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="input-group date">
-                                                        <input type="number" class="form-control"
-                                                               placeholder="Reference Number" name="reference_no"
-                                                               autocomplete="off"
-                                                               value="{{ !empty($_GET['reference_no']) ? $_GET['reference_no'] : '' }}">
-                                                    </div>
-                                                </div>
+
+
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <input type="number" class="form-control"
+                                                       placeholder="Account" name="account"
+                                                       autocomplete="off"
+                                                       value="{{ !empty($_GET['account']) ? $_GET['account'] : '' }}">
                                             </div>
                                         </div>
+
+
                                     </div>
                                     <br>
                                     <div>
@@ -189,6 +189,7 @@
                                     </thead>
                                     <tbody>
                                     @foreach($khaltiTransactions as $khaltiTransaction)
+
                                         <tr>
                                             <td>{{ $loop->index + ($khaltiTransactions->perPage() * ($khaltiTransactions->currentPage() - 1)) + 1 }}</td>
                                             <td>{{ $khaltiTransaction->account }}</td>
@@ -197,7 +198,13 @@
                                                 {{$khaltiTransaction->amount}}
 
                                             </td>
-                                            <td> <a @can('User profile') href="{{route('user.profile', optional($khaltiTransaction->user)->id)}}" @endcan>{{ $khaltiTransaction->user->mobile_no }}</a></td>
+                                            <td>
+                                                @if(optional(optional($khaltiTransaction->preTransaction)->user)->id)
+                                                <a @can('User profile') href="{{route('user.profile', $khaltiTransaction->preTransaction->user->id)}}" @endcan>
+                                                    @else
+                                                        <a @can('User profile') href="#" @endcan>
+                                                        @endif
+                                                            {{ optional(optional($khaltiTransaction->preTransaction)->user)->mobile_no }}</a></a></td>
                                             <td>{{$khaltiTransaction->message}}</td>
                                             <td>{{$khaltiTransaction->reference_no}}</td>
                                             <td>{{$khaltiTransaction->service}}</td>

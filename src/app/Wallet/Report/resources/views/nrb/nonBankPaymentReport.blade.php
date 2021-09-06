@@ -73,12 +73,11 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <br>
                                     <div class="row">
 
-                                        <div class="col-md-12 mt-3">
-                                            <label for="ionrange_amount">Date</label><br>
-                                            <div class="row">
-                                                <div class="col-6">
+
+                                                <div class="col-4">
                                                     <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
@@ -90,7 +89,7 @@
                                                     </div>
                                                     <br>
                                                 </div>
-                                                <div class="col-6">
+                                                <div class="col-4">
                                                     <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
@@ -101,8 +100,37 @@
                                                                value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
                                                     </div>
                                                 </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <select data-placeholder="User Type..." class="chosen-select"
+                                                        tabindex="2"
+                                                        name="user_type">
+                                                    <option value="" selected disabled>User Type...</option>
+                                                    @if(!empty($_GET['user_type']))
+                                                        <option value="all"
+                                                                @if($_GET['user_type'] == 'all') selected @endif>All
+                                                        </option>
+                                                        <option value="user"
+                                                                @if($_GET['user_type'] == 'user') selected @endif>User
+                                                        </option>
+                                                        <option value="merchant"
+                                                                @if($_GET['user_type'] == 'merchant') selected @endif>
+                                                            Merchant
+                                                        </option>
+                                                        <option value="agent"
+                                                                @if($_GET['user_type'] == 'agent') selected @endif>Agent
+                                                        </option>
+                                                    @else
+                                                        <option value="all">All</option>
+                                                        <option value="user">User</option>
+                                                        <option value="merchant">Merchant</option>
+                                                        <option value="agent">Agent</option>
+                                                    @endif
+                                                </select>
                                             </div>
                                         </div>
+
+
                                     </div>
                                     <br>
 

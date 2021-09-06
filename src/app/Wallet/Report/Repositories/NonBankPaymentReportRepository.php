@@ -7,6 +7,7 @@ namespace App\Wallet\Report\Repositories;
 use App\Models\CellPayUserTransaction;
 use App\Models\FundRequest;
 use App\Models\KhaltiUserTransaction;
+use App\Models\Microservice\PreTransaction;
 use App\Models\NchlAggregatedPayment;
 use App\Models\NchlBankTransfer;
 use App\Models\NchlLoadTransaction;
@@ -24,9 +25,11 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
 {
 
     public function getBillPaymentNumber(){
+
         $billPaymentTotalNumber = TransactionEvent::whereIn('transaction_type',$this->billPayment)
             ->filter($this->request)
             ->count();
+
         return $billPaymentTotalNumber;
     }
 
@@ -40,9 +43,15 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
     public function getTransferNumber(){
         $transferTotalNumber = TransactionEvent::where('transaction_type',UserToUserFundTransfer::class)
             ->where('vendor','Transfer Fund')
+            ->whereHas('preTransaction',function ($query){
+                return $query->where('transaction_type',PreTransaction::TRANSACTION_TYPE_DEBIT);
+            })
             ->filter($this->request)
             ->count();
         $fundTotalRequestNumber = TransactionEvent::where('transaction_type',FundRequest::class)
+            ->whereHas('preTransaction',function ($query){
+                return $query->where('transaction_type',PreTransaction::TRANSACTION_TYPE_DEBIT);
+            })
             ->filter($this->request)
             ->count();
         return $transferTotalNumber + $fundTotalRequestNumber;
@@ -51,9 +60,15 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
     public function getTransferValue(){
         $transferTotalValue = TransactionEvent::where('transaction_type',UserToUserFundTransfer::class)
             ->where('vendor','Transfer Fund')
+            ->whereHas('preTransaction',function ($query){
+                    return $query->where('transaction_type',PreTransaction::TRANSACTION_TYPE_DEBIT);
+            })
             ->filter($this->request)
             ->sum('amount');
         $fundTotalRequestValue = TransactionEvent::where('transaction_type',FundRequest::class)
+            ->whereHas('preTransaction',function ($query){
+                return $query->where('transaction_type',PreTransaction::TRANSACTION_TYPE_DEBIT);
+            })
             ->filter($this->request)
             ->sum('amount');
         return $transferTotalValue + $fundTotalRequestValue;

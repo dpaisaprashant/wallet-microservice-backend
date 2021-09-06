@@ -366,9 +366,10 @@ class RolesAndPermissionsSeeder extends Seeder
             'Cellpay user transaction view',
             'Cellpay user transaction detail',
 
-            //NPSLinked account
+            //Account_Link
+            'View load wallet',
+            'Generate load wallet excel',
             'View nps linked account',
-            'Excel nps linked account',
 
             //Mismtached user balance and bonus balance
             'View mismatched user balance and bonus balance',
@@ -378,6 +379,11 @@ class RolesAndPermissionsSeeder extends Seeder
             'Run seeder',
 
             'View nchl aggregated payment',
+
+            //Non Real Time Bank Payment
+            'Create non real time bank payment',
+            'View non real time bank payment',
+
             ];
 
         //get users having all permissions

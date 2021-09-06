@@ -263,7 +263,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/npay-generate-clearance-report/{clearance_id}', 'NPayClearanceController@generateReport')->name('npay.generateClearanceReport');
         Route::get('/paypoint-generate-clearance-report/{clearance_id}', 'PayPointClearanceController@generateReport')->name('paypoint.generateClearanceReport');
 
-
         /**
          * View Clearance
          */

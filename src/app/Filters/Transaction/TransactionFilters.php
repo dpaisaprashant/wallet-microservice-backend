@@ -31,7 +31,8 @@ class TransactionFilters extends FiltersAbstract
         'sort' => SortFilter::class,
         'till' => TillFilter::class,
         'pre_transaction_id' => CompletePreTransactionFilter::class,
-        'individual_user_number' => IndividualUserNumber::class
+        'individual_user_number' => IndividualUserNumber::class,
+        'user_type' => UserTypeFilter::class,
     ];
 
 

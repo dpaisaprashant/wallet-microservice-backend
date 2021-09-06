@@ -232,6 +232,7 @@
                                         <th>Check Response Code</th>
                                         <th>Check Response Description</th>
                                         <th>Action</th>
+                                        <th>API</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -253,7 +254,7 @@
                                             <td>
                                                 @if($nchlAggregatedPayment->response_description == "SUCCESS")
                                                     <span class="badge badge-primary">Success</span>
-                                                    @elseif($nchlAggregatedPayment->response_description == "ERROR")
+                                                @elseif($nchlAggregatedPayment->response_description == "ERROR")
                                                     <span class="badge badge-danger">Error</span>
                                                 @endif
                                             </td>
@@ -264,6 +265,16 @@
                                                 @include('admin.transaction.nchlAggregatedPayment.checkResponse',['nchlAggregatedPayment' => $nchlAggregatedPayment,'id' => '2'])
                                                 @include('admin.transaction.nchlAggregatedPayment.nchlAggregateRequest',['nchlAggregatedPayment' => $nchlAggregatedPayment,'id' => '3'])
                                                 @include('admin.transaction.nchlAggregatedPayment.nchlAggregateResponse',['nchlAggregatedPayment' => $nchlAggregatedPayment,'id' => '4'])
+                                            </td>
+                                            <td>
+                                                <form
+                                                    action="{{ route('nchlAggregatedTransferApi.report', $nchlAggregatedPayment->transaction_id) }}"
+                                                    method="post">
+                                                    @csrf
+                                                    <button class="btn btn-primary btn-icon" type="submit" title="API Details">
+                                                        <i class="fa fa-database"></i></button>
+                                                    </a>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

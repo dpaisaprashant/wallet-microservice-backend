@@ -1,3 +1,3 @@
-@include('LinkedAccounts::jsonRequest', ['LinkedAccounts' => $LinkedAccounts])
+@include('LinkedAccounts::jsonRequest', ['LinkedAccount' => $linkedAccount])
 
-@include('LinkedAccounts::jsonResponse', ['LinkedAccounts' => $LinkedAccounts])
+@include('LinkedAccounts::jsonResponse', ['LinkedAccount' => $linkedAccount])

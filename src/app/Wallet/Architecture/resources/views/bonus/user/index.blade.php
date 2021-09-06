@@ -109,7 +109,7 @@
 
                                         <td>
                                             @if($bonus->point_type == 'FLAT')
-                                                Rs. {{ $bonus->point_value }}
+                                                {{ $bonus->point_value }}
                                             @else
                                                 {{ $bonus->point_value }}
                                             @endif

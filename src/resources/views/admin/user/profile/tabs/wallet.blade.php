@@ -7,7 +7,7 @@
             <dd class="col-md-8">Rs. {{ $user->wallet->balance }}</dd>
 
             <dt class="col-md-3 text-right">Bonus Amount</dt>
-            <dd class="col-md-8">100</dd>
+            <dd class="col-md-8">Rs. {{$user->wallet->bonus_balance}}</dd>
 
             <dt class="col-md-3 text-right">Bonus Points</dt>
             <dd class="col-md-8">{{ $userBonus }}</dd>

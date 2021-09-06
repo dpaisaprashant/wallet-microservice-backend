@@ -21,6 +21,7 @@ use App\Models\UserReferral;
 use App\Models\UserReferralBonus;
 use App\Models\UserReferralLimit;
 use App\Models\UserType;
+use App\Models\Wallet;
 use App\Traits\CollectionPaginate;
 use App\Wallet\AuditTrail\AuditTrial;
 use App\Wallet\AuditTrail\Behaviors\BAll;
@@ -128,6 +129,7 @@ class UserController extends Controller
         //$user = User::with(['userLoadTransactions', 'userLoginHistories', 'userCheckPayment', 'fromFundTransfers', 'receiveFundTransfers', 'fromFundRequests', 'receiveFundRequests', 'kyc', 'wallet'])->findOrFail($id);
         $user = User::with(['userReferral', 'userReferralLimit','merchant','bankAccount','preTransactions', 'requestInfos', 'userLoginHistories', 'fromFundTransfers', 'receiveFundTransfers', 'fromFundRequests', 'receiveFundRequests', 'kyc', 'wallet', 'agent', 'userReferralBonus'])->findOrFail($id);
         $userBonus = UserBonus::whereHas('user')->where('user_id',$id)->first()->bonus;
+        $userBonusBalance = Wallet::whereHas('user')->where('user_id',$id)->first()->bonus_balance;
         $admin = $request->user();
         if (!$admin->hasPermissionTo('User profile')) {
 
@@ -178,7 +180,7 @@ class UserController extends Controller
 
 
 
-        return view('admin.user.profile')->with(compact('userLoadCommission', 'admin_details', 'admin', 'loginHistoryAudits', 'allAudits', 'user', 'loadFundSum', 'activeTab', 'userTransactionStatements', 'userTransactionEvents','userBonus'));
+        return view('admin.user.profile')->with(compact('userLoadCommission', 'admin_details', 'admin', 'loginHistoryAudits', 'allAudits', 'user', 'loadFundSum', 'activeTab', 'userTransactionStatements', 'userTransactionEvents','userBonus','userBonusBalance'));
     }
 
 

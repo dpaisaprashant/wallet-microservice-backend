@@ -30,6 +30,7 @@ class FCMNotification extends Notification
 
     protected $channel;
 
+    protected $image;
 
     /**
      * Create a new notification instance.
@@ -44,7 +45,7 @@ class FCMNotification extends Notification
         $this->title = $title;
         $this->description = $description;
         $this->type = $type;
-
+        $this->image = $image;
         $repository = new NotificationRepository(request());
         $this->channel = $repository->notificationChannel();
 
@@ -69,7 +70,8 @@ class FCMNotification extends Notification
             "title" => $this->title,
             "user" => $userInfo,
             "description" => $this->description,
-            "type" => $this->type
+            "type" => $this->type,
+            "image" => $this->image
         ];
     }
 

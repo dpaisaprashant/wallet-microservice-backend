@@ -39,4 +39,9 @@ class LoadTestFund extends Model
     {
         return (new LoadTestFundFilters($request))->add($filters)->filter($builder);
     }
+
+    public function transactionEvents()
+    {
+
+    }
 }

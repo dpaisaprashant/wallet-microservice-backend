@@ -13,6 +13,7 @@ class ServiceController extends Controller
 {
 
     use UploadImage;
+    private $disk = "public";
 
     public function __construct()
     {
@@ -35,11 +36,13 @@ class ServiceController extends Controller
 
             $data = Arr::except($request->all(), '_token');
 
-            if ($request->hasFile('image')) {
-                $data['image'] = $this->uploadImage(['image' => $request->file('image')], 'image', 'app/public/uploads/frontend/');
-            }
+            $responseData = $this->uploadImageToCoreBase64($this->disk, $data, $request);
 
-            FrontendService::create($data);
+//            if ($request->hasFile('image')) {
+//                $data['image'] = $this->uploadImage(['image' => $request->file('image')], 'image', 'app/public/uploads/frontend/');
+//            }
+
+            FrontendService::create($responseData);
 
             return redirect()->route('frontend.service.index')->with('success', 'Service created successfully');
 
@@ -53,12 +56,13 @@ class ServiceController extends Controller
         $service = FrontendService::whereId($id)->firstOrFail();
         if ($request->isMethod('post')) {
             $data = Arr::except($request->all(), '_token');
+            $responseData = $this->uploadImageToCoreBase64($this->disk, $data, $request);
 
-            if ($request->hasFile('image')) {
-                $data['image'] = $this->uploadImage(['image' => $request->file('image')], 'image', 'app/public/uploads/frontend/');
-            }
+//            if ($request->hasFile('image')) {
+//                $data['image'] = $this->uploadImage(['image' => $request->file('image')], 'image', 'app/public/uploads/frontend/');
+//            }
 
-            FrontendService::whereId($id)->update($data);
+            FrontendService::whereId($id)->update($responseData);
 
             return redirect()->back()->with('success', "Update Successful");
         }

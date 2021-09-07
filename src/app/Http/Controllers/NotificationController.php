@@ -35,7 +35,6 @@ class NotificationController extends Controller
             $allTopics = config('fcm.topics');
         }
         if ($request->isMethod('post')) {
-
             if (empty($request->topics)) {
                 return redirect()->back()->with('error', 'Topic not selected');
             }

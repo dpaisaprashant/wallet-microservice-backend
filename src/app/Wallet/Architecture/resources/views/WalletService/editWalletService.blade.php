@@ -34,7 +34,6 @@
                     <div class="ibox-content">
                         <div class="row">
                             <div class="col-sm-12">
-
                                 <form method="post" action="{{route('wallet.service.update',$selectedWalletService->id)}}">
                                     @csrf
                                     <div class="form-group  row">
@@ -68,7 +67,7 @@
 
                                             <option value="{{$wallet_transaction_id->id}}">
                                                 <p style="font-weight: bolder">Transaction Type&nbsp;&nbsp;:&nbsp;&nbsp;</p>
-                                                {{$wallet_transaction_id['transaction_type']}}&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;User Type&nbsp;&nbsp;:&nbsp;&nbsp;{{$wallet_transaction_id['user_type']}}&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;MicroService&nbsp;&nbsp;:&nbsp;&nbsp;{{$wallet_transaction_id['microservice']}}&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;Service&nbsp;&nbsp;:&nbsp;&nbsp;{{$wallet_transaction_id['service'] == null ?'Null':$wallet_transaction_id['service']}}&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;Service Type&nbsp;&nbsp;:&nbsp;&nbsp;{{$wallet_transaction_id['service_type'] == null ? 'Null' : $wallet_transaction_id['service_type']}} 
+                                                {{$wallet_transaction_id['transaction_type']}}&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;User Type&nbsp;&nbsp;:&nbsp;&nbsp;{{$wallet_transaction_id['user_type']}}&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;MicroService&nbsp;&nbsp;:&nbsp;&nbsp;{{$wallet_transaction_id['microservice']}}&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;Service&nbsp;&nbsp;:&nbsp;&nbsp;{{$wallet_transaction_id['service'] == null ?'Null':$wallet_transaction_id['service']}}&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;Service Type&nbsp;&nbsp;:&nbsp;&nbsp;{{$wallet_transaction_id['service_type'] == null ? 'Null' : $wallet_transaction_id['service_type']}}
                                             </option>
                                             @endforeach
                                             </select>

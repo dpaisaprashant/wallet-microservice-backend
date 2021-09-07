@@ -11,6 +11,7 @@ use Illuminate\Support\Arr;
 class ProcessController extends Controller
 {
     use UploadImage;
+    private $disk = "public";
 
     public function __construct()
     {
@@ -31,12 +32,13 @@ class ProcessController extends Controller
     {
         if ($request->isMethod('post')) {
             $data = Arr::except($request->all(), '_token');
+            $responseData = $this->uploadImageToCoreBase64($this->disk, $data, $request);
 
-            if ($request->hasFile('image')) {
-                $data['image'] = $this->uploadImage(['image' => $request->file('image')], 'image', 'app/public/uploads/frontend/');
-            }
+//            if ($request->hasFile('image')) {
+//                $data['image'] = $this->uploadImage(['image' => $request->file('image')], 'image', 'app/public/uploads/frontend/');
+//            }
 
-            $process = FrontendProcess::create($data);
+            $process = FrontendProcess::create($responseData);
             return redirect()->route('frontend.process.index')->with('success', $process->title . ' creates successfully');
         }
 
@@ -48,12 +50,13 @@ class ProcessController extends Controller
         $process = FrontendProcess::whereId($id)->firstOrFail();
         if ($request->isMethod('post')) {
             $data = Arr::except($request->all(), '_token');
+            $responseData = $this->uploadImageToCoreBase64($this->disk, $data, $request);
 
-            if ($request->hasFile('image')) {
-                $data['image'] = $this->uploadImage(['image' => $request->file('image')], 'image', 'app/public/uploads/frontend/');
-            }
+//            if ($request->hasFile('image')) {
+//                $data['image'] = $this->uploadImage(['image' => $request->file('image')], 'image', 'app/public/uploads/frontend/');
+//            }
 
-            FrontendProcess::whereId($id)->update($data);
+            FrontendProcess::whereId($id)->update($responseData);
 
             return redirect()->back()->with('success', 'Update successful');
         }

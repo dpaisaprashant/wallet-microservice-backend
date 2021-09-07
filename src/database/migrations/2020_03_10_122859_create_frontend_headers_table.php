@@ -24,11 +24,12 @@ class CreateFrontendHeadersTable extends Migration
                 $table->string('button_text')->nullable();
                 $table->string('button_link')->nullable();
                 $table->string('image');
-                
                 $table->string('google_image')->nullable();
                 $table->string('apple_image')->nullable();
                 $table->string('service_header')->nullable();
                 $table->text('service_description')->nullable();
+                $table->integer('sequence')->nullable();
+                $table->string('belongs_to');
                 $table->timestamps();
             });
         }

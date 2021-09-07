@@ -26,6 +26,7 @@ class CreateFrontendContactsTable extends Migration
             $table->string('address')->nullable();
             $table->double('latitude')->nullable();
             $table->double('longitude')->nullable();
+            $table->string('belongs_to');
             $table->timestamps();
         });
     }

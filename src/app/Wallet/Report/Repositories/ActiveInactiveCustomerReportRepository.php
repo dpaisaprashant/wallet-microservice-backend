@@ -37,52 +37,56 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
     {
 //        $selectedDate= Carbon::parse($this->from)->endOfDay()->toDateString();
 //        dd($selectedDate);
+
         $activeUsers = \DB::connection('dpaisa')->select("SELECT * FROM (
-            SELECT transaction_events.id,transaction_events.user_id,transaction_events.created_at,transaction_events.balance,transaction_events.bonus_balance FROM (
-        SELECT MAX(id) as id,user_id,MAX(created_at) as created_at from (SELECT * FROM transaction_events WHERE created_at <= '$this->from') as transaction_in_range GROUP BY user_id
+            SELECT transaction_events.id as latest_transaction_id,transaction_events.user_id,transaction_events.created_at as latest_transaction_date,transaction_events.balance,transaction_events.bonus_balance FROM (
+        SELECT MAX(id) as latest_transaction_id,user_id,MAX(created_at) as latest_transaction_date from (SELECT * FROM transaction_events WHERE created_at <= '$this->from') as transaction_in_range GROUP BY user_id
         ) AS latest_transaction
-        JOIN transaction_events ON transaction_events.id = latest_transaction.id
-        WHERE latest_transaction.created_at > '$this->sixMonthBeforeFromDate' AND latest_transaction.created_at <='$this->from'
+        JOIN transaction_events ON transaction_events.id = latest_transaction.latest_transaction_id
+        WHERE latest_transaction.latest_transaction_date > '$this->sixMonthBeforeFromDate' AND latest_transaction.latest_transaction_date <='$this->from'
 	) as latest_transaction_in_timeperiod
     RIGHT JOIN users
     ON users.id = latest_transaction_in_timeperiod.user_id
     WHERE (
         (
-        (users.phone_verified_at > '$this->sixMonthBeforeFromDate' AND users.phone_verified_at <= '$this->from')
-                AND
+            (users.phone_verified_at > '$this->sixMonthBeforeFromDate' AND users.phone_verified_at <= '$this->from')
+            AND
             NOT EXISTS(SELECT transaction_events.user_id,transaction_events.created_at
     FROM transaction_events WHERE users.id = transaction_events.user_id HAVING transaction_events.created_at <= '$this->from'
         ))
-            OR (latest_transaction_in_timeperiod.id IS NOT NULL)
+            OR (latest_transaction_in_timeperiod.latest_transaction_id IS NOT NULL)
     	);");
 
-        dd($activeUsers);
+
+
+
         return $activeUsers;
 
     }
 
     private function inactiveFor6to12MonthsCustomerBuilder()
     {
+
         $inactiveFor6to12MonthsUsers = \DB::connection('dpaisa')->select("SELECT * FROM (
-            SELECT transaction_events.id,transaction_events.user_id,transaction_events.created_at,transaction_events.balance,transaction_events.bonus_balance FROM (
-        SELECT MAX(id) as id,user_id,MAX(created_at) as created_at from (SELECT * FROM transaction_events WHERE created_at <= '$this->from') as transaction_in_range GROUP BY user_id
+            SELECT transaction_events.id as latest_transaction_id,transaction_events.user_id,transaction_events.created_at as latest_transaction_date,transaction_events.balance,transaction_events.bonus_balance FROM (
+        SELECT MAX(id) as latest_transaction_id,user_id,MAX(created_at) as latest_transaction_date from (SELECT * FROM transaction_events WHERE created_at <= '$this->from') as transaction_in_range GROUP BY user_id
         ) AS latest_transaction
-        JOIN transaction_events ON transaction_events.id = latest_transaction.id
-        WHERE latest_transaction.created_at > '$this->twelveMonthBeforeFromDate' AND latest_transaction.created_at <='$this->sixMonthBeforeFromDate'
+        JOIN transaction_events ON transaction_events.id = latest_transaction.latest_transaction_id
+        WHERE latest_transaction.latest_transaction_date > '$this->twelveMonthBeforeFromDate' AND latest_transaction.latest_transaction_date <='$this->sixMonthBeforeFromDate'
 	) as latest_transaction_in_timeperiod
     RIGHT JOIN users
     ON users.id = latest_transaction_in_timeperiod.user_id
     WHERE (
         (
-        (users.phone_verified_at > '$this->twelveMonthBeforeFromDate' AND users.phone_verified_at <= '$this->sixMonthBeforeFromDate')
-                AND
+            (users.phone_verified_at > '$this->twelveMonthBeforeFromDate' AND users.phone_verified_at <= '$this->sixMonthBeforeFromDate')
+            AND
             NOT EXISTS(SELECT transaction_events.user_id,transaction_events.created_at
     FROM transaction_events WHERE users.id = transaction_events.user_id HAVING transaction_events.created_at <= '$this->from'
         ))
-            OR (latest_transaction_in_timeperiod.id IS NOT NULL)
+            OR (latest_transaction_in_timeperiod.latest_transaction_id IS NOT NULL)
     	);");
 
-        dd($inactiveFor6to12MonthsUsers);
+
         return $inactiveFor6to12MonthsUsers;
     }
 
@@ -90,22 +94,22 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
     {
 
         $inactiveForMoreThan12MonthsUsers = \DB::connection('dpaisa')->select("SELECT * FROM (
-            SELECT transaction_events.id,transaction_events.user_id,transaction_events.created_at,transaction_events.balance,transaction_events.bonus_balance FROM (
-        SELECT MAX(id) as id,user_id,MAX(created_at) as created_at from (SELECT * FROM transaction_events WHERE created_at <= '$this->from') as transaction_in_range GROUP BY user_id
+            SELECT transaction_events.id as latest_transaction_id,transaction_events.user_id,transaction_events.created_at as latest_transaction_date,transaction_events.balance,transaction_events.bonus_balance FROM (
+        SELECT MAX(id) as latest_transaction_id,user_id,MAX(created_at) as latest_transaction_date from (SELECT * FROM transaction_events WHERE created_at <= '$this->from') as transaction_in_range GROUP BY user_id
         ) AS latest_transaction
-        JOIN transaction_events ON transaction_events.id = latest_transaction.id
-        WHERE latest_transaction.created_at <= '$this->twelveMonthBeforeFromDate'
+        JOIN transaction_events ON transaction_events.id = latest_transaction.latest_transaction_id
+        WHERE latest_transaction.latest_transaction_date <='$this->twelveMonthBeforeFromDate'
 	) as latest_transaction_in_timeperiod
     RIGHT JOIN users
     ON users.id = latest_transaction_in_timeperiod.user_id
     WHERE (
         (
-        (users.phone_verified_at <= '$this->twelveMonthBeforeFromDate')
-                AND
+            (users.phone_verified_at <= '$this->twelveMonthBeforeFromDate')
+            AND
             NOT EXISTS(SELECT transaction_events.user_id,transaction_events.created_at
     FROM transaction_events WHERE users.id = transaction_events.user_id HAVING transaction_events.created_at <= '$this->from'
         ))
-            OR (latest_transaction_in_timeperiod.id IS NOT NULL)
+            OR (latest_transaction_in_timeperiod.latest_transaction_id IS NOT NULL)
     	);");
 
         return $inactiveForMoreThan12MonthsUsers;

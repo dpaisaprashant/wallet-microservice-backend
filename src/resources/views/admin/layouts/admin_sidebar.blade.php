@@ -269,6 +269,23 @@ $url = url()->current();
             </li>
             @endif
 
+
+            @if(auth()->user()->hasPermissionTo('Lucky winner view') || auth()->user()->hasPermissionTo('Lucky winner create'))
+                <li @if(preg_match('/lucky/i', $url)) class="active" @endif>
+                    <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Lucky Winner</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        @can('Lucky winner view')
+                            <li><a href="{{ route('luckyWinner.index') }}">View Lucky Winner</a></li>
+                        @endcan
+                        @can('Lucky winner create')
+                            <li><a href="{{ route('luckyWinner.create') }}">Create Lucky Winner</a></li>
+                        @endcan
+                    </ul>
+                </li>
+            @endif
+
+
             @if(auth()->user()->hasPermissionTo('Repost transaction npay') || auth()->user()->hasPermissionTo('Repost transaction nps') || auth()->user()->hasPermissionTo('Repost transaction connectips'))
             <li @if(preg_match('/repost/i', $url)) class="active" @endif>
                 <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Repost Transaction</span><span

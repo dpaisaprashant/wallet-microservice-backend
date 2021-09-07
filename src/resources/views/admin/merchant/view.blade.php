@@ -387,16 +387,18 @@
                 </div>
             </div>
         </div>
-
+    @include('admin.asset.notification.notify')
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
                         <h5>List of registered merchants</h5>
+                        <a href="{{ route('merchant.update.view') }}" class="btn btn-sm btn-primary btn-xs"
+                           style="float: right;margin-top: -5px;">Update Merchant Type</a>
                     </div>
                     <div class="ibox-content">
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover dataTables-example" title="Dpasis user's list">
+                            <table class="table table-striped table-bordered table-hover dataTables-example" title="Merchant's list">
                                 <thead>
                                 <tr>
                                     <th>S.No.</th>
@@ -453,6 +455,9 @@
                                             <a style="margin-top: 5px;" href="{{route('merchant.kyc.detail', $merchant->id)}}" class="btn btn-sm btn-icon btn-primary m-t-n-xs" title="Unverified Merchant Kyc List"><i class="fa fa-eye"></i></a>
 
                                             <a style="margin-top: 5px" href="{{ route('user.profile', $merchant->id) }}" class="btn btn-sm btn-icon btn-danger m-t-n-xs" title="Merchant Profile"><i class="fa fa-user"></i></a>
+                                            @if(optional(optional($merchant->merchant)->merchantType)->name == "reseller")
+                                            @include('admin.merchant.viewMerchantResellerCredentials',['id'=>$merchant->id,'merchant' => $merchant])
+                                        @endif
 {{--                                        <a style="margin-top: 5px;" href="{{route('merchant.transaction', $merchant->id)}}" class="btn btn-sm btn-icon btn-info m-t-n-xs" title="merchant transactions"><i class="fa fa-credit-card"></i></a>--}}
 
 {{--                                        <a style="margin-top: 5px;" href="{{route('merchant.kyc', $merchant->id)}}" class="btn btn-sm btn-icon btn-warning m-t-n-xs" title="merchant kyc"><i class="fa fa-file"></i></a>--}}

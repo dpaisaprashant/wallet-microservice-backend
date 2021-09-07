@@ -34,7 +34,7 @@ class MerchantRepository
 
     private function wallerBalanceSorted()
     {
-        $unsortedUsers = User::with('wallet','merchant')->whereHas('merchant')->filter($this->request)->get();
+        $unsortedUsers = User::with('wallet','merchant','merchantReseller')->whereHas('merchant')->filter($this->request)->get();
 
         $users = $unsortedUsers->map(function ($value, $key) {
             $value['balance'] = $value->wallet->balance;
@@ -45,12 +45,12 @@ class MerchantRepository
     }
     private function sortedUsers()
     {
-        return User::with('wallet','merchant')->whereHas('merchant')->filter($this->request)->paginate($this->length);
+        return User::with('wallet','merchant','merchantReseller')->whereHas('merchant')->filter($this->request)->paginate($this->length);
     }
 
     private function latestUsers()
     {
-        return User::with('wallet','merchant')->whereHas('merchant')->latest()->filter($this->request)->paginate($this->length);
+        return User::with('wallet','merchant','merchantReseller')->whereHas('merchant')->latest()->filter($this->request)->paginate($this->length);
     }
 
 
@@ -66,6 +66,10 @@ class MerchantRepository
         }else{
             return $this->sortedUsers();
         }
+    }
+
+    public function insertIntoMerchantReseller(){
+        return 'ok';
     }
 
     private function merchantSortedTransactions($id)

@@ -56,6 +56,7 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
             OR (latest_transaction_in_timeperiod.id IS NOT NULL)
     	);");
 
+        dd($activeUsers);
         return $activeUsers;
 
     }
@@ -81,6 +82,7 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
             OR (latest_transaction_in_timeperiod.id IS NOT NULL)
     	);");
 
+        dd($inactiveFor6to12MonthsUsers);
         return $inactiveFor6to12MonthsUsers;
     }
 

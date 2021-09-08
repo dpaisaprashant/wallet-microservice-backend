@@ -411,6 +411,12 @@ class RolesAndPermissionsSeeder extends Seeder
             'Create non real time bank payment',
             'View non real time bank payment',
 
+            //Scheme
+            'View scheme',
+            'Create scheme',
+            'Edit scheme',
+            'Delete scheme'
+
             ];
 
         //get users having all permissions

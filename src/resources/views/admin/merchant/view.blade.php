@@ -420,12 +420,15 @@
                                 <tbody>
 
                                 @foreach($merchants as $merchant)
+
                                     <tr class="gradeX">
                                     <td>{{ $loop->index + ($merchants->perPage() * ($merchants->currentPage() - 1)) + 1 }}</td>
                                     <td>
+
                                          <a href="{{route('user.profile', $merchant->id)}}">{{ $merchant->name }}</a>
                                     </td>
                                     <td>
+
                                         @if(!empty($merchant->phone_verified_at))
                                             <i class="fa fa-check-circle" style="color: green;"></i> &nbsp;{{ $merchant->mobile_no }}
                                         @else
@@ -456,7 +459,7 @@
 
                                             <a style="margin-top: 5px" href="{{ route('user.profile', $merchant->id) }}" class="btn btn-sm btn-icon btn-danger m-t-n-xs" title="Merchant Profile"><i class="fa fa-user"></i></a>
                                             @if(optional(optional($merchant->merchant)->merchantType)->name == "reseller")
-                                            @include('admin.merchant.viewMerchantResellerCredentials',['id'=>$merchant->id,'merchant' => $merchant])
+                                            @include('admin.merchant.viewMerchantResellerCredentials',['id'=>optional($merchant->merchant)->id,'merchant' => $merchant])
                                         @endif
 {{--                                        <a style="margin-top: 5px;" href="{{route('merchant.transaction', $merchant->id)}}" class="btn btn-sm btn-icon btn-info m-t-n-xs" title="merchant transactions"><i class="fa fa-credit-card"></i></a>--}}
 

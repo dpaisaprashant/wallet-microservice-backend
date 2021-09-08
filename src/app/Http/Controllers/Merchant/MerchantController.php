@@ -122,38 +122,6 @@ class MerchantController extends Controller
     }
 
 
-    public function merchantReseller(Request $request){
-        $userId = $request->get('user_id');
-        $apiUsername = $request->get('api_username');
-        $apiPassword = $request->get('api_password');
-        $secretKey = TransactionIdGenerator::generateAlphaNumeric(40);
-        $apiKey = TransactionIdGenerator::generateAlphaNumeric(15);
-        $merchantResellerCount = MerchantReseller::where('user_id',$userId)->count();
-        if($merchantResellerCount > 0){
-            MerchantReseller::where('user_id',$userId)->update([
-                'user_id' => $userId,
-                'api_username' => $apiUsername,
-                'api_password_not_hashed' => $apiPassword,
-                'secret_key' => $secretKey,
-                'api_key' => $apiKey,
-                'api_password' => \Hash::make($apiPassword),
-                'status' => 1
-            ]);
-            return redirect()->route('merchant.view');
-        }
-        MerchantReseller::create([
-            'user_id' => $userId,
-            'api_username' => $apiUsername,
-            'api_password_not_hashed' => $apiPassword,
-            'secret_key' => $secretKey,
-            'api_key' => $apiKey,
-            'api_password' => \Hash::make($apiPassword),
-            'status' => 1
-        ]);
-
-        return redirect()->route('merchant.view');
-    }
-
     public function unverifiedMerchantKYCView(MerchantKYCRepository $repository){
         $merchants = $repository->paginatedUnverifiedMerchantKYC();
         return view('admin.merchant.unverifiedMerchantKYC',compact('merchants'));

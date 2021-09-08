@@ -677,11 +677,11 @@ $url = url()->current();
                             </li>
                         @endcan
 
-                        @can('Miracle info SMS view')
+                    {{--    @can('Miracle info SMS view')
                             <li>
                                 <a href="{{route('miracle-info.view')}}"><span class="nav-label">Miracle Info SMS</span></a>
                             </li>
-                        @endcan
+                        @endcan--}}
 
                     </ul>
                 </li>

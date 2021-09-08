@@ -115,7 +115,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/merchants',[\App\Http\Controllers\Merchant\MerchantController::class,'view'])->name('merchant.view')->middleware('permission:Merchant dashboard');
         Route::get('/update-merchant-detail',[App\Http\Controllers\Merchant\MerchantController::class,'merchantUpdateView'])->name('merchant.update.view');
         Route::post('/update-merchant-detail',[\App\Http\Controllers\Merchant\MerchantController::class,'merchantUpdate'])->name('merchant.update');
-        Route::post('/add-merchant-credential',[\App\Http\Controllers\Merchant\MerchantController::class,'merchantReseller'])->name('merchant.reseller');
 
         Route::get('/merchant-details/kyc/{id}',[\App\Http\Controllers\Merchant\MerchantController::class,'merchantDetailKyc'])->name('merchant.kyc.detail');
         Route::get('/merchant-change-kyc-status',[\App\Http\Controllers\Merchant\MerchantController::class,'changeKYCStatus'])->name('merchant.changeKYCStatus');

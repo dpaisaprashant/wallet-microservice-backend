@@ -11,40 +11,40 @@
                         <h3 class="m-t-none m-b">Merchant Credentials</h3>
                         <hr>
                         <dl class="row m-t-md">
-                            <dt class="col-md-5 ">Secret Key: </dt>
-                            <dd class="col-md-7"> @if(optional($merchant->merchantReseller)->secret_key != null)
+                            <dt class="col-md-3 ">Secret Key: </dt>
+                            <dd class="col-md-9"> @if(optional($merchant->merchantReseller)->secret_key != null)
                                     {{ optional($merchant->merchantReseller)->secret_key }}
                                 @else
                                     Not Set
                                 @endif
                             </dd>
 
-                            <dt class="col-md-5 ">API Key: </dt>
-                            <dd class="col-md-7"> @if(optional($merchant->merchantReseller)->api_key != null)
+                            <dt class="col-md-3 ">API Key: </dt>
+                            <dd class="col-md-9"> @if(optional($merchant->merchantReseller)->api_key != null)
                                     {{ optional($merchant->merchantReseller)->api_key }}
                                 @else
                                     Not Set
                                 @endif
                             </dd>
 
-                            <dt class="col-md-5 ">API Username: </dt>
-                            <dd class="col-md-7"> @if(optional($merchant->merchantReseller)->api_username != null)
+                            <dt class="col-md-3 ">API Username: </dt>
+                            <dd class="col-md-9"> @if(optional($merchant->merchantReseller)->api_username != null)
                                     {{ optional($merchant->merchantReseller)->api_username }}
                                 @else
                                     Not Set
                                 @endif
                             </dd>
 
-                            <dt class="col-md-5 ">API Password: </dt>
-                            <dd class="col-md-7"> @if(optional($merchant->merchantReseller)->api_password_not_hashed != null)
+                            <dt class="col-md-3 ">API Password: </dt>
+                            <dd class="col-md-9"> @if(optional($merchant->merchantReseller)->api_password_not_hashed != null)
                                     {{ optional($merchant->merchantReseller)->api_password_not_hashed }}
                                 @else
                                     Not Set
                                 @endif
                             </dd>
 
-                            <dt class="col-md-5 ">Status: </dt>
-                            <dd class="col-md-7"> @if(optional($merchant->merchantReseller)->status == "1")
+                            <dt class="col-md-3">Status: </dt>
+                            <dd class="col-md-9"> @if(optional($merchant->merchantReseller)->status == "1")
                                     <span class="badge badge-primary">True</span>
                                 @elseif(optional($merchant->merchantReseller)->status == "0")
                                     <span class="badge badge-danger">False</span>

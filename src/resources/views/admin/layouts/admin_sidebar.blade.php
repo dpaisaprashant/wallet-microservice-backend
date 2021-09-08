@@ -440,6 +440,13 @@ $url = url()->current();
                 </li>
             @endif
 
+            @if(auth()->user()->hasAnyPermission(['View scheme']))
+                <li @if($url == route('scheme.index')) class="active" @endif>
+                    <a href="{{ route('scheme.index') }}"><i class="fa fa-handshake-o"></i> <span
+                            class="nav-label">Scheme</span></a>
+                </li>
+            @endif
+
             @if(auth()->user()->hasAnyPermission(['Create non real time bank payment', 'View non real time bank payment']))
                 <li @if($url == route('nonRealTime.index') || $url == route('nonRealTime.view')) class="active" @endif>
                     <a href="#"><i class="fa fa-recycle"></i> <span class="nav-label">Non real time bank payment</span><span

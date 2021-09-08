@@ -53,7 +53,7 @@ class MerchantController extends Controller
 
         $merchantId = $request->get('merchant_name');
         $merchantDetail = Merchant::findOrFail($merchantId);
-        $userId = $merchantDetail->user_id;
+        $userId = $merchantDetail->id;
         $merchantTypeData = $request->get('merchant_type');
 
         $merchantTypeArray = explode('#',$merchantTypeData);
@@ -68,7 +68,7 @@ class MerchantController extends Controller
             $apiKey = TransactionIdGenerator::generateAlphaNumeric(15);
 
             MerchantReseller::create([
-                'user_id' => $userId,
+                'merchant_id' => $userId,
                 'api_username' => $request->get('api_username'),
                 'api_password_not_hashed' => $request->get('api_password'),
                 'secret_key' => $secretKey,

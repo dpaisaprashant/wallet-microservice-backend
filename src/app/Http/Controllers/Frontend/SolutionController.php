@@ -18,7 +18,7 @@ class SolutionController extends Controller
 
     public function index()
     {
-        $solutions = FrontendSolution::latest()->get();
+        $solutions = FrontendSolution::where('belongs_to',strtolower(config('app.'.'name')))->latest()->get();
         return view('admin.frontend.solution.index')->with(compact('solutions'));
     }
 

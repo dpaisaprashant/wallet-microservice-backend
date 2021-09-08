@@ -22,7 +22,7 @@ class HeaderController extends Controller
 
     public function index(Request $request)
     {
-        $header = FrontendHeader::first();
+        $header = FrontendHeader::where('belongs_to',strtolower(config('app.'.'name')))->first();
 
         if ($request->isMethod('post')) {
             $data = Arr::except($request->all(), '_token');
@@ -44,8 +44,9 @@ class HeaderController extends Controller
             if (empty($header)) {
                 $data = ["header_image" => null, "title" => "123"];
                 FrontendHeader::create($responseData);
+                $header = FrontendHeader::where('belongs_to',strtolower(config('app.'.'name')))->first();
             }
-            FrontendHeader::where('id', 1)->update($responseData);
+            FrontendHeader::where('id', $header->id)->update($responseData);
 
             return redirect()->route('frontend.header')->with(compact('header'));
         }
@@ -54,7 +55,7 @@ class HeaderController extends Controller
     }
 
     public function MultipleHeadersIndex(){
-        $headers = FrontendHeader::latest()->paginate(10);
+        $headers = FrontendHeader::where('belongs_to',strtolower(config('app.'.'name')))->latest()->paginate(10);
         return view('admin.frontend.header.multipleHeaderIndex')->with(compact('headers'));
     }
 

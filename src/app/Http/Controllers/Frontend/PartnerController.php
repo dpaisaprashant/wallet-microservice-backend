@@ -19,7 +19,7 @@ class PartnerController extends Controller
 
     public function index()
     {
-        $partners = FrontendPartner::latest()->get();
+        $partners = FrontendPartner::where('belongs_to',strtolower(config('app.'.'name')))->latest()->get();
         return view('admin.frontend.partner.index')->with(compact('partners'));
     }
 

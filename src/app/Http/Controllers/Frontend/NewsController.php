@@ -18,7 +18,7 @@ class NewsController extends Controller
 
     public function index()
     {
-        $news = FrontendNews::latest()->get();
+        $news = FrontendNews::where('belongs_to',strtolower(config('app.'.'name')))->latest()->get();
         return view('admin.frontend.news.index')->with(compact('news'));
     }
 

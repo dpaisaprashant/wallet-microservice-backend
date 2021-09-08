@@ -15,7 +15,7 @@ class BannerController extends Controller
 
     public function index()
     {
-        $banners = FrontendBanner::latest()->get();
+        $banners = FrontendBanner::where('belongs_to',strtolower(config('app.'.'name')))->latest()->get();
         return view('admin.frontend.banner.index')->with(compact('banners'));
     }
 

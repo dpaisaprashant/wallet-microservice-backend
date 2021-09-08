@@ -148,7 +148,7 @@
                                 </div>
                             </div>
 
-                            <input type="text" name="belongs_to" value="{{config('app.'.'name')}}" hidden>
+                            <input type="text" name="belongs_to" value="{{strtolower(config('app.'.'name'))}}" hidden>
 
                             <hr class="hr-line-dashed">
 

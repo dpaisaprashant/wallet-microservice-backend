@@ -170,7 +170,7 @@
                                     <textarea name="service_description" class="form-control" required>{!! $header->service_description ?? '' !!}</textarea>
                                 </div>
                             </div>
-
+                        @if(strtolower(config('app.'.'name')) == "sajilopay")
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Sequence</label>
                                 <div class="col-sm-10">
@@ -178,8 +178,9 @@
                                            class="form-control">
                                 </div>
                             </div>
+                        @endif
 
-                            <input type="text" name="belongs_to" value="{{config('app.'.'name')}}" hidden>
+                            <input type="text" name="belongs_to" value="{{strtolower(config('app.'.'name'))}}" hidden>
 
                             <hr class="hr-line-dashed">
 

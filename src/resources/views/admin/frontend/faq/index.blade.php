@@ -45,8 +45,10 @@
                                     <th>S.No.</th>
                                     <th>Question</th>
                                     <th>Answer</th>
-                                    <th>Question Type</th>
-                                    <th>Icon</th>
+                                    @if(strtolower(config('app.'.'name')) == "icash")
+                                        <th>Question Type</th>
+                                        <th>Icon</th>
+                                    @endif
                                     <th>Created At</th>
                                     <th>Actions</th>
                                 </tr>
@@ -57,8 +59,10 @@
                                         <td>{{ $loop->index + 1}}</td>
                                         <td>{{ $faq->question}}</td>
                                         <td>{{ $faq->answer}}</td>
-                                        <td>{{ $faq->question_type}}</td>
-                                        <td>{{ $faq->icon}}</td>
+                                        @if(strtolower(config('app.'.'name')) == "icash")
+                                            <td>{{ $faq->question_type}}</td>
+                                            <td>{{ $faq->icon}}</td>
+                                        @endif
                                         <td>{{ $faq->created_at}}</td>
                                         <td>
                                             @can('Frontend faq update')

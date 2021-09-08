@@ -29,7 +29,7 @@
                         <form method="post" action="{{ route('frontend.contact') }}" enctype="multipart/form-data">
                             @csrf
 
-                            <input type="text" name="belongs_to" value="{{config('app.'.'name')}}" hidden>
+                            <input type="text" name="belongs_to" value="{{strtolower(config('app.'.'name'))}}" hidden>
 
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Logo</label>

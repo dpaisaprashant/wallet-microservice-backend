@@ -17,7 +17,7 @@ class FaqController extends Controller
 
     public function index()
     {
-        $faqs = FrontendFaq::latest()->get();
+        $faqs = FrontendFaq::where('belongs_to',strtolower(config('app.'.'name')))->latest()->get();
         return view('admin.frontend.faq.index')->with(compact('faqs'));
     }
 

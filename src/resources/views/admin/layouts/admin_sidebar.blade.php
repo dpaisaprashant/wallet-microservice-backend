@@ -783,20 +783,25 @@ $url = url()->current();
                     <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Frontend Settings</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        @can('Frontend header view')
-                            <li><a href="{{ route('frontend.header') }}">Headers</a></li>
-                        @endcan
+                        @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'icash')
+                            @can('Frontend header view')
+                                <li><a href="{{ route('frontend.header') }}">Headers</a></li>
+                            @endcan
+                        @endif
+
                         @if(strtolower(config('app.'.'name')) == 'sajilopay')
-                            <li><a href="{{ route('frontend.multipleHeader') }}">Multiple Headers</a></li>
+                            <li><a href="{{ route('frontend.multipleHeader') }}">Headers</a></li>
                         @endif
 
                         @can('Frontend service view')
                             <li><a href="{{ route('frontend.service.index') }}">Services</a></li>
                         @endcan
 
-                        @can('Frontend about view')
-                            <li><a href="{{ route('frontend.about.index') }}">Abouts</a></li>
-                        @endcan
+                            @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'icash')
+                                @can('Frontend about view')
+                                    <li><a href="{{ route('frontend.about.index') }}">Abouts</a></li>
+                                @endcan
+                            @endif
 
                             @if(strtolower(config('app.'.'name')) == 'dpaisa')
                                 @can('Frontend process view')

@@ -35,7 +35,7 @@
                                 </div>
                             </div>
 
-                            <input type="text" name="belongs_to" value="{{config('app.'.'name')}}" hidden>
+                            <input type="text" name="belongs_to" value="{{strtolower(config('app.'.'name'))}}" hidden>
 
                             <hr class="hr-line-dashed">
 
@@ -48,6 +48,7 @@
 
                             <hr class="hr-line-dashed">
 
+                        @if(strtolower(config('app.'.'name')) == "icash")
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Question Type</label>
                                 <div class="col-sm-10">
@@ -65,6 +66,7 @@
                                            class="form-control">
                                 </div>
                             </div>
+                        @endif
 
                             <hr class="hr-line-dashed">
 

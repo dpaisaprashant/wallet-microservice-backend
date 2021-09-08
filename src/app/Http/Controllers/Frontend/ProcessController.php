@@ -24,7 +24,7 @@ class ProcessController extends Controller
 
     public function index()
     {
-        $processes = FrontendProcess::orderBy('sequence')->get();
+        $processes = FrontendProcess::where('belongs_to',strtolower(config('app.'.'name')))->orderBy('sequence')->get();
         return view('admin.frontend.process.index')->with(compact('processes'));
     }
 

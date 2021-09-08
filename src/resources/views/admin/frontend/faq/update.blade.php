@@ -48,23 +48,27 @@
 
                             <hr class="hr-line-dashed">
 
-                            <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Question Type</label>
-                                <div class="col-sm-10">
-                                    <input name="question_type" type="text" value="{{$faq->question_type}}"
-                                           class="form-control">
-                                </div>
-                            </div>
+                            @if(strtolower(config('app.'.'name')) == "icash")
 
-                            <hr class="hr-line-dashed">
-
-                            <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">icon</label>
-                                <div class="col-sm-10">
-                                    <input name="icon" type="text"
-                                           class="form-control" value="{{$faq->icon}}">
+                                <div class="form-group  row">
+                                    <label class="col-sm-2 col-form-label">Question Type</label>
+                                    <div class="col-sm-10">
+                                        <input name="question_type" type="text" value="{{$faq->question_type}}"
+                                               class="form-control">
+                                    </div>
                                 </div>
-                            </div>
+
+                                <hr class="hr-line-dashed">
+
+                                <div class="form-group  row">
+                                    <label class="col-sm-2 col-form-label">icon</label>
+                                    <div class="col-sm-10">
+                                        <input name="icon" type="text"
+                                               class="form-control" value="{{$faq->icon}}">
+                                    </div>
+                                </div>
+
+                            @endif
 
                             <hr class="hr-line-dashed">
 

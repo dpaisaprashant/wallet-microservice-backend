@@ -206,6 +206,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Frontend header view',
             'Frontend header create',
             'Frontend header update',
+            'Frontend header delete',
 
             'Frontend service view',
             'Frontend service create',

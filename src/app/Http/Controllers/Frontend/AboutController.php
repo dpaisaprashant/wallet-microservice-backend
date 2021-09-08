@@ -25,7 +25,7 @@ class AboutController extends Controller
 
     public function index()
     {
-        $abouts = FrontendAbout::latest()->get();
+        $abouts = FrontendAbout::where('belongs_to',strtolower(config('app.'.'name')))->latest()->get();
         return view('admin.frontend.about.index')->with(compact('abouts'));
     }
 

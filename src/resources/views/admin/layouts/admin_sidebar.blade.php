@@ -596,7 +596,7 @@ $url = url()->current();
 
 
             @if(auth()->user()->hasAnyPermission(['View blocked ip', 'View whitelisted ip']))
-                <li @if(preg_match('/report/i', $url)) class="active" @endif>
+                <li @if(preg_match('/ip/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-server"></i> <span class="nav-label">Block / Whitelist IPs</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">

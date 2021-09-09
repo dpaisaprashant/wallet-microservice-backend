@@ -15,24 +15,22 @@ class PaypointApiValidationRepository
 
     public function getDisputedTransactions(Request $request, PayPointRepository $repository)
     {
-
-
         $amount_mismatches[] = null;
         $wallet_success_mismatches = array();
         $paypoint_success_mismatches[] = null;
-        $wallet_status_mismatches=array();
-        $wallet_status_mismatches_api=array();
+        $wallet_status_mismatches = array();
+        $wallet_status_mismatches_api = array();
 
         if (!empty($_GET['from'])) {
             $from_convert = strtotime($_GET['from']);
             $this->from = date('Y-m-d', $from_convert);
-            $convertedFrom =date('Y-m-d\TH:i:s', $from_convert);
+            $convertedFrom = date('Y-m-d\TH:i:s', $from_convert);
 
         }
         if (!empty($_GET['to'])) {
             $to_convert = strtotime($_GET['to']);
             $this->to = date('Y-m-d', $to_convert);
-            $convertedTo=date('Y-m-d\TH:i:s', $from_convert);
+            $convertedTo = date('Y-m-d\TH:i:s', $to_convert);
         }
         if (!empty($_GET['from']) && !empty($_GET['to'])) {
             $transactions = $repository->latestTransactionsUnpaginated()->whereBetween('created_at', [$this->from, $this->to])->get();
@@ -43,46 +41,51 @@ class PaypointApiValidationRepository
 
         $paypointAPIs = array();
         $paypointMicroservice = new PaypointMicroservice();
+        if (!empty($_GET['from']) && !empty($_GET['to'])) {
+            $paypointAPI = $paypointMicroservice->getPaypointAPIByDate($request, $convertedFrom, $convertedTo);
+
+        } else {
+            $paypointAPI = $paypointMicroservice->getPaypointAPIByDate($request, Carbon::now()->subDays(7)->format('Y-m-d\TH:i:s'), Carbon::now()->format('Y-m-d\TH:i:s'));
+        }
+
+        $paypointAPIs=$paypointAPI['ResultMessage']['Transaction'];
 
         foreach ($transactions as $transaction) {
+            foreach ($paypointAPI['ResultMessage']['Transaction'] as $paypointAPITransaction) {
+                if ($paypointAPITransaction['RefStan'] == $transaction->refStan) {
 
-            if (!empty($_GET['from']) && !empty($_GET['to'])) {
-                $paypointAPI = $paypointMicroservice->getPaypointAPIByDate($request, $convertedFrom, $convertedTo);
+                    if ((optional($transaction->userTransaction)->amount * 100) != ($paypointAPITransaction['Amount'] ?? null)) {
+                        $amount_mismatches[] = $transaction;
+                    }
 
-            } else {
-                $paypointAPI = $paypointMicroservice->getPaypointAPIByDate($request, Carbon::now()->subDays(7)->format('Y-m-d\TH:i:s'), Carbon::now()->format('Y-m-d\TH:i:s'));
+                    if ($transaction->code == 000 && ($paypointAPITransaction['Status'] ?? 4) != 1) {
+                        $wallet_success_mismatches[] = $transaction;
+                    }
+
+                    if ($transaction->code != 000 && ($paypointAPITransaction['Status'] ?? 4) == 1) {
+                        $paypoint_success_mismatches[] = $transaction;
+                    }
+                    if ($transaction->code == 000 && ($paypointAPITransaction['Status'] ?? 4) != 1 || $transaction->code != 000 && ($paypointAPITransaction['ResultMessage']['Transaction']['Status'] ?? 'no data') == 000) {
+                        $wallet_status_mismatches[] = $transaction;
+                        $wallet_status_mismatches_api[] = $paypointAPI;
+                    }
+                }
             }
-
-            $paypointAPIs[] = $paypointAPI;
-            if ((optional($transaction->userTransaction)->amount*100) != ($paypointAPI['ResultMessage']['Transaction']['Amount'] ?? null)) {
-                $amount_mismatches[] = $transaction;
-            }
-
-            if ($transaction->code == 000 && ($paypointAPI['@attributes']['Result'] ?? 'no data') != 000) {
-                $wallet_success_mismatches[] = $transaction;
-            }
-
-            if ($transaction->code != 000 && ($paypointAPI['@attributes']['Result'] ?? 'no data') == 000) {
-                $paypoint_success_mismatches[] = $transaction;
-            }
-            if($transaction->code == 000 && ($paypointAPI['@attributes']['Result'] ?? 'no data') != 000 || $transaction->code != 000 && ($paypointAPI['@attributes']['Result'] ?? 'no data') == 000){
-                $wallet_status_mismatches[]=$transaction;
-                $wallet_status_mismatches_api[]=$paypointAPI;
-            }
-
         }
+
         $totalTransactionCount = count($transactions);
-        $totalTransactionCountAPI = count($paypointAPIs);
+        $totalTransactionCountAPI = count($paypointAPI['ResultMessage']['Transaction']);
         $totalAmount = 0;
         foreach ($transactions as $transaction) {
             if (isset($transaction->userTransaction->amount)) {
                 $totalAmount += $transaction->userTransaction->amount;
             }
         }
+
         $totalAmountAPI = 0;
-        foreach ($paypointAPIs as $paypointAPI) {
-            if (isset($paypointAPI['ResultMessage']['Transaction']['Amount'])) {
-                $totalAmountAPI += $paypointAPI['ResultMessage']['Transaction']['Amount'];
+        foreach ($paypointAPI['ResultMessage']['Transaction'] as $paypointAPI) {
+            if (isset($paypointAPI['Amount'])) {
+                $totalAmountAPI += $paypointAPI['Amount'];
             }
         }
 

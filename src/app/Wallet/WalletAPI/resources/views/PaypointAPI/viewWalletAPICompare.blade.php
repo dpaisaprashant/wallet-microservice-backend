@@ -150,18 +150,18 @@
                                     </thead>
                                     <tbody>
                                     @foreach($disputedTransactions['paypointAPIs'] as $paypointAPI)
-                                        @if(!empty($paypointAPI))
+                                        @if(isset($paypointAPI['RefStan']))
                                             <tr class="gradeC">
                                                 <td>{{$loop->index+1}}</td>
-                                                <td>{{ $paypointAPI['ResultMessage']['Transaction']['RefStan'] }}</td>
+                                                <td>{{ $paypointAPI['RefStan'] }}</td>
                                                 <td>
-                                                    {{ $paypointAPI['ResultMessage']['Transaction']['BillNumber']}}
+                                                    {{ $paypointAPI['BillNumber']}}
                                                 </td>
                                                 <td>
-                                                    {{ $paypointAPI['ResultMessage']['Transaction']['Company']['Name'] }}
+                                                    {{ $paypointAPI['Company']['Name'] }}
                                                 </td>
-                                                <td>{{ $paypointAPI['ResultMessage']['Transaction']['Amount']/100 }}</td>
-                                                <td>{{ $paypointAPI['@attributes']['Result'] }}</td>
+                                                <td>{{ $paypointAPI['Amount']/100 }}</td>
+                                                <td>{{ $paypointAPI['Status'] }}</td>
 
                                             </tr>
                                         @endif

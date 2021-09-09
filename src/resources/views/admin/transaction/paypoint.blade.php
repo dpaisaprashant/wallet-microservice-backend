@@ -205,6 +205,12 @@
                                             <strong>Filter</strong></button>
                                     </div>
                                     <div>
+                                        <button id="compareBtn" class="btn btn-sm btn-primary float-right m-t-n-xs"
+                                                type="submit" style="margin-right: 10px;"
+                                                formaction="{{ route('paypointTransferApi.compare') }}">
+                                            <strong>Compare with API</strong></button>
+                                    </div>
+                                    <div>
                                         <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
                                                 type="submit" style="margin-right: 10px;"
                                                 formaction="{{ route('paypoint.excel') }}"><strong>Excel</strong>
@@ -252,6 +258,7 @@
                                     </thead>
                                     <tbody>
                                     @foreach($transactions as $transaction)
+
                                         <tr class="gradeC">
                                             <td>{{ $loop->index + ($transactions->perPage() * ($transactions->currentPage() - 1)) + 1 }}</td>
                                             <td>
@@ -308,6 +315,7 @@
                                             </td>
 
                                             <td>
+
                                                 <form
                                                     action="{{ route('paypointTransferApi.report', $transaction->refStan) }}"
                                                     method="post">

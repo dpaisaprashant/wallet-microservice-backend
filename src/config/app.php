@@ -195,10 +195,9 @@ return [
         App\Wallet\NicAsia\NICAsiaCyberSourceLoadTransactionServiceProvider::class,
         App\Wallet\NPSAccountLinkLoad\NPSAccountLinkLoadServiceProvider::class,
         App\Wallet\LinkedAccounts\LinkedAccountsServiceProvider::class,
-        App\Wallet\WalletAPI\WalletAPIServiceProvider::class
-
-
-
+        App\Wallet\WalletAPI\WalletAPIServiceProvider::class,
+        App\Wallet\MiracleInfoSMS\MiracleInfoServiceProvider::class,
+        App\Wallet\Scheme\SchemeServiceProvider::class,
     ],
 
     /*

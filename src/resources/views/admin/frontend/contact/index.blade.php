@@ -29,6 +29,7 @@
                         <form method="post" action="{{ route('frontend.contact') }}" enctype="multipart/form-data">
                             @csrf
 
+                            <input type="text" name="belongs_to" value="{{strtolower(config('app.'.'name'))}}" hidden>
 
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Logo</label>
@@ -42,7 +43,7 @@
                                         <div class="row" style="margin-top: 20px;">
                                             <div class="col-md-4">
                                                 <img class="d-block w-100"
-                                                     src="{{ asset('storage/uploads/frontend/' . $contact->logo) }}"
+                                                     src="{{ config('dpaisa-api-url.public_document_url') . $contact->logo }}"
                                                      alt="First slide">
                                             </div>
                                         </div>
@@ -129,12 +130,13 @@
                                 </div>
                             </div>
                             <hr class="hr-line-dashed">
-
-                            <div class="form-group row">
-                                <div class="col-sm-4 col-sm-offset-2">
-                                    <button class="btn btn-primary btn-sm" type="submit">Save changes</button>
+                            @can('Frontend contact create')
+                                <div class="form-group row">
+                                    <div class="col-sm-4 col-sm-offset-2">
+                                        <button class="btn btn-primary btn-sm" type="submit">Save changes</button>
+                                    </div>
                                 </div>
-                            </div>
+                            @endcan
                         </form>
                     </div>
                 </div>

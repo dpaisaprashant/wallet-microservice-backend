@@ -31,9 +31,11 @@
                 <div class="ibox ">
                     <div class="ibox-title">
                         <h5>List of all banners</h5>
-                        <div class="ibox-tools" style="top: 8px;">
-                            <a class="btn btn-primary" href="{{ route('frontend.banner.create') }}"> <i class="fa fa-plus-circle"></i> Add New Banner</a>
-                        </div>
+                        @can('Frontend banner create')
+                            <div class="ibox-tools" style="top: 8px;">
+                                <a class="btn btn-primary" href="{{ route('frontend.banner.create') }}"> <i class="fa fa-plus-circle"></i> Add New Banner</a>
+                            </div>
+                        @endcan
                     </div>
                     <div class="ibox-content">
                         <div class="table-responsive">
@@ -54,25 +56,33 @@
                                         <td>{{ $banner->title}}</td>
                                         <td>
                                             @if(!empty($banner->image))
-                                                <img src="{{ asset('storage/uploads/frontend/'. $banner->image) }}" alt="" style="height: 120px;">
+                                                <img
+                                                    src="{{ config('dpaisa-api-url.public_document_url') . $banner->image }}"
+                                                    alt="Banner Image" style="height: 120px;">
                                             @endif
                                         </td>
 
                                         <td>
                                             @if(!empty($banner->mobile_image))
-                                                <img src="{{ asset('storage/uploads/frontend/'. $banner->mobile_image) }}" alt="" style="height: 120px;">
+                                                <img
+                                                    src="{{ config('dpaisa-api-url.public_document_url') . $banner->mobile_image }}"
+                                                    alt="Banner Mobile Image" style="height: 120px;">
                                             @endif
                                         </td>
 
 
                                         <td>
-                                            <a href="{{ route('frontend.banner.update', $banner->id) }}"><button class="btn btn-info btn-icon" type="button"><i class="fa fa-edit"></i></button></a>
-                                            <form action="{{ route('frontend.banner.delete') }}" method="post" id="deactivateForm" style="display: inline">
-                                                @csrf
-                                                <input type="hidden" name="id" value="{{ $banner->id }}">
-                                                <button class="btn btn-danger btn-icon deactivate" rel="{{ $banner->id }}"><i class="fa fa-trash"></i></button>
-                                                <button id="deactivateBtn-{{ $banner->id  }}" type="submit" style=" display:none;"  rel="{{ route('frontend.banner.delete') }}"></button>
-                                            </form>
+                                            @can('Frontend banner update')
+                                                <a href="{{ route('frontend.banner.update', $banner->id) }}"><button class="btn btn-info btn-icon" type="button"><i class="fa fa-edit"></i></button></a>
+                                            @endcan
+                                            @can('Frontend banner delete')
+                                                <form action="{{ route('frontend.banner.delete') }}" method="post" id="deactivateForm" style="display: inline">
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="{{ $banner->id }}">
+                                                    <button class="btn btn-danger btn-icon deactivate" rel="{{ $banner->id }}"><i class="fa fa-trash"></i></button>
+                                                    <button id="deactivateBtn-{{ $banner->id  }}" type="submit" style=" display:none;"  rel="{{ route('frontend.banner.delete') }}"></button>
+                                                </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

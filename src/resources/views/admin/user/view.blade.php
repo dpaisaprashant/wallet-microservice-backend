@@ -424,6 +424,15 @@
                                                    class="btn btn-sm btn-icon btn-warning m-t-n-xs"
                                                    title="user bank accounts"><i class="fa fa-bank"></i></a>
 
+                                                @can('Create user kyc')
+                                                    @if(empty($user->kyc))
+                                                        <a style="margin-top: 5px;"
+                                                           href="{{route('user.createUserKyc',$user->id)}}"
+                                                           class="btn btn-sm btn-icon btn-primary m-t-n-xs"
+                                                           title="user profile"><i class="fa fa-plus"></i></a>
+                                                    @endif
+                                                @endcan
+
                                             </td>
                                         </tr>
                                 @endforeach

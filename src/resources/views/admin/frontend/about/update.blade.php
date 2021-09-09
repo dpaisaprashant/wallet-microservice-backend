@@ -50,7 +50,7 @@
                                         <div class="row" style="margin-top: 20px;">
                                             <div class="col-md-4">
                                                 <img class="d-block w-100"
-                                                     src="{{ asset('storage/uploads/frontend/' . $about->image) }}"
+                                                     src="{{ config('dpaisa-api-url.public_document_url') . $about->image }}"
                                                      alt="First slide">
                                             </div>
                                         </div>

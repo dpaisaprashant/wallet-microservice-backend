@@ -24,7 +24,7 @@ class CreateFrontendHeadersTable extends Migration
                 $table->string('button_text')->nullable();
                 $table->string('button_link')->nullable();
                 $table->string('image');
-                
+
                 $table->string('google_image')->nullable();
                 $table->string('apple_image')->nullable();
                 $table->string('service_header')->nullable();
@@ -35,7 +35,7 @@ class CreateFrontendHeadersTable extends Migration
     }
 
     /**
-     * Reverse the migrations.
+     * Reverse the migrations.asdfasdf
      *
      * @return void
      */

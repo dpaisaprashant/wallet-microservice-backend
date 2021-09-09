@@ -12,6 +12,7 @@ class MerchantType extends Model
 
     CONST TYPE_NORMAL = 'normal';
 
+    protected $fillable = ['name'];
 
     public function merchants()
     {

@@ -9,6 +9,7 @@ use App\Models\Architecture\SingleUserCommission;
 use App\Models\MerchantBankAccount;
 use App\Models\MerchantNchlBankTransfer;
 use App\Models\MerchantNchlLoadTransaction;
+use App\Models\MerchantReseller;
 use App\Models\MerchantTransaction;
 use App\Models\MerchantTransactionEvent;
 use App\Models\UserType;
@@ -47,6 +48,10 @@ class Merchant extends Model
     public function kyc()
     {
         return $this->hasOne(MerchantKYC::class);
+    }
+
+    public function merchantReseller(){
+        return $this->hasOne(MerchantReseller::class,'merchant_id','id');
     }
 
     public function nchlBankTransfers()

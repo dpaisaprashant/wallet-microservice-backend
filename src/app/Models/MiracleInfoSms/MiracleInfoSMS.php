@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\MiracleInfoSms;
 
 use App\Filters\MiracleInfo\MiracleInfoFilters;
 use Illuminate\Database\Eloquent\Builder;

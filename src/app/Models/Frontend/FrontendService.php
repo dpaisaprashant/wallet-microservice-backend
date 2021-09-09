@@ -8,10 +8,5 @@ class FrontendService extends Model
 {
     protected $connection = 'dpaisa';
 
-    protected $fillable = [
-        'title',
-        'icon',
-        'image',
-        'description',
-    ];
+    protected $guarded = [];
 }

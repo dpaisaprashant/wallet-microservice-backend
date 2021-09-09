@@ -97,6 +97,9 @@ class RolesAndPermissionsSeeder extends Seeder
             'User KYC view',
             'KYC accept',
             'KYC reject',
+            'Edit user kyc',
+            'View admin edited kyc',
+            'Create user kyc',
 
             'Complete transaction view',
 
@@ -203,6 +206,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Frontend header view',
             'Frontend header create',
             'Frontend header update',
+            'Frontend header delete',
 
             'Frontend service view',
             'Frontend service create',
@@ -220,8 +224,32 @@ class RolesAndPermissionsSeeder extends Seeder
             'Frontend process delete',
 
             'Frontend banner view',
+            'Frontend banner create',
+            'Frontend banner update',
+            'Frontend banner delete',
 
             'Frontend contact view',
+            'Frontend contact create',
+
+            'Frontend faq view',
+            'Frontend faq create',
+            'Frontend faq update',
+            'Frontend faq delete',
+
+            'Frontend news view',
+            'Frontend news create',
+            'Frontend news update',
+            'Frontend news delete',
+
+            'Frontend solution view',
+            'Frontend solution create',
+            'Frontend solution update',
+            'Frontend solution delete',
+
+            'Frontend partner view',
+            'Frontend partner create',
+            'Frontend partner update',
+            'Frontend partner delete',
             //End frontend settings
 
             'Terms and condition view',
@@ -379,6 +407,17 @@ class RolesAndPermissionsSeeder extends Seeder
             'Run seeder',
 
             'View nchl aggregated payment',
+
+            //Non Real Time Bank Payment
+            'Create non real time bank payment',
+            'View non real time bank payment',
+
+            //Scheme
+            'View scheme',
+            'Create scheme',
+            'Edit scheme',
+            'Delete scheme'
+
             ];
 
         //get users having all permissions

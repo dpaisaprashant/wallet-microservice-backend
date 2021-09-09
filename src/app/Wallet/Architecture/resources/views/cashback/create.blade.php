@@ -188,7 +188,7 @@
     <script>
         $('#selectUserType').on('change', function (e) {
             let userType = $(this).val();
-            alert(userType);
+
             let url = `{{ route('architecture.userType.list') }}`
 
 

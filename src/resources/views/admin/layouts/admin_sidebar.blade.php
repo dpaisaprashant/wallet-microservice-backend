@@ -178,6 +178,13 @@ $url = url()->current();
                 </li>
             @endcan
 
+            @can('View admin edited kyc')
+            <li @if(preg_match('/admin-updated-user-kyc/i', $url)) class="active" @endif>
+                <a href="{{route('user.showAdminUpdatedKyc')}}"><i class="fa fa-user-secret"></i> <span
+                        class="nav-label">Admin Updated KYC List</span></a>
+            </li>
+            @endcan
+
             @can('Unverified KYC users view')
                 <li @if($url == route('user.unverifiedKYC.view')) class="active" @endif>
                     <a href="{{ route('user.unverifiedKYC.view') }}"><i class="fa fa-user-times"></i> <span
@@ -433,6 +440,34 @@ $url = url()->current();
                 </li>
             @endif
 
+            @if(auth()->user()->hasAnyPermission(['View scheme']))
+                <li @if($url == route('scheme.index')) class="active" @endif>
+                    <a href="{{ route('scheme.index') }}"><i class="fa fa-handshake-o"></i> <span
+                            class="nav-label">Scheme</span></a>
+                </li>
+            @endif
+
+            @if(auth()->user()->hasAnyPermission(['Create non real time bank payment', 'View non real time bank payment']))
+                <li @if($url == route('nonRealTime.index') || $url == route('nonRealTime.view')) class="active" @endif>
+                    <a href="#"><i class="fa fa-recycle"></i> <span class="nav-label">Non real time bank payment</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        @can('Create non real time bank payment')
+                            <li><a href="{{ route('nonRealTime.index') }}"><span
+                                        class="nav-label">Create Non Real Time Bank Payment</span></a></li>
+                        @endcan
+
+                        @can('View non real time bank payment')
+                            <li><a href="{{ route('nonRealTime.view') }}"><span
+                                        class="nav-label">View Non Real Time Bank Payment</span></a></li>
+                        @endcan
+
+                    </ul>
+                </li>
+            @endif
+
+
+
             {{--@if(auth()->user()->hasAnyPermission(['Clearance npay view', 'Clearance paypoint view']))
                 <li @if($url == route('clearance.npayView') || $url == route('clearance.paypointView')) class="active" @endif>
                     <a href="#"><i class="fa fa-handshake-o"></i> <span class="nav-label">View Clearance</span><span
@@ -572,7 +607,8 @@ $url = url()->current();
                         @endcan
                         @can('View whitelisted ip')
                             <li @if($url == route('whitelistedIP.view')) class="active" @endif>
-                                <a href="{{ route('whitelistedIP.view') }}"><i class="fa fa-check-square"></i> Whitelist IP</a>
+                                <a href="{{ route('whitelistedIP.view') }}"><i class="fa fa-check-square"></i> Whitelist
+                                    IP</a>
                             </li>
                         @endcan
                     </ul>
@@ -648,11 +684,11 @@ $url = url()->current();
                             </li>
                         @endcan
 
-                        @can('Miracle info SMS view')
+                    {{--    @can('Miracle info SMS view')
                             <li>
                                 <a href="{{route('miracle-info.view')}}"><span class="nav-label">Miracle Info SMS</span></a>
                             </li>
-                        @endcan
+                        @endcan--}}
 
                     </ul>
                 </li>
@@ -776,28 +812,64 @@ $url = url()->current();
                     <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Frontend Settings</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        @can('Frontend header view')
-                            <li><a href="{{ route('frontend.header') }}">Headers</a></li>
-                        @endcan
+                        @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'icash')
+                            @can('Frontend header view')
+                                <li><a href="{{ route('frontend.header') }}">Headers</a></li>
+                            @endcan
+                        @endif
+
+                        @if(strtolower(config('app.'.'name')) == 'sajilopay')
+                            <li><a href="{{ route('frontend.multipleHeader') }}">Headers</a></li>
+                        @endif
 
                         @can('Frontend service view')
                             <li><a href="{{ route('frontend.service.index') }}">Services</a></li>
                         @endcan
 
-                        @can('Frontend about view')
-                            <li><a href="{{ route('frontend.about.index') }}">Abouts</a></li>
-                        @endcan
+                            @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'icash')
+                                @can('Frontend about view')
+                                    <li><a href="{{ route('frontend.about.index') }}">Abouts</a></li>
+                                @endcan
+                            @endif
 
-                        @can('Frontend process view')
-                            <li><a href="{{ route('frontend.process.index') }}">Processes</a></li>
-                        @endcan
+                            @if(strtolower(config('app.'.'name')) == 'dpaisa')
+                                @can('Frontend process view')
+                                <li><a href="{{ route('frontend.process.index') }}">Processes</a></li>
+                                @endcan
+                            @endif
 
                         @can('Frontend banner view')
                             <li><a href="{{ route('frontend.banner.index') }}">Banners</a></li>
                         @endcan
-                        @can('Frontend contact view')
-                            <li><a href="{{ route('frontend.contact') }}">Contact</a></li>
-                        @endcan
+
+                            @if(strtolower(config('app.'.'name')) == 'dpaisa')
+                                @can('Frontend contact view')
+                                    <li><a href="{{ route('frontend.contact') }}">Contact</a></li>
+                                @endcan
+                            @endif
+
+                            @if(strtolower(config('app.'.'name')) == 'sajilopay' || strtolower(config('app.'.'name')) == 'icash' )
+                                @can('Frontend faq view')
+                                    <li><a href="{{route('frontend.faq.index')}}">FAQs</a></li>
+                                @endcan
+                            @endif
+
+                            @if(strtolower(config('app.'.'name')) == 'icash')
+                                @can('Frontend news view')
+                                <li><a href="{{route('frontend.news.index')}}">NEWS</a></li>
+                                @endcan
+                            @endif
+
+                            @if(strtolower(config('app.'.'name')) == 'sajilopay')
+                                @can('Frontend solution view')
+                                <li><a href="{{route('frontend.solution.index')}}">Solutions</a></li>
+                                @endcan
+                            @endif
+                            @if(strtolower(config('app.'.'name')) == 'sajilopay')
+                                @can('Frontend partner view')
+                                <li><a href="{{route('frontend.partner.index')}}">Partners</a></li>
+                                @endcan
+                            @endif
                     </ul>
                 </li>
             @endif

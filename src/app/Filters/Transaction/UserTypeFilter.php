@@ -3,6 +3,7 @@
 namespace App\Filters\Transaction;
 
 use App\Filters\FilterAbstract;
+use App\Models\Agent;
 use Illuminate\Database\Eloquent\Builder;
 
 class UserTypeFilter extends FilterAbstract {
@@ -30,9 +31,12 @@ class UserTypeFilter extends FilterAbstract {
             return $builder;
         }
         if($value == 'user'){
+
             return $builder->whereHas('user',function ($query){
-                return $query->whereHas('userType')->doesntHave('agent',function($query){
-                    return $query->where('status','!=','ACCEPTED');
+                return $query->whereHas('userType')->where(function ($query){
+                   return $query->doesntHave('agent')->orWhereHas('agent',function($query){
+                           return $query->where('status','!=',Agent::STATUS_ACCEPTED);
+                   });
                 });
 
             });
@@ -41,12 +45,7 @@ class UserTypeFilter extends FilterAbstract {
                 return $query->whereHas('merchant');
             });
         }elseif($value == 'agent'){
-       /*     $a = $builder->whereHas('user',function ($query){
-                return $query->whereHas('agent',function($query){
-                    return $query->where('status','ACCEPTED');
-                });
-            })->get();
-            dd($a[0]);*/
+
             return $builder->whereHas('user',function ($query){
                 return $query->whereHas('agent',function($query){
                     return $query->where('status','ACCEPTED');

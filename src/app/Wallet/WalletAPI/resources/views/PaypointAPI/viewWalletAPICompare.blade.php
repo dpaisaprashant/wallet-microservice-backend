@@ -3,7 +3,7 @@
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Transaction Comparison for Wallet and Paypoint API </h2>
+            <h2>Transaction Comparison between PayPoint API and Wallet</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -95,7 +95,7 @@
                                         <th>Transaction ID</th>
                                         <th>RefStan</th>
                                         <th>Bill Number</th>
-                                        <th>Amount (NRs.)</th>
+                                        <th>Amount (NRP)</th>
                                         <th>Status</th>
                                         <th>Created At</th>
                                     </tr>
@@ -110,7 +110,7 @@
                                             <td>{{ $transaction->refStan }}</td>
                                             <td>{{ $transaction->bill_number }}</td>
                                             <td>
-                                               {{ $transaction->amount ?? 0}}
+                                               {{ $transaction->userTransaction->amount ?? 0}}
                                             </td>
                                             <td>
                                                 {{ $transaction->code }}
@@ -119,7 +119,6 @@
                                                 {{ $transaction->created_at }}
                                             </td>
                                         </tr>
-
                                     @endforeach
                                     </tbody>
                                 </table>
@@ -135,7 +134,7 @@
                         </div>
                         <div class="ibox-content">
                             <h5><b>Total Count:</b> {{$disputedTransactions['totalTransactionCountAPI']}}</h5>
-                            <h5><b>Total Amount Sum:</b> Rs. {{$disputedTransactions['totalAmountAPI']}}</h5>
+                            <h5><b>Total Amount Sum:</b> Rs. {{$disputedTransactions['totalAmountAPI']/100}}</h5>
                             <div class="table-responsive" id="comparedTransactionId">
                                 <table class="table table-striped table-bordered table-hover dataTables-example"
                                        title="clearance transactions">
@@ -145,12 +144,11 @@
                                         <th>RefStan</th>
                                         <th>BillNumber</th>
                                         <th>Company</th>
-                                        <th>Amount (NRs.)</th>
+                                        <th>Amount (NRP)</th>
                                         <th>Status</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-{{--                                    {{dd($disputedTransactions['paypointAPIs'][0])}}--}}
                                     @foreach($disputedTransactions['paypointAPIs'] as $paypointAPI)
                                         @if(!empty($paypointAPI))
                                             <tr class="gradeC">
@@ -162,7 +160,7 @@
                                                 <td>
                                                     {{ $paypointAPI['ResultMessage']['Transaction']['Company']['Name'] }}
                                                 </td>
-                                                <td>{{ $paypointAPI['ResultMessage']['Transaction']['Amount'] }}</td>
+                                                <td>{{ $paypointAPI['ResultMessage']['Transaction']['Amount']/100 }}</td>
                                                 <td>{{ $paypointAPI['@attributes']['Result'] }}</td>
 
                                             </tr>
@@ -231,7 +229,6 @@
                                     <tbody>
                                     @foreach($disputedTransactions['paypoint_success_mismatches'] as $paypoint_success_mismatch)
                                         @if(!empty($paypoint_success_mismatch))
-                                    {{dd($paypoint_success_mismatch)}}
                                             <tr>
                                                 <td>{{$loop->index+1}}</td>
                                                 <td>{{$paypoint_success_mismatch->pre_transaction_id}}</td>
@@ -304,15 +301,7 @@
 @section('scripts')
     @include('admin.asset.js.chosen')
     @include('admin.asset.js.datepicker')
-    @include('admin.asset.js.datatable')
-{{--        <script>--}}
-{{--            @if(!empty($_GET))--}}
-{{--            $(document).ready(function (e) {--}}
-{{--                let a = "Showing {{ $transactions->firstItem() }} to {{ $transactions->lastItem() }} of {{ $transactions->total() }} entries";--}}
-{{--                $('.dataTables_info').text(a);--}}
-{{--            });--}}
-{{--            @endif--}}
-{{--        </script>--}}
+    @include('admin.asset.js.datatableWithPaging')
 
     <!-- IonRangeSlider -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js"></script>

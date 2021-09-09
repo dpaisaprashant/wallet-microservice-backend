@@ -10,35 +10,45 @@ use Carbon\Carbon;
 
 class PaypointApiValidationRepository
 {
+    protected $from;
+    protected $to;
+
     public function getDisputedTransactions(Request $request, PayPointRepository $repository)
     {
         $amount_mismatches[] = null;
-        $wallet_status_mismatches = array();
+        $wallet_success_mismatches = array();
         $paypoint_success_mismatches[] = null;
+        $wallet_status_mismatches=array();
+        $wallet_status_mismatches_api=array();
 
         if (!empty($_GET['from'])) {
             $from_convert = strtotime($_GET['from']);
-            $from = date('Y-m-d', $from_convert);
+            $this->from = date('Y-m-d\TH:i:s', $from_convert);
         }
         if (!empty($_GET['to'])) {
             $to_convert = strtotime($_GET['to']);
-            $to = date('Y-m-d', $to_convert);
+            $this->to = date('Y-m-d\TH:i:s', $to_convert);
         }
 
-        $transactions = $repository->paginatedTransactions()->whereBetween('created_at', [Carbon::now()->subMonths(12)->format('Y-m-d'), Carbon::now()->format('Y-m-d')]);
         if (!empty($_GET['from']) && !empty($_GET['to'])) {
-            $transactions = $repository->paginatedTransactions()->whereBetween('created_at', [$from, $to]);
+            $transactions = $repository->latestTransactionsUnpaginated()->whereBetween('created_at', [$this->from, $this->to])->get();
+        } else {
+            $transactions = $repository->latestTransactionsUnpaginated()->whereBetween('created_at', [Carbon::now()->subDays(7)->format('Y-m-d'), Carbon::now()->format('Y-m-d')])->get();
         }
 
         $paypointAPIs = array();
         $paypointMicroservice = new PaypointMicroservice();
 
         foreach ($transactions as $transaction) {
-            $id = $transaction->refStan;
-            $paypointAPI = $paypointMicroservice->getPaypointAPI($request, $id);
-            $paypointAPIs[] = $paypointAPI;
 
-            if ((optional($transaction)->amount) != ($paypointAPI['ResultMessage']['Amount'] ?? null)) {
+            if (!empty($_GET['from']) && !empty($_GET['to'])) {
+                $paypointAPI = $paypointMicroservice->getPaypointAPIByDate($request, $this->from, $this->to);
+            } else {
+                $paypointAPI = $paypointMicroservice->getPaypointAPIByDate($request, Carbon::now()->subDays(7)->format('Y-m-d'), Carbon::now()->format('Y-m-d'));
+            }
+
+            $paypointAPIs[] = $paypointAPI;
+            if ((optional($transaction->userTransaction)->amount*100) != ($paypointAPI['ResultMessage']['Transaction']['Amount'] ?? null)) {
                 $amount_mismatches[] = $transaction;
             }
 
@@ -47,23 +57,30 @@ class PaypointApiValidationRepository
             }
 
             if ($transaction->code != 000 && ($paypointAPI['@attributes']['Result'] ?? 'no data') == 000) {
-                $api_success_mismatches[] = $transaction;
+                $paypoint_success_mismatches[] = $transaction;
+            }
+            if($transaction->code == 000 && ($paypointAPI['@attributes']['Result'] ?? 'no data') != 000 || $transaction->code != 000 && ($paypointAPI['@attributes']['Result'] ?? 'no data') == 000){
+                $wallet_status_mismatches[]=$transaction;
+                $wallet_status_mismatches_api[]=$paypointAPI;
             }
 
         }
         $totalTransactionCount = count($transactions);
         $totalTransactionCountAPI = count($paypointAPIs);
-        $totalAmount = $transactions->sum('amount');
+        $totalAmount = 0;
+        foreach ($transactions as $transaction) {
+            if (isset($transaction->userTransaction->amount)) {
+                $totalAmount += $transaction->userTransaction->amount;
+            }
+        }
         $totalAmountAPI = 0;
         foreach ($paypointAPIs as $paypointAPI) {
-            if (isset($paypointAPI['ResultMessage']['Amount'])) {
-                $totalAmountAPI += $paypointAPI['ResultMessage']['Amount'];
+            if (isset($paypointAPI['ResultMessage']['Transaction']['Amount'])) {
+                $totalAmountAPI += $paypointAPI['ResultMessage']['Transaction']['Amount'];
             }
         }
 
-//        $data = $this->paginate($nchl_status_mismatches);
-
-        $disputedTransactions = ['wallet_success_mismatches' => $wallet_status_mismatches,
+        $disputedTransactions = ['wallet_success_mismatches' => $wallet_success_mismatches,
             'paypoint_success_mismatches' => $paypoint_success_mismatches,
             'amount_mismatches' => $amount_mismatches,
             'paypointAPIs' => $paypointAPIs,
@@ -72,42 +89,9 @@ class PaypointApiValidationRepository
             'totalTransactionCountAPI' => $totalTransactionCountAPI,
             'totalAmount' => $totalAmount,
             'totalAmountAPI' => $totalAmountAPI,
+            'wallet_status_mismatches' => $wallet_status_mismatches,
+            'wallet_status_mismatches_api' => $wallet_status_mismatches_api
         ];
         return $disputedTransactions;
-    }
-
-    public function compareStatus($nchlAPI)
-    {
-        if (empty($nchlAPI)) {
-            return "failed";
-        }
-
-        if ($nchlAPI['cipsTransactionDetailList']['0']['creditStatus'] == '000' || optional($nchlAPI['cipsTransactionDetailList']['0']['creditStatus']) == '999' || optional($nchlAPI['cipsTransactionDetailList']['0']['creditStatus']) == 'DEFER' &&
-            optional(($nchlAPI['debit_status']) == '000')) {
-            $nchlStatus = 'success';
-        } elseif ($nchlAPI['debitStatus'] == 'ENTR' || $nchlAPI['cipsTransactionDetailList']['0']['creditStatus'] == 'ENTR') {
-            $nchlStatus = 'success';
-        } else {
-            $nchlStatus = 'failed';
-        }
-
-        return $nchlStatus;
-    }
-
-    public function walletStatus($transaction)
-    {
-        if (empty($transaction)) {
-            return "failed";
-        }
-
-        if (($transaction->credit_status == '000' || $transaction->credit_status == '999' || $transaction->credit_status == 'DEFER') &&
-            ($transaction->debit_status == '000')) {
-            $walletStatus = 'success';
-        } elseif ($transaction->debit_status == 'ENTR' || $transaction->credit_status == 'ENTR') {
-            $walletStatus = 'success';
-        } else {
-            $walletStatus = 'failed';
-        }
-        return $walletStatus;
     }
 }

@@ -205,6 +205,12 @@
                                             <strong>Filter</strong></button>
                                     </div>
                                     <div>
+                                        <button id="compareBtn" class="btn btn-sm btn-primary float-right m-t-n-xs"
+                                                type="submit" style="margin-right: 10px;"
+                                                formaction="{{ route('paypointTransferApi.compare') }}">
+                                            <strong>Compare with API</strong></button>
+                                    </div>
+                                    <div>
                                         <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
                                                 type="submit" style="margin-right: 10px;"
                                                 formaction="{{ route('paypoint.excel') }}"><strong>Excel</strong>

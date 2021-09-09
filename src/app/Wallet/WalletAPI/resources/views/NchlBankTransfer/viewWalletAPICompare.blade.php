@@ -3,7 +3,7 @@
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Transaction Comparison for Wallet and NCHL API </h2>
+            <h2>Transaction Comparison between NCHL Bank Transfer API and Wallet</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -58,11 +58,17 @@
                                         </div>
                                     </div>
                                     <br>
+
                                     <div>
-                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
-                                                formaction="{{ route('nchlBankTransferApi.compare') }}">
+                                        {{--                                        <form action="{{ route('nchlBankTransferApiByDate.report') }}" method="post">--}}
+                                        {{--                                            @csrf--}}
+
+                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit">
                                             <strong>Filter</strong>
                                         </button>
+
+                                        {{--                                        </form>--}}
+
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
 
@@ -140,7 +146,7 @@
                             <h5>Compared Transactions from API</h5>
                         </div>
                         <div class="ibox-content">
-                            <h5><b>Total Count:</b> {{$disputedTransactions['totalTransactionCountAPI']}}</h5>
+                            <h5><b>Total Count:</b> {{count($disputedTransactions['comparedNchlAPIs'])}}</h5>
                             <h5><b>Total Amount Sum:</b> Rs. {{$disputedTransactions['totalAmountAPI']}}</h5>
                             <div class="table-responsive" id="comparedTransactionId">
                                 <table class="table table-striped table-bordered table-hover dataTables-example"
@@ -155,16 +161,16 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($disputedTransactions['nchlAPIs'] as $nchlAPI)
+                                    @foreach($disputedTransactions['comparedNchlAPIs'] as $nchlAPI)
                                         @if(!empty($nchlAPI))
                                             <tr class="gradeC">
                                                 <td>{{$loop->index+1}}</td>
-                                                <td>{{ $nchlAPI['batchId'] }}</td>
+                                                <td>{{ $nchlAPI['cipsBatchDetail']['batchId'] }}</td>
                                                 <td>
-                                                    {{ $nchlAPI['batchAmount']}}
+                                                    {{ $nchlAPI['cipsBatchDetail']['batchAmount']}}
                                                 </td>
                                                 <td>
-                                                    {{ $nchlAPI['debitStatus'] }}
+                                                    {{ $nchlAPI['cipsBatchDetail']['debitStatus'] }}
                                                 </td>
                                                 <td>{{ $nchlAPI['cipsTransactionDetailList']['0']['creditStatus'] }}</td>
                                             </tr>
@@ -196,12 +202,12 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($disputedTransactions['wallet_status_mismatches'] as $wallet_status_mismatch)
-                                        @if(!empty($wallet_status_mismatch))
+                                    @foreach($disputedTransactions['wallet_success_mismatches'] as $wallet_success_mismatch)
+                                        @if(!empty($wallet_success_mismatch))
                                             <tr>
                                                 <td>{{$loop->index+1}}</td>
-                                                <td>{{$wallet_status_mismatch->pre_transaction_id}}</td>
-                                                <td>{{$wallet_status_mismatch->transaction_id}}</td>
+                                                <td>{{$wallet_success_mismatch->pre_transaction_id}}</td>
+                                                <td>{{$wallet_success_mismatch->transaction_id}}</td>
                                             </tr>
                                         @endif
                                     @endforeach
@@ -228,12 +234,12 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($disputedTransactions['nchl_status_mismatches'] as $nchl_status_mismatch)
-                                        @if(!empty($nchl_status_mismatch))
+                                    @foreach($disputedTransactions['nchl_success_mismatches'] as $nchl_success_mismatch)
+                                        @if(!empty($nchl_success_mismatch))
                                             <tr>
                                                 <td>{{$loop->index+1}}</td>
-                                                <td>{{$nchl_status_mismatch->pre_transaction_id}}</td>
-                                                <td>{{$nchl_status_mismatch->transaction_id}}</td>
+                                                <td>{{$nchl_success_mismatch->pre_transaction_id}}</td>
+                                                <td>{{$nchl_success_mismatch->transaction_id}}</td>
                                             </tr>
                                         @endif
                                     @endforeach
@@ -376,16 +382,7 @@
 @section('scripts')
     @include('admin.asset.js.chosen')
     @include('admin.asset.js.datepicker')
-    @include('admin.asset.js.datatable')
-    {{--        <script>--}}
-    {{--            @if(!empty($_GET))--}}
-    {{--            $(document).ready(function (e) {--}}
-    {{--                let a = "Showing {{ $transactions->firstItem() }} to {{ $transactions->lastItem() }} of {{ $transactions->total() }} entries";--}}
-    {{--                $('.dataTables_info').text(a);--}}
-    {{--            });--}}
-    {{--            @endif--}}
-    {{--        </script>--}}
-
+    @include('admin.asset.js.datatableWithPaging')
     <!-- IonRangeSlider -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js"></script>
 

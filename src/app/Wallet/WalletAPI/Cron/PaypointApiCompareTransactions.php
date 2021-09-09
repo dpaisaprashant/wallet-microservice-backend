@@ -3,22 +3,23 @@
 
 namespace App\Wallet\WalletAPI\Cron;
 
-use App\Wallet\NCHL\Repository\NchlBankTransferRepository;
-use App\Wallet\WalletAPI\Repositories\NchlApiValidationRepository;
+use App\Wallet\PayPoint\Repository\PayPointRepository;
+use App\Wallet\WalletAPI\Repositories\PaypointApiValidationRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Wallet\WalletAPI\Http\Controllers\NchlControllers;
 use App\Models\DisputedApiTransaction;
 
-class NchlApiCompareTransactions
+class PaypointApiCompareTransactions
 {
 
     public function __invoke()
     {
-        $repo = new NchlBankTransferRepository(request());
+        $repo = new PayPointRepository(request());
 
-        $repository = new NchlApiValidationRepository();
+        $repository = new PaypointApiValidationRepository();
         $disputedTransactions = $repository->getDisputedTransactions(request(), $repo);
+
         try {
             $this->create();
             $this->update();
@@ -33,21 +34,22 @@ class NchlApiCompareTransactions
                 $data = [
                     'Transaction in which status is success in Wallet but not in API',
                     'Pre-Transaction ID' => $disputedTransaction->pre_transaction_id,
-                    'Batch ID' => $disputedTransaction->transaction_id
+                    'RefStan' => $disputedTransaction->refStan
                 ];
                 $val = json_encode($data);
                 Log::info($val . PHP_EOL);
             }
         }
 
-        if (!empty($disputedTransactions['nchl_success_mismatches'])) {
-            foreach ($disputedTransactions['nchl_success_mismatches'] as $disputedTransaction) {
+        if(!empty($disputedTransactions['paypoint_success_mismatches'])) {
+            foreach ($disputedTransactions['paypoint_success_mismatches'] as $disputedTransaction) {
                 //notify developers
                 if (!empty($disputedTransaction->transaction_id)) {
+
                     $data = [
-                        'Transaction in which status is success in API but not in Wallet',
+                        'Transaction in which status is success in Wallet but not in API',
                         'Pre-Transaction ID' => $disputedTransaction->pre_transaction_id,
-                        'Batch ID' => $disputedTransaction->transaction_id
+                        'RefStan' => $disputedTransaction->refStan
                     ];
                     $val = json_encode($data);
                     Log::info($val . PHP_EOL);
@@ -58,32 +60,31 @@ class NchlApiCompareTransactions
 
     public function create()
     {
-        $repo = new NchlBankTransferRepository(request());
+        $repo = new PayPointRepository(request());
 
-        $repository = new NchlApiValidationRepository();
+        $repository = new PaypointApiValidationRepository();
         $disputedTransactions = $repository->getDisputedTransactions(request(), $repo);
         Log::info('===================================================================Adding into disputed_api_transactions Table======================================================');
         foreach ($disputedTransactions['wallet_status_mismatches'] as $disputedTransaction) {
             DisputedApiTransaction::firstOrCreate([
                 'pre_transaction_id' => $disputedTransaction->pre_transaction_id,
-                'transaction_id' => $disputedTransaction->transaction_id,
+                'ref_stan' => $disputedTransaction->refStan,
             ]);
         }
     }
 
     public function update()
     {
-        $repo = new NchlBankTransferRepository(request());
+        $repo = new PayPointRepository(request());
 
-        $repository = new NchlApiValidationRepository();
+        $repository = new PaypointApiValidationRepository();
         $disputedTransactions = $repository->getDisputedTransactions(request(), $repo);
 
         foreach ($disputedTransactions['wallet_status_mismatches_api'] as $disputedTransaction) {
             $jsonResponse = json_encode($disputedTransaction);
-            DisputedApiTransaction::where('transaction_id','=',$disputedTransaction['cipsBatchDetail']['batchId'])->update([
+            DisputedApiTransaction::where('ref_stan','=',$disputedTransaction['ResultMessage']['Transaction']['RefStan'])->update([
                 'api_response' => $jsonResponse,
             ]);
         }
     }
-
 }

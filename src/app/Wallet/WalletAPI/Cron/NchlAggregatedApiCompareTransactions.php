@@ -3,22 +3,23 @@
 
 namespace App\Wallet\WalletAPI\Cron;
 
-use App\Wallet\NCHL\Repository\NchlBankTransferRepository;
-use App\Wallet\WalletAPI\Repositories\NchlApiValidationRepository;
+use App\Wallet\NCHL\Repository\NchlAggregatedPaymentRepository;
+use App\Wallet\WalletAPI\Repositories\NchlAggregatedApiValidationRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Wallet\WalletAPI\Http\Controllers\NchlControllers;
 use App\Models\DisputedApiTransaction;
 
-class NchlApiCompareTransactions
+class NchlAggregatedApiCompareTransactions
 {
 
     public function __invoke()
     {
-        $repo = new NchlBankTransferRepository(request());
+        $repo = new NchlAggregatedPaymentRepository(request());
 
-        $repository = new NchlApiValidationRepository();
+        $repository = new NchlAggregatedApiValidationRepository();
         $disputedTransactions = $repository->getDisputedTransactions(request(), $repo);
+
         try {
             $this->create();
             $this->update();
@@ -41,9 +42,11 @@ class NchlApiCompareTransactions
         }
 
         if (!empty($disputedTransactions['nchl_success_mismatches'])) {
+
             foreach ($disputedTransactions['nchl_success_mismatches'] as $disputedTransaction) {
                 //notify developers
                 if (!empty($disputedTransaction->transaction_id)) {
+
                     $data = [
                         'Transaction in which status is success in API but not in Wallet',
                         'Pre-Transaction ID' => $disputedTransaction->pre_transaction_id,
@@ -58,9 +61,9 @@ class NchlApiCompareTransactions
 
     public function create()
     {
-        $repo = new NchlBankTransferRepository(request());
+        $repo = new NchlAggregatedPaymentRepository(request());
 
-        $repository = new NchlApiValidationRepository();
+        $repository = new NchlAggregatedApiValidationRepository();
         $disputedTransactions = $repository->getDisputedTransactions(request(), $repo);
         Log::info('===================================================================Adding into disputed_api_transactions Table======================================================');
         foreach ($disputedTransactions['wallet_status_mismatches'] as $disputedTransaction) {
@@ -73,9 +76,9 @@ class NchlApiCompareTransactions
 
     public function update()
     {
-        $repo = new NchlBankTransferRepository(request());
+        $repo = new NchlAggregatedPaymentRepository(request());
 
-        $repository = new NchlApiValidationRepository();
+        $repository = new NchlAggregatedApiValidationRepository();
         $disputedTransactions = $repository->getDisputedTransactions(request(), $repo);
 
         foreach ($disputedTransactions['wallet_status_mismatches_api'] as $disputedTransaction) {

@@ -212,7 +212,6 @@ class BackendWalletAPIMicroservice extends BackendWalletAPIJSONAbstract
         $this->preRequest();
         $response = $this->jsonResponse = $this->makeRequest();
         Log::info("Response Json", [$response]);
-        dd($response);
         return $response;
     }
 

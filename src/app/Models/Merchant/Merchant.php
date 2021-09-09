@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
+use App\Models\User;
 
 class Merchant extends Model
 {
@@ -171,6 +172,5 @@ class Merchant extends Model
     {
         return $this->morphMany(SingleUserCommission::class, 'userCommissionable', 'user_type', 'user_id', 'id');
     }
-
 
 }

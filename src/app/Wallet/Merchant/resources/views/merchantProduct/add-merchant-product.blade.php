@@ -45,15 +45,17 @@
                                 <div class="col-sm-10">
                                     <select class="form-control" name="merchant_id">
                                         @if(!empty($merchants))
+                                            <option value="" disabled selected>Select Merchant</option>
                                             @foreach($merchants as $merchant)
                                                 @if(!empty($merchant->id))
                                                     <option value="{{$merchant->id}}">
-                                                        Name : {{$merchant->user->name}} | Mobile Number : {{$merchant->user->mobile_no}}
+                                                        Name : {{$merchant->user->name}} | Mobile Number
+                                                        : {{$merchant->user->mobile_no}}
                                                     </option>
                                                 @endif
                                             @endforeach
                                         @else
-                                            <option value= "{{$merchant->id=null}}">No Merchants Found.</option>
+                                            <option value="">No Merchants Found.</option>
                                         @endif
                                     </select>
                                 </div>
@@ -64,16 +66,16 @@
                                 <div class="col-sm-10">
                                     <textarea id="json-input" name="json_data" autocomplete="off">
 {
-  "merchant_id": 101,
-  "merchant_name": "Example",
-  "products": [{
-    "name": "gas",
+  "products": [
+    {
+    "name": "example",
     "price": 600
     },
     {
-    "name":"water",
+    "name":"example 2",
     "price": 100
-    }]
+    }
+    ]
 }
                                     </textarea>
                                     <button id="translate" type="button">Translate Into Json</button>

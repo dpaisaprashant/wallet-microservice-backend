@@ -324,6 +324,14 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/refunds', 'RefundController@index')->name('refund.index')->middleware('permission:Refund view');
         Route::match(['get', 'post'], '/refund/create', 'RefundController@create')->name('refund.create')->middleware('permission:Refund create');
 
+
+        /**
+         * Lucky Winner
+         */
+        Route::get('/lucky-winners', 'LuckyWinnerController@index')->name('luckyWinner.index')->middleware('permission:Lucky winner view');
+        Route::match(['get', 'post'], '/lucky-winners/create', 'LuckyWinnerController@create')->name('luckyWinner.create')->middleware('permission:Lucky winner create');
+
+
         /**
          * Repost transaction
          */

@@ -57,7 +57,12 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <br>
+                                    <div class="alert alert-warning" style="width: 100%">
+                                        <i class="fa fa-info-circle"></i>&nbsp; <b>Note: </b><br>
+                                        Maximum allowed date range is 7 days for PayPoint API.<br>
+                                    </div>
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
                                                 formaction="{{ route('paypointTransferApi.compare') }}"><strong>Filter</strong>

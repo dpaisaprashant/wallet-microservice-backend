@@ -425,7 +425,10 @@ class RolesAndPermissionsSeeder extends Seeder
             'Edit merchant product',
             'Delete merchant product',
 
-
+            //For APIs
+            'View nchl api',
+            'View nchl aggregated api',
+            'View paypoint api',
 
             ];
 

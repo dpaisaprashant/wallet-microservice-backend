@@ -2,11 +2,13 @@
 
 namespace App\Wallet\WalletAPI\Repositories;
 
+use App\Models\DisputedApiTransaction;
 use App\Wallet\WalletAPI\BackendWalletAPIMicroservice;
 use App\Wallet\WalletAPI\Microservice\PaypointMicroservice;
 use Illuminate\Http\Request;
 use App\Wallet\Paypoint\Repository\PayPointRepository;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class PaypointApiValidationRepository
 {
@@ -49,7 +51,7 @@ class PaypointApiValidationRepository
         }
 
         $paypointAPIs=$paypointAPI['ResultMessage']['Transaction'];
-
+//dd($transactions);
         foreach ($transactions as $transaction) {
             foreach ($paypointAPI['ResultMessage']['Transaction'] as $paypointAPITransaction) {
                 if ($paypointAPITransaction['RefStan'] == $transaction->refStan) {
@@ -67,7 +69,7 @@ class PaypointApiValidationRepository
                     }
                     if ($transaction->code == 000 && ($paypointAPITransaction['Status'] ?? 4) != 1 || $transaction->code != 000 && ($paypointAPITransaction['ResultMessage']['Transaction']['Status'] ?? 'no data') == 000) {
                         $wallet_status_mismatches[] = $transaction;
-                        $wallet_status_mismatches_api[] = $paypointAPI;
+                        $wallet_status_mismatches_api[] = $paypointAPITransaction;
                     }
                 }
             }
@@ -101,6 +103,7 @@ class PaypointApiValidationRepository
             'wallet_status_mismatches' => $wallet_status_mismatches,
             'wallet_status_mismatches_api' => $wallet_status_mismatches_api
         ];
+
         return $disputedTransactions;
     }
 }

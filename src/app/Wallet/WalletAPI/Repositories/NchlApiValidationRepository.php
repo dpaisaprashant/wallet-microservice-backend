@@ -42,7 +42,7 @@ class NchlApiValidationRepository
         if (!empty($_GET['from']) && !empty($_GET['to'])) {
             $transactions = $repository->latestTransactionsUnpaginated()->whereBetween('created_at', [$this->from, $this->to])->get();
         } else {
-            $transactions = $repository->latestTransactionsUnpaginated()->whereBetween('created_at', [Carbon::now()->subMonths(6)->format('Y-m-d'), Carbon::now()->format('Y-m-d')])->get();
+            $transactions = $repository->latestTransactionsUnpaginated()->whereBetween('created_at', [Carbon::now()->subDays(7)->format('Y-m-d'), Carbon::now()->format('Y-m-d')])->get();
         }
         $nchlAPIs = array();
         $nchlMicroservice = new NchlMicroservice();

@@ -65,6 +65,7 @@ class PaypointApiCompareTransactions
         $repository = new PaypointApiValidationRepository();
         $disputedTransactions = $repository->getDisputedTransactions(request(), $repo);
         Log::info('===================================================================Adding into disputed_api_transactions Table======================================================');
+        Log::info('tessasdasd',[$disputedTransactions['wallet_status_mismatches']]);
         foreach ($disputedTransactions['wallet_status_mismatches'] as $disputedTransaction) {
             DisputedApiTransaction::firstOrCreate([
                 'pre_transaction_id' => $disputedTransaction->pre_transaction_id,
@@ -82,7 +83,7 @@ class PaypointApiCompareTransactions
 
         foreach ($disputedTransactions['wallet_status_mismatches_api'] as $disputedTransaction) {
             $jsonResponse = json_encode($disputedTransaction);
-            DisputedApiTransaction::where('ref_stan','=',$disputedTransaction['ResultMessage']['Transaction']['RefStan'])->update([
+            DisputedApiTransaction::where('ref_stan','=',$disputedTransaction['RefStan'])->update([
                 'api_response' => $jsonResponse,
             ]);
         }

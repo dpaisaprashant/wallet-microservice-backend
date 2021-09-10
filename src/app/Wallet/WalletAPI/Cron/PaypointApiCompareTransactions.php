@@ -65,7 +65,7 @@ class PaypointApiCompareTransactions
         $repository = new PaypointApiValidationRepository();
         $disputedTransactions = $repository->getDisputedTransactions(request(), $repo);
         Log::info('===================================================================Adding into disputed_api_transactions Table======================================================');
-        Log::info('tessasdasd',[$disputedTransactions['wallet_status_mismatches']]);
+
         foreach ($disputedTransactions['wallet_status_mismatches'] as $disputedTransaction) {
             DisputedApiTransaction::firstOrCreate([
                 'pre_transaction_id' => $disputedTransaction->pre_transaction_id,

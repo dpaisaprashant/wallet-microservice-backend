@@ -27,17 +27,16 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
     public function __construct(Request $request)
     {
         parent::__construct($request);
-        $this->from = date('Y-m-d', strtotime(str_replace(',', ' ', $request->select_date)));
+        $this->from = date('Y-m-d H:i:s', strtotime(str_replace(',', ' ', $request->select_date)));
         $this->to = date('Y-m-d', strtotime(str_replace(',', ' ', $request->to_transaction_event)));
-        $this->sixMonthBeforeFromDate = Carbon::parse($this->from)->subMonths(6)->toDateString();
-        $this->twelveMonthBeforeFromDate = Carbon::parse($this->from)->subMonths(12)->toDateString();
+        $this->sixMonthBeforeFromDate = Carbon::parse($this->from)->subMonths(6)->toDateTimeString();
+        $this->twelveMonthBeforeFromDate = Carbon::parse($this->from)->subMonths(12)->toDateTimeString();
     }
 
     private function activeCustomerBuilder()
     {
 //        $selectedDate= Carbon::parse($this->from)->endOfDay()->toDateString();
 //        dd($selectedDate);
-
         $activeUsers = \DB::connection('dpaisa')->select("SELECT * FROM (
             SELECT transaction_events.id as latest_transaction_id,transaction_events.user_id,transaction_events.created_at as latest_transaction_date,transaction_events.balance,transaction_events.bonus_balance FROM (
         SELECT MAX(id) as latest_transaction_id,user_id,MAX(created_at) as latest_transaction_date from (SELECT * FROM transaction_events WHERE created_at <= '$this->from') as transaction_in_range GROUP BY user_id
@@ -56,9 +55,6 @@ class ActiveInactiveCustomerReportRepository extends AbstractReportRepository
         ))
             OR (latest_transaction_in_timeperiod.latest_transaction_id IS NOT NULL)
     	);");
-
-
-
 
         return $activeUsers;
 

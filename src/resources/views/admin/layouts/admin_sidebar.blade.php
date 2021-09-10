@@ -151,6 +151,14 @@ $url = url()->current();
                 </li>
             @endif
 
+            @if(auth()->user()->hasPermissionTo('View merchant product'))
+
+                <li @if(preg_match('/merchant-product/i', $url)) class="active" @endif>
+                    <a href="{{ route('merchant.product.list') }}"><i class="fa fa-shopping-bag"></i> <span
+                            class="nav-label">Merchant Products</span></a>
+                </li>
+            @endif
+
 
             @can('Deactivate users view')
                 <li @if($url == route('user.deactivate.list')) class="active" @endif>

@@ -412,11 +412,20 @@ class RolesAndPermissionsSeeder extends Seeder
             'Create non real time bank payment',
             'View non real time bank payment',
 
+
             //Scheme
             'View scheme',
             'Create scheme',
             'Edit scheme',
-            'Delete scheme'
+            'Delete scheme',
+
+            //Merchant Products
+            'View merchant product',
+            'Add merchant product',
+            'Edit merchant product',
+            'Delete merchant product',
+
+
 
             ];
 

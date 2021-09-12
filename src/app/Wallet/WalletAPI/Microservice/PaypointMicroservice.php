@@ -28,12 +28,11 @@ class PaypointMicroservice
             ->setDescription("PAYPOINT Transaction by Date")
             ->setVendor("PAYPOINT")
             ->setMicroservice("PAYPOINT")
-            ->setUrl("/transaction/get")
+            ->setUrl("/transaction/get/by-date")
             ->setStartDate($dateFrom)
             ->setEndDate($dateTo);
         $response = $microservice->processRequest();
         $paypointAPI = json_decode($response, true);
-
         return $paypointAPI;
     }
 

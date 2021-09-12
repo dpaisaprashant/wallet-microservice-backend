@@ -40,7 +40,7 @@
         });
     </script>
 
-    //For Second Date 
+{{--    //For Second Date --}}
     <script>
         $(".date_from_load").datepicker({
             autoclose: true,

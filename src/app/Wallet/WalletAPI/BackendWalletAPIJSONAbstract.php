@@ -63,7 +63,6 @@ abstract class BackendWalletAPIJSONAbstract
             $requestJson = (array_merge(request()->all(), $this->apiParams));
             Log::info("Request Json", $requestJson);
             $client = new Client();
-
             $response = $client->request($this->httpMethod, $this->baseUrl . $this->url, [
                 'json' => $requestJson
             ]);

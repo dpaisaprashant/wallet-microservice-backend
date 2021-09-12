@@ -44,7 +44,7 @@
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Select Merchant</label>
                                 <div class="col-sm-10">
-                                    <select class="form-control" name="merchant_id">
+                                    <select class="form-control chosen-select" name="merchant_id">
                                         @if(!empty($merchants))
                                             @foreach($merchants as $merchant)
                                                 @if(!empty($merchant->user->id))

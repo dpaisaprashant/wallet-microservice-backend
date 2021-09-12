@@ -883,7 +883,7 @@ $url = url()->current();
             @endif
 
             @if(auth()->user()->hasAnyPermission(['View wallet service', 'Yearly report view','Report paypoint','Report npay','Report nchl load','Report referral','Report register using referral user','Report subscriber daily','Report reconciliation','Report nrb active and inactive user','Report non bank payment','Report wallet end balance','Report admin kyc','Report commission']))
-                <li @if(preg_match('/report/i', $url)) class="active" @endif>
+                <li @if(preg_match('/developer/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">Developers option</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">

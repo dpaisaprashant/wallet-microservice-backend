@@ -104,6 +104,11 @@ class FCMNotifier
             ->setChannelId('12345');
 
         $dataBuilder = new PayloadDataBuilder();
+
+        if (isset($this->body['image'])) {
+            $finalData['fcm_options'] = ["image" => $this->body['image']];
+        }
+
         $dataBuilder->addData($this->body);
 
         $option = $optionBuilder->build();
@@ -118,9 +123,6 @@ class FCMNotifier
 
         if ($this->desktop_token && strtolower($this->desktop_token) !==  "no fcm") {
             $finalData = array_merge($this->body, ["desktop" => true]);
-            if (isset($this->body['image'])) {
-                $finalData['fcm_options'] = ["image" => $this->body['image']];
-            }
 
             $dataBuilder = new PayloadDataBuilder();
             $dataBuilder->addData($finalData);

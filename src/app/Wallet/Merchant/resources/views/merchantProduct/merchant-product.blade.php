@@ -109,9 +109,11 @@
     @include('admin.asset.css.datepicker')
     @include('admin.asset.css.datatable')
     @include('admin.asset.css.sweetalert')
+    @include('admin.asset.css.select2')
 @endsection
 
 @section('scripts')
+    @include('admin.asset.js.select2')
     @include('admin.asset.js.datepicker')
     @include('admin.asset.js.chosen')
     @include('admin.asset.js.datatableWithPaging')

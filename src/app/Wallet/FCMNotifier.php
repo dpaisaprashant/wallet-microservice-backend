@@ -80,6 +80,9 @@ class FCMNotifier
      */
     public function __construct($title, $description, $body,$token, $desktopToken)
     {
+        //before: "apility/laravel-fcm": "^1.4.0",
+        //now: "code-lts/laravel-fcm": "1.6.*",
+
         $this->title = $title;
         $this->description = $description;
         $this->body = $body;
@@ -100,14 +103,15 @@ class FCMNotifier
 
         $notificationBuilder = new PayloadNotificationBuilder($this->title);
         $notificationBuilder->setBody($this->description)
+            ->setImage($this->body["image"] ?? null)
             ->setSound('default')
             ->setChannelId('12345');
 
         $dataBuilder = new PayloadDataBuilder();
 
-        if (isset($this->body['image'])) {
+        /*if (isset($this->body['image'])) {
             $finalData['fcm_options'] = ["image" => $this->body['image']];
-        }
+        }*/
 
         $dataBuilder->addData($this->body);
 

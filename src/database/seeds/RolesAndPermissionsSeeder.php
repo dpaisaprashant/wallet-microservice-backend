@@ -266,6 +266,8 @@ class RolesAndPermissionsSeeder extends Seeder
             //agents
             'Agent view',
             'Agent create',
+            'Agent edit',
+            'Agent delete',
             'Agent type view',
             'Agent type create',
 

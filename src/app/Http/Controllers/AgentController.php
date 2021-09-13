@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminAlteredAgent;
 use App\Models\Agent;
 use App\Models\AgentType;
 use App\Models\Role;
@@ -30,7 +31,7 @@ class AgentController extends Controller
         $roles = Role::where('name', 'like', '%agent')->get();
         $users = User::doesnthave('agent')->doesnthave('merchant')->latest()->get();
         $agentTypes = AgentType::with('parentAgentType')->latest()->get();
-
+        $parentAgents = Agent::with('user')->latest()->get();
         if ($request->isMethod('POST')) {
             if ( ! $this->repository->create()) {
                 return redirect()->back()->with('error', 'Unsuccessful please try again');
@@ -38,20 +39,24 @@ class AgentController extends Controller
             return redirect()->route('agent.view');
         }
 
-        return view('admin.agent.create')->with(compact('roles', 'users', 'agentTypes'));
+        return view('admin.agent.create')->with(compact('roles', 'users', 'agentTypes','parentAgents'));
     }
 
     public function edit(Request $request, $id)
     {
         $agent = Agent::with('user', 'agentType', 'createdBy', 'codeUsed')->findOrFail($id);
         $agentTypes = AgentType::latest()->get();
+        $parentAgents = Agent::with('user')->latest()->get();
         if ($request->isMethod('POST')) {
-            $this->repository->edit($agent);
-
-            return redirect()->route('agent.view')->with('success', 'Agent updated successfully');
+            if($this->repository->edit($agent)) {
+                return redirect()->route('agent.view')->with('success', 'Agent updated successfully');
+            }
+            else{
+                return redirect()->back()->with('error', 'Unsuccessful please try again');
+            }
         }
 
-        return view('admin.agent.edit')->with(compact('agent', 'agentTypes'));
+        return view('admin.agent.edit')->with(compact('agent', 'agentTypes','parentAgents'));
     }
 
     public function delete(Request $request, $userId)
@@ -61,4 +66,11 @@ class AgentController extends Controller
         Agent::whereUserId($userId)->delete();
         return redirect()->back();
     }
+
+    public function showAdminAlteredAgents()
+    {
+        $adminAlteredAgents = AdminAlteredAgent::filter(request())->with('admin','agent')->latest()->paginate(10);
+        return view('admin.agent.AdminAlteredAgent')->with(compact('adminAlteredAgents'));
+    }
+
 }

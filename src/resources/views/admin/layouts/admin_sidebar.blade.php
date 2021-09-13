@@ -264,6 +264,7 @@ $url = url()->current();
                         @can('Agent create')
                             <li><a href="{{ route('agent.create') }}">Create Agent</a></li>
                         @endcan
+                        <li><a href="{{route('agent.AdminAlteredAgents')}}">Admin Altered Agents</a></li>
                     </ul>
                 </li>
             @endif

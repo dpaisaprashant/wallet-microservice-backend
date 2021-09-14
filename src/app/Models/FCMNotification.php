@@ -21,7 +21,8 @@ class FCMNotification extends Model
         'message',
         'data',
         'notification_type',
-        'backend_user_id'
+        'backend_user_id',
+        'image',
     ];
 
     public function scopeFilter(Builder $builder, Request $request, array $filters = [])

@@ -199,6 +199,7 @@ Route::group(['prefix' => 'admin'], function () {
 
         //(NPS)
         Route::get('/transaction/nps','TransactionController@nps')->name('nps')->middleware('permission:Transaction nps view');
+        Route::get('/transaction/nps/detail/{id}','TransactionController@npsDetail')->name('nps.detail');
         //paypoint (Utility)
         Route::get('/transaction/paypoint', 'TransactionController@paypoint')->name('paypoint')->middleware('permission:Paypoint view');
         Route::get('transaction/paypoint/detail/{id}', 'TransactionController@paypointDetail')->name('paypoint.detail')->middleware('permission:Paypoint detail|Failed paypoint detail');

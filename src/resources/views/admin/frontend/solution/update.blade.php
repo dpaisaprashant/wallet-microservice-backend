@@ -28,10 +28,22 @@
                     <div class="ibox-content">
                         <form method="post" action="{{route('frontend.solution.update',$solution->id)}}" enctype="multipart/form-data">@csrf
                             <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Icon</label>
+                                <label class="col-sm-2 col-form-label">Image</label>
                                 <div class="col-sm-10">
-                                    <input name="icon" type="text"
-                                           class="form-control" value="{{$solution->icon}}" required>
+                                    <div class="custom-file">
+                                        <input name="image" id="logo1" type="file" class="custom-file-input">
+                                        <label for="logo1" class="custom-file-label">Choose file...</label>
+                                    </div>
+
+                                    @if(!empty($solution->image))
+                                        <div class="row" style="margin-top: 20px;">
+                                            <div class="col-md-4">
+                                                <img class="d-block w-100"
+                                                     src="{{ config('dpaisa-api-url.public_document_url') . $solution->image }}"
+                                                     alt="Solution Image">
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
 

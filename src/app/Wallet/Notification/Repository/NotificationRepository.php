@@ -89,15 +89,20 @@ class NotificationRepository
         //event(new SendFcmNotification($user, $this->request->title, $this->request->message, ['a_data' => 'my_data'], 'Single user notification'));
     }
 
-    public function createUserNotification($user)
+    public function createUserNotification($user,$responseData)
     {
+        $imageUrl = null;
+        if (isset($responseData['image'])) {
+            $imageUrl = config('dpaisa-api-url.public_document_url').$responseData['image'];
+        }
         $notificationRequest = [
             'user_id' => $user->id,
             'title' => $this->request->title,
             'message' => $this->request->message,
             'data' => json_encode(['a_data' => 'my_data']),
             'notification_type' => 'Single user notification',
-            'backend_user_id' => auth()->user()->id
+            'backend_user_id' => auth()->user()->id,
+            'image' => $imageUrl,
         ];
 
         try {
@@ -124,17 +129,21 @@ class NotificationRepository
         //event(new SendFcmTopicNotification($topics, $title, $message, [$title => $message], 'TOPIC NOTIFICATION'));
     }
 
-    public function createTopicNotifications()
+    public function createTopicNotifications($responseData)
     {
+        $imageUrl = null;
+        if (isset($responseData['image'])) {
+            $imageUrl = config('dpaisa-api-url.public_document_url').$responseData['image'];
+        }
         foreach ($this->request->topics as $topic) {
-
             $notificationRequest = [
                 'user_id' => '',
                 'title' => $this->request->title,
                 'message' => $this->request->message,
                 'data' => json_encode(['a_data' => 'my_data']),
                 'notification_type' => $topic,
-                'backend_user_id' => auth()->user()->id
+                'backend_user_id' => auth()->user()->id,
+                'image' => $imageUrl,
             ];
 
             try {

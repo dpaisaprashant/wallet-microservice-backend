@@ -45,7 +45,7 @@ class NotificationController extends Controller
             $responseData = $this->uploadImageToCoreBase64($this->disk, $data, $request);
             $this->repository->sendTopicNotification($responseData);
 
-            if (!$this->repository->createTopicNotifications()) {
+            if (!$this->repository->createTopicNotifications($responseData)) {
                 return redirect()->route('notification.view')->with('error', 'notification not sent successfully');
             }
 
@@ -66,7 +66,7 @@ class NotificationController extends Controller
 
         $this->repository->sendUserNotification($user,$responseData);
 
-        if (!$this->repository->createUserNotification($user)) {
+        if (!$this->repository->createUserNotification($user,$responseData)) {
             return redirect(route('user.profile', $user->id))->with('error', 'Notification not sent successfully');
         }
 

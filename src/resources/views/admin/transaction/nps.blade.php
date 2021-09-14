@@ -270,7 +270,14 @@
 
                                             <td>{{$npsLoadTransaction->created_at}}</td>
                                             <td>{{$npsLoadTransaction->response}}</td>
-                                            <td>Action</td>
+                                            <td>
+                                                @include('admin.transaction.nps.detail', ['transaction' => $npsLoadTransaction])
+{{--                                                todo: add permission--}}
+                                                    <a href="{{ route('nps.detail', $npsLoadTransaction->id) }}">
+                                                        <button class="btn btn-primary btn-icon" type="button"><i
+                                                                class="fa fa-eye"></i></button>
+                                                    </a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>

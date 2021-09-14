@@ -36,6 +36,7 @@ class UserKYC extends Model
     const DOCUMENT_PASSPORT = 'p';
     const DOCUMENT_LICENSE = 'l';
 
+    protected $guarded = [];
 
     public function scopeFilter(Builder $builder, Request $request, array $filters = [])
     {
@@ -89,6 +90,10 @@ class UserKYC extends Model
         } elseif ($this->document_type == self::DOCUMENT_PASSPORT) {
             return 'Passport';
         }
+    }
+
+    public function adminUpdateKyc(){
+        return $this->hasMany(AdminUpdateKyc::class,'user_kyc_id');
     }
 
 }

@@ -9,16 +9,19 @@ use App\Wallet\WalletAPI\Http\Controllers\NonRealTimeBankTransferController\NonR
 Route::group(['prefix' => 'admin', 'middleware' => ['web','auth']], function () {
 
     //NCHL Bank Transfer
-    Route::post('/transaction/nchl/report/{id}', [NCHLController::class, 'byId'])->name('nchlBankTransferApi.report');
-    Route::get('/transaction/nchl/report/compare', [NCHLController::class, 'compareTransactions'])->name('nchlBankTransferApi.compare');
+    Route::post('/transaction/nchl/report/{id}', [NCHLController::class, 'byId'])->name('nchlBankTransferApi.report')->middleware('permission:View nchl api');
+    Route::get('/transaction/nchl/report/compare', [NCHLController::class, 'compareTransactions'])->name('nchlBankTransferApi.compare')->middleware('permission:View nchl api');
+//    Route::post('/transaction/nchl/report/by-date', [NCHLController::class, 'byDate'])->name('nchlBankTransferApiByDate.report');
+
 
     //NCHL Aggregated Transfer
-    Route::post('/transaction/nchl/aggregated/report/{id}', [NchlAggregatedController::class, 'byId'])->name('nchlAggregatedTransferApi.report');
-    Route::get('/transaction/nchl/aggregated/report/compare', [NchlAggregatedController::class, 'compareTransactions'])->name('nchlAggregatedTransferApi.compare');
+    Route::post('/transaction/nchl/aggregated/report/{id}', [NchlAggregatedController::class, 'byId'])->name('nchlAggregatedTransferApi.report')->middleware('permission:View nchl aggregated api');
+    Route::get('/transaction/nchl/aggregated/report/compare', [NchlAggregatedController::class, 'compareTransactions'])->name('nchlAggregatedTransferApi.compare')->middleware('permission:View nchl aggregated api');
+//    Route::post('/transaction/nchl/aggregated/report/by-date', [NchlAggregatedController::class, 'byDate'])->name('nchlAggregatedTransferApiByDate.report');
 
     //Paypoint Bank Transfer
-    Route::post('/transaction/paypoint/report/{id}', [PaypointController::class, 'byId'])->name('paypointTransferApi.report');
-    Route::get('/transaction/paypoint/report/compare', [PaypointController::class, 'compareTransactions'])->name('paypointTransferApi.compare');
+    Route::post('/transaction/paypoint/report/{id}', [PaypointController::class, 'byId'])->name('paypointTransferApi.report')->middleware('permission:View paypoint api');
+    Route::get('/transaction/paypoint/report/compare', [PaypointController::class, 'compareTransactions'])->name('paypointTransferApi.compare')->middleware('permission:View paypoint api');
 
     //Non real time bank transfer
     Route::get('/non-real-time-bank-transfer',[NonRealTimeBankTransferController::class,'index'])->name('nonRealTime.index');
@@ -30,7 +33,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web','auth']], function () 
 
 });
 
-//Route::post('/nchl/transaction/report/{id}', [PaypointController::class, 'byId'])->name('walletapi.report');
 
 
 

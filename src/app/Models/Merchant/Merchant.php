@@ -9,6 +9,7 @@ use App\Models\Architecture\SingleUserCommission;
 use App\Models\MerchantBankAccount;
 use App\Models\MerchantNchlBankTransfer;
 use App\Models\MerchantNchlLoadTransaction;
+use App\Models\MerchantReseller;
 use App\Models\MerchantTransaction;
 use App\Models\MerchantTransactionEvent;
 use App\Models\UserType;
@@ -18,6 +19,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
+use App\Models\User;
 
 class Merchant extends Model
 {
@@ -47,6 +49,10 @@ class Merchant extends Model
     public function kyc()
     {
         return $this->hasOne(MerchantKYC::class);
+    }
+
+    public function merchantReseller(){
+        return $this->hasOne(MerchantReseller::class,'merchant_id','id');
     }
 
     public function nchlBankTransfers()
@@ -171,6 +177,5 @@ class Merchant extends Model
     {
         return $this->morphMany(SingleUserCommission::class, 'userCommissionable', 'user_type', 'user_id', 'id');
     }
-
 
 }

@@ -19,7 +19,7 @@ class CreateFrontendServicesTable extends Migration
                 $table->string('title');
                 $table->string('icon')->nullable();
                 $table->string('image')->nullable();
-                $table->text('description');
+                $table->text('description')->nullable();
                 $table->timestamps();
             });
         }

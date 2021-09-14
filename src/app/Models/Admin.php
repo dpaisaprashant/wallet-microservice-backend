@@ -120,7 +120,12 @@ class Admin extends Authenticatable
         return UserKYC::with('user')->orderBy('updated_at', 'desc')->filter($request)->paginate(15);
     }
 
+    public function adminUpdateKyc(){
+        return $this->hasMany(AdminUpdateKyc::class,'admin_id');
+    }
 
-
+    public function adminAlteredAgent(){
+        return $this->hasMany(AdminAlteredAgent::class, 'admin_id');
+    }
 
 }

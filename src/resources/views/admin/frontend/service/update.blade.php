@@ -58,7 +58,7 @@
                                         <div class="row" style="margin-top: 20px;">
                                             <div class="col-md-4">
                                                 <img class="d-block w-100"
-                                                     src="{{ asset('storage/uploads/frontend/' . $service->image) }}"
+                                                     src="{{ config('dpaisa-api-url.public_document_url') . $service->image }}"
                                                      alt="First slide">
                                             </div>
                                         </div>
@@ -72,7 +72,7 @@
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Description</label>
                                 <div class="col-sm-10">
-                                    <textarea name="description" class="form-control" required>
+                                    <textarea name="description" class="form-control">
                                         {!! $service->description !!}
                                     </textarea>
                                 </div>
@@ -92,9 +92,13 @@
         </div>
     </div>
 @endsection
+@section('styles')
+    @include('admin.asset.css.icheck')
+@endsection
 
 
 @section('scripts')
+    @include('admin.asset.js.icheck')
     <script>
         $('.custom-file-input').on('change', function () {
             let fileName = $(this).val().split('\\').pop();

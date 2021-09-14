@@ -243,6 +243,7 @@
                                         </td>
                                         <td>Rs. {{ $user->wallet->balance }}</td>
 
+
 {{--
                                         <td>Rs. {{ $user->getTotalPaymentAmount() }}</td>
 
@@ -267,18 +268,22 @@
                                                    title="user transactions"><i class="fa fa-credit-card"></i></a>
                                             @endcan
 
-                                            <a style="margin-top: 5px;" href="{{route('agent.edit', $user->agent->id)}}"
-                                               class="btn btn-sm btn-icon btn-success m-t-n-xs" title="Edit Agent"><i
-                                                    class="fa fa-edit"></i></a>
+                                            @can('Agent edit')
+                                                <a style="margin-top: 5px;" href="{{route('agent.edit', $user->agent->id)}}"
+                                                   class="btn btn-sm btn-icon btn-success m-t-n-xs" title="Edit Agent"><i
+                                                        class="fa fa-edit"></i></a>
+                                            @endcan
 
-                                            <form action="{{ route('agent.delete', $user->id) }}" method="post">
-                                                @csrf
-                                                <button style="margin-top: 5px;"
-                                                        class="reset btn btn-sm btn-icon btn-danger m-t-n-xs"
-                                                        rel="{{ $user->id }}"><i class="fa fa-trash"></i></button>
-                                                <button id="resetBtn-{{ $user->id }}" style="display: none"
-                                                        type="submit"><strong>Reset Password</strong></button>
-                                            </form>
+                                            @can('Agent delete')
+                                                <form action="{{ route('agent.delete', $user->id) }}" method="post">
+                                                    @csrf
+                                                    <button style="margin-top: 5px;"
+                                                            class="reset btn btn-sm btn-icon btn-danger m-t-n-xs"
+                                                            rel="{{ $user->id }}"><i class="fa fa-trash"></i></button>
+                                                    <button id="resetBtn-{{ $user->id }}" style="display: none"
+                                                            type="submit"><strong>Reset Password</strong></button>
+                                                </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

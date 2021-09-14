@@ -19,6 +19,7 @@ class CreateFrontendAboutsTable extends Migration
                 $table->string('title');
                 $table->string('image');
                 $table->text('description');
+                $table->string('belongs_to');
                 $table->timestamps();
             });
         }
@@ -31,6 +32,6 @@ class CreateFrontendAboutsTable extends Migration
      */
     public function down()
     {
-        Schema::connection('dpasia')->dropIfExists('frontend_abouts');
+        Schema::connection('dpaisa')->dropIfExists('frontend_abouts');
     }
 }

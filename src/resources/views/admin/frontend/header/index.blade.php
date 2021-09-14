@@ -44,13 +44,15 @@
                                 </div>
                             </div>
 
-                            <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Sub Title</label>
-                                <div class="col-sm-10">
-                                    <input value="{{ $header->sub_title ?? '' }}" name="sub_title" type="text"
-                                           class="form-control" required>
+                            @if(strtolower(config('app.'.'name')) == 'dpaisa'|| strtolower(config('app.'.'name')) == 'master')
+                                <div class="form-group  row">
+                                    <label class="col-sm-2 col-form-label">Sub Title</label>
+                                    <div class="col-sm-10">
+                                        <input value="{{ $header->sub_title ?? '' }}" name="sub_title" type="text"
+                                               class="form-control" required>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
 
                                 <hr class="hr-line-dashed">
 
@@ -73,7 +75,7 @@
                                         <div class="row" style="margin-top: 20px;">
                                             <div class="col-md-4">
                                                 <img class="d-block w-100"
-                                                     src="{{ asset('storage/uploads/frontend/' . $header->google_image) }}"
+                                                     src="{{ config('dpaisa-api-url.public_document_url') . $header->google_image }}"
                                                      alt="First slide">
                                             </div>
                                         </div>
@@ -103,9 +105,10 @@
                                     @if(!empty($header->apple_image))
                                         <div class="row" style="margin-top: 20px;">
                                             <div class="col-md-4">
+
                                                 <img class="d-block w-100"
-                                                     src="{{ asset('storage/uploads/frontend/' . $header->apple_image) }}"
-                                                     alt="First slide">
+                                                    src="{{ config('dpaisa-api-url.public_document_url') . $header->apple_image }}"
+                                                    alt="First slide">
                                             </div>
                                         </div>
                                     @endif
@@ -145,7 +148,7 @@
                                         <div class="row" style="margin-top: 20px;">
                                             <div class="col-md-4">
                                                 <img class="d-block w-100"
-                                                     src="{{ asset('storage/uploads/frontend/' . $header->image) }}"
+                                                     src="{{ config('dpaisa-api-url.public_document_url') . $header->image }}"
                                                      alt="First slide">
                                             </div>
                                         </div>
@@ -169,6 +172,17 @@
                                     <textarea name="service_description" class="form-control" required>{!! $header->service_description ?? '' !!}</textarea>
                                 </div>
                             </div>
+                        @if(strtolower(config('app.'.'name')) == "sajilopay")
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Sequence</label>
+                                <div class="col-sm-10">
+                                    <input value="{{ $header->sequence ?? '' }}" name="sequence" type="number"
+                                           class="form-control">
+                                </div>
+                            </div>
+                        @endif
+
+                            <input type="text" name="belongs_to" value="{{strtolower(config('app.'.'name'))}}" hidden>
 
                             <hr class="hr-line-dashed">
 

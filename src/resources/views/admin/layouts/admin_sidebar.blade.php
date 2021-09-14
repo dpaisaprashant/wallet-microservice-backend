@@ -151,6 +151,14 @@ $url = url()->current();
                 </li>
             @endif
 
+            @if(auth()->user()->hasPermissionTo('View merchant product'))
+
+                <li @if(preg_match('/merchant-product/i', $url)) class="active" @endif>
+                    <a href="{{ route('merchant.product.list') }}"><i class="fa fa-shopping-bag"></i> <span
+                            class="nav-label">Merchant Products</span></a>
+                </li>
+            @endif
+
 
             @can('Deactivate users view')
                 <li @if($url == route('user.deactivate.list')) class="active" @endif>
@@ -597,7 +605,7 @@ $url = url()->current();
 
 
             @if(auth()->user()->hasAnyPermission(['View blocked ip', 'View whitelisted ip']))
-                <li @if(preg_match('/report/i', $url)) class="active" @endif>
+                <li @if(preg_match('/ip/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-server"></i> <span class="nav-label">Block / Whitelist IPs</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
@@ -876,7 +884,7 @@ $url = url()->current();
             @endif
 
             @if(auth()->user()->hasAnyPermission(['View wallet service', 'Yearly report view','Report paypoint','Report npay','Report nchl load','Report referral','Report register using referral user','Report subscriber daily','Report reconciliation','Report nrb active and inactive user','Report non bank payment','Report wallet end balance','Report admin kyc','Report commission']))
-                <li @if(preg_match('/report/i', $url)) class="active" @endif>
+                <li @if(preg_match('/developer/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">Developers option</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">

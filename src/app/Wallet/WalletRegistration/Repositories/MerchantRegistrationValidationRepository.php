@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Wallet\WalletAPI\Repositories;
+namespace App\Wallet\WalletRegistration\Repositories;
 
 use App\Traits\CollectionPaginate;
 use App\Wallet\WalletAPI\BackendWalletAPIMicroservice;
@@ -12,7 +12,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class NchlAggregatedApiValidationRepository
+class MerchantRegistrationValidationRepository
 {
     use CollectionPaginate;
 

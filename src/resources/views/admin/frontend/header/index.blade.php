@@ -158,20 +158,23 @@
                             <div class="hr-line-dashed"></div>
 
 
-                            <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Service Header</label>
-                                <div class="col-sm-10">
-                                    <input value="{{ $header->service_header ?? '' }}" name="service_header" type="text"
-                                           class="form-control">
+                            @if(strtolower(config('app.'.'name')) != "icash")
+                                <div class="form-group  row">
+                                    <label class="col-sm-2 col-form-label">Service Header</label>
+                                    <div class="col-sm-10">
+                                        <input value="{{ $header->service_header ?? '' }}" name="service_header" type="text"
+                                               class="form-control">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Service Description</label>
-                                <div class="col-sm-10">
-                                    <textarea name="service_description" class="form-control" required>{!! $header->service_description ?? '' !!}</textarea>
+                                <div class="form-group  row">
+                                    <label class="col-sm-2 col-form-label">Service Description</label>
+                                    <div class="col-sm-10">
+                                        <textarea name="service_description" class="form-control" required>{!! $header->service_description ?? '' !!}</textarea>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
+
                         @if(strtolower(config('app.'.'name')) == "sajilopay")
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Sequence</label>

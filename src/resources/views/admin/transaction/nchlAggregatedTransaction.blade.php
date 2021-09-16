@@ -270,7 +270,7 @@
                                                 @include('admin.transaction.nchlAggregatedPayment.checkResponse',['nchlAggregatedPayment' => $nchlAggregatedPayment,'id' => '2'])
                                                 @include('admin.transaction.nchlAggregatedPayment.nchlAggregateRequest',['nchlAggregatedPayment' => $nchlAggregatedPayment,'id' => '3'])
                                                 @include('admin.transaction.nchlAggregatedPayment.nchlAggregateResponse',['nchlAggregatedPayment' => $nchlAggregatedPayment,'id' => '4'])
-                                                <a href="{{ route('nchl.bankTransfer.detail', $nchlAggregatedPayment->id) }}">
+                                                <a href="{{ route('nchl.aggregatedPayment.detail', $nchlAggregatedPayment->id) }}">
                                                     <button class="btn btn-primary btn-icon" type="button"><i
                                                             class="fa fa-eye"></i></button>
                                                 </a>

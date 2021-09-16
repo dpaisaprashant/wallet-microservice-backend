@@ -159,9 +159,14 @@
                                                 <dt class="col-md-3 text-right">
                                                     <label for="c_issued_date">Identity Issue Date:</label>
                                                 </dt>
-                                                <dd class="col-md-8">
-                                                    <input type="text" class="form-control form-control-sm" name="c_issued_date" placeholder="Enter Document Issue Date" required>
-                                                </dd>
+                                            <dd class="col-md-8">
+                                                <div class="input-group date">
+                                                        <span class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </span>
+                                                    <input type="text" class="form-control date_from" name="c_issued_date" placeholder="Enter Document Issued Date" required>
+                                                </div>
+                                            </dd>
 
                                                 <dt class="col-md-3 text-right">
                                                     <label for="c_issued_from">Identity Issue From:</label>

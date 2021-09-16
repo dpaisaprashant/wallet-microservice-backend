@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Filters\NchlAggregatedPayment\NchlAggregatedPaymentFilters;
 use App\Traits\BelongsToUser;
+use App\Traits\BelongsToUseThroughMicroservice;
 use App\Traits\MorphOneCommission;
 use App\Traits\MorphOneDispute;
 use App\Traits\MorphOneTransaction;
@@ -14,7 +15,7 @@ use App\Models\Microservice\PreTransaction;
 
 class NchlAggregatedPayment extends Model
 {
-    use BelongsToUser, MorphOneTransaction, MorphOneCommission, MorphOneDispute;
+    use BelongsToUser, MorphOneTransaction, MorphOneCommission, MorphOneDispute, BelongsToUseThroughMicroservice;
 
     protected $connection = 'nchl';
     protected $appends = ['commission_amount'];

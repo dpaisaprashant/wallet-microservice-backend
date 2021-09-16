@@ -421,6 +421,9 @@ $url = url()->current();
                             <li><a href="{{route('cellPayUserTransaction.view')}}">CellPay Transactions</a></li>
                         @endcan
 
+                        @can('View load wallet')
+                            <li><a href="{{route('npsaccountlinkload.view')}}">Account Link</a></li>
+                        @endcan
 
                     </ul>
                 </li>

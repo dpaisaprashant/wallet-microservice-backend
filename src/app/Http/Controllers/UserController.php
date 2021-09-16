@@ -36,6 +36,7 @@ use App\Wallet\WalletAPI\Microservice\UploadImageToCoreMicroservice;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use mysql_xdevapi\Exception;
 
 class UserController extends Controller
 {
@@ -202,6 +203,12 @@ class UserController extends Controller
 
         $responseData = $this->uploadImageToCoreBase64($disk, $kycRequest, $request);
 
+        if (!empty($responseData['date_of_birth'])) {
+            $dateConvert = strtotime($responseData['date_of_birth']);
+            $convertedDate = date('Y-m-d', $dateConvert);
+            $responseData['date_of_birth'] = $convertedDate;
+        }
+
 //        foreach ($kycRequest as $key => $value) {
 //            if ($request->hasFile($key)) {
 //                $encoded_image = base64_encode(file_get_contents($request->file($key)->path()));
@@ -212,26 +219,28 @@ class UserController extends Controller
 //                $kycRequest[$key] = $image_file_name;
 //            }
 //        }
+        $responseData['user_id'] = $id;
+        $responseData['status'] = 1;
+        $userKycs = UserKYC::where('user_id', '=', $id)->first();
 
-        $userKyc = UserKYC::create($responseData);
-        $user = User::with('kyc')->findOrFail($id);
-        $userKyc->user_id = $id;
-        $userKyc->status = 1;
-        $kyc_after_change = json_encode($userKyc);
-        $adminId = auth()->user()->id;
-        $user_kyc_id = $userKyc->id;
-        $status = $userKyc->save();
-        $admin = 'admin';
-
-        if ($status){
+        if ($userKycs) {
+            return back()->with('error', 'User KYC Already Exists');
+        }
+        try {
+            $userKyc = UserKYC::create($responseData);
+            $user = User::with('kyc')->findOrFail($id); //to pass to view
+            $kyc_after_change = json_encode($userKyc); //for adminUpdateKyc
+            $adminId = auth()->user()->getAuthIdentifier(); //for adminUpdateKyc
+            $user_kyc_id = $userKyc->id; //for adminUpdateKyc
+            $admin = 'admin';
             $adminUpdateKyc = new AdminUpdateKyc();
             $adminUpdateKyc->admin_id = $adminId;
             $adminUpdateKyc->user_kyc_id = $user_kyc_id;
             $adminUpdateKyc->kyc_after_change = $kyc_after_change;
             $adminUpdateKyc->save();
-            return redirect()->route('user.kyc',$id)->with(compact('user','admin'))->with('success','Wallet Service updated successfully');
+            return redirect()->route('user.kyc', $id)->with(compact('user', 'admin'))->with('success', 'Wallet Service updated successfully');
         }
-        else{
+        catch (\Exception $e){
             return back()->with('error', 'Something went wrong!Please try again later');
         }
 
@@ -276,8 +285,13 @@ class UserController extends Controller
 //        }
         //note: the above code works just fine but is tedious can be deleted, for now i have just commented it out
 
+        if(!empty($responseData['date_of_birth'])){
+            $dateConvert = strtotime($responseData['date_of_birth']);
+            $convertedDate = date('Y-m-d', $dateConvert);
+            $responseData['date_of_birth']=$convertedDate;
+        }
         $adminId = auth()->user()->id;
-        $user_kyc_id = $selectedUserKYC->id;
+        $user_kyc_id = $selectedUserKYC->id; // for Admin Update KYC
         $selectedUserKYC->update($responseData);
         $status = $selectedUserKYC->save();
         $kyc_after_change = json_encode($selectedUserKYC);
@@ -299,6 +313,7 @@ class UserController extends Controller
     public function showAdminUpdatedKyc()
     {
         $adminUpdatedKycs = AdminUpdateKyc::filter(request())->with('admin','userKyc')->latest()->paginate(10);
+//        dd($adminUpdatedKycs);
         return view('admin.user.AdminUpdatedKyc')->with(compact('adminUpdatedKycs'));
     }
 

@@ -15,7 +15,7 @@
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Update Agent</strong>
+                    <strong>Edit Agent</strong>
                 </li>
             </ol>
         </div>
@@ -288,7 +288,6 @@
                             </div>
 
                             <div class="hr-line-dashed"></div>
-                            <button class="btn btn-sm btn-primary m-t-n-xs" type="submit"><strong>Save Agent</strong>
                             <div class="row">
                                 <div class="col-sm-4">
                                     <a href="{{ config('dpaisa-api-url.agent_url') . $agent->pan_vat_document}}"
@@ -345,7 +344,6 @@
                             </div>
                             <div class="hr-line-dashed"></div>
                             <button class="btn btn-sm btn-primary m-t-n-xs" type="submit"><strong>Edit Agent</strong>
->>>>>>> master
                             </button>
                         </form>
                     </div>
@@ -391,7 +389,7 @@
                 text: "This user will be set as an Agent",
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#3366ff",
+                confirmButtonColor: "#18a689",
                 confirmButtonText: "Yes, approve",
                 closeOnConfirm: true,
                 closeOnClickOutside: true

@@ -465,6 +465,15 @@
 
 {{--                                        <a style="margin-top: 5px;" href="{{route('merchant.kyc', $merchant->id)}}" class="btn btn-sm btn-icon btn-warning m-t-n-xs" title="merchant kyc"><i class="fa fa-file"></i></a>--}}
 
+{{--                                        @can('Create user kyc')--}}
+
+                                            @if(empty($merchant->kyc))
+                                                <a style="margin-top: 5px;"
+                                                   href="{{route('user.createUserKyc',$merchant->id)}}"
+                                                   class="btn btn-sm btn-icon btn-primary m-t-n-xs"
+                                                   title="user profile"><i class="fa fa-plus"></i></a>
+                                            @endif
+{{--                                        @endcan--}}
                                     </td>
                                 </tr>
                                 @endforeach

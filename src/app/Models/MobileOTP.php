@@ -9,7 +9,10 @@ use Illuminate\Notifications\Notifiable;
 
 class MobileOTP extends Model
 {
-    use HasFactory, MobileOTPToken, Notifiable;
+//    use HasFactory, MobileOTPToken, Notifiable;
+
+    protected $connection='dpaisa';
+    protected $table='mobile_o_t_p_s';
 
 
 }

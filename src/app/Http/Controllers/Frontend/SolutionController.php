@@ -32,7 +32,7 @@ class SolutionController extends Controller
 //                $data['base64_image'] = $this->uploadImageBase64($data['image']);
 //            }
 
-            $about = FrontendSolution::create($responseData);
+            FrontendSolution::create($responseData);
             return redirect()->route('frontend.solution.index')->with('success',' successfully created solution');
         }
         return view('admin.frontend.solution.create');

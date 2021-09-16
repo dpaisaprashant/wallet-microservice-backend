@@ -157,8 +157,9 @@ Route::group(['prefix' => 'admin'], function () {
          */
         Route::get('/agents', 'AgentController@view')->name('agent.view')->middleware('permission:Agent view');
         Route::match(['get', 'post'],'/agent/create', 'AgentController@create')->name('agent.create')->middleware('permission:Agent create');
-        Route::match(['get', 'post'], '/agent/edit/{id}', 'AgentController@edit')->name('agent.edit');
-        Route::post('/agent/delete/{id}', 'AgentController@delete')->name('agent.delete');
+        Route::match(['get', 'post'], '/agent/edit/{id}', 'AgentController@edit')->name('agent.edit')->middleware('permission:Agent edit');
+        Route::post('/agent/delete/{id}', 'AgentController@delete')->name('agent.delete')->middleware('permission:Agent delete');
+        Route::get('/admin-altered-agents','AgentController@showAdminAlteredAgents')->name('agent.AdminAlteredAgents');
 
         //agent type
         Route::get('agent-types', 'AgentTypeController@view')->name('agent.type.view')->middleware('permission:Agent type view');
@@ -198,6 +199,7 @@ Route::group(['prefix' => 'admin'], function () {
 
         //(NPS)
         Route::get('/transaction/nps','TransactionController@nps')->name('nps')->middleware('permission:Transaction nps view');
+        Route::get('/transaction/nps/detail/{id}','TransactionController@npsDetail')->name('nps.detail');
         //paypoint (Utility)
         Route::get('/transaction/paypoint', 'TransactionController@paypoint')->name('paypoint')->middleware('permission:Paypoint view');
         Route::get('transaction/paypoint/detail/{id}', 'TransactionController@paypointDetail')->name('paypoint.detail')->middleware('permission:Paypoint detail|Failed paypoint detail');

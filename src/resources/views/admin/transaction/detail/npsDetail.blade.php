@@ -43,15 +43,29 @@
 
                             <span>Bank:</span>
                             <address>
-                                <strong>{{ $transaction->vendor }}</strong><br>
-                                Transaction Id: {{ $transaction->transaction_id }}<br>
-                                Response Id: {{ $transaction->response_id }}<br>
-                                Response Status: @include('admin.transaction.nchlAggregatedPayment.responseStatus')
+                                <strong>{{ $transaction->payment_mode }}</strong><br>
+                                Process Id: {{ $transaction->process_id }}<br>
+                                Gateway Ref No: {{ $transaction->gateway_ref_no }}<br>
+                                Status:     @if($transaction->status == 'VALIDATED')
+                                                <span class="badge badge-warning">{{ $transaction->status }}</span>
+                                            @elseif($transaction->status == 'INVALID')
+                                                <span class="badge badge-danger">{{ $transaction->status }}</span>
+                                            @elseif($transaction->status == 'COMPLETED')
+                                                <span class="badge badge-primary">{{ $transaction->status }}</span>
+                                            @elseif($transaction->status == 'TESTED')
+                                                <span class="badge badge-warning">{{ $transaction->status }}</span>
+                                            @elseif($transaction->status == 'ERROR')
+                                                <span class="badge badge-danger">{{ $transaction->status }}</span>
+                                            @elseif($transaction->status == 'SUCCESS')
+                                                <span class="badge badge-primary">{{ $transaction->status }}</span>
+                                            @endif
                             </address>
 
                             <address>
                                 <strong>Amount: Rs. {{ $transaction->amount }}<br></strong>
-                                <strong>Commission: Rs.  {{ $transaction->commission_amount }}<br></strong>
+                                @if(! empty($transaction->commission))
+                                <strong>Commission: Rs. {{ $transaction->commission['before_amount'] - $transaction->commission['after_amount'] }}<br></strong>
+                                @endif
                             </address>
 
                         </div>
@@ -79,27 +93,37 @@
                         $step1 = false;
                         $step2 = false;
                         $step3 = false;
-                        $step2Error = false;
+                        $step3Error = false;
                         $step3NoResponse = false;
+                        $step4 = false;
 
-                        if ( $transaction->check_response_code == '000' && $transaction->check_response_description == 'SUCCESS') {
+                        if ($transaction->process_id != 'INVALID' && $transaction->status == 'VALIDATED' && $transaction->gateway_ref_no == 'INVALID') {
                             $step1 = true;
                         }
 
-                        if ( $transaction->response_code == '000' && $transaction->response_description == 'SUCCESS') {
-                            $step1 = true;
+                        if ($transaction->process_id != 'INVALID' && $transaction->status == 'VALIDATED' && $transaction->gateway_ref_no != 'INVALID') {
+                            $step1= true;
                             $step2 = true;
-                        } else {
-                            $step2Error = true;
-                            $step2 = false;
                         }
 
-
-                        if ($transaction->debit_status === '1001' && $transaction->credit_status === '1000') {
+                        if ($transaction->process_id != 'INVALID' && $transaction->gateway_ref_no != 'INVALID') {
+                            if ($transaction->status == 'COMPLETED') {
                                 $step1= true;
                                 $step2 = true;
                                 $step3 = true;
+                                $step4 = true;
+
+                            }elseif ($transaction->status == 'ERROR' ) {
+                                $step3Error = true;
+                            } else {
+                                $step3NoResponse = true;
+                            }
                         }
+
+
+
+
+
                     ?>
 
                    <div class="row">
@@ -124,12 +148,12 @@
                                                </div>--}}
                                                <div class="timeline-marker step1"></div>
                                                <div class="timeline-content">
-                                                   <h2 class="timeline-title">Create Transaction</h2>
+                                                   <h2 class="timeline-title">Validate Merchant</h2>
                                                    <p>
-                                                       Transaction Id: {{ $transaction->transaction_id }}<br>
-                                                       Response Id: {{ $transaction->response_id }}<br>
-                                                       Debit Status:     {{ $transaction->debit_status }}<br>
-                                                       Credit Status:    {{ $transaction->credit_status }}
+                                                       <strong>Process ID: </strong> {{ $transaction->process_id }} <br>
+                                                       <strong>Gateway Ref No.: </strong> {{ $transaction->gateway_ref_no }}
+                                                       <br>
+                                                       <strong>Status: </strong> {{ $transaction->status }}
                                                    </p>
                                                </div>
                                            </li>
@@ -139,84 +163,16 @@
                                                    <h2 class="timeline-title">STEP 2</h2>
                                                </div>
                                            </li>
-                                           <?php
-                                           $request =  json_decode($transaction->request, true);
-                                           $debtorRequest = $request['cipsBatchDetail'] ?? [];
-                                           $creditorRequest = $request['cipsTransactionDetail'] ?? [];
-                                           ?>
-                                           <?php
-                                           $response =  json_decode($transaction->response, true);
-                                           $debtorResponse = $response['cipsBatchDetail'] ?? [];
-                                           $creditorResponse = $response['cipsTransactionDetail'] ?? [];
-                                           ?>
                                            <li class="timeline-item">
                                                <div class="timeline-marker step2"></div>
                                                <div class="timeline-content">
-                                                   <h2 class="timeline-title">Payment Request</h2>
-                                                   <div class="row" style="background: none">
-                                                       <div class="col-md-6">
-                                                           <address>
-                                                               <strong>Debtor Request</strong><br>
-
-                                                               <?php foreach ($debtorRequest as $key => $value) { ?>
-                                                               {{ $key }} :
-                                                               @if($key == 'amount' )
-                                                                   Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
-                                                               @else
-                                                                   {{ $value }}<br>
-                                                               @endif
-                                                               <?php }?>
-                                                           </address>
-                                                       </div>
-                                                       <div class="col-md-6">
-                                                           <address>
-                                                               <strong>Creditor Request</strong><br>
-
-                                                               <?php foreach ($creditorRequest as $key => $value) { ?>
-                                                                   @if(!empty($value))
-                                                                       {{ $key }} :
-                                                                           @if($key == 'amount' )
-                                                                               Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
-                                                                           @else
-                                                                               {{ $value }}<br>
-                                                                           @endif
-                                                                   @endif
-                                                               <?php }?>
-                                                           </address>
-                                                       </div>
-                                                   </div>
-                                                   <div class="row">
-                                                       <div class="col-md-6">
-                                                           <address>
-                                                               <strong>Debtor Response</strong><br>
-
-                                                               <?php foreach ($debtorResponse as $key => $value) { ?>
-                                                               {{ $key }} :
-                                                               @if($key == 'amount' )
-                                                                   Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
-                                                               @else
-                                                                   {{ $value }}<br>
-                                                               @endif
-                                                               <?php }?>
-                                                           </address>
-                                                       </div>
-                                                       <div class="col-md-6">
-                                                           <address>
-                                                               <strong>Creditor Response</strong><br>
-
-                                                               <?php foreach ($creditorResponse as $key => $value) { ?>
-                                                               @if(!empty($value))
-                                                                   {{ $key }} :
-                                                                   @if($key == 'amount' )
-                                                                       Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
-                                                                   @else
-                                                                       {{ $value }}<br>
-                                                                   @endif
-                                                               @endif
-                                                               <?php }?>
-                                                           </address>
-                                                       </div>
-                                                   </div>
+                                                   <h2 class="timeline-title">Post Transaction Detail</h2>
+                                                   <p>
+                                                       <strong>Process ID: </strong> {{ $transaction->process_id }} <br>
+                                                       <strong>Gateway Ref No.: </strong> {{ $transaction->gateway_ref_no }}
+                                                       <br>
+                                                       <strong>Status: </strong> {{ $transaction->status }}
+                                                   </p>
                                                </div>
                                            </li>
 
@@ -228,16 +184,63 @@
                                            <li class="timeline-item">
                                                <div class="timeline-marker step3"></div>
                                                <div class="timeline-content">
-                                                   <h2 class="timeline-title">Complete Transaction</h2>
+                                                   <h2 class="timeline-title">Delivery URL</h2>
                                                    <p>
-                                                       Transaction Id: {{ $transaction->transaction_id }}<br>
-                                                       Response Id: {{ $transaction->response_id }}<br>
-                                                       Response Status:     {{ $transaction->response_description }}<br>
+                                                           <strong>Process ID: </strong> {{ $transaction->process_id }} <br>
+                                                           <strong>Gateway Ref No.: </strong> {{ $transaction->gateway_ref_no }}
+                                                           <br>
+                                                           <strong>Status:</strong> {{ $transaction->status }} <br>
+
+                                                           @if(!$step3)
+                                                               @if($step3Error)
+                                                                   <br><strong>Message: </strong>Error while loading fund
+                                                               <br>
+                                                               @elseif($step3NoResponse)
+                                                                   <br><strong>Message: </strong>No response from NPAY
+                                                               <br>
+                                                               @endif
+                                                           @endif
+
+                                                       @if(!empty($transaction->loadTransactionResponse))
+                                                           <br>
+                                                           <strong>Response</strong>
+
+                                                           <address>
+                                                               <?php $response =  json_decode($transaction->loadTransactionResponse->response, true)?>
+
+                                                               <?php foreach (json_decode($response) as $key => $value) { ?>
+                                                               {{ $key }} :
+                                                               @if($key == 'amount' )
+                                                                   &nbsp; Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                               @else
+                                                                   &nbsp;{{ $value }}<br>
+                                                               @endif
+                                                               <?php }?>
+                                                           </address>
+
+                                                   @endif
                                                    </p>
                                                </div>
 
                                            </li>
 
+                                           <li class="timeline-item period">
+                                               <div class="timeline-content">
+                                                   <h2 class="timeline-title">STEP 4</h2>
+                                               </div>
+                                           </li>
+                                           <li class="timeline-item">
+                                               <div class="timeline-marker step4"></div>
+                                               <div class="timeline-content">
+                                                   <h2 class="timeline-title">Transaction Response URL</h2>
+                                                   <p>
+                                                       <strong>Process ID:</strong> {{ $transaction->process_id }} <br>
+                                                       <strong>Gateway Ref No.:</strong> {{ $transaction->gateway_ref_no }}
+                                                       <br>
+                                                       <strong>Status:</strong> {{ $transaction->status }}
+                                                   </p>
+                                               </div>
+                                           </li>
                                        </ul>
                                    </div>
                                </div>
@@ -572,6 +575,15 @@
                 background: green;
             }
             .step3::after {
+                background: green;
+            }
+        @endif
+
+        @if($step4)
+            .step4::before {
+                background: green;
+            }
+            .step4::after {
                 background: green;
             }
         @endif

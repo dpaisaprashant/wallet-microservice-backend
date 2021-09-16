@@ -2,14 +2,14 @@
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Admin Updated Kyc List</h2>
+            <h2>Admin Altered Agents List</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>View Admin Update Kyc List</strong>
+                    <strong>View Admin Altered Agent List</strong>
                 </li>
             </ol>
         </div>
@@ -22,7 +22,7 @@
             <div class="col-lg-12">
                 <div class="ibox">
                     <div class="ibox-title collapse-link">
-                        <h5>Filter Admin Updated/Created Kycs</h5>
+                        <h5>Filter Admin Altered Agents List</h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -45,10 +45,10 @@
                                         </div>
 
                                         <div class="col-md-6">
-                                            <label for="user_number">User Number</label>
-                                            <input type="number" name="user_number" placeholder="Enter User Number"
+                                            <label for="user_number">Agent Number</label>
+                                            <input type="number" name="agent_number" placeholder="Enter Agent Number"
                                                    class="form-control"
-                                                   value="{{ !empty($_GET['user_number']) ? $_GET['user_number'] : '' }}">
+                                                   value="{{ !empty($_GET['agent_number']) ? $_GET['agent_number'] : '' }}">
                                         </div>
 
                                         <div class="col-md-4">
@@ -102,7 +102,7 @@
                                     <br>
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
-                                                formaction="{{route('user.showAdminUpdatedKyc')}}"><strong>Filter</strong></button>
+                                                formaction="{{route('agent.AdminAlteredAgents')}}"><strong>Filter</strong></button>
                                     </div>
 
                                     <div>
@@ -134,24 +134,24 @@
                                 <tr>
                                     <th>S.No.</th>
                                     <th>Admin</th>
-                                    <th>User-Kyc</th>
+                                    <th>Agent</th>
                                     <th>Admin Action</th>
-                                    <th>user Kyc Before</th>
-                                    <th>User Kyc After</th>
+                                    <th>Agent Before</th>
+                                    <th>Agent After</th>
                                     <th>Date</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($adminUpdatedKycs as $adminUpdatedKyc)
+                                @foreach($adminAlteredAgents as $adminAlteredAgent)
                                     <tr class="gradeX">
-                                        <td>{{ $loop->index + ($adminUpdatedKycs->perPage() * ($adminUpdatedKycs->currentPage() - 1)) + 1 }}</td>
+                                        <td>{{ $loop->index + ($adminAlteredAgents->perPage() * ($adminAlteredAgents->currentPage() - 1)) + 1 }}</td>
                                         <td>
-                                            &nbsp;{{ $adminUpdatedKyc->admin->name}}
+                                            &nbsp;{{ $adminAlteredAgent->admin->name}}
                                         </td>
-                                        <td>{{ optional(optional($adminUpdatedKyc->userKyc)->user)->mobile_no}}</td>
+                                        <td>{{ $adminAlteredAgent->agent->user->mobile_no}}</td>
                                         <td>
                                             @php
-                                            $response = json_decode($adminUpdatedKyc->kyc_before_change)
+                                            $response = json_decode($adminAlteredAgent->agent_before)
                                             @endphp
                                             @if($response == null)
                                                 Created
@@ -159,15 +159,15 @@
                                                 Updated
                                             @endif
                                         </td>
-                                        <td>@include('admin.user.AdminUpdateKycJsonDecode', ['adminUpdatedKyc' => $adminUpdatedKyc,'type'=>"before_change"])</td>
-                                        <td>@include('admin.user.AdminUpdateKycJsonDecode', ['adminUpdatedKyc' => $adminUpdatedKyc,'type'=>"after_change"])</td>
-                                        <td>{{$adminUpdatedKyc->created_at}}</td>
+                                        <td>@include('admin.agent.AdminAlteredAgentJsonDecode', ['adminAlteredAgent' => $adminAlteredAgent,'type'=>"before_change"])</td>
+                                        <td>@include('admin.agent.AdminAlteredAgentJsonDecode', ['adminAlteredAgent' => $adminAlteredAgent,'type'=>"after_change"])</td>
+                                        <td>{{$adminAlteredAgent->created_at}}</td>
                                     </tr>
                                 @endforeach
 
                                 </tbody>
                             </table>
-                            {{ $adminUpdatedKycs->appends(request()->query())->links() }}
+                            {{ $adminAlteredAgents->appends(request()->query())->links() }}
                         </div>
 
                     </div>
@@ -227,7 +227,7 @@
 
     <script>
         $(document).ready(function (e) {
-            let a = "Showing {{ $adminUpdatedKycs->firstItem() }} to {{ $adminUpdatedKycs->lastItem() }} of {{ $adminUpdatedKycs->total() }} entries";
+            let a = "Showing {{ $adminAlteredAgents->firstItem() }} to {{ $adminAlteredAgents->lastItem() }} of {{ $adminAlteredAgents->total() }} entries";
             $('.dataTables_info').text(a);
         });
     </script>

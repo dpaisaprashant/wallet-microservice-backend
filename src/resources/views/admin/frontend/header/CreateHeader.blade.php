@@ -43,7 +43,7 @@
                                            class="form-control" required>
                                 </div>
                             </div>
-
+                        @if(strtolower(config('app.'.'name')) == 'dpaisa'|| strtolower(config('app.'.'name')) == 'master')
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Sub Title</label>
                                 <div class="col-sm-10">
@@ -51,7 +51,7 @@
                                            class="form-control" required>
                                 </div>
                             </div>
-
+                        @endif
                             <hr class="hr-line-dashed">
 
                             <div class="form-group  row">

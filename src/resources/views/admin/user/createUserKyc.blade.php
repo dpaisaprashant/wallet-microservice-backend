@@ -313,24 +313,30 @@
                                                         <label for="company_document">Company Document:</label>
                                                     </dt>
                                                     <dd class="col-md-8">
+                                                        <div class="custom-file">
                                                         <input name="company_document"  type="file" class="custom-file-input" required>
                                                         <label for="company_document" class="custom-file-label">Upload Company Document...</label>
+                                                        </div>
                                                     </dd>
 
                                                     <dt class="col-md-3 text-right">
                                                         <label for="company_vat_document">Company VAT Document:</label>
                                                     </dt>
                                                     <dd class="col-md-8">
+                                                        <div class="custom-file">
                                                         <input name="company_vat_document"  type="file" class="custom-file-input" required>
                                                         <label for="company_vat_document" class="custom-file-label">Upload Company VAT Document...</label>
+                                                        </div>
                                                     </dd>
 
                                                     <dt class="col-md-3 text-right">
                                                         <label for="company_tax_clearance_document">Company Tax Clearance Document:</label>
                                                     </dt>
                                                     <dd class="col-md-8">
+                                                        <div class="custom-file">
                                                         <input name="company_tax_clearance_document"  type="file" class="custom-file-input" required>
                                                         <label for="company_tax_clearance_document" class="custom-file-label">Upload Company Tax Clearance Document...</label>
+                                                        </div>
                                                     </dd>
                                                 @endif
                                             <br>

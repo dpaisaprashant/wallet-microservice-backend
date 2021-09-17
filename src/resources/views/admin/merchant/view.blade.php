@@ -40,7 +40,7 @@
                         <h5>Invalid KYC Merchant Count</h5>
                     </div>
                     <div class="ibox-content">
-{{--                        <h1 class="no-margins">{{ $stats['invalidMerchantCount'] }}</h1>--}}
+                        {{--                        <h1 class="no-margins">{{ $stats['invalidMerchantCount'] }}</h1>--}}
                         <small>Number of merchant with invalid KYC</small>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                         <h5>Number of merchant transaction</h5>
                     </div>
                     <div class="ibox-content">
-{{--                        <h1 class="no-margins">{{ $stats['successfulMerchantTransactionCount'] }}</h1>--}}
+                        {{--                        <h1 class="no-margins">{{ $stats['successfulMerchantTransactionCount'] }}</h1>--}}
                         <small>Number of successful merchant transaction</small>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                         <h5>Sum of merchant transaction</h5>
                     </div>
                     <div class="ibox-content">
-{{--                        <h1 class="no-margins">Rs. {{ $stats['successfulMerchantTransactionSum'] }}</h1>--}}
+                        {{--                        <h1 class="no-margins">Rs. {{ $stats['successfulMerchantTransactionSum'] }}</h1>--}}
                         <small>Sum of merchant transaction amount</small>
                     </div>
                 </div>
@@ -85,7 +85,8 @@
                             </a>
                         </div>
                     </div>
-                    <div class="ibox-content" @if( empty($_GET) || (!empty($_GET['page']) && count($_GET) === 1)  ) style="display: none"  @endif>
+                    <div class="ibox-content"
+                         @if( empty($_GET) || (!empty($_GET['page']) && count($_GET) === 1)  ) style="display: none" @endif>
                         <div class="row">
                             <div class="col-sm-12">
                                 <form role="form" method="get">
@@ -366,14 +367,15 @@
                                     <br>
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
-                                                formaction="{{ route('merchant.view') }}"><strong>Filter</strong></button>
+                                                formaction="{{ route('merchant.view') }}"><strong>Filter</strong>
+                                        </button>
                                     </div>
 
-{{--                                    <div>--}}
-{{--                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"--}}
-{{--                                                type="submit" style="margin-right: 10px;"--}}
-{{--                                                formaction="{{ route('merchant.excel') }}"><strong>Excel</strong></button>--}}
-{{--                                    </div>--}}
+                                    {{--                                    <div>--}}
+                                    {{--                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"--}}
+                                    {{--                                                type="submit" style="margin-right: 10px;"--}}
+                                    {{--                                                formaction="{{ route('merchant.excel') }}"><strong>Excel</strong></button>--}}
+                                    {{--                                    </div>--}}
 
                                     {{--<div>
                                         <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs" type="submit" style="margin-right: 10px;" formaction="{{ route('user.excel') }}"><strong>Excel</strong></button>
@@ -387,7 +389,7 @@
                 </div>
             </div>
         </div>
-    @include('admin.asset.notification.notify')
+        @include('admin.asset.notification.notify')
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox ">
@@ -398,7 +400,8 @@
                     </div>
                     <div class="ibox-content">
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover dataTables-example" title="Merchant's list">
+                            <table class="table table-striped table-bordered table-hover dataTables-example"
+                                   title="Merchant's list">
                                 <thead>
                                 <tr>
                                     <th>S.No.</th>
@@ -408,12 +411,12 @@
                                     <th>KYC status</th>
                                     <th>Wallet Balance</th>
                                     <th>Merchant Type</th>
-{{--                                    <th>Commission Type</th>--}}
-{{--                                    <th>Commission Value</th>--}}
-{{--                                    <th>Total <br>Fund Deposit Amount</th>--}}
-{{--                                    <th>Total <br>Fund Received Amount</th>--}}
-{{--                                    <th>Total <br>Loaded Amount</th>--}}
-                                   {{-- <th>No. of <br>Transactions</th>--}}
+                                    {{--                                    <th>Commission Type</th>--}}
+                                    {{--                                    <th>Commission Value</th>--}}
+                                    {{--                                    <th>Total <br>Fund Deposit Amount</th>--}}
+                                    {{--                                    <th>Total <br>Fund Received Amount</th>--}}
+                                    {{--                                    <th>Total <br>Loaded Amount</th>--}}
+                                    {{-- <th>No. of <br>Transactions</th>--}}
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -421,67 +424,74 @@
 
                                 @foreach($merchants as $merchant)
                                     <tr class="gradeX">
-                                    <td>{{ $loop->index + ($merchants->perPage() * ($merchants->currentPage() - 1)) + 1 }}</td>
-                                    <td>
+                                        <td>{{ $loop->index + ($merchants->perPage() * ($merchants->currentPage() - 1)) + 1 }}</td>
+                                        <td>
 
-                                         <a href="{{route('user.profile', $merchant->id)}}">{{ $merchant->name }}</a>
-                                    </td>
-                                    <td>
+                                            <a href="{{route('user.profile', $merchant->id)}}">{{ $merchant->name }}</a>
+                                        </td>
+                                        <td>
 
-                                        @if(!empty($merchant->phone_verified_at))
-                                            <i class="fa fa-check-circle" style="color: green;"></i> &nbsp;{{ $merchant->mobile_no }}
-                                        @else
-                                            <i class="fa fa-times-circle" style="color: red;"></i>&nbsp;{{ $merchant->mobile_no }}
-                                        @endif
-                                    </td>
+                                            @if(!empty($merchant->phone_verified_at))
+                                                <i class="fa fa-check-circle" style="color: green;"></i>
+                                                &nbsp;{{ $merchant->mobile_no }}
+                                            @else
+                                                <i class="fa fa-times-circle" style="color: red;"></i>
+                                                &nbsp;{{ $merchant->mobile_no }}
+                                            @endif
+                                        </td>
 
-                                    <td>
-                                       @include('admin.merchant.kyc.status', ['kyc' => $merchant->kyc])
-                                    </td>
-                                    <td>Rs. {{ $merchant->wallet->balance }}</td>
-{{--                                    <td>{{ $merchant->commission_type }}</td>--}}
-{{--                                    <td>{{ $merchant->commission_value }}</td>--}}
+                                        <td>
+                                            @include('admin.merchant.kyc.status', ['kyc' => $merchant->kyc])
+                                        </td>
+                                        <td>Rs. {{ $merchant->wallet->balance }}</td>
+                                        {{--                                    <td>{{ $merchant->commission_type }}</td>--}}
+                                        {{--                                    <td>{{ $merchant->commission_value }}</td>--}}
 
-{{--                                    <td>Rs. {{ $merchant->depositSum() }}</td>--}}
+                                        {{--                                    <td>Rs. {{ $merchant->depositSum() }}</td>--}}
 
-{{--                                    <td>Rs. {{ $merchant->receivedSum() }}</td>--}}
+                                        {{--                                    <td>Rs. {{ $merchant->receivedSum() }}</td>--}}
 
 
-{{--                                    <td>Rs. {{ $merchant->loadedSum() }}</td>--}}
+                                        {{--                                    <td>Rs. {{ $merchant->loadedSum() }}</td>--}}
 
-{{--                                    <td>{{ count($merchant->userTransactionEvents) }}</td>--}}
+                                        {{--                                    <td>{{ count($merchant->userTransactionEvents) }}</td>--}}
                                         <td>@include('admin.user.userType.displayUserTypes',['user'=>$merchant])</td>
 
-                                    <td class="center">`
+                                        <td class="center">
+                                            {{--                                            <a style="margin-top: 5px;" href="{{route('merchant.kyc.detail', $merchant->id)}}" class="btn btn-sm btn-icon btn-primary m-t-n-xs" title="Unverified Merchant Kyc List"><i class="fa fa-eye"></i></a>--}}
+                                            @can('User KYC view')
+                                                <a style="margin-top: 5px;" href="{{route('user.kyc', $merchant->id)}}"
+                                                   class="btn btn-sm btn-icon btn-primary m-t-n-xs"><i class="fa fa-eye"></i></a>
+                                            @endcan
 
-                                            <a style="margin-top: 5px;" href="{{route('merchant.kyc.detail', $merchant->id)}}" class="btn btn-sm btn-icon btn-primary m-t-n-xs" title="Unverified Merchant Kyc List"><i class="fa fa-eye"></i></a>
-
-                                            <a style="margin-top: 5px" href="{{ route('user.profile', $merchant->id) }}" class="btn btn-sm btn-icon btn-danger m-t-n-xs" title="Merchant Profile"><i class="fa fa-user"></i></a>
+                                            <a style="margin-top: 5px" href="{{ route('user.profile', $merchant->id) }}"
+                                               class="btn btn-sm btn-icon btn-warning m-t-n-xs"
+                                               title="Merchant Profile"><i class="fa fa-user"></i></a>
                                             @if(optional(optional($merchant->merchant)->merchantType)->name == "reseller")
-                                            @include('admin.merchant.viewMerchantResellerCredentials',['id'=>optional($merchant->merchant)->id,'merchant' => $merchant])
-                                        @endif
-
-{{--                                        @can('User profile')--}}
-                                            <a style="margin-top: 5px;"
-                                               href="{{route('user.profile', $merchant->id)}}"
-                                               class="btn btn-sm btn-icon btn-primary m-t-n-xs"
-                                               title="user profile"><i class="fa fa-eye"></i></a>
-{{--                                        @endcan--}}
-{{--                                        <a style="margin-top: 5px;" href="{{route('merchant.transaction', $merchant->id)}}" class="btn btn-sm btn-icon btn-info m-t-n-xs" title="merchant transactions"><i class="fa fa-credit-card"></i></a>--}}
-
-{{--                                        <a style="margin-top: 5px;" href="{{route('merchant.kyc', $merchant->id)}}" class="btn btn-sm btn-icon btn-warning m-t-n-xs" title="merchant kyc"><i class="fa fa-file"></i></a>--}}
-
-{{--                                        @can('Create user kyc')--}}
-
-                                            @if(empty($merchant->kyc))
-                                                <a style="margin-top: 5px;"
-                                                   href="{{route('user.createUserKyc',$merchant->id)}}"
-                                                   class="btn btn-sm btn-icon btn-primary m-t-n-xs"
-                                                   title="user profile"><i class="fa fa-plus"></i></a>
+                                                @include('admin.merchant.viewMerchantResellerCredentials',['id'=>optional($merchant->merchant)->id,'merchant' => $merchant])
                                             @endif
-{{--                                        @endcan--}}
-                                    </td>
-                                </tr>
+
+                                            {{--                                        @can('User profile')--}}
+                                            {{--                                            <a style="margin-top: 5px;"--}}
+                                            {{--                                               href="{{route('user.profile', $merchant->id)}}"--}}
+                                            {{--                                               class="btn btn-sm btn-icon btn-primary m-t-n-xs"--}}
+                                            {{--                                               title="user profile"><i class="fa fa-eye"></i></a>--}}
+                                            {{--                                        @endcan--}}
+                                            {{--                                        <a style="margin-top: 5px;" href="{{route('merchant.transaction', $merchant->id)}}" class="btn btn-sm btn-icon btn-info m-t-n-xs" title="merchant transactions"><i class="fa fa-credit-card"></i></a>--}}
+
+                                            {{--                                        <a style="margin-top: 5px;" href="{{route('merchant.kyc', $merchant->id)}}" class="btn btn-sm btn-icon btn-warning m-t-n-xs" title="merchant kyc"><i class="fa fa-file"></i></a>--}}
+
+                                            @can('Create user kyc')
+
+                                                @if(empty($merchant->kyc))
+                                                    <a style="margin-top: 5px;"
+                                                       href="{{route('user.createUserKyc',$merchant->id)}}"
+                                                       class="btn btn-sm btn-icon btn-primary m-t-n-xs"
+                                                       title="user profile"><i class="fa fa-plus"></i></a>
+                                                @endif
+                                            @endcan
+                                        </td>
+                                    </tr>
                                 @endforeach
                                 </tbody>
                             </table>
@@ -504,7 +514,8 @@
 
     @include('admin.asset.css.datatable')
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/css/ion.rangeSlider.min.css"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/css/ion.rangeSlider.min.css"/>
 
 @endsection
 
@@ -530,7 +541,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js"></script>
 
     <script>
-        let walletAmount = @if(!empty($_GET['wallet_balance'])) `{{ $_GET['wallet_balance'] }}`; @else '0;100000'; @endif
+        let walletAmount = @if(!empty($_GET['wallet_balance'])) `{{ $_GET['wallet_balance'] }}`;
+        @else '0;100000'; @endif
         let split = walletAmount.split(';');
 
 
@@ -544,8 +556,10 @@
             prefix: "Rs."
         });
 
-        walletAmount = @if(!empty($_GET['transaction_payment'])) `{{ $_GET['transaction_payment'] }}`; @else '0;100000'; @endif
-        split = walletAmount.split(';');
+        walletAmount = @if(!empty($_GET['transaction_payment'])) `{{ $_GET['transaction_payment'] }}`;
+        @else '0;100000';
+        @endif
+            split = walletAmount.split(';');
 
         $(".ionrange_payment_amount").ionRangeSlider({
             type: "double",
@@ -557,8 +571,10 @@
             prefix: "Rs."
         });
 
-        walletAmount = @if(!empty($_GET['transaction_loaded'])) `{{ $_GET['transaction_loaded'] }}`; @else '0;100000'; @endif
-        split = walletAmount.split(';');
+        walletAmount = @if(!empty($_GET['transaction_loaded'])) `{{ $_GET['transaction_loaded'] }}`;
+        @else '0;100000';
+        @endif
+            split = walletAmount.split(';');
 
         $(".ionrange_loaded_amount").ionRangeSlider({
             type: "double",
@@ -571,8 +587,10 @@
         });
 
 
-        walletAmount = @if(!empty($_GET['transaction_number'])) `{{ $_GET['transaction_number'] }}`; @else '0;1000'; @endif
-        split = walletAmount.split(';');
+        walletAmount = @if(!empty($_GET['transaction_number'])) `{{ $_GET['transaction_number'] }}`;
+        @else '0;1000';
+        @endif
+            split = walletAmount.split(';');
 
         $(".ionrange_number").ionRangeSlider({
             type: "double",

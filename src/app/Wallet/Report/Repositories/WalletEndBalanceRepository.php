@@ -14,6 +14,7 @@ class WalletEndBalanceRepository extends AbstractReportRepository
 
     public function getWalletEndBalance($date){
         if($date != null) {
+
             $getWalletEndBalance = \DB::connection('dpaisa')->select("SELECT transaction_events.*,mobile_no as number
             FROM(SELECT MAX(id) as id,user_id,MAX(created_at) AS created_at FROM transaction_events
             GROUP BY user_id HAVING created_at <= '$date') AS latest_transaction

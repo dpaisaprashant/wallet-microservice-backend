@@ -18,6 +18,8 @@ networks:
     external: true
   wallet-microservice-khalti_spring-boot-mysql-network:
     external: true
+  wallet-microservice-cellpay_spring-boot-mysql-network:
+    external: true
   # wallet-microservice-merchant_laravel:
   #   external: true
 
@@ -43,6 +45,7 @@ services:
       - wallet-microservice-core_laravel
       - linked-account-integration-project_spring-boot-mysql-network
       - wallet-microservice-khalti_spring-boot-mysql-network
+      - wallet-microservice-cellpay_spring-boot-mysql-network
       - wallet-microservice-paypoint_laravel
       - wallet-microservice-nchl_laravel
       - wallet-microservice-cybersource_laravel
@@ -71,6 +74,7 @@ services:
       - wallet-microservice-core_laravel
       - linked-account-integration-project_spring-boot-mysql-network
       - wallet-microservice-khalti_spring-boot-mysql-network
+      - wallet-microservice-cellpay_spring-boot-mysql-network
       - wallet-microservice-paypoint_laravel
       - wallet-microservice-nchl_laravel
       - wallet-microservice-cybersource_laravel
@@ -93,6 +97,7 @@ services:
       - wallet-microservice-core_laravel
       - linked-account-integration-project_spring-boot-mysql-network
       - wallet-microservice-khalti_spring-boot-mysql-network
+      - wallet-microservice-cellpay_spring-boot-mysql-network
       - wallet-microservice-paypoint_laravel
       - wallet-microservice-nchl_laravel
       - wallet-microservice-cybersource_laravel
@@ -116,6 +121,7 @@ services:
       - wallet-microservice-core_laravel
       - linked-account-integration-project_spring-boot-mysql-network
       - wallet-microservice-khalti_spring-boot-mysql-network
+      - wallet-microservice-cellpay_spring-boot-mysql-network
       - wallet-microservice-paypoint_laravel
       - wallet-microservice-nchl_laravel
       - wallet-microservice-cybersource_laravel
@@ -141,13 +147,14 @@ services:
       - wallet-microservice-core_laravel
       - linked-account-integration-project_spring-boot-mysql-network
       - wallet-microservice-khalti_spring-boot-mysql-network
+      - wallet-microservice-cellpay_spring-boot-mysql-network
       - wallet-microservice-paypoint_laravel
       - wallet-microservice-nchl_laravel
       - wallet-microservice-cybersource_laravel
       - wallet-microservice-npay_laravel
       - wallet-microservice-nps_laravel
       # - wallet-microservice-merchant_laravel
-  
+
   phpmyadmin:
     depends_on:
       - mysql
@@ -164,6 +171,7 @@ services:
       - wallet-microservice-core_laravel
       - linked-account-integration-project_spring-boot-mysql-network
       - wallet-microservice-khalti_spring-boot-mysql-network
+      - wallet-microservice-cellpay_spring-boot-mysql-network
       - wallet-microservice-paypoint_laravel
       - wallet-microservice-nchl_laravel
       - wallet-microservice-cybersource_laravel
@@ -178,10 +186,10 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
-    ports: 
+    ports:
       - "27019:27017"
     restart: always
-    volumes: 
+    volumes:
       - ./mongo:/data/db
     networks:
       - laravel
@@ -192,8 +200,8 @@ services:
     restart: always
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: password      
-    ports: 
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password
+    ports:
       - "8021:8081"
     networks:
       - laravel

@@ -4,6 +4,7 @@
 namespace App\Wallet\WalletRegistration\Http\Controllers;
 
 
+use App\Models\BackendUserWalletUser;
 use App\Models\Merchant\Merchant;
 use App\Models\MobileOTP;
 use App\Models\User;
@@ -48,9 +49,13 @@ class MerchantRegistrationController extends Controller
             'should_change_password_message'=>'Password needs to be changed.'
         ]);
 
-        BackendUserMerchants::create([
-           'user_id' => auth()->user()->id,
+        $walletUser=User::where('mobile_no', $request->mobile_no)->get()->toArray();
+        $after_properties=json_encode($walletUser);
 
+        BackendUserWalletUser::create([
+           'backend_user_id' => auth()->user()->id,
+            'wallet_user_id' => $walletUser[0]['id'],
+            'after_properties' => $after_properties
         ]);
 
         return redirect()->route('create.merchant.view')->with('success', 'Merchant created successfully');

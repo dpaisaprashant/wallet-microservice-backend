@@ -461,7 +461,7 @@
                                             {{--                                            <a style="margin-top: 5px;" href="{{route('merchant.kyc.detail', $merchant->id)}}" class="btn btn-sm btn-icon btn-primary m-t-n-xs" title="Unverified Merchant Kyc List"><i class="fa fa-eye"></i></a>--}}
                                             @can('User KYC view')
                                                 <a style="margin-top: 5px;" href="{{route('user.kyc', $merchant->id)}}"
-                                                   class="btn btn-sm btn-icon btn-primary m-t-n-xs"><i class="fa fa-eye"></i></a>
+                                                   class="btn btn-sm btn-icon btn-primary m-t-n-xs" title="Verify Merchant KYC"><i class="fa fa-file"></i></a>
                                             @endcan
 
                                             <a style="margin-top: 5px" href="{{ route('user.profile', $merchant->id) }}"

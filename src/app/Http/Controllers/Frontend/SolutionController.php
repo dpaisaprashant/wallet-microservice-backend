@@ -18,7 +18,7 @@ class SolutionController extends Controller
 
     public function index()
     {
-        $solutions = FrontendSolution::latest()->get();
+        $solutions = FrontendSolution::where('belongs_to',strtolower(config('app.'.'name')))->latest()->get();
         return view('admin.frontend.solution.index')->with(compact('solutions'));
     }
 
@@ -32,7 +32,7 @@ class SolutionController extends Controller
 //                $data['base64_image'] = $this->uploadImageBase64($data['image']);
 //            }
 
-            $about = FrontendSolution::create($responseData);
+            FrontendSolution::create($responseData);
             return redirect()->route('frontend.solution.index')->with('success',' successfully created solution');
         }
         return view('admin.frontend.solution.create');

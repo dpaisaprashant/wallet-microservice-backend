@@ -43,14 +43,15 @@
                                            class="form-control" required>
                                 </div>
                             </div>
-
-                            <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Sub Title</label>
-                                <div class="col-sm-10">
-                                    <input value="{{ $header->sub_title ?? '' }}" name="sub_title" type="text"
-                                           class="form-control" required>
+                            @if(strtolower(config('app.'.'name')) == 'dpaisa'|| strtolower(config('app.'.'name')) == 'master')
+                                <div class="form-group  row">
+                                    <label class="col-sm-2 col-form-label">Sub Title</label>
+                                    <div class="col-sm-10">
+                                        <input value="{{ $header->sub_title ?? '' }}" name="sub_title" type="text"
+                                               class="form-control" required>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
 
                                 <hr class="hr-line-dashed">
 

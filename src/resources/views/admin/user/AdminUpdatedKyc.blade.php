@@ -136,8 +136,8 @@
                                     <th>Admin</th>
                                     <th>User-Kyc</th>
                                     <th>Admin Action</th>
-                                    <th>user Kyc Before Edit</th>
-                                    <th>User Kyc After Edit</th>
+                                    <th>user Kyc Before</th>
+                                    <th>User Kyc After</th>
                                     <th>Date</th>
                                 </tr>
                                 </thead>
@@ -148,7 +148,7 @@
                                         <td>
                                             &nbsp;{{ $adminUpdatedKyc->admin->name}}
                                         </td>
-                                        <td>{{ $adminUpdatedKyc->userKyc->user->mobile_no}}</td>
+                                        <td>{{ optional(optional($adminUpdatedKyc->userKyc)->user)->mobile_no}}</td>
                                         <td>
                                             @php
                                             $response = json_decode($adminUpdatedKyc->kyc_before_change)
@@ -159,8 +159,8 @@
                                                 Updated
                                             @endif
                                         </td>
-                                        <td>@include('admin.user.AdmindUpdateKycJsonDecode', ['adminUpdatedKyc' => $adminUpdatedKyc,'type'=>"before_change"])</td>
-                                        <td>@include('admin.user.AdmindUpdateKycJsonDecode', ['adminUpdatedKyc' => $adminUpdatedKyc,'type'=>"after_change"])</td>
+                                        <td>@include('admin.user.AdminUpdateKycJsonDecode', ['adminUpdatedKyc' => $adminUpdatedKyc,'type'=>"before_change"])</td>
+                                        <td>@include('admin.user.AdminUpdateKycJsonDecode', ['adminUpdatedKyc' => $adminUpdatedKyc,'type'=>"after_change"])</td>
                                         <td>{{$adminUpdatedKyc->created_at}}</td>
                                     </tr>
                                 @endforeach

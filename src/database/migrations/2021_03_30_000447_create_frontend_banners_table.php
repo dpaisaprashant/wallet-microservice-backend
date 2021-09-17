@@ -20,7 +20,6 @@ class CreateFrontendBannersTable extends Migration
             $table->string('image')->nullable();
             $table->integer('active')->nullable();
             $table->string('mobile_image')->nullable();
-            $table->string('belongs_to');
             $table->timestamps();
         });
     }

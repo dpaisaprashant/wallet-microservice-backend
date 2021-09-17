@@ -1,4 +1,4 @@
-@extends('admin.layouts.admin_design')
+ @extends('admin.layouts.admin_design')
 @section('content')
 
     <div class="row wrapper border-bottom white-bg page-heading">
@@ -181,7 +181,12 @@
                                             <strong>Filter</strong>
                                         </button>
                                     </div>
-
+                                    <div>
+                                        <button id="compareBtn" class="btn btn-sm btn-primary float-right m-t-n-xs"
+                                                type="submit" style="margin-right: 10px;"
+                                                formaction="{{ route('nchlAggregatedTransferApi.compare') }}">
+                                            <strong>Compare with API</strong></button>
+                                    </div>
                                     <div>
                                         <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
                                                 type="submit" style="margin-right: 10px;"
@@ -265,6 +270,10 @@
                                                 @include('admin.transaction.nchlAggregatedPayment.checkResponse',['nchlAggregatedPayment' => $nchlAggregatedPayment,'id' => '2'])
                                                 @include('admin.transaction.nchlAggregatedPayment.nchlAggregateRequest',['nchlAggregatedPayment' => $nchlAggregatedPayment,'id' => '3'])
                                                 @include('admin.transaction.nchlAggregatedPayment.nchlAggregateResponse',['nchlAggregatedPayment' => $nchlAggregatedPayment,'id' => '4'])
+                                                <a href="{{ route('nchl.aggregatedPayment.detail', $nchlAggregatedPayment->id) }}">
+                                                    <button class="btn btn-primary btn-icon" type="button"><i
+                                                            class="fa fa-eye"></i></button>
+                                                </a>
                                             </td>
                                             <td>
                                                 <form

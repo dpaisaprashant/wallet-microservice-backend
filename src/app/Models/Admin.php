@@ -124,4 +124,8 @@ class Admin extends Authenticatable
         return $this->hasMany(AdminUpdateKyc::class,'admin_id');
     }
 
+    public function adminAlteredAgent(){
+        return $this->hasMany(AdminAlteredAgent::class, 'admin_id');
+    }
+
 }

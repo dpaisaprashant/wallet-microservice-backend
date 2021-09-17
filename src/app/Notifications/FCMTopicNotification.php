@@ -25,19 +25,20 @@ class FCMTopicNotification extends Notification
     protected $type;
 
     protected string $channel;
+    protected $image;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($topic, $title, $description, $type)
+    public function __construct($topic, $title, $description, $type,$image)
     {
         $this->topic = $topic;
         $this->title = $title;
         $this->description = $description;
         $this->type = $type;
-
+        $this->image = $image;
         $repository = new NotificationRepository(request());
         $this->channel = $repository->notificationChannel();
     }
@@ -60,7 +61,8 @@ class FCMTopicNotification extends Notification
             "title" => $this->title,
             "topic" => $this->topic,
             "description" => $this->description,
-            "type" => $this->type
+            "type" => $this->type,
+            "image" => $this->image,
         ];
     }
 

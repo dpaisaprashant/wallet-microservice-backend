@@ -43,7 +43,7 @@
                                 <thead>
                                 <tr>
                                     <th>S.No.</th>
-                                    <th>Icon</th>
+                                    <th>Image</th>
                                     <th>Title</th>
                                     <th>Description</th>
                                     <th>Created At</th>
@@ -54,7 +54,11 @@
                                 @foreach($solutions as $solution)
                                     <tr class="gradeC">
                                         <td>{{ $loop->index + 1}}</td>
-                                        <td>{{ $solution->icon}}</td>
+                                        <td>
+                                            <img
+                                                src="{{ config('dpaisa-api-url.public_document_url') . $solution->image }}"
+                                                alt="Solution Image" style="height: 120px;">
+                                        </td>
                                         <td>{{ $solution->title}}</td>
                                         <td>{{ $solution->description}}</td>
                                         <td>{{ $solution->created_at}}</td>

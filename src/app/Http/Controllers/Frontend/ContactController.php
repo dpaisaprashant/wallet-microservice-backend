@@ -15,7 +15,7 @@ class ContactController extends Controller
 
     public function index(Request $request)
     {
-        $contact = FrontendContact::latest()->first();
+        $contact = FrontendContact::where('belongs_to',strtolower(config('app.'.'name')))->latest()->first();
 
         if ($request->isMethod('post')) {
 

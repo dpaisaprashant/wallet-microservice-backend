@@ -28,14 +28,16 @@
                     <div class="ibox-content">
                         <form method="post" action="{{route('frontend.solution.create')}}" enctype="multipart/form-data">@csrf
                             <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Icon</label>
+                                <label class="col-sm-2 col-form-label">Image</label>
                                 <div class="col-sm-10">
-                                    <input name="icon" type="text"
-                                           class="form-control" required>
+                                    <div class="custom-file">
+                                        <input name="image" id="logo1" type="file" class="custom-file-input">
+                                        <label for="logo1" class="custom-file-label">Choose file...</label>
+                                    </div>
                                 </div>
                             </div>
 
-                            <input type="text" name="belongs_to" value="{{config('app.'.'name')}}" hidden>
+                            <input type="text" name="belongs_to" value="{{strtolower(config('app.'.'name'))}}" hidden>
 
                             <hr class="hr-line-dashed">
 

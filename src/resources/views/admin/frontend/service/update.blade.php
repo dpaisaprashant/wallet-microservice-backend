@@ -72,7 +72,7 @@
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Description</label>
                                 <div class="col-sm-10">
-                                    <textarea name="description" class="form-control" required>
+                                    <textarea name="description" class="form-control">
                                         {!! $service->description !!}
                                     </textarea>
                                 </div>

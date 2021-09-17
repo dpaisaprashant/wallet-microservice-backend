@@ -151,6 +151,14 @@ $url = url()->current();
                 </li>
             @endif
 
+            @if(auth()->user()->hasPermissionTo('View merchant product'))
+
+                <li @if(preg_match('/merchant-product/i', $url)) class="active" @endif>
+                    <a href="{{ route('merchant.product.list') }}"><i class="fa fa-shopping-bag"></i> <span
+                            class="nav-label">Merchant Products</span></a>
+                </li>
+            @endif
+
 
             @can('Deactivate users view')
                 <li @if($url == route('user.deactivate.list')) class="active" @endif>
@@ -264,6 +272,7 @@ $url = url()->current();
                         @can('Agent create')
                             <li><a href="{{ route('agent.create') }}">Create Agent</a></li>
                         @endcan
+                        <li><a href="{{route('agent.AdminAlteredAgents')}}">Admin Altered Agents</a></li>
                     </ul>
                 </li>
             @endif
@@ -412,6 +421,9 @@ $url = url()->current();
                             <li><a href="{{route('cellPayUserTransaction.view')}}">CellPay Transactions</a></li>
                         @endcan
 
+                        @can('View load wallet')
+                            <li><a href="{{route('npsaccountlinkload.view')}}">Account Link</a></li>
+                        @endcan
 
                     </ul>
                 </li>
@@ -596,7 +608,7 @@ $url = url()->current();
 
 
             @if(auth()->user()->hasAnyPermission(['View blocked ip', 'View whitelisted ip']))
-                <li @if(preg_match('/report/i', $url)) class="active" @endif>
+                <li @if(preg_match('/ip/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-server"></i> <span class="nav-label">Block / Whitelist IPs</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
@@ -812,22 +824,27 @@ $url = url()->current();
                     <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Frontend Settings</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        @can('Frontend header view')
-                            <li><a href="{{ route('frontend.header') }}">Headers</a></li>
-                        @endcan
-                        @if(strtolower(config('app.'.'name')) == 'sajilopay')
-                            <li><a href="{{ route('frontend.multipleHeader') }}">Multiple Headers</a></li>
+                        @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'icash' || strtolower(config('app.'.'name')) == 'master')
+                            @can('Frontend header view')
+                                <li><a href="{{ route('frontend.header') }}">Headers</a></li>
+                            @endcan
+                        @endif
+
+                        @if(strtolower(config('app.'.'name')) == 'sajilopay' || strtolower(config('app.'.'name')) == 'master')
+                            <li><a href="{{ route('frontend.multipleHeader') }}">Headers</a></li>
                         @endif
 
                         @can('Frontend service view')
                             <li><a href="{{ route('frontend.service.index') }}">Services</a></li>
                         @endcan
 
-                        @can('Frontend about view')
-                            <li><a href="{{ route('frontend.about.index') }}">Abouts</a></li>
-                        @endcan
+                            @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'icash' || strtolower(config('app.'.'name')) == 'master')
+                                @can('Frontend about view')
+                                    <li><a href="{{ route('frontend.about.index') }}">Abouts</a></li>
+                                @endcan
+                            @endif
 
-                            @if(strtolower(config('app.'.'name')) == 'dpaisa')
+                            @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'master')
                                 @can('Frontend process view')
                                 <li><a href="{{ route('frontend.process.index') }}">Processes</a></li>
                                 @endcan
@@ -837,30 +854,30 @@ $url = url()->current();
                             <li><a href="{{ route('frontend.banner.index') }}">Banners</a></li>
                         @endcan
 
-                            @if(strtolower(config('app.'.'name')) == 'dpaisa')
+                            @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'master')
                                 @can('Frontend contact view')
                                     <li><a href="{{ route('frontend.contact') }}">Contact</a></li>
                                 @endcan
                             @endif
 
-                            @if(strtolower(config('app.'.'name')) == 'sajilopay' || strtolower(config('app.'.'name')) == 'icash' )
+                            @if(strtolower(config('app.'.'name')) == 'sajilopay' || strtolower(config('app.'.'name')) == 'icash' || strtolower(config('app.'.'name')) == 'master' )
                                 @can('Frontend faq view')
                                     <li><a href="{{route('frontend.faq.index')}}">FAQs</a></li>
                                 @endcan
                             @endif
 
-                            @if(strtolower(config('app.'.'name')) == 'icash')
+                            @if(strtolower(config('app.'.'name')) == 'icash' || strtolower(config('app.'.'name')) == 'master')
                                 @can('Frontend news view')
                                 <li><a href="{{route('frontend.news.index')}}">NEWS</a></li>
                                 @endcan
                             @endif
 
-                            @if(strtolower(config('app.'.'name')) == 'sajilopay')
+                            @if(strtolower(config('app.'.'name')) == 'sajilopay' || strtolower(config('app.'.'name')) == 'master')
                                 @can('Frontend solution view')
                                 <li><a href="{{route('frontend.solution.index')}}">Solutions</a></li>
                                 @endcan
                             @endif
-                            @if(strtolower(config('app.'.'name')) == 'sajilopay')
+                            @if(strtolower(config('app.'.'name')) == 'sajilopay' || strtolower(config('app.'.'name')) == 'master')
                                 @can('Frontend partner view')
                                 <li><a href="{{route('frontend.partner.index')}}">Partners</a></li>
                                 @endcan
@@ -870,7 +887,7 @@ $url = url()->current();
             @endif
 
             @if(auth()->user()->hasAnyPermission(['View wallet service', 'Yearly report view','Report paypoint','Report npay','Report nchl load','Report referral','Report register using referral user','Report subscriber daily','Report reconciliation','Report nrb active and inactive user','Report non bank payment','Report wallet end balance','Report admin kyc','Report commission']))
-                <li @if(preg_match('/report/i', $url)) class="active" @endif>
+                <li @if(preg_match('/developer/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">Developers option</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">

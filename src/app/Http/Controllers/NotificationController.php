@@ -9,11 +9,14 @@ use App\Models\FCMNotification;
 use App\Models\User;
 use App\Wallet\Notification\Repository\NotificationRepository;
 use Illuminate\Http\Request;
+use App\Traits\UploadImage;
 
 class NotificationController extends Controller
 {
 
     private $repository;
+    private $disk = "public";
+    use UploadImage;
 
     public function __construct(NotificationRepository $repository)
     {
@@ -38,10 +41,11 @@ class NotificationController extends Controller
             if (empty($request->topics)) {
                 return redirect()->back()->with('error', 'Topic not selected');
             }
+            $data = $request->all();
+            $responseData = $this->uploadImageToCoreBase64($this->disk, $data, $request);
+            $this->repository->sendTopicNotification($responseData);
 
-            $this->repository->sendTopicNotification();
-
-            if (!$this->repository->createTopicNotifications()) {
+            if (!$this->repository->createTopicNotifications($responseData)) {
                 return redirect()->route('notification.view')->with('error', 'notification not sent successfully');
             }
 
@@ -51,15 +55,18 @@ class NotificationController extends Controller
         return view('admin.notification.create')->with(compact('allTopics'));
     }
 
-    public function userNotification(User $user)
+    public function userNotification(User $user, Request $request)
     {
         if (!$this->repository->checkUserTokens($user)) {
             return redirect()->back()->with('error', 'Notification token not found');
         }
 
-        $this->repository->sendUserNotification($user);
+        $data = $request->all();
+        $responseData = $this->uploadImageToCoreBase64($this->disk, $data, $request);
 
-        if (!$this->repository->createUserNotification($user)) {
+        $this->repository->sendUserNotification($user,$responseData);
+
+        if (!$this->repository->createUserNotification($user,$responseData)) {
             return redirect(route('user.profile', $user->id))->with('error', 'Notification not sent successfully');
         }
 

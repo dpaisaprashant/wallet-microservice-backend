@@ -12,6 +12,7 @@ return [
 
     'merchant_kyc_documentation_url' => env('MERCHANT_KYC_DOCUMENTATION_URL', 'https://staging.merchant.silkinv.com/storage/img/kyc/'),
 
-    'public_document_url' => env('PUBLIC_DOCUMENTATION_URL','https://dpaisa.com/storage/')
+    'public_document_url' => env('PUBLIC_DOCUMENTATION_URL','https://dpaisa.com/storage/'),
+
 ];
 

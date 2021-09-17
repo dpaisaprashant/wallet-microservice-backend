@@ -26,7 +26,7 @@ class ServiceController extends Controller
 
     public function index()
     {
-        $services = FrontendService::latest()->get();
+        $services = FrontendService::where('belongs_to',strtolower(config('app.'.'name')))->latest()->get();
         return view('admin.frontend.service.index')->with(compact('services'));
     }
 

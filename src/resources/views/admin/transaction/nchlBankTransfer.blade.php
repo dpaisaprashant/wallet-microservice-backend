@@ -207,16 +207,17 @@
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
                                                 formaction="{{ route('nchl.bankTransfer') }}"><strong>Filter</strong>
                                         </button>
-                                        <button class="btn btn-sm btn-warning float-right m-t-n-xs"
+                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs"
                                                 style="margin-right: 8px;" type="submit"
                                                 formaction="{{ route('nchlBankTransferApi.compare') }}"><strong>Compare
                                                 with API</strong>
                                         </button>
                                     </div>
+                                    <div>
+                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs" type="submit" style="margin-right: 10px;" formaction="{{ route('nchlBankTransfer.excel') }}"><strong>Excel</strong></button>
+                                    </div>
                                     @include('admin.asset.components.clearFilterButton')
-                                    {{--<div>
-                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs" type="submit" style="margin-right: 10px;" formaction="{{ route('npay.excel') }}"><strong>Excel</strong></button>
-                                    </div>--}}
+
                                 </form>
                             </div>
 

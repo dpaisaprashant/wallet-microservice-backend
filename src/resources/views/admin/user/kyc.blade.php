@@ -43,7 +43,7 @@
                     <div class="ibox-title">
                         <h5>User KYC Details</h5>
                         @can('Edit user kyc')
-                            <a style="margin-left: 5px; display: inline; float: right"
+                            <a style="margin-top: -10px; padding: 8px;display: inline; float: right"
                                href="{{route('user.editKyc',$user->id)}}"
                                class="btn btn-sm btn-primary m-t-n-xs"
                                title="user profile">

@@ -159,14 +159,9 @@
                                                 <dt class="col-md-3 text-right">
                                                     <label for="c_issued_date">Identity Issue Date:</label>
                                                 </dt>
-                                            <dd class="col-md-8">
-                                                <div class="input-group date">
-                                                        <span class="input-group-addon">
-                                                            <i class="fa fa-calendar"></i>
-                                                        </span>
-                                                    <input type="text" class="form-control date_from" name="c_issued_date" placeholder="Enter Document Issued Date" required>
-                                                </div>
-                                            </dd>
+                                                <dd class="col-md-8">
+                                                    <input type="text" class="form-control form-control-sm" name="c_issued_date" placeholder="Enter Document Issue Date" required>
+                                                </dd>
 
                                                 <dt class="col-md-3 text-right">
                                                     <label for="c_issued_from">Identity Issue From:</label>
@@ -313,30 +308,24 @@
                                                         <label for="company_document">Company Document:</label>
                                                     </dt>
                                                     <dd class="col-md-8">
-                                                        <div class="custom-file">
                                                         <input name="company_document"  type="file" class="custom-file-input" required>
                                                         <label for="company_document" class="custom-file-label">Upload Company Document...</label>
-                                                        </div>
                                                     </dd>
 
                                                     <dt class="col-md-3 text-right">
                                                         <label for="company_vat_document">Company VAT Document:</label>
                                                     </dt>
                                                     <dd class="col-md-8">
-                                                        <div class="custom-file">
                                                         <input name="company_vat_document"  type="file" class="custom-file-input" required>
                                                         <label for="company_vat_document" class="custom-file-label">Upload Company VAT Document...</label>
-                                                        </div>
                                                     </dd>
 
                                                     <dt class="col-md-3 text-right">
                                                         <label for="company_tax_clearance_document">Company Tax Clearance Document:</label>
                                                     </dt>
                                                     <dd class="col-md-8">
-                                                        <div class="custom-file">
                                                         <input name="company_tax_clearance_document"  type="file" class="custom-file-input" required>
                                                         <label for="company_tax_clearance_document" class="custom-file-label">Upload Company Tax Clearance Document...</label>
-                                                        </div>
                                                     </dd>
                                                 @endif
                                             <br>

@@ -82,11 +82,11 @@
                         $step2Error = false;
                         $step3NoResponse = false;
 
-                        if ( $transaction ) {
+                        if ( $transaction->check_response_code == '000' && $transaction->check_response_description == 'SUCCESS') {
                             $step1 = true;
                         }
 
-                        if ( !empty($transaction->request) && ! (empty($transaction->response) || $transaction->response == 'null')) {
+                        if ( $transaction->response_code == '000' && $transaction->response_description == 'SUCCESS') {
                             $step1 = true;
                             $step2 = true;
                         } else {
@@ -95,7 +95,7 @@
                         }
 
 
-                        if ($transaction->debit_status === '000' && $transaction->credit_status === '000') {
+                        if ($transaction->debit_status === '1001' && $transaction->credit_status === '1000') {
                                 $step1= true;
                                 $step2 = true;
                                 $step3 = true;
@@ -128,8 +128,8 @@
                                                    <p>
                                                        Transaction Id: {{ $transaction->transaction_id }}<br>
                                                        Response Id: {{ $transaction->response_id }}<br>
-                                                       Debit Status:     {{ $transaction->debit_response_message }}<br>
-                                                       Credit Status:    {{ $transaction->credit_response_message }}
+                                                       Debit Status:     {{ $transaction->debit_status }}<br>
+                                                       Credit Status:    {{ $transaction->credit_status }}
                                                    </p>
                                                </div>
                                            </li>

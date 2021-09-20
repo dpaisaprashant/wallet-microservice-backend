@@ -423,6 +423,12 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::get('/excel/npay', 'ExcelExportController@nPay')->name('npay.excel');
         Route::get('/excel/paypoint', 'ExcelExportController@payPoint')->name('paypoint.excel');
+        Route::get('/excel/nps', 'ExcelExportController@nps')->name('nps.excel');
+        Route::get('/excel/nchl-aggregated', 'ExcelExportController@nchlAggregated')->name('nchlAggregated.excel');
+        Route::get('/excel/cellpay', 'ExcelExportController@cellPay')->name('cellpay.excel');
+        Route::get('/excel/nchl-bank-transfer', 'ExcelExportController@nchlBankTransfer')->name('nchlBankTransfer.excel');
+        Route::get('/excel/khalti', 'ExcelExportController@khalti')->name('khalti.excel');
+
 
         //user
         Route::get('/excel/complete-transaction/user', 'ExcelExportController@userCompleteTransactions')->name('user.transaction.complete.excel');

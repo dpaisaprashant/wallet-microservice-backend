@@ -437,7 +437,6 @@
                                 <tbody>
 
                                 @foreach($merchants as $merchant)
-
                                     <tr class="gradeX">
                                         <td>{{ $loop->index + ($merchants->perPage() * ($merchants->currentPage() - 1)) + 1 }}</td>
                                         <td>
@@ -473,7 +472,6 @@
                                         <td>@include('admin.user.userType.displayUserTypes',['user'=>$merchant])</td>
 
                                         <td class="center">
-
                                             <a style="margin-top: 5px;"
                                                href="{{route('merchant.kyc.detail', $merchant->id)}}"
                                                class="btn btn-sm btn-icon btn-primary m-t-n-xs"
@@ -485,9 +483,37 @@
                                             @if(optional(optional($merchant->merchant)->merchantType)->name == "reseller")
                                                 @include('admin.merchant.viewMerchantResellerCredentials',['id'=>optional($merchant->merchant)->id,'merchant' => $merchant])
                                             @endif
+                                    {{--                                            <a style="margin-top: 5px;" href="{{route('merchant.kyc.detail', $merchant->id)}}" class="btn btn-sm btn-icon btn-primary m-t-n-xs" title="Unverified Merchant Kyc List"><i class="fa fa-eye"></i></a>--}}
+                                            @can('User KYC view')
+                                                <a style="margin-top: 5px;" href="{{route('user.kyc', $merchant->id)}}"
+                                                   class="btn btn-sm btn-icon btn-primary m-t-n-xs" title="Verify Merchant KYC"><i class="fa fa-file"></i></a>
+                                            @endcan
+
+                                            <a style="margin-top: 5px" href="{{ route('user.profile', $merchant->id) }}"
+                                               class="btn btn-sm btn-icon btn-warning m-t-n-xs"
+                                               title="Merchant Profile"><i class="fa fa-user"></i></a>
+                                            @if(optional(optional($merchant->merchant)->merchantType)->name == "reseller")
+                                                @include('admin.merchant.viewMerchantResellerCredentials',['id'=>optional($merchant->merchant)->id,'merchant' => $merchant])
+                                            @endif
+
+                                            {{--                                        @can('User profile')--}}
+                                            {{--                                            <a style="margin-top: 5px;"--}}
+                                            {{--                                               href="{{route('user.profile', $merchant->id)}}"--}}
+                                            {{--                                               class="btn btn-sm btn-icon btn-primary m-t-n-xs"--}}
+                                            {{--                                               title="user profile"><i class="fa fa-eye"></i></a>--}}
+                                            {{--                                        @endcan--}}
                                             {{--                                        <a style="margin-top: 5px;" href="{{route('merchant.transaction', $merchant->id)}}" class="btn btn-sm btn-icon btn-info m-t-n-xs" title="merchant transactions"><i class="fa fa-credit-card"></i></a>--}}
 
                                             {{--                                        <a style="margin-top: 5px;" href="{{route('merchant.kyc', $merchant->id)}}" class="btn btn-sm btn-icon btn-warning m-t-n-xs" title="merchant kyc"><i class="fa fa-file"></i></a>--}}
+                                            @can('Create user kyc')
+
+                                                @if(empty($merchant->kyc))
+                                                    <a style="margin-top: 5px;"
+                                                       href="{{route('user.createUserKyc',$merchant->id)}}"
+                                                       class="btn btn-sm btn-icon btn-primary m-t-n-xs"
+                                                       title="user profile"><i class="fa fa-plus"></i></a>
+                                                @endif
+                                            @endcan
 
                                         </td>
                                     </tr>

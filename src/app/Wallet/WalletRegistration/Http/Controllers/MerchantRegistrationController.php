@@ -4,44 +4,106 @@
 namespace App\Wallet\WalletRegistration\Http\Controllers;
 
 
+use App\Models\BackendUserWalletUser;
 use App\Models\Merchant\Merchant;
+use App\Models\MobileOTP;
+use App\Models\User;
+use App\Wallet\Traits\ApiResponder;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Traits\CollectionPaginate;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ConnectException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Client\RequestException;
+use Illuminate\Support\Facades\Log;
+use App\Wallet\WalletRegistration\Microservice\MerchantRegistrationMicroservice;
+use App\Wallet\WalletRegistration\Exceptions\MicroserviceException;
 
 class MerchantRegistrationController extends Controller
 {
 
+    use ApiResponder;
+
     public function view()
     {
-        $merchants =  Merchant::all();
+        $merchants = Merchant::all();
 
-        return view('WalletRegistration::create-merchant',compact('merchants'));
+        return view('WalletRegistration::create-merchant', compact('merchants'));
     }
 
-    public function create(Request $request)
+    public function create(Request $request, MerchantRegistrationMicroservice $microservice)
     {
-        $formData=$request->all();
-        dd($formData['mobile_no']);
+        $response = $this->generateOTP($request);
 
-//        $blockedIPAlreadyExists = WalletIP::where('ip',$request->get('ip'))->count();
-//
-//        if($blockedIPAlreadyExists > 0){
-//            return redirect()->route('blockedip.view')->with('error','IP already exists in blocked list');
-//        }
-//
-//        $blockedIP = WalletIP::create([
-//            'ip' => $request->get('ip'),
-//            'description' => $request->get('description'),
-//            'blocked_at' => $request->get('blocked_at'),
-//            'block_duration' => $request->get('block_duration'),
-//            'status' => $request->get('status')
-//        ]);
+        MobileOTP::where('mobile_no', $request->mobile_no)->update([
+            'phone_verified_at' => Carbon::now()->format('Y-m-d H:i:s')
+        ]);
 
-//        return redirect()->route('blockedip.view')->with('success','IP added to block list');
+        $microservice->createMerchant();
 
+        User::where('mobile_no', $request->mobile_no)->update([
+            'should_change_password' => 1,
+            'should_change_password_message'=>'Password needs to be changed.'
+        ]);
+
+        $walletUser=User::where('mobile_no', $request->mobile_no)->get()->toArray();
+        $after_properties=json_encode($walletUser);
+
+        BackendUserWalletUser::create([
+           'backend_user_id' => auth()->user()->id,
+            'wallet_user_id' => $walletUser[0]['id'],
+            'after_properties' => $after_properties
+        ]);
+
+        return redirect()->route('create.merchant.view')->with('success', 'Merchant created successfully');
     }
 
+    public function generateOTP(Request $request)
+    {
+        try {
+            $client = new Client();
+            $response = $client->request('POST', 'nginx_core_wallet/api/otp/mobile/generate', [
+                "headers" => [
+                    'App-Authorizer' => '647061697361',
+                ],
+                'multipart' => [
+                    [
+                        'name' => 'mobile_no',
+                        'contents' => $request->mobile_no
+                    ],
+                ]
+            ]);
+            return $response->getBody()->getContents();
+        } catch (ClientException $e) {
+            Log::info("Client Exception");
+            Log::info($e);
+            throw new MicroserviceException(
+                $e->getMessage()
+            );
+        } catch (\GuzzleHttp\Exception\RequestException $e) {
+            Log::info("Request Exception");
+            Log::info($e);
+            throw new MicroserviceException(
+                $e->getMessage()
+            );
 
+        } catch (ConnectException $e) {
+            //TODO: Notify Developers
+            Log::info($e);
+            dd("connection exception");
+//            throw new MicroserviceException(
+//                $e->getMessage()
+//            );
+
+        } catch (\Exception $e) {
+            Log::info("Unknown Exception");
+            Log::info($e);
+            throw new MicroserviceException(
+                $e->getMessage()
+            );
+        }
+    }
 }

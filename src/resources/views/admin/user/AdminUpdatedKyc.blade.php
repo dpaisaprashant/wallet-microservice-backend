@@ -148,7 +148,7 @@
                                         <td>
                                             &nbsp;{{ $adminUpdatedKyc->admin->name}}
                                         </td>
-                                        <td>{{ $adminUpdatedKyc->userKyc->user->mobile_no}}</td>
+                                        <td>{{ optional(optional($adminUpdatedKyc->userKyc)->user)->mobile_no}}</td>
                                         <td>
                                             @php
                                             $response = json_decode($adminUpdatedKyc->kyc_before_change)

@@ -176,7 +176,6 @@ class TransactionController extends Controller
     public function khaltiPaymentDetail($id, KhaltiRepository $repository)
     {
         $transaction = $repository->detail($id);
-
         return view('admin.transaction.detail.khaltiDetail')->with(compact('transaction'));
     }
 

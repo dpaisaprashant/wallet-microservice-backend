@@ -32,12 +32,13 @@ class MerchantController extends Controller
     {
         $merchants = $repository->paginatedMerchants();
         $stats = $repository->merchantStats();
+        $merchantTypes = MerchantType::all();
 
-        return view('admin.merchant.view')->with(compact('merchants','stats'));
+        return view('admin.merchant.view')->with(compact('merchants','stats','merchantTypes'));
     }
 
     public function merchantUpdateView(){
-        $merchantNames = Merchant::get();
+        $merchant = Merchant::with('user')->get();
         $merchantTypeInArray = MerchantType::pluck('name')->toArray();
         if(!in_array('reseller',$merchantTypeInArray)){
             MerchantType::create([
@@ -46,7 +47,7 @@ class MerchantController extends Controller
         }
         $merchantTypes = MerchantType::get();
 
-        return view('admin.merchant.updateMerchantData',compact('merchantNames','merchantTypes'));
+        return view('admin.merchant.updateMerchantData',compact('merchant','merchantTypes'));
     }
 
     public function merchantUpdate(Request $request,MerchantRepository $repository){

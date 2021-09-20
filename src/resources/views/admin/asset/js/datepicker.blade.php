@@ -15,9 +15,6 @@
             format: 'dd M, yyyy',
             keyboardNavigation: false,
         });
-
-
-
     </script>
 
     <script>
@@ -70,3 +67,13 @@
             $(this).val('');
         });
     </script>
+
+    <script>
+        $(".select-date").datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            format: 'dd M, yyyy',
+            keyboardNavigation: false,
+        });
+    </script>
+

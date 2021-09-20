@@ -29,6 +29,7 @@ class UserFilters extends FiltersAbstract
         'kyc_status' => KycFilter::class,
         'user_name' =>MismatchUserFilter::class,
         'mobile_no'=>MismatchUserNumberFilter::class,
+        'merchant_type' => MerchantTypeFilter::class,
     ];
 
 

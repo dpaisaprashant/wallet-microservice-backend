@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\AllUserAuditResource;
 use App\Http\Resources\AllUserAuditResourceCollection;
+use App\Http\Resources\CellPayTransactionResource;
 use App\Http\Resources\ClearanceResource;
 use App\Http\Resources\ClearanceTransactionResource;
 use App\Http\Resources\DisputeResource;
@@ -11,6 +12,10 @@ use App\Http\Resources\DPaisaAudit\NPayResource;
 use App\Http\Resources\DPaisaAudit\PayPointResource;
 use App\Http\Resources\FundRequestResource;
 use App\Http\Resources\FundTransferResource;
+use App\Http\Resources\KhaltiResource;
+use App\Http\Resources\LinkedAccountsResource;
+use App\Http\Resources\NchlAggregatedTransactionResource;
+use App\Http\Resources\NchlBankTransferResource;
 use App\Http\Resources\SparrowSMSResource;
 use App\Http\Resources\TransactionEventResource;
 use App\Http\Resources\UserAudit\AdminUserKYCResource;
@@ -22,10 +27,16 @@ use App\Http\Resources\UserCheckPaymentResource;
 use App\Http\Resources\UserLoadTransactionResource;
 use App\Http\Resources\UserResource;
 use App\Models\AdminUserKYC;
+use App\Models\CellPayUserTransaction;
 use App\Models\Clearance;
 use App\Models\ClearanceTransaction;
 use App\Models\Dispute;
 use App\Models\FundRequest;
+use App\Models\KhaltiUserTransaction;
+use App\Models\LinkedAccounts;
+use App\Models\NchlAggregatedPayment;
+use App\Models\NchlBankTransfer;
+use App\Models\NpsLoadTransaction;
 use App\Models\SparrowSMS;
 use App\Models\TransactionEvent;
 use App\Models\User;
@@ -122,6 +133,17 @@ class ExcelExportController extends Controller
         return $export->exportExcel();
     }
 
+    public function nps(Request $request)
+    {
+        $export = new ExportExcelHelper();
+        $export->setName('NPS')
+            ->setGeneratorModel(NpsLoadTransaction::class)
+            ->setRequest($request)
+            ->setResource(UserLoadTransactionResource::class);
+
+        return $export->exportExcel();
+    }
+
     public function payPoint(Request $request)
     {
         $export = new ExportExcelHelper();
@@ -130,6 +152,56 @@ class ExcelExportController extends Controller
             ->setRequest($request)
             ->setResource(UserCheckPaymentResource::class);
 
+        return $export->exportExcel();
+    }
+
+    public function nchlAggregated(Request $request)
+    {
+        $export = new ExportExcelHelper();
+        $export->setName('nchlAggregated')
+            ->setGeneratorModel(NchlAggregatedPayment::class)
+            ->setRequest($request)
+            ->setResource(NchlAggregatedTransactionResource::class);
+        return $export->exportExcel();
+    }
+
+    public function cellPay(Request $request)
+    {
+        $export = new ExportExcelHelper();
+        $export->setName('cellPay')
+            ->setGeneratorModel(CellPayUserTransaction::class)
+            ->setRequest($request)
+            ->setResource(CellPayTransactionResource::class);
+        return $export->exportExcel();
+    }
+
+    public function linkedAccount(Request $request)
+    {
+        $export = new ExportExcelHelper();
+        $export->setName('linkedAccounts')
+            ->setGeneratorModel(LinkedAccounts::class)
+            ->setRequest($request)
+            ->setResource(LinkedAccountsResource::class);
+        return $export->exportExcel();
+    }
+
+    public function nchlBankTransfer(Request $request)
+    {
+        $export = new ExportExcelHelper();
+        $export->setName('NCHL Bank Transfer')
+            ->setGeneratorModel(NchlBankTransfer::class)
+            ->setRequest($request)
+            ->setResource(NchlBankTransferResource::class);
+        return $export->exportExcel();
+    }
+
+    public function khalti(Request $request)
+    {
+        $export = new ExportExcelHelper();
+        $export->setName('Khalti')
+            ->setGeneratorModel(KhaltiUserTransaction::class)
+            ->setRequest($request)
+            ->setResource(KhaltiResource::class);
         return $export->exportExcel();
     }
 

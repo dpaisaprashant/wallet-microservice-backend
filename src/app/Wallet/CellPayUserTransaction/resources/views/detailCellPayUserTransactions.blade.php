@@ -89,7 +89,7 @@
                         }
 
 
-                        if (strtoupper($transaction->status) == 'true') {
+                        if (strtolower($transaction->status) == "true") {
                                 $step1= true;
                                 $step2 = true;
                                 $step3 = true;

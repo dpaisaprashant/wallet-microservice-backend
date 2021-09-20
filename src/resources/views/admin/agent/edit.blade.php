@@ -66,7 +66,7 @@
                                         <option value="" disabled>Select Parent Agent</option>
                                         <option value="" selected>--- No parent Agent ---</option>
                                     @foreach($parentAgents as $parentAgent)
-                                            @if($parentAgent->code_used_id == $agent->code_used_id)
+                                            @if($parentAgent->user->id == $agent->code_used_id)
                                                 <option value="{{ $parentAgent->user->id }}" selected>
                                                     {{ ucwords(strtolower($parentAgent->user->name)) }}
                                                 </option>

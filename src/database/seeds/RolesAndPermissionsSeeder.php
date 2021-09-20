@@ -432,6 +432,9 @@ class RolesAndPermissionsSeeder extends Seeder
             'View nchl aggregated api',
             'View paypoint api',
 
+            //Merchant Registration
+            'Create merchant'
+
             ];
 
         //get users having all permissions

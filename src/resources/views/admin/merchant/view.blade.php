@@ -472,14 +472,7 @@
                                         <td>@include('admin.user.userType.displayUserTypes',['user'=>$merchant])</td>
 
                                         <td class="center">
-                                            <a style="margin-top: 5px;"
-                                               href="{{route('merchant.kyc.detail', $merchant->id)}}"
-                                               class="btn btn-sm btn-icon btn-primary m-t-n-xs"
-                                               title="Unverified Merchant Kyc List"><i class="fa fa-eye"></i></a>
 
-                                            <a style="margin-top: 5px" href="{{ route('user.profile', $merchant->id) }}"
-                                               class="btn btn-sm btn-icon btn-danger m-t-n-xs" title="Merchant Profile"><i
-                                                    class="fa fa-user"></i></a>
                                             @if(optional(optional($merchant->merchant)->merchantType)->name == "reseller")
                                                 @include('admin.merchant.viewMerchantResellerCredentials',['id'=>optional($merchant->merchant)->id,'merchant' => $merchant])
                                             @endif

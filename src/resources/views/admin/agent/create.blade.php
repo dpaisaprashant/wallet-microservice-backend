@@ -64,8 +64,9 @@
                                 <label class="col-sm-2 col-form-label">Parent Agent</label>
                                 <div class="col-sm-10">
                                     <select id="agentStatus" data-placeholder="Choose Agent Type..." class="chosen-select"  tabindex="2" name="code_used_id" required>
-                                        <option value="" selected disabled>Select Parent Agent</option>
-                                        @foreach($parentAgents as $parentAgent)
+                                        <option value=""  disabled>Select Parent Agent</option>
+                                        <option value="" selected>--- No parent Agent ---</option>
+                                    @foreach($parentAgents as $parentAgent)
                                             <option value="{{ $parentAgent->user->id }}">
                                                 {{ ucwords(strtolower($parentAgent->user->name)) }}
                                             </option>

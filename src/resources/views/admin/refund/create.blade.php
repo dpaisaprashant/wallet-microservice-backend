@@ -122,7 +122,7 @@
        $('#bonus_amount').keypress(function (e) {
            var amountToRefund = `{{ $_GET["amount"] }}`;
            console.log("amount to refund: " + amountToRefund);
-           var bonusBalanceAmount = $(this).val();
+           var bonusBalanceAmount = this.val();
            console.log("Bonus Balance Amount: " + bonusBalanceAmount)
            var mainBalanceAmount = parseFloat(amountToRefund) - parseFloat(bonusBalanceAmount);
            $("#amount").val(mainBalanceAmount);

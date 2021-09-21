@@ -134,18 +134,21 @@
 
                $("#main_amount").val(mainBalanceAmount);
 
+
+           if (bonusBalanceAmount > amountToRefund || mainBalanceAmount > amountToRefund) {
+               alert("Amount cannot be greater than amount to refund");
+               $('#bonus_amount').val(0);
+               $("#main_amount").val(0);
+               bonusBalanceAmount = 0;
+               mainBalanceAmount = 0;
+           }
+
            if (bonusBalanceAmount < 0 || mainBalanceAmount < 0) {
                alert("Amount cannot be less than 0");
                $('#bonus_amount').val(0);
                $("#main_amount").val(0);
            }
 
-
-           if (bonusBalanceAmount > amountToRefund || mainBalanceAmount > amountToRefund) {
-               alert("Amount cannot be greater than amount to refund");
-               $('#bonus_amount').val(0);
-               $("#main_amount").val(0);
-           }
        });
     </script>
     @endisset

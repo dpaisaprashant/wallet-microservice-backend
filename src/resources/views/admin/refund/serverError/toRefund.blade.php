@@ -115,7 +115,7 @@
                                         <td class="center">{{ $preTransaction->created_at }}</td>
                                         <td>
                                             @can('User profile')
-                                            <a target="__blank" href="{{ route('user.profile', $preTransaction->user_id) }}" class="btn btn-sm btn-info m-t-n-xs"><strong>View user's Audit</strong></a>
+                                            <a target="__blank" href="{{ route('user.profile', $preTransaction->user_id) }}?all-audit-trials=1" class="btn btn-sm btn-info m-t-n-xs"><strong>View user's Audit</strong></a>
                                             <br><br>
                                             @endcan
 

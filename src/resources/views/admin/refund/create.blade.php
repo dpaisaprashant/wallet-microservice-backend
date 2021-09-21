@@ -60,6 +60,15 @@
                                     <input name="mobile_no" type="text" class="form-control" required @isset($_GET["mobile_no"]) value="{{ $_GET["mobile_no"] }}" @endisset>
                                 </div>
                             </div>
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Before Bonus Amount (in Rs.)</label>
+                                <div class="col-sm-10">
+                                    <input id="before_bonus_amount" name="before_bonus_amount" type="text" class="form-control">
+                                    <small>Amount Should be in Rs.</small>
+                                </div>
+                            </div>
 
                             <div class="hr-line-dashed"></div>
 
@@ -119,35 +128,45 @@
 
     @isset($_GET["amount"])
     <script>
-       $('#bonus_amount').on("change paste keyup", function () {
+       $('#before_bonus_amount').on("change paste keyup", function () {
+
            var amountToRefund = `{{ $_GET["amount"] }}`;
-           console.log("amount to refund: " + amountToRefund);
+           var beforeBonusBalance = ('#before_bonus_amount').val();
 
-           var bonusBalanceAmount = $('#bonus_amount').val();
-           if (bonusBalanceAmount < 0) {
-               alert("Amount cannot be less than 0");
-               $('#bonus_amount').val(0);
-           }
-
-           console.log("Bonus Balance Amount: " + bonusBalanceAmount)
-           var mainBalanceAmount = parseFloat(amountToRefund) - parseFloat(bonusBalanceAmount);
-
-               $("#main_amount").val(mainBalanceAmount);
-
-
-           if (bonusBalanceAmount > amountToRefund || mainBalanceAmount > amountToRefund) {
-               alert("Amount cannot be greater than amount to refund");
-               $('#bonus_amount').val(0);
+           if (beforeBonusBalance >= amountToRefund) {
+               $('#bonus_amount').val(amountToRefund);
                $("#main_amount").val(0);
-               bonusBalanceAmount = 0;
-               mainBalanceAmount = 0;
+           } else {
+
+               $('#bonus_amount').val(beforeBonusBalance);
+               $("#main_amount").val(amountToRefund - beforeBonusBalance);
            }
 
-           if (bonusBalanceAmount < 0 || mainBalanceAmount < 0) {
-               alert("Amount cannot be less than 0");
-               $('#bonus_amount').val(0);
-               $("#main_amount").val(0);
-           }
+           // var bonusBalanceAmount = $('#bonus_amount').val();
+           // if (bonusBalanceAmount < 0) {
+           //     alert("Amount cannot be less than 0");
+           //     $('#bonus_amount').val(0);
+           // }
+           //
+           // console.log("Bonus Balance Amount: " + bonusBalanceAmount)
+           // var mainBalanceAmount = parseFloat(amountToRefund) - parseFloat(bonusBalanceAmount);
+           //
+           //     $("#main_amount").val(mainBalanceAmount);
+           //
+           //
+           // if (bonusBalanceAmount > amountToRefund || mainBalanceAmount > amountToRefund) {
+           //     alert("Amount cannot be greater than amount to refund");
+           //     $('#bonus_amount').val(0);
+           //     $("#main_amount").val(0);
+           //     bonusBalanceAmount = 0;
+           //     mainBalanceAmount = 0;
+           // }
+           //
+           // if (bonusBalanceAmount < 0 || mainBalanceAmount < 0) {
+           //     alert("Amount cannot be less than 0");
+           //     $('#bonus_amount').val(0);
+           //     $("#main_amount").val(0);
+           // }
 
        });
     </script>

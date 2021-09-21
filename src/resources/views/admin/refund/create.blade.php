@@ -119,7 +119,7 @@
 
     @isset($_GET["amount"])
     <script>
-       $('#bonus_amount').keypress(function (e) {
+       $('#bonus_amount').change(function (e) {
            var amountToRefund = `{{ $_GET["amount"] }}`;
            console.log("amount to refund: " + amountToRefund);
            var bonusBalanceAmount = $('#bonus_amount').val();

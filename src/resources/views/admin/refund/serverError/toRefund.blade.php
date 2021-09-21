@@ -90,7 +90,7 @@
                                     <th>Pre Transaction Id</th>
                                     <th>Amount</th>
                                     <th>Description</th>
-                                    <th>Vendor</th>
+                                    <th>Service Type</th>
                                     <th>Status</th>
                                     <th>Microservice Type</th>
                                     <th>Date</th>
@@ -109,7 +109,7 @@
                                         <td>
                                             {{ $preTransaction->description }}
                                         </td>
-                                        <td class="center">{{ $preTransaction->vendor }}</td>
+                                        <td class="center">{{ $preTransaction->service_type }}</td>
                                         <td class="center">{{ $preTransaction->status }}</td>
                                         <td class="center">{{ $preTransaction->microservice_type }}</td>
                                         <td class="center">{{ $preTransaction->created_at }}</td>

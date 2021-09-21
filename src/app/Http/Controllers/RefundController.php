@@ -100,7 +100,7 @@ class RefundController extends Controller
                     ->pluck("pre_transaction_id")
                     ->toArray();
 
-                dd(array_values($arr));
+                return array_values($arr);
             })->get();
 
         dd($disputedTransactions);

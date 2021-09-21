@@ -96,7 +96,7 @@ class RefundController extends Controller
             ->where("microservice_type", "PAYPOINT")
             ->whereNotIn("pre_transaction_id", function ($query) {
                 $arr =  $query->from("load_test_funds")
-                    ->select("pre_transaction_id");
+                    ->select("pre_transaction_id")->get();
 
                 dd($arr);
             })->get();

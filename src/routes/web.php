@@ -326,6 +326,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::match(['get', 'post'], '/refund/create', 'RefundController@create')->name('refund.create')->middleware('permission:Refund create');
 
 
+        Route::get('/server-error/refund', 'RefundController@serverErrorIndex')->name('refund.serverError.index')->middleware('permission:Refund view');
+        Route::match(['get', 'post'], '/server-error/refund/create', 'RefundController@serverErrorCreate')->name('refund.serverError.create')->middleware('permission:Refund create');
+
         /**
          * Lucky Winner
          */

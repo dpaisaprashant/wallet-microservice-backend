@@ -74,4 +74,22 @@ class RefundController extends Controller
 
         return view('admin.refund.create')->with(compact('users'));
     }
+
+
+    //Server Error Refund
+    public function serverErrorIndex()
+    {
+        $disputedTransactions = DB::connection('dpaisa')
+            ->select("SELECT * FROM pre_transactions
+                                 WHERE json_response LIKE '%Server error:%'
+                                 AND microservice_type = 'PAYPOINT'
+                                 AND pre_transaction_id NOT IN (
+                                     SELECT pre_transactions.pre_transaction_id FROM pre_transactions
+                                         JOIN load_test_funds
+                                             ON pre_transactions.pre_transaction_id = load_test_funds.pre_transaction_id)"
+            );
+
+        dd($disputedTransactions);
+
+    }
 }

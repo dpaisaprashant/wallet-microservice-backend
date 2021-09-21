@@ -132,8 +132,8 @@
     <script>
        $('#before_bonus_amount').on("change paste keyup", function () {
 
-           var amountToRefund = `{{ $_GET["amount"] }}`;
-           var beforeBonusBalance = $('#before_bonus_amount').val();
+           var amountToRefund = parseFloat(`{{ $_GET["amount"] }}`);
+           var beforeBonusBalance = parseFloat($('#before_bonus_amount').val());
 
            if (beforeBonusBalance >= amountToRefund) {
                $('#bonus_amount').val(amountToRefund);

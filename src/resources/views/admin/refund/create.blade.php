@@ -46,7 +46,7 @@
                             <div class="row" style="margin-top: 10px">
                                 <div class="col-sm-12">
                                     <div class="alert alert-danger" style="width: 100%">
-                                        <i class="fa fa-exclamation-triangle"></i>&nbsp; Please check the user's audit trail page before refunding the transaction !</b>
+                                        <i class="fa fa-exclamation-triangle"></i>&nbsp; Please check the user's audit trail page before refunding the transaction!!. Once refunded the amount is added to user's wallet. The process cannot be undone if user spends the amount from their wallet.</b>
                                     </div>
                                 </div>
                             </div>

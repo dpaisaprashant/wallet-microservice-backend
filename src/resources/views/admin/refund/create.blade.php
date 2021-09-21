@@ -61,20 +61,20 @@
                                 </div>
                             </div>
 
-                            <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Amount (in Rs.)</label>
-                                <div class="col-sm-10">
-                                    <input name="amount" type="text" class="form-control">
-                                    <small>Amount Should be in Rs.</small>
-                                </div>
-                            </div>
-
                             <div class="hr-line-dashed"></div>
 
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Bonus Amount (in Rs.)</label>
                                 <div class="col-sm-10">
-                                    <input name="bonus_amount" type="text" class="form-control">
+                                    <input id="bonus_amount" name="bonus_amount" type="text" class="form-control">
+                                    <small>Amount Should be in Rs.</small>
+                                </div>
+                            </div>
+
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Amount (in Rs.)</label>
+                                <div class="col-sm-10">
+                                    <input id="main_amount" name="amount" type="text" class="form-control">
                                     <small>Amount Should be in Rs.</small>
                                 </div>
                             </div>

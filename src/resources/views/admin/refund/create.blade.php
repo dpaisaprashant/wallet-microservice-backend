@@ -135,9 +135,9 @@
                alert("Amount cannot be less than 0")
                $('#bonus_amount').val(0);
                $("#main_amount").val(0);
+           } else {
+               $("#main_amount").val(mainBalanceAmount);
            }
-           $("#main_amount").val(mainBalanceAmount);
-
        });
     </script>
     @endisset

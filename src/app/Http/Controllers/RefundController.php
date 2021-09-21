@@ -98,9 +98,10 @@ class RefundController extends Controller
                 $arr =  $query->from("load_test_funds")
                     ->select("pre_transaction_id")
                     ->whereNotNull("pre_transaction_id")
-                    ->get();
+                    ->get()
+                    ->toArray();
 
-                dd($arr);
+                dd(array_values($arr));
             })->get();
 
         dd($disputedTransactions);

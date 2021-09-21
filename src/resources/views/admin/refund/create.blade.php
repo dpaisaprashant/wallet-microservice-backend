@@ -35,7 +35,7 @@
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Mobile No</label>
                                 <div class="col-sm-10">
-                                    <input name="mobile_no" type="text" class="form-control" required>
+                                    <input name="mobile_no" type="text" class="form-control" required @isset($_GET["mobile_no"]) value="{{ $_GET["mobile_no"] }}" @endisset>
                                 </div>
                             </div>
 
@@ -62,7 +62,7 @@
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Pre Transaction Id</label>
                                 <div class="col-sm-10">
-                                    <input name="pre_transaction_id" type="text" class="form-control" required>
+                                    <input name="pre_transaction_id" type="text" class="form-control" required @isset($_GET["pre_transaction_id"]) value="{{ $_GET["pre_transaction_id"] }}" @endisset>
                                 </div>
                             </div>
 

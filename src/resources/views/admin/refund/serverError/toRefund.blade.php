@@ -115,6 +115,18 @@
                                         <td class="center">{{ $preTransaction->created_at }}</td>
                                         <td>
 
+                                            @can('Backend user update role')
+                                                <a href="{{ route('backendUser.role', $user->id) }}" class="btn btn-sm btn-info m-t-n-xs"><strong>Update Role</strong></a>
+                                            @endcan
+
+                                            <br><br>
+
+                                                <form action="{{ route('refund.create') }}" method="get">
+                                                    @csrf
+                                                    <input id="pre_transaction_id" type="hidden" name="admin_id" value="{{ $preTransaction->pre_transaction_id }}">
+                                                    <input id="mobile_no" type="hidden" name="admin_id" value="{{ $preTransaction->user->mobile_no }}">
+                                                    <button type="submit"  class="resetBtn btn btn-sm btn-danger m-t-n-xs"><strong>Refund Transaction</strong></button>
+                                                </form>
                                         </td>
                                     </tr>
                                 @endforeach

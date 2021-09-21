@@ -7,12 +7,15 @@ use App\Models\LoadTestFund;
 use App\Models\Microservice\PreTransaction;
 use App\Models\User;
 use App\Models\Wallet;
+use App\Traits\CollectionPaginate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class RefundController extends Controller
 {
+    use CollectionPaginate;
+
     public function index()
     {
         $transactions = LoadTestFund::with('user')
@@ -89,6 +92,7 @@ class RefundController extends Controller
                                              ON pre_transactions.pre_transaction_id = load_test_funds.pre_transaction_id)"
             );
 
+        $disputedTransactions = collect($disputedTransactions);
         dd($disputedTransactions);
 
     }

@@ -33,6 +33,7 @@ use App\Models\UserActivity;
 use App\Models\UserCheckPayment;
 use App\Models\UserKYC;
 use App\Models\UserLoadTransaction;
+use App\Models\NpsLoadTransaction;
 use App\Models\UserLoginHistory;
 use App\Models\UserToUserFundTransfer;
 use App\Wallet\AuditTrail\AuditTrial;
@@ -117,6 +118,17 @@ class ExcelExportController extends Controller
         $export = new ExportExcelHelper();
         $export->setName('EBanking')
             ->setGeneratorModel(UserLoadTransaction::class)
+            ->setRequest($request)
+            ->setResource(UserLoadTransactionResource::class);
+
+        return $export->exportExcel();
+    }
+
+    public function nps(Request $request)
+    {
+        $export = new ExportExcelHelper();
+        $export->setName('EBankingNPS')
+            ->setGeneratorModel(NpsLoadTransaction::class)
             ->setRequest($request)
             ->setResource(UserLoadTransactionResource::class);
 

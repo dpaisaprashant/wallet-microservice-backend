@@ -407,6 +407,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/excel/fund-request', 'ExcelExportController@fundREquest')->name('fundRequest.excel');
 
         Route::get('/excel/npay', 'ExcelExportController@nPay')->name('npay.excel');
+        Route::get('/excel/nps', 'ExcelExportController@nps')->name('nps.excel');
         Route::get('/excel/paypoint', 'ExcelExportController@payPoint')->name('paypoint.excel');
 
         //user

@@ -28,6 +28,7 @@ class AgentController extends Controller
 
     public function create(Request $request)
     {
+
         $roles = Role::where('name', 'like', '%agent')->get();
         $users = User::doesnthave('agent')->doesnthave('merchant')->latest()->get();
         $agentTypes = AgentType::with('parentAgentType')->latest()->get();

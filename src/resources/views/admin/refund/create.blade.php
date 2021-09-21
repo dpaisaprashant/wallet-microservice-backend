@@ -74,7 +74,7 @@
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Amount (in Rs.)</label>
                                 <div class="col-sm-10">
-                                    <input id="main_amount" name="amount" type="text" class="form-control">
+                                    <input id="main_amount" name="amount" type="text" class="form-control" @isset($_GET["amount"]) readonly @endisset>
                                     <small>Amount Should be in Rs.</small>
                                 </div>
                             </div>
@@ -117,27 +117,19 @@
     <!-- Sweet alert -->
     <script src="{{ asset('admin/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
 
+    @isset($_GET["amount"])
     <script>
-        /*$('form').on('submit', function (e) {
+       $('#bonus_amount').type(function (e) {
+           var amountToRefund = `{{ $_GET["amount"] }}`;
+           console.log("amount to refund: " + amountToRefund);
+           var bonusBalanceAmount = $(this).val();
+           console.log("Bonus Balance Amount: " + bonusBalanceAmount)
+           var mainBalanceAmount = parseFloat(amountToRefund) - parseFloat(bonusBalanceAmount);
+           $("#amount").val(mainBalanceAmount);
 
-            e.preventDefault();
-
-            swal({
-                title: "Are you sure?",
-                text: "Refund for this transaction will be created",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3366ff",
-                confirmButtonText: "Yes, approve",
-                closeOnConfirm: true,
-                closeOnClickOutside: true
-            }, function () {
-                console.log(this)
-                $('#handleBtn').click();
-                swal.close();
-            })
-        });*/
+       });
     </script>
+    @endisset
 
 
 

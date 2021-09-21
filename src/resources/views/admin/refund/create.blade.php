@@ -123,6 +123,10 @@
            var amountToRefund = `{{ $_GET["amount"] }}`;
            console.log("amount to refund: " + amountToRefund);
            var bonusBalanceAmount = $('#bonus_amount').val();
+           if (bonusBalanceAmount < 0) {
+               alert("Amount cannot be less than 0")
+           }
+
            console.log("Bonus Balance Amount: " + bonusBalanceAmount)
            var mainBalanceAmount = parseFloat(amountToRefund) - parseFloat(bonusBalanceAmount);
            $("#main_amount").val(mainBalanceAmount);

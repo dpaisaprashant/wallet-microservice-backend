@@ -28,7 +28,8 @@ class RefundController extends Controller
 
     public function create(Request $request)
     {
-        $users = User::latest()->get();
+        //$users = User::latest()->get();
+        $users = [];
         if ($request->isMethod('post')) {
 
             $user = User::where('mobile_no', $request->mobile_no)->firstOrFail();

@@ -82,7 +82,8 @@ class RefundController extends Controller
     //Server Error Refund
     public function serverErrorToRefund()
     {
-        $disputedTransactions = PreTransaction::where("json_response", "like", "%Server error:%")
+        $disputedTransactions = PreTransaction::with("user")
+            ->where("json_response", "like", "%Server error:%")
             ->where("microservice_type", "PAYPOINT")
             ->whereNotIn("pre_transaction_id", function ($query) {
                 $query->from("load_test_funds")
@@ -90,8 +91,7 @@ class RefundController extends Controller
                     ->whereNotNull("pre_transaction_id");
             })->latest()->get();
 
-
-        dd($disputedTransactions);
+        dd($disputedTransactions[0]);
         return view('admin.refund.serverError.toRefund');
     }
 }

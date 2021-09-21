@@ -4,7 +4,7 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Refund Transactions</h2>
+            <h2>Potential Transactions to Refund</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -15,7 +15,7 @@
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Refund Transaction</strong>
+                    <strong>Potential Transactions to Refund</strong>
                 </li>
             </ol>
         </div>
@@ -161,11 +161,11 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>List of all load funds</h5>
+                        <h5>List of potential transactions to refund</h5>
                     </div>
                     <div class="ibox-content">
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover dataTables-example" title="Complete transactions list">
+                            <table class="table table-striped table-bordered table-hover dataTables-example" title="potential-transaction-to-refund">
                                 <thead>
                                 <tr>
                                     <th>S.No.</th>

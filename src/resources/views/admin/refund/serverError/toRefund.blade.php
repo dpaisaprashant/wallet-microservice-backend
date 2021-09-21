@@ -115,14 +115,14 @@
                                         <td class="center">{{ $preTransaction->created_at }}</td>
                                         <td>
                                             @can('User profile')
-                                            <a href="{{ route('user.profile', $preTransaction->user_id) }}" class="btn btn-sm btn-info m-t-n-xs"><strong>View user's Audit</strong></a>
+                                            <a target="__blank" href="{{ route('user.profile', $preTransaction->user_id) }}" class="btn btn-sm btn-info m-t-n-xs"><strong>View user's Audit</strong></a>
                                             <br><br>
                                             @endcan
 
-                                                <form action="{{ route('refund.create') }}" method="get">
+                                                <form target="__blank" action="{{ route('refund.create') }}" method="get">
                                                     @csrf
-                                                    <input id="pre_transaction_id" type="hidden" name="admin_id" value="{{ $preTransaction->pre_transaction_id }}">
-                                                    <input id="mobile_no" type="hidden" name="admin_id" value="{{ $preTransaction->user->mobile_no }}">
+                                                    <input id="pre_transaction_id" type="hidden" name="pre_transaction_id" value="{{ $preTransaction->pre_transaction_id }}">
+                                                    <input id="mobile_no" type="hidden" name="mobile_no" value="{{ $preTransaction->user->mobile_no }}">
                                                     <button type="submit"  class="resetBtn btn btn-sm btn-danger m-t-n-xs"><strong>Refund Transaction</strong></button>
                                                 </form>
                                         </td>

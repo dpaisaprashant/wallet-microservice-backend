@@ -20,10 +20,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use App\Models\User;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Merchant extends Model
 {
-    use BelongsToUser, Notifiable;
+    use BelongsToUser, Notifiable, LogsActivity;
+
+    protected static $logFillable = true;
+    protected static $logName = 'Merchant';
+    protected static $logOnlyDirty = true;
 
     const LOCK_MINUTES = 60;
 

@@ -34,6 +34,10 @@ class RefundController extends Controller
             $user = User::where('mobile_no', $request->mobile_no)->firstOrFail();
             $preTransaction = PreTransaction::where('pre_transaction_id', $request->pre_transaction_id)->firstOrfail();
 
+            if($preTransaction->amount != ($request['amount'] + $request['bonus_amount'])) {
+                return  redirect()->back()->with("error", "Refunded amount and pre transaction amount do not match");
+            }
+
             if ($user->id != $preTransaction->user_id) {
                 return redirect()->back()->with('error', "Pre transaction and user doesn't match");
             }

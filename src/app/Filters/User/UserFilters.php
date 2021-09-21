@@ -29,6 +29,10 @@ class UserFilters extends FiltersAbstract
         'kyc_status' => KycFilter::class,
         'user_name' =>MismatchUserFilter::class,
         'mobile_no'=>MismatchUserNumberFilter::class,
+        'parent_agent'=>ParentAgentFilter::class,
+        'agent_number_email'=>AgentNumberEmailFilter::class,
+        'parent_agent_number_email'=>ParentAgentNumberEmailFilter::class,
+        'agent_status'=>AgentStatusFilter::class,
     ];
 
 

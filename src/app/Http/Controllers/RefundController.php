@@ -95,8 +95,10 @@ class RefundController extends Controller
         $disputedTransactions = PreTransaction::where("json_response", "like", "%Server error:%")
             ->where("microservice_type", "PAYPOINT")
             ->whereNotIn("pre_transaction_id", function ($query) {
-                return $query->from("load_test_funds")
+                $arr =  $query->from("load_test_funds")
                     ->select("pre_transaction_id");
+
+                dd($arr);
             })->get();
 
         dd($disputedTransactions);

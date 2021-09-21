@@ -93,7 +93,7 @@ class RefundController extends Controller
         $disputedPreTransactions = PreTransaction::with("user")
             ->where("json_response", "like", "%Server error:%")
             ->where("microservice_type", "PAYPOINT")
-            ->whereDate("created_at", "!=", "2021-09-15")
+            ->whereDate("created_at", "!=", "2021-09-17")
             ->whereNotIn("pre_transaction_id", function ($query) {
                 $query->from("load_test_funds")
                     ->select("pre_transaction_id")

@@ -111,6 +111,7 @@
                                         </td>
                                         <td class="center">{{ $preTransaction->vendor }}</td>
                                         <td class="center">{{ $preTransaction->status }}</td>
+                                        <td class="center">{{ $preTransaction->microservice_type }}</td>
                                         <td class="center">{{ $preTransaction->created_at }}</td>
                                         <td>
 

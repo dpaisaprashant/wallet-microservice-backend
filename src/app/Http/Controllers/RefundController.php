@@ -89,7 +89,7 @@ class RefundController extends Controller
                 $query->from("load_test_funds")
                     ->select("pre_transaction_id")
                     ->whereNotNull("pre_transaction_id");
-            })->latest()->get();
+            })->latest()->paginate(25);
 
         return view('admin.refund.serverError.toRefund')->with(compact('disputedPreTransactions'));
     }

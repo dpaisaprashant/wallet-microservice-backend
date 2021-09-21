@@ -101,7 +101,9 @@
                                 @foreach($disputedPreTransactions as $preTransaction)
                                     <tr class="gradeC">
                                         <td>{{ $loop->index + ($disputedPreTransactions->perPage() * ($disputedPreTransactions->currentPage() - 1)) + 1 }}</td>
-                                        <a  @can('User profile') href="{{route('user.profile', $preTransaction->user_id)}}" @endcan> {{ $preTransaction->user['mobile_no'] }} </a>
+                                        <td>
+                                            <a  @can('User profile') href="{{route('user.profile', $preTransaction->user_id)}}" @endcan> {{ $preTransaction->user['mobile_no'] }} </a>
+                                        </td>
                                         <td>{{ $preTransaction->pre_transaction_id }}</td>
                                         <td>{{ $preTransaction->amount }}</td>
                                         <td>

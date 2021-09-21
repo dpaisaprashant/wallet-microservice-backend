@@ -37,11 +37,19 @@
                                 <div class="row" style="margin-top: 10px">
                                     <div class="col-sm-12">
                                         <div class="alert alert-warning" style="width: 100%">
-                                            <i class="fa fa-info-circle"></i>&nbsp; Total amount of bonus balance + main balance should be <b>Rs. {{ $_GET["amount"] }}</b>
+                                            <i class="fa fa-info-circle"></i>&nbsp; Total Refunding amount (bonus balance + main balance) should be <b>Rs. {{ $_GET["amount"] }}</b>
                                         </div>
                                     </div>
                                 </div>
                             @endisset
+
+                            <div class="row" style="margin-top: 10px">
+                                <div class="col-sm-12">
+                                    <div class="alert alert-danger" style="width: 100%">
+                                        <i class="fa fa-exclamation-triangle"></i>&nbsp; Please check the user's audit trail page before refunding the transaction !</b>
+                                    </div>
+                                </div>
+                            </div>
 
 
                             <div class="hr-line-dashed"></div>

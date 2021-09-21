@@ -122,13 +122,20 @@
        $('#bonus_amount').on("change paste keyup", function () {
            var amountToRefund = `{{ $_GET["amount"] }}`;
            console.log("amount to refund: " + amountToRefund);
+
            var bonusBalanceAmount = $('#bonus_amount').val();
            if (bonusBalanceAmount < 0) {
-               alert("Amount cannot be less than 0")
+               alert("Amount cannot be less than 0");
+               $('#bonus_amount').val(0);
            }
 
            console.log("Bonus Balance Amount: " + bonusBalanceAmount)
            var mainBalanceAmount = parseFloat(amountToRefund) - parseFloat(bonusBalanceAmount);
+           if (mainBalanceAmount < 0) {
+               alert("Amount cannot be less than 0")
+               $('#bonus_amount').val(0);
+               $("#main_amount").val(0);
+           }
            $("#main_amount").val(mainBalanceAmount);
 
        });

@@ -125,7 +125,7 @@
            var bonusBalanceAmount = $('#bonus_amount').val();
            console.log("Bonus Balance Amount: " + bonusBalanceAmount)
            var mainBalanceAmount = parseFloat(amountToRefund) - parseFloat(bonusBalanceAmount);
-           $("#amount").val(mainBalanceAmount);
+           $("#main_amount").val(mainBalanceAmount);
 
        });
     </script>

@@ -114,12 +114,10 @@
                                         <td class="center">{{ $preTransaction->microservice_type }}</td>
                                         <td class="center">{{ $preTransaction->created_at }}</td>
                                         <td>
-
-                                            @can('Backend user update role')
-                                                <a href="{{ route('backendUser.role', $user->id) }}" class="btn btn-sm btn-info m-t-n-xs"><strong>Update Role</strong></a>
-                                            @endcan
-
+                                            @can('User profile')
+                                            <a href="{{ route('user.profile', $preTransaction->user_id) }}" class="btn btn-sm btn-info m-t-n-xs"><strong>View user's Audit</strong></a>
                                             <br><br>
+                                            @endcan
 
                                                 <form action="{{ route('refund.create') }}" method="get">
                                                     @csrf

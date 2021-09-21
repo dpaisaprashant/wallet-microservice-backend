@@ -62,6 +62,7 @@
                             </div>
                             <div class="hr-line-dashed"></div>
 
+                            @isset($_GET["amount"])
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Before Bonus Amount (in Rs.)</label>
                                 <div class="col-sm-10">
@@ -69,6 +70,7 @@
                                     <small>Amount Should be in Rs.</small>
                                 </div>
                             </div>
+                            @endisset
 
                             <div class="hr-line-dashed"></div>
 
@@ -131,7 +133,7 @@
        $('#before_bonus_amount').on("change paste keyup", function () {
 
            var amountToRefund = `{{ $_GET["amount"] }}`;
-           var beforeBonusBalance = ('#before_bonus_amount').val();
+           var beforeBonusBalance = $('#before_bonus_amount').val();
 
            if (beforeBonusBalance >= amountToRefund) {
                $('#bonus_amount').val(amountToRefund);

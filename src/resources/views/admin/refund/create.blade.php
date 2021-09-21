@@ -32,6 +32,20 @@
                     <div class="ibox-content">
                         <form method="post" action="{{ route('loadTestFund.create') }}" enctype="multipart/form-data" id="transactionIdForm">
                             @csrf
+
+                            @isset($_GET["amount"])
+                                <div class="row" style="margin-top: 10px">
+                                    <div class="col-sm-12">
+                                        <div class="alert alert-warning" style="width: 100%">
+                                            <i class="fa fa-info-circle"></i>&nbsp; Total amount of bonus balance + main balance should be <b>Rs. {{ $_GET["amount"] }}</b>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endisset
+
+
+                            <div class="hr-line-dashed"></div>
+
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Mobile No</label>
                                 <div class="col-sm-10">

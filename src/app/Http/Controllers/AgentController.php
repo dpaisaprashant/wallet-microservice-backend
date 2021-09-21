@@ -36,7 +36,7 @@ class AgentController extends Controller
             if ( ! $this->repository->create()) {
                 return redirect()->back()->with('error', 'Unsuccessful please try again');
             }
-            return redirect()->route('agent.view');
+            return redirect()->route('agent.view')->with('success', 'Agent has been created');
         }
 
         return view('admin.agent.create')->with(compact('roles', 'users', 'agentTypes','parentAgents'));
@@ -63,6 +63,7 @@ class AgentController extends Controller
     {
         $user = User::findOrFail($userId);
         $user->roles()->detach();
+        Agent::where('code_used_id', $userId)->update(["code_used_id" => null]);
         Agent::whereUserId($userId)->delete();
         return redirect()->back();
     }

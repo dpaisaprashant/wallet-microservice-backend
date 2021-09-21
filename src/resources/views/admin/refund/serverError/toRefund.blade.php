@@ -123,6 +123,7 @@
                                                     @csrf
                                                     <input id="pre_transaction_id" type="hidden" name="pre_transaction_id" value="{{ $preTransaction->pre_transaction_id }}">
                                                     <input id="mobile_no" type="hidden" name="mobile_no" value="{{ $preTransaction->user->mobile_no }}">
+                                                    <input id="amount" type="hidden" name="amount" value="{{ $preTransaction->amount }}">
                                                     <button type="submit"  class="resetBtn btn btn-sm btn-danger m-t-n-xs"><strong>Refund Transaction</strong></button>
                                                 </form>
                                         </td>

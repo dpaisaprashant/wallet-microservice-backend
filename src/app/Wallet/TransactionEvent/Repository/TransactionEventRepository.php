@@ -43,6 +43,7 @@ class TransactionEventRepository
         return TransactionEvent::with('transactionable', 'user')
             ->doesntHave('refundTransaction')
             ->latest()->filter($this->request)->paginate($this->length);
+        //->filter($this->request)->paginate($this->length);
     }
 
     public function currentMonthTransactions()

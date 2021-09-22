@@ -237,6 +237,11 @@ class User extends Authenticatable
         return $this->hasMany(MerchantTransaction::class, 'user_id');
     }
 
+    public function merchantTransactionsMerchant()
+    {
+        return $this->hasMany(MerchantTransaction::class, 'merchant_id');
+    }
+
     public function merchant()
     {
         return $this->hasOne(Merchant::class,'user_id');

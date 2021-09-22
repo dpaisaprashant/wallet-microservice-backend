@@ -2,13 +2,13 @@
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8">
-            <h2>Test Load Detail</h2>
+            <h2>Merchant Transaction Detail</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                    Test Load
+                    Merchant Transaction
                 </li>
                 <li class="breadcrumb-item active">
                     <strong>Detail</strong>
@@ -28,30 +28,34 @@
                 <div class="ibox-content p-xl">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h5>User: <strong>{{$transaction->user->mobile_no}}</strong></h5>
-                            <h5>Before Test Load :</h5>
+                            <h5>Merchant:</h5>
                             <address>
-                                Before Amount: {{ $transaction->before_amount }}<br>
-                                Before Bonus Balance: {{ $transaction->before_bonus_balance }}<br>
+                                <strong>{{ $transaction->merchant->name }}</strong><br>
+                                Email: {{ $transaction->merchant->email }}<br>
+                                Number: {{ $transaction->merchant->mobile_no }}<br>
                             </address>
 
 
-                            <span>After Test Load:</span>
+                            <span>User:</span>
                             <address>
-                                After Amount: {{ $transaction->after_amount }}<br>
-                                After Bonus Balance: {{ $transaction->after_bonus_balance }}<br>
+                                <strong>{{ $transaction->user->name }}</strong><br>
+                                Email: {{ $transaction->user->email }}<br>
+                                Number: {{ $transaction->user->mobile_no }}<br>
                             </address>
 
                             <address>
-                                <strong>Description: </strong> <br>
-                                {{ $transaction->description }}<br>
+                                <strong>Amount: Rs. {{ $transaction->amount }}<br></strong>
+                                <strong>Commission: Rs. {{ optional($transaction->commission)['before_amount'] - optional($transaction->commission)['after_amount'] }}<br></strong>
                             </address>
 
                         </div>
 
                         <div class="col-sm-6 text-right">
                             <h4>Transaction Id:</h4>
-                            <h4 class="text-navy">#{{ $transaction->pre_transaction_id }}</h4>
+                            <h4 class="text-navy">#{{ $transaction->transactions->pre_transaction_id ?? "---" }}</h4>
+
+                            <h4>Discount: {{$transaction->discount ?? "No Discount"}}</h4>
+                            <h4>CashBack: {{$transaction->cashback ?? "No Cashback"}}</h4>
 
                             <p style="margin-top: 20px;">
                                 <?php

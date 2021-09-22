@@ -4,10 +4,15 @@ namespace App\Models\Architecture;
 
 use App\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class WalletTransactionBonus extends Model
 {
-    use BelongsToUser;
+    use BelongsToUser, LogsActivity;
+
+    protected static $logAttributes = ['*'];
+    //protected static $logOnlyDirty = true;
+    protected static $logName = 'Wallet Transaction Bonus';
 
     protected $connection = 'dpaisa';
 

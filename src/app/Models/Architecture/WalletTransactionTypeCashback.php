@@ -3,9 +3,17 @@
 namespace App\Models\Architecture;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class WalletTransactionTypeCashback extends Model
 {
+    use LogsActivity;
+
+    protected static $logAttributes = ['*'];
+    //protected static $logOnlyDirty = true;
+    protected static $logName = 'Wallet Transaction Type Cashback';
+
+
     protected $connection = 'dpaisa';
 
     protected $guarded = [];

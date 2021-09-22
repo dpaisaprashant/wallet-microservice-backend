@@ -10,10 +10,15 @@ use App\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class MerchantBFI extends Model
 {
-    use BelongsToMerchant;
+    use BelongsToMerchant, LogsActivity;
+
+    protected static $logFillable = true;
+    protected static $logName = 'Merchant BFI';
+    protected static $logOnlyDirty = true;
 
     protected $connection = "dpaisa";
 

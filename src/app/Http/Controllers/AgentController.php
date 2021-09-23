@@ -65,6 +65,7 @@ class AgentController extends Controller
     {
         $user = User::findOrFail($userId);
         $user->roles()->detach();
+        Agent::where('code_used_id', $userId)->update(["code_used_id" => null]);
         Agent::whereUserId($userId)->delete();
         return redirect()->back();
     }

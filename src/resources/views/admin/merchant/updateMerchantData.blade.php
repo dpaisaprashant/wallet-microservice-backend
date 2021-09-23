@@ -32,8 +32,8 @@
                                     <select id="selectUserType" data-placeholder="Merchant name..."
                                             class="chosen-select" tabindex="2" name="merchant_name">
                                         <option value="" selected disabled>-- Select merchant name--</option>
-                                        @foreach($merchantNames as $key=>$merchantName)
-                                            <option value="{{ $merchantName->id }}">{{ $merchantName->name }} &nbsp; ({{ $merchantName->mobile_no }}}</option>
+                                        @foreach($merchant as $key=>$merchant)
+                                            <option value="{{ $merchant->id }}">{{ $merchant->user->name }} &nbsp; ({{ $merchant->user->mobile_no }})</option>
                                         @endforeach
                                     </select>
                                 </div>

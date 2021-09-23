@@ -48,9 +48,11 @@ class ReportController extends Controller
     }
 
     public function walletEndBalance(WalletEndBalanceRepository $repository,Request $request){
-        $date = $request->get('date_till');
+        $dateFromDatePicker = $request->get('date_till');
+        $date = \Carbon\Carbon::parse($dateFromDatePicker)->format("Y-m-d");
         $datas = $repository->getWalletEndBalance($date);
         $totalSum = $repository->getTotalWalletEndBalanceAmount($date);
+
         if($datas != null) {
             $totalCount = count($datas);
         }else{

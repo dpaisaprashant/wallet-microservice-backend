@@ -15,9 +15,6 @@
             format: 'dd M, yyyy',
             keyboardNavigation: false,
         });
-
-
-
     </script>
 
     <script>
@@ -68,6 +65,15 @@
 
         $(".date_to_load").keyup(function () {
             $(this).val('');
+        });
+    </script>
+
+    <script>
+        $(".select-date").datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            format: 'dd M, yyyy',
+            keyboardNavigation: false,
         });
     </script>
 

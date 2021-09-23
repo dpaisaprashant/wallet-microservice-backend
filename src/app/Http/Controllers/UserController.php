@@ -184,7 +184,7 @@ class UserController extends Controller
                 $admin_data = collect(array('nodata'));
             }
 
-
+//        dd($allAudits);
 
         return view('admin.user.profile')->with(compact('userLoadCommission', 'admin_details', 'admin', 'loginHistoryAudits', 'allAudits', 'user', 'loadFundSum', 'activeTab', 'userTransactionStatements', 'userTransactionEvents','userBonus','userBonusBalance'));
     }

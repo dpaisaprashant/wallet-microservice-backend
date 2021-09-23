@@ -8,9 +8,16 @@ use App\Models\AgentType;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class AgentTypeHierarchyCashback extends Model
 {
+    use LogsActivity;
+
+    protected static $logAttributes = ['*'];
+    //protected static $logOnlyDirty = true;
+    protected static $logName = 'Agent Type Hierarchy Cashback';
+
     protected $connection = 'dpaisa';
 
     protected $guarded = [];

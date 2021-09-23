@@ -1,8 +1,8 @@
-@if($transaction->transaction_type == 'App\Models\UserToUserFundTransfer')
+@if($transaction->transaction_type == \App\Models\UserToUserFundTransfer::class)
     @include('admin.transaction.fundTransfer.detail', ['transaction' => $transaction->transactionable])
     <a href="{{ route('userToUserFundTransfer.detail', $transaction->transaction_id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
 
-@elseif($transaction->transaction_type == 'App\Models\UserLoadTransaction')
+@elseif($transaction->transaction_type == \App\Models\UserLoadTransaction::class)
     @include('admin.transaction.npay.detail', ['transaction' => $transaction->transactionable])
     <a href="{{ route('eBanking.detail', $transaction->transaction_id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
 

@@ -31,6 +31,12 @@ class User extends Authenticatable
     protected $table = "users";
     protected $connection = 'dpaisa';
 
+//    public function __construct(array $attributes = [])
+//    {
+//        $this->table = env('DB_DATABASE_2').'.'.$this->table;
+//        parent::__construct();
+//    }
+
     const AGENT = 'agent';
 
     const LOCK_MINUTES =  60;
@@ -473,6 +479,11 @@ class User extends Authenticatable
     public function singleUserCommissions()
     {
         return $this->morphMany(SingleUserCommission::class, 'userCommissionable', 'user_type', 'user_id', 'id');
+    }
+
+    public function issueTicket()
+    {
+        return $this->setConnection('mysql')->hasMany(IssueTicket::class, 'user_id', 'id');
     }
 
 }

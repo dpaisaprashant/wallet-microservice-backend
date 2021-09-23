@@ -433,7 +433,13 @@ class RolesAndPermissionsSeeder extends Seeder
             'View paypoint api',
 
             //Merchant Registration
-            'Create merchant'
+            'Create merchant',
+
+            //Issue Ticket
+            'View issue ticket',
+            'Edit issue ticket',
+            'Delete issue ticket',
+            'Create issue ticket'
 
             ];
 

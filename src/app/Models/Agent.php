@@ -8,10 +8,14 @@ use App\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Agent extends Model
 {
-    use BelongsToUser;
+    use BelongsToUser, LogsActivity;
+
+    protected static $logAttributes = ['*'];
+    protected static $logName = 'Agent';
 
     protected $connection = "dpaisa";
 

@@ -148,7 +148,7 @@
                                         <td>
                                             &nbsp;{{ $adminAlteredAgent->admin->name}}
                                         </td>
-                                        <td>{{ $adminAlteredAgent->agent->user->mobile_no}}</td>
+                                        <td>{{ optional(optional($adminAlteredAgent->agent)->user)->mobile_no}}</td>
                                         <td>
                                             @php
                                             $response = json_decode($adminAlteredAgent->agent_before)

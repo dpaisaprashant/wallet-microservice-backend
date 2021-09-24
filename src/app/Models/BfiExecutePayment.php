@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Filters\Agent\AgentFilters;
+use App\Filters\BFI\BFIFilters;
 use App\Filters\FiltersAbstract;
 use App\Models\BFI\BFIUser;
 use App\Traits\BelongsToUser;
@@ -19,7 +20,7 @@ class BfiExecutePayment extends Model
     protected $guarded = [];
 
     protected $table = 'bfi_gateway_execute_payments';
-    
+
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
@@ -33,6 +34,11 @@ class BfiExecutePayment extends Model
 
     public function bfiUser(){
         return $this->belongsTo(BFIUser::class, 'user_id');
+    }
+
+    public function scopeFilter(Builder $builder, Request $request, array $filters = [])
+    {
+        return (new BFIFilters($request))->add($filters)->filter($builder);
     }
 
 }

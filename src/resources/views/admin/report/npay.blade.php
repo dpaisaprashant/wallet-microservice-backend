@@ -65,9 +65,9 @@
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
 
-                                   {{-- <div>
-                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs" type="submit" style="margin-right: 10px;" formaction="{{ route('user.excel') }}"><strong>Excel</strong></button>
-                                    </div>--}}
+                                    <div>
+                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs" type="submit" style="margin-right: 10px;" formaction="{{ route('npay.report.excel') }}"><strong>Excel</strong></button>
+                                    </div>
                                 </form>
                             </div>
 

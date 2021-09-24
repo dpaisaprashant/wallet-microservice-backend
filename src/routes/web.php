@@ -226,7 +226,7 @@ Route::group(['prefix' => 'admin'], function () {
 //        Route::get('transaction/nicasia-cybesource-load-transaction','TransactionController@nicAsiaCyberSourceLoad')->name('nicasia.cyberSourceLoad')->middleware('permission:Nicasia cybersource load transaction');
 //        Route::get('transaction/nicasia-cybesource-load-transaction/detail/{id}', 'TransactionController@nicAsiaCyberSourceLoadDetail')->name('nicasia.cyberSourceLoadTransaction.detail');
 
-        //Khalti
+        //Khaltia
         Route::get('transaction/khalti-payment-transaction/detail/{id}', 'TransactionController@khaltiPaymentDetail')->name('khalti.payment.detail');
 
 
@@ -433,6 +433,15 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/excel/cellpay', 'ExcelExportController@cellPay')->name('cellpay.excel');
         Route::get('/excel/nchl-bank-transfer', 'ExcelExportController@nchlBankTransfer')->name('nchlBankTransfer.excel');
         Route::get('/excel/khalti', 'ExcelExportController@khalti')->name('khalti.excel');
+        Route::get('/excel/cybersource', 'ExcelExportController@cyberSource')->name('cybersource.excel');
+
+        //Report Excel
+        Route::get('/excel/paypoint-report', 'ExcelExportController@payPointReport')->name('paypoint.report.excel');
+        Route::get('/excel/nchl-load-report', 'ExcelExportController@nchlLoadReport')->name('nchl.load.report.excel');
+        Route::get('/excel/npay-report', 'ExcelExportController@nPayReport')->name('npay.report.excel');
+        Route::get('/excel/bfi-to-user', 'ExcelExportController@bfiToUserReport')->name('bfi.to.user.report.excel');
+        Route::get('/excel/user-to-bfi', 'ExcelExportController@userToBFIReport')->name('user.to.bfi.report.excel');
+        Route::get('/excel/execute-payment', 'ExcelExportController@executePaymentReport')->name('execute.payment.report.excel');
 
 
         //user

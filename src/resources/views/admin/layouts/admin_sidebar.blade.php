@@ -672,6 +672,12 @@ $url = url()->current();
                 </li>
             @endif
 
+            @if(auth()->user()->hasPermissionTo('View issue ticket'))
+                <li @if($url == route('issue.ticket.view'))class="active" @endif>
+                    <a href="{{route('issue.ticket.view')}}"><i class="fa fa-ticket"></i> <span class="nav-label">Issues/Tickets</span></a>
+                </li>
+            @endif
+
             @if(auth()->user()->hasAnyPermission(['Notification view', 'Notification create']))
                 <li @if(preg_match('/notification/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-bell-o"></i> <span class="nav-label">Notifications</span><span

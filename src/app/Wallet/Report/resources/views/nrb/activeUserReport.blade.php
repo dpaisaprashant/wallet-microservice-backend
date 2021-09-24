@@ -46,7 +46,7 @@
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </span>
-                                                <input class="select_date form-control" placeholder="Select Date" name="select_date" autocomplete="off" value="{{ !empty($_GET['select_date']) ? $_GET['select_date'] : '' }}">
+                                                <input class="form-control select_date" placeholder="Select Date" name="select_date" autocomplete="off" value="{{ !empty($_GET['select_date']) ? $_GET['select_date'] : '' }}">
                                             </div>
                                         </div>
 

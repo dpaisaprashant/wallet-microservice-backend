@@ -1,5 +1,6 @@
 <?php
 
+use App\Wallet\Report\Http\Controllers\MismatchedUserBalanceController;
 use App\Wallet\Report\Http\Controllers\NRBReportController;
 use App\Wallet\Report\Http\Controllers\SubscriberReportController;
 use App\Wallet\Report\Http\Controllers\UserWalletReportController;
@@ -29,4 +30,7 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web','auth']], funct
 
     //AdminKyc
     Route::get('/adminKyc',[AdminKycController::class,'getAdminData'])->name('report.adminKyc')->middleware('permission:Report admin kyc');
+
+    // Mismatches user balances
+    Route::match(['get', 'post'],'mismatched-user-balances', [MismatchedUserBalanceController::class, 'report'])->name('report.mismatchedUserBalance')->middleware('permission:View mismatched user balance and bonus balance');
 });

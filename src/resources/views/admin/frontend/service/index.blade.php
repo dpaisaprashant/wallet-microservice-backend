@@ -45,6 +45,7 @@
                                     <th>S.No.</th>
                                     <th>Title</th>
                                     <th>Icon</th>
+                                    <th>Placement</th>
                                     <th>Image</th>
                                     <th>Description</th>
                                     <th>Action</th>
@@ -56,6 +57,7 @@
                                         <td>{{ $loop->index + 1}}</td>
                                         <td>{{ $service->title}}</td>
                                         <td>{{ $service->icon }}</td>
+                                        <td>{{$service->placement}}</td>
                                         <td>
                                             @if(!empty($service->image))
                                                 <img

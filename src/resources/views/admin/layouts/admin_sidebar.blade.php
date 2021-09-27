@@ -876,12 +876,6 @@ $url = url()->current();
                             <li><a href="{{ route('frontend.banner.index') }}">Banners</a></li>
                         @endcan
 
-                        @if(strtolower(config('app.'.'name')) == 'sajilopay' || strtolower(config('app.'.'name')) == 'icash' )
-                            @can('Frontend faq view')
-                                <li><a href="{{route('frontend.faq.index')}}">FAQs</a></li>
-                            @endcan
-                        @endif
-
                         @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'master')
                             @can('Frontend contact view')
                                 <li><a href="{{ route('frontend.contact') }}">Contact</a></li>

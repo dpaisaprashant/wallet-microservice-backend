@@ -29,4 +29,8 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web','auth']], funct
 
     //AdminKyc
     Route::get('/adminKyc',[AdminKycController::class,'getAdminData'])->name('report.adminKyc')->middleware('permission:Report admin kyc');
+
+    //Nrb Reconciliation Report
+    Route::match(['get', 'post'],'nrb-reconciliation-report', [WalletReportController::class, 'nrbReconciliationReport'])->name('report.nrb.reconciliation')->middleware('permission:Report nrb reconciliation');
+
 });

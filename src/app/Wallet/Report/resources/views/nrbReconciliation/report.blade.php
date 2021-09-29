@@ -94,7 +94,6 @@
                                 <i class="fa fa-info-circle"></i>&nbsp;<b> Note: <br></b>
                                 <b>Total Credit Amount</b> is the sum of total of NPay Transaction Amount, NPS Transaction Amount, Cashback Amount, Referral Amount, and NicAsia CyberSource Load Amount. <br>
                                 <b>Total Debit Amount</b> is the sum of total of PayPoint Transaction Amount, NCHL Bank Transfer Amount, Commission Amount, User Fund Transferred to Merchant, NCHL Aggregated Payment Amount and User To Merchant Event Ticket Payment Amount and Khalti Transaction Amount. <br>
-
                             </div>
 
                             <div class="table-responsive">

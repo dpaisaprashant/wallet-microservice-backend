@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class MerchantProduct extends Model
+class MerchantAddress extends Model
 {
     use LogsActivity;
 
@@ -13,14 +13,10 @@ class MerchantProduct extends Model
     protected static $logName = 'User';
 
     protected $connection = 'dpaisa';
-    protected $table = 'merchant_products';
+    protected $table = 'merchant_addresses';
 
     protected $fillable = [
-        'name',
-        'price',
-        'type',
-        'service_charge',
-        'description',
+        'location',
         'merchant_id',
     ];
 
@@ -29,14 +25,14 @@ class MerchantProduct extends Model
     ];
 
 
-//    public function rules(){
-//        $rules = array(
-//            'merchant_id' => 'required|unique:dpaisa.merchant_products',
-//        );
-//        return $rules;
-//    }
+    public function rules(){
+        $rules = array(
+            'merchant_id' => 'required|unique:dpaisa.merchant_addresses',
+        );
+        return $rules;
+    }
 
-    public function merchant(){
+    public function merchantAddressUsers(){
         return $this->hasOne(Merchant::class,'id','merchant_id',);
     }
 }

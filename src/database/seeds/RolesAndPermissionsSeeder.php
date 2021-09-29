@@ -439,7 +439,13 @@ class RolesAndPermissionsSeeder extends Seeder
             'View issue ticket',
             'Edit issue ticket',
             'Delete issue ticket',
-            'Create issue ticket'
+            'Create issue ticket',
+
+            //Merchant Addresses
+            'View merchant address',
+            'Add merchant address',
+            'Edit merchant address',
+            'Delete merchant address',
 
             ];
 

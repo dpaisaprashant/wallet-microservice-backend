@@ -143,6 +143,10 @@ $url = url()->current();
                             <li><a href="{{ route('create.merchant.view') }}">Create Merchant</a></li>
                         @endcan
 
+                        @can('View merchant address')
+                            <li><a href="{{ route('merchant.address.list') }}">Add Merchant Address</a></li>
+                        @endcan
+
                     </ul>
                 </li>
             @endcan

@@ -183,4 +183,9 @@ class Merchant extends Model
         return $this->morphMany(SingleUserCommission::class, 'userCommissionable', 'user_type', 'user_id', 'id');
     }
 
+    public function merchantAddress()
+    {
+        return $this->belongsTo(MerchantAddress::class,'id','merchant_id');
+    }
+
 }

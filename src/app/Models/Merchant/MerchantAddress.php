@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models\Merchant;
+use App\Models\Location;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -16,7 +17,7 @@ class MerchantAddress extends Model
     protected $table = 'merchant_addresses';
 
     protected $fillable = [
-        'location',
+        'location_id',
         'merchant_id',
     ];
 
@@ -34,5 +35,9 @@ class MerchantAddress extends Model
 
     public function merchantAddressUsers(){
         return $this->hasOne(Merchant::class,'id','merchant_id',);
+    }
+
+    public function merchantAddressLocation(){
+        return $this->belongsTo(Location::class,'location_id','id',);
     }
 }

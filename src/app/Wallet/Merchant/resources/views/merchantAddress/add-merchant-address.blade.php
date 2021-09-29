@@ -56,13 +56,25 @@
                                 </div>
                             </div>
 
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Merchant Location</label>
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Select Location</label>
                                 <div class="col-sm-10">
-                                    <input name="location" type="text" class="form-control">
+                                    <select class="form-control chosen-select" name="location_id" required>
+                                        @if(!empty($locations))
+                                            <option value="" disabled selected>Select Location</option>
+                                            @foreach($locations as $location)
+                                                @if(!empty($location->id))
+                                                    <option value="{{$location->id}}">
+                                                       {{$location->name}}
+                                                    </option>
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            <option value="">No Locations Found.</option>
+                                        @endif
+                                    </select>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                 </div>

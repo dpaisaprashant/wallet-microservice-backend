@@ -6,6 +6,7 @@ namespace App\Wallet\Merchant\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\EventCashback;
+use App\Models\Location;
 use App\Models\Merchant\MerchantAddress;
 use App\Models\Merchant\MerchantProduct;
 use Illuminate\Http\Request;
@@ -18,8 +19,9 @@ class MerchantAddressController extends Controller
     public function addAddress(Request $request)
     {
         $merchants = Merchant::with('user')->get();
+        $locations = Location::all();
 
-        return view('Merchant::merchantAddress.add-merchant-address')->with(compact('merchants'));
+        return view('Merchant::merchantAddress.add-merchant-address')->with(compact('merchants','locations'));
     }
 
     public function createAddress(Request $request)
@@ -32,7 +34,7 @@ class MerchantAddressController extends Controller
         }
 
         MerchantAddress::create([
-            "location" => $request->location,
+            "location_id" => $request->location_id,
             "merchant_id" => $request->merchant_id
         ]);
 

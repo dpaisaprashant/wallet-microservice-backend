@@ -79,8 +79,8 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if(!empty(optional(optional($merchantProduct->merchant)->merchantAddress)->location))
-                                                {{ optional(optional($merchantProduct->merchant)->merchantAddress)->location }}
+                                            @if(!empty(optional(optional(optional($merchantProduct->merchant)->merchantAddress)->merchantAddressLocation)->name))
+                                                {{ optional(optional(optional($merchantProduct->merchant)->merchantAddress)->merchantAddressLocation)->name }}
                                             @else
                                                 No Address found.
                                             @endif

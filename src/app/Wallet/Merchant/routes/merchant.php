@@ -2,6 +2,7 @@
 
 use App\Wallet\Merchant\Http\Controllers\MerchantAddressController;
 use App\Wallet\Merchant\Http\Controllers\MerchantEventController;
+use App\Wallet\Merchant\Http\Controllers\MerchantLocationController;
 use App\Wallet\Merchant\Http\Controllers\MerchantProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,4 +28,11 @@ Route::group(['prefix' => 'admin/merchant', 'middleware' => ['web','auth']], fun
     Route::put('merchant-address/update/{id}', [MerchantAddressController::class, 'updateAddress'])->name('merchant.address.update')->middleware('permission:Edit merchant address');
     Route::post('merchant-address/delete/{id}', [MerchantAddressController::class, 'deleteAddress'])->name('merchant.address.delete')->middleware('permission:Delete merchant address');
 
+    //Merchant Location
+    Route::get('merchant-location', [MerchantLocationController::class, 'listLocation'])->name('merchant.location.list')->middleware('permission:View location');
+    Route::get('merchant-location/add', [MerchantLocationController::class, 'addLocation'])->name('merchant.location.add')->middleware('permission:Add location');
+    Route::post('merchant-location/create', [MerchantLocationController::class, 'createLocation'])->name('merchant.location.create')->middleware('permission:Add location');
+    Route::get('merchant-location/edit/{id}', [MerchantLocationController::class, 'editLocation'])->name('merchant.location.edit')->middleware('permission:Edit location');
+    Route::put('merchant-location/update/{id}', [MerchantLocationController::class, 'updateLocation'])->name('merchant.location.update')->middleware('permission:Edit location');
+    Route::post('merchant-location/delete/{id}', [MerchantLocationController::class, 'deleteLocation'])->name('merchant.location.delete')->middleware('permission:Delete location');
 });

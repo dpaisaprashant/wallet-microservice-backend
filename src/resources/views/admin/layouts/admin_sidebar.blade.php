@@ -130,7 +130,7 @@ $url = url()->current();
 
 
             @can('Merchant profile')
-                <li @if($url == route('merchant.view') || $url == route('create.merchant.view'))class="active" @endif>
+                <li @if(preg_match('/merchant/', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-cart-plus"></i> <span class="nav-label">Merchants</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
@@ -143,8 +143,12 @@ $url = url()->current();
                             <li><a href="{{ route('create.merchant.view') }}">Create Merchant</a></li>
                         @endcan
 
+                        @can('View location')
+                            <li><a href="{{ route('merchant.location.list') }}">Add Location</a></li>
+                        @endcan
+
                         @can('View merchant address')
-                            <li><a href="{{ route('merchant.address.list') }}">Add Merchant Address</a></li>
+                            <li><a href="{{ route('merchant.address.list') }}">Set Merchant Address</a></li>
                         @endcan
 
                     </ul>

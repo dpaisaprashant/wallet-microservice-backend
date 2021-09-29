@@ -447,6 +447,12 @@ class RolesAndPermissionsSeeder extends Seeder
             'Edit merchant address',
             'Delete merchant address',
 
+            //Merchant Locations
+            'View location',
+            'Add location',
+            'Edit location',
+            'Delete location',
+
             ];
 
         //get users having all permissions

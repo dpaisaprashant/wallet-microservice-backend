@@ -3,6 +3,8 @@
 namespace App\Filters\NPS;
 
 use App\Filters\FilterAbstract;
+use App\Models\NpsLoadTransaction;
+use App\Models\TransactionEvent;
 use Illuminate\Database\Eloquent\Builder;
 
 class NpsStatusFilter extends FilterAbstract {
@@ -29,14 +31,19 @@ class NpsStatusFilter extends FilterAbstract {
         if ($value === null) {
             return $builder;
         }
-        if($value == 'completed'){
-            return $builder->where('status','COMPLETED');
-        }elseif($value == 'validated'){
-            return $builder->where('status','VALIDATED');
-        }elseif($value == 'error') {
-            return $builder->where('status','ERROR');
-        }else{
-            return $builder->where('status','!=',null);
+
+        $transactionEventPreTransactionId = TransactionEvent::where('transaction_type',NpsLoadTransaction::class)->pluck('pre_transaction_id');
+
+        if($value == 'complete'){
+            return $builder->whereIn('pre_transaction_id',$transactionEventPreTransactionId);
+        }elseif($value == 'pending'){
+            return $builder->where('status',NpsLoadTransaction::STATUS_PENDING);
+        }elseif($value == 'failed') {
+            return $builder->where('status',NpsLoadTransaction::STATUS_FAILED);
+        }elseif($value == 'incomplete'){
+            return $builder->whereNotIn('pre_transaction_id',$transactionEventPreTransactionId)->where('status','!=',NpsLoadTransaction::STATUS_PENDING);
+        }elseif($value == 'all'){
+            return $builder->where('id','!=',null);
         }
 
     }

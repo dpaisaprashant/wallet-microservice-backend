@@ -108,6 +108,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('unverified-kyc-user', 'UserController@unverifiedKYCView')->name('user.unverifiedKYC.view')->middleware('permission:Unverified KYC users view'); // Unverified KYC view
         Route::post('change-kyc-status', 'UserController@changeKYCStatus')->name('user.changeKYCStatus')->middleware('permission:KYC accept|KYC reject'); // Change KYC status
 
+        Route::get('/transaction/nps','TransactionController@nps')->name('nps')->middleware('permission:Transaction nps view');
 
         Route::get('/users/profile/{id}', 'UserController@profile')->name('user.profile')->middleware('permission:User profile');
         Route::get('/users/kyc/{id}', 'UserController@kyc')->name('user.kyc')->middleware('permission:User KYC view');
@@ -325,6 +326,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::match(['get', 'post'], '/refund/create', 'RefundController@create')->name('refund.create')->middleware('permission:Refund create');
 
 
+        Route::get('/server-error/refund/to-refund', 'RefundController@serverErrorToRefund')->name('refund.serverError.toRefund')->middleware('permission:Refund view');
+        Route::match(['get', 'post'], '/server-error/refund/create', 'RefundController@serverErrorCreate')->name('refund.serverError.create')->middleware('permission:Refund create');
+
         /**
          * Lucky Winner
          */
@@ -406,6 +410,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/excel/fund-request', 'ExcelExportController@fundREquest')->name('fundRequest.excel');
 
         Route::get('/excel/npay', 'ExcelExportController@nPay')->name('npay.excel');
+        Route::get('/excel/nps', 'ExcelExportController@nps')->name('nps.excel');
         Route::get('/excel/paypoint', 'ExcelExportController@payPoint')->name('paypoint.excel');
 
         //user

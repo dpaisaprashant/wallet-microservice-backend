@@ -59,8 +59,8 @@
 
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <input type="text" name="bank" placeholder="Bank" class="form-control"
-                                                       value="{{ !empty($_GET['bank']) ? $_GET['bank'] : '' }}">
+                                                <input type="text" name="gateway_ref" placeholder="Gateway Ref no." class="form-control"
+                                                       value="{{ !empty($_GET['gateway_ref']) ? $_GET['gateway_ref'] : '' }}">
                                             </div>
                                         </div>
 
@@ -102,23 +102,28 @@
                                                         <option value="all"
                                                                 @if($_GET['status'] == 'all') selected @endif>All
                                                         </option>
-                                                        <option value="completed"
-                                                                @if($_GET['status']  == 'completed') selected @endif>
-                                                            Completed
+                                                        <option value="complete"
+                                                                @if($_GET['status']  == 'complete') selected @endif>
+                                                            Complete
                                                         </option>
-                                                        <option value="validated"
-                                                                @if($_GET['status']  == 'validated') selected @endif>
-                                                            Validated
+                                                        <option value="pending"
+                                                                @if($_GET['status']  == 'pending') selected @endif>
+                                                            Pending
                                                         </option>
-                                                        <option value="error"
-                                                                @if($_GET['status']  == 'error') selected @endif>
-                                                            Error
+                                                        <option value="failed"
+                                                                @if($_GET['status']  == 'failed') selected @endif>
+                                                            Failed
+                                                        </option>
+                                                        <option value="incomplete"
+                                                            @if($_GET['status']  == 'incomplete') selected @endif>
+                                                            Incomplete
                                                         </option>
                                                     @else
                                                         <option value="all">All</option>
-                                                        <option value="completed">Completed</option>
-                                                        <option value="validated">Validated</option>
-                                                        <option value="error">Error</option>
+                                                        <option value="complete">Completed</option>
+                                                        <option value="pending">Pending</option>
+                                                        <option value="failed">Failed</option>
+                                                        <option value="incomplete">Incomplete</option>
                                                     @endif
                                                 </select>
                                             </div>
@@ -203,7 +208,7 @@
                                     <div>
                                         <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
                                                 type="submit" style="margin-right: 10px;"
-                                                formaction="{{ route('npay.excel') }}"><strong>Excel</strong></button>
+                                                formaction="{{ route('nps.excel') }}"><strong>Excel</strong></button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
                                 </form>
@@ -242,13 +247,11 @@
                                         <th>Status</th>
                                         <th>Date</th>
                                         <th style="width: 1%">Response</th>
-                                        <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
 
                                     @foreach($npsLoadTransactions as $npsLoadTransaction)
-
                                         <tr>
                                             <td>{{ $loop->index + ($npsLoadTransactions->perPage() * ($npsLoadTransactions->currentPage() - 1)) + 1 }}</td>
                                             <td>{{optional($npsLoadTransaction->transactions)->uid ?? '---'}}</td>
@@ -260,10 +263,21 @@
                                             <td>{{$npsLoadTransaction->gateway_ref_no}}</td>
                                             <td class="center">Rs {{$npsLoadTransaction->amount}}</td>
                                             <td>Rs {{$npsLoadTransaction->transaction_fee ?? 0}}</td>
-                                            <td>@include('admin.transaction.nps.status',['npsLoadTransaction'=>$npsLoadTransaction])</td>
+                                            <td>
+                                                @if(isset($npsLoadTransaction->preTransaction->transactionEvent))
+
+                                                    <span class="badge badge-primary">Complete</span>
+                                                @elseif($npsLoadTransaction->status == \App\Models\NpsLoadTransaction::STATUS_PENDING)
+                                                    <span class="badge badge-warning">Pending</span>
+                                                    @elseif($npsLoadTransaction->status == \App\Models\NpsLoadTransaction::STATUS_FAILED)
+                                                    <span class="badge badge-dark">Failed</span>
+                                                @else
+                                                    <span class="badge badge-danger">Incomplete</span>
+                                                @endif
+                                            </td>
+
                                             <td>{{$npsLoadTransaction->created_at}}</td>
                                             <td>{{$npsLoadTransaction->response}}</td>
-                                            <td>Action</td>
                                         </tr>
                                     @endforeach
                                     </tbody>

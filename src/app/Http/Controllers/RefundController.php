@@ -7,12 +7,15 @@ use App\Models\LoadTestFund;
 use App\Models\Microservice\PreTransaction;
 use App\Models\User;
 use App\Models\Wallet;
+use App\Traits\CollectionPaginate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class RefundController extends Controller
 {
+    use CollectionPaginate;
+
     public function index()
     {
         $transactions = LoadTestFund::with('user')
@@ -25,7 +28,8 @@ class RefundController extends Controller
 
     public function create(Request $request)
     {
-        $users = User::latest()->get();
+        //$users = User::latest()->get();
+        $users = [];
         if ($request->isMethod('post')) {
 
             $user = User::where('mobile_no', $request->mobile_no)->firstOrFail();
@@ -40,6 +44,14 @@ class RefundController extends Controller
 
             if (empty($request['amount'])) $request['amount'] = 0;
             if (empty($request['bonus_amount'])) $request['bonus_amount'] = 0;
+
+            if ($request['amount'] < 0 || $request['bonus_amount'] < 0 ) {
+                return  redirect()->back()->with("error", "Amount cannot be less than 0");
+            }
+
+            if($preTransaction->amount != ($request['amount'] + $request['bonus_amount'])) {
+                return  redirect()->back()->with("error", "Refunded amount and pre transaction amount do not match");
+            }
 
             Log::info("before_balance: " . $currentBalance);
             Log::info("after_balance: " . ($currentBalance + ($request['amount'] * 100)));
@@ -73,5 +85,22 @@ class RefundController extends Controller
         }
 
         return view('admin.refund.create')->with(compact('users'));
+    }
+
+
+    //Server Error Refund
+    public function serverErrorToRefund()
+    {
+        $disputedPreTransactions = PreTransaction::with("user")
+            ->where("json_response", "like", "%Server error:%")
+            ->where("microservice_type", "PAYPOINT")
+            ->whereDate("created_at", "!=", "2021-09-17")
+            ->whereNotIn("pre_transaction_id", function ($query) {
+                $query->from("load_test_funds")
+                    ->select("pre_transaction_id")
+                    ->whereNotNull("pre_transaction_id");
+            })->latest()->paginate(25);
+
+        return view('admin.refund.serverError.toRefund')->with(compact('disputedPreTransactions'));
     }
 }

@@ -32,27 +32,60 @@
                     <div class="ibox-content">
                         <form method="post" action="{{ route('loadTestFund.create') }}" enctype="multipart/form-data" id="transactionIdForm">
                             @csrf
-                            <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Mobile No</label>
-                                <div class="col-sm-10">
-                                    <input name="mobile_no" type="text" class="form-control" required>
+
+                            @isset($_GET["amount"])
+                                <div class="row" style="margin-top: 10px">
+                                    <div class="col-sm-12">
+                                        <div class="alert alert-warning" style="width: 100%">
+                                            <i class="fa fa-info-circle"></i>&nbsp; Total Refunding amount (bonus balance + main balance) should be <b>Rs. {{ $_GET["amount"] }}</b>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endisset
+
+                            <div class="row" style="margin-top: 10px">
+                                <div class="col-sm-12">
+                                    <div class="alert alert-danger" style="width: 100%">
+                                        <i class="fa fa-exclamation-triangle"></i>&nbsp; Please check the user's audit trial page before refunding the transaction!!. Once refunded the amount is added to user's wallet. The process cannot be undone if user spends the amount from their wallet.</b>
+                                    </div>
                                 </div>
                             </div>
 
+
+                            <div class="hr-line-dashed"></div>
+
                             <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Amount (in Rs.)</label>
+                                <label class="col-sm-2 col-form-label">Mobile No</label>
                                 <div class="col-sm-10">
-                                    <input name="amount" type="text" class="form-control">
+                                    <input name="mobile_no" type="text" class="form-control" required @isset($_GET["mobile_no"]) value="{{ $_GET["mobile_no"] }}" @endisset>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+
+                            @isset($_GET["amount"])
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Before Bonus Amount (in Rs.)</label>
+                                <div class="col-sm-10">
+                                    <input id="before_bonus_amount" name="before_bonus_amount" type="text" class="form-control">
                                     <small>Amount Should be in Rs.</small>
                                 </div>
                             </div>
+                            @endisset
 
                             <div class="hr-line-dashed"></div>
 
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Bonus Amount (in Rs.)</label>
                                 <div class="col-sm-10">
-                                    <input name="bonus_amount" type="text" class="form-control">
+                                    <input id="bonus_amount" name="bonus_amount" type="text" class="form-control">
+                                    <small>Amount Should be in Rs.</small>
+                                </div>
+                            </div>
+
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Amount (in Rs.)</label>
+                                <div class="col-sm-10">
+                                    <input id="main_amount" name="amount" type="text" class="form-control" @isset($_GET["amount"]) readonly @endisset>
                                     <small>Amount Should be in Rs.</small>
                                 </div>
                             </div>
@@ -62,7 +95,7 @@
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Pre Transaction Id</label>
                                 <div class="col-sm-10">
-                                    <input name="pre_transaction_id" type="text" class="form-control" required>
+                                    <input name="pre_transaction_id" type="text" class="form-control" required @isset($_GET["pre_transaction_id"]) value="{{ $_GET["pre_transaction_id"] }}" @endisset>
                                 </div>
                             </div>
 
@@ -95,27 +128,51 @@
     <!-- Sweet alert -->
     <script src="{{ asset('admin/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
 
+    @isset($_GET["amount"])
     <script>
-        /*$('form').on('submit', function (e) {
+       $('#before_bonus_amount').on("change paste keyup", function () {
 
-            e.preventDefault();
+           var amountToRefund = parseFloat(`{{ $_GET["amount"] }}`);
+           var beforeBonusBalance = parseFloat($('#before_bonus_amount').val());
 
-            swal({
-                title: "Are you sure?",
-                text: "Refund for this transaction will be created",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3366ff",
-                confirmButtonText: "Yes, approve",
-                closeOnConfirm: true,
-                closeOnClickOutside: true
-            }, function () {
-                console.log(this)
-                $('#handleBtn').click();
-                swal.close();
-            })
-        });*/
+           if (beforeBonusBalance >= amountToRefund) {
+               $('#bonus_amount').val(amountToRefund);
+               $("#main_amount").val(0);
+           } else {
+
+               $('#bonus_amount').val(beforeBonusBalance);
+               $("#main_amount").val(amountToRefund - beforeBonusBalance);
+           }
+
+           // var bonusBalanceAmount = $('#bonus_amount').val();
+           // if (bonusBalanceAmount < 0) {
+           //     alert("Amount cannot be less than 0");
+           //     $('#bonus_amount').val(0);
+           // }
+           //
+           // console.log("Bonus Balance Amount: " + bonusBalanceAmount)
+           // var mainBalanceAmount = parseFloat(amountToRefund) - parseFloat(bonusBalanceAmount);
+           //
+           //     $("#main_amount").val(mainBalanceAmount);
+           //
+           //
+           // if (bonusBalanceAmount > amountToRefund || mainBalanceAmount > amountToRefund) {
+           //     alert("Amount cannot be greater than amount to refund");
+           //     $('#bonus_amount').val(0);
+           //     $("#main_amount").val(0);
+           //     bonusBalanceAmount = 0;
+           //     mainBalanceAmount = 0;
+           // }
+           //
+           // if (bonusBalanceAmount < 0 || mainBalanceAmount < 0) {
+           //     alert("Amount cannot be less than 0");
+           //     $('#bonus_amount').val(0);
+           //     $("#main_amount").val(0);
+           // }
+
+       });
     </script>
+    @endisset
 
 
 

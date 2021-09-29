@@ -57,6 +57,7 @@ services:
       - "3309:3306"
     volumes:
       - ./mysql:/var/lib/mysql
+      - ./mysql-config-file.cnf:/etc/mysql/conf.d/mysql-config-file.cnf
     environment:
       MYSQL_DATABASE: mysql_backend_wallet
       MYSQL_USER: mysql_backend_wallet
@@ -82,6 +83,7 @@ services:
     volumes:
       - ./src:/var/www/html:delegated
       - ./php/php-ini-overrides.ini:/usr/local/etc/php/conf.d/php-ini-overrides.ini:delegated
+      - ./php/www.conf:/usr/local/etc/php-fpm.d/www.conf:delegated
     ports:
       - "9033:9000"
     networks:

@@ -80,12 +80,7 @@
                                                 <dt class="col-md-3 text-right">
                                                     <label for="date_of_birth">Date Of Birth:</label>
                                                 <dd class="col-md-8">
-                                                    <div class="input-group date">
-                                                        <span class="input-group-addon">
-                                                            <i class="fa fa-calendar"></i>
-                                                        </span>
-                                                        <input type="text" class="form-control date_from" name="date_of_birth" placeholder="Enter Date Of Birth" required>
-                                                    </div>
+                                                @include('admin.user.datepicker',['type'=>'dob'])
                                                 </dd>
 
                                                 <dt class="col-md-3 text-right">
@@ -160,12 +155,7 @@
                                                     <label for="c_issued_date">Identity Issue Date:</label>
                                                 </dt>
                                             <dd class="col-md-8">
-                                                <div class="input-group date">
-                                                        <span class="input-group-addon">
-                                                            <i class="fa fa-calendar"></i>
-                                                        </span>
-                                                    <input type="text" class="form-control date_from" name="c_issued_date" placeholder="Enter Document Issued Date" required>
-                                                </div>
+                                                @include('admin.user.datepicker',['type'=>'issueDate'])
                                             </dd>
 
                                                 <dt class="col-md-3 text-right">
@@ -360,6 +350,16 @@
 @section('styles')
 
     <style>
+        .select {
+            display: none;
+        }
+
+        label {
+            margin-right: 20px;
+        }
+    </style>
+
+    <style>
         .btn-sm {
             padding: 2px;
         }
@@ -379,12 +379,15 @@
     <!-- Sweet Alert -->
     <link href="{{ asset('admin/css/plugins/sweetalert/sweetalert.css') }}" rel="stylesheet">
     @include('admin.asset.css.icheck')
+    @include('admin.asset.css.datepicker')
+    @include('admin.asset.css.chosen')
 @endsection
 
 @section('scripts')
 
     @include('admin.asset.js.icheck')
     @include('admin.asset.js.datepicker')
+    @include('admin.asset.js.chosen')
     <!-- Sweet alert -->
     <script src="{{ asset('admin/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
 
@@ -394,6 +397,26 @@
             $(this).next('.custom-file-label').addClass("selected").html(fileName);
         });
     </script>
+
+    <script>
+        function showDobBS(){
+            document.getElementById('BS').style.display ='block';
+            document.getElementById('AD').style.display ='none';
+        }
+        function showDobAD(){
+            document.getElementById('AD').style.display ='block';
+            document.getElementById('BS').style.display ='none';
+        }
+        function showIssueDateBS(){
+            document.getElementById('BS_issue').style.display ='block';
+            document.getElementById('AD_issue').style.display ='none';
+        }
+        function showIssueDateAD(){
+            document.getElementById('AD_issue').style.display ='block';
+            document.getElementById('BS_issue').style.display ='none';
+        }
+    </script>
+
 @endsection
 
 

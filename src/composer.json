@@ -22,7 +22,8 @@
         "rap2hpoutre/fast-excel": "^1.6",
         "spatie/laravel-activitylog": "^3.9",
         "spatie/laravel-backup": "6.*",
-        "spatie/laravel-permission": "^3.3"
+        "spatie/laravel-permission": "^3.3",
+        "fivedots/nepalicalendar":"*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

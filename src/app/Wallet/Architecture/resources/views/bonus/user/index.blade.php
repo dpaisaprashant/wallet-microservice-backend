@@ -45,6 +45,9 @@
                             @isset($walletTransactionType->service)
                                 | <span class="font-bold">Service: </span> {{ $walletTransactionType->service }}</h3>
                         @endisset
+                        | <span class="font-bold">Special 1: </span>{{ $walletTransactionType->special1 != null ? $walletTransactionType->special1 : '' }}
+                        |
+                        <span class="font-bold">Special 2: </span>{{ $walletTransactionType->special2 != null ? $walletTransactionType->special2 : '' }}
                     </div>
                 </div>
             </div>

@@ -7,6 +7,7 @@ namespace App\Wallet\User\Repositories;
 use App\Models\TransactionEvent;
 use App\Models\User;
 use App\Models\UserBankAccount;
+use App\Models\UserKYC;
 use App\Traits\CollectionPaginate;
 use Illuminate\Http\Request;
 
@@ -53,6 +54,32 @@ class UserRepository
         })->sortByDesc('amount_sum');
 
         return $this->collectionPaginate($this->length, $users, $this->request);
+    }
+
+    public function rejectedKycUsers(){
+        $rejectedKycUsers = User::with('wallet', 'userType','merchant','agent','kyc')->whereHas('userType')->whereHas('kyc',function($query){
+            return $query->where('accept',0);
+        })->get();
+        return $this->collectionPaginate($this->length,$rejectedKycUsers,$this->request);
+    }
+
+    public function acceptedKycUsers(){
+        $acceptedKycUsers = User::with('wallet', 'userType','merchant','agent','kyc')->whereHas('userType')->whereHas('kyc',function($query){
+            return $query->where('accept',1);
+        })->get();
+        return $this->collectionPaginate($this->length,$acceptedKycUsers,$this->request);
+    }
+
+    public function pendingKycUsers(){
+        $pendingKycUsers = User::with('wallet', 'userType','merchant','agent','kyc')->whereHas('userType')->whereHas('kyc',function($query){
+            return $query->where('accept',null);
+        })->get();
+        return $this->collectionPaginate($this->length,$pendingKycUsers,$this->request);
+    }
+
+    public function kycNotFilledUsers(){
+        $kycNotFilledUsers = User::with('wallet', 'userType','merchant','agent','kyc')->whereHas('userType')->doesntHave('kyc')->get();
+        return $this->collectionPaginate($this->length,$kycNotFilledUsers,$this->request);
     }
 
     private function transactionLoadSorted()

@@ -455,8 +455,13 @@ class RolesAndPermissionsSeeder extends Seeder
             'Delete location',
 
             //Agent Settings
-            'Agent setting view'
+            'Agent setting view',
 
+            //Users
+            'Rejected user kyc',
+            'Accepted user kyc',
+            'Pending user kyc',
+            'KYC not filled users'
             ];
 
         //get users having all permissions

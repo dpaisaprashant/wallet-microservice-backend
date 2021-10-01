@@ -125,6 +125,9 @@
                                     <th>S.No.</th>
                                     <th>User Type</th>
                                     <th>Vendor</th>
+                                    @if($vendorName == "BFI")
+                                        <th>BFI Name</th>
+                                    @endif
                                     <th>Transaction Category</th>
                                     <th>Service Type</th>
                                     <th>Service</th>
@@ -146,7 +149,21 @@
                                         </td>
                                         <td>
                                             {{ $transactionType->vendor }}
+                                            @if($vendorName == "BFI")
+                                                @if($transactionType->special1 == null)
+                                                    <span class="badge badge-danger"></span>
+                                                @else
+                                                    <span class="badge badge-success"> {{ $transactionType->special1 }}</span>
+                                                @endif
+                                                @endif
                                         </td>
+                                        @if($vendorName == "BFI")
+                                            @if($transactionType->special2 == null)
+                                            <td>  </td>
+                                            @else
+                                                <td> <span class="badge badge-success">{{ $transactionType->special2 }}</span></td>
+                                                @endif
+                                        @endif
                                         <td>
                                             {{ $transactionType->transaction_category }}
                                         </td>

@@ -80,6 +80,26 @@ class UserController extends Controller
         return view('admin.user.view')->with(compact('users'));
     }
 
+    public function rejectKycUsers(UserRepository $repository){
+        $rejectedKycUsers = $repository->rejectedKycUsers();
+        return view('admin.user.rejectedKycUser')->with(compact('rejectedKycUsers'));
+    }
+
+    public function acceptedKycUsers(UserRepository $repository){
+        $accpetedKycUsers = $repository->acceptedKycUsers();
+        return view('admin.user.acceptedKycUser')->with(compact('accpetedKycUsers'));
+    }
+
+    public function pendingKycUsers(UserRepository $repository){
+        $pendingKycUsers = $repository->pendingKycUsers();
+        return view('admin.user.pendingKycUser')->with(compact('pendingKycUsers'));
+    }
+
+    public function kycNotFilledUsers(UserRepository $repository){
+        $kycNotFilledUsers = $repository->kycNotFilledUsers();
+        return view('admin.user.kycNotFilledUser')->with(compact('kycNotFilledUsers'));
+    }
+
     public function kycNotFilledView(UserKYCRepository $repository)
     {
         $users = $repository->paginatedKycNotFilledUsers();

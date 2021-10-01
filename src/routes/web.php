@@ -108,6 +108,11 @@ Route::group(['prefix' => 'admin'], function () {
          */
         Route::get('/users', 'UserController@view')->name('user.view')->middleware('permission:Users view');//all users
 
+        Route::get('/rejected-kyc-users','UserController@rejectKycUsers')->name('reject.kycUsers')->middleware('permission:Rejected user kyc');
+        Route::get('/accepted-kyc-users','UserController@acceptedKycUsers')->name('accept.kycUsers')->middleware('permission:Accepted user kyc');
+        Route::get('/pending-kyc-users','UserController@pendingKycUsers')->name('pending.kycUsers')->middleware('permission:Pending user kyc');
+        Route::get('/kyc-not-filled-users','UserController@kycNotFilledUsers')->name('kycNotFilled.Users')->middleware('permission:KYC not filled users');
+
         Route::get('kyc-not-filled-user', 'UserController@kycNotFilledView')->name('user.kycNotFilled.view')->middleware('permission:KYC not filled users view'); // KYC not filled user view page
         Route::get('unverified-kyc-user', 'UserController@unverifiedKYCView')->name('user.unverifiedKYC.view')->middleware('permission:Unverified KYC users view'); // Unverified KYC view
         Route::post('change-kyc-status', 'UserController@changeKYCStatus')->name('user.changeKYCStatus')->middleware('permission:KYC accept|KYC reject'); // Change KYC status

@@ -41,6 +41,7 @@
                                     <th>Scheme Code</th>
                                     <th>Allow Cashback</th>
                                     <th>Allow Commission</th>
+                                    <th>Validate KYC</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -66,6 +67,13 @@
                                             @endif
                                         </td>
                                         <td>
+                                            @if($scheme->validate_kyc == 1)
+                                                <span class="badge badge-primary">true</span>
+                                            @else
+                                                <span class="badge badge-danger">false</span>
+                                            @endif
+                                        </td>
+                                        <td>
                                             @if($scheme->status == 1)
                                                 <span class="badge badge-primary">active</span>
                                             @else
@@ -74,20 +82,28 @@
                                         </td>
                                         <td>
 
-                                        @can('Edit scheme')
-                                                    <a href="{{ route('scheme.edit',$scheme->id) }}" title="Edit Scheme"
-                                                       class="btn btn-icon btn-sm btn-primary m-t-n-xs"><i
-                                                            class="fa fa-edit"></i></a>&nbsp;&nbsp;
+                                            @can('Edit scheme')
+                                                <a href="{{ route('scheme.edit',$scheme->id) }}" title="Edit Scheme"
+                                                   class="btn btn-icon btn-sm btn-primary m-t-n-xs"><i
+                                                        class="fa fa-edit"></i></a>&nbsp;&nbsp;
                                             @endcan
 
-                                        @can('Delete scheme')
-                                                    <form action="{{ route('scheme.delete',$scheme->id) }}" style="float: left;margin-right: 5px;" method="POST">
-                                                        @csrf
-                                                        <input id="resetValue" type="hidden" name="scheme_id" value="{{ $scheme->id }}">
-                                                        <button href="{{ route('scheme.delete', $scheme->id) }}" class="reset btn btn-icon btn-sm btn-danger m-t-n-xs" rel="{{ $scheme->id }}"><i class="fa fa-trash"></i></button>
-                                                        <button id="resetBtn-{{ $scheme->id }}" style="display: none" type="submit" href="{{ route('scheme.delete', $scheme->id) }}"  class="resetBtn btn btn-icon btn-sm btn-danger m-t-n-xs"><i class="fa fa-trash"></i></button>
-                                                    </form>
-                                        @endcan
+                                            @can('Delete scheme')
+                                                <form action="{{ route('scheme.delete',$scheme->id) }}"
+                                                      style="float: left;margin-right: 5px;" method="POST">
+                                                    @csrf
+                                                    <input id="resetValue" type="hidden" name="scheme_id"
+                                                           value="{{ $scheme->id }}">
+                                                    <button href="{{ route('scheme.delete', $scheme->id) }}"
+                                                            class="reset btn btn-icon btn-sm btn-danger m-t-n-xs"
+                                                            rel="{{ $scheme->id }}"><i class="fa fa-trash"></i></button>
+                                                    <button id="resetBtn-{{ $scheme->id }}" style="display: none"
+                                                            type="submit"
+                                                            href="{{ route('scheme.delete', $scheme->id) }}"
+                                                            class="resetBtn btn btn-icon btn-sm btn-danger m-t-n-xs"><i
+                                                            class="fa fa-trash"></i></button>
+                                                </form>
+                                            @endcan
 
 
                                         </td>

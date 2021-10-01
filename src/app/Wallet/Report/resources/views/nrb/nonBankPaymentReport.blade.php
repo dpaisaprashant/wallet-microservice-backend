@@ -41,7 +41,8 @@
                     <div class="ibox-content">
                         <div class="row">
                             <div class="col-sm-12">
-                                <form role="form" method="get" action="{{ route('report.nonBankPaymentReport') }}" id="filter">
+                                <form role="form" method="get" action="{{ route('report.nonBankPaymentReport') }}"
+                                      id="filter">
 
                                     <div class="row">
                                         <div class="col-12 mt-3">
@@ -77,29 +78,29 @@
                                     <div class="row">
 
 
-                                                <div class="col-4">
-                                                    <div class="input-group date">
+                                        <div class="col-4">
+                                            <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </span>
-                                                        <input id="date_load_from" type="text"
-                                                               class="form-control date_from" placeholder="From"
-                                                               name="from" autocomplete="off"
-                                                               value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}">
-                                                    </div>
-                                                    <br>
-                                                </div>
-                                                <div class="col-4">
-                                                    <div class="input-group date">
+                                                <input id="date_load_from" type="text"
+                                                       class="form-control date_from" placeholder="From"
+                                                       name="from" autocomplete="off"
+                                                       value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}">
+                                            </div>
+                                            <br>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </span>
-                                                        <input id="date_load_to" type="text"
-                                                               class="form-control date_to" placeholder="To" name="to"
-                                                               autocomplete="off"
-                                                               value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
-                                                    </div>
-                                                </div>
+                                                <input id="date_load_to" type="text"
+                                                       class="form-control date_to" placeholder="To" name="to"
+                                                       autocomplete="off"
+                                                       value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
+                                            </div>
+                                        </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <select data-placeholder="User Type..." class="chosen-select"
@@ -136,7 +137,8 @@
 
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
-                                                formaction="{{ route('report.nonBankPaymentReport') }}"><strong>Filter</strong>
+                                                formaction="{{ route('report.nonBankPaymentReport') }}">
+                                            <strong>Filter</strong>
                                         </button>
                                     </div>
 
@@ -155,42 +157,44 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox ">
-                    <div class="ibox-title">
-                        <h5>List of all Non bank payment reports</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover dataTables-example"
-                                   title="Non bank payment report">
-                                <thead>
-                                <tr>
-                                    <th>S.No.</th>
-                                    <th>Transaction channel</th>
-                                    <th>Form of transaction</th>
-                                    <th>Number (Count)</th>
-                                    <th>Value (Amount sum)</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($nonBankPayments as $title=>$nonBankPayment)
+        @if(!empty($_GET))
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5>List of all Non bank payment reports</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover dataTables-example"
+                                       title="Non bank payment report">
+                                    <thead>
                                     <tr>
-                                        <td>{{$loop->index+1}}</td>
-                                        <td>Customer initiated</td>
-                                        <td>{{$title}}</td>
-                                        <td>{{$nonBankPayment['number']}}</td>
-                                        <td>Rs. {{$nonBankPayment['value']}}</td>
+                                        <th>S.No.</th>
+                                        <th>Transaction channel</th>
+                                        <th>Form of transaction</th>
+                                        <th>Number (Count)</th>
+                                        <th>Value (Amount sum)</th>
                                     </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($nonBankPayments as $title=>$nonBankPayment)
+                                        <tr>
+                                            <td>{{$loop->index+1}}</td>
+                                            <td>Customer initiated</td>
+                                            <td>{{$title}}</td>
+                                            <td>{{$nonBankPayment['number']}}</td>
+                                            <td>Rs. {{$nonBankPayment['value']}}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
     </div>
 @endsection
 

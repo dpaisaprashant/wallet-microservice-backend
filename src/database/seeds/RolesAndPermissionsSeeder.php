@@ -300,6 +300,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Report admin kyc',
             'Report commission',
             'Report nrb agent',
+            'Report nrb reconciliation',
 
             //setting
             'Nps setting view',

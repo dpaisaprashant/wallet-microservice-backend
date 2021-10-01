@@ -33,4 +33,7 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web','auth']], funct
 
     // Mismatches user balances
     Route::match(['get', 'post'],'mismatched-user-balances', [MismatchedUserBalanceController::class, 'report'])->name('report.mismatchedUserBalance')->middleware('permission:View mismatched user balance and bonus balance');
+
+    //Nrb Reconciliation Report
+    Route::match(['get', 'post'],'nrb-reconciliation-report', [WalletReportController::class, 'nrbReconciliationReport'])->name('report.nrb.reconciliation')->middleware('permission:Report nrb reconciliation');
 });

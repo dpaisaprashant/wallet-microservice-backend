@@ -106,6 +106,18 @@ class MerchantMigrationSeeder extends Seeder
                 "updated_at" => $merchant->updated_at
             ]);
 
+            //1.5. Transfer merchant kyc to user kyc
+            $merchantKyc = $merchantDB->table("merchant_k_y_c_s")
+                ->where("merchant_id", $merchant->id)
+                ->first()
+                ->toArray();
+
+            if ($merchantKyc) {
+                unset($merchantKyc["merchant_id"]);
+                $merchantKyc["user_id"] = $user->id;
+                $coreDB->table("user_k_y_c_s")->insert($merchantKyc);
+            }
+
             //2
             //migrate merchant_transactions table
             //migrate merchant_ticket_payments table

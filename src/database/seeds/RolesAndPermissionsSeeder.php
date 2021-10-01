@@ -432,6 +432,12 @@ class RolesAndPermissionsSeeder extends Seeder
             'View nchl aggregated api',
             'View paypoint api',
 
+            //Users
+            'Rejected user kyc',
+            'Accepted user kyc',
+            'Pending user kyc',
+            'KYC not filled users'
+
             ];
 
         //get users having all permissions

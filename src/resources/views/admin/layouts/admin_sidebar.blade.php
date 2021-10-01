@@ -768,6 +768,7 @@ $url = url()->current();
                         'Bonus setting view',
                         'Notification setting view',
                         'Redirect setting view',
+                        'Agent setting view',
                 ]))
                 <li @if(preg_match('/settings/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Settings</span><span
@@ -842,6 +843,10 @@ $url = url()->current();
                         {{--@can('OTP setting view')
                             <li><a href="{{ route('settings.otp') }}">OTP Setting</a></li>
                         @endcan--}}
+
+                        @can('Agent setting view')
+                            <li><a href="{{ route('settings.agent') }}">Agent Setting</a></li>
+                        @endcan
                     </ul>
                 </li>
             @endif

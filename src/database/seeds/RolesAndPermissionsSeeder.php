@@ -453,6 +453,9 @@ class RolesAndPermissionsSeeder extends Seeder
             'Edit location',
             'Delete location',
 
+            //Agent Settings
+            'Agent setting view'
+
             ];
 
         //get users having all permissions

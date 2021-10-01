@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Filters\BFI\BFIFilters;
 use App\Models\BFI\BFIUser;
 use App\Traits\BelongsToUser;
 use App\Traits\MorphOneTransaction;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class BfiToUserFundTransfer extends Model
 {
@@ -23,6 +26,11 @@ class BfiToUserFundTransfer extends Model
 
     public function bfiCheckPayment(){
         return $this->belongsTo(BfiGatewayCheckPayment::class,'process_id','process_id');
+    }
+
+    public function scopeFilter(Builder $builder, Request $request, array $filters = [])
+    {
+        return (new BFIFilters($request))->add($filters)->filter($builder);
     }
 
 }

@@ -128,4 +128,8 @@ class Admin extends Authenticatable
         return $this->hasMany(AdminAlteredAgent::class, 'admin_id');
     }
 
+    public function issueTicket()
+    {
+        return $this->hasMany(IssueTicket::class, 'issued_by', 'id');
+    }
 }

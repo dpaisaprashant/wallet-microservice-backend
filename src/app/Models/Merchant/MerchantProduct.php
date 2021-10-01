@@ -16,9 +16,12 @@ class MerchantProduct extends Model
     protected $table = 'merchant_products';
 
     protected $fillable = [
+        'name',
+        'price',
         'type',
-        'json_data',
-        'merchant_id'
+        'service_charge',
+        'description',
+        'merchant_id',
     ];
 
     protected $casts = [
@@ -26,14 +29,14 @@ class MerchantProduct extends Model
     ];
 
 
-    public function rules(){
-        $rules = array(
-            'merchant_id' => 'required|unique:dpaisa.merchant_products',
-        );
-        return $rules;
-    }
+//    public function rules(){
+//        $rules = array(
+//            'merchant_id' => 'required|unique:dpaisa.merchant_products',
+//        );
+//        return $rules;
+//    }
 
-    public function merchantProductUsers(){
+    public function merchant(){
         return $this->hasOne(Merchant::class,'id','merchant_id',);
     }
 }

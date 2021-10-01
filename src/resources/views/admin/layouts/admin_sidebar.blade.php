@@ -130,7 +130,7 @@ $url = url()->current();
 
 
             @can('Merchant profile')
-                <li @if($url == route('merchant.view') || $url == route('create.merchant.view'))class="active" @endif>
+                <li @if(preg_match('/merchant/', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-cart-plus"></i> <span class="nav-label">Merchants</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
@@ -141,6 +141,14 @@ $url = url()->current();
 
                         @can('Create merchant')
                             <li><a href="{{ route('create.merchant.view') }}">Create Merchant</a></li>
+                        @endcan
+
+                        @can('View location')
+                            <li><a href="{{ route('merchant.location.list') }}">Add Location</a></li>
+                        @endcan
+
+                        @can('View merchant address')
+                            <li><a href="{{ route('merchant.address.list') }}">Set Merchant Address</a></li>
                         @endcan
 
                     </ul>
@@ -586,14 +594,18 @@ $url = url()->current();
                         @can('Report reconciliation')
                             <li><a href="{{ route('report.reconciliation') }}">Reconciliation Report</a></li>
                         @endcan
+                        @can('Report nrb reconciliation')
+                            <li><a href="{{ route('report.nrb.reconciliation') }}">NRB Reconciliation Report</a></li>
+                        @endcan
                         {{--  @can('Report reconciliation')
                               <li><a href="{{ route('mismatched.reconciliation') }}">Mismatchced Reconciliation Report</a>
                               </li>
                           @endcan--}}
                         {{--<li><a href="{{ route('report.user.reconciliation') }}">User Reconciliation Report</a></li>--}}
                         @can('Report nrb active and inactive user')
-                            <li><a href="{{ route('report.nrb.activeInactiveUser') }}">NRB Active/Inactive User
-                                    Report</a>
+                            <li><a href="{{ route('report.nrb.activeUser') }}">NRB Active User Report</a>
+                            </li>
+                            <li><a href="{{ route('report.nrb.inactiveUser') }}">NRB Inactive User Report</a>
                             </li>
                         @endcan
                         @can('Report nrb agent')
@@ -669,6 +681,12 @@ $url = url()->current();
                         <li><a href="{{ route('admin.log.development') }}">Development Log</a></li>
                         @endcan--}}
                     </ul>
+                </li>
+            @endif
+
+            @if(auth()->user()->hasPermissionTo('View issue ticket'))
+                <li @if($url == route('issue.ticket.view'))class="active" @endif>
+                    <a href="{{route('issue.ticket.view')}}"><i class="fa fa-ticket"></i> <span class="nav-label">Issues/Tickets</span></a>
                 </li>
             @endif
 
@@ -753,6 +771,7 @@ $url = url()->current();
                         'Bonus setting view',
                         'Notification setting view',
                         'Redirect setting view',
+                        'Agent setting view',
                 ]))
                 <li @if(preg_match('/settings/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Settings</span><span
@@ -828,6 +847,10 @@ $url = url()->current();
                         {{--@can('OTP setting view')
                             <li><a href="{{ route('settings.otp') }}">OTP Setting</a></li>
                         @endcan--}}
+
+                        @can('Agent setting view')
+                            <li><a href="{{ route('settings.agent') }}">Agent Setting</a></li>
+                        @endcan
                     </ul>
                 </li>
             @endif

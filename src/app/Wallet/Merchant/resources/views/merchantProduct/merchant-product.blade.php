@@ -33,11 +33,15 @@
                                 <thead>
                                 <tr>
                                     <th>S.No.</th>
-                                    <th>Type</th>
+                                    <th>Product Type</th>
+                                    <th>Product Name</th>
+                                    <th>Product Description</th>
+                                    <th>Product Price</th>
+                                    <th>Service Charge</th>
                                     <th>Merchant Name</th>
                                     <th>Merchant Phone Number</th>
+                                    <th>Merchant Address</th>
                                     <th>Created At</th>
-                                    <th>Json Data</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -49,25 +53,42 @@
                                             {{ $merchantProduct->type }}
                                         </td>
                                         <td>
-                                            @if(!empty($merchantProduct->merchantProductUsers->user->name))
-                                                {{ $merchantProduct->merchantProductUsers->user->name }}
+                                            {{ $merchantProduct->name }}
+                                        </td>
+                                        <td>
+                                            {{ $merchantProduct->description }}
+                                        </td>
+                                        <td>
+                                            {{ $merchantProduct->price }}
+                                        </td>
+                                        <td>
+                                            {{ $merchantProduct->service_charge }}
+                                        </td>
+                                        <td>
+                                            @if(!empty(optional(optional($merchantProduct->merchant)->user)->name))
+                                                {{ optional(optional($merchantProduct->merchant)->user)->name }}
                                             @else
                                                 No Merchant Name Found.
                                             @endif
                                         </td>
                                         <td>
-                                            @if(!empty($merchantProduct->merchantProductUsers->user->mobile_no))
-                                                {{ $merchantProduct->merchantProductUsers->user->mobile_no }}
+                                            @if(!empty(optional(optional($merchantProduct->merchant)->user)->mobile_no))
+                                                {{ optional(optional($merchantProduct->merchant)->user)->mobile_no }}
                                             @else
                                                 No phone found.
                                             @endif
                                         </td>
                                         <td>
-                                            {{ $merchantProduct->created_at }}
+                                            @if(!empty(optional(optional(optional($merchantProduct->merchant)->merchantAddress)->merchantAddressLocation)->name))
+                                                {{ optional(optional(optional($merchantProduct->merchant)->merchantAddress)->merchantAddressLocation)->name }}
+                                            @else
+                                                No Address found.
+                                            @endif
                                         </td>
                                         <td>
-                                            @include('Merchant::merchantProduct/json-merchant-product', ['MerchantProduct' => $merchantProduct])
+                                            {{ $merchantProduct->created_at }}
                                         </td>
+
                                         <td class="center">
                                             <form action="{{ route('merchant.product.delete',$merchantProduct->id) }}"
                                                   method="POST">

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\AllUserAuditResource;
 use App\Http\Resources\AllUserAuditResourceCollection;
+use App\Http\Resources\BfiExecutePaymentReportResource;
+use App\Http\Resources\BfiToUserReportResource;
 use App\Http\Resources\CellPayTransactionResource;
 use App\Http\Resources\ClearanceResource;
 use App\Http\Resources\ClearanceTransactionResource;
@@ -16,6 +18,8 @@ use App\Http\Resources\KhaltiResource;
 use App\Http\Resources\LinkedAccountsResource;
 use App\Http\Resources\NchlAggregatedTransactionResource;
 use App\Http\Resources\NchlBankTransferResource;
+use App\Http\Resources\NICAsiaCyberSourceLoadTransactionResource;
+use App\Http\Resources\PayPointReportResource;
 use App\Http\Resources\SparrowSMSResource;
 use App\Http\Resources\TransactionEventResource;
 use App\Http\Resources\UserAudit\AdminUserKYCResource;
@@ -26,7 +30,10 @@ use App\Http\Resources\UserAudit\UserLoginHistoryResource;
 use App\Http\Resources\UserCheckPaymentResource;
 use App\Http\Resources\UserLoadTransactionResource;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\UserToBfiReportResource;
 use App\Models\AdminUserKYC;
+use App\Models\BfiExecutePayment;
+use App\Models\BfiToUserFundTransfer;
 use App\Models\CellPayUserTransaction;
 use App\Models\Clearance;
 use App\Models\ClearanceTransaction;
@@ -36,6 +43,7 @@ use App\Models\KhaltiUserTransaction;
 use App\Models\LinkedAccounts;
 use App\Models\NchlAggregatedPayment;
 use App\Models\NchlBankTransfer;
+use App\Models\NICAsiaCyberSourceLoadTransaction;
 use App\Models\NpsLoadTransaction;
 use App\Models\SparrowSMS;
 use App\Models\TransactionEvent;
@@ -45,6 +53,7 @@ use App\Models\UserCheckPayment;
 use App\Models\UserKYC;
 use App\Models\UserLoadTransaction;
 use App\Models\UserLoginHistory;
+use App\Models\UserToBfiFundTransfer;
 use App\Models\UserToUserFundTransfer;
 use App\Wallet\AuditTrail\AuditTrial;
 use App\Wallet\AuditTrail\Behaviors\BAll;
@@ -53,6 +62,9 @@ use App\Wallet\DPaisaAuditTrail\AllAuditTrail;
 use App\Wallet\DPaisaAuditTrail\NPayAuditTrail;
 use App\Wallet\DPaisaAuditTrail\PPAuditTrail;
 use App\Wallet\Excel\ExportExcelHelper;
+use App\Wallet\Report\Repositories\NchlLoadReportRepository;
+use App\Wallet\TransactionEvent\Repository\NPayReportRepository;
+use App\Wallet\TransactionEvent\Repository\PayPointReportRepository;
 use Illuminate\Http\Request;
 
 class ExcelExportController extends Controller
@@ -205,7 +217,7 @@ class ExcelExportController extends Controller
         return $export->exportExcel();
     }
 
-    public function userCompleteTransactions (Request $request)
+    public function userCompleteTransactions(Request $request)
     {
         $user = User::where('mobile_no', $request->user)->first()->name;
 
@@ -214,6 +226,17 @@ class ExcelExportController extends Controller
             ->setGeneratorModel(TransactionEvent::class)
             ->setRequest($request)
             ->setResource(TransactionEventResource::class);
+
+        return $export->exportExcel();
+    }
+
+    public function cyberSource(Request $request)
+    {
+        $export = new ExportExcelHelper();
+        $export->setName('CyberSource Nic Asia')
+            ->setGeneratorModel(NICAsiaCyberSourceLoadTransaction::class)
+            ->setRequest($request)
+            ->setResource(NICAsiaCyberSourceLoadTransactionResource::class);
 
         return $export->exportExcel();
     }
@@ -311,33 +334,24 @@ class ExcelExportController extends Controller
 
     private function transformAuditData($collection, $userId)
     {
-        return $collection->transform(function($value, $key) use ($userId) {
-            if ($value instanceof AdminUserKYC)
-            {
+        return $collection->transform(function ($value, $key) use ($userId) {
+            if ($value instanceof AdminUserKYC) {
                 return new AdminUserKYCResource($value);
-            } elseif ($value instanceof UserLoginHistory)
-            {
+            } elseif ($value instanceof UserLoginHistory) {
                 return new UserLoginHistoryResource($value);
-            } elseif ($value instanceof UserToUserFundTransfer)
-            {
+            } elseif ($value instanceof UserToUserFundTransfer) {
                 return (new \App\Http\Resources\UserAudit\FundTransferResource($value))->setUserId($userId);
-            } elseif ($value instanceof FundRequest)
-            {
+            } elseif ($value instanceof FundRequest) {
                 return (new \App\Http\Resources\UserAudit\FundRequestResource($value))->setUserId($userId);
-            } elseif ($value instanceof Commission && $value->module == Commission::MODULE_CASHBACK)
-            {
+            } elseif ($value instanceof Commission && $value->module == Commission::MODULE_CASHBACK) {
                 return new CashBackResource($value);
-            } elseif ($value instanceof UserCheckPayment)
-            {
+            } elseif ($value instanceof UserCheckPayment) {
                 return new \App\Http\Resources\UserAudit\UserCheckPaymentResource($value);
-            } elseif ($value instanceof UserLoadTransaction)
-            {
+            } elseif ($value instanceof UserLoadTransaction) {
                 return new \App\Http\Resources\UserAudit\UserLoadTransactionResource($value);
-            } elseif ($value instanceof UserKYC)
-            {
+            } elseif ($value instanceof UserKYC) {
                 return new UserKYCResource($value);
-            } elseif ($value instanceof UserActivity)
-            {
+            } elseif ($value instanceof UserActivity) {
                 return new UserActivityResource($value);
             }
         });
@@ -345,33 +359,24 @@ class ExcelExportController extends Controller
 
     private function transformSuccessfulAuditData($collection, $userId)
     {
-        return $collection->transform(function($value, $key) use ($userId) {
-            if ($value instanceof AdminUserKYC)
-            {
+        return $collection->transform(function ($value, $key) use ($userId) {
+            if ($value instanceof AdminUserKYC) {
                 return new AdminUserKYCResource($value);
-            } elseif ($value instanceof UserLoginHistory)
-            {
+            } elseif ($value instanceof UserLoginHistory) {
                 return new UserLoginHistoryResource($value);
-            } elseif ($value instanceof UserToUserFundTransfer)
-            {
+            } elseif ($value instanceof UserToUserFundTransfer) {
                 return (new \App\Http\Resources\UserAudit\FundTransferResource($value))->setUserId($userId);
-            } elseif ($value instanceof FundRequest)
-            {
+            } elseif ($value instanceof FundRequest) {
                 return (new \App\Http\Resources\UserAudit\FundRequestResource($value))->setUserId($userId);
-            } elseif ($value instanceof Commission && $value->module == Commission::MODULE_CASHBACK)
-            {
+            } elseif ($value instanceof Commission && $value->module == Commission::MODULE_CASHBACK) {
                 return new CashBackResource($value);
-            } elseif ($value instanceof UserCheckPayment && !empty($value->userTransaction))
-            {
+            } elseif ($value instanceof UserCheckPayment && !empty($value->userTransaction)) {
                 return new \App\Http\Resources\UserAudit\UserCheckPaymentResource($value);
-            } elseif ($value instanceof UserLoadTransaction && $value->status == 'COMPLETED')
-            {
+            } elseif ($value instanceof UserLoadTransaction && $value->status == 'COMPLETED') {
                 return new \App\Http\Resources\UserAudit\UserLoadTransactionResource($value);
-            } elseif ($value instanceof UserKYC)
-            {
+            } elseif ($value instanceof UserKYC) {
                 return new UserKYCResource($value);
-            } elseif ($value instanceof UserActivity)
-            {
+            } elseif ($value instanceof UserActivity) {
                 return new UserActivityResource($value);
             }
         });
@@ -400,13 +405,11 @@ class ExcelExportController extends Controller
         $auditTrail = new AllAuditTrail();
         $collection = $auditTrail->createTrail();
 
-        $collection->transform(function ($value){
+        $collection->transform(function ($value) {
 
-            if ($value instanceof UserCheckPayment)
-            {
+            if ($value instanceof UserCheckPayment) {
                 return new PayPointResource($value);
-            } elseif ($value instanceof UserLoadTransaction)
-            {
+            } elseif ($value instanceof UserLoadTransaction) {
                 return new NPayResource($value);
             }
         });
@@ -424,7 +427,7 @@ class ExcelExportController extends Controller
         $auditTrail = new NPayAuditTrail();
         $collection = $auditTrail->createTrail();
 
-        $collection->transform(function ($value){
+        $collection->transform(function ($value) {
             return new NPayResource($value);
         });
 
@@ -441,7 +444,7 @@ class ExcelExportController extends Controller
         $auditTrail = new PPAuditTrail();
         $collection = $auditTrail->createTrail();
 
-        $collection->transform(function ($value){
+        $collection->transform(function ($value) {
             return new PayPointResource($value);
         });
 
@@ -451,6 +454,69 @@ class ExcelExportController extends Controller
             ->setRequest($request);
 
         return $export->exportExcelCollection();
+    }
+
+    //Reports
+    public function payPointReport(Request $request, PayPointReportRepository $repo)
+    {
+        $export = new ExportExcelHelper();
+        $export->setName('Paypoint Report')
+            ->setMixGeneratorModels(($repo->generateServiceReport())->filter())
+            ->setRequest($request);
+
+        return $export->exportExcelCollection();
+    }
+
+    public function nchlLoadReport(Request $request, NchlLoadReportRepository $repo)
+    {
+        $export = new ExportExcelHelper();
+        $export->setName('NCHL-LOAD Report')
+            ->setMixGeneratorModels(($repo->generateServiceReport())->filter())
+            ->setRequest($request);
+
+        return $export->exportExcelCollection();
+    }
+
+    public function nPayReport(Request $request, NPayReportRepository $repo)
+    {
+        $export = new ExportExcelHelper();
+        $export->setName('NPAY Report')
+            ->setMixGeneratorModels(($repo->generateServiceReport())->filter())
+            ->setRequest($request);
+
+        return $export->exportExcelCollection();
+    }
+
+    public function userToBFIReport(Request $request)
+    {
+        $export = new ExportExcelHelper();
+        $export->setName('USER TO BFI REPORT')
+            ->setGeneratorModel(UserToBfiFundTransfer::class)
+            ->setRequest($request)
+            ->setResource(UserToBfiReportResource::class);
+
+        return $export->exportExcel();
+    }
+
+    public function bfiToUserReport(Request $request)
+    {
+        $export = new ExportExcelHelper();
+        $export->setName('BFI TO USER REPORT')
+            ->setGeneratorModel(BfiToUserFundTransfer::class)
+            ->setRequest($request)
+            ->setResource(BfiToUserReportResource::class);
+
+        return $export->exportExcel();
+    }
+
+    public function executePaymentReport(Request $request)
+    {
+        $export = new ExportExcelHelper();
+        $export->setName('BFI EXECUTE PAYMENT REPORT')
+            ->setGeneratorModel(BfiExecutePayment::class)
+            ->setRequest($request)
+            ->setResource(BfiExecutePaymentReportResource::class);
+        return $export->exportExcel();
     }
 
 }

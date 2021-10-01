@@ -35,11 +35,6 @@
                             <div class="col-md-12">
                                 @include('admin.asset.notification.notify')
                             </div>
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Type</label>
-                                <div class="col-sm-10">
-                                    <input name="type" type="text" class="form-control" value="{{$merchantProduct->type}}">
-                                </div>
-                            </div>
 
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Select Merchant</label>
@@ -60,16 +55,35 @@
                                 </div>
                             </div>
 
-                            <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Json Data</label>
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Product Type</label>
                                 <div class="col-sm-10">
-                                    <textarea id="json-input" name="json_data" autocomplete="off">{{$merchantProduct->json_data}}</textarea>
-                                    <button id="translate" type="button">Translate Into Json</button>
-                                    <pre id="json-display"></pre>
+                                    <input name="type" type="text" class="form-control" value="{{$merchantProduct->type}}">
                                 </div>
                             </div>
 
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Product Name</label>
+                                <div class="col-sm-10">
+                                    <input name="name" type="text" class="form-control" value="{{$merchantProduct->name}}">
+                                </div>
+                            </div>
 
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Product Description</label>
+                                <div class="col-sm-10">
+                                    <textarea name="description" type="text" class="form-control">{{$merchantProduct->description}}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Product Price</label>
+                                <div class="col-sm-10">
+                                    <input name="price" type="number" class="form-control" step="0.01" value="{{$merchantProduct->price}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Service Charge</label>
+                                <div class="col-sm-10">
+                                    <input name="service_charge" type="number" class="form-control" step="0.01" value="{{$merchantProduct->service_charge}}">
+                                </div>
+                            </div>
                         </div>
                         <div class="ibox-title">
                             <div class="col-sm-4 col-sm-offset-2">
@@ -90,7 +104,7 @@
     @include('admin.asset.css.chosen')
     @include('admin.asset.css.datatable')
     {{--    @include('admin.asset.css.jsonbubble')--}}
-    @include('admin.asset.css.jsoneditor')
+{{--    @include('admin.asset.css.jsoneditor')--}}
 
 
 @endsection
@@ -100,7 +114,7 @@
     @include('admin.asset.js.chosen')
     @include('admin.asset.js.datatable')
     {{--    @include('admin.asset.js.jsonbubble')--}}
-    @include('admin.asset.js.jsoneditor')
+{{--    @include('admin.asset.js.jsoneditor')--}}
 
 
 @endsection

@@ -2,13 +2,13 @@
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Merchant Product List</h2>
+            <h2>Merchant Addresses List</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
                 </li>
                 <li class="breadcrumb-item active">
-                    <strong>Merchant Products</strong>
+                    <strong>Merchant Addresses</strong>
                 </li>
             </ol>
         </div>
@@ -19,94 +19,72 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>List of Merchant Products</h5>
+                        <h5>List of Merchant Addresses</h5>
                         @can('Add merchant product')
-                            <a href="{{ route('merchant.product.add')}}" class="btn btn-success btn-sm m-t-n-xs"
+                            <a href="{{ route('merchant.address.add')}}" class="btn btn-success btn-sm m-t-n-xs"
                                style="margin-left: 80%;margin-top:-5px"><i class="fa fa-plus"> &nbsp;Add
-                                    Products</i></a>
+                                    Address</i></a>
                         @endcan
                     </div>
                     <div class="ibox-content">
                         <div class="table-responsive" id="comparedTransactionId">
                             <table class="table table-striped table-bordered table-hover dataTables-example"
-                                   title="Merchant Products">
+                                   title="Merchant Addresses">
                                 <thead>
                                 <tr>
                                     <th>S.No.</th>
-                                    <th>Product Type</th>
-                                    <th>Product Name</th>
-                                    <th>Product Description</th>
-                                    <th>Product Price</th>
-                                    <th>Service Charge</th>
                                     <th>Merchant Name</th>
                                     <th>Merchant Phone Number</th>
-                                    <th>Merchant Address</th>
+                                    <th>Merchant Location</th>
                                     <th>Created At</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($merchantProducts as $merchantProduct)
+                                @foreach($merchantAddresses as $merchantAddress)
                                     <tr class="gradeX">
-                                        <td>{{ $loop->index + ($merchantProducts->perPage() * ($merchantProducts->currentPage() - 1)) + 1 }}</td>
+                                        <td>{{ $loop->index + ($merchantAddresses->perPage() * ($merchantAddresses->currentPage() - 1)) + 1 }}</td>
                                         <td>
-                                            {{ $merchantProduct->type }}
-                                        </td>
-                                        <td>
-                                            {{ $merchantProduct->name }}
-                                        </td>
-                                        <td>
-                                            {{ $merchantProduct->description }}
-                                        </td>
-                                        <td>
-                                            {{ $merchantProduct->price }}
-                                        </td>
-                                        <td>
-                                            {{ $merchantProduct->service_charge }}
-                                        </td>
-                                        <td>
-                                            @if(!empty(optional(optional($merchantProduct->merchant)->user)->name))
-                                                {{ optional(optional($merchantProduct->merchant)->user)->name }}
+                                            @if(!empty(optional(optional($merchantAddress->merchantAddressUsers)->user)->name))
+                                                {{ optional(optional($merchantAddress->merchantAddressUsers)->user)->name }}
                                             @else
                                                 No Merchant Name Found.
                                             @endif
                                         </td>
                                         <td>
-                                            @if(!empty(optional(optional($merchantProduct->merchant)->user)->mobile_no))
-                                                {{ optional(optional($merchantProduct->merchant)->user)->mobile_no }}
+                                            @if(!empty(optional(optional($merchantAddress->merchantAddressUsers)->user)->mobile_no))
+                                                {{ optional(optional($merchantAddress->merchantAddressUsers)->user)->mobile_no }}
                                             @else
                                                 No phone found.
                                             @endif
                                         </td>
+
                                         <td>
-                                            @if(!empty(optional(optional(optional($merchantProduct->merchant)->merchantAddress)->merchantAddressLocation)->name))
-                                                {{ optional(optional(optional($merchantProduct->merchant)->merchantAddress)->merchantAddressLocation)->name }}
-                                            @else
-                                                No Address found.
-                                            @endif
+                                            {{ optional($merchantAddress->merchantAddressLocation)->name }}
                                         </td>
+
                                         <td>
-                                            {{ $merchantProduct->created_at }}
+                                            {{ $merchantAddress->created_at }}
                                         </td>
 
                                         <td class="center">
-                                            <form action="{{ route('merchant.product.delete',$merchantProduct->id) }}"
+                                            <form action="{{ route('merchant.address.delete',$merchantAddress->id) }}"
                                                   method="POST">
                                                 @csrf
-                                                @can('Delete merchant product')
+                                                @can('Delete merchant address')
                                                     <button class="reset btn btn-sm btn-danger m-t-n-xs"
-                                                            rel="{{ $merchantProduct->id }}">
+                                                            rel="{{ $merchantAddress->id }}">
                                                         <i class="fa fa-trash"></i>
                                                     </button>
 
-                                                    <button id="resetBtn-{{ $merchantProduct->id }}"
+                                                    <button id="resetBtn-{{ $merchantAddress->id }}"
                                                             style="display: none" type="submit"
-                                                            href="{{ route('merchant.product.delete',$merchantProduct->id) }}"
+                                                            href="{{ route('merchant.address.delete',$merchantAddress->id) }}"
                                                             class="resetBtn btn btn-sm btn-danger m-t-n-xs">
                                                         <i class="fa fa-trash"></i></button>
                                                 @endcan
-                                                @can('Edit merchant product')
-                                                    <a href="{{ route('merchant.product.edit',$merchantProduct->id)}}"
+                                                @can('Edit merchant address')
+                                                    <a href="{{ route('merchant.address.edit',$merchantAddress->id)}}"
                                                        class="btn btn-success btn-sm m-t-n-xs"><i
                                                             class="fa fa-edit"></i></a>
                                                 @endcan
@@ -142,17 +120,17 @@
     <script>
         $('.reset').on('click', function (e) {
             e.preventDefault();
-            let merchantProduct_Id = $(this).attr('rel');
+            let merchantAddress_Id = $(this).attr('rel');
             swal({
                 title: "Are you sure?",
-                text: "Selected merchant products will be deleted",
+                text: "Selected merchant address will be deleted",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Yes",
                 closeOnConfirm: false
             }, function () {
-                $('#resetBtn-' + merchantProduct_Id).trigger('click');
+                $('#resetBtn-' + merchantAddress_Id).trigger('click');
                 swal.close();
 
             })

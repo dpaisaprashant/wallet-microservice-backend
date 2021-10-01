@@ -99,6 +99,10 @@ Route::group(['prefix' => 'admin'], function () {
 
         //redirect settings
         Route::match(['get', 'post'], '/settings/redirect', 'Setting\SettingController@redirectSetting')->name('settings.redirect')->middleware('permission:Redirect setting view');
+
+        //Agent Bonus Balance
+        Route::match(['get', 'post'], '/settings/agent', 'Setting\SettingController@agentBonusBalanceSetting')->name('settings.agent');
+
         /**
          * Users
          */

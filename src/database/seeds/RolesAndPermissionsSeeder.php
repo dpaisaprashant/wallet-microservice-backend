@@ -300,6 +300,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Report admin kyc',
             'Report commission',
             'Report nrb agent',
+            'Report nrb reconciliation',
 
             //setting
             'Nps setting view',
@@ -439,7 +440,22 @@ class RolesAndPermissionsSeeder extends Seeder
             'View issue ticket',
             'Edit issue ticket',
             'Delete issue ticket',
-            'Create issue ticket'
+            'Create issue ticket',
+
+            //Merchant Addresses
+            'View merchant address',
+            'Add merchant address',
+            'Edit merchant address',
+            'Delete merchant address',
+
+            //Merchant Locations
+            'View location',
+            'Add location',
+            'Edit location',
+            'Delete location',
+
+            //Agent Settings
+            'Agent setting view'
 
             ];
 

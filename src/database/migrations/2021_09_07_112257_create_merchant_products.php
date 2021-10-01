@@ -16,9 +16,12 @@ class CreateMerchantProducts extends Migration
         if (!Schema::connection('dpaisa')->hasTable('merchant_products')) {
             Schema::connection('dpaisa')->create('merchant_products', function (Blueprint $table) {
                 $table->bigIncrements('id');
+                $table->string('name')->nullable();
+                $table->text('description')->nullable();
+                $table->float('service_charge')->nullable();
                 $table->string('type')->nullable();
+                $table->float('price')->nullable();
                 $table->string('merchant_id')->nullable();
-                $table->json('json_data')->nullable();
                 $table->timestamps();
             });
         }

@@ -115,11 +115,33 @@ $url = url()->current();
              </li>
              @endcan--}}
 
-            @can('Users view')
-                <li @if(preg_match('/users/i', $url)) class="active" @endif>
-                    <a href="{{ route('user.view') }}"><i class="fa fa-users"></i> <span class="nav-label">Users</span></a>
-                </li>
-            @endcan
+
+            <li @if(preg_match('/users/i', $url)) class="active" @endif>
+                <a href="javascript:void(0)"><i class="fa fa-users"></i> <span class="nav-label">Users</span><span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    @can('Users view')
+                        <li><a href="{{ route('user.view') }}">View all Users</a></li>
+                    @endcan
+
+                    @can('Rejected user kyc')
+                        <li><a href="{{ route('reject.kycUsers') }}">Rejected User KYC</a></li>
+                    @endcan
+
+                    @can('Accepted user kyc')
+                        <li><a href="{{ route('accept.kycUsers') }}">Accepted User KYC</a></li>
+                    @endcan
+
+                    @can('Pending user kyc')
+                        <li><a href="{{ route('pending.kycUsers') }}">Pending User KYC</a></li>
+                    @endcan
+
+                    @can('KYC not filled users')
+                        <li><a href="{{ route('kycNotFilled.Users') }}">KYC not filled users</a></li>
+                    @endcan
+                </ul>
+            </li>
+
 
             {{-- @can('Group force password change')
                  <li @if(preg_match('/force-password/i', $url)) class="active" @endif>
@@ -873,12 +895,12 @@ $url = url()->current();
                             <li><a href="{{ route('frontend.service.index') }}">Services</a></li>
                         @endcan
 
-
                         @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'icash' || strtolower(config('app.'.'name')) == 'master')
                             @can('Frontend about view')
                                 <li><a href="{{ route('frontend.about.index') }}">Abouts</a></li>
                             @endcan
                         @endif
+
 
                         @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'master')
                             @can('Frontend process view')
@@ -913,7 +935,6 @@ $url = url()->current();
                                 <li><a href="{{route('frontend.news.index')}}">NEWS</a></li>
                             @endcan
                         @endif
-
 
                         @if(strtolower(config('app.'.'name')) == 'sajilopay' || strtolower(config('app.'.'name')) == 'master')
                             @can('Frontend solution view')

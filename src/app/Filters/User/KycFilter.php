@@ -56,6 +56,5 @@ class KycFilter extends FilterAbstract {
         }
 
 
-        return $builder->whereDate('created_at', '>=' ,date('Y-m-d', strtotime(str_replace(',', ' ', $value))));
     }
 }

@@ -594,6 +594,9 @@ $url = url()->current();
                         @can('Report reconciliation')
                             <li><a href="{{ route('report.reconciliation') }}">Reconciliation Report</a></li>
                         @endcan
+                        @can('Report nrb reconciliation')
+                            <li><a href="{{ route('report.nrb.reconciliation') }}">NRB Reconciliation Report</a></li>
+                        @endcan
                         {{--  @can('Report reconciliation')
                               <li><a href="{{ route('mismatched.reconciliation') }}">Mismatchced Reconciliation Report</a>
                               </li>

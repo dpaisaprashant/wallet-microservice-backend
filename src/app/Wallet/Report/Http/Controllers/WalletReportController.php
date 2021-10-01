@@ -103,4 +103,16 @@ class WalletReportController extends Controller
 
         return view('WalletReport::nchlLoad.report')->with(compact('services'));
     }
+
+    public function nrbReconciliationReport(Request $request)
+    {
+        $repository = new ReconciliationReportRepository($request);
+
+        $totalAmounts = $this->generateReport($repository);
+
+        $totalLoadAmount = $repository->totalLoadAmount() / 100;
+        $totalPaymentAmount = $repository->totalPaymentAmount() / 100;
+
+        return view('WalletReport::nrbReconciliation.report')->with(compact('totalAmounts', 'totalLoadAmount', 'totalPaymentAmount'));
+    }
 }

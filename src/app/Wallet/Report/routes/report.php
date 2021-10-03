@@ -29,6 +29,7 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web', 'auth']], func
 
     //Non bank payment
     Route::get('/non-bank-payment', [NRBReportController::class, 'nonBankPaymentReport'])->name('report.nonBankPaymentReport')->middleware('permission:Report non bank payment');
+    Route::get('/non-bank-payment-count', [NRBReportController::class, 'nonBankPaymentCountReport'])->name('report.nonBankPaymentCountReport')->middleware('permission:Report non bank payment count');
 
     //AdminKyc
     Route::get('/adminKyc', [AdminKycController::class, 'getAdminData'])->name('report.adminKyc')->middleware('permission:Report admin kyc');

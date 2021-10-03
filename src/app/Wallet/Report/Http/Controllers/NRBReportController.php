@@ -164,4 +164,47 @@ class NRBReportController extends Controller
         ];
         return view('WalletReport::nrb.nonBankPaymentReport',compact('nonBankPayments'));
     }
+
+    public function nonBankPaymentCountReport(Request $request){
+        $repository = new NonBankPaymentReportRepository($request);
+
+        $nonBankPayments = [
+
+            'Merchant Payment' => [
+                'Successful Count' => $repository->getBillPaymentNumber(),
+                'Failed Count' => ($repository->getBillPaymentValue())/100
+            ],
+
+            'Transfer to Wallet (P2P)' => [
+                'Successful Count' => $repository->getBillPaymentNumber(),
+                'Failed Count' => ($repository->getBillPaymentValue())/100
+            ],
+
+            'Transfer to Bank A/C (P2P)' => [
+                'Successful Count' => $repository->checkCountNchlBankTransfer()['successfulNchlBankTransferCount'],
+                'Failed Count' => $repository->checkCountNchlBankTransfer()['failedNchlBankTransferCount'],
+            ],
+
+            'Government Payment (P2G)' => [
+                'Successful Count' => $repository->checkCountNchlAggregated()['successfulNchlAggregatedCount'],
+                'Failed Count' => $repository->checkCountNchlAggregated()['failedNchlAggregatedCount'],
+            ],
+
+            'Topup' => [
+                'Successful Count' => $repository->getBillPaymentNumber(),
+                'Failed Count' => ($repository->getBillPaymentValue())/100
+            ],
+
+            'Cash In' => [
+                'Successful Count' => $repository->checkCountCashIn()['successfulCashInCount'],
+                'Failed Count' => $repository->checkCountCashIn()['failedCashInCount'],
+            ],
+
+            'Cash Out' => [
+                'Successful Count' => $repository->checkCountCashOut()['successfulCashOutCount'],
+                'Failed Count' => $repository->checkCountCashOut()['failedCashOutCount'],
+            ],
+        ];
+        return view('WalletReport::nrb.nonBankPaymentCountReport',compact('nonBankPayments'));
+    }
 }

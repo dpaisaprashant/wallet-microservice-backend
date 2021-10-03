@@ -36,7 +36,7 @@
                                     <th>Product Type</th>
                                     <th>Product Name</th>
                                     <th>Product Description</th>
-                                    <th>Product Price</th>
+                                    <th>Product Price (In Paisa)</th>
                                     <th>Service Charge</th>
                                     <th>Merchant Name</th>
                                     <th>Merchant Phone Number</th>

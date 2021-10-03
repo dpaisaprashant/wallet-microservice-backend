@@ -73,15 +73,15 @@
                                 </div>
                             </div>
 
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Product Price</label>
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Product Price (In Paisa not Rs.)</label>
                                 <div class="col-sm-10">
-                                    <input name="price" type="number" class="form-control" step="0.01" value="{{$merchantProduct->price}}">
+                                    <input name="price" type="number" class="form-control" value="{{$merchantProduct->price}}">
                                 </div>
                             </div>
 
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Service Charge</label>
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Service Charge (In Paisa not Rs.)</label>
                                 <div class="col-sm-10">
-                                    <input name="service_charge" type="number" class="form-control" step="0.01" value="{{$merchantProduct->service_charge}}">
+                                    <input name="service_charge" type="number" class="form-control" value="{{$merchantProduct->service_charge}}">
                                 </div>
                             </div>
                         </div>

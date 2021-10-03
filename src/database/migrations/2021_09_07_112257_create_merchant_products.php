@@ -18,9 +18,9 @@ class CreateMerchantProducts extends Migration
                 $table->bigIncrements('id');
                 $table->string('name')->nullable();
                 $table->text('description')->nullable();
-                $table->float('service_charge')->nullable();
+                $table->integer('service_charge')->nullable();
                 $table->string('type')->nullable();
-                $table->float('price')->nullable();
+                $table->integer('price')->nullable();
                 $table->string('merchant_id')->nullable();
                 $table->timestamps();
             });

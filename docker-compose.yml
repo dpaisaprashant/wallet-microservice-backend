@@ -106,6 +106,8 @@ services:
       # - wallet-microservice-merchant_laravel
 
   composer:
+    environment:
+      - COMPOSER_MEMORY_LIMIT=-1
     build:
       context: .
       dockerfile: composer.dockerfile

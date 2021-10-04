@@ -37,8 +37,9 @@ class MisMatchUserReconciliation
 
         }
 
-
+        $misMatchUserIds = [];
         foreach($misMatchArray as $key=>$value){
+            array_push($misMatchUserIds, $value['userId']);
             \Log::info(
                 [
                     'User Id:',
@@ -55,6 +56,8 @@ class MisMatchUserReconciliation
                 ]
             );
         }
+
+        Log::info("Mismatch user id: ", $misMatchUserIds);
 
     }
 }

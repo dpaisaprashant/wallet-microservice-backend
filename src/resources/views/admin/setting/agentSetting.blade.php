@@ -43,7 +43,7 @@
                         <form method="post" enctype="multipart/form-data" id="agentForm">
                             @csrf
                             <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Agent Bonus Balance</label>
+                                <label class="col-sm-2 col-form-label">Agent Deduct Bonus Balance</label>
                                 <div class="col-sm-10">
                                     <select class="form-control" name="agent_deduct_bonus_balance">
                                         @if(!empty($settings['agent_deduct_bonus_balance']))

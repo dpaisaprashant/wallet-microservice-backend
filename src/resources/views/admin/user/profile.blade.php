@@ -107,12 +107,12 @@
                             @can('Edit user kyc')
                                 <a style="margin-top: 5px; width: 100px"
                                    href="{{route('user.editKyc',$user->id)}}"
-                                   class="btn btn-sm btn-primary m-t-n-xs"
+                                   class="btn btn-primary m-t-n-xs"
                                    title="user profile">
-                                    <i class="fa fa-pencil"> EDIT</i>
+                                    Edit
                                 </a>
                             @endcan
-                            {{--@if($user->should_change_password == 0)
+                            @if($user->should_change_password == 0)
 
                                 <a data-toggle="modal" href="#modal-should-change-password">
                                     <button style="margin-top: 5px;" class="btn btn-danger m-t-n-xs"
@@ -160,7 +160,7 @@
                             @else
                                 <button style="margin-top: 5px;" class="btn btn-success m-t-n-xs " disabled><strong>Password
                                         Change Forced</strong></button>
-                            @endif--}}
+                            @endif
                         </td>
                         @endif
 

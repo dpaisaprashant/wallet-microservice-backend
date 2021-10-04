@@ -300,6 +300,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Report admin kyc',
             'Report commission',
             'Report nrb agent',
+            'Report nrb reconciliation',
 
             //setting
             'Nps setting view',
@@ -441,9 +442,31 @@ class RolesAndPermissionsSeeder extends Seeder
             'Delete issue ticket',
             'Create issue ticket',
 
+
 //            Transfer Bonus balance to Main balance
             'Transfer bonus balance to main balance',
 
+
+            //Merchant Addresses
+            'View merchant address',
+            'Add merchant address',
+            'Edit merchant address',
+            'Delete merchant address',
+
+            //Merchant Locations
+            'View location',
+            'Add location',
+            'Edit location',
+            'Delete location',
+
+            //Agent Settings
+            'Agent setting view',
+
+            //Users
+            'Rejected user kyc',
+            'Accepted user kyc',
+            'Pending user kyc',
+            'KYC not filled users'
             ];
 
         //get users having all permissions

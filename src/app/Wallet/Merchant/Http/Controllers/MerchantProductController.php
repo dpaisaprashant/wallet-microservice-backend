@@ -25,15 +25,18 @@ class MerchantProductController extends Controller
     {
         $merchantProduct = new MerchantProduct();
 
-        $validator = Validator::make($request->all(), $merchantProduct->rules());
-        if ($validator->fails()) {
-            return redirect()->route('merchant.product.list')->with('error', 'Merchant already exists on the table. Failed to add merchant product.');
-        }
+//        $validator = Validator::make($request->all(), $merchantProduct->rules());
+//        if ($validator->fails()) {
+//            return redirect()->route('merchant.product.list')->with('error', 'Merchant already exists on the table. Failed to add merchant product.');
+//        }
 
         MerchantProduct::create([
-            "type" => $request->type,
-            "json_data" => $request->json_data,
-            "merchant_id" => $request->merchant_id
+            'merchant_id' => $request->merchant_id,
+            'name' => $request->name,
+            'price' => $request->price,
+            'type' => $request->type,
+            'service_charge' => $request->service_charge,
+            'description' => $request->description,
         ]);
 
         return redirect()->route('merchant.product.list')->with('success', 'Merchant Product Added Successfully');
@@ -41,7 +44,7 @@ class MerchantProductController extends Controller
 
     public function listProduct(Request $request)
     {
-        $merchantProducts = MerchantProduct::with('merchantProductUsers')->paginate(15);
+        $merchantProducts = MerchantProduct::with('merchant')->paginate(15);
 
         return view('Merchant::merchantProduct.merchant-product')->with(compact('merchantProducts'));
     }
@@ -68,9 +71,12 @@ class MerchantProductController extends Controller
 
         $merchantProduct = MerchantProduct::findOrFail($id);
         MerchantProduct::where('id', $id)->update([
-            "type" => $request->get('type'),
-            "json_data" => $request->get('json_data'),
-            "merchant_id" => $request->get('merchant_id')
+            'merchant_id' => $request->get('merchant_id'),
+            'name' => $request->get('name'),
+            'price' => $request->get('price'),
+            'type' => $request->get('type'),
+            'service_charge' => $request->get('service_charge'),
+            'description' => $request->get('description'),
         ]);
 
         return redirect()->route('merchant.product.list')->with('success', 'Merchant Product Updated Successfully');

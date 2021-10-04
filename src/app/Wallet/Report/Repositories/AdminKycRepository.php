@@ -24,6 +24,7 @@ class AdminKycRepository extends AbstractReportRepository
                 //query to get latest row ids from adminUserKyc where groupBy kyc_id
                 $adminUsersKycIds = AdminUserKYC::pluck('id');
 
+
                 //query to count accepted/rejected Kyc whereIn ids from above query
                 $value->accept_count = AdminUserKYC::where('admin_id',$value->id)->where('status', AdminUserKYC::ACCEPTED)->whereIn('id',$adminUsersKycIds)->filter(request())->count();
                 $value->reject_count = AdminUserKYC::where('admin_id',$value->id)->where('status',AdminUserKYC::REJECTED)->whereIn('id',$adminUsersKycIds)->filter(request())->count();

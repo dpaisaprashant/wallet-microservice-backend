@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Filters\User\UserFilters;
 use App\Models\Architecture\SingleUserCashback;
 use App\Models\Architecture\SingleUserCommission;
+use App\Models\BonusToMainBalanceTransfer\BonusBalanceDeduction;
+use App\Models\BonusToMainBalanceTransfer\MainBalanceAddition;
 use App\Models\Merchant\Merchant;
 use App\Models\Microservice\PreTransaction;
 use App\Models\Microservice\RequestInfo;
@@ -490,5 +492,16 @@ class User extends Authenticatable
     {
         return $this->setConnection('mysql')->hasMany(IssueTicket::class, 'user_id', 'id');
     }
+
+    public function mainBalanceDeduction()
+    {
+        return $this->hasMany(MainBalanceAddition::class);
+    }
+
+    public function bonusBalanceDeduction()
+    {
+        return $this->hasMany(BonusBalanceDeduction::class);
+    }
+
 
 }

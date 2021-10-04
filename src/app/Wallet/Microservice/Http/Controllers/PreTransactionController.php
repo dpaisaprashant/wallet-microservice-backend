@@ -3,6 +3,7 @@
 namespace App\Wallet\Microservice\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Wallet;
 use App\Wallet\PreTransaction\Repository\PreTransactionRepository;
 use App\Traits\CollectionPaginate;
 use App\Http\Controllers\Controller;

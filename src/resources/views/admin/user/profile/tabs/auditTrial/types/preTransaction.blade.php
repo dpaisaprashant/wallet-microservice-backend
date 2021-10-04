@@ -157,9 +157,9 @@
             <a href="{{route('nchl.aggregatedPayment.detail',$event->nchlAggregatePayment->id)}}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         @elseif($event->cellPayUserTransaction)
             <a href="{{route('cellPayUserTransaction.detail',$transaction->transaction_id)}}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
-        @elseif($event->transactionEvent->transaction_type == \App\Models\UserToUserFundTransfer::class)
+        @elseif(optional($event->transactionEvent)->transaction_type == \App\Models\UserToUserFundTransfer::class)
             <a href="{{ route('userToUserFundTransfer.detail', $event->transactionEvent->transaction_id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
-        @elseif($event->transactionEvent->transaction_type == \App\Models\FundRequest::class)
+        @elseif(optional($event->transactionEvent)->transaction_type == \App\Models\FundRequest::class)
             <a href="{{ route('fundRequest.detail', $event->transactionEvent->transaction_id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         @elseif($event->npsLoadTransaction)
                 <a href="{{route('nps.detail',$event->npsLoadTransaction->id)}}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>

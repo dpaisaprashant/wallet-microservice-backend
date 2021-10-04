@@ -439,7 +439,10 @@ class RolesAndPermissionsSeeder extends Seeder
             'View issue ticket',
             'Edit issue ticket',
             'Delete issue ticket',
-            'Create issue ticket'
+            'Create issue ticket',
+
+//            Transfer Bonus balance to Main balance
+            'Transfer bonus balance to main balance',
 
             ];
 

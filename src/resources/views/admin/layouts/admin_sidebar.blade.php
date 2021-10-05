@@ -633,6 +633,9 @@ $url = url()->current();
                         @can('Report nrb agent')
                             <li><a href="{{ route('report.agent') }}">NRB Agent Report</a></li>
                         @endcan
+                        @can('Report non bank payment count')
+                            <li><a href="{{ route('report.nonBankPaymentCountReport') }}">Non Bank Payment Count Report</a></li>
+                        @endcan
                         @can('Report non bank payment')
                             <li><a href="{{ route('report.nonBankPaymentReport') }}">Non bank payment report</a></li>
                         @endcan

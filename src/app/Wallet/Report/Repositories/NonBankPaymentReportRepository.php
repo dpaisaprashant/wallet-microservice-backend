@@ -7,6 +7,7 @@ namespace App\Wallet\Report\Repositories;
 use App\Models\CellPayUserTransaction;
 use App\Models\FundRequest;
 use App\Models\KhaltiUserTransaction;
+use App\Models\MerchantTransaction;
 use App\Models\Microservice\PreTransaction;
 use App\Models\NchlAggregatedPayment;
 use App\Models\NchlBankTransfer;
@@ -150,6 +151,48 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
             ->filter($this->request)
             ->sum('amount');
         return $cashOutTotalValue;
+    }
+
+    public function checkCountMerchantTransactions()
+    {
+
+        $successfulCountMerchantTransactions = MerchantTransaction::where('status', 'COMPLETE')->filter($this->request)->count();
+        $merchantTransactions = MerchantTransaction::filter($this->request)->count();
+
+        $failedCountMerchantTransactions = $merchantTransactions - $successfulCountMerchantTransactions;
+
+        $merchantTransactionsCount = ['successfulCountMerchantTransactions' => $successfulCountMerchantTransactions,
+            'failedCountMerchantTransactions' => $failedCountMerchantTransactions,
+        ];
+        return $merchantTransactionsCount;
+    }
+
+    public function checkCountUserToUserFundTransfer()
+    {
+        $userToUserFundTransferCount = UserToUserFundTransfer::filter($this->request)->count();
+        $fundRequestsCount = FundRequest::where('status',1)->filter($this->request)->count();
+        $successfulCountUserToUserFundTransfer=$userToUserFundTransferCount+$fundRequestsCount;
+
+        $failedCountUserToUserFundTransfer = 0;
+
+        $userToUserFundTransferCount = ['successfulCountUserToUserFundTransfer' => $successfulCountUserToUserFundTransfer,
+            'failedCountUserToUserFundTransfer' => $failedCountUserToUserFundTransfer,
+        ];
+        return $userToUserFundTransferCount;
+    }
+
+    public function checkCountKhaltiPayment()
+    {
+
+        $khaltiPayment = KhaltiUserTransaction::where('vendor', 'NCELL')->orWhere('vendor', 'NTC')->orWhere('vendor', 'SMARTCELL')->filter($this->request);
+        $successfulCountKhaltiPayment=$khaltiPayment->where('state','success')->filter($this->request)->count();
+        $failedCountKhaltiPayment = ($khaltiPayment->count()) - $successfulCountKhaltiPayment;
+
+        $khaltiPaymentCount = ['successfulKhaltiPaymentCount' => $successfulCountKhaltiPayment,
+            'failedKhaltiPaymentCount' => $failedCountKhaltiPayment,
+        ];
+
+        return $khaltiPaymentCount;
     }
 
     public function checkCountNchlAggregated()

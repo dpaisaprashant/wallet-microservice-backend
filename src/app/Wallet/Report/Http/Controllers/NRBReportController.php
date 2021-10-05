@@ -169,15 +169,15 @@ class NRBReportController extends Controller
         $repository = new NonBankPaymentReportRepository($request);
 
         $nonBankPayments = [
-
+//merchant transaction table count
             'Merchant Payment' => [
-                'Successful Count' => $repository->getBillPaymentNumber(),
-                'Failed Count' => ($repository->getBillPaymentValue())/100
+                'Successful Count' => $repository->checkCountMerchantTransactions()['successfulCountMerchantTransactions'],
+                'Failed Count' => $repository->checkCountMerchantTransactions()['failedCountMerchantTransactions']
             ],
-
+//user to user fund
             'Transfer to Wallet (P2P)' => [
-                'Successful Count' => $repository->getBillPaymentNumber(),
-                'Failed Count' => ($repository->getBillPaymentValue())/100
+                'Successful Count' => $repository->checkCountUserToUserFundTransfer()['successfulCountUserToUserFundTransfer'],
+                'Failed Count' => $repository->checkCountUserToUserFundTransfer()['failedCountUserToUserFundTransfer'],
             ],
 
             'Transfer to Bank A/C (P2P)' => [
@@ -191,8 +191,8 @@ class NRBReportController extends Controller
             ],
 
             'Topup' => [
-                'Successful Count' => $repository->getBillPaymentNumber(),
-                'Failed Count' => ($repository->getBillPaymentValue())/100
+                'Successful Count' => $repository->checkCountKhaltiPayment()['successfulKhaltiPaymentCount'],
+                'Failed Count' => $repository->checkCountKhaltiPayment()['failedKhaltiPaymentCount'],
             ],
 
             'Cash In' => [

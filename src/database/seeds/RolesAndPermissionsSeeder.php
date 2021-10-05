@@ -296,6 +296,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Report reconciliation',
             'Report nrb active and inactive user',
             'Report non bank payment',
+            'Report non bank payment count',
             'Report wallet end balance',
             'Report admin kyc',
             'Report commission',

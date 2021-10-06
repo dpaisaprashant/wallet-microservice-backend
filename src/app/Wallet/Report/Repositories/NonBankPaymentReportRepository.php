@@ -184,8 +184,8 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
     {
 
         $khaltiPayment = CellPayUserTransaction::where('vendor', 'NCELL')->orWhere('vendor', 'NTC')->orWhere('vendor', 'SMARTCELL')->filter($this->request);
-        $successfulCountKhaltiPayment=$khaltiPayment->where('state','success')->filter($this->request)->count();
-        $failedCountKhaltiPayment = ($khaltiPayment->count()) - $successfulCountKhaltiPayment;
+        $successfulCountKhaltiPayment=$khaltiPayment->where('status','true')->filter($this->request)->count();
+        $failedCountKhaltiPayment = $khaltiPayment->where('status', '!=', 'true')->filter($this->request)->count();
 
         $khaltiPaymentCount = ['successfulKhaltiPaymentCount' => $successfulCountKhaltiPayment,
             'failedKhaltiPaymentCount' => $failedCountKhaltiPayment,

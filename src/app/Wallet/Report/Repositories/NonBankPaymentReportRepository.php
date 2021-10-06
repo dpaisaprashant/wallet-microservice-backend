@@ -6,7 +6,6 @@ namespace App\Wallet\Report\Repositories;
 
 use App\Models\CellPayUserTransaction;
 use App\Models\FundRequest;
-use App\Models\KhaltiUserTransaction;
 use App\Models\MerchantTransaction;
 use App\Models\Microservice\PreTransaction;
 use App\Models\NchlAggregatedPayment;
@@ -184,7 +183,7 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
     public function checkCountKhaltiPayment()
     {
 
-        $khaltiPayment = KhaltiUserTransaction::where('vendor', 'NCELL')->orWhere('vendor', 'NTC')->orWhere('vendor', 'SMARTCELL')->filter($this->request);
+        $khaltiPayment = CellPayUserTransaction::where('vendor', 'NCELL')->orWhere('vendor', 'NTC')->orWhere('vendor', 'SMARTCELL')->filter($this->request);
         $successfulCountKhaltiPayment=$khaltiPayment->where('state','success')->filter($this->request)->count();
         $failedCountKhaltiPayment = ($khaltiPayment->count()) - $successfulCountKhaltiPayment;
 

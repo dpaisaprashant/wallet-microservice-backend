@@ -27,7 +27,7 @@ abstract class AbstractReportRepository
         $this->billPayment = [
             UserTransaction::class,
             NchlAggregatedPayment::class,
-            KhaltiUserTransaction::class,
+            //KhaltiUserTransaction::class,
             CellPayUserTransaction::class
         ];
 
@@ -36,7 +36,7 @@ abstract class AbstractReportRepository
             NchlLoadTransaction::class,
             NICAsiaCyberSourceLoadTransaction::class,
             NPSAccountLinkLoad::class,
-            PaymentNepalLoadTransaction::class,
+            //PaymentNepalLoadTransaction::class,
         ];
     }
 

@@ -78,14 +78,13 @@
                                                                 Service Type : {{ $walletTransactionType->service_type }}
                                                                 @elseif($walletTransactionType->service_type == null && $walletTransactionType->transaction_category != null)
                                                                 Transaction Category : {{ $walletTransactionType->transaction_category }}
+                                                            @endif
+                                                            @if(!empty($walletTransactionType->special1))
+                                                                &nbsp;&nbsp;| Special1: {{ $walletTransactionType->special1 }}
+                                                            @endif
 
-                                                                @if(!empty($walletTransactionType->special1))
-                                                                    | Special1: {{ $walletTransactionType->special1 }}
-                                                                @endif
-
-                                                                @if(!empty($walletTransactionType->special2))
-                                                                    | Special2: {{ $walletTransactionType->special2 }}
-                                                                @endif
+                                                            @if(!empty($walletTransactionType->special2))
+                                                                &nbsp;&nbsp;| Special2: {{ $walletTransactionType->special2 }}
                                                             @endif
                                                         </option>
                                                     @endforeach

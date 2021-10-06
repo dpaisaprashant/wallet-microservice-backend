@@ -15,9 +15,6 @@
             format: 'dd M, yyyy',
             keyboardNavigation: false,
         });
-
-
-
     </script>
 
     <script>
@@ -40,7 +37,7 @@
         });
     </script>
 
-    //For Second Date 
+{{--    //For Second Date --}}
     <script>
         $(".date_from_load").datepicker({
             autoclose: true,
@@ -70,3 +67,24 @@
             $(this).val('');
         });
     </script>
+
+    <script>
+        $(".select-date").datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            format: 'dd M, yyyy',
+            keyboardNavigation: false,
+        });
+    </script>
+    <script>
+        $(".select_date").datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            format: 'dd M, yyyy',
+            keyboardNavigation: false,
+        });
+    </script>
+
+
+
+

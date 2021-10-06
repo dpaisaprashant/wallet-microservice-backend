@@ -38,14 +38,14 @@
                                 <form role="form" method="get">
 
                                     <div class="row">
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <input type="text" name="name" placeholder="Enter User Name"
                                                        class="form-control"
                                                        value="{{ !empty($_GET['name']) ? $_GET['name'] : '' }}">
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <input type="text" name="number" placeholder="Enter Contact Number"
                                                        class="form-control"
@@ -54,13 +54,13 @@
                                         </div>
 
 
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <input type="email" name="email" placeholder="Enter Email"
                                                    class="form-control"
                                                    value="{{ !empty($_GET['email']) ? $_GET['email'] : '' }}">
                                         </div>
 
-                                        <div class="col-md-3">
+                                        {{--<div class="col-md-3">
                                             <div class="form-group">
                                                 <select data-placeholder="Choose transaction status..."
                                                         class="chosen-select" tabindex="2" name="sort">
@@ -90,7 +90,7 @@
                                                     @endif
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div>--}}
 
 
                                         <div class="col-md-6" style="padding-bottom: 15px;">
@@ -424,6 +424,15 @@
                                                    href="{{route('user.bank.accounts', $user->id)}}"
                                                    class="btn btn-sm btn-icon btn-warning m-t-n-xs"
                                                    title="user bank accounts"><i class="fa fa-bank"></i></a>
+
+                                                @can('Create user kyc')
+                                                    @if(empty($user->kyc))
+                                                        <a style="margin-top: 5px;"
+                                                           href="{{route('user.createUserKyc',$user->id)}}"
+                                                           class="btn btn-sm btn-icon btn-primary m-t-n-xs"
+                                                           title="user profile"><i class="fa fa-plus"></i></a>
+                                                    @endif
+                                                @endcan
 
                                             </td>
                                         </tr>

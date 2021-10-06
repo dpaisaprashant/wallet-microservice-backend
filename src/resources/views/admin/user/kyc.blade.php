@@ -42,6 +42,14 @@
                 <div class="ibox ">
                     <div class="ibox-title">
                         <h5>User KYC Details</h5>
+                        @can('Edit user kyc')
+                            <a style="margin-top: -10px; padding: 8px;display: inline; float: right"
+                               href="{{route('user.editKyc',$user->id)}}"
+                               class="btn btn-sm btn-primary m-t-n-xs"
+                               title="user profile">
+                                <i class="fa fa-pencil"> EDIT</i>
+                            </a>
+                        @endcan
                     </div>
                     <div class="ibox-content">
                         @if($user->merchant()->first())
@@ -714,7 +722,7 @@
                                                     {{--                                                        </div>--}}
                                                     {{--                                                    </a>--}}
                                                     <a href="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_back'] }}"
-                                                       target="_blank"></a>
+                                                       target="_blank">
                                                     <img
                                                         src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['id_photo_back'] }}"
                                                         style="max-width: 500px;object-fit: cover"
@@ -722,6 +730,7 @@
                                                     <p style="color: black; font-weight: bold;">
                                                         &nbsp;DOCUMENT BACK
                                                     </p>
+                                                    </a>
                                                 </div>
 
                                                 @if($user->merchant()->first())

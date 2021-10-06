@@ -1,4 +1,4 @@
-@extends('admin.layouts.admin_design')
+ @extends('admin.layouts.admin_design')
 @section('content')
 
     <div class="row wrapper border-bottom white-bg page-heading">
@@ -181,11 +181,16 @@
                                             <strong>Filter</strong>
                                         </button>
                                     </div>
-
+                                    <div>
+                                        <button id="compareBtn" class="btn btn-sm btn-primary float-right m-t-n-xs"
+                                                type="submit" style="margin-right: 10px;"
+                                                formaction="{{ route('nchlAggregatedTransferApi.compare') }}">
+                                            <strong>Compare with API</strong></button>
+                                    </div>
                                     <div>
                                         <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
                                                 type="submit" style="margin-right: 10px;"
-                                                formaction="{{ route('nchl.aggregatePayment') }}">
+                                                formaction="{{ route('nchlAggregated.excel') }}">
                                             <strong>Excel</strong></button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
@@ -232,6 +237,7 @@
                                         <th>Check Response Code</th>
                                         <th>Check Response Description</th>
                                         <th>Action</th>
+                                        <th>API</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -253,7 +259,7 @@
                                             <td>
                                                 @if($nchlAggregatedPayment->response_description == "SUCCESS")
                                                     <span class="badge badge-primary">Success</span>
-                                                    @elseif($nchlAggregatedPayment->response_description == "ERROR")
+                                                @elseif($nchlAggregatedPayment->response_description == "ERROR")
                                                     <span class="badge badge-danger">Error</span>
                                                 @endif
                                             </td>
@@ -264,6 +270,20 @@
                                                 @include('admin.transaction.nchlAggregatedPayment.checkResponse',['nchlAggregatedPayment' => $nchlAggregatedPayment,'id' => '2'])
                                                 @include('admin.transaction.nchlAggregatedPayment.nchlAggregateRequest',['nchlAggregatedPayment' => $nchlAggregatedPayment,'id' => '3'])
                                                 @include('admin.transaction.nchlAggregatedPayment.nchlAggregateResponse',['nchlAggregatedPayment' => $nchlAggregatedPayment,'id' => '4'])
+                                                <a href="{{ route('nchl.aggregatedPayment.detail', $nchlAggregatedPayment->id) }}">
+                                                    <button class="btn btn-primary btn-icon" type="button"><i
+                                                            class="fa fa-eye"></i></button>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <form
+                                                    action="{{ route('nchlAggregatedTransferApi.report', $nchlAggregatedPayment->transaction_id) }}"
+                                                    method="post">
+                                                    @csrf
+                                                    <button class="btn btn-primary btn-icon" type="submit" title="API Details">
+                                                        <i class="fa fa-database"></i></button>
+                                                    </a>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

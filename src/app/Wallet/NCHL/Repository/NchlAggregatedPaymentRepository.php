@@ -68,4 +68,14 @@ class NchlAggregatedPaymentRepository
         return NchlAggregatedPayment::filter(request())->sum('transaction_fee') / 100;
     }
 
+    public function latestTransactionsUnpaginated()
+    {
+        return NchlAggregatedPayment::with('preTransaction', 'transactions', 'commission')->latest()->filter($this->request);
+    }
+
+    public function detailUsingBatchId($id)
+    {
+        return NchlAggregatedPayment::with('user', 'transactions', 'commission')->where('transaction_id', $id)->firstOrFail();
+    }
+
 }

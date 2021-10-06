@@ -68,6 +68,10 @@ class MerchantRepository
         }
     }
 
+    public function insertIntoMerchantReseller(){
+        return 'ok';
+    }
+
     private function merchantSortedTransactions($id)
     {
         return MerchantTransactionEvent::where('merchant_id' , $id)

@@ -23,8 +23,12 @@ class WalletTransactionTypeController extends Controller
 
     public function getUserTransactionTypeList(Request $request)
     {
+
         $userType = $request->user_type;
+        \Log::info(User::class);
+        \Log::info(UserType::class);
         if ($userType == UserType::class) {
+            \Log::info('ok');
             $list =  UserType::get();
         } elseif ($userType == AgentType::class) {
             $list = AgentType::get();
@@ -33,7 +37,9 @@ class WalletTransactionTypeController extends Controller
         }
 
         if (isset($list)) {
-            return $list->transform(function ($value) { return ["id" => $value->id, "name" => $value->name];});
+            return $list->transform(function ($value) {
+                return ["id" => $value->id, "name" => $value->name];
+            });
         }
         return false;
     }

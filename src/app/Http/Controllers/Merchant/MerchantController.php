@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Merchant;
 
 use App\Models\Merchant\Merchant;
+use App\Models\Merchant\MerchantType;
+use App\Models\MerchantReseller;
 use App\Models\MerchantTransaction;
 use App\Notifications\SingleMerchantSMSNotification;
 use App\Traits\CollectionPaginate;
@@ -13,6 +15,7 @@ use App\Wallet\Merchant\Repositories\MerchantRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Wallet\Helpers\TransactionIdGenerator;
 
 class MerchantController extends Controller
 {
@@ -29,8 +32,63 @@ class MerchantController extends Controller
     {
         $merchants = $repository->paginatedMerchants();
         $stats = $repository->merchantStats();
+        $merchantTypes = MerchantType::all();
 
-        return view('admin.merchant.view')->with(compact('merchants','stats'));
+        return view('admin.merchant.view')->with(compact('merchants','stats','merchantTypes'));
+    }
+
+    public function merchantUpdateView(){
+        $merchant = Merchant::with('user')->get();
+        $merchantTypeInArray = MerchantType::pluck('name')->toArray();
+        if(!in_array('reseller',$merchantTypeInArray)){
+            MerchantType::create([
+                'name' => 'reseller'
+            ]);
+        }
+        $merchantTypes = MerchantType::get();
+
+        return view('admin.merchant.updateMerchantData',compact('merchant','merchantTypes'));
+    }
+
+    public function merchantUpdate(Request $request,MerchantRepository $repository){
+
+        $merchantId = $request->get('merchant_name');
+        $merchantDetail = Merchant::findOrFail($merchantId);
+        $userId = $merchantDetail->id;
+        $merchantTypeData = $request->get('merchant_type');
+
+        $merchantTypeArray = explode('#',$merchantTypeData);
+        if($merchantTypeArray[1] == "normal"){
+            MerchantReseller::where('user_id',$userId)->update([
+                'status' => 0
+            ]);
+        }
+        $merchantDetail->merchant_type_id = $merchantTypeArray[0];
+        if($request->get('api_username') != null && $request->get('api_password') != null){
+            $secretKey = TransactionIdGenerator::generateAlphaNumeric(40);
+            $apiKey = TransactionIdGenerator::generateAlphaNumeric(15);
+
+            MerchantReseller::create([
+                'merchant_id' => $userId,
+                'api_username' => $request->get('api_username'),
+                'api_password_not_hashed' => $request->get('api_password'),
+                'secret_key' => $secretKey,
+                'api_key' => $apiKey,
+                'api_password' => \Hash::make($request->get('api_password')),
+                'status' => 1
+            ]);
+
+        }else{
+            $merchantResellerCount = MerchantReseller::where('user_id',$userId)->count();
+            if($merchantResellerCount > 0){
+                if($merchantDetail->merchant_type_id == $merchantTypeArray[0]){
+
+                    return redirect()->route('merchant.view')->with('success','Already exists');
+                }
+            }
+        }
+        $merchantDetail->save();
+        return redirect()->route('merchant.view');
     }
 
     public function transaction($id, MerchantRepository $repository)
@@ -63,6 +121,7 @@ class MerchantController extends Controller
 
         return redirect()->back();
     }
+
 
     public function unverifiedMerchantKYCView(MerchantKYCRepository $repository){
         $merchants = $repository->paginatedUnverifiedMerchantKYC();

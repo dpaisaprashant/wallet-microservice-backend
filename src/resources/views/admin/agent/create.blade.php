@@ -35,10 +35,10 @@
                         </div>
                         <form method="post" action="{{ route('agent.create') }}" enctype="multipart/form-data" id="transactionIdForm">
                             @csrf
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Mobile No.</label>
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Mobile No. <small>(required)</small></label>
                                 <div class="col-sm-10">
                                     <select id="selectTransaction" data-placeholder="Choose Mobile No..." class="chosen-select"  tabindex="2" name="user_id" required>
-                                        <option value="" selected disabled>Mobile No.</option>
+                                        <option value="" selected disabled>--- Select Mobile No. ---</option>
                                         @foreach($users as $user)
                                             <option value="{{ $user->id }}" >{{ $user->name . ' - ' . $user->mobile_no }}</option>
                                         @endforeach
@@ -47,24 +47,39 @@
                             </div>
 
                             <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Business PAN</label>
+                                <label class="col-sm-2 col-form-label">Business PAN <small>(required)</small></label>
                                 <div class="col-sm-10">
                                     <input name="business_pan" type="text" class="form-control" required>
                                 </div>
                             </div>
 
                             <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Business Name</label>
+                                <label class="col-sm-2 col-form-label">Business Name <small>(required)</small></label>
                                 <div class="col-sm-10">
-                                    <input name="business_name" type="text" class="form-control">
+                                    <input name="business_name" type="text" class="form-control" required>
                                 </div>
                             </div>
 
                             <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Agent Type</label>
+                                <label class="col-sm-2 col-form-label">Parent Agent</label>
+                                <div class="col-sm-10">
+                                    <select id="agentStatus" data-placeholder="Choose Agent Type..." class="chosen-select"  tabindex="2" name="code_used_id">
+                                        <option value=""  disabled>Select Parent Agent</option>
+                                        <option value="" selected>--- No parent Agent ---</option>
+                                    @foreach($parentAgents as $parentAgent)
+                                            <option value="{{ $parentAgent->user->id }}">
+                                                {{ ucwords(strtolower($parentAgent->user->name)) }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Agent Type <small>(required)</small></label>
                                 <div class="col-sm-10">
                                     <select id="agentStatus" data-placeholder="Choose Agent Type..." class="chosen-select"  tabindex="2" name="agent_type_id" required>
-                                        <option value="" selected disabled>Select Agent Type</option>
+                                        <option value="" selected disabled>--- Select Agent Type ---</option>
                                         @foreach($agentTypes as $type)
                                             <option value="{{ $type->id }}">
                                                 {{ ucwords(strtolower($type->name)) }}
@@ -74,13 +89,82 @@
                                 </div>
                             </div>
 
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Institution Type</label>
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Agent Status <small>(required)</small></label>
+                                <div class="col-sm-10">
+                                    <select id="agentStatus" data-placeholder="Choose Status..." class="chosen-select"
+                                            tabindex="2" name="status" required>
+                                        <option value="" selected disabled>--- Select Agent Status ---</option>
+                                        <option
+                                            value="{{ \App\Models\Agent::STATUS_ACCEPTED }}"
+                                        >
+                                            {{ \App\Models\Agent::STATUS_ACCEPTED }}
+                                        </option>
+
+                                        <option
+                                            value="{{ \App\Models\Agent::STATUS_REJECTED }}"
+                                        >
+                                            {{ \App\Models\Agent::STATUS_REJECTED }}
+                                        </option>
+
+                                        <option
+                                            value="{{ \App\Models\Agent::STATUS_PROCESSING }}"
+                                        >
+                                            {{ \App\Models\Agent::STATUS_PROCESSING }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Institution Type <small>(required)</small></label>
                                 <div class="col-sm-10">
                                     <select data-placeholder="Choose Mobile No..." class="chosen-select"  tabindex="2" name="institution_type" required>
-                                        <option value="" selected disabled>Institution Type</option>
+                                        <option value="" selected disabled>--- Select Institution Type ---</option>
                                             <option value="{{ \App\Models\Agent::INSTITUTION_TYPE_COMPANY }}" >{{ \App\Models\Agent::INSTITUTION_TYPE_COMPANY }}</option>
                                             <option value="{{ \App\Models\Agent::INSTITUTION_TYPE_INDIVIDUAL }}" >{{ \App\Models\Agent::INSTITUTION_TYPE_INDIVIDUAL }}</option>
                                     </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Business Owner Citizenship Front <small>(required)</small></label>
+                                <div class="col-sm-10">
+                                    <input name="business_owner_citizenship_front"  type="file" class="custom-file-input" required>
+                                    <label for="business_owner_citizenship_front" class="custom-file-label">Upload Citizenship Front Image...</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Business Owner Citizenship Back <small>(required)</small></label>
+                                <div class="col-sm-10">
+                                    <input name="business_owner_citizenship_back"  type="file" class="custom-file-input" required>
+                                    <label for="business_owner_citizenship_back" class="custom-file-label">Upload Citizenship Back Image...</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Business Document Image <small>(required)</small></label>
+                                <div class="col-sm-10">
+                                    <input name="business_document"  type="file" class="custom-file-input" required>
+                                    <label for="business_document" class="custom-file-label">Upload Business Document Image Image...</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Passport Size Photo <small>(required)</small></label>
+                                <div class="col-sm-10">
+                                    <input name="pp_photo"  type="file" class="custom-file-input" required>
+                                    <label for="pp_photo" class="custom-file-label">Upload Passport Size Image...</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Tax Clearance Certificate <small>(required)</small></label>
+                                <div class="col-sm-10">
+                                    <input name="tax_clearance_certificate"  type="file" class="custom-file-input" required>
+                                    <label for="tax_clearance_certificate" class="custom-file-label">Upload Tax Clearance Certificate...</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Pan/Vat Document <small>(required)</small></label>
+                                <div class="col-sm-10">
+                                    <input name="pan_vat_document"  type="file" class="custom-file-input" required>
+                                    <label for="pan_vat_document" class="custom-file-label">Upload Pan/Vat document</label>
                                 </div>
                             </div>
 
@@ -149,6 +233,13 @@
                 $('#handleBtn').trigger('click');
                 swal.close();
             })
+        });
+    </script>
+
+    <script>
+        $('.custom-file-input').on('change', function () {
+            let fileName = $(this).val().split('\\').pop();
+            $(this).next('.custom-file-label').addClass("selected").html(fileName);
         });
     </script>
 

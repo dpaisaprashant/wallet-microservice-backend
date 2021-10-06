@@ -2,10 +2,18 @@
 
 namespace App\Models\Architecture;
 
+use App\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class WalletTransactionType extends Model
 {
+    use LogsActivity;
+
+    protected static $logAttributes = ['*'];
+    //protected static $logOnlyDirty = true;
+    protected static $logName = 'Wallet Transaction Type';
+
     protected $connection = 'dpaisa';
     protected $guarded = [];
 
@@ -66,5 +74,9 @@ class WalletTransactionType extends Model
     public function walletServices()
     {
         return $this->hasMany(WalletService::class);
+    }
+
+    public function walletTransactionBonus(){
+        return $this->hasMany(WalletTransactionBonus::class);
     }
 }

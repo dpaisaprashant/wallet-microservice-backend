@@ -93,6 +93,14 @@ class TransactionController extends Controller
         return view('admin.transaction.nps');
     }
 
+    public function npsDetail($id, NPSRepository $repository)
+    {
+        $transaction = $repository->detail($id);
+//        dd($transaction);
+        return view('admin.transaction.detail.npsDetail')->with(compact('transaction'));
+    }
+
+
     //PAYPOINT
     public function paypoint(PayPointRepository $repository, Request $request)
     {
@@ -168,7 +176,6 @@ class TransactionController extends Controller
     public function khaltiPaymentDetail($id, KhaltiRepository $repository)
     {
         $transaction = $repository->detail($id);
-
         return view('admin.transaction.detail.khaltiDetail')->with(compact('transaction'));
     }
 

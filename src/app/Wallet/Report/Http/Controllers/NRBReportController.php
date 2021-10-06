@@ -18,56 +18,87 @@ class NRBReportController extends Controller
 {
     use CollectionPaginate;
 
-    public function activeInactiveCustomerReport(Request $request)
+    public function activeCustomerReport(Request $request)
     {
-        $repository = new ActiveInactiveCustomerReportRepository($request);
-        $activityReports = [
-            'Active Customer Wallet' => [
-                'Male' => [
-                    'Number' => $repository->activeMaleUserCount(),
-                    'Value' =>'Rs.' . $repository->activeMaleUserBalance()
+        $activityReports = [];
+        if(!empty($_GET)) {
+            $repository = new ActiveInactiveCustomerReportRepository($request);
+            $activityReports = [
+                'Active Customer Wallet' => [
+                    'Male' => [
+                        'Number' => $repository->activeMaleUserCount(),
+                        'Value' =>'Rs.' . $repository->activeMaleUserBalance()
+                    ],
+
+                    'Female' => [
+                        'Number' => $repository->activeFemaleUserCount(),
+                        'Value' => 'Rs.' . $repository->activeFemaleUserBalance()
+                    ],
+
+                    'Other' => [
+                        'Number' => $repository->activeOtherUserCount(),
+                        'Value' => 'Rs.' . $repository->activeOtherUserBalance()
+                    ],
+
+                    'Unknown' => [
+                        'Number' => $repository->activeUnknownUserCount(),
+                        'Value' => 'Rs.' . $repository->activeUnknownUserBalance()
+                    ],
+
+                    'Grand Total' => [
+                        'Number' => $repository->activeTotalUserCount(),
+                        'Value' => 'Rs.' . $repository->activeTotalUserBalance()
+                    ],
                 ],
 
-                'Female' => [
-                    'Number' => $repository->activeFemaleUserCount(),
-                    'Value' => 'Rs.' . $repository->activeFemaleUserBalance()
-                ],
+               /* 'Inactive Customer Wallet' => [
+                    'Inactive (6-12 months)' => [
+                        'Number' => $repository->inactiveFor6To12MonthsUserCount(),
+                        'Value' => 'Rs.' . $repository->inactiveFor6To12MonthsUserBalance()
+                    ],
 
-                'Other' => [
-                    'Number' => $repository->activeOtherUserCount(),
-                    'Value' => 'Rs.' . $repository->activeOtherUserBalance()
-                ],
+                    'Inactive (> 12 months)' => [
+                        'Number' => $repository->inactiveForMoreThan12MonthsUserCount(),
+                        'Value' => 'Rs.' . $repository->inactiveForMoreThan12MonthsUserBalance()
+                    ],
 
-                'Unknown' => [
-                    'Number' => $repository->activeUnknownUserCount(),
-                    'Value' => 'Rs.' . $repository->activeUnknownUserBalance()
-                ],
+                    'Grand Total' => [
+                        'Number' => $repository->inactiveTotalUserCount(),
+                        'Value' => 'Rs.' . $repository->inactiveTotalUserBalance()
+                    ]
+                ]*/
+            ];
+        }
 
-                'Grand Total' => [
-                    'Number' => $repository->activeTotalUserCount(),
-                    'Value' => 'Rs.' . $repository->activeTotalUserBalance()
-                ],
-            ],
+        return view('WalletReport::nrb.activeUserReport')->with(compact('activityReports'));
+    }
 
-            'Inactive Customer Wallet' => [
-                'Inactive (6-12 months)' => [
-                    'Number' => $repository->inactiveFor6To12MonthsUserCount(),
-                    'Value' => 'Rs.' . $repository->inactiveFor6To12MonthsUserBalance()
-                ],
+    public function inactiveCustomerReport(Request $request)
+    {
+        $activityReports = [];
+        if(!empty($_GET)) {
+            $repository = new ActiveInactiveCustomerReportRepository($request);
+            $activityReports = [
+                 'Inactive Customer Wallet' => [
+                     'Inactive (6-12 months)' => [
+                         'Number' => $repository->inactiveFor6To12MonthsUserCount(),
+                         'Value' => 'Rs.' . $repository->inactiveFor6To12MonthsUserBalance()
+                     ],
 
-                'Inactive (> 12 months)' => [
-                    'Number' => $repository->inactiveForMoreThan12MonthsUserCount(),
-                    'Value' => 'Rs.' . $repository->inactiveForMoreThan12MonthsUserBalance()
-                ],
+                     'Inactive (> 12 months)' => [
+                         'Number' => $repository->inactiveForMoreThan12MonthsUserCount(),
+                         'Value' => 'Rs.' . $repository->inactiveForMoreThan12MonthsUserBalance()
+                     ],
 
-                'Grand Total' => [
-                    'Number' => $repository->inactiveTotalUserCount(),
-                    'Value' => 'Rs.' . $repository->inactiveTotalUserBalance()
-                ]
-            ]
-        ];
+                     'Grand Total' => [
+                         'Number' => $repository->inactiveTotalUserCount(),
+                         'Value' => 'Rs.' . $repository->inactiveTotalUserBalance()
+                     ]
+                 ]
+            ];
+        }
 
-        return view('WalletReport::nrb.activeInactiveUserReport')->with(compact('activityReports'));
+        return view('WalletReport::nrb.inactiveUserReport')->with(compact('activityReports'));
     }
 
     public function agentReport(Request $request)
@@ -132,5 +163,48 @@ class NRBReportController extends Controller
             ]
         ];
         return view('WalletReport::nrb.nonBankPaymentReport',compact('nonBankPayments'));
+    }
+
+    public function nonBankPaymentCountReport(Request $request){
+        $repository = new NonBankPaymentReportRepository($request);
+
+        $nonBankPayments = [
+//merchant transaction table count
+            'Merchant Payment' => [
+                'Successful Count' => $repository->checkCountMerchantTransactions()['successfulCountMerchantTransactions'],
+                'Failed Count' => $repository->checkCountMerchantTransactions()['failedCountMerchantTransactions']
+            ],
+//user to user fund
+            'Transfer to Wallet (P2P)' => [
+                'Successful Count' => $repository->checkCountUserToUserFundTransfer()['successfulCountUserToUserFundTransfer'],
+                'Failed Count' => $repository->checkCountUserToUserFundTransfer()['failedCountUserToUserFundTransfer'],
+            ],
+
+            'Transfer to Bank A/C (P2P)' => [
+                'Successful Count' => $repository->checkCountNchlBankTransfer()['successfulNchlBankTransferCount'],
+                'Failed Count' => $repository->checkCountNchlBankTransfer()['failedNchlBankTransferCount'],
+            ],
+
+            'Government Payment (P2G)' => [
+                'Successful Count' => $repository->checkCountNchlAggregated()['successfulNchlAggregatedCount'],
+                'Failed Count' => $repository->checkCountNchlAggregated()['failedNchlAggregatedCount'],
+            ],
+
+            'Topup' => [
+                'Successful Count' => $repository->checkCountKhaltiPayment()['successfulKhaltiPaymentCount'],
+                'Failed Count' => $repository->checkCountKhaltiPayment()['failedKhaltiPaymentCount'],
+            ],
+
+            'Cash In' => [
+                'Successful Count' => $repository->checkCountCashIn()['successfulCashInCount'],
+                'Failed Count' => $repository->checkCountCashIn()['failedCashInCount'],
+            ],
+
+            'Cash Out' => [
+                'Successful Count' => $repository->checkCountCashOut()['successfulCashOutCount'],
+                'Failed Count' => $repository->checkCountCashOut()['failedCashOutCount'],
+            ],
+        ];
+        return view('WalletReport::nrb.nonBankPaymentCountReport',compact('nonBankPayments'));
     }
 }

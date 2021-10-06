@@ -10,10 +10,6 @@
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Transactions</strong>
-                </li>
-
-                <li class="breadcrumb-item active">
                     <strong>Linked Accounts</strong>
                 </li>
             </ol>
@@ -67,7 +63,7 @@
 
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <input type="text" name="mobile_number" placeholder="Mobile Number"
+                                                <input type="text" name="mobile_number" placeholder="Linked Account Mobile Number"
                                                        class="form-control"
                                                        value="{{ !empty($_GET['mobile_number']) ? $_GET['mobile_number'] : '' }}">
                                             </div>
@@ -124,12 +120,12 @@
 
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <input type="text" name="user_phone_number" placeholder="User Phone Number"
+                                                <input type="text" name="user_phone_number" placeholder="Wallet User Phone Number"
                                                        class="form-control"
                                                        value="{{ !empty($_GET['user_phone_number']) ? $_GET['user_phone_number'] : '' }}">
                                             </div>
                                         </div>
-                                        
+
                                     </div>
 
                                     <div class="row" style="margin-top: 20px;">
@@ -163,7 +159,7 @@
                                                        value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
                                             </div>
                                         </div>
-                                       
+
                                     </div>
 
                                     <div style="margin-top: 10px;">
@@ -175,7 +171,7 @@
                                     <div>
                                         <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
                                                 type="submit" style="margin-right: 10px;"
-                                                formaction="{{ route('npsaccountlinkload.excel') }}">
+                                                formaction="{{ route('linkedAccount.excel') }}">
                                             <strong>Excel</strong></button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
@@ -206,14 +202,14 @@
                                         <th>Account Number</th>
                                         <th>Bank Code</th>
                                         <th>Date of Birth</th>
-                                        <th>Mobile Number</th>
+                                        <th>Linked Account Mobile Number</th>
                                         <th>Reference ID</th>
                                         <th>Register Date</th>
                                         <th>Register Status</th>
                                         <th>Time Stamp</th>
                                         <th>Token</th>
                                         <th>User ID</th>
-                                        <th>User Phone Number</th>
+                                        <th>Wallet User Phone Number</th>
                                         <th>Verified Status</th>
                                         <th>Verified Time Stamp</th>
                                         <th>Created At</th>
@@ -221,40 +217,40 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($LinkedAccounts as $LinkedAccount)
+                                    @foreach($linkedAccounts as $linkedAccount)
                                         <tr class="gradeC">
-                                            <td>{{ $loop->index + ($LinkedAccounts->perPage() * ($LinkedAccounts->currentPage() - 1)) + 1 }}</td>
-                                            <td>{{ $LinkedAccount->account_name }}</td>
-                                            <td>{{ $LinkedAccount->account_number }}</td>
-                                            <td>{{ $LinkedAccount->bank_code }}</td>
-                                            <td>{{ $LinkedAccount->dob }}</td>
-                                            <td>{{ $LinkedAccount->mobile_number }}</td>
-                                            <td>{{ $LinkedAccount->reference_id }}</td>
-                                            <td>{{ $LinkedAccount->register_date }}</td>
+                                            <td>{{ $loop->index + ($linkedAccounts->perPage() * ($linkedAccounts->currentPage() - 1)) + 1 }}</td>
+                                            <td>{{ $linkedAccount->account_name }}</td>
+                                            <td>{{ $linkedAccount->account_number }}</td>
+                                            <td>{{ $linkedAccount->bank_code }}</td>
+                                            <td>{{ $linkedAccount->dob }}</td>
+                                            <td>{{ $linkedAccount->mobile_number }}</td>
+                                            <td>{{ $linkedAccount->reference_id }}</td>
+                                            <td>{{ $linkedAccount->register_date }}</td>
                                             <td>
-                                                <span class="badge {{$LinkedAccount->register_status=="Success" ? "badge-primary" : "badge-danger"}}">{{ $LinkedAccount->register_status }}</span>
+                                                <span class="badge {{$linkedAccount->register_status=="Success" ? "badge-primary" : "badge-danger"}}">{{ $linkedAccount->register_status }}</span>
                                             </td>
-                                            <td>{{ $LinkedAccount->time_stamp }}</td>
-                                            <td>{{ $LinkedAccount->token }}</td>
-                                            <td>{{ $LinkedAccount->user_id }}</td>
-                                            @if(!empty($LinkedAccount->user->mobile_no))
-                                                <td>{{ $LinkedAccount->user->mobile_no }}</td>
+                                            <td>{{ $linkedAccount->time_stamp }}</td>
+                                            <td>{{ $linkedAccount->token }}</td>
+                                            <td>{{ $linkedAccount->user_id }}</td>
+                                            @if(!empty($linkedAccount->user->mobile_no))
+                                                <td>{{ $linkedAccount->user->mobile_no }}</td>
                                             @else
                                                 <td>No Data</td>
                                             @endif
                                             <td>
-                                                <span class="badge {{$LinkedAccount->verified_status=="Success" ? "badge-primary" : "badge-danger"}}">{{ $LinkedAccount->verified_status }}</span>
+                                                <span class="badge {{$linkedAccount->verified_status=="Success" ? "badge-primary" : "badge-danger"}}">{{ $linkedAccount->verified_status }}</span>
                                             </td>
-                                            <td>{{ $LinkedAccount->verified_time_stamp }}</td>
-                                            <td>{{ $LinkedAccount->created_at }}</td>
+                                            <td>{{ $linkedAccount->verified_time_stamp }}</td>
+                                            <td>{{ $linkedAccount->created_at }}</td>
                                             <td>
-                                                @include('LinkedAccounts::jsonButtons', ['LinkedAccount' => $LinkedAccount])
+                                                @include('LinkedAccounts::jsonButtons', ['linkedAccount' => $linkedAccount])
                                             </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
-                                {{ $LinkedAccounts->appends(request()->query())->links() }}
+                                {{ $linkedAccounts->appends(request()->query())->links() }}
                             </div>
                         </div>
                     </div>
@@ -280,7 +276,7 @@
     <script>
         @if(!empty($_GET))
         $(document).ready(function (e) {
-            let a = "Showing {{ $LinkedAccounts->firstItem() }} to {{ $LinkedAccounts->lastItem() }} of {{ $LinkedAccounts->total() }} entries";
+            let a = "Showing {{ $linkedAccounts->firstItem() }} to {{ $linkedAccounts->lastItem() }} of {{ $linkedAccounts->total() }} entries";
             $('.dataTables_info').text(a);
         });
         @endif

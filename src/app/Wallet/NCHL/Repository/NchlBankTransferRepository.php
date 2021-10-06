@@ -60,7 +60,18 @@ class NchlBankTransferRepository
         return NchlBankTransfer::filter($this->request)->count();
     }
 
-    public function     getNchlLoadBankTransferTransactionSum(){
+    public function getNchlLoadBankTransferTransactionSum(){
         return NchlBankTransfer::filter($this->request)->sum('amount') / 100;
     }
+
+    public function latestTransactionsUnpaginated()
+    {
+        return NchlBankTransfer::with('preTransaction', 'transactions', 'commission')->latest()->filter($this->request);
+    }
+
+    public function detailUsingBatchId($id)
+    {
+        return NchlBankTransfer::with('user', 'transactions', 'commission')->where('transaction_id', $id)->firstOrFail();
+    }
+
 }

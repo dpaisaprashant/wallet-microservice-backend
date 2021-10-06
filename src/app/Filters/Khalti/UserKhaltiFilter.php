@@ -43,7 +43,8 @@ class UserKhaltiFilter extends FilterAbstract {
 //        $a = $users->preTransactions->pluck('pre_transaction_id');
 //
 //        dd($a);
-
-        return $builder->where('account', $value);
+        $userId = User::where('mobile_no',$value)->orWhere('email',$value)->value('id');
+        $preTransactionList = PreTransaction::where('user_id',$userId)->pluck('pre_transaction_id');
+        return $builder->whereIn('reference_no',  $preTransactionList);
     }
 }

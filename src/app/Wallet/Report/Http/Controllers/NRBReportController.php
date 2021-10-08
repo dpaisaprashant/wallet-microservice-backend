@@ -164,4 +164,47 @@ class NRBReportController extends Controller
         ];
         return view('WalletReport::nrb.nonBankPaymentReport',compact('nonBankPayments'));
     }
+
+    public function nonBankPaymentCountReport(Request $request){
+        $repository = new NonBankPaymentReportRepository($request);
+
+        $nonBankPayments = [
+//merchant transaction table count
+            'Merchant Payment' => [
+                'Successful Count' => $repository->checkCountMerchantTransactions()['successfulCountMerchantTransactions'],
+                'Failed Count' => $repository->checkCountMerchantTransactions()['failedCountMerchantTransactions']
+            ],
+//user to user fund
+            'Transfer to Wallet (P2P)' => [
+                'Successful Count' => $repository->checkCountUserToUserFundTransfer()['successfulCountUserToUserFundTransfer'],
+                'Failed Count' => $repository->checkCountUserToUserFundTransfer()['failedCountUserToUserFundTransfer'],
+            ],
+
+            'Transfer to Bank A/C (P2P)' => [
+                'Successful Count' => $repository->checkCountNchlBankTransfer()['successfulNchlBankTransferCount'],
+                'Failed Count' => $repository->checkCountNchlBankTransfer()['failedNchlBankTransferCount'],
+            ],
+
+            'Government Payment (P2G)' => [
+                'Successful Count' => $repository->checkCountNchlAggregated()['successfulNchlAggregatedCount'],
+                'Failed Count' => $repository->checkCountNchlAggregated()['failedNchlAggregatedCount'],
+            ],
+
+            'Topup' => [
+                'Successful Count' => $repository->checkCountKhaltiPayment()['successfulKhaltiPaymentCount'],
+                'Failed Count' => $repository->checkCountKhaltiPayment()['failedKhaltiPaymentCount'],
+            ],
+
+            'Cash In' => [
+                'Successful Count' => $repository->checkCountCashIn()['successfulCashInCount'],
+                'Failed Count' => $repository->checkCountCashIn()['failedCashInCount'],
+            ],
+
+            'Cash Out' => [
+                'Successful Count' => $repository->checkCountCashOut()['successfulCashOutCount'],
+                'Failed Count' => $repository->checkCountCashOut()['failedCashOutCount'],
+            ],
+        ];
+        return view('WalletReport::nrb.nonBankPaymentCountReport',compact('nonBankPayments'));
+    }
 }

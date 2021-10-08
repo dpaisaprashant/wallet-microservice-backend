@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Agent;
 use App\Models\AgentType;
 
+use App\Models\Architecture\AgentHierarchyPayment;
 use App\Models\Architecture\AgentTypeHierarchyCashback;
 use App\Models\Architecture\WalletTransactionTypeCashback;
 use App\Models\Architecture\WalletTransactionTypeCommission;
@@ -14,6 +15,7 @@ use App\Wallet\Setting\Traits\UpdateSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\View;
 use Illuminate\Validation\Validator;
 
 class AgentTypeController extends Controller
@@ -143,5 +145,20 @@ class AgentTypeController extends Controller
         }
 
 
+    }
+
+    public function agentHierarchyPayments(Request $request)
+    {
+        $status = AgentHierarchyPayment::groupBy('status')->pluck('status')->toArray();
+
+        View::share('status', $status);
+
+        $services = AgentHierarchyPayment::groupBy('service')->pluck('service')->toArray();
+
+        View::share('services', $services);
+
+        $agentHierarchyPayments = AgentHierarchyPayment::with('subAgent','parentAgent')->filter($request)->latest()->paginate(15);
+
+        return view('admin.agentType.agentHierarchyPayment')->with(compact('agentHierarchyPayments'));
     }
 }

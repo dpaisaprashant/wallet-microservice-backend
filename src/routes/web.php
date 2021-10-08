@@ -178,6 +178,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/agent-type/delete/{id}', 'AgentTypeController@delete')->name('agent.type.delete');
         Route::match(['get', 'post'],'/agent-type/cashback/{id}', 'AgentTypeController@cashback')->name('agent.type.cashback');
         Route::match(['get', 'post'],'/agent-type/limit/{id}', 'AgentTypeController@limit')->name('agent.type.limit');
+        Route::match(['get', 'post'],'/agent-hierarchy-payments', 'AgentTypeController@agentHierarchyPayments')->name('agent.hierarchy.payments')->middleware('permission:View agent hierarchy payment');
 
         /**
          * BankLists

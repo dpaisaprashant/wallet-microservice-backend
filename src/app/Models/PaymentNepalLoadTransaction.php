@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Filters\NicAsia\NICAsiaCyberSourceLoadTransactionFilters;
+use App\Filters\PaymentNepalLoadTransaction\PaymentNepalLoadTransactionFilters;
 use App\Traits\BelongsToUser;
 use App\Traits\BelongsToUseThroughMicroservice;
 use App\Traits\MorphOneTransaction;
@@ -22,5 +23,10 @@ class PaymentNepalLoadTransaction extends Model
     public function getAmountAttribute($amount)
     {
         return ($amount/100);
+    }
+
+    public function scopeFilter(Builder $builder, Request $request, array $filters = [])
+    {
+        return (new PaymentNepalLoadTransactionFilters($request))->add($filters)->filter($builder);
     }
 }

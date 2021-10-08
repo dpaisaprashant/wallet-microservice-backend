@@ -270,6 +270,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Agent delete',
             'Agent type view',
             'Agent type create',
+            'View agent hierarchy payment',
 
             //refund
             'Refund view',
@@ -296,6 +297,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Report reconciliation',
             'Report nrb active and inactive user',
             'Report non bank payment',
+            'Report non bank payment count',
             'Report wallet end balance',
             'Report admin kyc',
             'Report commission',

@@ -335,7 +335,15 @@ $url = url()->current();
                                     <span
                                         class="nav-label">Agent Type Hierarchy Cashback</span></a>
                             </li>
-                        @endif
+                        @endcan
+
+                        @can('View agent hierarchy payment')
+                            <li @if(preg_match('/agent-hierarchy-payment/i', $url)) class="active" @endif>
+                                <a href="{{route('agent.hierarchy.payments')}}">
+                                    <span
+                                        class="nav-label">Agent Hierarchy Payments</span></a>
+                            </li>
+                        @endcan
                     </ul>
                 </li>
             @endif
@@ -634,7 +642,8 @@ $url = url()->current();
                             <li><a href="{{ route('report.agent') }}">NRB Agent Report</a></li>
                         @endcan
                         @can('Report non bank payment count')
-                            <li><a href="{{ route('report.nonBankPaymentCountReport') }}">Non Bank Payment Count Report</a></li>
+                            <li><a href="{{ route('report.nonBankPaymentCountReport') }}">Non Bank Payment Count
+                                    Report</a></li>
                         @endcan
                         @can('Report non bank payment')
                             <li><a href="{{ route('report.nonBankPaymentReport') }}">Non bank payment report</a></li>

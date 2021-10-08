@@ -98,13 +98,13 @@ class BAll implements IAuditTrail
 
         //add 1sec to cashback
         $cashBack->transform(function ($value) {
-            $newDate = Carbon::parse($value['created_at'])->addSeconds(1);
+            $newDate = Carbon::parse($value['created_at'])->addSeconds(2);
             $value['created_at'] = $newDate;
             return $value;
         });
 
         $commission->transform(function ($value) {
-            $newDate = Carbon::parse($value['created_at'])->addSeconds(1);
+            $newDate = Carbon::parse($value['created_at'])->addSeconds(2);
             $value['created_at'] = $newDate;
             return $value;
         });

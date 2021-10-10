@@ -160,6 +160,7 @@ class AgentRepository
                 'cash_in_value' => $agentType->default_cash_in_value,
                 'institution_type' => $this->request->institution_type,
                 'code_used_id' => $this->request->code_used_id,
+                'use_parent_balance' => $this->request->use_parent_balance,
                 'business_owner_citizenship_front' => $responseData['business_owner_citizenship_front'],
                 'business_owner_citizenship_back' => $responseData['business_owner_citizenship_back'],
                 'pp_photo' => $responseData['pp_photo'],
@@ -231,6 +232,7 @@ class AgentRepository
             'cash_in_value' => $agentType->default_cash_in_value,
             'institution_type' => $this->request->institution_type,
             'code_used_id' => $this->request->code_used_id,
+            'use_parent_balance' => $this->request->use_parent_balance,
             'business_owner_citizenship_front' => $responseData['business_owner_citizenship_front'] ?? null,
             'business_owner_citizenship_back' => $responseData['business_owner_citizenship_back'] ?? null,
             'pp_photo' => $responseData['pp_photo'] ?? null,
@@ -257,7 +259,7 @@ class AgentRepository
         if (empty($agentData['pan_vat_document'])){
             unset($agentData['pan_vat_document']);
         }
-
+//dd($agentData);
         $status = Agent::whereId($agent->id)->update($agentData);
         $updatedAgent = Agent::find($agent->id);
         $adminAlteredAgent = new AdminAlteredAgent();

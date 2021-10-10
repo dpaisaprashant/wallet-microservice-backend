@@ -182,6 +182,7 @@
                                     <th>Agent status</th>
                                     <th>Reference Code</th>
                                     <th>Wallet Balance</th>
+                                    <th>Deduct From Parent Agent</th>
                                     <th>Agent Created At</th>
                                     {{--<th>Total <br>Payment Amount</th>
                                     <th>Total <br>Loaded Amount</th>--}}
@@ -241,7 +242,13 @@
                                             {{ $user->agent->reference_code }}
                                         </td>
                                         <td>Rs. {{ $user->wallet->balance }}</td>
-
+                                        <td>
+                                            @if($user->agent->use_parent_balance)
+                                                <span class="badge badge-success">TRUE</span>
+                                            @else
+                                                <span class="badge badge-danger">FALSE</span>
+                                            @endif
+                                        </td>
 
 {{--
                                         <td>Rs. {{ $user->getTotalPaymentAmount() }}</td>

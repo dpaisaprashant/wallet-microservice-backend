@@ -62,10 +62,11 @@
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Parent Agent</label>
                                 <div class="col-sm-10">
-                                    <select id="agentStatus" data-placeholder="Choose Agent Type..." class="chosen-select"  tabindex="2" name="code_used_id" required>
+                                    <select id="code_used_id" data-placeholder="Choose Agent Type..."
+                                            class="chosen-select" tabindex="2" name="code_used_id" required>
                                         <option value="" disabled>--- Select Parent Agent ---</option>
                                         <option value="" selected>--- No parent Agent ---</option>
-                                    @foreach($parentAgents as $parentAgent)
+                                        @foreach($parentAgents as $parentAgent)
                                             @if($parentAgent->user->id == $agent->code_used_id)
                                                 <option value="{{ $parentAgent->user->id }}" selected>
                                                     {{ ucwords(strtolower($parentAgent->user->name)) }}
@@ -76,6 +77,22 @@
                                                 </option>
                                             @endif
                                         @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group  row" id="use_parent_balance" @if($agent->code_used_id==null) style="display: none" @endif>
+                                <label class="col-sm-2 col-form-label">Deduct Parent Agent Balance</label>
+                                <div class="col-sm-10">
+                                    <select id="use_parent_balance_" data-placeholder="Choose option..."
+                                            class="chosen-select" tabindex="2" name="use_parent_balance" required>
+                                        <option value="" disabled>--- Select Option ---</option>
+                                        <option value="1" @if($agent->use_parent_balance==1) selected @endif>
+                                            TRUE
+                                        </option>
+                                        <option value="0" @if($agent->use_parent_balance==0) selected @endif >
+                                            FALSE
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -144,10 +161,13 @@
                             </div>
 
 
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Business owner citizenship front <small>(required)</small></label>
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Business owner
+                                    citizenship front <small>(required)</small></label>
                                 <div class="col-sm-8">
-                                    <input name="business_owner_citizenship_front"  type="file" class="custom-file-input">
-                                    <label for="business_owner_citizenship_front" class="custom-file-label">Upload Citizenship Front Document...</label>
+                                    <input name="business_owner_citizenship_front" type="file"
+                                           class="custom-file-input">
+                                    <label for="business_owner_citizenship_front" class="custom-file-label">Upload
+                                        Citizenship Front Document...</label>
                                 </div>
                                 <div class="col-sm-2">
                                     @if(isset($agent->business_owner_citizenship_front))
@@ -164,10 +184,12 @@
                                 </div>
                             </div>
 
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Business owner citizenship back <small>(required)</small></label>
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Business owner
+                                    citizenship back <small>(required)</small></label>
                                 <div class="col-sm-8">
-                                    <input name="business_owner_citizenship_back"  type="file" class="custom-file-input">
-                                    <label for="business_owner_citizenship_back" class="custom-file-label">Upload Citizenship Back Document...</label>
+                                    <input name="business_owner_citizenship_back" type="file" class="custom-file-input">
+                                    <label for="business_owner_citizenship_back" class="custom-file-label">Upload
+                                        Citizenship Back Document...</label>
                                 </div>
                                 <div class="col-sm-2">
                                     @if(isset($agent->business_owner_citizenship_back))
@@ -184,10 +206,12 @@
                                 </div>
                             </div>
 
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Passport Size Photo <small>(required)</small></label>
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Passport Size Photo
+                                    <small>(required)</small></label>
                                 <div class="col-sm-8">
-                                    <input name="pp_photo"  type="file" class="custom-file-input">
-                                    <label for="pp_photo" class="custom-file-label">Upload Passport Size Photo...</label>
+                                    <input name="pp_photo" type="file" class="custom-file-input">
+                                    <label for="pp_photo" class="custom-file-label">Upload Passport Size
+                                        Photo...</label>
                                 </div>
                                 <div class="col-sm-2">
                                     @if(isset($agent->pp_photo))
@@ -204,10 +228,12 @@
                                 </div>
                             </div>
 
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Tax Clearance Certificate <small>(required)</small></label>
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Tax Clearance
+                                    Certificate <small>(required)</small></label>
                                 <div class="col-sm-8">
-                                    <input name="tax_clearance_certificate"  type="file" class="custom-file-input">
-                                    <label for="tax_clearance_certificate" class="custom-file-label">Upload tax clearance document Photo...</label>
+                                    <input name="tax_clearance_certificate" type="file" class="custom-file-input">
+                                    <label for="tax_clearance_certificate" class="custom-file-label">Upload tax
+                                        clearance document Photo...</label>
                                 </div>
                                 <div class="col-sm-2">
                                     @if(isset($agent->tax_clearance_certificate))
@@ -225,10 +251,12 @@
                             </div>
 
 
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Company Document Image <small>(required)</small></label>
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Company Document Image
+                                    <small>(required)</small></label>
                                 <div class="col-sm-8">
-                                    <input name="business_document"  type="file" class="custom-file-input">
-                                    <label for="business_document" class="custom-file-label">Upload Business Document Photo...</label>
+                                    <input name="business_document" type="file" class="custom-file-input">
+                                    <label for="business_document" class="custom-file-label">Upload Business Document
+                                        Photo...</label>
                                 </div>
                                 <div class="col-sm-2">
                                     @if(isset($agent->business_document))
@@ -247,8 +275,9 @@
 
                             <div class="form-group  row"><label class="col-sm-2 col-form-label">Pan/Vat Document <small>(required)</small></label>
                                 <div class="col-sm-8">
-                                    <input name="pan_vat_document"  type="file" class="custom-file-input">
-                                    <label for="pan_vat_document" class="custom-file-label">Upload Pan/Vat Document Photo...</label>
+                                    <input name="pan_vat_document" type="file" class="custom-file-input">
+                                    <label for="pan_vat_document" class="custom-file-label">Upload Pan/Vat Document
+                                        Photo...</label>
                                 </div>
                                 <div class="col-sm-2">
                                     @if(isset($agent->pan_vat_document))
@@ -454,6 +483,22 @@
         });
     </script>
 
+    <script>
+            $(document).ready(function(){
+            $('#code_used_id').on('change', function() {
+                if ( this.value == '')
+                {
+                    $('#use_parent_balance_').val("0");
+                    $("#use_parent_balance").hide();
+                }
+                else
+                {
+                    $("#use_parent_balance").show();
+                }
+            });
+        });
+
+    </script>
 
 
 @endsection

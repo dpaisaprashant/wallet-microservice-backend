@@ -30,7 +30,7 @@ class AgentController extends Controller
     {
 
         $roles = Role::where('name', 'like', '%agent')->get();
-        $users = User::doesnthave('agent')->doesnthave('merchant')->latest()->get();
+        $users = User::doesntHave('agent')->doesnthave('merchant')->latest()->get();
         $agentTypes = AgentType::with('parentAgentType')->latest()->get();
         $parentAgents = Agent::with('user')->latest()->get();
         if ($request->isMethod('POST')) {

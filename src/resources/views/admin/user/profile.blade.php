@@ -200,11 +200,11 @@
 
                     </tr>
                     <tr>
-                        @can('Transfer bonus balance to main balance')
+                        {{--@can('Transfer bonus balance to main balance')
                             <td>
                                 @include('admin.user.bonusToMainBalanceTransfer')
                             </td>
-                        @endcan
+                        @endcan--}}
 
                         <td>
 

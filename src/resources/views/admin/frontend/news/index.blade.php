@@ -46,6 +46,7 @@
                                     <th>Heading</th>
                                     <th>Sub-Heading</th>
                                     <th>news_link</th>
+                                    <th>Priority</th>
                                     <th>Image</th>
                                     <th>Created At</th>
                                     <th>Actions</th>
@@ -58,6 +59,7 @@
                                         <td>{{ $new->heading}}</td>
                                         <td>{{ $new->sub_heading}}</td>
                                         <td>{{ $new->news_link}}</td>
+                                        <td>{{$new->priority ?? ""}}</td>
                                         <td>
                                             <img
                                                 src="{{ config('dpaisa-api-url.public_document_url') . $new->image }}"

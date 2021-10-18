@@ -44,6 +44,22 @@
                                 </div>
                             </div>
 
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Placement</label>
+                                <div class="col-sm-10">
+                                    <select name="placement" class="form-control" required>
+                                        <option value="" disabled selected>Select Placement</option>
+                                        @if($service->placement == "top")
+                                            <option value="top" selected>Top</option>
+                                            <option value="bottom">Bottom</option>
+                                        @else
+                                            <option value="top">Top</option>
+                                            <option value="bottom" selected>Bottom</option>
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+
                             <hr class="hr-line-dashed">
 
                             <div class="form-group  row">

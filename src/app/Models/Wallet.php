@@ -19,6 +19,7 @@ class Wallet extends Model
 
     protected $table = "wallets";
     protected $connection = 'dpaisa';
+    protected $guarded = [];
 
     protected $appends = [
         'main_balance'

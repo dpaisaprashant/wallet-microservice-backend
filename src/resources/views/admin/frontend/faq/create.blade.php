@@ -52,8 +52,13 @@
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Question Type</label>
                                 <div class="col-sm-10">
-                                    <input name="question_type" type="text"
+                                    <select name="question_type"
                                            class="form-control">
+                                        <option value="" disabled selected>Select Question Type</option>
+                                        <option value="about icash">About Icash</option>
+                                        <option value="icash usage">Icahs Usage</option>
+                                        <option value="general questions">General Questions</option>
+                                    </select>
                                 </div>
                             </div>
 

@@ -8,14 +8,22 @@
         @if($event->pre_transaction_id)
             REFUND For: {{ $event->pre_transaction_id }}
         @else
-            TEST LOAD FUND
+            @if(!empty($event->description))
+                {{ $event->description }}
+            @else
+                TEST LOAD FUND
+            @endif
         @endif
     </td>
     <td>
         @if($event->pre_transaction_id)
             REFUND
         @else
-            TEST LOAD FUND
+            @if(!empty($event->description))
+                LUCKY WINNER
+            @else
+                TEST LOAD FUND
+            @endif
         @endif
     </td>
     <td>

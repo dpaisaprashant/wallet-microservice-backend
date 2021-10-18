@@ -10,6 +10,7 @@ use App\Traits\MorphOneCommission;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use App\Models\Microservice\PreTransaction;
 
 class TransactionEvent extends Model
 {
@@ -155,6 +156,10 @@ class TransactionEvent extends Model
 
     public function preTransaction(){
         return $this->hasMany(PreTransaction::class,"pre_transaction_id",'pre_transaction_id');
+    }
+
+    public function preTransactionMicroservice(){
+        return $this->belongsTo(PreTransaction::class,'pre_transaction_id','pre_transaction_id');
     }
 
 }

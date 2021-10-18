@@ -140,9 +140,9 @@
                                 </div>
                             </div>
 
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Business Document Image <small>(required)</small></label>
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Business Document Image</label>
                                 <div class="col-sm-10">
-                                    <input name="business_document"  type="file" class="custom-file-input" required>
+                                    <input name="business_document"  type="file" class="custom-file-input">
                                     <label for="business_document" class="custom-file-label">Upload Business Document Image Image...</label>
                                 </div>
                             </div>

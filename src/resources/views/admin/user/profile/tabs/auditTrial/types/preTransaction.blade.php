@@ -1,5 +1,5 @@
 <tr class="gradeC">
-
+{{--    @php dd($event); @endphp--}}
     <td>{{ $loop->index + ($allAudits->perPage() * ($allAudits->currentPage() - 1)) + 1 }}</td>
     <?php $date = explode(' ', $event->created_at) ?>
     <td>{{ $date[0] }}</td>
@@ -155,6 +155,35 @@
 
         @endif
 
+        @if($event->nicAsiaCyberSourceLoad)
+            <a href="{{route('nicAsia.detailCyberSourceLoad',$event->nicAsiaCyberSourceLoad->id)}}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+        @elseif($event->userloadTransaction)
+            <a href="{{ route('eBanking.detail', $event->userLoadTransaction) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+        @elseif($event->userTransaction)
+            <a href="{{ route('paypoint.detail', $event->userTransaction->id) }}">    <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+        @elseif($event->khaltiUserTransaction)
+            <a href="{{ route('khalti.payment.detail', $event->khaltiUserTransaction->id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+        @elseif($event->nchlBankTransfer)
+            <a href="{{ route('nchl.bankTransfer.detail', $event->nchlBankTransfer->id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+        @elseif($event->nchlLoadTransaction)
+            <a href="{{ route('nchl.loadTransaction.detail', $transaction->transaction_id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+        @elseif($event->nchlAggregatePayment)
+            <a href="{{route('nchl.aggregatedPayment.detail',$event->nchlAggregatePayment->id)}}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+        @elseif($event->cellPayUserTransaction)
+            <a href="{{route('cellPayUserTransaction.detail',$transaction->transaction_id)}}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+        @elseif(optional($event->transactionEvent)->transaction_type == \App\Models\UserToUserFundTransfer::class)
+            <a href="{{ route('userToUserFundTransfer.detail', $event->transactionEvent->transaction_id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+        @elseif(optional($event->transactionEvent)->transaction_type == \App\Models\FundRequest::class)
+            <a href="{{ route('fundRequest.detail', $event->transactionEvent->transaction_id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+        @elseif($event->npsLoadTransaction)
+                <a href="{{route('nps.detail',$event->npsLoadTransaction->id)}}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+        @endif
+
+{{--            without details page--}}
+{{--            @elseif($event->refundTransaction)--}}
+{{--            @elseif($event->userToBFIFundTransfer)--}}
+{{--            @elseif($event->bfiToUserFundTransfer)--}}
+{{--        without details page ends--}}
 
     </td>
 </tr>

@@ -200,6 +200,7 @@ return [
         App\Wallet\Scheme\SchemeServiceProvider::class,
         App\Wallet\WalletRegistration\WalletRegistrationServiceProvider::class,
         App\Wallet\IssueTicket\IssueTicketServiceProvider::class,
+        App\Wallet\BonusToMainBalanceTransfer\BonusToMainBalanceTransferServiceProvider::class,
     ],
 
     /*

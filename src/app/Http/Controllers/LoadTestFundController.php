@@ -16,6 +16,12 @@ class LoadTestFundController extends Controller
         return view('admin.loadTestTransaction.index')->with(compact('transactions'));
     }
 
+    public function loadTestDetail($id)
+    {
+        $transaction = LoadTestFund::with('user')->where('id','=',$id)->first();
+        return view('admin.loadTestTransaction.details')->with(compact('transaction'));
+    }
+
     public function create(Request $request)
     {
         $users = User::latest()->get();

@@ -377,6 +377,21 @@ $url = url()->current();
                 </li>
             @endif
 
+            @if(auth()->user()->hasPermissionTo('Lucky winner view') || auth()->user()->hasPermissionTo('Lucky winner create'))
+                <li @if(preg_match('/lucky/i', $url)) class="active" @endif>
+                    <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Lucky Winner</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        @can('Lucky winner view')
+                            <li><a href="{{ route('luckyWinner.index') }}">View Lucky Winner</a></li>
+                        @endcan
+                        @can('Lucky winner create')
+                            <li><a href="{{ route('luckyWinner.create') }}">Create Lucky Winner</a></li>
+                        @endcan
+                    </ul>
+                </li>
+            @endif
+
             @if(auth()->user()->hasPermissionTo('Repost transaction npay') || auth()->user()->hasPermissionTo('Repost transaction nps') || auth()->user()->hasPermissionTo('Repost transaction connectips'))
                 <li @if(preg_match('/repost/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Repost Transaction</span><span
@@ -466,6 +481,7 @@ $url = url()->current();
                         @can('View load wallet')
                             <li><a href="{{route('npsaccountlinkload.view')}}">Account Link</a></li>
                         @endcan
+                        <li><a href="{{route('merchant-transaction.index')}}">Merchant Transactions</a></li>
                     </ul>
                 </li>
             @endif
@@ -915,12 +931,6 @@ $url = url()->current();
                         @can('Frontend banner view')
                             <li><a href="{{ route('frontend.banner.index') }}">Banners</a></li>
                         @endcan
-
-                        @if(strtolower(config('app.'.'name')) == 'sajilopay' || strtolower(config('app.'.'name')) == 'icash' )
-                            @can('Frontend faq view')
-                                <li><a href="{{route('frontend.faq.index')}}">FAQs</a></li>
-                            @endcan
-                        @endif
 
                         @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'master')
                             @can('Frontend contact view')

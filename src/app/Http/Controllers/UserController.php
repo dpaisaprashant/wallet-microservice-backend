@@ -236,13 +236,13 @@ class UserController extends Controller
         $responseData = $this->uploadImageToCoreBase64($disk, $kycRequest, $request);
 
         if (!empty($responseData['date_of_birth'])) {
-            $dateConvert = strtotime($responseData['date_of_birth']);
+            $dateConvert = strtotime(str_replace(',','',$responseData['date_of_birth']));
             $convertedDate = date('Y-m-d', $dateConvert);
             $responseData['date_of_birth'] = $convertedDate;
         }
 
         if (!empty($responseData['c_issued_date'])) {
-            $dateConvert = strtotime($responseData['c_issued_date']);
+            $dateConvert = strtotime(str_replace(',','',$responseData['c_issued_date']));
             $convertedDate = date('Y-m-d', $dateConvert);
             $responseData['c_issued_date'] = $convertedDate;
         }
@@ -298,7 +298,11 @@ class UserController extends Controller
         $admin = 'admin';
         $DobBs = $this->EnglishToNepali($user->kyc->date_of_birth);
         $DateOfIssueBs = $this->EnglishToNepali($user->kyc->c_issued_date);
-        return view('admin.user.EditKyc')->with(compact('user','admin','DobBs','DateOfIssueBs'));
+        $date_of_birth = strtotime($user->kyc->date_of_birth);
+        $date_of_birth_formatted = date('j F, Y',$date_of_birth);
+        $date_of_issue = strtotime($user->kyc->c_issued_date);
+        $date_of_issue_formatted = date('j F, Y',$date_of_issue);
+        return view('admin.user.EditKyc')->with(compact('user','admin','DobBs','DateOfIssueBs','date_of_birth_formatted','date_of_issue_formatted'));
     }
 
     public function UpdateKyc(Request $request, $id)
@@ -338,13 +342,13 @@ class UserController extends Controller
         //note: the above code works just fine but is tedious can be deleted, for now i have just commented it out
 
         if(!empty($responseData['date_of_birth'])){
-            $dateConvert = strtotime($responseData['date_of_birth']);
+            $dateConvert = strtotime(str_replace(',','',$responseData['date_of_birth']));
             $convertedDate = date('Y-m-d', $dateConvert);
             $responseData['date_of_birth']=$convertedDate;
         }
 
         if (!empty($responseData['c_issued_date'])) {
-            $dateConvert = strtotime($responseData['c_issued_date']);
+            $dateConvert = strtotime(str_replace(',','',$responseData['c_issued_date']));
             $convertedDate = date('Y-m-d', $dateConvert);
             $responseData['c_issued_date'] = $convertedDate;
         }

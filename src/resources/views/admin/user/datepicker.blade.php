@@ -147,7 +147,7 @@
                         <i class="fa fa-calendar"></i>
                     </span>
             <input id="date_load_from" type="text" class="form-control date_from"
-                   placeholder="Date of Birth" name="date_of_birth" autocomplete="off" value="{{$user->kyc->date_of_birth ?? ""}}">
+                   placeholder="Date of Birth" name="date_of_birth" autocomplete="off" value="{{$date_of_birth_formatted ?? ""}}">
         </div>
     </div>
 
@@ -299,7 +299,7 @@
                             <i class="fa fa-calendar"></i>
                         </span>
             <input id="date_load_from" type="text" class="form-control date_from"
-                   placeholder="Document Issue Date" name="c_issued_date" autocomplete="off" value="{{$user->kyc->c_issued_date ?? ""}}">
+                   placeholder="Document Issue Date" name="c_issued_date" autocomplete="off" value="{{$date_of_issue_formatted ?? ""}}">
         </div>
     </div>
 @endif

@@ -447,6 +447,11 @@ class RolesAndPermissionsSeeder extends Seeder
             'Delete issue ticket',
             'Create issue ticket',
 
+
+//            Transfer Bonus balance to Main balance
+            'Transfer bonus balance to main balance',
+
+
             //Merchant Addresses
             'View merchant address',
             'Add merchant address',

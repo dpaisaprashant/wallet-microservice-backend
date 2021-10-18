@@ -10,10 +10,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Spatie\Activitylog\Traits\LogsActivity;
+use App\Traits\DateConverter;
 
 class UserKYC extends Model
 {
-    use BelongsToUser, LogsActivity, BelongsToMerchant;
+    use BelongsToUser, LogsActivity, BelongsToMerchant,DateConverter;
 
     protected static $logAttributes = ['*'];
     //protected static $logOnlyDirty = true;
@@ -36,7 +37,70 @@ class UserKYC extends Model
     const DOCUMENT_PASSPORT = 'p';
     const DOCUMENT_LICENSE = 'l';
 
-    protected $guarded = [];
+    protected $guarded = ['id'];
+
+    protected $fillable = [
+        'first_name',
+        'middle_name',
+        'last_name',
+        'date_of_birth',
+        'fathers_name',
+        'mothers_name',
+        'grand_fathers_name',
+        'spouse_name',
+        'email',
+        'occupation',
+        'province',
+        'zone',
+        'district',
+        'municipality',
+        'ward_no',
+        'tmp_province',
+        'tmp_zone',
+        'tmp_district',
+        'tmp_municipality',
+        'tmp_ward_no',
+        'document_type',
+        'id_no',
+        'c_issued_date',
+        'c_issued_from',
+        'p_photo',
+        'id_photo_front',
+        'id_photo_back',
+        'o_photo',
+        'gender',
+        'user_id',
+        'status',
+        'accept',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'company_name',
+        'company_address',
+        'company_vat_pin_number',
+        'company_document',
+        'company_logo',
+        'company_vat_document',
+        'company_tax_clearance_document',
+        ];
+
+    protected $appends = [
+        "date_of_birth_bs", "c_issued_date_bs"
+    ];
+
+    public function getDateOfBirthBsAttribute()
+    {
+        $nepaliDate =  $this->EnglishToNepali($this->date_of_birth);
+        $formattedNepaliDate = $nepaliDate['year']."-".$nepaliDate['month']."-".$nepaliDate['date'];
+        return $formattedNepaliDate;
+    }
+
+    public function getCIssuedDateBsAttribute()
+    {
+        $nepaliDate = $this->EnglishToNepali($this->c_issued_date);
+        $formattedNepaliDate = $nepaliDate['year']."-".$nepaliDate['month']."-".$nepaliDate['date'];
+        return $formattedNepaliDate;
+    }
 
     public function scopeFilter(Builder $builder, Request $request, array $filters = [])
     {

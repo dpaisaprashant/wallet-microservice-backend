@@ -48,13 +48,28 @@
 
                             <hr class="hr-line-dashed">
 
-                            @if(strtolower(config('app.'.'name')) == "icash")
+                            @if(strtolower(config('app.'.'name')) == "icash" || strtolower(config('app.'.'name')) == "master" )
 
                                 <div class="form-group  row">
                                     <label class="col-sm-2 col-form-label">Question Type</label>
                                     <div class="col-sm-10">
-                                        <input name="question_type" type="text" value="{{$faq->question_type}}"
-                                               class="form-control">
+                                        <select name="question_type"
+                                                class="form-control">
+                                            <option value="" disabled selected>Select Question Type</option>
+                                            @if($faq->question_type == "about icash")
+                                                <option value="about icash" selected>About Icash</option>
+                                                <option value="icash usage">Icash Usage</option>
+                                                <option value="general questions">General Question</option>
+                                            @elseif($faq->question_type == "icash usage")
+                                                <option value="about icash">About Icash</option>
+                                                <option value="icash usage" selected>Icash Usage</option>
+                                                <option value="general questions">General Question</option>
+                                            @elseif($faq->question_type == "general questions")
+                                                <option value="about icash">About Icash</option>
+                                                <option value="icash usage">Icash Usage</option>
+                                                <option value="general questions" selected>General Question</option>
+                                            @endif
+                                        </select>
                                     </div>
                                 </div>
 

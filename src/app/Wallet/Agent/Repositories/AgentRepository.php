@@ -118,17 +118,9 @@ class AgentRepository
 
     public function paginatedUsers()
     {
-        if ($this->request->sort == 'wallet_balance') {
-            $user = $this->wallerBalanceSorted();
-        } elseif ($this->request->sort == 'transaction_payment') {
-            $user = $this->transactionPaymentSorted();
-        } elseif ($this->request->sort == 'transaction_loaded') {
-            $user = $this->transactionLoadSorted();
-        } elseif (empty($this->request->sort)) {
+
             $user = $this->latestUsers();
-        } else {
-            $user = $this->sortedUsers();
-        }
+
         return $this->addRoleToUser($user);
     }
 
@@ -160,6 +152,7 @@ class AgentRepository
                 'cash_in_value' => $agentType->default_cash_in_value,
                 'institution_type' => $this->request->institution_type,
                 'code_used_id' => $this->request->code_used_id,
+                'business_document' => $responseData['business_document'],
                 'business_owner_citizenship_front' => $responseData['business_owner_citizenship_front'],
                 'business_owner_citizenship_back' => $responseData['business_owner_citizenship_back'],
                 'pp_photo' => $responseData['pp_photo'],
@@ -231,6 +224,7 @@ class AgentRepository
             'cash_in_value' => $agentType->default_cash_in_value,
             'institution_type' => $this->request->institution_type,
             'code_used_id' => $this->request->code_used_id,
+            'business_document' => $responseData['business_document'] ?? null,
             'business_owner_citizenship_front' => $responseData['business_owner_citizenship_front'] ?? null,
             'business_owner_citizenship_back' => $responseData['business_owner_citizenship_back'] ?? null,
             'pp_photo' => $responseData['pp_photo'] ?? null,

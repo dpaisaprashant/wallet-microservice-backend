@@ -13,6 +13,7 @@
 
 use App\Models\Admin;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MerchantTransactionController;
 
 Route::match(['get', 'post'], '/', 'AdminController@login')->middleware('guest'); //admin login
 Route::group(['prefix' => 'admin'], function () {
@@ -253,6 +254,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/transaction/khalti','TransactionController@khaltiTransaction')->name('khalti.transaction')->middleware('permission:View khalti details');
         Route::get('/transaction/khalti/{id}','TransactionController@khaltiSpecificDetail')->name('khalti.specific')->middleware('permission:View khalti detail page');
 
+        //MerchantTransactions
+        Route::get('/transaction/merchant-transaction','MerchantTransactionController@index')->name('merchant-transaction.index');
+        Route::get('/transaction/merchant-transaction/detail/{id}','MerchantTransactionController@detail')->name('merchant-transaction.detail');
         /**
          * Clearance
          */
@@ -342,6 +346,7 @@ Route::group(['prefix' => 'admin'], function () {
          */
         Route::get('/load-test-fund', 'LoadTestFundController@index')->name('loadTestFund.index');
         Route::match(['get', 'post'], '/load-test-fund/create', 'LoadTestFundController@create')->name('loadTestFund.create');
+        Route::get('/load-test-fun/detail/{id}','LoadTestFundController@loadTestDetail')->name('loadTestFund.detail');
 
         /**
          * Load paypoint fund

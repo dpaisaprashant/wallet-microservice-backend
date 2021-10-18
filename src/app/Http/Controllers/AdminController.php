@@ -172,13 +172,14 @@ class AdminController extends Controller
 
                 if (!$this->checkOldSession($admin->id)) {
                     Auth::logout();
-                    return redirect()->route('admin.login')->with('error', 'Already logged in from another session');
+                    return redirect()->route('admin.login')->with('error', 'Already logged in from another session')->withInput();
                 }
 
                 return redirect()->route('admin.dashboard');
 
             } else {
-                return redirect()->back()->with('error', 'Invalid Username or Password');
+                $email = $request->email;
+                return redirect()->back()->with('error', 'Invalid Username or Password')->withInput();
             }
         }
         return view('admin.login');

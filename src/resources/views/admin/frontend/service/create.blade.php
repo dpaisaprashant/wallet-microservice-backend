@@ -45,6 +45,17 @@
                                 </div>
                             </div>
 
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Placement</label>
+                                <div class="col-sm-10">
+                                    <select name="placement" class="form-control" required>
+                                        <option value="" disabled selected>Select Placement</option>
+                                        <option value="top">Top</option>
+                                        <option value="bottom">Bottom</option>
+                                    </select>
+                                </div>
+                            </div>
+
                             <hr class="hr-line-dashed">
 
                             <div class="form-group  row">

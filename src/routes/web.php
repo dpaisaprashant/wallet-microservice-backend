@@ -255,8 +255,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/transaction/khalti/{id}','TransactionController@khaltiSpecificDetail')->name('khalti.specific')->middleware('permission:View khalti detail page');
 
         //MerchantTransactions
-        Route::get('/transaction/merchant-transaction','MerchantTransactionController@index')->name('merchant-transaction.index');
-        Route::get('/transaction/merchant-transaction/detail/{id}','MerchantTransactionController@detail')->name('merchant-transaction.detail');
+        Route::get('/transaction/merchant-transaction','MerchantTransactionController@index')->name('merchant-transaction.index')->middleware('permission:Merchant revenue view');
+        Route::get('/transaction/merchant-transaction/detail/{id}','MerchantTransactionController@detail')->name('merchant-transaction.detail')->middleware('permission:Merchant revenue view');
         /**
          * Clearance
          */

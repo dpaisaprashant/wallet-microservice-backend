@@ -159,8 +159,8 @@
             <a href="{{route('nicAsia.detailCyberSourceLoad',$event->nicAsiaCyberSourceLoad->id)}}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         @elseif($event->userloadTransaction)
             <a href="{{ route('eBanking.detail', $event->userLoadTransaction) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
-        @elseif($event->userTransaction)
-            <a href="{{ route('paypoint.detail', $event->userTransaction->id) }}">    <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+{{--        @elseif($event->userTransaction)--}}
+{{--            <a href="{{ route('paypoint.detail', $event->userTransaction->id) }}">    <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>--}}
         @elseif($event->khaltiUserTransaction)
             <a href="{{ route('khalti.payment.detail', $event->khaltiUserTransaction->id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         @elseif($event->nchlBankTransfer)

@@ -152,7 +152,7 @@
         @elseif($event->nchlBankTransfer)
             <a href="{{ route('nchl.bankTransfer.detail', $event->nchlBankTransfer->id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         @elseif($event->nchlLoadTransaction)
-            <a href="{{ route('nchl.loadTransaction.detail', $event->transaction_id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+            <a href="{{ route('nchl.loadTransaction.detail', $event->nchlLoadTransaction->id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         @elseif($event->nchlAggregatePayment)
             <a href="{{route('nchl.aggregatedPayment.detail',$event->nchlAggregatePayment->id)}}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         @elseif($event->cellPayUserTransaction)

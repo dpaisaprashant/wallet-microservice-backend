@@ -275,6 +275,10 @@ class RolesAndPermissionsSeeder extends Seeder
             'Refund view',
             'Refund create',
 
+            //refund
+            'Lucky winner view',
+            'Lucky winner create',
+
             //repost transaction
             'Repost transaction npay',
             'Repost transaction nps',

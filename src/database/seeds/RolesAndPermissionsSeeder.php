@@ -471,7 +471,10 @@ class RolesAndPermissionsSeeder extends Seeder
             'Rejected user kyc',
             'Accepted user kyc',
             'Pending user kyc',
-            'KYC not filled users'
+            'KYC not filled users',
+
+            //Merchant Revenues
+            'Merchant revenue view'
             ];
 
         //get users having all permissions

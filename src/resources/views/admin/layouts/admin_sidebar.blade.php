@@ -481,9 +481,9 @@ $url = url()->current();
                             <li><a href="{{route('npsaccountlinkload.view')}}">Account Link</a></li>
                         @endcan
 
-{{--                        todo: add can--}}
-                        <li><a href="{{route('merchant-transaction.index')}}">Merchant Transactions</a></li>
-
+                        @can('Merchant revenue view')
+                            <li><a href="{{route('merchant-transaction.index')}}">Merchant Transactions</a></li>
+                        @endcan
                     </ul>
                 </li>
             @endif

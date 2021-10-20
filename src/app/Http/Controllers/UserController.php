@@ -276,7 +276,7 @@ class UserController extends Controller
             $adminUpdateKyc->user_kyc_id = $user_kyc_id;
             $adminUpdateKyc->kyc_after_change = $kyc_after_change;
             $adminUpdateKyc->save();
-            return redirect()->route('user.kyc', $id)->with(compact('user', 'admin'))->with('success', 'Wallet Service updated successfully');
+            return redirect()->route('user.kyc', $id)->with(compact('user', 'admin'))->with('success', 'User Kyc created successfully');
         }
         catch (\Exception $e){
             return back()->with('error', 'Something went wrong!Please try again later');
@@ -296,8 +296,20 @@ class UserController extends Controller
     {
         $user = User::with('kyc')->findOrFail($id);
         $admin = 'admin';
-        $DobBs = $this->EnglishToNepali($user->kyc->date_of_birth);
-        $DateOfIssueBs = $this->EnglishToNepali($user->kyc->c_issued_date);
+        $yearDob = date('Y',strtotime($user->kyc->date_of_birth));
+        if ($yearDob > 1944 && $yearDob < 2022) {
+            $DobBs = $this->EnglishToNepali($user->kyc->date_of_birth);
+        }
+        else{
+            $DobBs = null;
+        }
+        $yearIssueDate = date('Y',strtotime($user->kyc->c_issued_date));
+        if ($yearIssueDate > 1944 && $yearIssueDate < 2022) {
+            $DateOfIssueBs = $this->EnglishToNepali($user->kyc->c_issued_date);
+        }
+        else{
+            $DateOfIssueBs = null;
+        }
         $date_of_birth = strtotime($user->kyc->date_of_birth);
         $date_of_birth_formatted = date('j F, Y',$date_of_birth);
         $date_of_issue = strtotime($user->kyc->c_issued_date);
@@ -367,7 +379,7 @@ class UserController extends Controller
             $adminUpdateKyc->kyc_before_change = $kyc_before_change;
             $adminUpdateKyc->kyc_after_change = $kyc_after_change;
             $adminUpdateKyc->save();
-            return redirect()->route('user.kyc',$id)->with(compact('user','admin'))->with('success','Wallet Service updated successfully');
+            return redirect()->route('user.kyc',$id)->with(compact('user','admin'))->with('success','User Kyc updated successfully');
         }else{
             return redirect()->route('user.kyc',$id)->with(compact('user','admin'))->with('error', 'Something went wrong!Please try again later');
         }

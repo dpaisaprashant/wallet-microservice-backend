@@ -90,28 +90,23 @@ class UserKYC extends Model
 
     public function getDateOfBirthBsAttribute()
     {
-        $year = date('Y',strtotime($this->date_of_birth));
-        if ($year > 1944 && $year < 2022) {
-            $nepaliDate = $this->EnglishToNepali($this->date_of_birth);
-            $formattedNepaliDate = $nepaliDate['year'] . "-" . $nepaliDate['month'] . "-" . $nepaliDate['date'];
-            return $formattedNepaliDate;
-        }
-        else{
+        $nepaliDate = $this->EnglishToNepali(date('Y-m-d',strtotime(str_replace(',','',$this->date_of_birth))));
+        if ($nepaliDate) {
+                $formattedNepaliDate = $nepaliDate['year'] . "-" . $nepaliDate['month'] . "-" . $nepaliDate['date'];
+                return $formattedNepaliDate;
+            }
             return null;
-        }
     }
 
     public function getCIssuedDateBsAttribute()
     {
-        $year = date('Y',strtotime($this->c_issued_date));
-        if ($year > 1944 && $year < 2022) {
-            $nepaliDate = $this->EnglishToNepali($this->c_issued_date);
-            $formattedNepaliDate = $nepaliDate['year'] . "-" . $nepaliDate['month'] . "-" . $nepaliDate['date'];
-            return $formattedNepaliDate;
-        }
-        else{
+        $nepaliDate = $this->EnglishToNepali(date('Y-m-d',strtotime(str_replace(',','',$this->c_issued_date))));
+            if ($nepaliDate) {
+                $formattedNepaliDate = $nepaliDate['year'] . "-" . $nepaliDate['month'] . "-" . $nepaliDate['date'];
+                return $formattedNepaliDate;
+            }
             return null;
-        }
+
     }
 
     public function scopeFilter(Builder $builder, Request $request, array $filters = [])

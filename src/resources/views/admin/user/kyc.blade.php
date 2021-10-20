@@ -325,7 +325,7 @@
                                             </dt>
                                             <dd class="col-md-8">{{ $user->kyc->date_of_birth }} AD
                                                 <br>
-                                                {{$user->kyc->date_of_birth_bs}} BS
+                                                {{$user->kyc->date_of_birth_bs}} @if($user->kyc->date_of_birth_bs)BS @endif
                                             </dd>
 
                                             <dt class="col-md-3 text-right">
@@ -438,7 +438,7 @@
                                             </dt>
                                             <dd class="col-md-8">{{ ($user->kyc->c_issued_date) }} AD
                                                 <br>
-                                                {{$user->kyc->c_issued_date_bs}} BS
+                                                {{$user->kyc->c_issued_date_bs}} @if($user->kyc->c_issued_date_bs)BS @endif
                                             </dd>
 
                                             <dt class="col-md-3 text-right">

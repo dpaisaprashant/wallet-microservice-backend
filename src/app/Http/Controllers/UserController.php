@@ -232,7 +232,6 @@ class UserController extends Controller
             $kycRequest['c_issued_date'] = $dateAD;
         }
 
-//        dd($kycRequest);
         $responseData = $this->uploadImageToCoreBase64($disk, $kycRequest, $request);
 
         if (!empty($responseData['date_of_birth'])) {
@@ -296,20 +295,8 @@ class UserController extends Controller
     {
         $user = User::with('kyc')->findOrFail($id);
         $admin = 'admin';
-        $yearDob = date('Y',strtotime($user->kyc->date_of_birth));
-        if ($yearDob > 1944 && $yearDob < 2022) {
-            $DobBs = $this->EnglishToNepali($user->kyc->date_of_birth);
-        }
-        else{
-            $DobBs = null;
-        }
-        $yearIssueDate = date('Y',strtotime($user->kyc->c_issued_date));
-        if ($yearIssueDate > 1944 && $yearIssueDate < 2022) {
-            $DateOfIssueBs = $this->EnglishToNepali($user->kyc->c_issued_date);
-        }
-        else{
-            $DateOfIssueBs = null;
-        }
+        $DobBs = $this->EnglishToNepali(date('Y-m-d',strtotime(str_replace(',','',$user->kyc->date_of_birth))));
+        $DateOfIssueBs = $this->EnglishToNepali(date('Y-m-d',strtotime(str_replace(',','',$user->kyc->c_issued_date))));
         $date_of_birth = strtotime($user->kyc->date_of_birth);
         $date_of_birth_formatted = date('j F, Y',$date_of_birth);
         $date_of_issue = strtotime($user->kyc->c_issued_date);

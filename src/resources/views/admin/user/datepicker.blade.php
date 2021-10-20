@@ -164,7 +164,7 @@
             <div class="col-md-4">
                 <select name="yearIssue" class="chosen-select">
                     <option value="" disabled selected>--- Select Year Issue ---</option>
-                    @isset($DateOfIssueBS)
+                    @isset($DateOfIssueBs)
                         @for($i = 2000;$i<2090;$i++)
                             @if($DateOfIssueBs['year'] == $i)
                                 <option value="{{$i}}" selected>{{$i}}</option>
@@ -182,7 +182,7 @@
             <div class="col-md-4">
                 <select name="monthIssue" class="chosen-select">
                     <option value="" disabled selected>--- Select Month ---</option>
-                    @isset($DateOfIssueBS)
+                    @isset($DateOfIssueBs)
 
                         @if($DateOfIssueBs['month'] == 1)
                             <option value="1" selected>Baishak</option>
@@ -286,7 +286,7 @@
                         @for($i = 1;$i<33;$i++)
                             <option value="{{$i}}">{{$i}}</option>
                         @endfor
-                    @endif
+                    @endisset
                 </select>
             </div>
         </div>

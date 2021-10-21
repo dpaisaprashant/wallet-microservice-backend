@@ -34,6 +34,7 @@ use App\Wallet\User\Repositories\UserKYCRepository;
 use App\Wallet\User\Repositories\UserRepository;
 use App\Wallet\WalletAPI\Microservice\UploadImageToCoreMicroservice;
 use Carbon\Carbon;
+use Doctrine\DBAL\Query\QueryException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use mysql_xdevapi\Exception;
@@ -221,6 +222,7 @@ class UserController extends Controller
 
         $disk = "kyc_images";
         $kycRequest = $request->all();
+        $selectedUser = User::where('id','=',$id)->first();
 
         if($kycRequest['date_format'] == "BS"){
             $dateAD = $this->ConvertNepaliDateFromRequest($kycRequest,'yearDob','monthDob','dayDob');
@@ -263,7 +265,21 @@ class UserController extends Controller
         if ($userKycs) {
             return back()->with('error', 'User KYC Already Exists');
         }
+
         try {
+            if (!$selectedUser->merchant()->exists()){
+                $userUpdateValues = [];
+                $userUpdateValues['name'] = $responseData['first_name'] . " " . $responseData['middle_name'] . " " . $responseData['last_name'];
+                $userUpdateValues['email'] = $responseData['email'];
+                $userUpdateValues['gender'] = $responseData['gender'];
+                $selectedUser->update($userUpdateValues);
+            }
+        }catch (\Exception $e){
+            return back()->with('error', 'Duplicated Email! Enter Unique Email');
+        }
+
+        try {
+
             $userKyc = UserKYC::create($responseData);
             $user = User::with('kyc')->findOrFail($id); //to pass to view
             $kyc_after_change = json_encode($userKyc); //for adminUpdateKyc
@@ -307,6 +323,7 @@ class UserController extends Controller
     public function UpdateKyc(Request $request, $id)
     {
         $selectedUserKYC = UserKYC::where('user_id','=',$id)->first();
+        $selectedUser = User::where('id','=',$id)->first();
         $kyc_before_change = json_encode($selectedUserKYC);
         $disk = "kyc_images";
         $kycRequest = $request->all();
@@ -351,25 +368,41 @@ class UserController extends Controller
             $convertedDate = date('Y-m-d', $dateConvert);
             $responseData['c_issued_date'] = $convertedDate;
         }
-
-        $adminId = auth()->user()->id;
-        $user_kyc_id = $selectedUserKYC->id; // for Admin Update KYC
-        $selectedUserKYC->update($responseData);
-        $status = $selectedUserKYC->save();
-        $kyc_after_change = json_encode($selectedUserKYC);
-        $user = User::with('kyc')->findOrFail($id);
-        $admin = 'admin';
-        if($status == true){
-            $adminUpdateKyc = new AdminUpdateKyc();
-            $adminUpdateKyc->admin_id = $adminId;
-            $adminUpdateKyc->user_kyc_id = $user_kyc_id;
-            $adminUpdateKyc->kyc_before_change = $kyc_before_change;
-            $adminUpdateKyc->kyc_after_change = $kyc_after_change;
-            $adminUpdateKyc->save();
-            return redirect()->route('user.kyc',$id)->with(compact('user','admin'))->with('success','User Kyc updated successfully');
-        }else{
-            return redirect()->route('user.kyc',$id)->with(compact('user','admin'))->with('error', 'Something went wrong!Please try again later');
+        try {
+            if (!$selectedUser->merchant()->exists()){
+                $userUpdateValues = [];
+                $userUpdateValues['name'] = $responseData['first_name'] . " " . $responseData['middle_name'] . " " . $responseData['last_name'];
+                $userUpdateValues['email'] = $responseData['email'];
+                $userUpdateValues['gender'] = $responseData['gender'];
+                $selectedUser->update($userUpdateValues);
+            }
+        }catch(\Exception $e){
+            return back()->with('error', 'Duplicated Email, Please Enter a Valid Email');
         }
+        try {
+            $adminId = auth()->user()->id;
+            $user_kyc_id = $selectedUserKYC->id; // for Admin Update KYC
+            $selectedUserKYC->update($responseData);
+            $status = $selectedUserKYC->save();
+            $kyc_after_change = json_encode($selectedUserKYC);
+            $user = User::with('kyc')->findOrFail($id);
+            $admin = 'admin';
+            if($status == true){
+                $adminUpdateKyc = new AdminUpdateKyc();
+                $adminUpdateKyc->admin_id = $adminId;
+                $adminUpdateKyc->user_kyc_id = $user_kyc_id;
+                $adminUpdateKyc->kyc_before_change = $kyc_before_change;
+                $adminUpdateKyc->kyc_after_change = $kyc_after_change;
+                $adminUpdateKyc->save();
+                return redirect()->route('user.kyc',$id)->with(compact('user','admin'))->with('success','User Kyc updated successfully');
+            }else{
+                return redirect()->route('user.kyc',$id)->with(compact('user','admin'))->with('error', 'Something went wrong!Please try again later');
+            }
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Something went wrong!Please try again later');
+        }
+
     }
 
     public function showAdminUpdatedKyc()

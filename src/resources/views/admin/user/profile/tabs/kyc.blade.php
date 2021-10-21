@@ -35,7 +35,7 @@
                             @endif
                         </dd>
                         <dt class="col-md-3 text-right">Middle Name</dt>
-                        <dd class="col-md-8">{{$user->kyc->middle_name == null ? ' ' : $user->kyc->middle_name}}\
+                        <dd class="col-md-8">{{$user->kyc->middle_name == null ? ' ' : $user->kyc->middle_name}}
                             @if(isset($user->kyc->kycValidation))
                                 @if($user->kyc->kycValidation->middle_name==0)
                                     <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
@@ -112,7 +112,9 @@
 
 
                         <dt class="col-md-3 text-right">Date of birth</dt>
-                        <dd class="col-md-8">{{ $user->kyc->date_of_birth }}
+                        <dd class="col-md-8">{{ $user->kyc->date_of_birth}} AD
+                            <br>
+                            {{$user->kyc->date_of_birth_bs}} @if($user->kyc->date_of_birth_bs) BS @endif
                             @if(isset($user->kyc->kycValidation))
                                 @if($user->kyc->kycValidation->date_of_birth==0)
                                     <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
@@ -196,7 +198,9 @@
                         </dd>
 
                         <dt class="col-md-3 text-right">Identity Issue Date</dt>
-                        <dd class="col-md-8">{{ date('M d, Y', strtotime($user->kyc->c_issued_date)) }}
+                        <dd class="col-md-8">{{ $user->kyc->c_issued_date }} AD
+                            <br>
+                            {{$user->kyc->c_issued_date_bs}} @if($user->kyc->c_issued_date_bs) BS @endif
                             @if(isset($user->kyc->kycValidation))
                                 @if($user->kyc->kycValidation->c_issued_date==0)
                                     <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>

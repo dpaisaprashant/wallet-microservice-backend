@@ -447,6 +447,11 @@ class RolesAndPermissionsSeeder extends Seeder
             'Delete issue ticket',
             'Create issue ticket',
 
+
+//            Transfer Bonus balance to Main balance
+            'Transfer bonus balance to main balance',
+
+
             //Merchant Addresses
             'View merchant address',
             'Add merchant address',
@@ -466,7 +471,10 @@ class RolesAndPermissionsSeeder extends Seeder
             'Rejected user kyc',
             'Accepted user kyc',
             'Pending user kyc',
-            'KYC not filled users'
+            'KYC not filled users',
+
+            //Merchant Revenues
+            'Merchant revenue view'
             ];
 
         //get users having all permissions

@@ -195,7 +195,7 @@
                                         <td class="center">Rs. {{ $transaction->amount }}</td>
                                         <td class="center">{{ $transaction->created_at }}</td>
                                         <td>
-
+                                            <a href="{{route('loadTestFund.detail',$transaction->id)}}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
                                         </td>
                                     </tr>
                                 @endforeach

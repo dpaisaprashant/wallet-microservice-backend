@@ -45,7 +45,7 @@
                                     <th>S.No.</th>
                                     <th>Question</th>
                                     <th>Answer</th>
-                                    @if(strtolower(config('app.'.'name')) == "icash")
+                                    @if(strtolower(config('app.'.'name')) == "icash" || strtolower(config('app.'.'name')) == "master")
                                         <th>Question Type</th>
                                         <th>Icon</th>
                                     @endif
@@ -59,7 +59,7 @@
                                         <td>{{ $loop->index + 1}}</td>
                                         <td>{{ $faq->question}}</td>
                                         <td>{{ $faq->answer}}</td>
-                                        @if(strtolower(config('app.'.'name')) == "icash")
+                                        @if(strtolower(config('app.'.'name')) == "icash" || strtolower(config('app.'.'name')) == "master")
                                             <td>{{ $faq->question_type}}</td>
                                             <td>{{ $faq->icon}}</td>
                                         @endif

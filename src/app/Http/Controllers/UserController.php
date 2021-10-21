@@ -37,12 +37,16 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use mysql_xdevapi\Exception;
+use App\Traits\DateConverter;
+
 
 class UserController extends Controller
 {
 
     use CollectionPaginate;
     use UploadImage;
+    use DateConverter;
+
 
     public $admin_data;
 
@@ -203,9 +207,6 @@ class UserController extends Controller
                 $admin = collect(array('nodata'));
                 $admin_data = collect(array('nodata'));
             }
-
-
-
         return view('admin.user.profile')->with(compact('userLoadCommission', 'admin_details', 'admin', 'loginHistoryAudits', 'allAudits', 'user', 'loadFundSum', 'activeTab', 'userTransactionStatements', 'userTransactionEvents','userBonus','userBonusBalance'));
     }
 
@@ -221,12 +222,28 @@ class UserController extends Controller
         $disk = "kyc_images";
         $kycRequest = $request->all();
 
+        if($kycRequest['date_format'] == "BS"){
+            $dateAD = $this->ConvertNepaliDateFromRequest($kycRequest,'yearDob','monthDob','dayDob');
+            $kycRequest['date_of_birth'] = $dateAD;
+        }
+
+        if($kycRequest['date_format_issueDate'] == "BS_issue"){
+            $dateAD = $this->ConvertNepaliDateFromRequest($kycRequest,'yearIssue','monthIssue','dayIssue');
+            $kycRequest['c_issued_date'] = $dateAD;
+        }
+
         $responseData = $this->uploadImageToCoreBase64($disk, $kycRequest, $request);
 
         if (!empty($responseData['date_of_birth'])) {
-            $dateConvert = strtotime($responseData['date_of_birth']);
+            $dateConvert = strtotime(str_replace(',','',$responseData['date_of_birth']));
             $convertedDate = date('Y-m-d', $dateConvert);
             $responseData['date_of_birth'] = $convertedDate;
+        }
+
+        if (!empty($responseData['c_issued_date'])) {
+            $dateConvert = strtotime(str_replace(',','',$responseData['c_issued_date']));
+            $convertedDate = date('Y-m-d', $dateConvert);
+            $responseData['c_issued_date'] = $convertedDate;
         }
 
 //        foreach ($kycRequest as $key => $value) {
@@ -258,7 +275,7 @@ class UserController extends Controller
             $adminUpdateKyc->user_kyc_id = $user_kyc_id;
             $adminUpdateKyc->kyc_after_change = $kyc_after_change;
             $adminUpdateKyc->save();
-            return redirect()->route('user.kyc', $id)->with(compact('user', 'admin'))->with('success', 'Wallet Service updated successfully');
+            return redirect()->route('user.kyc', $id)->with(compact('user', 'admin'))->with('success', 'User Kyc created successfully');
         }
         catch (\Exception $e){
             return back()->with('error', 'Something went wrong!Please try again later');
@@ -278,7 +295,13 @@ class UserController extends Controller
     {
         $user = User::with('kyc')->findOrFail($id);
         $admin = 'admin';
-        return view('admin.user.EditKyc')->with(compact('user','admin'));
+        $DobBs = $this->EnglishToNepali(date('Y-m-d',strtotime(str_replace(',','',$user->kyc->date_of_birth))));
+        $DateOfIssueBs = $this->EnglishToNepali(date('Y-m-d',strtotime(str_replace(',','',$user->kyc->c_issued_date))));
+        $date_of_birth = strtotime($user->kyc->date_of_birth);
+        $date_of_birth_formatted = date('j F, Y',$date_of_birth);
+        $date_of_issue = strtotime($user->kyc->c_issued_date);
+        $date_of_issue_formatted = date('j F, Y',$date_of_issue);
+        return view('admin.user.EditKyc')->with(compact('user','admin','DobBs','DateOfIssueBs','date_of_birth_formatted','date_of_issue_formatted'));
     }
 
     public function UpdateKyc(Request $request, $id)
@@ -287,7 +310,19 @@ class UserController extends Controller
         $kyc_before_change = json_encode($selectedUserKYC);
         $disk = "kyc_images";
         $kycRequest = $request->all();
+
+        if($kycRequest['date_format'] == "BS"){
+            $dateAD = $this->ConvertNepaliDateFromRequest($kycRequest,'yearDob','monthDob','dayDob');
+            $kycRequest['date_of_birth'] = $dateAD;
+        }
+
+        if($kycRequest['date_format_issueDate'] == "BS_issue"){
+            $dateAD = $this->ConvertNepaliDateFromRequest($kycRequest,'yearIssue','monthIssue','dayIssue');
+            $kycRequest['c_issued_date'] = $dateAD;
+        }
+
         $responseData = $this->uploadImageToCoreBase64($disk, $kycRequest,$request); // this is more efficient that the commented out code below
+
         //note: the below code works just fine but is tedious can be deleted, for now i have just commented it out
 //        $kycImageOnly = $request->allFiles();
 //        foreach ($kycImageOnly as $key => $value) {
@@ -306,10 +341,17 @@ class UserController extends Controller
         //note: the above code works just fine but is tedious can be deleted, for now i have just commented it out
 
         if(!empty($responseData['date_of_birth'])){
-            $dateConvert = strtotime($responseData['date_of_birth']);
+            $dateConvert = strtotime(str_replace(',','',$responseData['date_of_birth']));
             $convertedDate = date('Y-m-d', $dateConvert);
             $responseData['date_of_birth']=$convertedDate;
         }
+
+        if (!empty($responseData['c_issued_date'])) {
+            $dateConvert = strtotime(str_replace(',','',$responseData['c_issued_date']));
+            $convertedDate = date('Y-m-d', $dateConvert);
+            $responseData['c_issued_date'] = $convertedDate;
+        }
+
         $adminId = auth()->user()->id;
         $user_kyc_id = $selectedUserKYC->id; // for Admin Update KYC
         $selectedUserKYC->update($responseData);
@@ -324,7 +366,7 @@ class UserController extends Controller
             $adminUpdateKyc->kyc_before_change = $kyc_before_change;
             $adminUpdateKyc->kyc_after_change = $kyc_after_change;
             $adminUpdateKyc->save();
-            return redirect()->route('user.kyc',$id)->with(compact('user','admin'))->with('success','Wallet Service updated successfully');
+            return redirect()->route('user.kyc',$id)->with(compact('user','admin'))->with('success','User Kyc updated successfully');
         }else{
             return redirect()->route('user.kyc',$id)->with(compact('user','admin'))->with('error', 'Something went wrong!Please try again later');
         }

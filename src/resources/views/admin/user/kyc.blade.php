@@ -323,7 +323,10 @@
                                                     </label>
                                                 </div>
                                             </dt>
-                                            <dd class="col-md-8">{{ $user->kyc->date_of_birth }}</dd>
+                                            <dd class="col-md-8">{{ $user->kyc->date_of_birth }} AD
+                                                <br>
+                                                {{$user->kyc->date_of_birth_bs}} @if($user->kyc->date_of_birth_bs)BS @endif
+                                            </dd>
 
                                             <dt class="col-md-3 text-right">
                                                 <div class="i-checks">
@@ -433,7 +436,10 @@
                                                     </label>
                                                 </div>
                                             </dt>
-                                            <dd class="col-md-8">{{ date('M d, Y', strtotime($user->kyc->c_issued_date)) }}</dd>
+                                            <dd class="col-md-8">{{ ($user->kyc->c_issued_date) }} AD
+                                                <br>
+                                                {{$user->kyc->c_issued_date_bs}} @if($user->kyc->c_issued_date_bs)BS @endif
+                                            </dd>
 
                                             <dt class="col-md-3 text-right">
                                                 <div class="i-checks">

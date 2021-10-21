@@ -12,6 +12,7 @@ use App\Models\NchlAggregatedPayment;
 use App\Models\NchlBankTransfer;
 use App\Models\NchlLoadTransaction;
 use App\Models\NICAsiaCyberSourceLoadTransaction;
+use App\Models\NpsLoadTransaction;
 use App\Models\TransactionEvent;
 use App\Models\UserCheckPayment;
 use App\Models\UserExecutePayment;
@@ -32,6 +33,8 @@ class PreTransaction extends Model
 
     CONST MICROSERVICE_PAYPOINT = 'PAYPOINT';
     CONST MICROSERVICE_NCHL = 'NCHL';
+
+    CONST MICROSERVICE_WALLET = 'WALLET';
 
     CONST TRANSACTION_TYPE_DEBIT = 'debit';
     CONST TRANSACTION_TYPE_CREDIT = 'credit';
@@ -116,6 +119,10 @@ class PreTransaction extends Model
 
     public function cellPayUserTransaction(){
         return $this->hasOne(CellPayUserTransaction::class,'reference_no','pre_transaction_id');
+    }
+
+    public function npsLoadTransaction(){
+        return $this->hasOne(NpsLoadTransaction::class,'pre_transaction_id','pre_transaction_id');
     }
 
 }

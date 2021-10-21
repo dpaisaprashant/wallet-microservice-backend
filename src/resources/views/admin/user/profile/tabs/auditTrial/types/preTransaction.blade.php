@@ -101,14 +101,14 @@
                                   <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button>
                               </a>
                           @endif--}}
-        @elseif($event->microservice_type == 'KHALTI')
+       {{-- @elseif($event->microservice_type == 'KHALTI')
             @if(!empty($event->khaltiUserTransaction))
-                {{--                    {{ dd($event->khaltiUserTransaction) }}--}}
+                --}}{{--                    {{ dd($event->khaltiUserTransaction) }}--}}{{--
                 <a href="{{ route('khalti.payment.detail', $event->khaltiUserTransaction->id) }}">
                     <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button>
 
                 </a>
-            @endif
+            @endif--}}
         @elseif(!empty($event->transactionEvent))
             @if($event->transactionEvent instanceof \App\Models\UserToUserFundTransfer)
                 @include('admin.transaction.fundTransfer.detail', [$event->transactionEvent->transactionable])
@@ -147,8 +147,8 @@
             <a href="{{ route('eBanking.detail', $event->userLoadTransaction) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         @elseif($event->userTransaction)
             <a href="{{ route('paypoint.detail', $event->userTransaction->id) }}">    <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
-        @elseif($event->khaltiUserTransaction)
-            <a href="{{ route('khalti.payment.detail', $event->khaltiUserTransaction->id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+       {{-- @elseif($event->khaltiUserTransaction)
+            <a href="{{ route('khalti.payment.detail', $event->khaltiUserTransaction->id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>--}}
         @elseif($event->nchlBankTransfer)
             <a href="{{ route('nchl.bankTransfer.detail', $event->nchlBankTransfer->id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         @elseif($event->nchlLoadTransaction)

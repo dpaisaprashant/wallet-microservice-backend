@@ -73,7 +73,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6" style="padding-bottom: 15px;">
+                                        <div class="col-md-4" style="padding-bottom: 15px;">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
@@ -82,12 +82,40 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6" style="padding-bottom: 15px;">
+                                        <div class="col-md-4" style="padding-bottom: 15px;">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </span>
                                                 <input id="date_load_to" type="text" class="form-control date_to" placeholder="To" name="to" autocomplete="off" value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <select data-placeholder="Choose User Type..." class="chosen-select"  tabindex="2" name="user_type">
+                                                    <option value=""  disabled>Sort By User Type</option>
+                                                    <option value="" selected>All</option>
+                                                    @if(!empty($_GET['user_type']))
+                                                        @if($_GET['user_type'] == "normal_user")
+                                                            <option value="normal_user" selected>Normal user</option>
+                                                            <option value="agent">Agent</option>
+                                                            <option value="merchant">Merchant</option>
+                                                        @elseif($_GET['user_type'] == "agent")
+                                                            <option value="normal_user">Normal user</option>
+                                                            <option value="agent" selected>Agent</option>
+                                                            <option value="merchant">Merchant</option>
+                                                        @elseif($_GET['user_type'] == 'merchant')
+                                                            <option value="normal_user">Normal user</option>
+                                                            <option value="agent">Agent</option>
+                                                            <option value="merchant" selected>Merchant</option>
+                                                        @endif
+                                                    @else
+                                                        <option value="normal_user">Normal user</option>
+                                                        <option value="agent">Agent</option>
+                                                        <option value="merchant">Merchant</option>
+                                                    @endif
+                                                </select>
                                             </div>
                                         </div>
 
@@ -145,6 +173,7 @@
                                     <th>User</th>
                                     <th>Contact Number</th>
                                     <th>Email</th>
+                                    <th>User Type</th>
                                     <th>Wallet Balance</th>
                                     <th>No. of <br>Transactions</th>
                                     <th>Utility <br>Payment Sum</th>
@@ -173,6 +202,9 @@
                                             @else
                                                 <i class="fa fa-times-circle" style="color: red;"></i>&nbsp;{{ $user->email }}
                                             @endif
+                                        </td>
+                                        <td>
+                                            @include('admin.user.userType.displayUserTypes',['user' => $user])
                                         </td>
                                         <td>Rs. {{ $user->wallet->balance }}</td>
                                         <td>{{ count($user->userTransactionEvents) }}</td>

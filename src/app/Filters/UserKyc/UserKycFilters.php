@@ -17,7 +17,8 @@ class UserKycFilters extends FiltersAbstract
         'status' => StatusFilter::class,
         'from' => FromDateFilter::class,
         'to' => ToDateFilter::class,
-        'change_status' => ChangeStatusFilter::class
+        'change_status' => ChangeStatusFilter::class,
+        'user_type' => UserTypeFilter::class,
     ];
 
 

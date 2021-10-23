@@ -21,9 +21,9 @@ class MisMatchUserReconciliation
 
         foreach($users as $user){
             Log::info(" =========== checking for user: " . $user->mobile_no . " ===============");
-            $walletMainBalance = $user->wallet->main_balance;
+            $totalWalletBalance = $user->wallet->main_balance; // balance + bonus_balance
+            $walletBalance = $user->wallet->balance;
             $walletBonusBalance = $user->wallet->bonus_balance;
-            $totalWalletBalance = $walletMainBalance + $walletBonusBalance;
             $request->merge([
                 'individual_user_number' => $user->mobile_no,
             ]);
@@ -32,12 +32,13 @@ class MisMatchUserReconciliation
             $userMainBalance = $repository->totalLoadAmount() - $repository->totalPaymentAmount();
             if($totalWalletBalance != $userMainBalance){
                 Log::info("mismatch for user: " . $user->mobile_no);
-                Log::info("Wallet Main Balance: " . $walletMainBalance);
+                Log::info("Wallet Balance: " . $walletBalance);
                 Log::info("Wallet Bonus Balance: " . $walletBonusBalance);
+                Log::info("Wallet total Balance: " . $totalWalletBalance);
                 Log::info("Reconciliation balance: " . $userMainBalance);
 
                 $misMatchArray[] = array(
-                    'walletMainBalance' => $walletMainBalance / 100,
+                    'walletTotalBalance' => $totalWalletBalance / 100,
                     'userMainBalance' => $userMainBalance / 100,
                     'mobileNumber' => $user->mobile_no,
                     'userId' => $user->id
@@ -59,7 +60,7 @@ class MisMatchUserReconciliation
                     $value['mobileNumber'],
 
                     'Wallet Main Balance:',
-                    $value['walletMainBalance'],
+                    $value['walletTotalBalance'],
 
                     'User Main Balance:',
                     $value['userMainBalance'],

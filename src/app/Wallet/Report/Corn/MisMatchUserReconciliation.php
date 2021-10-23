@@ -13,20 +13,25 @@ use Illuminate\Support\Facades\Log;
 class MisMatchUserReconciliation
 {
     public function __invoke(Request $request){
+        Log::info("Checking mismatch reconciliation");
         $users = User::with('wallet')->latest()->get();
         $misMatchArray = [];
         $repository = new ReconciliationReportRepository(request());
 
 
         foreach($users as $user){
+            Log::info("checking for user: " . $user->mobile_no);
             $walletMainBalance = $user->wallet->main_balance;
+            $walletBonusBalance = $user->wallet->bonus_balance;
+            $totalWalletBalance = $walletMainBalance + $walletBonusBalance;
             $request->merge([
                 'individual_user_number' => $user->mobile_no,
             ]);
             $repository = new ReconciliationReportRepository($request);
 
             $userMainBalance = $repository->totalLoadAmount() - $repository->totalPaymentAmount();
-            if($walletMainBalance != $userMainBalance){
+            if($totalWalletBalance != $userMainBalance){
+                Log::info("mismatch for user: " . $user->mobile_no);
                 $misMatchArray[] = array(
                     'walletMainBalance' => $walletMainBalance / 100,
                     'userMainBalance' => $userMainBalance / 100,

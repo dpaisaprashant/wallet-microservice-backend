@@ -15,6 +15,7 @@ use App\Models\Microservice\PreTransaction;
 use App\Models\NchlAggregatedPayment;
 use App\Models\NchlBankTransfer;
 use App\Models\NchlLoadTransaction;
+use App\Models\NeaTransaction;
 use App\Models\NICAsiaCyberSourceLoadTransaction;
 use App\Models\NPSAccountLinkLoad;
 use App\Models\NpsLoadTransaction;
@@ -64,6 +65,21 @@ class ReconciliationReportRepository extends AbstractReportRepository
     public function totalKhaltiTransactionCount()
     {
         return TransactionEvent::where('transaction_type', KhaltiUserTransaction::class)
+            ->filter($this->request)
+            ->count();
+    }
+
+
+    public function totalNeaTransactionAmount()
+    {
+        return TransactionEvent::where('transaction_type', NeaTransaction::class)
+            ->filter($this->request)
+            ->sum('amount');
+    }
+
+    public function totalNeaTransactionCount()
+    {
+        return TransactionEvent::where('transaction_type', NeaTransaction::class)
             ->filter($this->request)
             ->count();
     }
@@ -551,6 +567,7 @@ class ReconciliationReportRepository extends AbstractReportRepository
         return $this->totalPaypointTransactionAmount() + $this->totalNchlBankTransferAmount()
             + $this->totalCommissionAmount() + $this->totalUserSendToMerchantAmount()
             + $this->totalNchlAggregatedPaymentAmount() + $this->totalUserToMerchantEventTicketPaymentAmount()
+                + $this->totalNeaTransactionAmount()
             + $this->totalKhaltiTransactionAmount()+$this->totalCellPayAmount()+$this->totalNtcDirectAmount()+$this->totalBFIDebitAmount()
          +$this->totaluserSendsFundToBfiAmount() +$this->totalbfiSendFundToUserAmount()+$this->totalUserSendsBalanceToOtherUserAmount()+$this->totalUserSendsFundToOtherUserAmount();
     }

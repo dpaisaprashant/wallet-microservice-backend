@@ -17,7 +17,8 @@ class MisMatchUserReconciliation
         $users = User::with('wallet')->latest()->get();
         $misMatchArray = [];
         $repository = new ReconciliationReportRepository(request());
-
+        $decimalMismatch = [];
+        $amountMismatch = [];
 
         foreach($users as $user){
             Log::info(" =========== checking for user: " . $user->mobile_no . " ===============");
@@ -32,8 +33,8 @@ class MisMatchUserReconciliation
             $userMainBalance = $repository->totalLoadAmount() - $repository->totalPaymentAmount();
             if($totalWalletBalance != $userMainBalance){
                 Log::info("mismatch for user: " . $user->mobile_no);
-                Log::info("Wallet Balance: " . $walletBalance);
-                Log::info("Wallet Bonus Balance: " . $walletBonusBalance);
+                Log::info("Wallet Balance: " . ($walletBalance * 100));
+                Log::info("Wallet Bonus Balance: " . ($walletBonusBalance * 100));
                 Log::info("Wallet total Balance: " . $totalWalletBalance);
                 Log::info("Reconciliation balance: " . $userMainBalance);
 
@@ -43,6 +44,16 @@ class MisMatchUserReconciliation
                     'mobileNumber' => $user->mobile_no,
                     'userId' => $user->id
                 );
+
+
+                $diff = $totalWalletBalance - $userMainBalance;
+                if ($diff < 0) $diff = $diff * -1;
+                if ($diff < 1) {
+                    array_push($decimalMismatch, $user->id);
+                } else {
+                    array_push($amountMismatch, $user->id);
+                }
+
             }
             Log::info("==================================================================");
 
@@ -69,6 +80,10 @@ class MisMatchUserReconciliation
         }
 
         Log::info("Mismatch user id: ", $misMatchUserIds);
+        Log::info("=======================================");
+        Log::info("Decimal mismatch user id: ", $decimalMismatch);
+        Log::info("=======================================");
+        Log::info("Amount mismatch user id: ", $amountMismatch);
 
     }
 }

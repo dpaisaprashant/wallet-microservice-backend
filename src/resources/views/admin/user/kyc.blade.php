@@ -42,14 +42,25 @@
                 <div class="ibox ">
                     <div class="ibox-title">
                         <h5>User KYC Details</h5>
-                        @can('Edit user kyc')
-                            <a style="margin-top: -10px; padding: 8px;display: inline; float: right"
-                               href="{{route('user.editKyc',$user->id)}}"
-                               class="btn btn-sm btn-primary m-t-n-xs"
-                               title="user profile">
-                                <i class="fa fa-pencil"> EDIT</i>
-                            </a>
-                        @endcan
+                        @if($user->kyc)
+                            @can('Edit user kyc')
+                                <a style="margin-top: -10px; padding: 8px;display: inline; float: right"
+                                   href="{{route('user.editKyc',$user->id)}}"
+                                   class="btn btn-sm btn-primary m-t-n-xs"
+                                   title="user profile">
+                                    <i class="fa fa-pencil"> EDIT</i>
+                                </a>
+                            @endcan
+                        @else
+                            @can('Create user kyc')
+                                    <a style="margin-top: -10px; padding: 8px;display: inline; float: right"
+                                       href="{{route('user.createUserKyc',$user->id)}}"
+                                       class="btn btn-sm btn-primary m-t-n-xs"
+                                       title="user profile">
+                                        <i class="fa fa-pencil"> CREATE</i>
+                                    </a>
+                            @endcan
+                        @endif
                     </div>
                     <div class="ibox-content">
                         @if($user->merchant()->first())

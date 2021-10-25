@@ -120,6 +120,33 @@
                                                        value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
                                             </div>
                                         </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <select data-placeholder="Choose User Type..." class="chosen-select"  tabindex="2" name="user_type">
+                                                    <option value="" selected disabled>Sort By User Type</option>
+                                                    <option value="" selected>All</option>
+                                                    @if(!empty($_GET['user_type']))
+                                                        @if($_GET['user_type'] == "normal_user")
+                                                            <option value="normal_user" selected>Normal user</option>
+                                                            <option value="agent">Agent</option>
+                                                            <option value="merchant">Merchant</option>
+                                                        @elseif($_GET['user_type'] == "agent")
+                                                            <option value="normal_user">Normal user</option>
+                                                            <option value="agent" selected>Agent</option>
+                                                            <option value="merchant">Merchant</option>
+                                                        @elseif($_GET['user_type'] == 'merchant')
+                                                            <option value="normal_user">Normal user</option>
+                                                            <option value="agent">Agent</option>
+                                                            <option value="merchant" selected>Merchant</option>
+                                                        @endif
+                                                    @else
+                                                        <option value="normal_user">Normal user</option>
+                                                        <option value="agent">Agent</option>
+                                                        <option value="merchant">Merchant</option>
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                     <br>
                                     <div>

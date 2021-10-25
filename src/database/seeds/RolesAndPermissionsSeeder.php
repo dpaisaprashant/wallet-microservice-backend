@@ -474,7 +474,13 @@ class RolesAndPermissionsSeeder extends Seeder
             'KYC not filled users',
 
             //Merchant Revenues
-            'Merchant revenue view'
+            'Merchant revenue view',
+
+            //Social Media Challenge
+            'View social media challenge',
+            'Edit social media challenge',
+            'Add social media challenge',
+            'Delete social media challenge',
             ];
 
         //get users having all permissions

@@ -34,7 +34,7 @@ class UserFilters extends FiltersAbstract
         'parent_agent_number_email'=>ParentAgentNumberEmailFilter::class,
         'agent_status'=>AgentStatusFilter::class,
         'merchant_type' => MerchantTypeFilter::class,
-
+        'user_type' => UserTypeFilter::class,
     ];
 
 

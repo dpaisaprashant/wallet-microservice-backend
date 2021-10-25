@@ -310,6 +310,9 @@ class UserController extends Controller
     public function EditKyc($id)
     {
         $user = User::with('kyc')->findOrFail($id);
+        if ($user->kyc == null) {
+            return back()->with('error', 'User Has not Filled Kyc');
+        }
         $admin = 'admin';
         $DobBs = $this->EnglishToNepali(date('Y-m-d',strtotime(str_replace(',','',$user->kyc->date_of_birth))));
         $DateOfIssueBs = $this->EnglishToNepali(date('Y-m-d',strtotime(str_replace(',','',$user->kyc->c_issued_date))));

@@ -20,6 +20,7 @@ class CreateUserSocialChallengesTable extends Migration
                 $table->foreignId('social_challenge_id');
                 $table->foreignId('user_id');
                 $table->text('link');
+                $table->text('facebook_link')->nullable();
                 $table->text('embed_link')->nullable();
                 $table->text('caption')->nullable();
                 $table->string('challenge_status')->nullable();
@@ -40,6 +41,6 @@ class CreateUserSocialChallengesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_social_challenges');
+        Schema::connection('dpaisa')->dropIfExists('user_social_challenges');
     }
 }

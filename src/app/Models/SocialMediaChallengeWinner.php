@@ -13,7 +13,7 @@ class SocialMediaChallengeWinner extends Model
 
     protected $fillable = [
         'user_id',
-        'social_challenges_id',
+        'social_challenge_id',
         'won_at',
         'description',
     ];
@@ -23,4 +23,8 @@ class SocialMediaChallengeWinner extends Model
 //        return (new SocialMediaChallengeFilters($request))->add($filters)->filter($builder);
 //    }
 
+//    public function challengeWinner()
+//    {
+//        return $this->belongsTo(SocialMediaChallengeUser::class, 'user_id','user_id');
+//    }
 }

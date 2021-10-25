@@ -18,7 +18,7 @@ class CreateSocialChallengesWinnersTable extends Migration
             Schema::connection('dpaisa')->create('social_challenges_winners', function (Blueprint $table) {
                 $table->id();
                 $table->foreignId('user_id');
-                $table->foreignId('social_challenges_id');
+                $table->foreignId('social_challenge_id');
                 $table->dateTime('won_at');
                 $table->text('description')->nullable();
                 $table->timestamps();
@@ -34,6 +34,6 @@ class CreateSocialChallengesWinnersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('social_challenges_winners');
+        Schema::connection('dpaisa')->dropIfExists('social_challenges_winners');
     }
 }

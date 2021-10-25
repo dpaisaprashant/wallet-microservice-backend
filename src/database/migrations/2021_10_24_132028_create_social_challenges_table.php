@@ -42,6 +42,6 @@ class CreateSocialChallengesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('social_challenges');
+        Schema::connection('dpaisa')->dropIfExists('social_challenges');
     }
 }

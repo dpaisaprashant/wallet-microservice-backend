@@ -18,26 +18,26 @@ class SocialMediaChallengeController extends Controller
     public function view(Request $request)
     {
 
-        $status = SocialMediaChallenge::groupBy('status')->pluck('status')->toArray();
-
-        View::share('status', $status);
+//        $status = SocialMediaChallenge::groupBy('status')->pluck('status')->toArray();
+//
+//        View::share('status', $status);
 
         $socialMediaChallenges = SocialMediaChallenge::filter($request)->paginate(20);
 
-        return view('SocialMediaChallenge::view-social-media-challenge',compact('socialMediaChallenges'));
+        return view('SocialMediaChallenge::view-social-media-challenge', compact('socialMediaChallenges'));
     }
 
     public function create(Request $request)
     {
         $socialMediaChallenges = SocialMediaChallenge::all();
 
-        return view('SocialMediaChallenge::view-social-media-challenge',compact('socialMediaChallenges'));
+        return view('SocialMediaChallenge::create-social-media-challenge', compact('socialMediaChallenges'));
 
     }
 
     public function store(Request $request)
     {
-       SocialMediaChallenge::create([
+        SocialMediaChallenge::create([
             'title' => $request->get('title'),
             'description' => $request->get('description'),
             'code' => $request->get('code'),
@@ -46,6 +46,7 @@ class SocialMediaChallengeController extends Controller
             'status' => $request->get('status'),
             'attempts_per_user' => $request->get('attempts_per_user'),
             'expired_at' => $request->get('expired_at'),
+            'created_at' => $request->get('created_at'),
             'special1' => $request->get('special1'),
             'special2' => $request->get('special2'),
             'special3' => $request->get('special3'),
@@ -53,7 +54,7 @@ class SocialMediaChallengeController extends Controller
 
         ]);
 
-        return redirect()->route('socialmediachallenge.view')->with('success','Social Media Challenge Added Successfully.');
+        return redirect()->route('socialmediachallenge.view')->with('success', 'Social Media Challenge Added Successfully.');
     }
 
     public function delete($id)
@@ -62,17 +63,19 @@ class SocialMediaChallengeController extends Controller
 
         $socialMediaChallenge->delete();
 
-        return redirect()->route('socialmediachallenge.view')->with('success','Social Media Challenge Deleted Successfully.');
+        return redirect()->route('socialmediachallenge.view')->with('success', 'Social Media Challenge Deleted Successfully.');
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
 
         $socialMediaChallenge = SocialMediaChallenge::findOrFail($id);
 
         return view('SocialMediaChallenge::edit-social-media-challenge', compact('socialMediaChallenge'));
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
 
         $socialMediaChallenge = SocialMediaChallenge::findOrFail($id);
 
@@ -91,7 +94,7 @@ class SocialMediaChallengeController extends Controller
             'special4' => $request->get('special4'),
         ]);
 
-        return redirect()->route('socialmediachallenge.view')->with('success','Updated successfully');
+        return redirect()->route('socialmediachallenge.view')->with('success', 'Updated successfully');
     }
 
 }

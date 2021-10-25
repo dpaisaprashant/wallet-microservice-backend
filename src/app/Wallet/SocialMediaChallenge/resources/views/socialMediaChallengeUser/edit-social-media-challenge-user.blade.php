@@ -3,14 +3,19 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Whitelist an IP</h2>
+            <h2>Social Media Challenge</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
                 </li>
 
                 <li class="breadcrumb-item">
-                    <a href="{{ route('whitelistedIP.view') }}">Whitelisted IPs</a>
+                    <a href="{{ route('socialmediachallenge.view') }}">Social Media Challenge</a>
+                </li>
+
+                <li class="breadcrumb-item">
+                    <a href="{{ route('socialmediachallenge.user.view',$socialMediaChallengeUser->socialMediaChallenge->id) }}">Social
+                        Media Challenge Users</a>
                 </li>
 
                 <li class="breadcrumb-item active">
@@ -25,42 +30,56 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>Edit Whitelisted IP</h5>
+                        <h5>Edit {{$socialMediaChallengeUser->user->name}}
+                            's {{$socialMediaChallengeUser->socialMediaChallenge->title}} Info</h5>
                     </div>
                     <div class="ibox-content">
-                        <form method="post" action="{{ route('whitelistedIP.update',$whitelistedIP->id) }}"  enctype="multipart/form-data" id="blockedIPForm">
+                        <form method="post"
+                              action="{{ route('socialmediachallenge.user.update',$socialMediaChallengeUser->id) }}"
+                              enctype="multipart/form-data" id="socialChallengeForm">
                             @csrf
                             @method('PUT')
                             <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">IP</label>
+                                <label class="col-sm-2 col-form-label">Link</label>
                                 <div class="col-sm-10">
-                                    <input name="ip" type="text" class="form-control" value="{{$whitelistedIP->ip}}" required>
+                                    <input name="link" type="text" class="form-control"
+                                           value="{{$socialMediaChallengeUser->link}}" required>
                                 </div>
                             </div>
 
                             <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Title</label>
+                                <label class="col-sm-2 col-form-label">Caption</label>
                                 <div class="col-sm-10">
-                                    <input name="title" type="text" class="form-control" value="{{$whitelistedIP->title}}" required>
+                                    <input name="caption" type="text" class="form-control"
+                                           value="{{$socialMediaChallengeUser->caption}}" required>
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Status</label>
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Challenge Status</label>
                                 <div class="col-sm-10">
-                                    <select data-placeholder="Select Status..." class="chosen-select" tabindex="2" name="status">
-                                        <option @if($whitelistedIP->status == 'Active')  selected @endif>Active</option>
-                                        <option @if($whitelistedIP->status == 'Inactive') selected @endif>Inactive</option>
-                                    </select>
+                                    <input name="challenge_status" type="text" class="form-control"
+                                           value="{{$socialMediaChallengeUser->challenge_status}}" required>
                                 </div>
                             </div>
 
-                            <div class="form-group  row" style="display:none">
-                                <label class="col-sm-2 col-form-label">Created At</label>
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Embed Link</label>
                                 <div class="col-sm-10">
-                                    <input name="created_at" type="datetime" class="form-control" value="{{$whitelistedIP->created_at}}"  required>
+                                    <input name="embed_link" type="text" class="form-control"
+                                           value="{{$socialMediaChallengeUser->embed_link}}">
                                 </div>
                             </div>
+
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Facebook Link</label>
+                                <div class="col-sm-10">
+                                    <input name="facebook_link" type="text" class="form-control"
+                                           value="{{$socialMediaChallengeUser->facebook_link}}">
+                                </div>
+                            </div>
+
+
 
                             <div class="hr-line-dashed"></div>
 
@@ -71,6 +90,32 @@
                             </div>
 
 
+                        </form>
+                        <form action="{{ route('socialmediachallenge.user.winner', $socialMediaChallengeUser->id) }}" method="POST">
+                            @csrf
+
+                            <input type="hidden" name="user_id"
+                                   value="{{$socialMediaChallengeUser->user->id}}">
+                            <input type="hidden" name="social_challenge_id"
+                                   value="{{$socialMediaChallengeUser->socialMediaChallenge->id}}">
+                            <input type="hidden" name="won_at"
+                                   value="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
+                            <input type="text" name="description"
+                                   value="Winner of {{$socialMediaChallengeUser->socialMediaChallenge->title}}!">
+
+                                <button
+                                    class="reset btn btn-icon btn-outline-success btn-sm m-t-n-xs"
+                                    rel="{{ $socialMediaChallengeUser->id }}"><i
+                                        class="fa fa-trophy"></i>
+                                </button>
+                                <button id="resetBtn-{{ $socialMediaChallengeUser->id }}"
+                                        style="display: none" type="submit"
+                                        href="{{ route('socialmediachallenge.user.winner',$socialMediaChallengeUser->id) }}"
+                                        class="resetBtn btn btn-icon btn-outline-success btn-sm m-t-n-xs">
+                                    <i class="fa fa-trophy"></i></button>
+
+                                &nbsp; &nbsp;<i class="fa fa-trophy" style="color:inherit;"> Winner</i>
+                            @endif
                         </form>
                     </div>
                 </div>

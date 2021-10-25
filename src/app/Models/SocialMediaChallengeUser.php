@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use App\Traits\BelongsToUser;
 
 class SocialMediaChallengeUser extends Model
 {
+    use BelongsToUser;
+
     protected $table = 'user_social_challenges';
     protected $connection = 'dpaisa';
 
@@ -16,6 +19,7 @@ class SocialMediaChallengeUser extends Model
         'user_id',
         'link',
         'embed_link',
+        'facebook_link',
         'caption',
         'challenge_status',
         'special1',
@@ -28,5 +32,11 @@ class SocialMediaChallengeUser extends Model
 //    {
 //        return (new SocialMediaChallengeFilters($request))->add($filters)->filter($builder);
 //    }
+
+    public function socialMediaChallenge()
+    {
+        return $this->belongsTo(SocialMediaChallenge::class, 'social_challenge_id');
+    }
+
 
 }

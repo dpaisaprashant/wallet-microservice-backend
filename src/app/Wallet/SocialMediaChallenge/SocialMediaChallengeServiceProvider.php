@@ -1,13 +1,13 @@
 <?php
 
 
-namespace App\Wallet\LinkedAccounts;
+namespace App\Wallet\SocialMediaChallenge;
 
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
-class LinkedAccountsServiceProvider extends ServiceProvider
+class SocialMediaChallengeServiceProvider extends ServiceProvider
 {
     public function register()
     {
@@ -16,8 +16,8 @@ class LinkedAccountsServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->loadRoutesFrom(__DIR__.'/routes/LinkedAccounts.php');
-        $this->loadViewsFrom(__DIR__.'/resources/views', 'LinkedAccounts');
+        $this->loadRoutesFrom(__DIR__.'/routes/socialmediachallenge.php');
+        $this->loadViewsFrom(__DIR__.'/resources/views', 'SocialMediaChallenge');
     }
 
 }

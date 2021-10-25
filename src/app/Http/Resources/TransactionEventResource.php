@@ -26,7 +26,7 @@ class TransactionEventResource extends JsonResource
             'SERVICE TYPE' => $this->service_type,
             'DESCRIPTION' => $this->description,
             'CASHBACK AMOUNT' => $this->cashback_amount,
-            'CREATED AT' => $this->created_at
+            'CREATED AT' => (string) $this->created_at
         ];
     }
 }

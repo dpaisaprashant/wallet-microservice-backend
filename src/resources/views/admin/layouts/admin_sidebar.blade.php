@@ -391,7 +391,7 @@ $url = url()->current();
 
             @if(auth()->user()->hasPermissionTo('View social media challenge'))
                 <li @if(preg_match('/social-media-challenge/i', $url)) class="active" @endif>
-                    <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Social Media Challenge</span><span
+                    <a href="#"><i class="fa fa-trophy"></i> <span class="nav-label">Social Media Challenge</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         @can('View social media challenge')

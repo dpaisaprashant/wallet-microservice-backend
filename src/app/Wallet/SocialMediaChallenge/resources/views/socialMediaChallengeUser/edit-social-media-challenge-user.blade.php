@@ -91,6 +91,10 @@
 
 
                         </form>
+                        <div >
+                        <div class="ibox-title" style="margin-left: -15px">
+                            <h5>Select {{$socialMediaChallengeUser->user->name}} as {{$socialMediaChallengeUser->socialMediaChallenge->title}} Winner</h5>
+                        </div>
                         <form action="{{ route('socialmediachallenge.user.winner', $socialMediaChallengeUser->id) }}" method="POST">
                             @csrf
 
@@ -100,23 +104,32 @@
                                    value="{{$socialMediaChallengeUser->socialMediaChallenge->id}}">
                             <input type="hidden" name="won_at"
                                    value="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
-                            <input type="text" name="description"
-                                   value="Winner of {{$socialMediaChallengeUser->socialMediaChallenge->title}}!">
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Description</label>
+                                <div class="col-sm-10">
+                                    <input name="description" type="text" class="form-control"
+                                           value="Winner of {{$socialMediaChallengeUser->socialMediaChallenge->title}}!">
+                                </div>
+                            </div>
+{{--                            <input type="text" name="description"--}}
+{{--                                   value="Winner of {{$socialMediaChallengeUser->socialMediaChallenge->title}}!">--}}
 
                                 <button
                                     class="reset btn btn-icon btn-outline-success btn-sm m-t-n-xs"
-                                    rel="{{ $socialMediaChallengeUser->id }}"><i
-                                        class="fa fa-trophy"></i>
+                                    rel="{{ $socialMediaChallengeUser->id }}" style="width: 120px"><i
+                                        class="fa fa-trophy"></i>&nbsp;Save as Winner
                                 </button>
+
                                 <button id="resetBtn-{{ $socialMediaChallengeUser->id }}"
                                         style="display: none" type="submit"
                                         href="{{ route('socialmediachallenge.user.winner',$socialMediaChallengeUser->id) }}"
                                         class="resetBtn btn btn-icon btn-outline-success btn-sm m-t-n-xs">
                                     <i class="fa fa-trophy"></i></button>
 
-                                &nbsp; &nbsp;<i class="fa fa-trophy" style="color:inherit;"> Winner</i>
-                            @endif
+{{--                                &nbsp; &nbsp;<i class="fa fa-trophy" style="color:inherit;"> Winner</i>--}}
+{{--                            @endif--}}
                         </form>
+                        </div>
                     </div>
                 </div>
             </div>

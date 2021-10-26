@@ -80,7 +80,7 @@
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </span>
-                                        <input type="datetime-local" id="expired_at" class="form-control"
+                                        <input type="date" id="expired_at" class="form-control"
                                                placeholder="Select Expiry Date" name="expired_at" value="{{$socialMediaChallenge->expired_at}}">
                                     </div>
                                 </div>
@@ -104,7 +104,6 @@
                                     <button class="btn btn-primary btn-sm" type="submit">Update</button>
                                 </div>
                             </div>
-
 
                         </form>
                     </div>

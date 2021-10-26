@@ -397,9 +397,9 @@ $url = url()->current();
                         @can('View social media challenge')
                             <li><a href="{{ route('socialmediachallenge.view') }}">Social Media Challenges</a></li>
                         @endcan
-{{--                        @can('View social media challenge')--}}
-                            <li><a href="#">Social Media Challenge Winners</a></li>
-{{--                        @endcan--}}
+                        @can('View social media challenge')
+                            <li><a href="{{ route('socialmediachallenge.winners') }}">Social Media Challenge Winners</a></li>
+                        @endcan
                     </ul>
                 </li>
             @endif

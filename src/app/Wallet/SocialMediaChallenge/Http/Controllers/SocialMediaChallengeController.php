@@ -18,9 +18,9 @@ class SocialMediaChallengeController extends Controller
     public function view(Request $request)
     {
 
-//        $status = SocialMediaChallenge::groupBy('status')->pluck('status')->toArray();
-//
-//        View::share('status', $status);
+        $status = SocialMediaChallenge::groupBy('status')->pluck('status')->toArray();
+
+        View::share('status', $status);
 
         $socialMediaChallenges = SocialMediaChallenge::filter($request)->paginate(20);
 
@@ -37,6 +37,14 @@ class SocialMediaChallengeController extends Controller
 
     public function store(Request $request)
     {
+        try {
+            $validated = $request->validate([
+                'code' => 'required|unique',
+            ]);
+        }catch (\Exception $e){
+            return redirect()->route('socialmediachallenge.view')->with('error', 'Failed to create. Social Media Challenge Code should be unique to each challenge.');
+        }
+
         SocialMediaChallenge::create([
             'title' => $request->get('title'),
             'description' => $request->get('description'),

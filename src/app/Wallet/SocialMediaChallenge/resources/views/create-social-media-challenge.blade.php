@@ -80,11 +80,14 @@
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </span>
-                                        <input type="datetime-local" id="datetime" class="form-control"
+                                        <input type="date" id="datetime" class="form-control"
                                                placeholder="Select Expiry Date" name="expired_at">
+
+{{--                                        <input id="date_load_from" type="text" class="form-control date_from" placeholder="From" name="expired_at" autocomplete="off">--}}
                                     </div>
                                 </div>
                             </div>
+
 
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Status</label>
@@ -154,7 +157,7 @@
 
 @section('styles')
     @include('admin.asset.css.chosen')
-    {{--    @include('admin.asset.css.datepicker')--}}
+        @include('admin.asset.css.datepicker')
     {{--        <link href=--}}
     {{--              "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"--}}
     {{--              rel="stylesheet">--}}
@@ -170,7 +173,7 @@
 @section('scripts')
 
     @include('admin.asset.js.chosen')
-    {{--    @include('admin.asset.js.datepicker')--}}
+        @include('admin.asset.js.datepicker')
     {{--    @include('admin.asset.js.datatable')--}}
 
     <script src=

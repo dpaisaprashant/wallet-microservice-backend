@@ -17,42 +17,15 @@ class SocialMediaChallengeUserController extends Controller
 {
     public function view($id)
     {
+        $challenge_status = SocialMediaChallengeUser::groupBy('challenge_status')->pluck('challenge_status')->toArray();
+        View::share('challenge_status', $challenge_status);
 
-//        $status = SocialMediaChallenge::groupBy('status')->pluck('status')->toArray();
-//        View::share('status', $status);
-
-        $socialMediaChallengeUsers = SocialMediaChallengeUser::with('socialMediaChallenge')->where('social_challenge_id', $id)->paginate(20);
+        $socialMediaChallengeUsers = SocialMediaChallengeUser::with('socialMediaChallenge')->where('social_challenge_id', $id)->filter(request())->paginate(20);
 //        $socialMediaChallengeWinner = SocialMediaChallengeWinner::with('challengeWinner')->where()->get();
-
-        return view('SocialMediaChallenge::socialMediaChallengeUser/view-social-media-challenge-user', compact('socialMediaChallengeUsers'));
+        $socialMediaChallenge = SocialMediaChallenge::where('id', $id)->first();
+        return view('SocialMediaChallenge::socialMediaChallengeUser/view-social-media-challenge-user', compact('socialMediaChallengeUsers', 'socialMediaChallenge'));
     }
 
-//    public function store(Request $request)
-//    {
-//        SocialMediaChallengeUser::create([
-//            'social_challenge_id' => $request->get('social_challenge_id'),
-//            'user_id' => $request->get('user_id'),
-//            'link' => $request->get('link'),
-//            'embed_link' => $request->get('embed_link'),
-//            'caption' => $request->get('caption'),
-//            'challenge_status' => $request->get('challenge_status'),
-//            'special1' => $request->get('special1'),
-//            'special2' => $request->get('special2'),
-//            'special3' => $request->get('special3'),
-//            'special4' => $request->get('special4'),
-//        ]);
-//
-//        return redirect()->route('socialmediachallenge.user.view')->with('success', 'Social Media Challenge Added Successfully.');
-//    }
-//
-//    public function delete($id)
-//    {
-//        $socialMediaChallenge = SocialMediaChallengeUser::findOrFail($id);
-//
-//        $socialMediaChallenge->delete();
-//
-//        return redirect()->route('socialmediachallenge.view')->with('success', 'Social Media Challenge Deleted Successfully.');
-//    }
 
     public function edit($id)
     {
@@ -79,15 +52,28 @@ class SocialMediaChallengeUserController extends Controller
             'special4' => $request->get('special4'),
         ]);
 
-        return redirect()->route('socialmediachallenge.user.edit',$socialMediaChallengeUser->socialMediaChallenge->id)->with('success', 'Updated successfully');
+        return redirect()->route('socialmediachallenge.user.edit', $socialMediaChallengeUser->socialMediaChallenge->id)->with('success', 'Updated successfully');
     }
 
-        public function selectWinner(Request $request)
+    public function selectWinner(Request $request)
     {
-//        dd('here');
+        $validated = $request->validate([
+            'user_id' => 'required',
+            'social_challenge_id' => 'required',
+        ]);
 
-//        $socialMediaChallengeUser = SocialMediaChallengeUser::find($request->get('user_id'));
-//        $socialMediaChallenge = SocialMediaChallenge::where($request->get('social_challenges_id'));
+        $socialMediaChallengeUser = SocialMediaChallengeUser::where('user_id', $request->get('user_id'));
+        $socialMediaChallenge = SocialMediaChallenge::where('id', $request->get('social_challenge_id'));
+        $challenge = $socialMediaChallenge->first();
+        $socialChallengeWinner = SocialMediaChallengeWinner::all();
+
+        $alreadyWon = SocialMediaChallengeWinner::where('user_id', $request->user_id)
+            ->where('social_challenge_id', $request->social_challenge_id)
+            ->first();
+        if ($alreadyWon) {
+            return redirect()->route('socialmediachallenge.view')->with('error', 'The user is already a winner of ' . $challenge['title']);
+        }
+
         SocialMediaChallengeWinner::create([
             'social_challenge_id' => $request->get('social_challenge_id'),
             'user_id' => $request->get('user_id'),
@@ -95,7 +81,34 @@ class SocialMediaChallengeUserController extends Controller
             'description' => $request->get('description'),
         ]);
 
-        return redirect()->route('socialmediachallenge.view')->with('success', 'The Winner for the challenge has been crowned!');
+        return redirect()->route('socialmediachallenge.view')->with('success', 'The Winner for the ' . $challenge['title'] . ' has been crowned!');
     }
+
+    //    public function store(Request $request)
+//    {
+//        SocialMediaChallengeUser::create([
+//            'social_challenge_id' => $request->get('social_challenge_id'),
+//            'user_id' => $request->get('user_id'),
+//            'link' => $request->get('link'),
+//            'embed_link' => $request->get('embed_link'),
+//            'caption' => $request->get('caption'),
+//            'challenge_status' => $request->get('challenge_status'),
+//            'special1' => $request->get('special1'),
+//            'special2' => $request->get('special2'),
+//            'special3' => $request->get('special3'),
+//            'special4' => $request->get('special4'),
+//        ]);
+//
+//        return redirect()->route('socialmediachallenge.user.view')->with('success', 'Social Media Challenge Added Successfully.');
+//    }
+//
+//    public function delete($id)
+//    {
+//        $socialMediaChallenge = SocialMediaChallengeUser::findOrFail($id);
+//
+//        $socialMediaChallenge->delete();
+//
+//        return redirect()->route('socialmediachallenge.view')->with('success', 'Social Media Challenge Deleted Successfully.');
+//    }
 
 }

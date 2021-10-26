@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Filters\SocialMediaChallengeUsers\SocialMediaChallengeUsersFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -28,10 +29,10 @@ class SocialMediaChallengeUser extends Model
         'special4',
     ];
 
-//    public function scopeFilter(Builder $builder, Request $request, array $filters = [])
-//    {
-//        return (new SocialMediaChallengeFilters($request))->add($filters)->filter($builder);
-//    }
+    public function scopeFilter(Builder $builder, Request $request, array $filters = [])
+    {
+        return (new SocialMediaChallengeUsersFilter($request))->add($filters)->filter($builder);
+    }
 
     public function socialMediaChallenge()
     {

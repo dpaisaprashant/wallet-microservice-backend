@@ -49,7 +49,36 @@
                                         <div class="col-md-4">
                                             <input type="email" name="email" placeholder="Enter Email" class="form-control" value="{{ !empty($_GET['email']) ? $_GET['email'] : '' }}">
                                         </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <select data-placeholder="Choose User Type..." class="chosen-select"  tabindex="2" name="user_type">
+                                                    <option value="" selected disabled>Sort By User Type</option>
+                                                    <option value="" selected>All</option>
+                                                    @if(!empty($_GET['user_type']))
+                                                        @if($_GET['user_type'] == "normal_user")
+                                                            <option value="normal_user" selected>Normal user</option>
+                                                            <option value="agent">Agent</option>
+                                                            <option value="merchant">Merchant</option>
+                                                        @elseif($_GET['user_type'] == "agent")
+                                                            <option value="normal_user">Normal user</option>
+                                                            <option value="agent" selected>Agent</option>
+                                                            <option value="merchant">Merchant</option>
+                                                        @elseif($_GET['user_type'] == 'merchant')
+                                                            <option value="normal_user">Normal user</option>
+                                                            <option value="agent">Agent</option>
+                                                            <option value="merchant" selected>Merchant</option>
+                                                        @endif
+                                                    @else
+                                                        <option value="normal_user">Normal user</option>
+                                                        <option value="agent">Agent</option>
+                                                        <option value="merchant">Merchant</option>
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
+
                                     <br>
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('user.unverifiedKYC.view') }}"><strong>Filter</strong></button>
@@ -99,6 +128,7 @@
                                     <th>User</th>
                                     <th>Contact Number</th>
                                     <th>Email</th>
+                                    <th>User Type</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -112,6 +142,9 @@
                                         </td>
                                         <td>{{ $user->mobile_no }}</td>
                                         <td class="center">{{ $user->email }}</td>
+                                        <td>
+                                            @include('admin.user.userType.displayUserTypes',['user' => $user])
+                                        </td>
                                         <td class="center">
                                             @can('User KYC view')
                                             <a href="{{route('user.kyc', $user->id)}}" class="btn btn-sm btn-primary m-t-n-xs"><strong>KYC</strong></a>

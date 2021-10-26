@@ -29,6 +29,7 @@ class TransactionController extends Controller
             $totalTransactionAmountSum = $repository->transactionAmountSum();
             $totalTransactionFeeSum = $repository->transactionFeeSum();
             $getAllUniqueVendors = $repository->getUniqueVendors();
+//            dd($transactions);
             return view('admin.transaction.complete')->with(compact('transactions', 'getAllUniqueVendors', 'totalTransactionAmountSum', 'totalTransactionCount', 'totalTransactionFeeSum'));
         }
         $getAllUniqueVendors = $repository->getUniqueVendors();
@@ -96,7 +97,7 @@ class TransactionController extends Controller
     public function npsDetail($id, NPSRepository $repository)
     {
         $transaction = $repository->detail($id);
-//        dd($transaction);
+
         return view('admin.transaction.detail.npsDetail')->with(compact('transaction'));
     }
 
@@ -229,4 +230,6 @@ class TransactionController extends Controller
         $khaltiTransaction = KhaltiUserTransaction::with('preTransaction')->find($id);
         return view('admin.transaction.khalti.details',compact('khaltiTransaction'));
     }
+
+
 }

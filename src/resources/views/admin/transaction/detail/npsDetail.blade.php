@@ -35,9 +35,9 @@
                         <div class="col-sm-6" style="margin-top: 30px;">
                             <h5>User:</h5>
                             <address>
-                                <strong>{{ $transaction->user['name']}}</strong><br>
-                                Email: {{ $transaction->user['email'] }}<br>
-                                Contact Number: {{ $transaction->user['mobile_no'] }}
+                                <strong>{{ $transaction->transactions->name}}</strong><br>
+                                Email: {{ $transaction->transactions->email }}<br>
+                                Contact Number: {{ $transaction->transactions->mobile_no }}
                             </address>
 
 

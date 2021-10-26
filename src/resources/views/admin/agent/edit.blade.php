@@ -225,7 +225,7 @@
                             </div>
 
 
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Company Document Image <small>(required)</small></label>
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Company Document Image @if($agent->institution_type == \App\Models\Agent::INSTITUTION_TYPE_COMPANY)<small>(required)</small>@endif</label>
                                 <div class="col-sm-8">
                                     <input name="business_document"  type="file" class="custom-file-input">
                                     <label for="business_document" class="custom-file-label">Upload Business Document Photo...</label>

@@ -481,6 +481,9 @@ $url = url()->current();
                             <li><a href="{{route('npsaccountlinkload.view')}}">Account Link</a></li>
                         @endcan
 
+                        @can('Merchant revenue view')
+                            <li><a href="{{route('merchant-transaction.index')}}">Merchant Transactions</a></li>
+                        @endcan
                     </ul>
                 </li>
             @endif
@@ -929,12 +932,6 @@ $url = url()->current();
                         @can('Frontend banner view')
                             <li><a href="{{ route('frontend.banner.index') }}">Banners</a></li>
                         @endcan
-
-                        @if(strtolower(config('app.'.'name')) == 'sajilopay' || strtolower(config('app.'.'name')) == 'icash' )
-                            @can('Frontend faq view')
-                                <li><a href="{{route('frontend.faq.index')}}">FAQs</a></li>
-                            @endcan
-                        @endif
 
                         @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'master')
                             @can('Frontend contact view')

@@ -64,7 +64,7 @@ class ServiceController extends Controller
 
             FrontendService::whereId($id)->update($responseData);
 
-            return redirect()->back()->with('success', "Update Successful");
+            return redirect()->route('frontend.service.index')->with('success', "Update Successful");
         }
         return view('admin.frontend.service.update')->with(compact('service'));
     }

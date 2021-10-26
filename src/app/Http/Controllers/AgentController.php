@@ -23,7 +23,8 @@ class AgentController extends Controller
     public function view()
     {
         $users = $this->repository->paginatedUsers();
-        return view('admin.agent.view')->with(compact('users'));
+        $agentStatus = Agent::select('status')->distinct()->get();
+        return view('admin.agent.view')->with(compact('users','agentStatus'));
     }
 
     public function create(Request $request)

@@ -13,8 +13,8 @@
 @endif
 @if($user->agent != null && $user->isValidAgentOrSubAgent())
     <span class="badge badge-danger">Agent type :
-                                                    @if($user->agent != null)
+        @if($user->agent != null)
             {{ optional($user->agent->agentType)->name }}
         @endif
-                                                </span>
+    </span>
 @endif

@@ -102,6 +102,7 @@
                         </td>
                     </tr>
                     <tr>
+                        @if(!empty($user->kyc))
                         <td>
                             @can('Edit user kyc')
                                 <a style="margin-top: 5px; width: 100px"
@@ -161,6 +162,7 @@
                                         Change Forced</strong></button>
                             @endif
                         </td>
+                        @endif
 
                         <td>
                             @if($user->status == 1 || $user->status === null)
@@ -198,9 +200,11 @@
 
                     </tr>
                     <tr>
-                        <td>
-
-                        </td>
+                        {{--@can('Transfer bonus balance to main balance')
+                            <td>
+                                @include('admin.user.bonusToMainBalanceTransfer')
+                            </td>
+                        @endcan--}}
 
                         <td>
 
@@ -332,6 +336,49 @@
 
         .profile-image {
             width: 145px;
+        }
+    </style>
+
+    <style>
+        body {font-family: Arial, Helvetica, sans-serif;}
+
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
         }
     </style>
 @endsection
@@ -754,6 +801,26 @@
             var ctx2 = document.getElementById("barChart").getContext("2d");
             barChart = new Chart(ctx2, {type: 'bar', data: barData, options: barOptions});
 
+        }
+    </script>
+
+    <script>
+        var modal = document.getElementById("myModal");
+        var btn = document.getElementById("BonusToMain");
+        var span = document.getElementsByClassName("close")[0];
+
+        btn.onclick = function(){
+            modal.style.display = "block";
+        }
+
+        span.onclick = function (){
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event){
+            if (event.target === modal){
+                modal.style.display = "none";
+            }
         }
     </script>
 

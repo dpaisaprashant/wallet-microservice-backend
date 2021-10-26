@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filters\MerchantTransactionEvent;
+namespace App\Filters\SocialMediaChallenge;
 
 use App\Filters\FilterAbstract;
 use Illuminate\Database\Eloquent\Builder;
 
-class ServiceFilter extends FilterAbstract {
+class TitleFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -25,11 +25,10 @@ class ServiceFilter extends FilterAbstract {
      */
     public function filter(Builder $builder, $value)
     {
-        //$value = $this->resolveFilterValue($value);
         if ($value === null) {
             return $builder;
         }
 
-        return $builder->where('service_type', $value);
+        return $builder->where('title', 'LIKE', "%{$value}%");
     }
 }

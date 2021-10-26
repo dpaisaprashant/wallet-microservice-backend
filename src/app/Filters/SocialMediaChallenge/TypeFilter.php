@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Filters\MerchantTransactionEvent;
+namespace App\Filters\SocialMediaChallenge;
 
 use App\Filters\FilterAbstract;
-use App\Models\UserLoadTransaction;
-use App\Models\UserTransaction;
 use Illuminate\Database\Eloquent\Builder;
 
-class UIDFilter extends FilterAbstract {
+class TypeFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -31,6 +29,6 @@ class UIDFilter extends FilterAbstract {
             return $builder;
         }
 
-        return $builder->where('uid', $value);
+        return $builder->where('type', $value);
     }
 }

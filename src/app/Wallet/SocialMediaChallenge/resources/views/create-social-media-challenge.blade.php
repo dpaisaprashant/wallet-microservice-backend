@@ -23,6 +23,7 @@
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-lg-12">
+                @include('admin.asset.notification.notify')
                 <div class="ibox ">
                     <div class="ibox-title">
                         <h5>Add New Social Media Challenge</h5>
@@ -80,11 +81,14 @@
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </span>
-                                        <input type="datetime-local" id="datetime" class="form-control"
+                                        <input type="date" id="datetime" class="form-control"
                                                placeholder="Select Expiry Date" name="expired_at">
+
+{{--                                        <input id="date_load_from" type="text" class="form-control date_from" placeholder="From" name="expired_at" autocomplete="off">--}}
                                     </div>
                                 </div>
                             </div>
+
 
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Status</label>
@@ -128,7 +132,7 @@
                             <div class="form-group  row" style="display:none">
                                 <label class="col-sm-2 col-form-label">Created At</label>
                                 <div class="col-sm-10">
-                                    <input name="blocked_at" type="datetime" class="form-control"
+                                    <input name="created_at" type="datetime" class="form-control"
                                            value="{{\Carbon\Carbon::now()->format('Y-m-d\TH:i')}}" required>
                                 </div>
                             </div>
@@ -154,7 +158,7 @@
 
 @section('styles')
     @include('admin.asset.css.chosen')
-    {{--    @include('admin.asset.css.datepicker')--}}
+        @include('admin.asset.css.datepicker')
     {{--        <link href=--}}
     {{--              "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"--}}
     {{--              rel="stylesheet">--}}
@@ -170,7 +174,7 @@
 @section('scripts')
 
     @include('admin.asset.js.chosen')
-    {{--    @include('admin.asset.js.datepicker')--}}
+        @include('admin.asset.js.datepicker')
     {{--    @include('admin.asset.js.datatable')--}}
 
     <script src=

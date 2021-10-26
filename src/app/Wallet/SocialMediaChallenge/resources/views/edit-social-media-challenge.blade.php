@@ -80,12 +80,11 @@
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </span>
-                                        <input type="datetime-local" id="expired_at" class="form-control"
-                                               placeholder="Select Expiry Date" name="expired_at" value="{{$socialMediaChallenge->expired_at}}">
+                                        <input type="date" id="expired_at" class="form-control"
+                                               placeholder="Select Expiry Date" name="expired_at" value="{{\Carbon\Carbon::parse($socialMediaChallenge->expired_at)->format('Y-m-d')}}">
                                     </div>
                                 </div>
                             </div>
-
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Status</label>
                                 <div class="col-sm-10">
@@ -104,7 +103,6 @@
                                     <button class="btn btn-primary btn-sm" type="submit">Update</button>
                                 </div>
                             </div>
-
 
                         </form>
                     </div>

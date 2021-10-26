@@ -80,7 +80,6 @@
                             </div>
 
 
-
                             <div class="hr-line-dashed"></div>
 
                             <div class="form-group row">
@@ -91,32 +90,51 @@
 
 
                         </form>
-                        <form action="{{ route('socialmediachallenge.user.winner', $socialMediaChallengeUser->id) }}" method="POST">
-                            @csrf
+                        <div class="ibox-title">
+                        <h5 style="margin-left: -15px">Select as winner?</h5>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" name="winner" id="winner">
+                            <span class="slider round"></span>
+                        </label>
 
-                            <input type="hidden" name="user_id"
-                                   value="{{$socialMediaChallengeUser->user->id}}">
-                            <input type="hidden" name="social_challenge_id"
-                                   value="{{$socialMediaChallengeUser->socialMediaChallenge->id}}">
-                            <input type="hidden" name="won_at"
-                                   value="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
-                            <input type="text" name="description"
-                                   value="Winner of {{$socialMediaChallengeUser->socialMediaChallenge->title}}!">
+                        <div class="winner_settings" title="winner_settings" name="winner_settings" id="winner_settings" style="display: none">
+                            <div class="ibox-title" style="margin-left: -15px">
+                                <h5>Select {{$socialMediaChallengeUser->user->name}}
+                                    as {{$socialMediaChallengeUser->socialMediaChallenge->title}} Winner</h5>
+                            </div>
+                            <form
+                                action="{{ route('socialmediachallenge.user.winner', $socialMediaChallengeUser->id) }}"
+                                method="POST">
+                                @csrf
+
+                                <input type="hidden" name="user_id"
+                                       value="{{$socialMediaChallengeUser->user->id}}">
+                                <input type="hidden" name="social_challenge_id"
+                                       value="{{$socialMediaChallengeUser->socialMediaChallenge->id}}">
+                                <input type="hidden" name="won_at"
+                                       value="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
+                                <div class="form-group  row">
+                                    <label class="col-sm-2 col-form-label">Description</label>
+                                    <div class="col-sm-10">
+                                        <input name="description" type="text" class="form-control"
+                                               value="Winner of {{$socialMediaChallengeUser->socialMediaChallenge->title}}!">
+                                    </div>
+                                </div>
 
                                 <button
-                                    class="reset btn btn-icon btn-outline-success btn-sm m-t-n-xs"
-                                    rel="{{ $socialMediaChallengeUser->id }}"><i
-                                        class="fa fa-trophy"></i>
+                                    class="reset btn btn-icon btn-success btn-sm m-t-n-xs"
+                                    rel="{{ $socialMediaChallengeUser->id }}" style="width: 120px; height: 30px"><i
+                                        class="fa fa-trophy"></i>&nbsp;Save as Winner
                                 </button>
+
                                 <button id="resetBtn-{{ $socialMediaChallengeUser->id }}"
                                         style="display: none" type="submit"
                                         href="{{ route('socialmediachallenge.user.winner',$socialMediaChallengeUser->id) }}"
                                         class="resetBtn btn btn-icon btn-outline-success btn-sm m-t-n-xs">
                                     <i class="fa fa-trophy"></i></button>
-
-                                &nbsp; &nbsp;<i class="fa fa-trophy" style="color:inherit;"> Winner</i>
-                            @endif
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -133,6 +151,71 @@
     @include('admin.asset.css.datatable')
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/css/ion.rangeSlider.min.css"/>
+
+    <style>
+    /* The switch - the box around the slider */
+    .switch {
+    position: relative;
+    display: inline-block;
+    width: 35px;
+    height: 18px;
+    }
+
+    /* Hide default HTML checkbox */
+    .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    }
+
+    /* The slider */
+    .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    }
+
+    .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 1px;
+    bottom: 1px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    }
+
+    input:checked + .slider {
+    background-color: #18a689;
+    }
+
+    input:focus + .slider {
+    box-shadow: 0 0 1px #18a689;
+    }
+
+    input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(16px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+    border-radius: 34px;
+    }
+
+    .slider.round:before {
+    border-radius: 50%;
+    }
+    </style>
 @endsection
 
 @section('scripts')
@@ -143,4 +226,20 @@
 
     <!-- IonRangeSlider -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            $('#winner').on('change', function() {
+                if (!this.checked)
+                {
+                    $("#winner_settings").hide();
+                }
+                else
+                {
+                    $("#winner_settings").show();
+                }
+            });
+        });
+    </script>
+
 @endsection

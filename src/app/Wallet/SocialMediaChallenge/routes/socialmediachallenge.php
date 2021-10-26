@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ExcelExportController;
 use App\Wallet\SocialMediaChallenge\Http\Controllers\SocialMediaChallengeUserController;
+use App\Wallet\SocialMediaChallenge\Http\Controllers\SocialMediaChallengeWinnerController;
 use Illuminate\Support\Facades\Route;
 use App\Wallet\SocialMediaChallenge\Http\Controllers\SocialMediaChallengeController;
 use App\Http\Controllers\PhpSpreadSheetController;
@@ -22,4 +23,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web','auth']], function () 
     Route::put('social-challenge-user/update/{id}', [SocialMediaChallengeUserController::class, 'update'])->name('socialmediachallenge.user.update')->middleware('permission:Edit social media challenge');
     Route::post('social-challenge-user/winner/{id}', [SocialMediaChallengeUserController::class, 'selectWinner'])->name('socialmediachallenge.user.winner')->middleware('permission:Edit social media challenge');
 
+    Route::get('social-challenge/winners', [SocialMediaChallengeWinnerController::class, 'view'])->name('socialmediachallenge.winners')->middleware('permission:View social media challenge');
+    Route::get('social-challenge/random-winner/{id}', [SocialMediaChallengeUserController::class, 'selectWinnerRandom'])->name('socialmediachallenge.winner.random')->middleware('permission:Edit social media challenge');
+
+//    socialmediachallenge.winner.random
 });

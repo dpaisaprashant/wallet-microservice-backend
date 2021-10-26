@@ -23,6 +23,7 @@
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-lg-12">
+                @include('admin.asset.notification.notify')
                 <div class="ibox ">
                     <div class="ibox-title">
                         <h5>Add New Social Media Challenge</h5>
@@ -131,7 +132,7 @@
                             <div class="form-group  row" style="display:none">
                                 <label class="col-sm-2 col-form-label">Created At</label>
                                 <div class="col-sm-10">
-                                    <input name="blocked_at" type="datetime" class="form-control"
+                                    <input name="created_at" type="datetime" class="form-control"
                                            value="{{\Carbon\Carbon::now()->format('Y-m-d\TH:i')}}" required>
                                 </div>
                             </div>

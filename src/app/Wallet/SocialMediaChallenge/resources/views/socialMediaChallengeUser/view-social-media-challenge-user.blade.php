@@ -134,6 +134,10 @@
                     <div class="ibox ">
                         <div class="ibox-title">
                             <h5>List of all {{$socialMediaChallenge->title}}'s Users</h5>
+{{--                            @include('SocialMediaChallenge::socialMediaChallengeUser/lucky-winner', ['socialMediaChallenge' => $socialMediaChallenge])--}}
+{{--                            <a href="{{route('socialmediachallenge.winner.random',$socialMediaChallenge->id)}}"--}}
+{{--                               class="btn btn-sm btn-primary btn-xs"--}}
+{{--                               style="float: right;margin-top: -5px;">Select random winner</a>--}}
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">

@@ -39,10 +39,11 @@ class SocialMediaChallengeController extends Controller
     {
         try {
             $validated = $request->validate([
-                'code' => 'required|unique',
+                'code' => ['required','unique:dpaisa.social_challenges']
             ]);
         }catch (\Exception $e){
-            return redirect()->route('socialmediachallenge.view')->with('error', 'Failed to create. Social Media Challenge Code should be unique to each challenge.');
+//            dd('asd');
+            return redirect()->back()->with('error', 'Failed to create. Social Media Challenge Code should be unique to each challenge.');
         }
 
         SocialMediaChallenge::create([

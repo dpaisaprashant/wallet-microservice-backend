@@ -84,6 +84,29 @@ class SocialMediaChallengeUserController extends Controller
         return redirect()->route('socialmediachallenge.view')->with('success', 'The Winner for the ' . $challenge['title'] . ' has been crowned!');
     }
 
+    public function selectWinnerRandom($id)
+    {
+        $socialMediaChallengeUser = SocialMediaChallengeUser::where('social_challenge_id', $id)->get()->random(1)->first();
+//        dd($socialMediaChallengeUser);
+        $challengeTitle = $socialMediaChallengeUser->socialMediaChallenge->title;
+//        $socialChallengeWinner = SocialMediaChallengeWinner::all();
+
+//        $alreadyWon = SocialMediaChallengeWinner::where('user_id', $socialMediaChallengeUser->user_id)
+//            ->where('social_challenge_id', $socialMediaChallengeUser->social_challenge_id)
+//            ->first();
+//        if ($alreadyWon) {
+//            return redirect()->route('socialmediachallenge.view')->with('error', 'The user is already a winner of ' . $challengeTitle);
+//        }
+        SocialMediaChallengeWinner::create([
+            'social_challenge_id' => $socialMediaChallengeUser->social_challenge_id,
+            'user_id' => $socialMediaChallengeUser->user_id,
+            'won_at' => Carbon::now()->format('Y-m-d'),
+            'description' => 'The Lucky Winner of '.$challengeTitle,
+        ]);
+
+        return view('SocialMediaChallenge::socialMediaChallengeUser/lucky-winner')->with('success', 'The Winner for the ' . $challengeTitle . ' has been crowned!');
+    }
+
     //    public function store(Request $request)
 //    {
 //        SocialMediaChallengeUser::create([

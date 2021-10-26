@@ -147,25 +147,25 @@
                                                 class="badge {{$socialMediaChallenge->status == 1 ? "badge-primary" : "badge-danger"}}">{{ $socialMediaChallenge->status==1 ? "Active":"Inactive" }}</span>
                                             </td>
                                             <td>{{ $socialMediaChallenge->attempts_per_user }}</td>
-                                            <td>{{ $socialMediaChallenge->expired_at }}</td>
-                                            <td>{{ $socialMediaChallenge->created_at }}</td>
+                                            <td>{{\Carbon\Carbon::parse($socialMediaChallenge->expired_at)->format('Y-m-d')}}</td>
+                                            <td>{{\Carbon\Carbon::parse($socialMediaChallenge->created_at)->format('Y-m-d')}}</td>
                                             <td>
-                                                @can('Delete social media challenge')
-                                                    <form
-                                                        action="{{ route('socialmediachallenge.delete',$socialMediaChallenge->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        <button
-                                                            class="reset btn btn-sm btn-danger btn-icon m-t-n-xs"
-                                                            rel="{{ $socialMediaChallenge->id }}"><i
-                                                                class="fa fa-trash"></i>
-                                                        </button>
+{{--                                                @can('Delete social media challenge')--}}
+{{--                                                    <form--}}
+{{--                                                        action="{{ route('socialmediachallenge.delete',$socialMediaChallenge->id) }}"--}}
+{{--                                                        method="POST">--}}
+{{--                                                        @csrf--}}
+{{--                                                        <button--}}
+{{--                                                            class="reset btn btn-sm btn-danger btn-icon m-t-n-xs"--}}
+{{--                                                            rel="{{ $socialMediaChallenge->id }}"><i--}}
+{{--                                                                class="fa fa-trash"></i>--}}
+{{--                                                        </button>--}}
 
-                                                        <button id="resetBtn-{{ $socialMediaChallenge->id }}"
-                                                                style="display: none" type="submit"
-                                                                href="{{ route('socialmediachallenge.delete',$socialMediaChallenge->id) }}"
-                                                                class="resetBtn btn btn-sm btn-danger m-t-n-xs">
-                                                            <i class="fa fa-trash"></i></button>
+{{--                                                        <button id="resetBtn-{{ $socialMediaChallenge->id }}"--}}
+{{--                                                                style="display: none" type="submit"--}}
+{{--                                                                href="{{ route('socialmediachallenge.delete',$socialMediaChallenge->id) }}"--}}
+{{--                                                                class="resetBtn btn btn-sm btn-danger m-t-n-xs">--}}
+{{--                                                            <i class="fa fa-trash"></i></button>--}}
 
                                                         @can('Edit social media challenge')
                                                             <a href="{{ route('socialmediachallenge.edit',$socialMediaChallenge->id)}}"
@@ -173,12 +173,14 @@
                                                                     class="fa fa-edit"></i></a>
                                                         @endcan
                                                         @include('SocialMediaChallenge::buttons', ['socialMediaChallenge' => $socialMediaChallenge])
+<br>
+                                                <br>
 
                                                         <a href="{{ route('socialmediachallenge.user.view',$socialMediaChallenge->id)}}"
-                                                           class="btn btn-icon btn-success btn-sm m-t-n-xs"><i
-                                                                class="fa fa-users"></i></a>
-                                                    </form>
-                                                @endcan
+                                                           class="btn btn-primary btn-success btn-sm m-t-n-xs" ><i
+                                                                class="fa fa-users"></i>&nbsp;View Participants</a>
+{{--                                                    </form>--}}
+{{--                                                @endcan--}}
 
                                             </td>
                                         </tr>

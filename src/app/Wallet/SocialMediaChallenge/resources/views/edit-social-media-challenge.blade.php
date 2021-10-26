@@ -81,11 +81,10 @@
                                             <i class="fa fa-calendar"></i>
                                         </span>
                                         <input type="date" id="expired_at" class="form-control"
-                                               placeholder="Select Expiry Date" name="expired_at" value="{{$socialMediaChallenge->expired_at}}">
+                                               placeholder="Select Expiry Date" name="expired_at" value="{{\Carbon\Carbon::parse($socialMediaChallenge->expired_at)->format('Y-m-d')}}">
                                     </div>
                                 </div>
                             </div>
-
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Status</label>
                                 <div class="col-sm-10">

@@ -24,6 +24,12 @@ trait ReconciliationReportGenerator
                 "transaction_type" => "debit"
             ],
 
+            'NEA' => [
+                "amount" => $repository->totalNeaTransactionAmount() / 100,
+                "count" => $repository->totalNeaTransactionCount(),
+                "transaction_type" => "debit"
+            ],
+
             'NPay' => [
                 "amount" => $repository->totalNPayTransactionAmount() / 100,
                 "count" => $repository->totalNPayTransactionCount(),

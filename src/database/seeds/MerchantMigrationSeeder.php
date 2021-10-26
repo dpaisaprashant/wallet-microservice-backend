@@ -19,6 +19,7 @@ class MerchantMigrationSeeder extends Seeder
 
             $coreDB = DB::connection("dpaisa");
             $merchantDB = DB::connection("merchant");
+            $nchlDB = DB::connection("nchl");
 
             //key => old number
             //value => new number
@@ -143,16 +144,15 @@ class MerchantMigrationSeeder extends Seeder
                     ->update(["user_id" => $user->id, "merchant_type_id" => 1]);
 
                 $coreDB->table("merchant_transactions")->where("merchant_id", $merchant->id)
-                    ->update(["merchant_id" => "user_id"]);
-
-
-                $coreDB->table("merchant_transactions")->where("merchant_id", $merchant->id)
-                    ->update(["merchant_id" => "user_id"]);
+                    ->update(["merchant_id" => $user->id]);
 
                 //TODO: MERCHANT TICKET PAYMENT
                 $merchantTransactionEvents = $coreDB->table("merchant_transaction_events")
                     ->where("merchant_id", $merchant->id)
                     ->get();
+
+
+                //2.5 migrate merchant_bank_transfers to nchl_bank_transfers table
 
 
                 //3

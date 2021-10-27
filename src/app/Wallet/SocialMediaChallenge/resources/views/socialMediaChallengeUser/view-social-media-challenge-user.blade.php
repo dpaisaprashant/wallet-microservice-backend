@@ -111,6 +111,11 @@
                                         {{--                                                            </div>--}}
 
                                     </div>
+                                    <div class="alert alert-warning" style="width: 100%">
+                                        <i class="fa fa-info-circle"></i>&nbsp; Note: <br><b>Methods of Selecting Lucky Winner</b><br></b>
+                                        <b>Automatic : </b> Select Random Winner button will select a random user automatically. <br>
+                                        <b>Manual : </b> You can edit the users and make them a winner. <br>
+                                    </div>
 
                                     <div style="margin-top: 10px;">
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
@@ -118,6 +123,7 @@
                                             <strong>Filter</strong>
                                         </button>
                                     </div>
+
 
                                     @include('admin.asset.components.clearFilterButton')
                                 </form>
@@ -134,10 +140,17 @@
                     <div class="ibox ">
                         <div class="ibox-title">
                             <h5>List of all {{$socialMediaChallenge->title}}'s Users</h5>
-{{--                            @include('SocialMediaChallenge::socialMediaChallengeUser/lucky-winner', ['socialMediaChallenge' => $socialMediaChallenge])--}}
-{{--                            <a href="{{route('socialmediachallenge.winner.random',$socialMediaChallenge->id)}}"--}}
-{{--                               class="btn btn-sm btn-primary btn-xs"--}}
-{{--                               style="float: right;margin-top: -5px;">Select random winner</a>--}}
+
+                            <form id="randomWinnerForm" role="form" method="post"
+                                  action="{{ route('socialmediachallenge.winner.random',$socialMediaChallenge->id) }}">
+                                <button id="randomWinnerBtn" class="btn btn-primary btn-sm m-t-n-xs" type="submit"
+                                        title="Random Winner" style="margin-left: 90%">
+                                    Select Random Winner
+                                </button>
+                            </form>
+
+                            <div id="winner-settings" class="modal fade" aria-hidden="true">
+                            </div>
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">
@@ -172,7 +185,7 @@
                                             <td>{{ $socialMediaChallengeUser->created_at }}</td>
                                             <td>
                                                 <a href="{{ route('socialmediachallenge.user.edit',$socialMediaChallengeUser->id)}}"
-                                                   class="btn btn-icon btn-primary btn-sm m-t-n-xs"><i
+                                                   class="btn btn-icon btn-primary btn-sm m-t-n-xs" title="Edit"><i
                                                         class="fa fa-edit"></i></a>
 
                                             </td>
@@ -236,6 +249,91 @@
                 swal.close();
 
             })
+        });
+    </script>
+
+    <!--    ****Random Winner Pop Up****    -->
+    <script>
+        $('#randomWinnerForm').submit(function (e) {
+            e.preventDefault();
+            let url = $(this).attr('action');
+            let winnerId = $(this).attr('rel');
+            console.log(this);
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: url,
+                method: "GET",
+                data: new FormData(this),
+                // dataType: 'JSON',
+                contentType: false,
+                cache: false,
+                processData: false,
+                async: true,
+                // beforeSend: function () {
+                //     // $("#overlay").fadeIn(300);
+                // },
+                success: function (resp) {
+                    let url=resp.url;
+                    let user=resp.user;
+                    swal({
+                        title: "The Lucky Winner Is :\n Name : "+resp.user.user.name+".\n Mobile Number : "+resp.user.user.mobile_no,
+                        text: "The selected user will be crowned the lucky winner!",
+                        type: "info",
+                        confirmButtonColor: "#efbd02",
+                        confirmButtonText: "Select Lucky Winner!",
+                        showCancelButton: true,
+                        closeOnConfirm: false
+                    }, function (resp) {
+                        console.log(resp);
+                        if(resp === false){
+                            swal.close();
+                        } else {
+                            let formInstance = document.getElementById("randomWinnerForm")
+                            $.ajax({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                method: "POST",
+                                data: new FormData(formInstance),
+                                // dataType: 'JSON',
+                                url: url,
+                                contentType: false,
+                                cache: false,
+                                processData: false,
+                                async: true,
+                                // beforeSend: function () {
+                                //     $("#overlay").fadeIn(300);
+                                // },
+                                success: function (resp) {
+                                    console.log(resp);
+                                    swal({
+                                        title: "The Lucky Winner Has Been Selected",
+                                        text: "The lucky winner " + resp.user.name + ", Mobile Number : " + resp.user.mobile_no + " has been added successfully to the winners list.",
+                                        type: "success",
+                                        confirmButtonColor: "#efbd02",
+                                        confirmButtonText: "Accept",
+                                        // showCancelButton: true,
+                                        closeOnConfirm: true
+                                    })
+                                }
+                            })
+
+                        }
+                    })
+
+                    // $(".stats").fadeIn(300);
+                    // $("#overlay").fadeOut(100);
+
+                },
+                error: function (resp) {
+                    console.log(resp);
+                    alert('error');
+                }
+            });
+
+
         });
     </script>
 

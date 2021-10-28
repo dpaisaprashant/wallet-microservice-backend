@@ -144,7 +144,7 @@
         @if($event->nicAsiaCyberSourceLoad)
             <a href="{{route('nicAsia.detailCyberSourceLoad',$event->nicAsiaCyberSourceLoad->id)}}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         @elseif($event->userloadTransaction)
-            <a href="{{ route('eBanking.detail', $event->userLoadTransaction) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+            <a href="{{ route('eBanking.detail', $event->userLoadTransaction->id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         @elseif($event->userTransaction)
             <a href="{{ route('paypoint.detail', $event->userTransaction->id) }}">    <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         @elseif($event->khaltiUserTransaction)
@@ -156,7 +156,7 @@
         @elseif($event->nchlAggregatePayment)
             <a href="{{route('nchl.aggregatedPayment.detail',$event->nchlAggregatePayment->id)}}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         @elseif($event->cellPayUserTransaction)
-            <a href="{{route('cellPayUserTransaction.detail',$event->transaction_id)}}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+            <a href="{{route('cellPayUserTransaction.detail',$event->cellPayUserTransaction->id)}}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         @elseif(optional($event->transactionEvent)->transaction_type == \App\Models\UserToUserFundTransfer::class)
             <a href="{{ route('userToUserFundTransfer.detail', $event->transactionEvent->transaction_id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         @elseif(optional($event->transactionEvent)->transaction_type == \App\Models\FundRequest::class)

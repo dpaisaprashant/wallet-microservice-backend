@@ -11,14 +11,12 @@ class SocialMediaChallengeFilters extends FiltersAbstract
      * @var array
      */
     protected $filters = [
-//        'uid' => UIDFilter::class,
-//        'account' => AccountFilter::class,
-//        'vendor' => VendorFilter::class,
-//        'service' => ServiceFilter::class,
-//        'amount' => AmountFilter::class,
+        'title' => TitleFilter::class,
+        'code' => CodeFilter::class,
+        'type' => TypeFilter::class,
+        'status' => StatusFilter::class,
 //        'from' => FromDateFilter::class,
 //        'to' => ToDateFilter::class,
-//        'sort' => SortFilter::class,
     ];
 
 
@@ -29,10 +27,7 @@ class SocialMediaChallengeFilters extends FiltersAbstract
      */
     public static function mapping() {
         $map = [
-            'sort' => [
-                'date' => 'created_at',
-                'amount' => 'amount'
-            ]
+
         ];
 
         return  $map;

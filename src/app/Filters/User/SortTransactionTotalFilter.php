@@ -34,7 +34,7 @@ class SortTransactionTotalFilter extends FilterAbstract
         }
 
         if (request()->sortTot) {
-            dd('here');
+//            dd('here');
             if ($value === 'total_credit_amount') {
 
 //            dd($builder->whereHas('userTransactionEvents',function ($query){

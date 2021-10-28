@@ -19,7 +19,7 @@ class UserTotalTransactionRepository
 
     public function totalUserTransactions()
     {
-        $users = User::with('preTransactions','userTransactionEvents')
+        $users = User::with('preTransactions', 'userTransactionEvents')
             ->filter(request())
             ->whereHas('preTransactions', function ($q) {
                 return $q->where('status', PreTransaction::STATUS_SUCCESS);
@@ -64,15 +64,25 @@ class UserTotalTransactionRepository
                 ->count();
 
         }
-        if(request()->sortTotal){
-             $newRequest = new Request();
-            $newRequest->merge(["sortTot" => request()->sortTotal]);
 
-//            dd(request()->sortTotal);
-//            request()->merge(['sortTot'=>request()->sortTotal]);
-//            User::filter(request()->sortTot);
-//            User::filter()
-        };
+        if (request()->sortTotal === 'total_credit_amount') {
+            $users = $users->sortByDesc('credit_sum');
+        } elseif (request()->sortTotal === 'total_debit_amount') {
+            $users = $users->sortByDesc('debit_sum');
+        } elseif (request()->sortTotal === 'total_credit_count') {
+            $users = $users->sortByDesc('credit_count');
+        } elseif (request()->sortTotal === 'total_debit_count') {
+            $users = $users->sortByDesc('debit_count');
+        } elseif (request()->sortTotal === 'total_cashback_count') {
+            $users = $users->sortByDesc('cashback_count');
+        } elseif (request()->sortTotal === 'total_cashback_amount') {
+            $users = $users->sortByDesc('cashback_sum');
+        } elseif (request()->sortTotal === 'total_commission_amount') {
+            $users = $users->sortByDesc('commission_sum');
+        } elseif (request()->sortTotal === 'total_commission_count') {
+            $users = $users->sortByDesc('commission_count');
+        }
+
         return $this->collectionPaginate(10, $users, request());
     }
 

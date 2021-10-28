@@ -27,19 +27,19 @@ class UserTotalTransactionRepository
             ->get();
 
         foreach ($users as $user) {
-            $user['debit_sum'] = $user['preTransaction']
+            $user['debit_sum'] = $user['preTransactions']
                 ->where('transaction_type', 'debit')
                 ->sum('amount');
 
-            $user['debit_count'] = $user['preTransaction']
+            $user['debit_count'] = $user['preTransactions']
                 ->where('transaction_type', 'debit')
                 ->count();
 
-            $user['credit_sum'] = $user['preTransaction']
+            $user['credit_sum'] = $user['preTransactions']
                 ->where('transaction_type', 'credit')
                 ->sum('amount');
 
-            $user['credit_count'] = $user['preTransaction']
+            $user['credit_count'] = $user['preTransactions']
                 ->where('transaction_type', 'credit')
                 ->count();
 
@@ -64,23 +64,39 @@ class UserTotalTransactionRepository
                 ->count();
 
         }
-
+//dd($users);
         if (request()->sortTotal === 'total_credit_amount') {
+
             $users = $users->sortByDesc('credit_sum');
+
         } elseif (request()->sortTotal === 'total_debit_amount') {
+
             $users = $users->sortByDesc('debit_sum');
+
         } elseif (request()->sortTotal === 'total_credit_count') {
+
             $users = $users->sortByDesc('credit_count');
+
         } elseif (request()->sortTotal === 'total_debit_count') {
+
             $users = $users->sortByDesc('debit_count');
+
         } elseif (request()->sortTotal === 'total_cashback_count') {
+
             $users = $users->sortByDesc('cashback_count');
+
         } elseif (request()->sortTotal === 'total_cashback_amount') {
+
             $users = $users->sortByDesc('cashback_sum');
+
         } elseif (request()->sortTotal === 'total_commission_amount') {
+
             $users = $users->sortByDesc('commission_sum');
+
         } elseif (request()->sortTotal === 'total_commission_count') {
+
             $users = $users->sortByDesc('commission_count');
+
         }
 
         return $this->collectionPaginate(10, $users, request());

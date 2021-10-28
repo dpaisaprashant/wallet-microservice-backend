@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Filters\MerchantTransactionEvent;
+namespace App\Filters\SocialMediaChallengeUsers;
 
 use App\Filters\FilterAbstract;
+use App\Models\SocialMediaChallengeUser;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 
-class AmountFilter extends FilterAbstract {
+class UserFilter extends FilterAbstract
+{
 
 
     public function mapping()
@@ -25,13 +28,11 @@ class AmountFilter extends FilterAbstract {
      */
     public function filter(Builder $builder, $value)
     {
-        //$value = $this->resolveFilterValue($value);
         if ($value === null) {
             return $builder;
         }
 
-        $value = explode(';' , $value);
-
-        return $builder->where('amount', '>=', (float)($value[0] * 100))->where('amount', '<=', (float)($value[1] * 100));
+        $users = User::where('name', 'LIKE', "%{$value}%")->pluck('id');
+        return $builder->whereIn('user_id', $users);
     }
 }

@@ -389,6 +389,21 @@ $url = url()->current();
                 </li>
             @endif
 
+            @if(auth()->user()->hasPermissionTo('View social media challenge'))
+                <li @if(preg_match('/social-media-challenge/i', $url)) class="active" @endif>
+                    <a href="#"><i class="fa fa-trophy"></i> <span class="nav-label">Social Media Challenge</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        @can('View social media challenge')
+                            <li><a href="{{ route('socialmediachallenge.view') }}">Social Media Challenges</a></li>
+                        @endcan
+                        @can('View social media challenge')
+                            <li><a href="{{ route('socialmediachallenge.winners') }}">Social Media Challenge Winners</a></li>
+                        @endcan
+                    </ul>
+                </li>
+            @endif
+
             @if(auth()->user()->hasPermissionTo('Repost transaction npay') || auth()->user()->hasPermissionTo('Repost transaction nps') || auth()->user()->hasPermissionTo('Repost transaction connectips'))
                 <li @if(preg_match('/repost/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Repost Transaction</span><span

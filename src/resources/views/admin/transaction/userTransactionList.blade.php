@@ -148,12 +148,12 @@
                                         </button>
                                     </div>
 
-{{--                                    <div>--}}
-{{--                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"--}}
-{{--                                                type="submit" style="margin-right: 10px;"--}}
-{{--                                                formaction="{{ route('transaction.complete.excel') }}">--}}
-{{--                                            <strong>Excel</strong></button>--}}
-{{--                                    </div>--}}
+                                    {{--                                    <div>--}}
+                                    {{--                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"--}}
+                                    {{--                                                type="submit" style="margin-right: 10px;"--}}
+                                    {{--                                                formaction="{{ route('transaction.complete.excel') }}">--}}
+                                    {{--                                            <strong>Excel</strong></button>--}}
+                                    {{--                                    </div>--}}
                                     @include('admin.asset.components.clearFilterButton')
                                 </form>
                             </div>
@@ -208,12 +208,11 @@
                                             <td>{{ $user->cashback_count }}</td>
                                             <td>{{ $user->commission_sum }}</td>
                                             <td>{{ $user->commission_count }}</td>
-
                                         </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
-                                                                {{ $users->appends(request()->query())->links() }}
+                                {{ $users->appends(request()->query())->links() }}
                             </div>
                         </div>
                     </div>
@@ -237,14 +236,14 @@
     @include('admin.asset.js.chosen')
     @include('admin.asset.js.datepicker')
     @include('admin.asset.js.datatable')
-    {{--    <script>--}}
-    {{--        @if(!empty($_GET))--}}
-    {{--        $(document).ready(function (e) {--}}
-    {{--            let a = "Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} of {{ $users->total() }} entries";--}}
-    {{--            $('.dataTables_info').text(a);--}}
-    {{--        });--}}
-    {{--        @endif--}}
-    {{--    </script>--}}
+        <script>
+            @if(!empty($_GET))
+            $(document).ready(function (e) {
+                let a = "Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} of {{ $users->total() }} entries";
+                $('.dataTables_info').text(a);
+            });
+            @endif
+        </script>
 
     <!-- IonRangeSlider -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js"></script>

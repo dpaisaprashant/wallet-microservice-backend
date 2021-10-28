@@ -128,4 +128,11 @@ class TransactionEventRepository
         return $vendors;
     }
 
+    //For Individual User
+    public function totalLoadedAmountUser()
+    {
+        return TransactionEvent::doesntHave('refundTransaction')
+            ->filter($this->request)->count();
+    }
+
 }

@@ -194,6 +194,7 @@ Route::group(['prefix' => 'admin'], function () {
          * Transactions
          */
         Route::get('transaction/complete', 'TransactionController@complete')->name('transaction.complete')->middleware('permission:Complete transaction view');
+            Route::get('transaction/complete-user-list', 'TransactionController@completeUserList')->name('transaction.complete.user')->middleware('permission:Complete transaction view');
 
         //Fund Request
         Route::get('/transaction/fund-request' , 'TransactionController@fundRequest')->name('fundRequest')->middleware('permission:Fund request view');

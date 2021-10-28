@@ -61,18 +61,19 @@
 
                                     <div class="row" style="margin-top: 20px">
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="input-group date">
                                                         <span class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </span>
                                                 <input id="date_load_from" type="text" class="form-control date_from"
-                                                       placeholder="From" name="from_transaction_date" autocomplete="off"
+                                                       placeholder="From" name="from_transaction_date"
+                                                       autocomplete="off"
                                                        value="{{ !empty($_GET['from_transaction_date']) ? $_GET['from_transaction_date'] : '' }}">
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="input-group date">
                                                         <span class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
@@ -80,6 +81,62 @@
                                                 <input id="date_load_to" type="text" class="form-control date_to"
                                                        placeholder="To" name="to_transaction_date" autocomplete="off"
                                                        value="{{ !empty($_GET['to_transaction_date']) ? $_GET['to_transaction_date'] : '' }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <select data-placeholder="Sort By..." class="chosen-select" tabindex="2"
+                                                        name="sortTotal">
+                                                    <option value="" selected disabled>Sort By...</option>
+                                                    @if(!empty($_GET['sortTotal']))
+                                                        <option value="total_credit_amount"
+                                                                @if($_GET['sortTotal'] == 'total_credit_amount') selected @endif>
+                                                            Total Credit Amount
+                                                        </option>
+                                                        <option value="total_credit_count"
+                                                                @if($_GET['sortTotal'] == 'total_credit_count') selected @endif>
+                                                            Total Credit Count
+                                                        </option>
+                                                        <option value="total_debit_amount"
+                                                                @if($_GET['sortTotal'] == 'total_debit_amount') selected @endif>
+                                                            Total Debit Amount
+                                                        </option>
+                                                        <option value="total_debit_count"
+                                                                @if($_GET['sortTotal'] == 'total_debit_count') selected @endif>
+                                                            Total Debit Count
+                                                        </option>
+                                                        <option value="total_cashback_amount"
+                                                                @if($_GET['sortTotal'] == 'total_cashback_amount') selected @endif>
+                                                            Total Cashback Amount
+                                                        </option>
+                                                        <option value="total_cashback_count"
+                                                                @if($_GET['sortTotal'] == 'total_cashback_count') selected @endif>
+                                                            Total Cashback Count
+                                                        </option>
+                                                        <option value="total_commission_amount"
+                                                                @if($_GET['sortTotal'] == 'total_commission_amount') selected @endif>
+                                                            Total Commission Amount
+                                                        </option>
+                                                        <option value="total_commission_count"
+                                                                @if($_GET['sortTotal'] == 'total_commission_count') selected @endif>
+                                                            Total Commission Count
+                                                        </option>
+                                                    @else
+                                                        <option value="total_credit_amount">Total Credit Amount</option>
+                                                        <option value="total_credit_count">Total Credit Count</option>
+                                                        <option value="total_debit_amount">Total Debit Amount</option>
+                                                        <option value="total_debit_count">Total Debit Count</option>
+                                                        <option value="total_cashback_amount">Total Cashback Amount
+                                                        </option>
+                                                        <option value="total_cashback_count">Total Cashback Count
+                                                        </option>
+                                                        <option value="total_commission_amount">Total Commission
+                                                            Amount
+                                                        </option>
+                                                        <option value="total_commission_count">Total Commission Count
+                                                        </option>
+                                                    @endif
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -91,12 +148,12 @@
                                         </button>
                                     </div>
 
-                                    <div>
-                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
-                                                type="submit" style="margin-right: 10px;"
-                                                formaction="{{ route('transaction.complete.excel') }}">
-                                            <strong>Excel</strong></button>
-                                    </div>
+{{--                                    <div>--}}
+{{--                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"--}}
+{{--                                                type="submit" style="margin-right: 10px;"--}}
+{{--                                                formaction="{{ route('transaction.complete.excel') }}">--}}
+{{--                                            <strong>Excel</strong></button>--}}
+{{--                                    </div>--}}
                                     @include('admin.asset.components.clearFilterButton')
                                 </form>
                             </div>
@@ -107,65 +164,62 @@
             </div>
         </div>
 
-        {{--        @if(!empty($_GET))--}}
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox ">
-                    <div class="ibox-title">
-                        <h5>List of all transactions</h5>
+        @if(!empty($_GET))
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5>List of all transactions</h5>
 
-                    </div>
-                    <div class="ibox-content">
-                        {{--                            <h5><b>Total Count:</b> {{ $totalTransactionCount }}</h5>--}}
-                        {{--                            <h5><b>Total Amount Sum:</b> Rs. {{ $totalTransactionAmountSum }}</h5>--}}
-                        {{--                            <h5><b>Total Fee Sum:</b> Rs. {{ $totalTransactionFeeSum }}</h5>--}}
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover dataTables-example"
-                                   title="Complete transactions list">
-                                <thead>
-                                <tr>
-                                    <th>S.No.</th>
-                                    <th>User Name</th>
-                                    <th>User Phone Number</th>
-                                    <th>Total Credit Amount</th>
-                                    <th>Credited Transaction Count</th>
-                                    <th>Total Debit Amount</th>
-                                    <th>Debit Transactions Count</th>
-                                    <th>Total Cashback Amount</th>
-                                    <th>Count of Cashback Transactions</th>
-                                    <th>Total Commission</th>
-                                    <th>Count of Commission Transactions</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @php
-                                    $i=1;
-                                @endphp
-                                @foreach($users as $user)
-                                    <tr class="gradeC">
-                                        <td>{{ $i++}}</td>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->mobile_no }}</td>
-                                        <td>{{ $user->credit_sum }}</td>
-                                        <td>{{ $user->credit_count }}</td>
-                                        <td>{{ $user->debit_sum }}</td>
-                                        <td>{{ $user->debit_count }}</td>
-                                        <td>{{ $user->cashback_sum }}</td>
-                                        <td>{{ $user->cashback_count }}</td>
-                                        <td>{{ $user->commission_sum }}</td>
-                                        <td>{{ $user->commission_count }}</td>
-
+                        </div>
+                        <div class="ibox-content">
+                            {{--                            <h5><b>Total Count:</b> {{ $totalTransactionCount }}</h5>--}}
+                            {{--                            <h5><b>Total Amount Sum:</b> Rs. {{ $totalTransactionAmountSum }}</h5>--}}
+                            {{--                            <h5><b>Total Fee Sum:</b> Rs. {{ $totalTransactionFeeSum }}</h5>--}}
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover dataTables-example"
+                                       title="Complete transactions list">
+                                    <thead>
+                                    <tr>
+                                        <th>S.No.</th>
+                                        <th>User Name</th>
+                                        <th>User Phone Number</th>
+                                        <th>Total Credit Amount</th>
+                                        <th>Credited Transaction Count</th>
+                                        <th>Total Debit Amount</th>
+                                        <th>Debit Transactions Count</th>
+                                        <th>Total Cashback Amount</th>
+                                        <th>Count of Cashback Transactions</th>
+                                        <th>Total Commission</th>
+                                        <th>Count of Commission Transactions</th>
                                     </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                            {{--                                {{ $users->appends(request()->query())->links() }}--}}
+                                    </thead>
+                                    <tbody>
+                                    @foreach($users as $user)
+                                        <tr class="gradeC">
+                                            <td>{{ $loop->index + ($users->perPage() * ($users->currentPage() - 1)) + 1 }}</td>
+                                            <td>{{ $user->name }}</td>
+                                            <td>{{ $user->mobile_no }}</td>
+                                            <td>{{ $user->credit_sum }}</td>
+                                            <td>{{ $user->credit_count }}</td>
+                                            <td>{{ $user->debit_sum }}</td>
+                                            <td>{{ $user->debit_count }}</td>
+                                            <td>{{ $user->cashback_sum }}</td>
+                                            <td>{{ $user->cashback_count }}</td>
+                                            <td>{{ $user->commission_sum }}</td>
+                                            <td>{{ $user->commission_count }}</td>
+
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                                                                {{ $users->appends(request()->query())->links() }}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        {{--        @endif--}}
+        @endif
     </div>
 @endsection
 
@@ -182,15 +236,15 @@
 
     @include('admin.asset.js.chosen')
     @include('admin.asset.js.datepicker')
-    @include('admin.asset.js.datatableWithPaging')
-{{--    <script>--}}
-{{--        @if(!empty($_GET))--}}
-{{--        $(document).ready(function (e) {--}}
-{{--            let a = "Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} of {{ $users->total() }} entries";--}}
-{{--            $('.dataTables_info').text(a);--}}
-{{--        });--}}
-{{--        @endif--}}
-{{--    </script>--}}
+    @include('admin.asset.js.datatable')
+    {{--    <script>--}}
+    {{--        @if(!empty($_GET))--}}
+    {{--        $(document).ready(function (e) {--}}
+    {{--            let a = "Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} of {{ $users->total() }} entries";--}}
+    {{--            $('.dataTables_info').text(a);--}}
+    {{--        });--}}
+    {{--        @endif--}}
+    {{--    </script>--}}
 
     <!-- IonRangeSlider -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js"></script>

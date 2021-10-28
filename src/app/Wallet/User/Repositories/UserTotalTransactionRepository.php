@@ -64,7 +64,16 @@ class UserTotalTransactionRepository
                 ->count();
 
         }
-        return $users;
+        if(request()->sortTotal){
+             $newRequest = new Request();
+            $newRequest->merge(["sortTot" => request()->sortTotal]);
+
+//            dd(request()->sortTotal);
+//            request()->merge(['sortTot'=>request()->sortTotal]);
+//            User::filter(request()->sortTot);
+//            User::filter()
+        };
+        return $this->collectionPaginate(10, $users, request());
     }
 
 }

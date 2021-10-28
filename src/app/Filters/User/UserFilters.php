@@ -20,6 +20,7 @@ class UserFilters extends FiltersAbstract
         'transaction_payment' => TransactionPaymentFilter::class,
         'transaction_loaded' => TransactionLoadedFilter::class,
         'sort' => SortFilter::class,
+        'sortTot' => SortTransactionTotalFilter::class,
         'from' => FromDateFilter::class,
         'from_agent_created_at' => FromAgentDateFilter::class,
         'to_agent_created_at' => ToAgentDateFilter::class,

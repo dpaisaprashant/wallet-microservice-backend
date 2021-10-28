@@ -30,9 +30,11 @@ class ToTransactionDateFilter extends FilterAbstract {
             return $builder;
         }
 
-        return $builder->whereHas('userTransactionEvents', function ($query) use ($value) {
-            return $query->whereDate('created_at', '<=' ,date('Y-m-d', strtotime(str_replace(',', ' ', $value))));
-        });
+        return $builder->with(['preTransactions' => function ($query) use ($value) {
+            return $query->whereDate('created_at', '<=', date('Y-m-d', strtotime(str_replace(',', ' ', $value))));
+        }])->with(['userTransactionEvents' => function ($query) use ($value) {
+            return $query->whereDate('created_at', '<=', date('Y-m-d', strtotime(str_replace(',', ' ', $value))));
+        }]);
 
 //        return $builder->whereDate('created_at', '<=' ,date('Y-m-d', strtotime(str_replace(',', ' ', $value))));
 

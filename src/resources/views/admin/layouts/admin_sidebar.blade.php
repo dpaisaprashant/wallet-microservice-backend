@@ -398,7 +398,8 @@ $url = url()->current();
                             <li><a href="{{ route('socialmediachallenge.view') }}">Social Media Challenges</a></li>
                         @endcan
                         @can('View social media challenge')
-                            <li><a href="{{ route('socialmediachallenge.winners') }}">Social Media Challenge Winners</a></li>
+                            <li><a href="{{ route('socialmediachallenge.winners') }}">Social Media Challenge Winners</a>
+                            </li>
                         @endcan
                     </ul>
                 </li>
@@ -447,6 +448,10 @@ $url = url()->current();
 
                         @can('Complete transaction view')
                             <li><a href="{{ route('transaction.complete') }}">Complete Transactions</a></li>
+                        @endcan
+
+                        @can('Complete transaction view')
+                            <li><a href="{{ route('transaction.complete.user') }}">Complete Transactions User</a></li>
                         @endcan
 
                         @can('Fund transfer view')
@@ -667,7 +672,8 @@ $url = url()->current();
                             <li><a href="{{ route('report.agent') }}">NRB Agent Report</a></li>
                         @endcan
                         @can('Report non bank payment count')
-                            <li><a href="{{ route('report.nonBankPaymentCountReport') }}">Non Bank Payment Count Report</a></li>
+                            <li><a href="{{ route('report.nonBankPaymentCountReport') }}">Non Bank Payment Count
+                                    Report</a></li>
                         @endcan
                         @can('Report non bank payment')
                             <li><a href="{{ route('report.nonBankPaymentReport') }}">Non bank payment report</a></li>

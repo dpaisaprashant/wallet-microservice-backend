@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\KhaltiUserTransaction;
+use App\Models\User;
 use App\Wallet\FundRequest\Repository\FundRequestRepository;
 use App\Wallet\FundTransfer\Repository\FundTransferRepository;
 use App\Wallet\Khalti\Repository\KhaltiRepository;
@@ -14,6 +15,8 @@ use App\Wallet\NPay\Repository\NPayRepository;
 use App\Wallet\NPS\Repository\NPSRepository;
 use App\Wallet\PayPoint\Repository\PayPointRepository;
 use App\Wallet\TransactionEvent\Repository\TransactionEventRepository;
+use App\Wallet\User\Repositories\UserRepository;
+use App\Wallet\User\Repositories\UserTotalTransactionRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -123,7 +126,7 @@ class TransactionController extends Controller
     //NCHL LOAD TRANSACTION
     public function nchlLoadTransaction(NchlLoadTransactionRepository $repository, Request $request)
     {
-        if(!empty($_GET)) {
+        if (!empty($_GET)) {
             $totalNchlLoadTransactionCount = $repository->getTotalNchlLoadTransactionCount();
             $totalNchlLoadTransactionSum = $repository->getTotalNchlLoadTransactionSum();
             $transactions = $repository->paginatedTransactions();
@@ -141,7 +144,7 @@ class TransactionController extends Controller
     //NCHL BANK TRANSFER
     public function nchlBankTransfer(NchlBankTransferRepository $repository, Request $request)
     {
-        if(!empty($_GET)) {
+        if (!empty($_GET)) {
             $totalNchlLoadBankTransferTransactionCount = $repository->getNchlLoadBankTransferTransactionCount();
             $totalNchlLoadBankTransferTransactionSum = $repository->getNchlLoadBankTransferTransactionSum();
             $transactions = $repository->paginatedTransactions();
@@ -157,12 +160,13 @@ class TransactionController extends Controller
     }
 
     //NCHL AGGREGATED PAYMENT
-    public function nchlAggregatedPayment(NchlAggregatedPaymentRepository $repository){
+    public function nchlAggregatedPayment(NchlAggregatedPaymentRepository $repository)
+    {
         $nchlAggregatedPayments = $repository->paginatedTransactions();
         $nchlAggregatedTotalCount = $repository->nchlAggregatePaymentTotalCount();
         $nchlAggregatedTotalAmount = $repository->nchlAggregatePaymentTotalAmount();
         $nchlAggregatedTotalFee = $repository->nchlAggregatePaymentTotalFee();
-        return view('admin.transaction.nchlAggregatedTransaction',compact('nchlAggregatedPayments','nchlAggregatedTotalCount','nchlAggregatedTotalAmount','nchlAggregatedTotalFee'));
+        return view('admin.transaction.nchlAggregatedTransaction', compact('nchlAggregatedPayments', 'nchlAggregatedTotalCount', 'nchlAggregatedTotalAmount', 'nchlAggregatedTotalFee'));
     }
 
     public function nchlAggregatedPaymentDetail($id, NchlAggregatedPaymentRepository $repository)
@@ -170,7 +174,6 @@ class TransactionController extends Controller
         $transaction = $repository->detail($id);
         return view('admin.transaction.detail.nchlAggregatedPaymentDetail')->with(compact('transaction'));
     }
-
 
 
     //KHALTI
@@ -226,10 +229,18 @@ class TransactionController extends Controller
         return view('admin.transaction.khalti')->with(compact('vendorNames'));
     }
 
-    public function khaltiSpecificDetail($id){
+    public function khaltiSpecificDetail($id)
+    {
         $khaltiTransaction = KhaltiUserTransaction::with('preTransaction')->find($id);
-        return view('admin.transaction.khalti.details',compact('khaltiTransaction'));
+        return view('admin.transaction.khalti.details', compact('khaltiTransaction'));
     }
 
+    public function completeUserList(Request $request, UserTotalTransactionRepository $user)
+    {
+        $users = $user->totalUserTransactions();
 
+        return view('admin.transaction.userTransactionList')
+            ->with(compact('users'));
+
+    }
 }

@@ -106,7 +106,7 @@
             </div>
         </div>
         @include('admin.asset.notification.notify')
-        @if(!empty($_GET))
+{{--        @if(!empty($_GET))--}}
             <div class="row">
                 <div class="col-lg-12">
                     <div class="ibox ">
@@ -193,7 +193,7 @@
                     </div>
                 </div>
             </div>
-        @endif
+{{--        @endif--}}
     </div>
 @endsection
 

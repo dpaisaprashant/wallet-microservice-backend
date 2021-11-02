@@ -1,5 +1,5 @@
 <a data-toggle="modal" href="#modal-form-json-response{{$socialMediaChallengeUser->id}}">
-    <button class="btn btn-warning btn-icon btn-sm m-t-n-xs" type="button" title="Json Response"><i
+    <button class="btn btn-warning btn-icon btn-sm m-t-n-xs" type="button" title="User Links"><i
             class="fa fa-info"></i></button>
 </a>
 <div id="modal-form-json-response{{$socialMediaChallengeUser->id}}" class="modal fade" aria-hidden="true">

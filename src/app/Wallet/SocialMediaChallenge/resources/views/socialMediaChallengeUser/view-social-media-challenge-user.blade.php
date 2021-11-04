@@ -166,6 +166,7 @@
                                     <th>Caption</th>
                                     <th>Challenge Status</th>
                                     <th>Links</th>
+                                    <th>Video Links</th>
                                     <th>Facebook Links</th>
                                     <th>Created At</th>
                                     <th style='width: 100px'>Actions</th>

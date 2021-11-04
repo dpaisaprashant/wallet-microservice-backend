@@ -182,9 +182,9 @@
                                             <span
                                                 class="badge badge-info">{{ $socialMediaChallengeUser->challenge_status }}</span>
                                         </td>
-                                        {{--                                            <td>--}}
-                                        {{--                                                @include('SocialMediaChallenge::socialMediaChallengeUser/links', ['socialMediaChallengeUser' => $socialMediaChallengeUser])--}}
-                                        {{--                                            </td>--}}
+                                                                                    <td>
+                                                                                        @include('SocialMediaChallenge::socialMediaChallengeUser/links', ['socialMediaChallengeUser' => $socialMediaChallengeUser])
+                                                                                    </td>
                                         <td>
                                             @if(!empty($socialMediaChallengeUser->link))
                                                 <a href="{{$socialMediaChallengeUser->link}}"

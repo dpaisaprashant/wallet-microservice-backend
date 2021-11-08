@@ -112,8 +112,10 @@
 
                                     </div>
                                     <div class="alert alert-warning" style="width: 100%">
-                                        <i class="fa fa-info-circle"></i>&nbsp; Note: <br><b>Methods of Selecting Lucky Winner</b><br></b>
-                                        <b>Automatic : </b> Select Random Winner button will select a random user automatically. <br>
+                                        <i class="fa fa-info-circle"></i>&nbsp; Note: <br><b>Methods of Selecting Lucky
+                                            Winner</b><br></b>
+                                        <b>Automatic : </b> Select Random Winner button will select a random user
+                                        automatically. <br>
                                         <b>Manual : </b> You can edit the users and make them a winner. <br>
                                     </div>
 
@@ -134,72 +136,91 @@
                 </div>
             </div>
         </div>
-        @if(!empty($_GET))
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="ibox ">
-                        <div class="ibox-title">
-                            <h5>List of all {{$socialMediaChallenge->title}}'s Users</h5>
+        {{--        @if(!empty($_GET))--}}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h5>List of all {{$socialMediaChallenge->title}}'s Users</h5>
 
-                            <form id="randomWinnerForm" role="form" method="post"
-                                  action="{{ route('socialmediachallenge.winner.random',$socialMediaChallenge->id) }}">
-                                <button id="randomWinnerBtn" class="btn btn-primary btn-sm m-t-n-xs" type="submit"
-                                        title="Random Winner" style="margin-left: 90%">
-                                    Select Random Winner
-                                </button>
-                            </form>
+                        <form id="randomWinnerForm" role="form" method="post"
+                              action="{{ route('socialmediachallenge.winner.random',$socialMediaChallenge->id) }}">
+                            <button id="randomWinnerBtn" class="btn btn-primary btn-sm m-t-n-xs" type="submit"
+                                    title="Random Winner" style="margin-left: 90%">
+                                Select Random Winner
+                            </button>
+                        </form>
 
-                            <div id="winner-settings" class="modal fade" aria-hidden="true">
-                            </div>
+                        <div id="winner-settings" class="modal fade" aria-hidden="true">
                         </div>
-                        <div class="ibox-content">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover dataTables-example"
-                                       title="Complete Requests List">
-                                    <thead>
-                                    <tr>
-                                        <th>S.No.</th>
-                                        <th>User Name</th>
-                                        <th>User Mobile Number</th>
-                                        <th>Caption</th>
-                                        <th>Challenge Status</th>
-                                        <th>Links</th>
-                                        <th>Created At</th>
-                                        <th style='width: 100px'>Actions</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($socialMediaChallengeUsers as $socialMediaChallengeUser)
-                                        <tr class="gradeC">
-                                            <td>{{ $loop->index + ($socialMediaChallengeUsers->perPage() * ($socialMediaChallengeUsers->currentPage() - 1)) + 1 }}</td>
-                                            <td>{{ $socialMediaChallengeUser->user->name }}</td>
-                                            <td>{{ $socialMediaChallengeUser->user->mobile_no }}</td>
-                                            <td> {{ $socialMediaChallengeUser->caption }} </td>
-                                            <td>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover dataTables-example"
+                                   title="Complete Requests List">
+                                <thead>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>User Name</th>
+                                    <th>User Mobile Number</th>
+                                    <th>Caption</th>
+                                    <th>Challenge Status</th>
+                                    {{--<th>Links</th>--}}
+                                    <th>Video Links</th>
+                                    <th>Facebook Links</th>
+                                    <th>Created At</th>
+                                    <th style='width: 100px'>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($socialMediaChallengeUsers as $socialMediaChallengeUser)
+                                    <tr class="gradeC">
+                                        <td>{{ $loop->index + ($socialMediaChallengeUsers->perPage() * ($socialMediaChallengeUsers->currentPage() - 1)) + 1 }}</td>
+                                        <td>{{ $socialMediaChallengeUser->user->name }}</td>
+                                        <td>{{ $socialMediaChallengeUser->user->mobile_no }}</td>
+                                        <td> {{ $socialMediaChallengeUser->caption }} </td>
+                                        <td>
                                             <span
                                                 class="badge badge-info">{{ $socialMediaChallengeUser->challenge_status }}</span>
-                                            </td>
-                                            <td>
-                                                @include('SocialMediaChallenge::socialMediaChallengeUser/links', ['socialMediaChallengeUser' => $socialMediaChallengeUser])
-                                            </td>
-                                            <td>{{ $socialMediaChallengeUser->created_at }}</td>
-                                            <td>
-                                                <a href="{{ route('socialmediachallenge.user.edit',$socialMediaChallengeUser->id)}}"
-                                                   class="btn btn-icon btn-primary btn-sm m-t-n-xs" title="Edit"><i
-                                                        class="fa fa-edit"></i></a>
+                                        </td>
+                                                                                    {{--<td>
+                                                                                        @include('SocialMediaChallenge::socialMediaChallengeUser/links', ['socialMediaChallengeUser' => $socialMediaChallengeUser])
+                                                                                    </td>--}}
+                                        <td>
+                                            @if(!empty($socialMediaChallengeUser->link))
+                                                <a href="{{$socialMediaChallengeUser->link}}"
+                                                   target="_blank">{{ $socialMediaChallengeUser->link }}</a><br><br>
+                                            @else
+                                                No Link.
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if(!empty($socialMediaChallengeUser->facebook_link))
+                                                <a href="{{$socialMediaChallengeUser->facebook_link}}"
+                                                   target="_blank">{{ $socialMediaChallengeUser->facebook_link }}</a><br>
+                                                <br>
+                                            @else
+                                                No Link.
+                                            @endif
+                                        </td>
+                                        <td>{{ $socialMediaChallengeUser->created_at }}</td>
+                                        <td>
+                                            <a href="{{ route('socialmediachallenge.user.edit',$socialMediaChallengeUser->id)}}"
+                                               class="btn btn-icon btn-primary btn-sm m-t-n-xs" title="Edit"><i
+                                                    class="fa fa-edit"></i></a>
 
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                                {{ $socialMediaChallengeUsers->appends(request()->query())->links() }}
-                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                            {{ $socialMediaChallengeUsers->appends(request()->query())->links() }}
                         </div>
                     </div>
                 </div>
             </div>
-        @endif
+        </div>
+        {{--        @endif--}}
     </div>
 @endsection
 
@@ -275,10 +296,10 @@
                 //     // $("#overlay").fadeIn(300);
                 // },
                 success: function (resp) {
-                    let url=resp.url;
-                    let user=resp.user;
+                    let url = resp.url;
+                    let user = resp.user;
                     swal({
-                        title: "The Lucky Winner Is :\n Name : "+resp.user.user.name+".\n Mobile Number : "+resp.user.user.mobile_no,
+                        title: "The Lucky Winner Is :\n Name : " + resp.user.user.name + ".\n Mobile Number : " + resp.user.user.mobile_no,
                         text: "The selected user will be crowned the lucky winner!",
                         type: "info",
                         confirmButtonColor: "#efbd02",
@@ -287,7 +308,7 @@
                         closeOnConfirm: false
                     }, function (resp) {
                         console.log(resp);
-                        if(resp === false){
+                        if (resp === false) {
                             swal.close();
                         } else {
                             let formInstance = document.getElementById("randomWinnerForm")

@@ -24,7 +24,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web','auth']], function () 
     Route::post('social-challenge-user/winner/{id}', [SocialMediaChallengeUserController::class, 'selectWinner'])->name('socialmediachallenge.user.winner')->middleware('permission:Edit social media challenge');
 
     Route::get('social-challenge/winners', [SocialMediaChallengeWinnerController::class, 'view'])->name('socialmediachallenge.winners')->middleware('permission:View social media challenge');
-    Route::get('social-challenge/random-winner/{id}', [SocialMediaChallengeUserController::class, 'selectWinnerRandom'])->name('socialmediachallenge.winner.random')->middleware('permission:Edit social media challenge');
+    Route::match(['get'],'social-challenge/random-winner/{id}', [SocialMediaChallengeUserController::class, 'selectWinnerRandom'])->name('socialmediachallenge.winner.random')->middleware('permission:Edit social media challenge');
+    Route::match(['post'],'social-challenge/random-winner/{id}', [SocialMediaChallengeUserController::class, 'addToWinnersTable'])->name('socialmediachallenge.winner.random.add')->middleware('permission:Edit social media challenge');
 
 //    socialmediachallenge.winner.random
 });

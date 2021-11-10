@@ -13,6 +13,7 @@ use App\Models\MerchantTransaction;
 use App\Models\NchlAggregatedPayment;
 use App\Models\NchlBankTransfer;
 use App\Models\NchlLoadTransaction;
+use App\Models\NeaTransaction;
 use App\Models\NICAsiaCyberSourceLoadTransaction;
 use App\Models\NPSAccountLinkLoad;
 use App\Models\NpsLoadTransaction;
@@ -94,6 +95,7 @@ class Controller extends BaseController
             KhaltiUserTransaction::class => "KHALTI",
             UserLoadTransaction::class => "NPAY",
             NpsLoadTransaction::class => "NPS",
+            NeaTransaction::class => "NEA",
             NchlLoadTransaction::class => "NCHL LOAD",
             NchlAggregatedPayment::class => "NCHL AGGREGATED PAYMENT",
             NchlBankTransfer::class => "BANK TRANSFER",

@@ -165,7 +165,8 @@
                                     <th>User Mobile Number</th>
                                     <th>Caption</th>
                                     <th>Challenge Status</th>
-                                    <th>Links</th>
+                                    {{--<th>Links</th>--}}
+                                    <th>Video Links</th>
                                     <th>Facebook Links</th>
                                     <th>Created At</th>
                                     <th style='width: 100px'>Actions</th>
@@ -182,13 +183,13 @@
                                             <span
                                                 class="badge badge-info">{{ $socialMediaChallengeUser->challenge_status }}</span>
                                         </td>
-                                        {{--                                            <td>--}}
-                                        {{--                                                @include('SocialMediaChallenge::socialMediaChallengeUser/links', ['socialMediaChallengeUser' => $socialMediaChallengeUser])--}}
-                                        {{--                                            </td>--}}
+                                                                                    {{--<td>
+                                                                                        @include('SocialMediaChallenge::socialMediaChallengeUser/links', ['socialMediaChallengeUser' => $socialMediaChallengeUser])
+                                                                                    </td>--}}
                                         <td>
                                             @if(!empty($socialMediaChallengeUser->link))
                                                 <a href="{{$socialMediaChallengeUser->link}}"
-                                                   target="_blank">Link</a><br><br>
+                                                   target="_blank">{{ $socialMediaChallengeUser->link }}</a><br><br>
                                             @else
                                                 No Link.
                                             @endif
@@ -196,7 +197,7 @@
                                         <td>
                                             @if(!empty($socialMediaChallengeUser->facebook_link))
                                                 <a href="{{$socialMediaChallengeUser->facebook_link}}"
-                                                   target="_blank">Facebook Link</a><br>
+                                                   target="_blank">{{ $socialMediaChallengeUser->facebook_link }}</a><br>
                                                 <br>
                                             @else
                                                 No Link.

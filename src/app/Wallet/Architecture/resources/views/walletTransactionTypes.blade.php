@@ -134,6 +134,7 @@
                                     <th>Service</th>
                                     <th>Service Enabled</th>
                                     <th>Payment Type</th>
+                                    <th>Specials</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -183,7 +184,7 @@
                                         </td>
 
                                         <td>{{ $transactionType->payment_type }}</td>
-
+                                        <td>{{ $transactionType->special1 }} @if($transactionType->special1) | {{ $transactionType->special2 }} @endif</td>
                                         <td class="center">
                                             <a style="margin-top: 5px;"
                                                href="{{ route('architecture.transaction.cashback', $transactionType->id) }}"

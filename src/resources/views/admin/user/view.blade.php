@@ -94,6 +94,7 @@
 
 
                                         <div class="col-md-6" style="padding-bottom: 15px;">
+                                            <label for="transaction_number">From User Registration Date</label>
                                             <div class="input-group date">
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
@@ -105,6 +106,7 @@
                                         </div>
 
                                         <div class="col-md-6" style="padding-bottom: 15px;">
+                                            <label for="transaction_number">To User Registration Date</label>
                                             <div class="input-group date">
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
@@ -115,6 +117,30 @@
                                             </div>
                                         </div>
 
+
+                                        <div class="col-md-6" style="padding-bottom: 15px;">
+                                            <label for="transaction_number">From User KYC Created Date</label>
+                                            <div class="input-group date">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </span>
+                                                <input id="date_load_from" type="text" class="form-control date_from"
+                                                       placeholder="From KYC Created Date" name="from_kyc_date" autocomplete="off"
+                                                       value="{{ !empty($_GET['from_kyc_date']) ? $_GET['from_kyc_date'] : '' }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6" style="padding-bottom: 15px;">
+                                            <label for="transaction_number">To User KYC Created Date</label>
+                                            <div class="input-group date">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </span>
+                                                <input id="date_load_to" type="text" class="form-control date_to"
+                                                       placeholder="To KYC Created Date" name="to_kyc_date" autocomplete="off"
+                                                       value="{{ !empty($_GET['to_kyc_date']) ? $_GET['to_kyc_date'] : '' }}">
+                                            </div>
+                                        </div>
 
                                         <div class="col-md-6">
                                             <label for="transaction_number">Transaction Number</label>

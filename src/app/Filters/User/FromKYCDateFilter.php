@@ -32,8 +32,8 @@ class FromKYCDateFilter extends FilterAbstract {
             return $builder;
         }
 
-        return User::whereHas('kyc',function ($query) use ($value) {
-            $query->whereDate('created_at', '>=' ,date('Y-m-d', strtotime(str_replace(',', ' ', $value))));
+        return $builder->whereHas('kyc',function ($query) use ($value) {
+            return $query->whereDate('created_at', '>=' ,date('Y-m-d', strtotime(str_replace(',', ' ', $value))));
         });
     }
 }

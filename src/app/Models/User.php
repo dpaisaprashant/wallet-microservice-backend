@@ -425,7 +425,7 @@ class User extends Authenticatable
             $status =  'not filled';
         } elseif($this->kyc->status == 0 && $this->kyc->accept !== 0) {
             $status =  'not verified';
-        } elseif($this->kyc->status == 0 && $this->kyc->accept === 0) {
+        } elseif($this->kyc->accept === 0) {
             $status =  'kyc rejected';
         } elseif($this->kyc->status == 1) {
             $status =  'verified';

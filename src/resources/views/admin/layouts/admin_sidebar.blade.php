@@ -173,6 +173,10 @@ $url = url()->current();
                             <li><a href="{{ route('merchant.address.list') }}">Set Merchant Address</a></li>
                         @endcan
 
+                        @can('View unverified merchant kyc')
+                            <li><a href="{{ route('merchant.unverifiedMerchantKYC.view') }}">View Unverified Merchant KYC</a></li>
+                        @endcan
+
                     </ul>
                 </li>
             @endcan

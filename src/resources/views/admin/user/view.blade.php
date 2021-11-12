@@ -38,14 +38,14 @@
                                 <form role="form" method="get">
 
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <input type="text" name="name" placeholder="Enter User Name"
                                                        class="form-control"
                                                        value="{{ !empty($_GET['name']) ? $_GET['name'] : '' }}">
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <input type="text" name="number" placeholder="Enter Contact Number"
                                                        class="form-control"
@@ -54,12 +54,38 @@
                                         </div>
 
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <input type="email" name="email" placeholder="Enter Email"
                                                    class="form-control"
                                                    value="{{ !empty($_GET['email']) ? $_GET['email'] : '' }}">
                                         </div>
 
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <select data-placeholder="User Type ..." class="chosen-select"
+                                                        tabindex="2" name="user_type">
+                                                    <option value="" selected disabled>User Type...</option>
+                                                    @if(!empty($_GET['user_type']))
+                                                        <option value="all"
+                                                                @if($_GET['user_type']  == 'all') selected @endif >All
+                                                        </option>
+                                                        <option value="normal"
+                                                                @if($_GET['user_type']  == 'user') selected @endif >
+                                                            User
+                                                        </option>
+                                                        <option value="agent"
+                                                                @if($_GET['user_type']  == 'agent') selected @endif >
+                                                            Agent
+                                                        </option>
+
+                                                    @else
+                                                        <option value="all">All</option>
+                                                        <option value="user">User</option>
+                                                        <option value="agent">Agent</option>
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
                                         {{--<div class="col-md-3">
                                             <div class="form-group">
                                                 <select data-placeholder="Choose transaction status..."

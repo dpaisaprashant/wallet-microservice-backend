@@ -481,6 +481,9 @@ class RolesAndPermissionsSeeder extends Seeder
             'Edit social media challenge',
             'Add social media challenge',
             'Delete social media challenge',
+
+            //Merchant KYC
+            'View unverified merchant kyc',
             ];
 
         //get users having all permissions

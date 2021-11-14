@@ -31,7 +31,13 @@ class AgentController extends Controller
     {
 
         $roles = Role::where('name', 'like', '%agent')->get();
-        $users = User::doesnthave('agent')->doesnthave('merchant')->latest()->get();
+        $users = User::doesnthave('agent')
+            ->doesnthave('merchant')
+            ->whereHas('kyc', function ($query) {
+                return $query->where('accept', 1);
+            })
+            ->latest()
+            ->get();
         $agentTypes = AgentType::with('parentAgentType')->latest()->get();
         $parentAgents = Agent::with('user')->latest()->get();
         if ($request->isMethod('POST')) {

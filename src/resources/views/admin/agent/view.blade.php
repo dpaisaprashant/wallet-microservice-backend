@@ -149,7 +149,8 @@
                                     {{--<th>Email</th>--}}
                                     <th>Agent status</th>
                                     <th>Reference Code</th>
-                                    <th>Wallet Balance</th>
+                                    {{--<th>Wallet Balance</th>--}}
+                                    <th>Use parent agent balance</th>
                                     <th>Agent Created At</th>
                                     {{--<th>Total <br>Payment Amount</th>
                                     <th>Total <br>Loaded Amount</th>--}}
@@ -216,8 +217,14 @@
                                         <td>
                                             {{ $user->agent->reference_code }}
                                         </td>
-                                        <td>Rs. {{ $user->wallet->balance }}</td>
-
+                                        {{--<td>Rs. {{ $user->wallet->balance }}</td>--}}
+                                        <td>
+                                            @if($user->agent->use_parent_balance == 1)
+                                                <span class="badge badge-primary">Use parent agent's balance</span>
+                                            @else
+                                                <span class="badge badge-primary">Use own balance</span>
+                                            @endif
+                                        </td>
 
 {{--
                                         <td>Rs. {{ $user->getTotalPaymentAmount() }}</td>

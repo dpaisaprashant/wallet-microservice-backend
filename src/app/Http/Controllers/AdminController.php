@@ -164,7 +164,7 @@ class AdminController extends Controller
         if ($request->isMethod('post'))
         {
             $data = $request->input();
-            if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])){
+            if(Auth::attempt(['email' => $data['email'], 'password' => $data['password'], 'status' => 1])){
                 $admin = Admin::whereId(auth()->user()->id)->first();
                /* event(new SendOTPCodeEvent($admin));
                 Auth::logout();

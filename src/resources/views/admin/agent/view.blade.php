@@ -220,9 +220,9 @@
                                         {{--<td>Rs. {{ $user->wallet->balance }}</td>--}}
                                         <td>
                                             @if($user->agent->use_parent_balance == 1)
-                                                <span class="badge badge-primary">Use parent agent's balance</span>
+                                                <span class="badge badge-danger">Use parent <br>agent's balance</span>
                                             @else
-                                                <span class="badge badge-primary">Use own balance</span>
+                                                <span class="badge badge-warning">Use own balance</span>
                                             @endif
                                         </td>
 

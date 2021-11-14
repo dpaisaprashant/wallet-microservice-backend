@@ -230,7 +230,7 @@ class AgentRepository
             'pp_photo' => $responseData['pp_photo'] ?? null,
             'tax_clearance_certificate' => $responseData['tax_clearance_certificate'] ?? null,
             'pan_vat_document' => $responseData['pan_vat_document'] ?? null,
-            'use_parent_balance' => $responseData['use_parent_balance'] ?? 0
+            'use_parent_balance' => $this->request->use_parent_balance ?? 0
         ];
         // if empty then unset.
         if (empty($agentData['business_owner_citizenship_front'])){

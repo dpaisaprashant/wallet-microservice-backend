@@ -80,6 +80,9 @@ class WalletTypeTransactionController extends Controller{
         $walletTransactionType->limit_type = $request->get('limit_type');
         $walletTransactionType->microservice = $request->get('microservice');
         $walletTransactionType->payment_type = $request->get('payment_type');
+        $walletTransactionType->special1 = $request->get('special1');
+        $walletTransactionType->special2 = $request->get('special2');
+        $walletTransactionType->transaction_type_code = $this->createTransactionTypeCode($walletTransactionType);
 
         $status = $walletTransactionType->save();
 
@@ -90,6 +93,38 @@ class WalletTypeTransactionController extends Controller{
         }
 
 
+    }
+
+    public function createTransactionTypeCode ($wallet_transaction_type){
+        $vendor = $wallet_transaction_type->vendor ? $wallet_transaction_type->vendor . "_" : "";
+        $service = $wallet_transaction_type->service ? $wallet_transaction_type->service . "_" : "";
+        $service_type = $wallet_transaction_type->service_type ? $wallet_transaction_type->service_type . "_" : "";
+        $transaction_category = $wallet_transaction_type->transaction_category ? $wallet_transaction_type->transaction_category . "_" : "";
+
+        if (! (int)($wallet_transaction_type->special1)){
+            if ($wallet_transaction_type->special1 == '0'){
+                $special1 = "";
+            }else{
+                $special1 = $wallet_transaction_type->special1 ? $wallet_transaction_type->special1 . "_" : "";
+            }
+        }else{
+            $special1 = "";
+        }
+        if (! (int)($wallet_transaction_type->special2)){
+            if ($wallet_transaction_type->special2 == '0'){
+                $special2 = "";
+            }else{
+                $special2 = $wallet_transaction_type->special2 ? $wallet_transaction_type->special2 . "_" : "";
+            }
+        }else{
+            $special2 = "";
+        }
+        $transaction_type_code =  $vendor . $service . $service_type . $transaction_category . $special1 . $special2 ?? "";
+        $last_character = substr($transaction_type_code, -1);
+        if ($last_character == "_"){
+            $transaction_type_code =  substr_replace($transaction_type_code, "", -1);
+        }
+        return $transaction_type_code;
     }
 
     public function edit($id){

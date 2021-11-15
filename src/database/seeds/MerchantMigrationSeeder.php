@@ -148,15 +148,15 @@ class MerchantMigrationSeeder extends Seeder
 
 
 
+                //2.5 migrate merchant_bank_transfers to nchl_bank_transfers table
+                $nchlDB->table("merchant_nchl_bank_transfers")->where("merchant_id", $merchant->id)
+                    ->update(["merchant_id" => $user->id]);
+
+
                 //TODO: MERCHANT TICKET PAYMENT
                 $merchantTransactionEvents = $coreDB->table("merchant_transaction_events")
                     ->where("merchant_id", $merchant->id)
                     ->get();
-
-
-                //2.5 migrate merchant_bank_transfers to nchl_bank_transfers table
-                
-
 
                 //3
                 //move row from merchant_transaction_events table to transaction_events table

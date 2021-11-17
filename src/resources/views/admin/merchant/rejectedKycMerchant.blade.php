@@ -25,7 +25,7 @@
             <div class="col-lg-12">
                 <div class="ibox">
                     <div class="ibox-title">
-                        <h5>List of rejected KYC Merchants</h5>
+                        <h5>List of Rejected KYC Merchants</h5>
                     </div>
                     <div class="ibox-content">
                         <div class="table-responsive">

@@ -25,7 +25,7 @@
                             @if(!empty($user->kyc))
                                 <h4>Address: {{ $user->kyc->district }}, Province {{ $user->kyc->province }}</h4>
                             @endif
-
+                                <h4>User Type: {{ $user->userType->name }}</h4>
                         </div>
                     </div>
                 </div>

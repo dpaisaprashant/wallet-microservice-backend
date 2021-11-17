@@ -486,6 +486,13 @@ class RolesAndPermissionsSeeder extends Seeder
             'Refund view pretransaction',
             'Refund create pretransaction',
             'Refund edit pretransaction',
+
+            //Merchant KYC
+            'View unverified merchant kyc',
+            'Accepted merchant kyc',
+            'Rejected merchant kyc',
+            'KYC not filled merchant',
+
             ];
 
         //get users having all permissions

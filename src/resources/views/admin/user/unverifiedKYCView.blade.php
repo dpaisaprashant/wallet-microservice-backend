@@ -19,82 +19,9 @@
         </div>
     </div>
     <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox ">
-                    <div class="ibox-title collapse-link">
-                        <h5>Filter Users</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="ibox-content" @if( empty($_GET) || (!empty($_GET['page']) && count($_GET) === 1)  ) style="display: none"  @endif>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <form role="form" method="get">
 
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <input type="text" name="name" placeholder="Enter User Name" class="form-control" value="{{ !empty($_GET['name']) ? $_GET['name'] : '' }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <input type="text" name="number" placeholder="Enter Contact Number" class="form-control" value="{{ !empty($_GET['number']) ? $_GET['number'] : '' }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <input type="email" name="email" placeholder="Enter Email" class="form-control" value="{{ !empty($_GET['email']) ? $_GET['email'] : '' }}">
-                                        </div>
+        @include('admin.userFilter.user-filter',['title' => "User"])
 
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <select data-placeholder="Choose User Type..." class="chosen-select"  tabindex="2" name="user_type">
-                                                    <option value="" selected disabled>Sort By User Type</option>
-                                                    <option value="" selected>All</option>
-                                                    @if(!empty($_GET['user_type']))
-                                                        @if($_GET['user_type'] == "normal_user")
-                                                            <option value="normal_user" selected>Normal user</option>
-                                                            <option value="agent">Agent</option>
-                                                            <option value="merchant">Merchant</option>
-                                                        @elseif($_GET['user_type'] == "agent")
-                                                            <option value="normal_user">Normal user</option>
-                                                            <option value="agent" selected>Agent</option>
-                                                            <option value="merchant">Merchant</option>
-                                                        @elseif($_GET['user_type'] == 'merchant')
-                                                            <option value="normal_user">Normal user</option>
-                                                            <option value="agent">Agent</option>
-                                                            <option value="merchant" selected>Merchant</option>
-                                                        @endif
-                                                    @else
-                                                        <option value="normal_user">Normal user</option>
-                                                        <option value="agent">Agent</option>
-                                                        <option value="merchant">Merchant</option>
-                                                    @endif
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <br>
-                                    <div>
-                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('user.unverifiedKYC.view') }}"><strong>Filter</strong></button>
-                                    </div>
-
-                                    <div>
-                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs" type="submit" style="margin-right: 10px;" formaction="{{ route('user.excel') }}"><strong>Excel</strong></button>
-                                    </div>
-                                    @include('admin.asset.components.clearFilterButton')
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox ">

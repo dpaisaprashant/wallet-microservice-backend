@@ -25,14 +25,14 @@ class UserTypeFilter extends FilterAbstract
      * @return Builder
      */
     public function filter(Builder $builder, $value){
-        if ($value == "normal_user"){
+        if ($value == "user"){
             return $builder->whereHas('userType')->whereDoesntHave('agent')->latest();
         }
         elseif ($value == "agent"){
             return $builder->whereHas('agent')->latest();
         }
         else{
-            return $builder->whereHas('merchant')->latest();
+            return $builder->latest();
         }
     }
 }

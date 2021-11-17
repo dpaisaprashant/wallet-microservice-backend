@@ -190,6 +190,6 @@ class MerchantKYCRepository
     public function paginatedUnverifiedMerchantKYC(){
         return User::with('merchant', 'kyc')->whereHas('kyc',function($query){
             return $query->where('accept',MerchantKYC::ACCEPT_UNVERIFIED);
-        })->whereHas('merchant')->latest()->paginate($this->length);
+        })->whereHas('merchant')->filter(request())->latest()->paginate($this->length);
     }
 }

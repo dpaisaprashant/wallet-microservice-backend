@@ -161,6 +161,22 @@ $url = url()->current();
                         <li><a href="{{ route('merchant.view') }}">View Merchants</a></li>
                         {{--                        @endcan--}}
 
+                        @can('View unverified merchant kyc')
+                            <li><a href="{{ route('merchant.unverifiedMerchantKYC.view') }}">Unverified Merchant KYC</a></li>
+                        @endcan
+
+                        @can('Accepted merchant kyc')
+                            <li><a href="{{ route('merchant.acceptedMerchantKYC.view') }}">Accepted Merchant KYC</a></li>
+                        @endcan
+
+                        @can('Rejected merchant kyc')
+                            <li><a href="{{ route('merchant.rejectedMerchantKYC.view') }}">Rejected Merchant KYC</a></li>
+                        @endcan
+
+                        @can('KYC not filled merchant')
+                            <li><a href="{{ route('merchant.unfilledMerchantKYC.view') }}">Unfilled Merchant KYC</a></li>
+                        @endcan
+
                         @can('Create merchant')
                             <li><a href="{{ route('create.merchant.view') }}">Create Merchant</a></li>
                         @endcan
@@ -172,6 +188,7 @@ $url = url()->current();
                         @can('View merchant address')
                             <li><a href="{{ route('merchant.address.list') }}">Set Merchant Address</a></li>
                         @endcan
+
 
                     </ul>
                 </li>

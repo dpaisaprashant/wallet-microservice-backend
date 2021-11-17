@@ -481,6 +481,11 @@ class RolesAndPermissionsSeeder extends Seeder
             'Edit social media challenge',
             'Add social media challenge',
             'Delete social media challenge',
+
+            //Refund PreTransaction
+            'Refund view pretransaction',
+            'Refund create pretransaction',
+            'Refund edit pretransaction',
             ];
 
         //get users having all permissions

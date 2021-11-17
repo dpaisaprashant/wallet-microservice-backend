@@ -121,7 +121,11 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('create-user-kyc/{id}','UserController@createUserKyc')->name('user.createUserKyc')->middleware('permission:Create user kyc');
         Route::post('create-user-kyc/{id}','UserController@storeUserKyc')->name('user.storeUserKyc')->middleware('permission:Create user kyc');
 
-        Route::get('unverified-merchant-kyc-user',[\App\Http\Controllers\Merchant\MerchantController::class,'unverifiedMerchantKYCView'])->name('merchant.unverifiedMerchantKYC.view');
+        Route::get('unverified-merchant-kyc',[\App\Http\Controllers\Merchant\MerchantController::class,'unverifiedMerchantKYCView'])->name('merchant.unverifiedMerchantKYC.view')->middleware('permission:View unverified merchant kyc');
+        Route::get('accepted-merchant-kyc',[\App\Http\Controllers\Merchant\MerchantController::class,'acceptedMerchantKYCView'])->name('merchant.acceptedMerchantKYC.view')->middleware('permission:Accepted merchant kyc');
+        Route::get('rejected-merchant-kyc',[\App\Http\Controllers\Merchant\MerchantController::class,'rejectedMerchantKYCView'])->name('merchant.rejectedMerchantKYC.view')->middleware('permission:Rejected merchant kyc');
+        Route::get('unfilled-merchant-kyc',[\App\Http\Controllers\Merchant\MerchantController::class,'unfilledMerchantKYCView'])->name('merchant.unfilledMerchantKYC.view')->middleware('permission:KYC not filled merchant');
+
         Route::get('/merchants',[\App\Http\Controllers\Merchant\MerchantController::class,'view'])->name('merchant.view')->middleware('permission:Merchant dashboard');
         Route::get('/update-merchant-detail',[App\Http\Controllers\Merchant\MerchantController::class,'merchantUpdateView'])->name('merchant.update.view');
         Route::post('/update-merchant-detail',[\App\Http\Controllers\Merchant\MerchantController::class,'merchantUpdate'])->name('merchant.update');

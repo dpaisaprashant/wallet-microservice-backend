@@ -484,6 +484,9 @@ class RolesAndPermissionsSeeder extends Seeder
 
             //Merchant KYC
             'View unverified merchant kyc',
+            'Accepted merchant kyc',
+            'Rejected merchant kyc',
+            'KYC not filled merchant',
             ];
 
         //get users having all permissions

@@ -19,64 +19,9 @@
         </div>
     </div>
     <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox ">
-                    <div class="ibox-title collapse-link">
-                        <h5>Filter Merchants</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="ibox-content"
-                         @if( empty($_GET) || (!empty($_GET['page']) && count($_GET) === 1)  ) style="display: none" @endif>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <form role="form" method="get">
 
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <input type="text" name="name" placeholder="Enter User Name"
-                                                       class="form-control"
-                                                       value="{{ !empty($_GET['name']) ? $_GET['name'] : '' }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <input type="text" name="number" placeholder="Enter Contact Number"
-                                                       class="form-control"
-                                                       value="{{ !empty($_GET['number']) ? $_GET['number'] : '' }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <input type="email" name="email" placeholder="Enter Email"
-                                                   class="form-control"
-                                                   value="{{ !empty($_GET['email']) ? $_GET['email'] : '' }}">
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div>
-                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
-                                                formaction="{{ route('user.unverifiedKYC.view') }}">
-                                            <strong>Filter</strong></button>
-                                    </div>
+        @include('admin.userFilter.user-filter',['title' => "Merchant"])
 
-                                    <div>
-                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
-                                                type="submit" style="margin-right: 10px;"
-                                                formaction="{{ route('user.excel') }}"><strong>Excel</strong></button>
-                                    </div>
-                                    @include('admin.asset.components.clearFilterButton')
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox ">

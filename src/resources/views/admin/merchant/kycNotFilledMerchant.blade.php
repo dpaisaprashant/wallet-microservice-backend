@@ -20,7 +20,7 @@
     </div>
     <div class="wrapper wrapper-content animated fadeInRight">
 
-        @include('admin.userFilter.user-filter',['title' => "User"])
+        @include('admin.userFilter.user-filter',['title' => "Merchant"])
 
         <div class="row">
             <div class="col-lg-12">
@@ -52,9 +52,9 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($accpetedKycUsers as $user)
+                                @foreach($kycNotFilledUsers as $user)
                                     <tr class="gradeX">
-                                        <td>{{ $loop->index + ($accpetedKycUsers->perPage() * ($accpetedKycUsers->currentPage() - 1)) + 1 }}</td>
+                                        <td>{{ $loop->index + ($kycNotFilledUsers->perPage() * ($kycNotFilledUsers->currentPage() - 1)) + 1 }}</td>
                                         <td>
                                             {{--<img alt="image"  src="img/profile_small.jpg" style="">--}}
                                             <a @can('User profile') href="{{route('user.profile', $user->id)}}" @endcan>{{ $user->name }}</a>
@@ -131,7 +131,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            {{ $accpetedKycUsers->appends(request()->query())->links() }}
+                            {{ $kycNotFilledUsers->appends(request()->query())->links() }}
                         </div>
 
                     </div>
@@ -166,7 +166,7 @@
     <script>
         $(document).ready(function (e) {
 
-            let a = "Showing {{ $accpetedKycUsers->firstItem() }} to {{ $accpetedKycUsers->lastItem() }} of {{ $accpetedKycUsers->total() }} entries";
+            let a = "Showing {{ $kycNotFilledUsers->firstItem() }} to {{ $kycNotFilledUsers->lastItem() }} of {{ $kycNotFilledUsers->total() }} entries";
 
             $('.dataTables_info').text(a);
         });

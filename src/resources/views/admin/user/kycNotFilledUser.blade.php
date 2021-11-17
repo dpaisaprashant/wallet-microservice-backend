@@ -20,6 +20,8 @@
     </div>
     <div class="wrapper wrapper-content animated fadeInRight">
 
+        @include('admin.userFilter.user-filter',['title' => "User"])
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox">

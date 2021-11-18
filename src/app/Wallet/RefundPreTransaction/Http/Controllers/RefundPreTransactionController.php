@@ -19,139 +19,79 @@ class RefundPreTransactionController extends Controller
 
     public function view()
     {
-        $preTransactions = \App\Models\Microservice\PreTransaction::where('service_type','REFUND')->orderBy('created_at', 'DESC')->paginate(20);
-//        $preTransactions = \App\Models\Microservice\PreTransaction::where('service_type','REFUND')->first();
-//dd($preTransactions);
-        return view('RefundPreTransaction::view-refund-pretransaction', compact('preTransactions'));
+//        $preTransactions = \App\Models\Microservice\PreTransaction::where('service_type','REFUND')->orderBy('created_at', 'DESC')->paginate(20);
+
+        $vendors = \App\Models\Microservice\PreTransaction::groupBy('vendor')->pluck('vendor');
+        $service_types = PreTransaction::groupBy('service_type')->pluck('service_type');
+        $microservice_types = PreTransaction::groupBy('microservice_type')->pluck('microservice_type');
+        $transaction_types = PreTransaction::groupBy('transaction_type')->pluck('transaction_type');
+        $preTransactions = \App\Models\Microservice\PreTransaction::where('service_type', 'REFUND')->filter(request())->latest()->paginate(10);
+
+        return view('RefundPreTransaction::view-refund-pretransaction')->with(
+            compact(
+                'preTransactions',
+                'vendors',
+                'service_types',
+                'microservice_types',
+                'transaction_types',
+            )
+        );
+//        return view('RefundPreTransaction::view-refund-pretransaction', compact('preTransactions'));
     }
 
     public function create(Request $request)
     {
-        $blockedIP = WalletIP::all();
-
-
-        return view('RefundPreTransaction::create-refund-pretransaction', compact('blockedIP'));
-
+        return view('RefundPreTransaction::create-refund-pretransaction');
     }
 
     public function store(Request $request)
     {
-        //loadtestfund
-
         $userId = User::where('mobile_no', $request->get('user_mobile_no'))->pluck('id')->first();
 
-        $preTransaction = \App\Models\Microservice\PreTransaction::create([
-            'pre_transaction_id' => TransactionIdGenerator::generate(19),
-            'user_id' => $userId,
-            'amount' => $request->get('amount'),
-            'description' => $request->get('description'),
-            'vendor' => 'WALLET',
-            'service_type' => 'REFUND',
-            'microservice_type' => 'WALLET',
-            'transaction_type' => 'debit',
-            'Url' => '/refund',
-            'Status' => 'FAILED',
-            'created_at' => $request->get('created_at'),
-        ]);
+        if(!$userId) {
+            return redirect()->route('refund.pretransaction.create')->with('error', 'The Mobile Number doesnt exist in the database.');
+        }
 
-        return redirect()->route('preTransaction.view')->with('success', 'PreTransaction Row Created.');
-    }
+            $preTransaction = \App\Models\Microservice\PreTransaction::create([
+                'pre_transaction_id' => TransactionIdGenerator::generate(19),
+                'user_id' => $userId,
+                'amount' => $request->get('amount'),
+                'description' => $request->get('description'),
+                'vendor' => 'WALLET',
+                'service_type' => 'REFUND',
+                'microservice_type' => 'WALLET',
+                'transaction_type' => 'debit',
+                'Url' => '/refund',
+                'Status' => 'FAILED',
+                'created_at' => $request->get('created_at'),
+            ]);
 
-    public function delete($id)
-    {
-        $blockedIP = WalletIP::findOrFail($id);
 
-        $blockedIP->delete();
-
-        return redirect()->route('blockedip.view')->with('success', 'IP deleted successfully');
+        return redirect()->route('refund.pretransaction.view')->with('success', 'PreTransaction Row Created.');
     }
 
     public function edit($id)
     {
 
-        $blockedIP = WalletIP::findOrFail($id);
+        $preTransaction = \App\Models\Microservice\PreTransaction::findOrFail($id);
 
-        return view('WalletIP::editBlockedIP', compact('blockedIP'));
+        return view('RefundPreTransaction::edit-refund-pretransaction', compact('preTransaction'));
     }
 
     public function update(Request $request, $id)
     {
+        $preTransaction = \App\Models\Microservice\PreTransaction::findOrFail($id);
 
-        $blockedIP = WalletIP::findOrFail($id);
+        $userId = User::where('mobile_no', $request->get('user_mobile_no'))->pluck('id')->first();
 
-        $blockedIP = WalletIP::where('id', $id)->update([
-            'ip' => $request->get('ip'),
+        \App\Models\Microservice\PreTransaction::where('id', $id)->update([
+            'user_id' => $userId,
             'description' => $request->get('description'),
-            'blocked_at' => $request->get('blocked_at'),
-            'block_duration' => $request->get('block_duration'),
-            'status' => $request->get('status')
+            'amount' => $request->get('amount'),
+            'created_at' => $request->get('created_at'),
         ]);
 
-        return redirect()->route('blockedip.view')->with('success', 'Updated successfully');
-    }
-
-    //WhiteList IP
-    public function view_whitelist()
-    {
-        $whitelistedIPs = WhitelistIP::orderBy('created_at', 'DESC')->paginate(20);
-
-        return view('WalletIP::whitelistedIP/viewWhitelistedIP', compact('whitelistedIPs'));
-    }
-
-    public function create_whitelist(Request $request)
-    {
-        $whitelistedIPs = WhitelistIP::all();
-
-        return view('WalletIP::whitelistedIP/createWhitelistedIP', compact('whitelistedIPs'));
-
-    }
-
-    public function store_whitelist(Request $request)
-    {
-        $whitelistedIPAlreadyExists = WhitelistIP::where('ip', $request->get('ip'))->count();
-
-        if ($whitelistedIPAlreadyExists > 0) {
-            return redirect()->route('whitelistedIP.view')->with('error', 'IP already exists in list');
-        }
-
-        $whitelistedIP = WhitelistIP::create([
-            'ip' => $request->get('ip'),
-            'title' => $request->get('title'),
-            'status' => $request->get('status'),
-        ]);
-
-        return redirect()->route('whitelistedIP.view')->with('success', 'IP Whitelisted');
-    }
-
-    public function delete_whitelist($id)
-    {
-        $whitelistedIP = WhitelistIP::findOrFail($id);
-
-        $whitelistedIP->delete();
-
-        return redirect()->route('whitelistedIP.view')->with('success', 'IP deleted successfully');
-    }
-
-    public function edit_whitelist($id)
-    {
-
-        $whitelistedIP = WhitelistIP::findOrFail($id);
-
-        return view('WalletIP::whitelistedIP/editWhitelistedIP', compact('whitelistedIP'));
-    }
-
-    public function update_whitelist(Request $request, $id)
-    {
-
-        $whitelistedIP = WhitelistIP::findOrFail($id);
-
-        $whitelistedIP = WhitelistIP::where('id', $id)->update([
-            'ip' => $request->get('ip'),
-            'title' => $request->get('title'),
-            'status' => $request->get('status'),
-        ]);
-
-        return redirect()->route('whitelistedIP.view')->with('success', 'Updated successfully');
+        return redirect()->route('refund.pretransaction.view')->with('success', 'Updated successfully');
     }
 
 }

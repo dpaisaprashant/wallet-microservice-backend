@@ -85,6 +85,14 @@
         });
     </script>
 
+    <script>
+        $(".date_with_time").datetimepicker({
+            // autoclose: true,
+            // todayHighlight: true,
+            // format: 'dd M yyyy HH:mm',
+            // keyboardNavigation: false,
+        });
 
+    </script>
 
 

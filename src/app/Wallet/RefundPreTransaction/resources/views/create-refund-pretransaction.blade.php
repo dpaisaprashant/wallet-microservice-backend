@@ -53,30 +53,11 @@
 
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Created At</label>
-                                <div class="col-sm-10">
-                                    <input name="created_at" type="datetime-local" class="form-control" required>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-4" style="padding-bottom: 15px;">
-                                <label for="transaction_type">Created Date</label>
-                                <div class="input-group date">
-                                                    <span class="input-group-addon">
-                                                        <i class="fa fa-calendar"></i>
-                                                    </span>
-                                    <input id="date_with_time" type="text" class="form-control date_with_time"
-                                           placeholder="Select Date" name="created_at" autocomplete="off">
-                                </div>
-                            </div>
-
-                            <div class="container">
-                                <div class="row">
-                                    <div class='col-sm-6'>
-                                        <input type='text' class="form-control" id='datetimepicker4'/>
-                                        <input type="text" class="form-control" id="example">
-                                    </div>
-
+                                <div class='col-sm-10 input-group date' id='datetimepicker1'>
+                                    <input type='text' name='created_at' class="form-control"/>
+                                    <span class="input-group-addon">
+                                       <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
                                 </div>
                             </div>
 
@@ -98,45 +79,36 @@
 
 @section('styles')
     @include('admin.asset.css.chosen')
-{{--    @include('admin.asset.css.datepicker')--}}
+    @include('admin.asset.css.datepicker')
     @include('admin.asset.css.datatable')
-
-    <link rel="stylesheet" href="{{asset('admin/css/plugins/clockpicker/clockpicker.css')}}" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.min.css">
-
+    {{--    <link rel="stylesheet" href="{{asset('admin/css/plugins/clockpicker/clockpicker.css')}}" />--}}
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/css/ion.rangeSlider.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css">
 
 @endsection
 
 @section('scripts')
 
-    <!-- Necessary -->
-{{--    <link rel="stylesheet" href="/path/to/cdn/bootstrap.min.css" />--}}
-{{--    <script src="/path/to/cdn/jquery.slim.min.js"></script>--}}
-{{--    <script src="/path/to/cdn/bootstrap.min.js"></script>--}}
-{{--    <script src="/path/to/cdn/popper.min.js"></script>--}}
-    <!-- Font Awesome Iconic Font -->
-{{--    <link rel="stylesheet" href="/path/to/cdn/fontawesome.min.css" />--}}
-    <!-- Moment.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
-
-    <script src="{{asset('admin/js/plugins/clockpicker/clockpicker.js')}}"></script>
-
+    {{--    <script src="{{asset('admin/js/plugins/clockpicker/clockpicker.js')}}"></script>--}}
     @include('admin.asset.js.chosen')
-{{--    @include('admin.asset.js.datepicker')--}}
+    @include('admin.asset.js.datepicker')
     @include('admin.asset.js.datatable')
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+    <script
+        src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
 
     <script type="text/javascript">
         $(function () {
-            $('#datetimepicker4').datetimepicker({
-
+            $('#datetimepicker1').datetimepicker({
+                // inline: true,
+                sideBySide: true,
             });
-        });
-
-        $(function () {
-            $('#example').datetimepicker();
         });
     </script>
 

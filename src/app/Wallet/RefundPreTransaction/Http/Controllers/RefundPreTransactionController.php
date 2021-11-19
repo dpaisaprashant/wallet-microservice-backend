@@ -3,7 +3,8 @@
 
 namespace App\Wallet\RefundPreTransaction\Http\Controllers;
 
-use App\Models\PreTransaction;
+use App\Models\Microservice\PreTransaction;
+//use App\Models\PreTransaction;
 use App\Models\User;
 use App\Wallet\Helpers\TransactionIdGenerator;
 use Carbon\Carbon;

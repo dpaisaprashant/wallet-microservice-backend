@@ -254,7 +254,7 @@ $url = url()->current();
                     <li><a href="{{ route('paypoint.loadTestFund.create') }}">Create Load For Paypoint</a></li>
                 </ul>
             </li>--}}
-            @if(auth()->user()->hasPermissionTo('Refund view') || auth()->user()->hasPermissionTo('Refund create'))
+            @if(auth()->user()->hasPermissionTo('Refund view') || auth()->user()->hasPermissionTo('Refund create') || auth()->user()->hasPermissionTo('Refund create pretransaction') || auth()->user()->hasPermissionTo('Refund view pretransaction'))
                 <li @if(preg_match('/refund/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Refund</span><span
                             class="fa arrow"></span></a>
@@ -265,12 +265,19 @@ $url = url()->current();
                         @can('Refund create')
                             <li><a href="{{ route('refund.create') }}">Create Refund</a></li>
                         @endcan
+                        @can('Refund create pretransaction')
+                            <li><a href="{{ route('refund.pretransaction.create') }}">Create Pretransaction</a></li>
+                        @endcan
+                        @can('Refund view pretransaction')
+                            <li><a href="{{ route('refund.pretransaction.view') }}">View Refunded Pretransactions</a></li>
+                        @endcan
                     </ul>
                 </li>
             @endif
 
 
-            @if(auth()->user()->hasPermissionTo('Lucky winner view') || auth()->user()->hasPermissionTo('Lucky winner create'))
+
+        @if(auth()->user()->hasPermissionTo('Lucky winner view') || auth()->user()->hasPermissionTo('Lucky winner create'))
                 <li @if(preg_match('/lucky/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Lucky Winner</span><span
                             class="fa arrow"></span></a>

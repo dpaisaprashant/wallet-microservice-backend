@@ -288,7 +288,13 @@ class RolesAndPermissionsSeeder extends Seeder
             'Api log',
 
             'Merchant event list',
-            'Merchant pending event list'
+            'Merchant pending event list',
+
+            //Refund PreTransaction
+            'Refund view pretransaction',
+            'Refund create pretransaction',
+            'Refund edit pretransaction',
+
 
             ];
 

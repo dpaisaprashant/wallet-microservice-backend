@@ -58,25 +58,27 @@
                                 </div>
                             </div>
 
-{{--                            <div class="col-md-4" style="padding-bottom: 15px;">--}}
-{{--                                <label for="transaction_type">From Date</label>--}}
-{{--                                <div class="input-group date">--}}
-{{--                                                    <span class="input-group-addon">--}}
-{{--                                                        <i class="fa fa-calendar"></i>--}}
-{{--                                                    </span>--}}
-{{--                                    <input id="date_with_time" type="text" class="form-control date_with_time"--}}
-{{--                                           placeholder="Select Date" name="created_at" autocomplete="off">--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
 
-{{--                            <div class="container">--}}
-{{--                                <div class="row">--}}
-{{--                                    <div class='col-sm-6'>--}}
-{{--                                        <input type='text' class="form-control" id='datetimepicker4'/>--}}
-{{--                                    </div>--}}
+                            <div class="col-md-4" style="padding-bottom: 15px;">
+                                <label for="transaction_type">Created Date</label>
+                                <div class="input-group date">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </span>
+                                    <input id="date_with_time" type="text" class="form-control date_with_time"
+                                           placeholder="Select Date" name="created_at" autocomplete="off">
+                                </div>
+                            </div>
 
-{{--                                </div>--}}
-{{--                            </div>--}}
+                            <div class="container">
+                                <div class="row">
+                                    <div class='col-sm-6'>
+                                        <input type='text' class="form-control" id='datetimepicker4'/>
+                                        <input type="text" class="form-control" id="example">
+                                    </div>
+
+                                </div>
+                            </div>
 
                             <div class="hr-line-dashed"></div>
 
@@ -92,31 +94,35 @@
         </div>
     </div>
 
-
-
 @endsection
 
 @section('styles')
     @include('admin.asset.css.chosen')
-    @include('admin.asset.css.datepicker')
+{{--    @include('admin.asset.css.datepicker')--}}
     @include('admin.asset.css.datatable')
+
+    <link rel="stylesheet" href="{{asset('admin/css/plugins/clockpicker/clockpicker.css')}}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/css/bootstrap-datetimepicker.min.css">
 
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/css/ion.rangeSlider.min.css"/>
-
-
 
 @endsection
 
 @section('scripts')
 
-{{--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>--}}
-{{--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">--}}
-{{--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />--}}
+    <!-- Necessary -->
+{{--    <link rel="stylesheet" href="/path/to/cdn/bootstrap.min.css" />--}}
+{{--    <script src="/path/to/cdn/jquery.slim.min.js"></script>--}}
+{{--    <script src="/path/to/cdn/bootstrap.min.js"></script>--}}
+{{--    <script src="/path/to/cdn/popper.min.js"></script>--}}
+    <!-- Font Awesome Iconic Font -->
+{{--    <link rel="stylesheet" href="/path/to/cdn/fontawesome.min.css" />--}}
+    <!-- Moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 
-    <!-- Include Bootstrap Datepicker -->
-{{--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" />--}}
-{{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>--}}
+    <script src="{{asset('admin/js/plugins/clockpicker/clockpicker.js')}}"></script>
 
     @include('admin.asset.js.chosen')
 {{--    @include('admin.asset.js.datepicker')--}}
@@ -127,6 +133,10 @@
             $('#datetimepicker4').datetimepicker({
 
             });
+        });
+
+        $(function () {
+            $('#example').datetimepicker();
         });
     </script>
 

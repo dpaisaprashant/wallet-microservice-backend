@@ -64,7 +64,7 @@ class RefundPreTransactionController extends Controller
                 'transaction_type' => 'debit',
                 'Url' => '/refund',
                 'Status' => 'FAILED',
-                'created_at' => $request->get('created_at'),
+                'created_at' => \Carbon\Carbon::createFromFormat('m/d/Y h:i A', $request->get('created_at')),
             ]);
 
 
@@ -89,7 +89,7 @@ class RefundPreTransactionController extends Controller
             'user_id' => $userId,
             'description' => $request->get('description'),
             'amount' => $request->get('amount'),
-            'created_at' => $request->get('created_at'),
+            'created_at' => \Carbon\Carbon::createFromFormat('m/d/Y h:i A', $request->get('created_at')),
         ]);
 
         return redirect()->route('refund.pretransaction.view')->with('success', 'Updated successfully');

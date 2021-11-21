@@ -482,11 +482,17 @@ class RolesAndPermissionsSeeder extends Seeder
             'Add social media challenge',
             'Delete social media challenge',
 
+            //Refund PreTransaction
+            'Refund view pretransaction',
+            'Refund create pretransaction',
+            'Refund edit pretransaction',
+
             //Merchant KYC
             'View unverified merchant kyc',
             'Accepted merchant kyc',
             'Rejected merchant kyc',
             'KYC not filled merchant',
+
             ];
 
         //get users having all permissions

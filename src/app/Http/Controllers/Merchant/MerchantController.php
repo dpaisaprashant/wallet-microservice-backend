@@ -35,6 +35,8 @@ class MerchantController extends Controller
         $merchants = $repository->paginatedMerchants();
         $stats = $repository->merchantStats();
         $merchantTypes = MerchantType::all();
+        $districts = config('districts.district_list');
+        View::share('districts', $districts);
 
         return view('admin.merchant.view')->with(compact('merchants','stats','merchantTypes'));
     }

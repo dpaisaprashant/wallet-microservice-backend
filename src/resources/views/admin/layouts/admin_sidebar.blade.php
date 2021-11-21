@@ -390,6 +390,13 @@ $url = url()->current();
                         @can('Refund create')
                             <li><a href="{{ route('refund.create') }}">Create Refund</a></li>
                         @endcan
+                        @can('Refund create pretransaction')
+                            <li><a href="{{ route('refund.pretransaction.create') }}">Create Pretransaction</a></li>
+                        @endcan
+                        @can('Refund view pretransaction')
+                            <li><a href="{{ route('refund.pretransaction.view') }}">View Refunded Pretransactions</a></li>
+                        @endcan
+
                     </ul>
                 </li>
             @endif

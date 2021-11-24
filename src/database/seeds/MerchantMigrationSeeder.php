@@ -101,6 +101,9 @@ class MerchantMigrationSeeder extends Seeder
                     Log::info("Create new user data", $createNewUserData);
                 }
 
+                $coreDB->table("merchants")->where("id", $merchant->id)
+                    ->update(["user_id" => $user->id, "merchant_type_id" => 1]);
+
                 $coreDB->table("wallets")->insert([
                     "user_id" => $user->id,
                     "balance" => 0,
@@ -140,17 +143,15 @@ class MerchantMigrationSeeder extends Seeder
                 //migrate merchant_transactions table
                 //migrate merchant_ticket_payments table
                 //change merchant id to new user id for the table
-                $coreDB->table("merchants")->where("id", $merchant->id)
-                    ->update(["user_id" => $user->id, "merchant_type_id" => 1]);
 
                 $coreDB->table("merchant_transactions")->where("merchant_id", $merchant->id)
-                    ->update(["merchant_id" => $user->id]);
+                    ->update(["user_id" => $user->id]);
 
 
 
                 //2.5 migrate merchant_bank_transfers to nchl_bank_transfers table
                 $nchlDB->table("merchant_nchl_bank_transfers")->where("merchant_id", $merchant->id)
-                    ->update(["merchant_id" => $user->id]);
+                    ->update(["user_id" => $user->id]);
 
 
                 //TODO: MERCHANT TICKET PAYMENT

@@ -117,7 +117,7 @@ class NotificationRepository
 
     public function sendTopicNotification($responseData)
     {
-        $topics = $responseData['topics'];
+        $topics = array_merge($responseData['topics'], $responseData['district_topics'] ?? []);
         $title = $responseData['title'];
         $message = $responseData['message'];
         $imageUrl = null;
@@ -135,7 +135,8 @@ class NotificationRepository
         if (isset($responseData['image'])) {
             $imageUrl = config('dpaisa-api-url.public_document_url').$responseData['image'];
         }
-        foreach ($this->request->topics as $topic) {
+        $allTopics = array_merge($this->request->topics, $this->request->district_topics ?? []);
+        foreach ($allTopics as $topic) {
             $notificationRequest = [
                 'user_id' => '',
                 'title' => $this->request->title,

@@ -10,9 +10,9 @@ class SparrowSMSController extends Controller
     public function index(Request $request)
     {
         if (empty($request->sort)) {
-            $messages = SparrowSMS::latest()->filter($request)->get();
+            $messages = SparrowSMS::latest()->filter($request)->paginate(50);
         } else {
-            $messages = SparrowSMS::filter($request)->get();
+            $messages = SparrowSMS::filter($request)->paginate(50);
         }
 
         return view('admin.sparrow.view')->with(compact('messages'));

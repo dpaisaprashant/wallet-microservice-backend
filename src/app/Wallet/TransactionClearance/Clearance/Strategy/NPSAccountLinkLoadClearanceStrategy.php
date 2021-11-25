@@ -14,7 +14,7 @@ class NPSAccountLinkLoadClearanceStrategy extends AbstractClearanceCompareStrate
 
     public function clearanceInfo()
     {
-        return "Use reference_id/pre_transaction_id as linked_id";
+        return "Use merchant transaction id as linked_id";
     }
 
     public function transactionName()

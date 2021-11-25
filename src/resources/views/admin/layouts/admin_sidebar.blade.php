@@ -558,6 +558,14 @@ $url = url()->current();
                 </li>
             @endif
 
+{{--            add permissions--}}
+            <li @if($url == route('scheme.index')) class="active" @endif>
+                <a href="#"><i class="fa fa-handshake-o"></i> <span
+                        class="nav-label">NEA Settlement</span></a>
+            </li>
+{{--            end permission--}}
+
+
 
 
             {{--@if(auth()->user()->hasAnyPermission(['Clearance npay view', 'Clearance paypoint view']))

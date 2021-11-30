@@ -76,8 +76,6 @@
                                     </div>
                                     <br>
                                     <div class="row">
-
-
                                         <div class="col-4">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
@@ -130,8 +128,15 @@
                                                 </select>
                                             </div>
                                         </div>
-
-
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group">
+                                                <input type="text" name="user" placeholder="Email or number"
+                                                       class="form-control"
+                                                       value="{{ !empty($_GET['user']) ? $_GET['user'] : '' }}">
+                                            </div>
+                                        </div>
                                     </div>
                                     <br>
 

@@ -68,6 +68,18 @@
 
                             <div class="hr-line-dashed"></div>
 
+                                    <div class="form-group row"> <label class="col-sm-2 col-form-label">Select Districts</label>
+                                        <div class="col-lg-10 col-sm-10">
+                                        <select class="select2_demo_2 form-control" multiple="multiple" name="district_topics[]">
+                                            @foreach($allDistrictTopics as $districtTopic)
+                                                <option value="{{ $districtTopic }}">{{ $districtTopic }}</option>
+                                            @endforeach
+                                        </select>
+                                        </div>
+                                    </div>
+
+                            <div class="hr-line-dashed"></div>
+
                             <div class="form-group  row"><label class="col-sm-2 col-form-label">Message</label>
                                 <div class="col-lg-10 col-sm-10">
                                     <div class="ibox ">
@@ -131,12 +143,13 @@
 
 @section('styles')
     @include('admin.asset.css.summernote')
+    @include('admin.asset.css.select2')
     <link href="{{ asset('admin/css/plugins/iCheck/custom.css') }}" rel="stylesheet">
 @endsection
 
 @section('scripts')
    @include('admin.asset.js.summernote')
-
+   @include('admin.asset.js.select2')
    <script src="{{ asset('admin/js/plugins/iCheck/icheck.min.js') }}"></script>
    <script>
        $(document).ready(function () {

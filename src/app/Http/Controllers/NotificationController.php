@@ -34,8 +34,10 @@ class NotificationController extends Controller
     {
         if ($this->repository->notificationService() == NotificationRepository::SERVICE_ONE_SIGNAL) {
             $allTopics = array_map(function ($arr) {return $arr["title"];}, config('onesignal.tags'));
+            $allDistrictTopics = config('fcm.districts');
         } else {
             $allTopics = config('fcm.topics');
+            $allDistrictTopics = config('fcm.districts');
         }
         if ($request->isMethod('post')) {
             if (empty($request->topics)) {
@@ -52,7 +54,7 @@ class NotificationController extends Controller
             return redirect()->route('notification.view')->with('success', 'notification sent successfully');
         }
 
-        return view('admin.notification.create')->with(compact('allTopics'));
+        return view('admin.notification.create')->with(compact('allTopics', 'allDistrictTopics'));
     }
 
     public function userNotification(User $user, Request $request)

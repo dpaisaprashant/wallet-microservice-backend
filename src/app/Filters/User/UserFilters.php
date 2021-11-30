@@ -38,6 +38,9 @@ class UserFilters extends FiltersAbstract
         'user_type' => UserTypeFilter::class,
         'from_transaction_date' => FromTransactionDateFilter::class,
         'to_transaction_date' => ToTransactionDateFilter::class,
+        'from_kyc_date' => FromKYCDateFilter::class,
+        'to_kyc_date' => ToKYCDateFilter::class,
+        'district'=> DistrictFilter::class,
     ];
 
 

@@ -20,11 +20,13 @@
     </div>
     <div class="wrapper wrapper-content animated fadeInRight">
 
+        @include('admin.userFilter.user-filter',['title' => "User"])
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox">
                     <div class="ibox-title">
-                        <h5>List of rejected KYC users</h5>
+                        <h5>List of Rejected KYC users</h5>
                     </div>
                     <div class="ibox-content">
                         <div class="table-responsive">

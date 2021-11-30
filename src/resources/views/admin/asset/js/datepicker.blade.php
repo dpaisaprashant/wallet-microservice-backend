@@ -85,6 +85,21 @@
         });
     </script>
 
+    <script>
+        // $(".date_with_time").datepicker({
+        //     // autoclose: true,
+        //     // todayHighlight: true,
+        //     // format: 'dd M yyyy HH:mm',
+        //     // keyboardNavigation: false,
+        // });
 
+        $(".date_with_time").clockpicker({
+            // autoclose: true,
+            // todayHighlight: true,
+            // format: 'dd M yyyy HH:mm',
+            // keyboardNavigation: false,
+        });
+
+    </script>
 
 

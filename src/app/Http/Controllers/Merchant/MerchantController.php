@@ -12,10 +12,12 @@ use App\Wallet\AuditTrail\AuditTrial;
 use App\Wallet\AuditTrail\Behaviors\BMerchant;
 use App\Wallet\Merchant\Repositories\MerchantKYCRepository;
 use App\Wallet\Merchant\Repositories\MerchantRepository;
+use App\Wallet\User\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Wallet\Helpers\TransactionIdGenerator;
+use Illuminate\Support\Facades\View;
 
 class MerchantController extends Controller
 {
@@ -33,6 +35,8 @@ class MerchantController extends Controller
         $merchants = $repository->paginatedMerchants();
         $stats = $repository->merchantStats();
         $merchantTypes = MerchantType::all();
+        $districts = config('districts.district_list');
+        View::share('districts', $districts);
 
         return view('admin.merchant.view')->with(compact('merchants','stats','merchantTypes'));
     }
@@ -125,11 +129,41 @@ class MerchantController extends Controller
 
     public function unverifiedMerchantKYCView(MerchantKYCRepository $repository){
         $merchants = $repository->paginatedUnverifiedMerchantKYC();
+        $districts = config('districts.district_list');
+        View::share('districts', $districts);
         return view('admin.merchant.unverifiedMerchantKYC',compact('merchants'));
+    }
+
+    public function rejectedMerchantKYCView(MerchantRepository $repository){
+        $rejectedKycUsers = $repository->rejectedKycUsers();
+
+        $districts = config('districts.district_list');
+        View::share('districts', $districts);
+
+        return view('admin.merchant.rejectedKycMerchant')->with(compact('rejectedKycUsers'));
+    }
+
+    public function acceptedMerchantKYCView(MerchantRepository $repository){
+        $accpetedKycUsers = $repository->acceptedKycUsers();
+
+        $districts = config('districts.district_list');
+        View::share('districts', $districts);
+
+        return view('admin.merchant.acceptedKycMerchant')->with(compact('accpetedKycUsers'));
+    }
+
+    public function unfilledMerchantKYCView(MerchantRepository $repository){
+        $kycNotFilledUsers = $repository->kycNotFilledUsers();
+
+        $districts = config('districts.district_list');
+        View::share('districts', $districts);
+
+        return view('admin.merchant.kycNotFilledMerchant')->with(compact('kycNotFilledUsers'));
     }
 
     public function merchantDetailKyc($id){
         $merchant = User::with('merchant','kyc')->findOrFail($id);
+
         return view('admin.merchant.kyc',compact('merchant'));
     }
 

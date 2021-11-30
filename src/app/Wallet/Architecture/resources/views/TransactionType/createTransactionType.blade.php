@@ -291,6 +291,22 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-group  row"><label class="col-sm-2 col-form-label">Special1</label>
+
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control form-control-sm"
+                                                   placeholder="special1" name="special1">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group  row"><label class="col-sm-2 col-form-label">Special2</label>
+
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control form-control-sm"
+                                                   placeholder="special2" name="special2">
+                                        </div>
+                                    </div>
+
                                     <div class="hr-line-dashed"></div>
 
 

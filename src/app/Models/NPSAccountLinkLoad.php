@@ -20,15 +20,20 @@ class NPSAccountLinkLoad extends Model
     //     "amount" => "integer",
     //     "load_time_stamp" => "datetime"
     // ];
-    
+
     public function scopeFilter(Builder $builder, Request $request, array $filters = [])
     {
         return (new NPSAccountLinkLoadFilters($request))->add($filters)->filter($builder);
     }
 
-  
+
     public function preTransaction(){
         return $this->belongsTo(PreTransaction::class,'reference_id','pre_transaction_id');
+    }
+
+    public function transactions()
+    {
+        return $this->morphOne(TransactionEvent::class, 'transactionable','transaction_type', 'transaction_id');
     }
 
 

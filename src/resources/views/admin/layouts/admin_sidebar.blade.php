@@ -691,6 +691,8 @@ $url = url()->current();
                             </li>
                             <li><a href="{{ route('report.nrb.inactiveUser') }}">NRB Inactive User Report</a>
                             </li>
+                            <li><a href="{{ route('report.nrb.activeInactiveTransaction') }}">Active/Inactive Transaction Report</a>
+                            </li>
                         @endcan
                         @can('Report nrb agent')
                             <li><a href="{{ route('report.agent') }}">NRB Agent Report</a></li>

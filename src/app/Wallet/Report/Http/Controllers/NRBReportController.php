@@ -233,19 +233,19 @@ class NRBReportController extends Controller
                 "Male" => [
                     "count" => $repository->getUserCount("m"),
                     "transaction_count" => $repository->getUserTransactionCount("m"),
-                    "transaction_value" => $repository->getUserTransactionValue("m")
+                    "transaction_value" => $repository->getUserTransactionValue("m") / 100
                 ],
 
                 "Female" => [
                     "count" => $repository->getUserCount("f"),
                     "transaction_count" => $repository->getUserTransactionCount("f"),
-                    "transaction_value" => $repository->getUserTransactionValue("f")
+                    "transaction_value" => $repository->getUserTransactionValue("f") / 100
                 ],
 
                 "Others" => [
                     "count" => $repository->getUserCount("o"),
                     "transaction_count" => $repository->getUserTransactionCount("o"),
-                    "transaction_value" => $repository->getUserTransactionValue("o")
+                    "transaction_value" => $repository->getUserTransactionValue("o") / 100
                 ],
             ];
         }

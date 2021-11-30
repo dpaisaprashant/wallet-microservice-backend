@@ -26,7 +26,7 @@ class BackendUsersController extends Controller
 
     public function view()
     {
-        $users = Admin::with('roles')->paginate(10);
+        $users = Admin::with('roles')->where('status', 1)->paginate(10);
         return view('admin.backendUser.view')->with(compact('users'));
     }
 

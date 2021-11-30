@@ -160,6 +160,21 @@ class NRBReportController extends Controller
             'Cash Out (Bank withdrawal)' => [
                 'number' => $repository->getCashOutNumber(),
                 'value' => ($repository->getCashOutValue())/100,
+            ],
+
+            'Bank Transfer' => [
+                'number' => $repository->getBankTransferNumber(),
+                'value' => $repository->getBankTransferValue() / 100,
+            ],
+
+            'TopUp' => [
+                'number' => $repository->getTopUpNumber(),
+                'value' => $repository->getTopUpValue() / 100,
+            ],
+
+            'Government Payments' => [
+                'number' => $repository->getGovernmentPaymentNumber(),
+                'value' => $repository->getGovernmentPaymentValue() / 100,
             ]
         ];
         return view('WalletReport::nrb.nonBankPaymentReport',compact('nonBankPayments'));

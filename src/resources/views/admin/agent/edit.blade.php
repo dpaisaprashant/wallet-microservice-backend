@@ -127,6 +127,26 @@
                             </div>
 
                             <div class="hr-line-dashed"></div>
+                            {{--Use Balance Of--}}
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Use Balance of</label>
+                                <div class="col-sm-10">
+                                    <select data-placeholder="Choose Mobile No..." class="chosen-select" tabindex="2"
+                                            name="use_parent_balance" required>
+                                        <option value="1"
+                                            {{ $agent->use_parent_balance == 1 ? "selected" : "" }}
+                                        >Use parent agent's balance</option>
+                                        <option value="0"
+                                            {{ $agent->use_parent_balance == 0 ? "selected" : "" }}
+                                        >Use own balance</option>
+                                    </select>
+                                    <small>
+                                        When set to "Use parent agent's balance" balance is deducted from this agent's parent agent while performing any transaction
+                                        By default set this field to "Use own balance"
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
 
                             <div class="form-group  row"><label class="col-sm-2 col-form-label">Institution Type <small>(required)</small></label>
                                 <div class="col-sm-10">

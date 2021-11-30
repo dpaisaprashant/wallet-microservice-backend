@@ -193,7 +193,7 @@
                         @if($DateOfIssueBs['month'] == 2)
                             <option value="2" selected>Jestha</option>
                         @else
-                            <option value="2">Baishak</option>
+                            <option value="2">Jestha</option>
                         @endif
 
                         @if($DateOfIssueBs['month'] == 3)

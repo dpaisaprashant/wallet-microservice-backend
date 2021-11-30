@@ -13,6 +13,7 @@ use App\Models\NchlBankTransfer;
 use App\Models\NchlLoadTransaction;
 use App\Models\NICAsiaCyberSourceLoadTransaction;
 use App\Models\NPSAccountLinkLoad;
+use App\Models\NtcRetailerToCustomerTransaction;
 use App\Models\PaymentNepalLoadTransaction;
 use App\Models\TransactionEvent;
 use App\Models\UsedUserReferral;
@@ -151,6 +152,50 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
             ->sum('amount');
         return $cashOutTotalValue;
     }
+
+    public function getBankTransferNumber()
+    {
+        return TransactionEvent::where('transaction_type', NchlBankTransfer::class)
+            ->filter($this->request)
+            ->count();
+    }
+
+    public function getBankTransferValue()
+    {
+        return TransactionEvent::where('transaction_type', NchlBankTransfer::class)
+            ->filter($this->request)
+            ->sum('amount');
+    }
+
+    public function getGovernmentPaymentNumber()
+    {
+        return TransactionEvent::where('transaction_type', NchlAggregatedPayment::class)
+            ->filter($this->request)
+            ->count();
+    }
+
+    public function getGovernmentPaymentValue()
+    {
+        return TransactionEvent::where('transaction_type', NchlAggregatedPayment::class)
+            ->filter($this->request)
+            ->sum('amount');
+    }
+
+    public function getTopUpNumber()
+    {
+        return TransactionEvent::whereIn('transaction_type', [UserTransaction::class, CellPayUserTransaction::class, NtcRetailerToCustomerTransaction::class])
+            ->filter($this->request)
+            ->count();
+    }
+
+    public function getTopUpValue()
+    {
+        return TransactionEvent::whereIn('transaction_type', [UserTransaction::class, CellPayUserTransaction::class, NtcRetailerToCustomerTransaction::class])
+            ->filter($this->request)
+            ->sum('amount');
+    }
+
+
 
     public function checkCountMerchantTransactions()
     {

@@ -41,12 +41,12 @@ class ActiveInactiveTransactionRepository extends AbstractReportRepository
     public function getUserTransactionCount($gender) {
        return TransactionEvent::whereHas("user", function ($query) use ($gender) {
            return $query->where("gender", $gender);
-       })->count();
+       })->filter($this->request)->count();
     }
 
     public function getUserTransactionValue($gender) {
         return TransactionEvent::whereHas("user", function ($query) use ($gender) {
             return $query->where("gender", $gender);
-        })->sum('amount');
+        })->filter($this->request)->sum('amount');
     }
 }

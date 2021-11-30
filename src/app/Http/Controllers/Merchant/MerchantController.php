@@ -17,7 +17,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Wallet\Helpers\TransactionIdGenerator;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
+use QrCode;
 
 class MerchantController extends Controller
 {
@@ -255,5 +257,14 @@ class MerchantController extends Controller
         }
 
         return redirect()->back()->with('success', 'Error while updating bankaccount');
+    }
+
+    public function DownloadQr($id){
+        $merchant = User::where('id','=',$id)->first();
+        $data_for_qr = ['number'=>$merchant->mobile_no,'service'=>'SajiloPay','name'=>$merchant->name,'type'=>'merchant'];
+        $data_for_qr_json = json_encode($data_for_qr,true);
+        $filename = $merchant->mobile_no . '_' .time() .".svg";
+        $qr =  QrCode::generate($data_for_qr_json, storage_path("app/public/") . $filename);
+        return view('admin.merchant.qr')->with(compact('data_for_qr','data_for_qr_json','filename'));
     }
 }

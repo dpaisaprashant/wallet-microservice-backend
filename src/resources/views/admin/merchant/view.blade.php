@@ -536,7 +536,10 @@
                                                        title="user profile"><i class="fa fa-plus"></i></a>
                                                 @endif
                                             @endcan
-
+                                                <a style="margin-top: 5px;" target="_blank"
+                                                   href="{{route('merchant.download.qr',$merchant->id)}}"
+                                                   class="btn btn-sm btn-icon btn-secondary m-t-n-xs"
+                                                   title="download qr"><i class="fa fa-qrcode"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

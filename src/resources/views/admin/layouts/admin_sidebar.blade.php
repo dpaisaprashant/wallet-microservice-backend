@@ -583,8 +583,8 @@ $url = url()->current();
             @endif
 
 {{--            add permissions--}}
-            <li @if($url == route('scheme.index')) class="active" @endif>
-                <a href="#"><i class="fa fa-handshake-o"></i> <span
+            <li @if($url == route('ViewNEASettlement')) class="active" @endif>
+                <a href="{{route('ViewNEASettlement')}}"><i class="fa fa-handshake-o"></i> <span
                         class="nav-label">NEA Settlement</span></a>
             </li>
 {{--            end permission--}}

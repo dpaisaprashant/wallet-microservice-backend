@@ -203,6 +203,7 @@ return [
         App\Wallet\BonusToMainBalanceTransfer\BonusToMainBalanceTransferServiceProvider::class,
         App\Wallet\SocialMediaChallenge\SocialMediaChallengeServiceProvider::class,
         App\Wallet\RefundPreTransaction\RefundPreTransactionServiceProvider::class,
+        App\Wallet\NEA\NEASettlementServiceProvider::class,
     ],
 
     /*

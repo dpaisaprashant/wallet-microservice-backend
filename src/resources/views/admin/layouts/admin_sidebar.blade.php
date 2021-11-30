@@ -584,6 +584,14 @@ $url = url()->current();
                 </li>
             @endif
 
+{{--            add permissions--}}
+{{--            <li @if($url == route('ViewNEASettlement')) class="active" @endif>--}}
+{{--                <a href="{{route('ViewNEASettlement')}}"><i class="fa fa-handshake-o"></i> <span--}}
+{{--                        class="nav-label">NEA Settlement</span></a>--}}
+{{--            </li>--}}
+{{--            end permission--}}
+
+
 
 
             {{--@if(auth()->user()->hasAnyPermission(['Clearance npay view', 'Clearance paypoint view']))
@@ -692,6 +700,8 @@ $url = url()->current();
                             <li><a href="{{ route('report.nrb.activeUser') }}">NRB Active User Report</a>
                             </li>
                             <li><a href="{{ route('report.nrb.inactiveUser') }}">NRB Inactive User Report</a>
+                            </li>
+                            <li><a href="{{ route('report.nrb.activeInactiveTransaction') }}">Active/Inactive Transaction Report</a>
                             </li>
                         @endcan
                         @can('Report nrb agent')

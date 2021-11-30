@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Traits\CollectionPaginate;
 use App\Wallet\Report\Repositories\AbstractReportRepository;
 use App\Wallet\Report\Repositories\ActiveInactiveCustomerReportRepository;
+use App\Wallet\Report\Repositories\ActiveInactiveTransactionRepository;
 use App\Wallet\Report\Repositories\AgentReportRepository;
 use App\Wallet\Report\Repositories\NonBankPaymentReportRepository;
 use Illuminate\Http\Request;
@@ -160,6 +161,21 @@ class NRBReportController extends Controller
             'Cash Out (Bank withdrawal)' => [
                 'number' => $repository->getCashOutNumber(),
                 'value' => ($repository->getCashOutValue())/100,
+            ],
+
+            'Bank Transfer' => [
+                'number' => $repository->getBankTransferNumber(),
+                'value' => $repository->getBankTransferValue() / 100,
+            ],
+
+            'TopUp' => [
+                'number' => $repository->getTopUpNumber(),
+                'value' => $repository->getTopUpValue() / 100,
+            ],
+
+            'Government Payments' => [
+                'number' => $repository->getGovernmentPaymentNumber(),
+                'value' => $repository->getGovernmentPaymentValue() / 100,
             ]
         ];
         return view('WalletReport::nrb.nonBankPaymentReport',compact('nonBankPayments'));
@@ -206,5 +222,34 @@ class NRBReportController extends Controller
             ],
         ];
         return view('WalletReport::nrb.nonBankPaymentCountReport',compact('nonBankPayments'));
+    }
+
+    public function activeInactiveTransaction(Request $request)
+    {
+        $reports = [];
+        if (!empty($_GET)) {
+            $repository = new ActiveInactiveTransactionRepository($request);
+            $reports = [
+                "Male" => [
+                    "count" => $repository->getUserCount("m"),
+                    "transaction_count" => $repository->getUserTransactionCount("m"),
+                    "transaction_value" => $repository->getUserTransactionValue("m") / 100
+                ],
+
+                "Female" => [
+                    "count" => $repository->getUserCount("f"),
+                    "transaction_count" => $repository->getUserTransactionCount("f"),
+                    "transaction_value" => $repository->getUserTransactionValue("f") / 100
+                ],
+
+                "Others" => [
+                    "count" => $repository->getUserCount("o"),
+                    "transaction_count" => $repository->getUserTransactionCount("o"),
+                    "transaction_value" => $repository->getUserTransactionValue("o") / 100
+                ],
+            ];
+        }
+        return view('WalletReport::nrb.activeInactiveTransactionReport')->with(compact('reports'));
+
     }
 }

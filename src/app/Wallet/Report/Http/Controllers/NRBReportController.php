@@ -28,27 +28,27 @@ class NRBReportController extends Controller
                 'Active Customer Wallet' => [
                     'Male' => [
                         'Number' => $repository->activeMaleUserCount(),
-                        'Value' =>'Rs.' . $repository->activeMaleUserBalance()
+                        'Value' =>'Rs.' . $repository->activeMaleUserBalance()/100
                     ],
 
                     'Female' => [
                         'Number' => $repository->activeFemaleUserCount(),
-                        'Value' => 'Rs.' . $repository->activeFemaleUserBalance()
+                        'Value' => 'Rs.' . $repository->activeFemaleUserBalance()/100
                     ],
 
                     'Other' => [
                         'Number' => $repository->activeOtherUserCount(),
-                        'Value' => 'Rs.' . $repository->activeOtherUserBalance()
+                        'Value' => 'Rs.' . $repository->activeOtherUserBalance()/100
                     ],
 
                     'Unknown' => [
                         'Number' => $repository->activeUnknownUserCount(),
-                        'Value' => 'Rs.' . $repository->activeUnknownUserBalance()
+                        'Value' => 'Rs.' . $repository->activeUnknownUserBalance()/100
                     ],
 
                     'Grand Total' => [
                         'Number' => $repository->activeTotalUserCount(),
-                        'Value' => 'Rs.' . $repository->activeTotalUserBalance()
+                        'Value' => 'Rs.' . $repository->activeTotalUserBalance()/100
                     ],
                 ],
 

@@ -147,12 +147,12 @@ class NRBReportController extends Controller
                 'value' => ($repository->getCashInValue())/100
             ],
 
-            'Offer/Cashback/Coupon' => [
+            'Offer/Cashback/Coupon/Commission' => [
                 'number' => $repository->getOfferNumber(),
                 'value' => ($repository->getOfferValue())/100
             ],
 
-            'Commission/Fees and Charges' => [
+            'Fees and Charges' => [
                 'number' => $repository->getFeesChargesNumber(),
                 'value' => ($repository->getFeesChargesValue())/100
             ],

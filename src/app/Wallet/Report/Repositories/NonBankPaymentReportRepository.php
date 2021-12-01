@@ -9,6 +9,7 @@ use App\Models\NchlAggregatedPayment;
 use App\Models\NchlBankTransfer;
 use App\Models\NchlLoadTransaction;
 use App\Models\NICAsiaCyberSourceLoadTransaction;
+use App\Models\NpsLoadTransaction;
 use App\Models\TransactionEvent;
 use App\Models\UsedUserReferral;
 use App\Models\UserLoadTransaction;
@@ -21,17 +22,23 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
 {
 
     public function getBillPaymentNumber(){
-        $billPaymentTotalNumber = TransactionEvent::whereIn('transaction_type',[UserTransaction::class,NchlAggregatedPayment::class])
+        $billPaymentTotalNumber = TransactionEvent::whereIn('transaction_type',[
+            UserTransaction::class,
+            NchlAggregatedPayment::class
+        ])
             ->filter($this->request)
             ->count();
         return $billPaymentTotalNumber;
     }
 
     public function getBillPaymentValue(){
-        $billPaymentTotalValue = TransactionEvent::whereIn('transaction_type',[UserTransaction::class,NchlAggregatedPayment::class])
+        $billPaymentTotalValue = TransactionEvent::whereIn('transaction_type',[
+            UserTransaction::class,
+            NchlAggregatedPayment::class
+        ])
             ->filter($this->request)
             ->sum('amount');
-        
+
         return $billPaymentTotalValue;
     }
 
@@ -58,14 +65,24 @@ class NonBankPaymentReportRepository extends AbstractReportRepository
     }
 
     public function getCashInNumber(){
-        $cashInTotalNumber = TransactionEvent::whereIn('transaction_type',[UserLoadTransaction::class,NchlLoadTransaction::class,NICAsiaCyberSourceLoadTransaction::class])
+        $cashInTotalNumber = TransactionEvent::whereIn('transaction_type',[
+            UserLoadTransaction::class,
+            NchlLoadTransaction::class,
+            NICAsiaCyberSourceLoadTransaction::class,
+            NpsLoadTransaction::class
+        ])
             ->filter($this->request)
             ->count();
         return $cashInTotalNumber;
     }
 
     public function getCashInValue(){
-        $cashInTotalValue = TransactionEvent::whereIn('transaction_type',[UserLoadTransaction::class,NchlLoadTransaction::class,NICAsiaCyberSourceLoadTransaction::class])
+        $cashInTotalValue = TransactionEvent::whereIn('transaction_type',[
+            UserLoadTransaction::class,
+            NchlLoadTransaction::class,
+            NICAsiaCyberSourceLoadTransaction::class,
+            NpsLoadTransaction::class
+        ])
             ->filter($this->request)
             ->sum('amount');
         return $cashInTotalValue;

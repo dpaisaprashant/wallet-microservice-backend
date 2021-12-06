@@ -34,12 +34,12 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->call(new MisMatchUserReconciliation())->everyFifteenMinutes();
-        $schedule->call(new AdminSession)->everyMinute();
-        $schedule->call(new CheckUserBalanceMismatch)->hourly();
-        $schedule->call(new NchlApiCompareTransactions)->hourly();
-        $schedule->call(new NchlAggregatedApiCompareTransactions)->hourly();
-        $schedule->call(new PaypointApiCompareTransactions)->hourly();
+        $schedule->call(new MisMatchUserReconciliation())->everyMinute();
+        //$schedule->call(new AdminSession)->everyMinute();
+        //$schedule->call(new CheckUserBalanceMismatch)->hourly();
+        //$schedule->call(new NchlApiCompareTransactions)->hourly();
+        //$schedule->call(new NchlAggregatedApiCompareTransactions)->hourly();
+        //$schedule->call(new PaypointApiCompareTransactions)->hourly();
     }
 
     /**

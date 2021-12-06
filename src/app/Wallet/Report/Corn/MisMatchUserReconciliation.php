@@ -14,7 +14,8 @@ class MisMatchUserReconciliation
 {
     public function __invoke(Request $request){
         Log::info("Checking mismatch reconciliation");
-        $users = User::with('wallet')->latest()->get();
+        $userIds = [2604,2198,1976,1965,1935,1893,1863,1801,1751,1712,1675,1654,1594,1500,1470,1435,1432,1414,1332,1314,1285,1279,1235,1178,1157,1133,1099,1093,964,957,949,938,922,916,764,746,591,508,435,434,433,431,429,428,427,425,424,421,357,197,172,171,152,98,89,85,84,42,29,19,18,9,7,6,4];
+        $users = User::with('wallet')->whereIn('id', $userIds)->latest()->get();
         $misMatchArray = [];
         $repository = new ReconciliationReportRepository(request());
         $decimalMismatch = [];

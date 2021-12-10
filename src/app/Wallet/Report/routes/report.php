@@ -1,5 +1,6 @@
 <?php
 
+use App\Wallet\Report\Http\Controllers\ClosingBalanceController;
 use App\Wallet\Report\Http\Controllers\NRBReportController;
 use App\Wallet\Report\Http\Controllers\SubscriberReportController;
 use App\Wallet\Report\Http\Controllers\UserWalletReportController;
@@ -43,4 +44,6 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web', 'auth']], func
     //Nrb Reconciliation Report
     Route::match(['get', 'post'],'nrb-reconciliation-report', [WalletReportController::class, 'nrbReconciliationReport'])->name('report.nrb.reconciliation')->middleware('permission:Report nrb reconciliation');
 
+    //closing balance
+    Route::get('closing-balance', [ClosingBalanceController::class, 'getClosingBalanceReport'])->name('report.closing.balance');
 });

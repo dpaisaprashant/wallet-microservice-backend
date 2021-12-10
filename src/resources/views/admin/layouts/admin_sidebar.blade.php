@@ -723,6 +723,8 @@ $url = url()->current();
                         @endcan
                         @can('View mismatched user balance and bonus balance')
                             <li><a href="{{route('report.mismatchedUserBalance')}}">Mismatched User Balance</a></li>
+
+                           {{--<li><a href="{{route('report.closing.balance')}}">Closing Balance</a></li>--}}
                         @endcan
                     </ul>
                 </li>

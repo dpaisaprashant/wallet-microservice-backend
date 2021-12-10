@@ -115,7 +115,7 @@ class NRBReportController extends Controller
                 $repository = new AgentReportRepository($request, $value);
                 $value->totalSubAgent = $repository->totalSubAgent();
                 $value->previousReportingBalance = 'Rs.' . $repository->previousReportingBalance();
-                $value->currentReportingBalance = 'Rs.'. $value->user->wallet->balance;
+                $value->currentReportingBalance = 'Rs.'. ($value->user->wallet->balance + $value->user->wallet->bonus_balance);
                 $value->billPayment = 'Rs.' . $repository->totalBillPayment() / 100;
                 $value->p2pTransfer = 'Rs.' . $repository->totalP2PTransfer() / 100;
                 $value->cashIn = 'Rs.' . $repository->totalCashIn() / 100;

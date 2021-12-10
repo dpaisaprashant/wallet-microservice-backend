@@ -492,7 +492,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Accepted merchant kyc',
             'Rejected merchant kyc',
             'KYC not filled merchant',
-
+            'View nea settlements'
             ];
 
         //get users having all permissions

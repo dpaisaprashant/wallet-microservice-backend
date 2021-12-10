@@ -532,6 +532,11 @@ $url = url()->current();
                 </li>
             @endif
 
+            @if(auth()->user()->hasAnyPermission(['View load wallet']))
+                <li><a href="{{route('linkedaccounts.view')}}"><i class="fa fa-link"></i>Linked Accounts</a></li>
+            @endif
+
+
             @if(auth()->user()->hasAnyPermission(['Failed paypoint view', 'Failed npay view']))
                 <li @if($url == route('userTransaction.failed') || $url == route('userLoadTransaction.failed')) class="active" @endif>
                     <a href="#"><i class="fa fa-recycle"></i> <span class="nav-label">Failed Transactions</span><span

@@ -245,6 +245,9 @@
                                             <td>{{ $linkedAccount->created_at }}</td>
                                             <td>
                                                 @include('LinkedAccounts::jsonButtons', ['linkedAccount' => $linkedAccount])
+                                                <a href="#">
+                                                    <button class="btn btn-danger btn-icon" type="button" title="Unlink Account"><i class="fa fa-chain-broken"></i></button>
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach

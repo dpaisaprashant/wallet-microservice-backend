@@ -9,5 +9,6 @@ class NeaSettlement extends Model
 //    public function bankTransfer(){
 //        $this->belongsTo(NonRealTimeBankTransfer::class);
 //    }
+protected $guarded = [];
 
 }

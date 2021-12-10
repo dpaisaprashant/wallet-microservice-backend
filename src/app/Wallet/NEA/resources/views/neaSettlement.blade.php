@@ -5,6 +5,7 @@
     ?>
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
+            @include('admin.asset.notification.notify')
             <h2>NEA Settlement</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
@@ -122,15 +123,21 @@
                                                                     <hr>
                                                                     <form action="{{route('SettleNea')}}" method="post">
                                                                         @csrf
-                                                                        <input type="text" name="bank" placeholder="Enter Bank Name" class="form-control" style="margin-bottom: 15px">
+                                                                        <input type="text" name="bank_name" placeholder="Enter Bank Name" class="form-control" style="margin-bottom: 15px">
                                                                         <input type="text" name="branch_name" placeholder="Enter Bank Branch" class="form-control" style="margin-bottom: 15px">
-                                                                        <input type="text" name="account_name" placeholder="Enter Account Name" class="form-control" style="margin-bottom: 15px">
-                                                                        <input type="text" name="account_number" placeholder="Enter Account Number" class="form-control" style="margin-bottom: 15px">
+                                                                        <input type="text" name="bank_account_name" placeholder="Enter Account Name" class="form-control" style="margin-bottom: 15px">
+                                                                        <input type="text" name="bank_account_number" placeholder="Enter Account Number" class="form-control" style="margin-bottom: 15px">
 {{--                                                                        hidden fields starts--}}
                                                                         <input type="text" name="nea_branch_code" value="{{$nea_information['branch_code']}}" class="form-control" style="display: none">
                                                                         <input type="text" name="nea_branch_name" value="{{$nea_information['branch_name']}}" class="form-control" style="display: none">
                                                                         <input type="text" name="transaction_count" value="{{$nea_information['transaction_count']}}" class="form-control" style="display: none">
                                                                         <input type="text" name="transaction_sum" value="{{$nea_information['transaction_sum']}}" class="form-control" style="display: none">
+                                                                        <input id="date_load_from" type="text" class="form-control date_from"
+                                                                               placeholder="From" name="date_from" autocomplete="off"
+                                                                               value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}" style="display: none">
+                                                                        <input id="date_load_to" type="text" class="form-control date_to"
+                                                                               placeholder="To" name="date_to" autocomplete="off"
+                                                                               value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}" style="display: none">
 {{--                                                                        hidden fields end--}}
                                                                         <button class="btn btn-primary" type="submit">Settle</button>
                                                                     </form>

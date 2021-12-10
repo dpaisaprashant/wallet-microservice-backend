@@ -3,6 +3,7 @@
 namespace App\Wallet\NEA\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\NeaSettlement;
 use App\Traits\CollectionPaginate;
 use App\Models\NeaTransaction;
 use Illuminate\Http\Request;
@@ -35,8 +36,20 @@ class NEAController extends Controller
 
     public function SettleNea(Request $request){
         $nea_settlement = $request->all();
+        $nea_settlement['bank_code'] = 666;
+        $nea_settlement['status'] = 'STARTED';
+        $nea_settlement['non_real_time_bank_transfer_id'] = 15;
+        //changing date format for date_from and date_to starts
+        $nea_settlement['date_from'] = date("Y-m-d", strtotime($nea_settlement['date_from']));
+        $nea_settlement['date_to'] = date("Y-m-d", strtotime($nea_settlement['date_to']));
+        //changing date format for date_from and date_to ends
+        try {
+            $createSettlement = NeaSettlement::create($nea_settlement);
+            return back()->with('success','nea settlement started');
+        }catch (\Exception $exception){
+            return back()->with('error','nea settlement failed.');
+        }
 //        dd($nea_settlement['nea_branch_code']);
-        dd($nea_settlement);
     }
 
 }

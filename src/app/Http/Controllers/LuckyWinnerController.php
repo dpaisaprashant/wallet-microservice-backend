@@ -44,7 +44,6 @@ class LuckyWinnerController extends Controller
 
             if (empty($request['amount'])) $request['amount'] = 0;
             if (empty($request['bonus_amount'])) $request['bonus_amount'] = 0;
-            $amount = $request['amount'];
 
             Log::info("before_balance: " . $currentBalance);
             Log::info("after_balance: " . ($currentBalance + ($request['amount'] * 100)));
@@ -77,7 +76,7 @@ class LuckyWinnerController extends Controller
                     $notificationRepository = new NotificationRepository($request);
                     $notificationRepository->sendUserNotification($user, [
                         "title" => "Winner Deposit",
-                        "message" => "Congratulations!!! You have won Rs. ". $amount." from " .$vendor
+                        "message" => "Congratulations!!! You have won Rs. ". ($request['amount'] + $request['bonus_amount']) ." from " .$vendor
                     ]);
                 }
 

@@ -35,7 +35,7 @@ class BAll implements IAuditTrail
 
     public function createTrial($user)
     {
-        $preTransactions = $user->preTransactions()->whereUserId($user->id)->filter($this->request)->get();
+        $preTransactions = $user->preTransactions()->with('transactionEvent')->whereUserId($user->id)->filter($this->request)->get();
         //$requestInfo = $user->requestInfos()->whereUserId($user->id)->filter($this->request)->get();
 
         //$userLoadTransactions = $user->userLoadTransactions()->whereUserId($user->id)->filter($this->request)->get();
@@ -43,8 +43,8 @@ class BAll implements IAuditTrail
         //$userTransactions = $user->userCheckPayment()->whereUserId($user->id)->filter($this->request)->get();
         $fromFundTransfers = $user->fromFundTransfers()->whereFromUser($user->id)->filter($this->request)->get();
         $receiveFundTransfers = $user->receiveFundTransfers()->whereToUser($user->id)->filter($this->request)->get();
-        $fromFundRequest = $user->fromFundRequests()->whereFromUser($user->id)->filter($this->request)->get();
-        $receiveFundRequest = $user->receiveFundRequests()->whereToUser($user->id)->filter($this->request)->get();
+        $fromFundRequest = $user->fromFundRequests()->with('transactions')->whereFromUser($user->id)->filter($this->request)->get();
+        $receiveFundRequest = $user->receiveFundRequests()->with('transactions')->whereToUser($user->id)->filter($this->request)->get();
 
         //$nchlBankTransfer = $user->nchlBankTransfers()->whereUserId($user->id)->filter($this->request)->get();
         //$nchlLoadTransaction = $user->nchlLoadTransactions()->whereUserId($user->id)->filter($this->request)->get();
@@ -179,8 +179,8 @@ class BAll implements IAuditTrail
                 $event['current_bonus_balance'] = $bonusBalance;
             }
             elseif ($event instanceof PreTransaction) {
-                $balance = $event->transactionEvent()->first()->balance ?? $balance;
-                $bonusBalance = $event->transactionEvent()->first()->bonus_balance ?? $bonusBalance;
+                $balance = optional($event->transactionEvent)->balance ?? $balance;
+                $bonusBalance = optional($event->transactionEvent)->bonus_balance ?? $bonusBalance;
                 $event['current_balance'] = $balance;
                 $event['current_bonus_balance'] = $bonusBalance;
                 //dd($event);

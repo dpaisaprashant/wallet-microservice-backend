@@ -58,12 +58,14 @@ class LuckyWinnerController extends Controller
                 'after_bonus_balance' => $currentBonusBalance + ($request['bonus_amount'] * 100)
             ];
 
+            $vendor = $request->vendor ?? self::VENDOR;
+
             DB::beginTransaction();
             try {
                 $transaction = LoadTestFund::create($data);
                 if (! $transaction) return redirect(route('luckyWinner.index'))->with('error', 'Transaction not created successfully');
 
-                event(new LoadTestFundEvent($transaction, self::VENDOR, self::SERVICE_TYPE));
+                event(new LoadTestFundEvent($transaction, $vendor, self::SERVICE_TYPE));
                 DB::commit();
                 return redirect(route('luckyWinner.index'))->with('success', 'Transaction created successfully');
             } catch (\Exception $e) {

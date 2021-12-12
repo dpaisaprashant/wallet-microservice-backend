@@ -94,25 +94,9 @@
     <script src="{{ asset('admin/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
 
     <script>
-        /*$('form').on('submit', function (e) {
-
-            e.preventDefault();
-
-            swal({
-                title: "Are you sure?",
-                text: "Refund for this transaction will be created",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3366ff",
-                confirmButtonText: "Yes, approve",
-                closeOnConfirm: true,
-                closeOnClickOutside: true
-            }, function () {
-                console.log(this)
-                $('#handleBtn').click();
-                swal.close();
-            })
-        });*/
+        $('form').on('submit', function (e) {
+            $("#overlay").fadeIn(300);
+        });
     </script>
 
 

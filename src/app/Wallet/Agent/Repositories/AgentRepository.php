@@ -130,6 +130,7 @@ class AgentRepository
             DB::beginTransaction();
             $user = User::whereId($this->request->user_id)->firstOrFail();
             if ($user->isAgent()) return false;
+            if (Agent::where('user_id', $user->id)->count()) return false;
 
             $data = [
                 'role_id' => (new Role())->agentRole()->id

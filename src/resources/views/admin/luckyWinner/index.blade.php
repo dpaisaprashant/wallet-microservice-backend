@@ -4,7 +4,7 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Lucky Winner Transactions</h2>
+            <h2>Winner Deposit Transactions</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -15,7 +15,7 @@
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Lucky Winner Transaction</strong>
+                    <strong>Winner Deposit Transaction</strong>
                 </li>
             </ol>
         </div>
@@ -161,7 +161,7 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>List of all lucky winner transactions</h5>
+                        <h5>List of all winner deposit transactions</h5>
                     </div>
                     <div class="ibox-content">
                         <div class="table-responsive">

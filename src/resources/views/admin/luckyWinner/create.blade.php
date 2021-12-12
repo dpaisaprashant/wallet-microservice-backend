@@ -4,18 +4,18 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Create Lucky Winner Transaction</h2>
+            <h2>Create Winner Deposit Transaction</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Luck Winner Transaction</strong>
+                    <strong>Winner Deposit Transaction</strong>
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Create Lucky Winner Transaction</strong>
+                    <strong>Create Winner Deposit Transaction</strong>
                 </li>
             </ol>
         </div>
@@ -54,6 +54,16 @@
                                 <div class="col-sm-10">
                                     <input name="bonus_amount" type="text" class="form-control">
                                     <small>Amount Should be in Rs.</small>
+                                </div>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Vendor</label>
+                                <div class="col-sm-10">
+                                    <input name="vendor" type="text" class="form-control">
+                                    <small>Vendor is display in user's transaction history</small>
                                 </div>
                             </div>
 

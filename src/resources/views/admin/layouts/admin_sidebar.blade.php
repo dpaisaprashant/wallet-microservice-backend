@@ -400,14 +400,14 @@ $url = url()->current();
 
             @if(auth()->user()->hasPermissionTo('Lucky winner view') || auth()->user()->hasPermissionTo('Lucky winner create'))
                 <li @if(preg_match('/lucky/i', $url)) class="active" @endif>
-                    <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Lucky Winner</span><span
+                    <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Winner Deposit</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         @can('Lucky winner view')
-                            <li><a href="{{ route('luckyWinner.index') }}">View Lucky Winner</a></li>
+                            <li><a href="{{ route('luckyWinner.index') }}">View Winner Deposits</a></li>
                         @endcan
                         @can('Lucky winner create')
-                            <li><a href="{{ route('luckyWinner.create') }}">Create Lucky Winner</a></li>
+                            <li><a href="{{ route('luckyWinner.create') }}">Create Winner Deposit</a></li>
                         @endcan
                     </ul>
                 </li>

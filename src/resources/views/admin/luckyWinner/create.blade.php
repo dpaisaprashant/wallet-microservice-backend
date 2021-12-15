@@ -63,7 +63,7 @@
                                 <label class="col-sm-2 col-form-label">Vendor</label>
                                 <div class="col-sm-10">
                                     <input name="vendor" type="text" class="form-control">
-                                    <small>Vendor is display in user's transaction history</small>
+                                    <small>Vendor is displayed in user's transaction history</small>
                                 </div>
                             </div>
 

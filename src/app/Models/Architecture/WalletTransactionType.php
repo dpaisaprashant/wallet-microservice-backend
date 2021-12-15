@@ -79,4 +79,8 @@ class WalletTransactionType extends Model
     public function walletTransactionBonus(){
         return $this->hasMany(WalletTransactionBonus::class);
     }
+
+    public function walletTransactionTypeMerchantRevenue(){
+        return $this->hasMany(WalletTransactionTypeMerchantRevenue::class);
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Filters\User\UserFilters;
 use App\Models\Architecture\SingleUserCashback;
 use App\Models\Architecture\SingleUserCommission;
+use App\Models\Architecture\WalletTransactionTypeMerchantRevenue;
 use App\Models\BonusToMainBalanceTransfer\BonusBalanceDeduction;
 use App\Models\BonusToMainBalanceTransfer\MainBalanceAddition;
 use App\Models\Merchant\Merchant;
@@ -501,6 +502,10 @@ class User extends Authenticatable
     public function bonusBalanceDeduction()
     {
         return $this->hasMany(BonusBalanceDeduction::class);
+    }
+
+    public function merchantRevenue(){
+        return $this->hasOne(WalletTransactionTypeMerchantRevenue::class);
     }
 
 

@@ -210,6 +210,12 @@
                                                href="{{ route('walletBonus.index', $transactionType->id) }}"
                                                class="btn btn-sm btn-warning m-t-n-xs" title="User Commissions"><i
                                                     class="fa fa-dollar"></i>&nbsp;Bonus</a>
+                                            @can('Add merchant revenue')
+                                                <a style="margin-top: 5px;"
+                                                   href="{{ route('architecture.wallet.merchantRevenue', $transactionType->id) }}"
+                                                   class="btn btn-sm btn-info m-t-n-xs" title="User Commissions"><i
+                                                        class="fa fa-dollar"></i> Merchant Revenue</a>
+                                            @endcan
 
                                         </td>
                                     </tr>

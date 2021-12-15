@@ -3,6 +3,7 @@
 use App\Wallet\Architecture\Http\Controllers\WalletTransactionCashbackController;
 use App\Wallet\Architecture\Http\Controllers\WalletTransactionCommissionController;
 use App\Wallet\Architecture\Http\Controllers\WalletTransactionTypeController;
+use App\Wallet\Architecture\Http\Controllers\WalletTransactionTypeMerchantRevenueController;
 use App\Wallet\Architecture\Http\Controllers\WalletUserCashbackController;
 use App\Wallet\Architecture\Http\Controllers\WalletUserCommissionController;
 use App\Wallet\Architecture\Http\Controllers\WalletServiceController;
@@ -54,6 +55,11 @@ Route::group(['prefix' => 'admin/architecture', 'middleware' => ['web','auth']],
     Route::get('/create-wallet-permission-transaction-type',[WalletPermissionTransactionTypeController::class,'create'])->name('wallet.permission.transaction.type.create');
     Route::post('/store-wallet-permission-transaction-type',[WalletPermissionTransactionTypeController::class, 'store'])->name('wallet.permission.transaction.type.store');
     Route::post('/delete-wallet-permission-transaction-type/{id}',[WalletPermissionTransactionTypeController::class,'delete'])->name('wallet.permission.transaction.type.delete');
+
+    // Wallet Transaction Type Merchant Revenue
+    Route::get('/wallet-merchant-revenue/{walletTransaction}', [WalletTransactionTypeMerchantRevenueController::class, 'index'])->name('architecture.wallet.merchantRevenue');
+    Route::match(['get', 'post'], '/wallet-merchant-revenue/{walletTransaction}/create', [WalletTransactionTypeMerchantRevenueController::class, 'create'])->name('architecture.wallet.merchantRevenue.create');
+    Route::post('/wallet-merchant-revenue/delete', [WalletTransactionTypeMerchantRevenueController::class, 'delete'])->name('architecture.wallet.merchantRevenue.delete');
 
 
     //Wallet transaction types

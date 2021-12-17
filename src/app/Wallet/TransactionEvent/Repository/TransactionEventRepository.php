@@ -7,6 +7,7 @@ namespace App\Wallet\TransactionEvent\Repository;
 use App\Models\TransactionEvent;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class TransactionEventRepository
 {
@@ -124,8 +125,9 @@ class TransactionEventRepository
     }
 
     public function getUniqueVendors(){
-        $vendors = TransactionEvent::groupBy('vendor')->pluck('vendor');
-        return $vendors;
+        return Cache::remember('transactionVendors', 86400, function () {
+            return  TransactionEvent::groupBy('vendor')->pluck('vendor');
+        });
     }
 
     //For Individual User

@@ -18,5 +18,6 @@ class WalletTransactionTypeMerchantRevenue extends Model
     protected $table = 'wallet_transaction_type_merchant_revenues';
 
     protected $guarded = [];
+    protected $fillable = [];
 
 }

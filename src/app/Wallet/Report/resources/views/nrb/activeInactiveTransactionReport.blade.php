@@ -4,7 +4,7 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Non bank payment</h2>
+            <h2>Active/Inactive User Transaction Report</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -15,7 +15,7 @@
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Non-bank payment</strong>
+                    <strong>Active/Inactive User Transaction</strong>
                 </li>
             </ol>
         </div>
@@ -41,13 +41,12 @@
                     <div class="ibox-content">
                         <div class="row">
                             <div class="col-sm-12">
-                                <form role="form" method="get" action="{{ route('report.nonBankPaymentReport') }}"
+                                <form role="form" method="get"
                                       id="filter">
 
                                     <div class="row">
                                         <div class="col-12 mt-3">
                                             <label for="ionrange_amount">Amount</label><br>
-                                            {{--                                            <input type="text" name="amount" class="ionrange_amount">--}}
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="input-group date">
@@ -76,65 +75,57 @@
                                     </div>
                                     <br>
                                     <div class="row">
-                                        <div class="col-4">
+                                        <div class="col-6">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </span>
                                                 <input id="date_load_from" type="text"
                                                        class="form-control date_from" placeholder="From"
-                                                       name="from" autocomplete="off"
-                                                       value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}">
+                                                       name="transaction_from" autocomplete="off"
+                                                       value="{{ !empty($_GET['transaction_from']) ? $_GET['transaction_from'] : '' }}">
                                             </div>
                                             <br>
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-6">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </span>
                                                 <input id="date_load_to" type="text"
-                                                       class="form-control date_to" placeholder="To" name="to"
+                                                       class="form-control date_to" placeholder="To" name="transaction_to"
                                                        autocomplete="off"
-                                                       value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <select data-placeholder="User Type..." class="chosen-select"
-                                                        tabindex="2"
-                                                        name="user_type">
-                                                    <option value="" selected disabled>User Type...</option>
-                                                    @if(!empty($_GET['user_type']))
-                                                        <option value="all"
-                                                                @if($_GET['user_type'] == 'all') selected @endif>All
-                                                        </option>
-                                                        <option value="user"
-                                                                @if($_GET['user_type'] == 'user') selected @endif>User
-                                                        </option>
-                                                        <option value="merchant"
-                                                                @if($_GET['user_type'] == 'merchant') selected @endif>
-                                                            Merchant
-                                                        </option>
-                                                        <option value="agent"
-                                                                @if($_GET['user_type'] == 'agent') selected @endif>Agent
-                                                        </option>
-                                                    @else
-                                                        <option value="all">All</option>
-                                                        <option value="user">User</option>
-                                                        <option value="merchant">Merchant</option>
-                                                        <option value="agent">Agent</option>
-                                                    @endif
-                                                </select>
+                                                       value="{{ !empty($_GET['transaction_to']) ? $_GET['transaction_to'] : '' }}">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-4">
+                                        <div class="col-md-12">
+                                            <label for="user_activity_status">User Activity Status</label><br>
                                             <div class="form-group">
-                                                <input type="text" name="user" placeholder="Email or number"
-                                                       class="form-control"
-                                                       value="{{ !empty($_GET['user']) ? $_GET['user'] : '' }}">
+                                                <select data-placeholder="User Activity Status..." class="chosen-select"
+                                                        tabindex="2"
+                                                        name="user_activity_status" required>
+                                                    <option value="" selected disabled>User Activity Status...</option>
+                                                    @if(!empty($_GET['user_activity_status']))
+                                                        <option value="active"
+                                                                @if($_GET['user_activity_status'] == 'active') selected @endif>
+                                                            Active
+                                                        </option>
+                                                        <option value="inactive_6_month"
+                                                                @if($_GET['user_activity_status'] == 'inactive_6_month') selected @endif>
+                                                            Inactive for more than 6 months and less than 12 months
+                                                        </option>
+                                                        <option value="inactive_12_month"
+                                                                @if($_GET['user_activity_status'] == 'inactive_12_month') selected @endif>
+                                                            Inactive for more than 12 months
+                                                        </option>
+                                                    @else
+                                                        <option value="active">Active</option>
+                                                        <option value="inactive_6_month">Inactive for more than 6 months and less than 12 months</option>
+                                                        <option value="inactive_12_month">Inactive for more than 12 months</option>
+                                                    @endif
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -142,7 +133,7 @@
 
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
-                                                formaction="{{ route('report.nonBankPaymentReport') }}">
+                                                formaction="{{ route('report.nrb.activeInactiveTransaction') }}">
                                             <strong>Filter</strong>
                                         </button>
                                     </div>
@@ -167,7 +158,7 @@
                 <div class="col-lg-12">
                     <div class="ibox ">
                         <div class="ibox-title">
-                            <h5>List of all Non bank payment reports</h5>
+                            <h5>List of all Active/Inactive user transaction reports</h5>
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">
@@ -176,20 +167,20 @@
                                     <thead>
                                     <tr>
                                         <th>S.No.</th>
-                                        <th>Transaction channel</th>
-                                        <th>Form of transaction</th>
-                                        <th>Number (Count)</th>
-                                        <th>Value (Amount sum)</th>
+                                        <th>Gender</th>
+                                        <th>User Count</th>
+                                        <th>Transaction Number (Count)</th>
+                                        <th>TransactionValue (Amount sum)</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($nonBankPayments as $title=>$nonBankPayment)
+                                    @foreach($reports as $gender=>$report)
                                         <tr>
                                             <td>{{$loop->index+1}}</td>
-                                            <td>Customer initiated</td>
-                                            <td>{{$title}}</td>
-                                            <td>{{$nonBankPayment['number']}}</td>
-                                            <td>Rs. {{$nonBankPayment['value']}}</td>
+                                            <td>{{ $gender }}</td>
+                                            <td>{{ $report["count"] }}</td>
+                                            <td>{{$report['transaction_count']}}</td>
+                                            <td>Rs. {{$report['transaction_value']}}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>

@@ -36,6 +36,7 @@ class UserFilters extends FiltersAbstract
         'agent_status'=>AgentStatusFilter::class,
         'merchant_type' => MerchantTypeFilter::class,
         'user_type' => UserTypeFilter::class,
+        'user_activity_status' => UserActivityStatusFilter::class,
         'from_transaction_date' => FromTransactionDateFilter::class,
         'to_transaction_date' => ToTransactionDateFilter::class,
         'from_kyc_date' => FromKYCDateFilter::class,

@@ -15,15 +15,16 @@
         "code-lts/laravel-fcm": "1.6.*",
         "doctrine/dbal": "2.*",
         "fideloper/proxy": "^4.0",
+        "fivedots/nepalicalendar": "*",
         "guzzlehttp/guzzle": "^7.3",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.5",
         "phpoffice/phpspreadsheet": "^1.18",
         "rap2hpoutre/fast-excel": "^1.6",
+        "simplesoftwareio/simple-qrcode": "^4.2",
         "spatie/laravel-activitylog": "^3.9",
         "spatie/laravel-backup": "6.*",
-        "spatie/laravel-permission": "^3.3",
-        "fivedots/nepalicalendar":"*"
+        "spatie/laravel-permission": "^3.3"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

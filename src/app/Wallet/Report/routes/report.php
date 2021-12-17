@@ -1,5 +1,6 @@
 <?php
 
+use App\Wallet\Report\Http\Controllers\ClosingBalanceController;
 use App\Wallet\Report\Http\Controllers\NRBReportController;
 use App\Wallet\Report\Http\Controllers\SubscriberReportController;
 use App\Wallet\Report\Http\Controllers\UserWalletReportController;
@@ -25,6 +26,9 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web', 'auth']], func
     Route::get('nrb/active-user-report', [NRBReportController::class, 'activeCustomerReport'])->name('report.nrb.activeUser')->middleware('permission:Report nrb active and inactive user');
     Route::get('nrb/inactive-user-report', [NRBReportController::class, 'inactiveCustomerReport'])->name('report.nrb.inactiveUser')->middleware('permission:Report nrb active and inactive user');
 
+    //Active inactive transaction counts
+    Route::get('nrb/active-inactive-user-transaction-report', [NRBReportController::class, 'activeInactiveTransaction'])->name('report.nrb.activeInactiveTransaction')->middleware('permission:Report nrb active and inactive user');
+
     Route::get('nrb/agent-report', [NRBReportController::class, 'agentReport'])->name('report.agent')->middleware('permission:Report nrb agent');
 
     //Non bank payment
@@ -40,4 +44,6 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web', 'auth']], func
     //Nrb Reconciliation Report
     Route::match(['get', 'post'],'nrb-reconciliation-report', [WalletReportController::class, 'nrbReconciliationReport'])->name('report.nrb.reconciliation')->middleware('permission:Report nrb reconciliation');
 
+    //closing balance
+    Route::get('closing-balance', [ClosingBalanceController::class, 'getClosingBalanceReport'])->name('report.closing.balance');
 });

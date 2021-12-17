@@ -204,6 +204,7 @@ return [
         App\Wallet\SocialMediaChallenge\SocialMediaChallengeServiceProvider::class,
         App\Wallet\RefundPreTransaction\RefundPreTransactionServiceProvider::class,
         App\Wallet\NEA\NEASettlementServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
     ],
 
     /*
@@ -259,6 +260,7 @@ return [
         'FCMGroup' => LaravelFCM\Facades\FCMGroup::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
     ],
 
 ];

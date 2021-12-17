@@ -400,14 +400,14 @@ $url = url()->current();
 
             @if(auth()->user()->hasPermissionTo('Lucky winner view') || auth()->user()->hasPermissionTo('Lucky winner create'))
                 <li @if(preg_match('/lucky/i', $url)) class="active" @endif>
-                    <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Lucky Winner</span><span
+                    <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Winner Deposit</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         @can('Lucky winner view')
-                            <li><a href="{{ route('luckyWinner.index') }}">View Lucky Winner</a></li>
+                            <li><a href="{{ route('luckyWinner.index') }}">View Winner Deposits</a></li>
                         @endcan
                         @can('Lucky winner create')
-                            <li><a href="{{ route('luckyWinner.create') }}">Create Lucky Winner</a></li>
+                            <li><a href="{{ route('luckyWinner.create') }}">Create Winner Deposit</a></li>
                         @endcan
                     </ul>
                 </li>
@@ -587,12 +587,12 @@ $url = url()->current();
                 </li>
             @endif
 
-            @can('View nea settlements')
-                <li @if($url == route('ViewNEASettlement')) class="active" @endif>
-                    <a href="{{route('ViewNEASettlement')}}"><i class="fa fa-handshake-o"></i> <span
-                            class="nav-label">NEA Settlement</span></a>
-                </li>
-            @endcan
+{{--            add permissions--}}
+{{--            <li @if($url == route('ViewNEASettlement')) class="active" @endif>--}}
+{{--                <a href="{{route('ViewNEASettlement')}}"><i class="fa fa-handshake-o"></i> <span--}}
+{{--                        class="nav-label">NEA Settlement</span></a>--}}
+{{--            </li>--}}
+{{--            end permission--}}
 
 
 
@@ -704,6 +704,8 @@ $url = url()->current();
                             </li>
                             <li><a href="{{ route('report.nrb.inactiveUser') }}">NRB Inactive User Report</a>
                             </li>
+                            <li><a href="{{ route('report.nrb.activeInactiveTransaction') }}">Active/Inactive Transaction Report</a>
+                            </li>
                         @endcan
                         @can('Report nrb agent')
                             <li><a href="{{ route('report.agent') }}">NRB Agent Report</a></li>
@@ -726,6 +728,8 @@ $url = url()->current();
                         @endcan
                         @can('View mismatched user balance and bonus balance')
                             <li><a href="{{route('report.mismatchedUserBalance')}}">Mismatched User Balance</a></li>
+
+                           {{--<li><a href="{{route('report.closing.balance')}}">Closing Balance</a></li>--}}
                         @endcan
                     </ul>
                 </li>

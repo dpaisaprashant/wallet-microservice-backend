@@ -9,6 +9,7 @@ use App\Models\NchlAggregatedPayment;
 use App\Models\NchlBankTransfer;
 use App\Models\NchlLoadTransaction;
 use App\Models\NICAsiaCyberSourceLoadTransaction;
+use App\Models\NPSAccountLinkLoad;
 use App\Models\NpsLoadTransaction;
 use App\Models\NtcRetailerToCustomerTransaction;
 use App\Models\UserLoadTransaction;
@@ -19,6 +20,7 @@ use App\Wallet\TransactionClearance\Clearance\Strategy\NchlBankTransferClearance
 use App\Wallet\TransactionClearance\Clearance\Strategy\NchlLoadClearanceStrategy;
 use App\Wallet\TransactionClearance\Clearance\Strategy\NicAsiaCybersourceClearanceStrategy;
 use App\Wallet\TransactionClearance\Clearance\Strategy\NPayLoadClearanceStrategy;
+use App\Wallet\TransactionClearance\Clearance\Strategy\NPSAccountLinkLoadClearanceStrategy;
 use App\Wallet\TransactionClearance\Clearance\Strategy\NpsLoadClearanceStrategy;
 use App\Wallet\TransactionClearance\Clearance\Strategy\NtcPaymentClearanceStrategy;
 use App\Wallet\TransactionClearance\Clearance\Strategy\PaypointClearanceStrategy;
@@ -53,6 +55,8 @@ class ClearanceTransactionTypeResolver
                 return new NtcPaymentClearanceStrategy();
             case NpsLoadTransaction::class:
                 return new NpsLoadClearanceStrategy();
+            case NPSAccountLinkLoad::class:
+                return new NPSAccountLinkLoadClearanceStrategy();
         }
     }
 

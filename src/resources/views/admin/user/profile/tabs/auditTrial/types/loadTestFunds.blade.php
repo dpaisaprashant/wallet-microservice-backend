@@ -20,7 +20,7 @@
             REFUND
         @else
             @if(!empty($event->description))
-                LUCKY WINNER
+                {{ $event->vendor }} WINNER DEPOSIT
             @else
                 TEST LOAD FUND
             @endif

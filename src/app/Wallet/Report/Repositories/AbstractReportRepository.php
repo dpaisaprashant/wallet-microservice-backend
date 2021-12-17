@@ -8,6 +8,7 @@ use App\Models\CellPayUserTransaction;
 use App\Models\KhaltiUserTransaction;
 use App\Models\NchlAggregatedPayment;
 use App\Models\NchlLoadTransaction;
+use App\Models\NeaTransaction;
 use App\Models\NICAsiaCyberSourceLoadTransaction;
 use App\Models\NPSAccountLinkLoad;
 use App\Models\PaymentNepalLoadTransaction;
@@ -28,7 +29,8 @@ abstract class AbstractReportRepository
             UserTransaction::class,
             NchlAggregatedPayment::class,
             KhaltiUserTransaction::class,
-            CellPayUserTransaction::class
+            CellPayUserTransaction::class,
+            NeaTransaction::class
         ];
 
         $this->cashIn = [

@@ -19,7 +19,7 @@ class NeaTransaction extends Model
 {
     use BelongsToUseThroughMicroservice, BelongsToUser, MorphOneCommission, MorphOneDispute;
 
-//    protected $connection = 'nea';
+    protected $connection = 'nea';
     protected $table = 'nea_transaction';
 
     protected $casts = [

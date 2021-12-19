@@ -658,6 +658,13 @@ $url = url()->current();
                 </li>
             @endif
 
+            @can('Report nrb active and inactive user')
+                <li @if($url == route('report.nrb.activeUser')) class="active" @endif>
+                    <a href="{{ route('report.nrb.activeUser') }}"><i class="fa fa-users"></i> <span
+                            class="nav-label">Active/Inactive Report</span></a>
+                </li>
+            @endcan
+
             @if(auth()->user()->hasAnyPermission(['Monthly report view', 'Yearly report view','Report paypoint','Report npay','Report nchl load','Report referral','Report register using referral user','Report subscriber daily','Report reconciliation','Report nrb active and inactive user','Report non bank payment','Report wallet end balance','Report admin kyc','Report commission']))
                 <li @if(preg_match('/report/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">Report</span><span

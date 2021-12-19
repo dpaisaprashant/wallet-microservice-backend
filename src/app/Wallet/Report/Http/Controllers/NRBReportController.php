@@ -11,6 +11,7 @@ use App\Traits\CollectionPaginate;
 use App\Wallet\Report\Repositories\AbstractReportRepository;
 use App\Wallet\Report\Repositories\ActiveInactiveCustomerReportRepository;
 use App\Wallet\Report\Repositories\ActiveInactiveTransactionRepository;
+use App\Wallet\Report\Repositories\ActiveInactiveUserReportRepository;
 use App\Wallet\Report\Repositories\AgentReportRepository;
 use App\Wallet\Report\Repositories\NonBankPaymentReportRepository;
 use Illuminate\Http\Request;
@@ -23,8 +24,38 @@ class NRBReportController extends Controller
     {
         $activityReports = [];
         if(!empty($_GET)) {
-            $repository = new ActiveInactiveCustomerReportRepository($request);
+            //$repository = new ActiveInactiveCustomerReportRepository($request);
+            $repository = new ActiveInactiveUserReportRepository($request);
+            //dd($repository->activeUsersData(), $repository->oneDayBeforeFromDateRegisteredUserCount());
+            $activeData = $repository->activeUsersData();
+            $inactiveData = $repository->oneDayBeforeFromDateRegisteredUserCount();
+
             $activityReports = [
+                'Active' => [
+                    'count' => $activeData['total_count'],
+                    'balance' => $activeData['total_balance'],
+                    'bonus_balance' => $activeData['total_bonus_balance'],
+                    'total' => $activeData['total_bonus_balance']
+                ],
+
+                'Inactive (6 months)' => [
+                    'count' => $inactiveData['count'] - $activeData['total_count'],
+                    'balance' => 0,
+                    'bonus_balance' => 0,
+                    'total' => 0
+                ],
+
+                'Inactive' => [
+                    'count' => $inactiveData['count'] - $activeData['total_count'],
+                    'balance' => 0,
+                    'bonus_balance' => 0,
+                    'total' => 0
+                ],
+            ];
+
+            //dd($activityReports);
+
+            /*$activityReports = [
                 'Active Customer Wallet' => [
                     'Male' => [
                         'Number' => $repository->activeMaleUserCount(),
@@ -52,7 +83,7 @@ class NRBReportController extends Controller
                     ],
                 ],
 
-               /* 'Inactive Customer Wallet' => [
+                'Inactive Customer Wallet' => [
                     'Inactive (6-12 months)' => [
                         'Number' => $repository->inactiveFor6To12MonthsUserCount(),
                         'Value' => 'Rs.' . $repository->inactiveFor6To12MonthsUserBalance()
@@ -67,11 +98,12 @@ class NRBReportController extends Controller
                         'Number' => $repository->inactiveTotalUserCount(),
                         'Value' => 'Rs.' . $repository->inactiveTotalUserBalance()
                     ]
-                ]*/
-            ];
+                ]
+            ];*/
         }
 
-        return view('WalletReport::nrb.activeUserReport')->with(compact('activityReports'));
+        //return view('WalletReport::nrb.activeUserReport')->with(compact('activityReports'));
+        return view('WalletReport::nrb.sajiloActiveUserReport')->with(compact('activityReports'));
     }
 
     public function inactiveCustomerReport(Request $request)

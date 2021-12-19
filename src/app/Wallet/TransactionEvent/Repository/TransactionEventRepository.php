@@ -34,14 +34,14 @@ class TransactionEventRepository
 
     public function sortedTransactions()
     {
-        return TransactionEvent::with('transactionable', 'user')
+        return TransactionEvent::with('transactionable', 'user', 'commission', 'commission.transactions')
             ->doesntHave('refundTransaction')
             ->filter($this->request)->paginate($this->length);
     }
 
     public function latestTransactions()
     {
-        return TransactionEvent::with('transactionable', 'user')
+        return TransactionEvent::with('transactionable', 'user', 'commission', 'commission.transactions')
             ->doesntHave('refundTransaction')
             ->latest()->filter($this->request)->paginate($this->length);
         //->filter($this->request)->paginate($this->length);

@@ -444,6 +444,57 @@ return [
             ]
         ],
 
+        'fixture-tickets' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE17_URL'),
+            'host' => env('DB17_HOST', '127.0.0.1'),
+            'port' => env('DB17_PORT', '3306'),
+            'database' => env('DB17_DATABASE', 'forge'),
+            'username' => env('DB17_USERNAME', 'forge'),
+            'password' => env('DB17_PASSWORD', ''),
+            'unix_socket' => env('DB17_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => false,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+            'dump' => [
+                'dump_binary_path' => env('DB_DUMP_PATH', '/usr/bin/'), // only the path, so without `mysqldump` or `pg_dump`
+                'use_single_transaction',
+                'timeout' => 60 * 5, // 5 minute timeout
+            ]
+        ],
+
+        'event-tickets' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE18_URL'),
+            'host' => env('DB18_HOST', '127.0.0.1'),
+            'port' => env('DB18_PORT', '3306'),
+            'database' => env('DB18_DATABASE', 'forge'),
+            'username' => env('DB18_USERNAME', 'forge'),
+            'password' => env('DB18_PASSWORD', ''),
+            'unix_socket' => env('DB18_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => false,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+            'dump' => [
+                'dump_binary_path' => env('DB_DUMP_PATH', '/usr/bin/'), // only the path, so without `mysqldump` or `pg_dump`
+                'use_single_transaction',
+                'timeout' => 60 * 5, // 5 minute timeout
+            ]
+        ],
+
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),

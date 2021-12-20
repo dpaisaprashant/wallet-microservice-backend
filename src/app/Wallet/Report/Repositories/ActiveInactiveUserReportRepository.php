@@ -47,7 +47,7 @@ class ActiveInactiveUserReportRepository extends AbstractReportRepository
     public function oneDayBeforeFromDateRegisteredUserCount()
     {
        $values =  DB::connection('dpaisa')
-           ->select("SELECT COUNT(*) as count from users where Date(created_at) <= Date('$this->oneDayBeforeFromDate');");
+           ->select("SELECT COUNT(*) as count from users where Date(created_at) <= Date('$this->from');");
        return (array) $values[0];
     }
 }

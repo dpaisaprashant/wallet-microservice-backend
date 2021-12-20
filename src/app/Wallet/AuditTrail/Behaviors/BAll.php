@@ -127,9 +127,9 @@ class BAll implements IAuditTrail
             return $value;
         });
 
-        $collection = ($userLoginHistories)
+        $collection = ($fromFundTransfers)
+            //->concat($userLoginHistories)
             //->concat($userTransactions)
-            ->concat($fromFundTransfers)
             ->concat($receiveFundTransfers)
             ->concat($fromFundRequest)
             ->concat($receiveFundRequest)

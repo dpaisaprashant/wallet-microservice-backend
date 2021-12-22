@@ -99,7 +99,7 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>List of disputed transactions</h5>
+                        <h5>List of Nea settlement per branch</h5>
                     </div>
                     <div class="ibox-content">
                         <div class="table-responsive">

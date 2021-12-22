@@ -744,19 +744,28 @@ $url = url()->current();
 
                             {{--<li><a href="{{route('report.closing.balance')}}">Closing Balance</a></li>--}}
                         @endcan
-                        @can('Report commission')
+
+
+                    </ul>
+                </li>
+            @endif
+
+            @if(auth()->user()->hasAnyPermission(['Monthly report view', 'Yearly report view','Report paypoint','Report npay','Report nchl load','Report referral','Report register using referral user','Report subscriber daily','Report reconciliation','Report nrb active and inactive user','Report non bank payment','Report wallet end balance','Report admin kyc','Report commission']))
+                <li @if(preg_match('/report/i', $url)) class="active" @endif>
+                    <a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">NRB Annex Reports</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        @can('Monthly report view')
                             <li><a href="{{ route('report.nrb.annex.agent.payments') }}">NRB Annex 10.1.5 Agents
                                     Report</a></li>
                         @endcan
-                        @can('Report commission')
+                        @can('Monthly report view')
                             <li><a href="{{ route('report.nrb.annex.customer.payments') }}">NRB Annex 10.1.5 Initiated Customer
                                     Report</a></li>
                         @endcan
-                        @can('Report commission')
-                            <li><a href="{{ route('report.nrb.annex.merchant.payments') }}">NRB Annex 10.1.6 Merchant Payments
-                                    Report</a></li>
+                        @can('Monthly report view')
+                            <li><a href="{{ route('report.nrb.annex.merchant.payments') }}">NRB Annex 10.1.6 Report</a></li>
                         @endcan
-
                     </ul>
                 </li>
             @endif

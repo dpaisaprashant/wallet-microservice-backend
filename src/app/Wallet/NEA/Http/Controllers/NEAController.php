@@ -12,9 +12,6 @@ class NEAController extends Controller
 {
     public function ViewNEASettlement(){
         $nea_transactions = NeaTransaction::filter(request())->latest()->get();
-
-
-//        $nea_transactions = NeaTransaction::get();
         $nea_informations = [];
         $branch_names = config('nea-branches');
         $transaction_count_total = 0;

@@ -30,12 +30,12 @@ class NRBAnnexReportController extends Controller
         $nrbAnnexAgentPayments = [
             'Bill Payment' => [
                 'number' => $repository->getBillPaymentCount(),
-                'value' => ($repository->getBillPaymentValue())
+                'value' => ($repository->getBillPaymentValue())??0
             ],
 
             'Transfer (A/c to A/c)' => [
                 'number' => $repository->getTransferCount(),
-                'value' => ($repository->getTransferValue()),
+                'value' => ($repository->getTransferValue())??0,
             ],
 
             'Cash In (wallet load)' => [

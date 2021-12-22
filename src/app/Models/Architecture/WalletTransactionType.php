@@ -4,6 +4,7 @@ namespace App\Models\Architecture;
 
 use App\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class WalletTransactionType extends Model
@@ -40,6 +41,14 @@ class WalletTransactionType extends Model
             'App\\Models\\UserTransaction',
             'App\\Wallet\\Commission\\Models\\Commission'
         ];
+    }
+
+    public function getCachedWalletVendors()
+    {
+        //retrieves from cache, if not in cache adds the query to cache
+        return Cache::remember('walletVendors', 86400, function () {
+            return  $this->groupBy('vendor')->pluck('vendor')->toArray();
+        });
     }
 
     public function resolveWalletTransactionType($vendor, $transactionCategory = null, $serviceType = null, $service = null)

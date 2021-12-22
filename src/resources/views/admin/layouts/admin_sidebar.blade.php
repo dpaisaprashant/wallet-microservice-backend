@@ -495,6 +495,22 @@ $url = url()->current();
                 </li>
             @endif
 
+            @if(auth()->user()->hasAnyPermission(['Monthly report view', 'Yearly report view','Report paypoint','Report npay','Report nchl load','Report referral','Report register using referral user','Report subscriber daily','Report reconciliation','Report nrb active and inactive user','Report non bank payment','Report wallet end balance','Report admin kyc','Report commission']))
+                <li @if(preg_match('/report/i', $url)) class="active" @endif>
+                    <a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">NRB Annex Reports</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        @can('Monthly report view')
+                            <li><a href="{{ route('report.nrb.annex.agent.payments') }}">Nrb Annex 10.1.5 Agent Report</a></li>
+                        @endcan
+                            @can('Monthly report view')
+                            <li><a href="{{ route('report.nrb.annex.customer.payments') }}">Nrb Annex 10.1.5 Initiated Customer Report</a></li>
+                        @endcan
+
+                    </ul>
+                </li>
+            @endif
+
             @if(auth()->user()->hasAnyPermission(['User session log view', 'Backend user log view' , 'Auditing log view', 'Profiling log view', 'Statistics log view', 'Development log view','Api log']))
                 <li @if(preg_match('/log/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-th-list"></i> <span class="nav-label">Logs</span><span

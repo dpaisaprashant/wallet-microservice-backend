@@ -1,6 +1,7 @@
 <?php
 
 use App\Wallet\Report\Http\Controllers\ClosingBalanceController;
+use App\Wallet\Report\Http\Controllers\NRBAnnexReportController;
 use App\Wallet\Report\Http\Controllers\NRBReportController;
 use App\Wallet\Report\Http\Controllers\SubscriberReportController;
 use App\Wallet\Report\Http\Controllers\UserWalletReportController;
@@ -46,4 +47,15 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web', 'auth']], func
 
     //closing balance
     Route::get('closing-balance', [ClosingBalanceController::class, 'getClosingBalanceReport'])->name('report.closing.balance');
+
+    /**
+     * NRB ANNEX Report
+     */
+
+    Route::get('nrb-annex/agent-payments', [NRBAnnexReportController::class, 'agentReport'])->name('report.nrb.annex.agent.payments');
+    Route::get('nrb-annex/customer-payments', [NRBAnnexReportController::class, 'customerReport'])->name('report.nrb.annex.customer.payments');
+    Route::get('nrb-annex/merchant-payments', [NRBAnnexReportController::class, 'merchantReport'])->name('report.nrb.annex.merchant.payments');
+//    Route::get('/report/nrb-annex/agent-payments/monthly', 'ReportController@monthly')->name('report.monthly')->middleware('permission:Monthly report view');
+//    Route::get('/report/yearly', 'ReportController@yearly')->name('report.yearly')->middleware('permission:Yearly report view');
+
 });

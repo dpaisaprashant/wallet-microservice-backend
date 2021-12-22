@@ -162,19 +162,23 @@ $url = url()->current();
                         {{--                        @endcan--}}
 
                         @can('View unverified merchant kyc')
-                            <li><a href="{{ route('merchant.unverifiedMerchantKYC.view') }}">Unverified Merchant KYC</a></li>
+                            <li><a href="{{ route('merchant.unverifiedMerchantKYC.view') }}">Unverified Merchant KYC</a>
+                            </li>
                         @endcan
 
                         @can('Accepted merchant kyc')
-                            <li><a href="{{ route('merchant.acceptedMerchantKYC.view') }}">Accepted Merchant KYC</a></li>
+                            <li><a href="{{ route('merchant.acceptedMerchantKYC.view') }}">Accepted Merchant KYC</a>
+                            </li>
                         @endcan
 
                         @can('Rejected merchant kyc')
-                            <li><a href="{{ route('merchant.rejectedMerchantKYC.view') }}">Rejected Merchant KYC</a></li>
+                            <li><a href="{{ route('merchant.rejectedMerchantKYC.view') }}">Rejected Merchant KYC</a>
+                            </li>
                         @endcan
 
                         @can('KYC not filled merchant')
-                            <li><a href="{{ route('merchant.unfilledMerchantKYC.view') }}">Unfilled Merchant KYC</a></li>
+                            <li><a href="{{ route('merchant.unfilledMerchantKYC.view') }}">Unfilled Merchant KYC</a>
+                            </li>
                         @endcan
 
                         @can('Create merchant')
@@ -391,7 +395,8 @@ $url = url()->current();
                             <li><a href="{{ route('refund.pretransaction.create') }}">Create Pretransaction</a></li>
                         @endcan
                         @can('Refund view pretransaction')
-                            <li><a href="{{ route('refund.pretransaction.view') }}">View Refunded Pretransactions</a></li>
+                            <li><a href="{{ route('refund.pretransaction.view') }}">View Refunded Pretransactions</a>
+                            </li>
                         @endcan
 
                     </ul>
@@ -587,12 +592,12 @@ $url = url()->current();
                 </li>
             @endif
 
-{{--            add permissions--}}
-{{--            <li @if($url == route('ViewNEASettlement')) class="active" @endif>--}}
-{{--                <a href="{{route('ViewNEASettlement')}}"><i class="fa fa-handshake-o"></i> <span--}}
-{{--                        class="nav-label">NEA Settlement</span></a>--}}
-{{--            </li>--}}
-{{--            end permission--}}
+            {{--            add permissions--}}
+            {{--            <li @if($url == route('ViewNEASettlement')) class="active" @endif>--}}
+            {{--                <a href="{{route('ViewNEASettlement')}}"><i class="fa fa-handshake-o"></i> <span--}}
+            {{--                        class="nav-label">NEA Settlement</span></a>--}}
+            {{--            </li>--}}
+            {{--            end permission--}}
 
 
 
@@ -711,7 +716,8 @@ $url = url()->current();
                             </li>
                             <li><a href="{{ route('report.nrb.inactiveUser') }}">NRB Inactive User Report</a>
                             </li>
-                            <li><a href="{{ route('report.nrb.activeInactiveTransaction') }}">Active/Inactive Transaction Report</a>
+                            <li><a href="{{ route('report.nrb.activeInactiveTransaction') }}">Active/Inactive
+                                    Transaction Report</a>
                             </li>
                         @endcan
                         @can('Report nrb agent')
@@ -736,8 +742,21 @@ $url = url()->current();
                         @can('View mismatched user balance and bonus balance')
                             <li><a href="{{route('report.mismatchedUserBalance')}}">Mismatched User Balance</a></li>
 
-                           {{--<li><a href="{{route('report.closing.balance')}}">Closing Balance</a></li>--}}
+                            {{--<li><a href="{{route('report.closing.balance')}}">Closing Balance</a></li>--}}
                         @endcan
+                        @can('Report commission')
+                            <li><a href="{{ route('report.nrb.annex.agent.payments') }}">NRB Annex 10.1.5 Agents
+                                    Report</a></li>
+                        @endcan
+                        @can('Report commission')
+                            <li><a href="{{ route('report.nrb.annex.customer.payments') }}">NRB Annex 10.1.5 Initiated Customer
+                                    Report</a></li>
+                        @endcan
+                        @can('Report commission')
+                            <li><a href="{{ route('report.nrb.annex.merchant.payments') }}">NRB Annex 10.1.6 Merchant Payments
+                                    Report</a></li>
+                        @endcan
+
                     </ul>
                 </li>
             @endif

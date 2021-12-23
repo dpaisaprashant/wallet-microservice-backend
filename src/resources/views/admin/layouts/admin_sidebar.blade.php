@@ -509,6 +509,9 @@ $url = url()->current();
                             @can('Monthly report view')
                             <li><a href="{{ route('report.nrb.annex.merchant.payments') }}">Nrb Annex 10.1.6 Report</a></li>
                         @endcan
+                            @can('Monthly report view')
+                            <li><a href="{{ route('report.statement.settlement.bank') }}">Statement Settlement Bank Report</a></li>
+                        @endcan
 
                     </ul>
                 </li>

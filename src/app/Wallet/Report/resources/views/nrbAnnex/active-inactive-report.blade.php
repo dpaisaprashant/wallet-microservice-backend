@@ -4,7 +4,7 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Statement Settlement Bank Report</h2>
+            <h2>Active/Inactive User Report</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -15,7 +15,7 @@
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Statement Settlement Bank Report</strong>
+                    <strong>Active/Inactive User Report</strong>
                 </li>
             </ol>
         </div>
@@ -37,15 +37,44 @@
                         </div>
                     </div>
 
-{{--                                        <div class="ibox-content" @if( empty($_GET)) style="display: none"  @endif>--}}
+                    {{--                    <div class="ibox-content" @if( empty($_GET) || (!empty($_GET['page']) && count($_GET) === 1)  ) style="display: none"  @endif>--}}
                     <div class="ibox-content">
                         <div class="row">
                             <div class="col-sm-12">
                                 <form role="form" method="get" action="{{ route('report.statement.settlement.bank') }}"
                                       id="filter">
+                                                                        <div class="row">
+                                                                            <div class="col-12 mt-3">
+                                                                                <label for="ionrange_amount">Amount</label><br>
+                                                                                                                            <input type="text" name="amount" class="ionrange_amount">
+                                                                                <div class="row">
+                                                                                    <div class="col-5">
+                                                                                        <div class="input-group date">
+                                                                                    <span class="input-group-addon">
+                                                                                        <i class="fa fa-dollar"></i>
+                                                                                    </span>
+                                                                                            <input type="number" class="form-control"
+                                                                                                   placeholder="From Amount" name="from_amount"
+                                                                                                   autocomplete="off"
+                                                                                                   value="{{ !empty($_GET['from_amount']) ? $_GET['from_amount'] : '' }} " required>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-5">
+                                                                                        <div class="input-group date">
+                                                                                    <span class="input-group-addon">
+                                                                                        <i class="fa fa-dollar"></i>
+                                                                                    </span>
+                                                                                            <input type="number" class="form-control"
+                                                                                                   placeholder="To Amount" name="to_amount"
+                                                                                                   autocomplete="off"
+                                                                                                   value="{{ !empty($_GET['to_amount']) ? $_GET['to_amount'] : '' }}" required>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                     <br>
                                     <div class="row">
-                                        <label class="col-sm-2 col-form-label">Select Date</label>
                                         <div class="col-5">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">

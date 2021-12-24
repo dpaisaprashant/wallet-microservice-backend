@@ -18,6 +18,7 @@ use App\Wallet\Report\Repositories\NrbAnnexCustomerPaymentReportRepository;
 use App\Wallet\Report\Repositories\NrbAnnexMerchantPaymentReportRepository;
 use App\Wallet\Report\Repositories\NrbAnnexPaymentReportRepository;
 use App\Wallet\Report\Repositories\StatementSettlementBankRepository;
+use App\Wallet\WalletAPI\Microservice\WalletClearanceMicroService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -27,6 +28,13 @@ class NRBAnnexReportController extends Controller
 
     public function agentReport(Request $request)
     {
+        if ($request->all() != NULL) {
+            $amountRange = json_decode($request->amount_range);
+            $fromAmount = $amountRange->fromAmount;
+            $toAmount = $amountRange->toAmount;
+            $request->merge(['fromAmount' => $fromAmount, 'toAmount' => $toAmount]);
+        }
+
         $repository = new NrbAnnexPaymentReportRepository($request);
 
         $nrbAnnexAgentPayments = [
@@ -81,6 +89,13 @@ class NRBAnnexReportController extends Controller
 
     public function customerReport(Request $request)
     {
+        if ($request->all() != NULL) {
+            $amountRange = json_decode($request->amount_range);
+            $fromAmount = $amountRange->fromAmount;
+            $toAmount = $amountRange->toAmount;
+            $request->merge(['fromAmount' => $fromAmount, 'toAmount' => $toAmount]);
+        }
+
         $repository = new NrbAnnexCustomerPaymentReportRepository($request);
 
         $nrbAnnexCustomerPayments = [
@@ -135,6 +150,13 @@ class NRBAnnexReportController extends Controller
 
     public function customerReportDetails(Request $request)
     {
+        if ($request->all() != NULL) {
+            $amountRange = json_decode($request->amount_range);
+            $fromAmount = $amountRange->fromAmount;
+            $toAmount = $amountRange->toAmount;
+            $request->merge(['fromAmount' => $fromAmount, 'toAmount' => $toAmount]);
+        }
+
         $repository = new NrbAnnexCustomerPaymentReportRepository($request);
 
         $nrbAnnexCustomerPayments = [
@@ -190,6 +212,13 @@ class NRBAnnexReportController extends Controller
 
     public function merchantReport(Request $request)
     {
+//        if ($request->all() != NULL) {
+//            $amountRange = json_decode($request->amount_range);
+//            $fromAmount = $amountRange->fromAmount;
+//            $toAmount = $amountRange->toAmount;
+//            $request->merge(['fromAmount' => $fromAmount, 'toAmount' => $toAmount]);
+//        }
+
         $repository = new NrbAnnexMerchantPaymentReportRepository($request);
 
         $nrbAnnexMerchantPayments = [
@@ -240,17 +269,21 @@ class NRBAnnexReportController extends Controller
         $check = $repository->checkForReport();
 
         if ($check == null) {
-//            echo "REPORT NOT PRESENT";
-//            dd("REPORT NOT PRESENT");
-            $statementSettlementBanks = 'Report not Found, Would you like to generate one?';
+            $walletClearance = new WalletClearanceMicroService();
+            $walletClearanceResponse['message'] = '';
+
+            if (isset(request()->from)) {
+                $walletClearanceResponse = $walletClearance->dispatchStatementSettlementJobs(request(), request()->from);
+            }
+
+            $statementSettlementBanks = $walletClearanceResponse['message'];
 
             return view('WalletReport::nrbAnnex.statement-settlement-bank', compact('statementSettlementBanks'));
         }
         if ($check) {
             if ($check->status == "PROCESSING") {
-//                echo "PROCESSING PLEASE BE PATIENT....";
-//                dd("PROCESSING PLEASE BE PATIENT....");
-                return view('WalletReport::nrbAnnex.statement-settlement-bank');
+                $statementSettlementBanks = 'Generating Report .....';
+                return view('WalletReport::nrbAnnex.statement-settlement-bank', compact('statementSettlementBanks'));
             }
         }
 

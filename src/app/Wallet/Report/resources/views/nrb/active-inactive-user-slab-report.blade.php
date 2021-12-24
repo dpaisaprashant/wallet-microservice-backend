@@ -4,7 +4,7 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Statement Settlement Bank Report</h2>
+            <h2>Active Inactive User Report</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -15,7 +15,7 @@
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Statement Settlement Bank Report</strong>
+                    <strong>Active Inactive User Report</strong>
                 </li>
             </ol>
         </div>
@@ -37,12 +37,27 @@
                         </div>
                     </div>
 
-{{--                                        <div class="ibox-content" @if( empty($_GET)) style="display: none"  @endif>--}}
+                    {{--                    <div class="ibox-content" @if( empty($_GET) || (!empty($_GET['page']) && count($_GET) === 1)  ) style="display: none"  @endif>--}}
                     <div class="ibox-content">
                         <div class="row">
                             <div class="col-sm-12">
-                                <form role="form" method="get" action="{{ route('report.statement.settlement.bank') }}"
+                                <form role="form" method="get" action="{{ route('report.active.inactive.user.slab') }}"
                                       id="filter">
+
+                                    <div class="form-group  row"><label class="col-sm-2 col-form-label">Amount</label>
+                                        <div class="col-sm-5">
+                                            <select data-placeholder="Choose Amount Range..." class="chosen-select"  tabindex="2" name="amount_range" required>
+                                                <option value="" selected disabled>-- Select Amount Range --</option>
+                                                    <option value='{"fromAmount":"0","toAmount":"1000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"0","toAmount":"1000"}') selected @endif>0 - 1,000</option>
+                                                    <option value='{"fromAmount":"1001","toAmount":"5000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"1001","toAmount":"5000"}') selected @endif>1,000 - 5,000</option>
+                                                    <option value='{"fromAmount":"5001","toAmount":"10000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"5001","toAmount":"10000"}') selected @endif >5,000 - 10,000</option>
+                                                    <option value='{"fromAmount":"10001","toAmount":"20000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"10001","toAmount":"20000"}') selected @endif>10,000 - 20,000</option>
+                                                    <option value='{"fromAmount":"20001","toAmount":"25000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"20001","toAmount":"25000"}') selected @endif>20,000 - 25,000</option>
+                                                    <option value='{"fromAmount":"25001","toAmount":"1000000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"25001","toAmount":"1000000"}') selected @endif >> 25,000</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                     <br>
                                     <div class="row">
                                         <label class="col-sm-2 col-form-label">Select Date</label>
@@ -64,7 +79,7 @@
 
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
-                                                formaction="{{ route('report.statement.settlement.bank') }}">
+                                                formaction="{{ route('report.active.inactive.user.slab') }}">
                                             <strong>Filter</strong>
                                         </button>
                                     </div>
@@ -89,50 +104,45 @@
                 <div class="col-lg-12">
                     <div class="ibox ">
                         <div class="ibox-title">
-                            <h5>List Generated for Statement Settlement Bank Report for {{request()->from}}</h5>
+                            <h5>List Generated for Active/Inactive User Report for Date {{request()->from}} and Amount Range of (Rs. {{request()->fromAmount}} to Rs. {{request()->toAmount}})</h5>
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover dataTables-example"
-                                       title="Non bank payment report">
-                                    <thead>
-                                    <tr>
-                                        <th>S.No.</th>
-                                        <th>Particulars</th>
-                                        <th>Credit</th>
-                                        <th>Debit</th>
-                                    </tr>
-                                    </thead>
-                                    @php
-                                        $totalCredit=0;
-                                        $totalDebit=0;
-                                    @endphp
-                                    <tbody>
-                                    @if(!is_array($statementSettlementBanks))
+
+                                <table class="table table-striped table-bordered table-hover {{--dataTables-example--}}"
+                                       title="active inactive list">
+                                    @if(!is_array($activeInactiveUserReports))
                                         <div class="alert alert-warning">
                                             <i class="fa fa-info-circle"></i>
-                                            {{$statementSettlementBanks}}
+                                            {{$activeInactiveUserReports}}
                                         </div>
                                     @else
-                                        @foreach($statementSettlementBanks as $title=>$statementSettlementBank)
-                                            <tr>
-                                                <td>{{$loop->index+1}}</td>
-                                                <td>{{$title}}</td>
-                                                <td>Rs. {{$statementSettlementBank['credit']}}</td>
-                                                <td>Rs. {{$statementSettlementBank['debit']}}</td>
+                                        @foreach($activeInactiveUserReports as $title => $reports)
+                                            <thead>
+                                            <tr class="gradeX">
+                                                <td colspan="2"><h2><strong><b>{{ $title }}</b></strong></h2></td>
                                             </tr>
-                                            @php
-                                                $totalCredit += $statementSettlementBank['credit'];
-                                                $totalDebit += $statementSettlementBank['debit'];
-                                            @endphp
+                                            </thead>
+                                            <tbody>
+                                            @foreach($reports as $reportTitle => $report)
+                                                <tr class="gradeX">
+                                                    <td style="font-size: 16px">
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;<strong>{{ $reportTitle }}</strong></td>
+                                                    <td></td>
+                                                </tr>
+                                                @foreach($report as $valueTitle => $value)
+                                                    <tr class="gradeX">
+                                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <strong>{{ $valueTitle }}: </strong>
+                                                        </td>
+                                                        <td>{{ $value }}</td>
+                                                    </tr>
+
+                                                @endforeach
+                                            @endforeach
+                                            </tbody>
                                         @endforeach
-                                        <tr>
-                                            <td colspan="2" style="text-align: center">Grand Total</td>
-                                            <td>Rs. {{$totalCredit}}</td>
-                                            <td>Rs. {{$totalDebit}}</td>
-                                        </tr>
                                     @endif
-                                    </tbody>
                                 </table>
                             </div>
                         </div>

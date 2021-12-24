@@ -469,12 +469,7 @@ $url = url()->current();
                             <li><a href="{{ route('report.nrb.reconciliation') }}">NRB Reconciliation Report</a></li>
                         @endcan
                         {{--<li><a href="{{ route('report.user.reconciliation') }}">User Reconciliation Report</a></li>--}}
-                        @can('Report nrb active and inactive user')
-                            <li><a href="{{ route('report.nrb.activeUser') }}">NRB Active User Report</a>
-                            </li>
-                            <li><a href="{{ route('report.nrb.inactiveUser') }}">NRB Inactive User Report</a>
-                            </li>
-                        @endcan
+
                         @can('Report nrb agent')
                             <li><a href="{{ route('report.agent') }}">NRB Agent Report</a></li>
                         @endcan
@@ -490,7 +485,14 @@ $url = url()->current();
                         @can('Report commission')
                             <li><a href="{{ route('commission.report') }}">Commission report</a></li>
                         @endcan
-
+                        @can('Report nrb active and inactive user')
+                            <li><a href="{{ route('report.active.inactive.user') }}">NRB Active/Inactive User Report</a>
+                            </li>
+                        @endcan
+                        @can('Report nrb active and inactive user')
+                            <li><a href="{{ route('report.active.inactive.user.slab') }}">NRB Active/Inactive User Slab Report</a>
+                            </li>
+                        @endcan
                     </ul>
                 </li>
             @endif
@@ -501,16 +503,20 @@ $url = url()->current();
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         @can('Monthly report view')
-                            <li><a href="{{ route('report.nrb.annex.agent.payments') }}">Nrb Annex 10.1.5 Agent Report</a></li>
+                            <li><a href="{{ route('report.nrb.annex.agent.payments') }}">Nrb Annex 10.1.5 Agent
+                                    Report</a></li>
                         @endcan
-                            @can('Monthly report view')
-                            <li><a href="{{ route('report.nrb.annex.customer.payments') }}">Nrb Annex 10.1.5 Initiated Customer Report</a></li>
+                        @can('Monthly report view')
+                            <li><a href="{{ route('report.nrb.annex.customer.payments') }}">Nrb Annex 10.1.5 Initiated
+                                    Customer Report</a></li>
                         @endcan
-                            @can('Monthly report view')
-                            <li><a href="{{ route('report.nrb.annex.merchant.payments') }}">Nrb Annex 10.1.6 Report</a></li>
+                        @can('Monthly report view')
+                            <li><a href="{{ route('report.nrb.annex.merchant.payments') }}">Nrb Annex 10.1.6 Report</a>
+                            </li>
                         @endcan
-                            @can('Monthly report view')
-                            <li><a href="{{ route('report.statement.settlement.bank') }}">Statement Settlement Bank Report</a></li>
+                        @can('Monthly report view')
+                            <li><a href="{{ route('report.statement.settlement.bank') }}">Statement Settlement Bank
+                                    Report</a></li>
                         @endcan
 
                     </ul>

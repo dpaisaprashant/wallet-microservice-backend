@@ -32,16 +32,16 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
 {
     protected $fromDate;
     protected $fromAmount;
-    protected $toDate;
-    protected $toAmount;
+//    protected $toDate;
+//    protected $toAmount;
 
     public function __construct(Request $request)
     {
         parent::__construct($request);
         $this->fromDate = date('Y-m-d', strtotime(str_replace(',', ' ', $request->from)));
         $this->toDate = date('Y-m-d', strtotime(str_replace(',', ' ', $request->to)));
-        $this->fromAmount = $request->from_amount;
-        $this->toAmount = $request->to_amount;
+//        $this->fromAmount = $request->from_amount;
+//        $this->toAmount = $request->to_amount;
     }
 
     public function getSuccessfulMerchantPaymentCount()

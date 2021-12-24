@@ -4,7 +4,7 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Statement Settlement Bank Report</h2>
+            <h2>Active Inactive User Report</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -15,7 +15,7 @@
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Statement Settlement Bank Report</strong>
+                    <strong>Active Inactive User Report</strong>
                 </li>
             </ol>
         </div>
@@ -37,11 +37,11 @@
                         </div>
                     </div>
 
-{{--                                        <div class="ibox-content" @if( empty($_GET)) style="display: none"  @endif>--}}
+                    {{--                    <div class="ibox-content" @if( empty($_GET) || (!empty($_GET['page']) && count($_GET) === 1)  ) style="display: none"  @endif>--}}
                     <div class="ibox-content">
                         <div class="row">
                             <div class="col-sm-12">
-                                <form role="form" method="get" action="{{ route('report.statement.settlement.bank') }}"
+                                <form role="form" method="get" action="{{ route('report.active.inactive.user') }}"
                                       id="filter">
                                     <br>
                                     <div class="row">
@@ -64,7 +64,7 @@
 
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
-                                                formaction="{{ route('report.statement.settlement.bank') }}">
+                                                formaction="{{ route('report.active.inactive.user') }}">
                                             <strong>Filter</strong>
                                         </button>
                                     </div>
@@ -89,50 +89,45 @@
                 <div class="col-lg-12">
                     <div class="ibox ">
                         <div class="ibox-title">
-                            <h5>List Generated for Statement Settlement Bank Report for {{request()->from}}</h5>
+                            <h5>List Generated for Active/Inactive User Report for date {{request()->from}}</h5>
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover dataTables-example"
-                                       title="Non bank payment report">
-                                    <thead>
-                                    <tr>
-                                        <th>S.No.</th>
-                                        <th>Particulars</th>
-                                        <th>Credit</th>
-                                        <th>Debit</th>
-                                    </tr>
-                                    </thead>
-                                    @php
-                                        $totalCredit=0;
-                                        $totalDebit=0;
-                                    @endphp
-                                    <tbody>
-                                    @if(!is_array($statementSettlementBanks))
+
+                                <table class="table table-striped table-bordered table-hover {{--dataTables-example--}}"
+                                       title="active inactive list">
+                                    @if(!is_array($activeInactiveUserReports))
                                         <div class="alert alert-warning">
                                             <i class="fa fa-info-circle"></i>
-                                            {{$statementSettlementBanks}}
+                                            {{$activeInactiveUserReports}}
                                         </div>
                                     @else
-                                        @foreach($statementSettlementBanks as $title=>$statementSettlementBank)
-                                            <tr>
-                                                <td>{{$loop->index+1}}</td>
-                                                <td>{{$title}}</td>
-                                                <td>Rs. {{$statementSettlementBank['credit']}}</td>
-                                                <td>Rs. {{$statementSettlementBank['debit']}}</td>
+                                        @foreach($activeInactiveUserReports as $title => $reports)
+                                            <thead>
+                                            <tr class="gradeX">
+                                                <td colspan="2"><h2><strong><b>{{ $title }}</b></strong></h2></td>
                                             </tr>
-                                            @php
-                                                $totalCredit += $statementSettlementBank['credit'];
-                                                $totalDebit += $statementSettlementBank['debit'];
-                                            @endphp
+                                            </thead>
+                                            <tbody>
+                                            @foreach($reports as $reportTitle => $report)
+                                                <tr class="gradeX">
+                                                    <td style="font-size: 16px">
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;<strong>{{ $reportTitle }}</strong></td>
+                                                    <td></td>
+                                                </tr>
+                                                @foreach($report as $valueTitle => $value)
+                                                    <tr class="gradeX">
+                                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <strong>{{ $valueTitle }}: </strong>
+                                                        </td>
+                                                        <td>{{ $value }}</td>
+                                                    </tr>
+
+                                                @endforeach
+                                            @endforeach
+                                            </tbody>
                                         @endforeach
-                                        <tr>
-                                            <td colspan="2" style="text-align: center">Grand Total</td>
-                                            <td>Rs. {{$totalCredit}}</td>
-                                            <td>Rs. {{$totalDebit}}</td>
-                                        </tr>
                                     @endif
-                                    </tbody>
                                 </table>
                             </div>
                         </div>

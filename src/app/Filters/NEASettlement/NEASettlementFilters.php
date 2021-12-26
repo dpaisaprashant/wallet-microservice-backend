@@ -12,7 +12,6 @@ class NEASettlementFilters extends FiltersAbstract
      */
     protected $filters = [
         'from' => FromDateFilter::class,
-        'to' => ToDateFilter::class,
     ];
 
     /**

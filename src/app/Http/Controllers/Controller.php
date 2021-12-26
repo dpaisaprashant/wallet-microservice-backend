@@ -88,7 +88,8 @@ class Controller extends BaseController
 
         View::share('paypointVendors', $paypointVendors);
 
-        $walletVendors = WalletTransactionType::groupBy('vendor')->pluck('vendor')->toArray();
+        //$walletVendors = WalletTransactionType::groupBy('vendor')->pluck('vendor')->toArray();
+        $walletVendors = (new WalletTransactionType())->getCachedWalletVendors();
         View::share('walletVendors', $walletVendors);
 
         $transactionTypes = [

@@ -76,7 +76,7 @@ class LuckyWinnerController extends Controller
                     $notificationRepository = new NotificationRepository($request);
                     $notificationRepository->sendUserNotification($user, [
                         "title" => "Winner Deposit",
-                        "message" => "Congratulations!!! You have won Rs. ${$request['amount']} from ${vendor}"
+                        "message" => "Congratulations!!! You have won Rs. ". ($request['amount'] + $request['bonus_amount']) ." from " .$vendor
                     ]);
                 }
 

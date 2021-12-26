@@ -26,7 +26,6 @@ class BackendWalletAPIMicroservice extends BackendWalletAPIJSONAbstract
     private $special3;
     private $special4;
     private $status;
-
     private $amount;
     private $accountNumber;
     private $accountName;

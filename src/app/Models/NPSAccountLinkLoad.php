@@ -26,6 +26,10 @@ class NPSAccountLinkLoad extends Model
         return (new NPSAccountLinkLoadFilters($request))->add($filters)->filter($builder);
     }
 
+    public function getAmountAttribute($amount)
+    {
+        return ($amount/100);
+    }
 
     public function preTransaction(){
         return $this->belongsTo(PreTransaction::class,'reference_id','pre_transaction_id');

@@ -92,6 +92,12 @@
                             <h5>List Generated for Active/Inactive User Report for date {{request()->from}}</h5>
                         </div>
                         <div class="ibox-content">
+                            <div><b>Total Users : </b>{{$totalUsers}}</div>
+                            <div><b>Total Balance : </b>{{$totalBalance}}</div>
+                            <div><b>Opening Balance : </b>{{$openingBalance}}</div>
+                            <div><b>(Active + Inactive) - Opening Balance : </b>{{$shouldBeZero}}</div>
+
+                            <br>
                             <div class="table-responsive">
 
                                 <table class="table table-striped table-bordered table-hover {{--dataTables-example--}}"
@@ -109,24 +115,30 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach($reports as $reportTitle => $report)
-                                                <tr class="gradeX">
-                                                    <td style="font-size: 16px">
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;<strong>{{ $reportTitle }}</strong></td>
-                                                    <td></td>
-                                                </tr>
-                                                @foreach($report as $valueTitle => $value)
+                                            @if(is_array($reports))
+                                                @foreach($reports as $reportTitle => $report)
                                                     <tr class="gradeX">
-                                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                            <strong>{{ $valueTitle }}: </strong>
+                                                        <td style="font-size: 16px">
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;<strong>{{ $reportTitle }}</strong>
                                                         </td>
-                                                        <td>{{ $value }}</td>
+                                                        <td></td>
                                                     </tr>
+                                                    @if(is_array($report))
+                                                        @foreach($report as $valueTitle => $value)
+                                                            <tr class="gradeX">
+                                                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                    <strong>{{ $valueTitle }}: </strong>
+                                                                </td>
+                                                                <td>{{ $value }}</td>
+                                                            </tr>
 
+                                                        @endforeach
+                                                    @endif
                                                 @endforeach
-                                            @endforeach
+                                            @endif
                                             </tbody>
                                         @endforeach
+
                                     @endif
                                 </table>
                             </div>

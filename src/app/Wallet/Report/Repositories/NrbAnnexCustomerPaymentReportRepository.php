@@ -47,12 +47,12 @@ class NrbAnnexCustomerPaymentReportRepository extends AbstractReportRepository
     public function customerTransactions()
     {
         $customerTransactions = DB::connection('dpaisa')->select("CREATE TEMPORARY TABLE temp_agents
-SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';
+                                                                                SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';
 
-SELECT COUNT(*)
-FROM transaction_events t
-LEFT JOIN temp_agents a ON a.user_id = t.user_id
-WHERE a.user_id IS NULL
+                                                                                SELECT COUNT(*)
+                                                                                FROM transaction_events t
+                                                                                LEFT JOIN temp_agents a ON a.user_id = t.user_id
+                                                                                WHERE a.user_id IS NULL
 
                                                       ");
 

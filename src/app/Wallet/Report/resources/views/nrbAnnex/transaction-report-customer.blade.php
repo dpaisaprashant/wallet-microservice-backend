@@ -51,8 +51,8 @@
                                                 <option value='{"fromAmount":"0","toAmount":"1000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"0","toAmount":"1000"}') selected @endif>0 - 1,000</option>
                                                 <option value='{"fromAmount":"1001","toAmount":"5000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"1001","toAmount":"5000"}') selected @endif>1,000 - 5,000</option>
                                                 <option value='{"fromAmount":"5001","toAmount":"10000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"5001","toAmount":"10000"}') selected @endif >5,000 - 10,000</option>
-                                                <option value='{"fromAmount":"10001","toAmount":"20000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"10001","toAmount":"20000"}') selected @endif>10,000 - 20,000</option>
-                                                <option value='{"fromAmount":"20001","toAmount":"25000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"20001","toAmount":"25000"}') selected @endif>20,000 - 25,000</option>
+                                                <option value='{"fromAmount":"10001","toAmount":"25000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"10001","toAmount":"25000"}') selected @endif>10,000 - 25,000</option>
+{{--                                                <option value='{"fromAmount":"20001","toAmount":"25000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"20001","toAmount":"25000"}') selected @endif>20,000 - 25,000</option>--}}
                                                 <option value='{"fromAmount":"25001","toAmount":"1000000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"25001","toAmount":"1000000"}') selected @endif >> 25,000</option>
                                             </select>
                                         </div>

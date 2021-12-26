@@ -70,14 +70,12 @@ class WalletClearanceMicroService
         $npaySettledAmount = $request->npaySettledAmount;
         $cardSettledAmount = $request->cardSettledAmount;
 
-        dd($request->all());
-
         $microservice = new BackendWalletAPIMicroservice($request);
         $microservice->setServiceType("WALLET_CLEARANCE")
             ->setDescription("WALLET CLEARANCE")
             ->setVendor("WALLET_CLEARANCE")
             ->setMicroservice("WALLET_CLEARANCE")
-            ->setUrl("dispatch_active_inactive_slab")
+            ->setUrl("dispatch_nrb_reconciliation")
             ->setRequestParam([
                 'from' => $from,
                 'to' => $to,
@@ -89,7 +87,6 @@ class WalletClearanceMicroService
             ]);
 
         $response = $microservice->processRequest();
-
         $activeInactive = json_decode($response, true);
         return $activeInactive;
     }

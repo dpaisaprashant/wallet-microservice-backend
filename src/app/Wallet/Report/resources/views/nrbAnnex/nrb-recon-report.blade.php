@@ -41,49 +41,137 @@
                     <div class="ibox-content">
                         <div class="row">
                             <div class="col-sm-12">
-                                <form role="form" method="get" action="{{ route('report.active.inactive.user.slab') }}"
+                                <form role="form" method="get" action="{{ route('report.nrb.annex.reconciliation') }}"
                                       id="filter">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label>Balance per Statement</label>
 
-                                    <div class="form-group  row"><label class="col-sm-2 col-form-label">Amount</label>
-                                        <div class="col-sm-5">
-                                            <div class="col-6">
-                                                <div class="input-group date">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-dollar"></i>
-                                                </span>
-                                                    <input type="number" class="form-control"
-                                                           placeholder="NPS Amount" name="nps_amount"
-                                                           autocomplete="off"
-                                                           value="{{ !empty($_GET['nps_amount']) ? $_GET['nps_amount'] : '' }}">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="input-group date">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-dollar"></i>
+                                                    </span>
+                                                        <input type="number" class="form-control"
+                                                               placeholder="Insert Amount for Balance per Statement"
+                                                               name="balanceAmount" autocomplete="off"
+                                                               value="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="transaction_amount">Success in NCHL not in Settlement
+                                                Bank</label>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="input-group date">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-dollar"></i>
+                                                    </span>
+                                                        <input type="number" class="form-control"
+                                                               placeholder="Insert Amount for Success in NCHL not in Settlement Bank"
+                                                               name="nchlAmount" autocomplete="off"
+                                                               value="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="transaction_amount">Success in NPS not in Settlement
+                                                Bank</label>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="input-group date">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-dollar"></i>
+                                                    </span>
+                                                        <input type="number" class="form-control"
+                                                               placeholder="Insert Amount for Success in NPS not in Settlement Bank"
+                                                               name="npsAmount" autocomplete="off"
+                                                               value="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="transaction_amount">NPAY Settled Amount</label>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="input-group date">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-dollar"></i>
+                                                    </span>
+                                                        <input type="number" class="form-control"
+                                                               placeholder="Insert Amount for NPAY Settled Amount"
+                                                               name="npaySettledAmount" autocomplete="off"
+                                                               value="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="transaction_amount">Card Settled Amount</label>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="input-group date">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-dollar"></i>
+                                                    </span>
+                                                        <input type="number" class="form-control"
+                                                               placeholder="Insert Amount for Card Settled Amount"
+                                                               name="cardSettledAmount" autocomplete="off"
+                                                               value="">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
                                     <br>
                                     <div class="row">
-                                        <label class="col-sm-2 col-form-label">Select Date</label>
-                                        <div class="col-3">
-                                            <div class="input-group date">
+                                        <div class="col-md-4">
+                                            <label for="transaction_amount">Select From Date</label>
+
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </span>
-                                                <input id="date_load_from" type="text"
-                                                       class="form-control date_from" placeholder="From"
-                                                       name="from" autocomplete="off"
-                                                       value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}" required>
+                                                        <input id="date_load_from" type="text"
+                                                               class="form-control date_from" placeholder="From"
+                                                               name="from" autocomplete="off"
+                                                               value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}"
+                                                               required>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+                                        <div class="col-md-4">
+                                            <label for="transaction_amount">Select To Date</label>
 
-                                        <div class="col-3">
-                                            <div class="input-group date">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </span>
-                                                <input id="date_load_to" type="text"
-                                                       class="form-control date_to" placeholder="To" name="to"
-                                                       autocomplete="off"
-                                                       value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}" required>
+                                                        <input id="date_load_to" type="text"
+                                                               class="form-control date_to" placeholder="To" name="to"
+                                                               autocomplete="off"
+                                                               value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}" required>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -91,7 +179,7 @@
 
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
-                                                formaction="{{ route('report.active.inactive.user.slab') }}">
+                                                formaction="{{ route('report.nrb.annex.reconciliation') }}">
                                             <strong>Generate Report</strong>
                                         </button>
                                     </div>
@@ -116,42 +204,65 @@
                 <div class="col-lg-12">
                     <div class="ibox ">
                         <div class="ibox-title">
-                            <h5>List Generated for Reconciliation Report for Date from {{request()->from}} to {{request()->to}} and NPS (Rs. {{request()->fromAmount}} to Rs. {{request()->toAmount}})</h5>
+                            <h5>List Generated for Reconciliation Report for Date from {{request()->from}}
+                                to {{request()->to}}</h5>
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">
 
                                 <table class="table table-striped table-bordered table-hover {{--dataTables-example--}}"
                                        title="active inactive list">
-                                    @if(!is_array($activeInactiveUserReports))
+                                    @if(!is_array($nrbReconciliationReport))
                                         <div class="alert alert-warning">
                                             <i class="fa fa-info-circle"></i>
-                                            {{$activeInactiveUserReports}}
+                                            {{$nrbReconciliationReport}}
                                         </div>
                                     @else
-                                        @foreach($activeInactiveUserReports as $title => $reports)
+                                        @foreach($nrbReconciliationReport as $title => $reports)
                                             <thead>
                                             <tr class="gradeX">
-                                                <td colspan="2"><h2><strong><b>{{ $title }}</b></strong></h2></td>
+                                                <td colspan="2" style="text-align: center"><h2><strong><b>{{$title}}</b></strong>
+                                                    </h2></td>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach($reports as $reportTitle => $report)
-                                                <tr class="gradeX">
-                                                    <td style="font-size: 16px">
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;<strong>{{ $reportTitle }}</strong></td>
-                                                    <td></td>
-                                                </tr>
-                                                @foreach($report as $valueTitle => $value)
-                                                    <tr class="gradeX">
-                                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                            <strong>{{ $valueTitle }}: </strong>
-                                                        </td>
-                                                        <td>{{ $value }}</td>
-                                                    </tr>
 
+                                            @if(is_array($reports))
+                                                @foreach($reports as $reportTitle => $report)
+                                                    <tr class="gradeX">
+                                                        <td style="font-size: 16px">
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;<strong>{{ $reportTitle }}</strong>
+                                                        </td>
+                                                        @if(!is_array($report))
+                                                            <td>{{$report}}</td>
+                                                        @endif
+                                                    </tr>
+                                                    @if(is_array($report))
+                                                        @foreach($report as $valueTitle => $value)
+                                                            <tr class="gradeX">
+                                                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                    <strong>{{ $valueTitle }}: </strong>
+                                                                </td>
+                                                                <td></td>
+
+                                                            </tr>
+                                                            @if(is_array($value))
+                                                                @foreach($value as $subValueTitle => $subValue)
+                                                                    <tr class="gradeX">
+                                                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                                                            <strong>{{ $subValueTitle }}: </strong>
+                                                                        </td>
+                                                                        <td>{{$subValue}}</td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
                                                 @endforeach
-                                            @endforeach
+                                            @else
+
+                                            @endif
                                             </tbody>
                                         @endforeach
                                     @endif

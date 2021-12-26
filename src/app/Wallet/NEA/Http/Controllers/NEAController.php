@@ -39,6 +39,7 @@ class NEAController extends Controller
 
     public function SettleNea(Request $request){
         $nea_settlement = $request->all();
+        $nea_settlement['transaction_sum'] = $nea_settlement['transaction_sum'] * 100;
 
         $bank_details = config('nea-bank-details.'.$nea_settlement['nea_branch_code']);
 

@@ -126,7 +126,9 @@ class NRBReportController extends Controller
 
             $walletClearanceResponse = $walletClearance->dispatchActiveInactiveUserSlabJobs(request());
 
-            $activeInactiveUserReports = $walletClearanceResponse['message'];
+//            $activeInactiveUserReports = $walletClearanceResponse['message'];
+            $activeInactiveUserReports = 'Report is being generated. Please be patient and check in at another time.';
+
 
             return view('WalletReport::nrb.active-inactive-user-slab-report', compact('activeInactiveUserReports'));
         }
@@ -356,7 +358,8 @@ class NRBReportController extends Controller
 
             $walletClearanceResponse = $walletClearance->dispatchReconciliationJobs(request());
 
-            $nrbReconciliationReport = $walletClearanceResponse['message'];
+            $nrbReconciliationReport = 'Please Wait while the report is being generated.';
+//            $nrbReconciliationReport = $walletClearanceResponse['message'];
 
             return view('WalletReport::nrbAnnex.nrb-recon-report', compact('nrbReconciliationReport'));
         }

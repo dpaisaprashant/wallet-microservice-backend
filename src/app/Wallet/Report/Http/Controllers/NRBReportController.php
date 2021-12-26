@@ -337,7 +337,7 @@ class NRBReportController extends Controller
         if ($check == null) {
             $walletClearance = new WalletClearanceMicroService();
 
-            $walletClearanceResponse = $walletClearance->dispatchActiveInactiveUserSlabJobs(request());
+            $walletClearanceResponse = $walletClearance->dispatchReconciliationJobs(request());
 
             $activeInactiveUserReports = $walletClearanceResponse['message'];
 

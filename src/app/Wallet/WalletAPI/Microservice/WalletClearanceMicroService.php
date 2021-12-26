@@ -37,11 +37,12 @@ class WalletClearanceMicroService
         $activeInactive = json_decode($response, true);
         return $activeInactive;
     }
+
     public function dispatchActiveInactiveUserSlabJobs(Request $request)
     {
-        $date=$request->from;
-        $slab_from=$request->fromAmount;
-        $slab_to=$request->toAmount;
+        $date = $request->from;
+        $slab_from = $request->fromAmount;
+        $slab_to = $request->toAmount;
 
         $microservice = new BackendWalletAPIMicroservice($request);
         $microservice->setServiceType("WALLET_CLEARANCE")
@@ -50,19 +51,26 @@ class WalletClearanceMicroService
             ->setMicroservice("WALLET_CLEARANCE")
             ->setUrl("dispatch_active_inactive_slab")
             ->setRequestParam(['as_of_date' => $date,
-                'slab_from'=> $slab_from,
-                'slab_to'=>$slab_to]);
+                'slab_from' => $slab_from,
+                'slab_to' => $slab_to]);
 
         $response = $microservice->processRequest();
 
         $activeInactive = json_decode($response, true);
         return $activeInactive;
     }
+
     public function dispatchReconciliationJobs(Request $request)
     {
-        $date=$request->from;
-        $slab_from=$request->fromAmount;
-        $slab_to=$request->toAmount;
+        $from = $request->from;
+        $to = $request->to;
+        $npsAmount = $request->npsAmount;
+        $nchlAmount = $request->nchlAmount;
+        $statementAmount = $request->statementAmount;
+        $npaySettledAmount = $request->npaySettledAmount;
+        $cardSettledAmount = $request->cardSettledAmount;
+
+        dd($request->all());
 
         $microservice = new BackendWalletAPIMicroservice($request);
         $microservice->setServiceType("WALLET_CLEARANCE")
@@ -70,9 +78,15 @@ class WalletClearanceMicroService
             ->setVendor("WALLET_CLEARANCE")
             ->setMicroservice("WALLET_CLEARANCE")
             ->setUrl("dispatch_active_inactive_slab")
-            ->setRequestParam(['as_of_date' => $date,
-                'slab_from'=> $slab_from,
-                'slab_to'=>$slab_to]);
+            ->setRequestParam([
+                'from' => $from,
+                'to' => $to,
+                'nps' => $npsAmount,
+                'nchl' => $nchlAmount,
+                'statement' => $statementAmount,
+                'npay_settled' => $npaySettledAmount,
+                'card_settled' => $cardSettledAmount,
+            ]);
 
         $response = $microservice->processRequest();
 

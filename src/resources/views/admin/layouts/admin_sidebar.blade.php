@@ -521,9 +521,9 @@ $url = url()->current();
                                     Report</a>
                             </li>
                         @endcan
-{{--                        @can('Report nrb reconciliation')--}}
-{{--                            <li><a href="{{ route('report.nrb.annex.reconciliation') }}">NRB Reconciliation Report</a></li>--}}
-{{--                        @endcan--}}
+                        @can('Report nrb reconciliation')
+                            <li><a href="{{ route('report.nrb.annex.reconciliation') }}">NRB Reconciliation Report</a></li>
+                        @endcan
 
                     </ul>
                 </li>

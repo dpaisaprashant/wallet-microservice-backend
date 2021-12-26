@@ -33,7 +33,7 @@ class NRBReportController extends Controller
             $walletClearance = new WalletClearanceMicroService();
 
             $walletClearanceResponse = $walletClearance->dispatchActiveInactiveUserJobs(request(), request()->from);
-            $activeInactiveUserReports = $walletClearanceResponse['message'];
+            $activeInactiveUserReports = 'Report is being generated. Please be patient and check in at another time.';
             $totalUsers=0;
             $totalBalance=0;
             $openingBalance=0;

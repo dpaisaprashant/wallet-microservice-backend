@@ -23,7 +23,9 @@ class ActiveInactiveUserReportRepository extends AbstractReportRepository
     public function __construct(Request $request)
     {
         parent::__construct($request);
+
         $this->date = date('Y-m-d', strtotime(str_replace(',', ' ', $request->from)));
+        dd($this->date);
 //        $this->fromAmount = $request->fromAmount;
 //        $this->toAmount = $request->toAmount;
     }

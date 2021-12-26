@@ -2,20 +2,22 @@ version: '3'
 
 networks:
   laravel:
-  walletmicroservicecore_laravel:
+  wallet-microservice-core_laravel:
     external: true
-  walletmicroservicepaypoint_laravel:
+  wallet_clearance_laravel:
     external: true
-  walletmicroservicenchl_laravel:
-    external: true
-  walletmicroservicecybersource_laravel:
-    external: true
-  walletmicroservicenpay_laravel:
-    external: true
-  walletmicroservicemerchant_laravel:
-    external: true
-  walletmicroservicenps_laravel:
-    external: true
+#  walletmicroservicepaypoint_laravel:
+#    external: true
+#  walletmicroservicenchl_laravel:
+#    external: true
+#  walletmicroservicecybersource_laravel:
+#    external: true
+#  walletmicroservicenpay_laravel:
+#    external: true
+#  walletmicroservicemerchant_laravel:
+#    external: true
+#  walletmicroservicenps_laravel:
+#    external: true
 
 
 services:
@@ -40,13 +42,14 @@ services:
       - mongo-express
     networks:
       - laravel
-      - walletmicroservicecore_laravel
-      - walletmicroservicepaypoint_laravel
-      - walletmicroservicenchl_laravel
-      - walletmicroservicecybersource_laravel
-      - walletmicroservicenpay_laravel
-      - walletmicroservicemerchant_laravel
-      - walletmicroservicenps_laravel
+      - wallet-microservice-core_laravel
+      - wallet_clearance_laravel
+  #      - walletmicroservicepaypoint_laravel
+  #      - walletmicroservicenchl_laravel
+  #      - walletmicroservicecybersource_laravel
+  #      - walletmicroservicenpay_laravel
+  #      - walletmicroservicemerchant_laravel
+  #      - walletmicroservicenps_laravel
 
   mysql:
     image: mysql:5.7.29
@@ -67,13 +70,14 @@ services:
       SERVICE_NAME: mysql
     networks:
       - laravel
-      - walletmicroservicecore_laravel
-      - walletmicroservicepaypoint_laravel
-      - walletmicroservicenchl_laravel
-      - walletmicroservicecybersource_laravel
-      - walletmicroservicenpay_laravel
-      - walletmicroservicemerchant_laravel
-      - walletmicroservicenps_laravel
+      - wallet-microservice-core_laravel
+      - wallet_clearance_laravel
+  #      - walletmicroservicepaypoint_laravel
+  #      - walletmicroservicenchl_laravel
+  #      - walletmicroservicecybersource_laravel
+  #      - walletmicroservicenpay_laravel
+  #      - walletmicroservicemerchant_laravel
+  #      - walletmicroservicenps_laravel
 
   php:
     build:
@@ -88,13 +92,14 @@ services:
       - "9033:9000"
     networks:
       - laravel
-      - walletmicroservicecore_laravel
-      - walletmicroservicepaypoint_laravel
-      - walletmicroservicenchl_laravel
-      - walletmicroservicecybersource_laravel
-      - walletmicroservicenpay_laravel
-      - walletmicroservicemerchant_laravel
-      - walletmicroservicenps_laravel
+      - wallet-microservice-core_laravel
+      - wallet_clearance_laravel
+  #      - walletmicroservicepaypoint_laravel
+  #      - walletmicroservicenchl_laravel
+  #      - walletmicroservicecybersource_laravel
+  #      - walletmicroservicenpay_laravel
+  #      - walletmicroservicemerchant_laravel
+  #      - walletmicroservicenps_laravel
 
   composer:
     build:
@@ -109,13 +114,6 @@ services:
     user: laravel
     networks:
       - laravel
-      - walletmicroservicecore_laravel
-      - walletmicroservicepaypoint_laravel
-      - walletmicroservicenchl_laravel
-      - walletmicroservicecybersource_laravel
-      - walletmicroservicenpay_laravel
-      - walletmicroservicemerchant_laravel
-      - walletmicroservicenps_laravel
     entrypoint: ['composer', '--ignore-platform-reqs']
 
   artisan:
@@ -132,13 +130,6 @@ services:
     entrypoint: ['php', '/var/www/html/artisan']
     networks:
       - laravel
-      - walletmicroservicecore_laravel
-      - walletmicroservicepaypoint_laravel
-      - walletmicroservicenchl_laravel
-      - walletmicroservicecybersource_laravel
-      - walletmicroservicenpay_laravel
-      - walletmicroservicemerchant_laravel
-      - walletmicroservicenps_laravel
 
   phpmyadmin:
     depends_on:
@@ -153,18 +144,11 @@ services:
       MYSQL_ROOT_PASSWORD: secret
     networks:
       - laravel
-      - walletmicroservicecore_laravel
-      - walletmicroservicepaypoint_laravel
-      - walletmicroservicenchl_laravel
-      - walletmicroservicecybersource_laravel
-      - walletmicroservicenpay_laravel
-      - walletmicroservicemerchant_laravel
-      - walletmicroservicenps_laravel
 
   mongo:
     container_name: mongo-backend
     image: mongo
-    restart: always
+    #    restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password

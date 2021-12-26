@@ -23,9 +23,11 @@ class ActiveInactiveUserSlabReportRepository extends AbstractReportRepository
     public function __construct(Request $request)
     {
         parent::__construct($request);
-        $this->date = date('Y-m-d', strtotime(str_replace(',', ' ', $request->from)));
-        $this->fromAmount = $request->fromAmount * 100;
-        $this->toAmount = $request->toAmount * 100;
+        if($request->all()!=null) {
+            $this->date = date('Y-m-d', strtotime(str_replace(',', ' ', $request->from)));
+            $this->fromAmount = $request->fromAmount * 100;
+            $this->toAmount = $request->toAmount * 100;
+        }
     }
 
     public function checkForReport(){

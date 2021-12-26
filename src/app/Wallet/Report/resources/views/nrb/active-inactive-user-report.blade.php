@@ -92,10 +92,10 @@
                             <h5>List Generated for Active/Inactive User Report for date {{request()->from}}</h5>
                         </div>
                         <div class="ibox-content">
-                            <div><b>Total Users : </b>{{$totalUsers}}</div>
-                            <div><b>Total Balance : </b>{{$totalBalance}}</div>
-                            <div><b>Opening Balance : </b>{{$openingBalance}}</div>
-                            <div><b>(Active + Inactive) - Opening Balance : </b>{{$shouldBeZero}}</div>
+                            <div><b>Total Users : </b>{{optional($totalUsers)}}</div>
+                            <div><b>Total Balance : </b>{{optional($totalBalance)}}</div>
+                            <div><b>Opening Balance : </b>{{optional($openingBalance)}}</div>
+                            <div><b>(Active + Inactive) - Opening Balance : </b>{{optional($shouldBeZero)}}</div>
 
                             <br>
                             <div class="table-responsive">

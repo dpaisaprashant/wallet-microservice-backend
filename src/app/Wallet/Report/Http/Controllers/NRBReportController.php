@@ -34,12 +34,20 @@ class NRBReportController extends Controller
 
             $walletClearanceResponse = $walletClearance->dispatchActiveInactiveUserJobs(request(), request()->from);
             $activeInactiveUserReports = $walletClearanceResponse['message'];
+            $totalUsers=0;
+            $totalBalance=0;
+            $openingBalance=0;
+            $shouldBeZero=0;
 
             return view('WalletReport::nrb.active-inactive-user-report', compact('activeInactiveUserReports'));
         }
         if ($check) {
             if ($check->status == "PROCESSING") {
                 $activeInactiveUserReports = 'Generating Report .....';
+                $totalUsers=0;
+                $totalBalance=0;
+                $openingBalance=0;
+                $shouldBeZero=0;
                 return view('WalletReport::nrb.active-inactive-user-report', compact('activeInactiveUserReports'));
             }
         }

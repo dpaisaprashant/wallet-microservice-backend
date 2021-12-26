@@ -16,7 +16,7 @@ use function PHPUnit\Framework\isEmpty;
 class NEAController extends Controller
 {
     public function ViewNEASettlement(){
-        $nea_transactions = NeaTransaction::filter(request())->latest()->get();
+        $nea_transactions = NeaTransaction::filter(request())->where('status','=','true')->latest()->get();
         $nea_settlements = NeaSettlement::get();
         $nea_informations = [];
         $branch_names = config('nea-branches');
@@ -74,14 +74,14 @@ class NEAController extends Controller
 
             // calling the api
             $neaSettlementAPI = new NeaSettlementAPIMicroservice();
-            $settleNea = $neaSettlementAPI->processBankTransferRequest($nea_settlement); // saving the response from the called api
+            $settleNeaResponse = $neaSettlementAPI->processBankTransferRequest($nea_settlement); // saving the response from the called api
 
             // check if response is json or not
-            if (!is_array($settleNea)){
-                $nea_settlement['json_response'] = $settleNea;
-                $settleNea = json_decode($settleNea,true);
+            if (!is_array($settleNeaResponse)){
+                $nea_settlement['json_response'] = $settleNeaResponse;
+                $settleNeaResponse = json_decode($settleNeaResponse,true);
             }else{
-                $nea_settlement['json_response'] = json_encode($settleNea);
+                $nea_settlement['json_response'] = json_encode($settleNeaResponse);
             }
 
             //save json_response in nea_settlements table
@@ -90,24 +90,17 @@ class NEAController extends Controller
             ]);
 
             // check if the response yielded success OR failure and update status of nea_settlements accordingly
-            $success_response = $createSettlement->successfulBankTransfer($settleNea);
-            if ($success_response == true){
-                $updateSettlement = NeaSettlement::where('id','=',$createSettlement->id)->update([
-                    'status' => "SUCCESS"
+            if ($settleNeaResponse['transaction']['pre_transaction_status'] == "true"){
+                $updateStatusNeaSettlement = NeaSettlement::where('id','=',$createSettlement->id)->update([
+                    'status'=> 'SUCCESS'
                 ]);
-                return back()->with('success','nea settlement success');
+                return back()->with('success','nea settlement successful.');
             }else{
-                $pending_response = $createSettlement->pendingBankTransfer($settleNea);
-                if ($pending_response == true){
-                    $updateSettlement = NeaSettlement::where('id','=',$createSettlement->id)->update([
-                        'status' => "SUCCESS"
-                    ]);
-                    return back()->with('success','nea settlement success');
-                }
+                $updateStatusNeaSettlement = NeaSettlement::where('id','=',$createSettlement->id)->update([
+                    'status'=> 'ERROR'
+                ]);
+                return back()->with('error','nea settlement failed.');
             }
-            $updateSettlement = NeaSettlement::where('id','=',$createSettlement->id)->update([
-                'status' => "ERROR"
-            ]);
             return back()->with('error','nea settlement failed.');
 
         }catch (\Exception $exception){

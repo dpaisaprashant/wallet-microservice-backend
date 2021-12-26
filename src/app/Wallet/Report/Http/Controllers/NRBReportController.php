@@ -15,6 +15,7 @@ use App\Wallet\Report\Repositories\ActiveInactiveUserReportRepository;
 use App\Wallet\Report\Repositories\ActiveInactiveUserSlabReportRepository;
 use App\Wallet\Report\Repositories\AgentReportRepository;
 use App\Wallet\Report\Repositories\NonBankPaymentReportRepository;
+use App\Wallet\Report\Repositories\NrbReconciliationReportRepository;
 use App\Wallet\WalletAPI\Microservice\WalletClearanceMicroService;
 use Illuminate\Http\Request;
 
@@ -317,5 +318,81 @@ class NRBReportController extends Controller
         }
         return view('WalletReport::nrb.activeInactiveTransactionReport')->with(compact('reports'));
 
+    }
+
+    public function reconciliationReport(Request $request)
+    {
+//        if ($request->all() != NULL) {
+//            $amountRange = json_decode($request->amount_range);
+//            $npsAmount = $amountRange->fromAmount;
+//            $npsAmount = $amountRange->fromAmount;
+//            $toAmount = $amountRange->toAmount;
+//            $request->merge(['fromAmount' => $fromAmount, 'toAmount' => $toAmount]);
+//        }
+
+        $repository = new nrbReconciliationReportRepository($request);
+
+        $check = $repository->checkForReport();
+
+        if ($check == null) {
+            $walletClearance = new WalletClearanceMicroService();
+
+            $walletClearanceResponse = $walletClearance->dispatchActiveInactiveUserSlabJobs(request());
+
+            $activeInactiveUserReports = $walletClearanceResponse['message'];
+
+            return view('WalletReport::nrb.active-inactive-user-slab-report', compact('activeInactiveUserReports'));
+        }
+        if ($check) {
+            if ($check->status == "PROCESSING") {
+                $activeInactiveUserReports = 'Generating Report .....';
+                return view('WalletReport::nrb.active-inactive-user-slab-report', compact('activeInactiveUserReports'));
+            }
+        }
+
+        $walletClearance = new WalletClearanceMicroService();
+        $walletClearanceResponse = $walletClearance->dispatchActiveInactiveUserSlabJobs(request());
+
+        $activeInactiveUserReports = [
+            'Active Customer Wallet' => [
+                'Male' => [
+                    'Number' => $walletClearanceResponse['active']['male_number'],
+                    'Total Balance' => 'Rs. ' . $walletClearanceResponse['active']['male_amount']
+                ],
+
+                'Female' => [
+                    'Number' => $walletClearanceResponse['active']['female_number'],
+                    'Total Balance' => 'Rs. ' . $walletClearanceResponse['active']['female_amount']
+                ],
+
+                'Other' => [
+                    'Number' => $walletClearanceResponse['active']['others_number'],
+                    'Total Balance' => 'Rs. ' . $walletClearanceResponse['active']['others_amount']
+                ],
+
+//                'Grand Total' => [
+//                    'Number' => $walletClearanceResponse['active']['total_number'],
+//                    'Total Balance' => 'Rs. '.$walletClearanceResponse['active']['total_amount']
+//                ]
+            ],
+            'Inactive Customer Wallet' => [
+                'Inactive  (6-12 months)' => [
+                    'Number' => $walletClearanceResponse['inactive']['six_month_number'],
+                    'Total Balance' => 'Rs. ' . $walletClearanceResponse['inactive']['six_month_amount']
+                ],
+
+                'Inactive (> 12 months)' => [
+                    'Number' => $walletClearanceResponse['inactive']['tweleve_month_number'],
+                    'Total Balance' => 'Rs. ' . $walletClearanceResponse['inactive']['tweleve_month_amount']
+                ],
+
+//                'Grand Total' => [
+//                    'Number' => $walletClearanceResponse['inactive']['total_number'],
+//                    'Total Balance' => 'Rs. '.$walletClearanceResponse['inactive']['total_amount']
+//                ]
+            ]
+        ];
+
+        return view('WalletReport::nrbAnnex.nrb-recon-report')->with(compact('activeInactiveUserReports'));
     }
 }

@@ -465,9 +465,10 @@ $url = url()->current();
                         @can('Report reconciliation')
                             <li><a href="{{ route('report.reconciliation') }}">Reconciliation Report</a></li>
                         @endcan
-                        @can('Report nrb reconciliation')
-                            <li><a href="{{ route('report.nrb.reconciliation') }}">NRB Reconciliation Report</a></li>
-                        @endcan
+{{--                            @can('Report nrb reconciliation')--}}
+{{--                                <li><a href="{{ route('report.nrb.reconciliation') }}">NRB Reconciliation Report</a>--}}
+{{--                                </li>--}}
+{{--                            @endcan--}}
                         {{--<li><a href="{{ route('report.user.reconciliation') }}">User Reconciliation Report</a></li>--}}
 
                         @can('Report nrb agent')
@@ -485,14 +486,7 @@ $url = url()->current();
                         @can('Report commission')
                             <li><a href="{{ route('commission.report') }}">Commission report</a></li>
                         @endcan
-                        @can('Report nrb active and inactive user')
-                            <li><a href="{{ route('report.active.inactive.user') }}">NRB Active/Inactive User Report</a>
-                            </li>
-                        @endcan
-                        @can('Report nrb active and inactive user')
-                            <li><a href="{{ route('report.active.inactive.user.slab') }}">NRB Active/Inactive User Slab Report</a>
-                            </li>
-                        @endcan
+
                     </ul>
                 </li>
             @endif
@@ -517,6 +511,18 @@ $url = url()->current();
                         @can('Monthly report view')
                             <li><a href="{{ route('report.statement.settlement.bank') }}">Statement Settlement Bank
                                     Report</a></li>
+                        @endcan
+                        @can('Report nrb active and inactive user')
+                            <li><a href="{{ route('report.active.inactive.user') }}">NRB Active/Inactive User Report</a>
+                            </li>
+                        @endcan
+                        @can('Report nrb active and inactive user')
+                            <li><a href="{{ route('report.active.inactive.user.slab') }}">NRB Active/Inactive User Slab
+                                    Report</a>
+                            </li>
+                        @endcan
+                        @can('Report nrb reconciliation')
+                            <li><a href="{{ route('report.nrb.annex.reconciliation') }}">NRB Reconciliation Report</a></li>
                         @endcan
 
                     </ul>

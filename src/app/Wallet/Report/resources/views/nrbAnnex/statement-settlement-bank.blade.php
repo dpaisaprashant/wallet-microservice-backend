@@ -65,7 +65,7 @@
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
                                                 formaction="{{ route('report.statement.settlement.bank') }}">
-                                            <strong>Filter</strong>
+                                            <strong>Generate Report</strong>
                                         </button>
                                     </div>
 

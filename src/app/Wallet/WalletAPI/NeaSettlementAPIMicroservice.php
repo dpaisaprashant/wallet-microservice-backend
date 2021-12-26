@@ -21,7 +21,7 @@ class NeaSettlementAPIMicroservice
             ->setDescription("bank transfer")
             ->setVendor("NCHL BANK TRANSFER")
             ->setMicroservice("NCHL")
-            ->setUrl("/nchl/process-bank-transfer")
+            ->setUrl("/api/microservice/nchl/process-bank-transfer")
             ->setRequestParam([
                 "amount" => $nea_settlement['transaction_sum'],
                 "bank_id" => $nea_settlement['bank_code'],

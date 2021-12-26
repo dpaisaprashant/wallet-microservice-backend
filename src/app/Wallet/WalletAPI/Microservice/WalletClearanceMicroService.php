@@ -58,7 +58,7 @@ class WalletClearanceMicroService
         $activeInactive = json_decode($response, true);
         return $activeInactive;
     }
-    public function dispatchActiveInactiveUserSlabJobs(Request $request)
+    public function dispatchReconciliationJobs(Request $request)
     {
         $date=$request->from;
         $slab_from=$request->fromAmount;

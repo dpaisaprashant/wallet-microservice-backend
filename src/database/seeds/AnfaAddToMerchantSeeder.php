@@ -8,8 +8,10 @@ use App\Models\TransactionEvent;
 use App\Models\User;
 use App\Models\UserKYC;
 use App\Models\UserKYCValidation;
+use App\Models\Wallet;
 use App\Wallet\Helpers\TransactionIdGenerator;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -28,6 +30,8 @@ class AnfaAddToMerchantSeeder extends Seeder
         $merchantUser = User::where('mobile_no', '')
             ->first();
 
+        $createdAtDate = Illuminate\Support\Carbon::now()->subSeconds(180);
+
         foreach ($ticketTransactions as $ticketTransaction) {
 
             //check if revenue transaction exists
@@ -39,6 +43,7 @@ class AnfaAddToMerchantSeeder extends Seeder
                 continue;
             }
 
+            $createdAt = $createdAtDate->format("Y-m-d H:i:s");
 
             $currentBalance = $merchantUser->wallet()->first();
             $amount = $ticketTransaction->amount * 100;
@@ -54,7 +59,9 @@ class AnfaAddToMerchantSeeder extends Seeder
                 'transaction_type' => 'credit',
                 'url' => '/merchantRevenuePayment',
                 'status' => 'SUCCESS',
-                'user_id' => $merchantUser->id
+                'user_id' => $merchantUser->id,
+                'created_at' => $createdAt,
+                'updated_at' => $createdAt
             ];
 
             $preTransaction = PreTransaction::create($preTransaction);
@@ -66,7 +73,9 @@ class AnfaAddToMerchantSeeder extends Seeder
                 'user_id' => $merchantUser->id,
                 'pre_transaction_id' => $preTransaction->pre_transaction_id,
                 'amount' => $amount,
-                'description' => 'merchant revenue'
+                'description' => 'merchant revenue',
+                'created_at' => $createdAt,
+                'updated_at' => $createdAt
             ];
 
             $merchantRevenue = MerchantRevenueRecord::create($merchantRevenue);
@@ -85,11 +94,14 @@ class AnfaAddToMerchantSeeder extends Seeder
                 'uid' => TransactionIdGenerator::generateAlphaNumeric(8),
                 'balance' => $currentBalance->getOriginal('balance'),
                 'bonus_balance' => $currentBalance->getOriginal('bonus_balance'),
+                'created_at' => $createdAt,
+                'updated_at' => $createdAt
             ];
 
             $transactionEvent = TransactionEvent::create($transactionEvent);
+            Wallet::where('user_id', $merchantUser->id)->increment('balance', $amount);
 
-
+            $createdAtDate = $createdAtDate->addSeconds(2);
         }
     }
 }

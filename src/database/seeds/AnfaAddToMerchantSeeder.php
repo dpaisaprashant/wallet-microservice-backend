@@ -12,6 +12,7 @@ use App\Wallet\Helpers\TransactionIdGenerator;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -28,6 +29,16 @@ class AnfaAddToMerchantSeeder extends Seeder
             ->first();
 
         foreach ($ticketTransactions as $ticketTransaction) {
+
+            //check if revenue transaction exists
+            $oldRevenue = MerchantRevenueRecord::where('transaction_event_id', $ticketTransaction->id)
+                ->first();
+
+            if ($oldRevenue) {
+                Log::info("Revenue already exists for " . $ticketTransaction->pre_transaction_id);
+                continue;
+            }
+
 
             $currentBalance = $merchantUser->wallet()->first();
 

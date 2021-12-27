@@ -36,6 +36,7 @@
                                     <th>S.No.</th>
                                     <th>User</th>
                                     <th>Contact Number</th>
+                                    <th>Prize Code</th>
                                     {{--<th>Email</th>--}}
                                     <th>KYC status</th>
                                     <th>Wallet Balance</th>
@@ -67,6 +68,7 @@
                                                     &nbsp;{{ $user->mobile_no }}
                                                 @endif
                                             </td>
+                                            <td>{{ $user->prizeCode->code }}</td>
                                             {{--<td class="center">
                                                 @if(!empty($user->email_verified_at))
                                                     <i class="fa fa-check-circle" style="color: green;"></i> &nbsp;{{ $user->email }}

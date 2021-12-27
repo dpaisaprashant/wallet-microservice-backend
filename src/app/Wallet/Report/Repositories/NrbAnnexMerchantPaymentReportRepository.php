@@ -64,10 +64,10 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             WHERE
                                                                             service_type='MERCHANT'  AND status != 'SUCCESS'
                                                                             AND
-                                                                            date(created_at) >= date('$this->fromDate')
+                                                                            date(created_at) >= date(:from)
                                                                             AND
-                                                                            date(created_at) <= date('$this->toDate')
-                                                                               ");
+                                                                            date(created_at) <= date(:to)
+                                                                               ",['from'=>$this->fromDate,'to'=>$this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -76,18 +76,14 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
     {
         $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
                                                                             WHERE
-                                                                            ((service_type='NIC_ASIA_LOAD' AND status = 'SUCCESS')
+                                                                            ((service_type='FUND_TRANSFER' AND status = 'SUCCESS')
                                                                             OR
-                                                                            (service_type='NCHL_LOAD' AND status = 'SUCCESS')
-                                                                            OR
-                                                                            (service_type='NPAY_LOAD' AND status = 'SUCCESS')
-                                                                            OR
-                                                                            (service_type='NPS_LOAD' AND status = 'SUCCESS'))
+                                                                            (service_type='FUND_REQUEST' AND status = 'SUCCESS'))
                                                                             AND
-                                                                            date(created_at) >= date('$this->fromDate')
+                                                                            date(created_at) >= date(:from)
                                                                             AND
-                                                                            date(created_at) <= date('$this->toDate')
-                                                                               ");
+                                                                            date(created_at) <= date(:to)",
+            ['from'=>$this->fromDate,'to'=>$this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -96,18 +92,14 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
     {
         $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
                                                                             WHERE
-                                                                            ((service_type='NIC_ASIA_LOAD' AND status != 'SUCCESS')
+                                                                            ((service_type='FUND_TRANSFER' AND status != 'SUCCESS')
                                                                             OR
-                                                                            (service_type='NCHL_LOAD' AND status != 'SUCCESS')
-                                                                            OR
-                                                                            (service_type='NPAY_LOAD' AND status != 'SUCCESS')
-                                                                            OR
-                                                                            (service_type='NPS_LOAD' AND status != 'SUCCESS'))
+                                                                            (service_type='FUND_TRANSFER' AND status != 'SUCCESS'))
                                                                             AND
-                                                                            date(created_at) >= date('$this->fromDate')
+                                                                            date(created_at) >= date(:from)
                                                                             AND
-                                                                            date(created_at) <= date('$this->toDate')
-                                                                               ");
+                                                                            date(created_at) <= date(:to)"
+            ,['from'=>$this->fromDate,'to'=>$this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }

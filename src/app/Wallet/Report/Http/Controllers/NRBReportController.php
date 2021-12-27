@@ -166,14 +166,32 @@ class NRBReportController extends Controller
 //                ]
             ],
             'Inactive Customer Wallet' => [
-                'Inactive  (6-12 months)' => [
-                    'Number' => $walletClearanceResponse['inactive']['six_month_number'],
-                    'Total Balance' => 'Rs. ' . round($walletClearanceResponse['inactive']['six_month_amount'] / 100, 2)
+                'Inactive Male (6-12 months)' => [
+                    'Number' => $walletClearanceResponse['inactive']['six_month_male_number'],
+                    'Total Balance' => 'Rs. ' . round($walletClearanceResponse['inactive']['six_month_male_amount'] / 100, 2)
+                ],
+                'Inactive Female (6-12 months)' => [
+                    'Number' => $walletClearanceResponse['inactive']['six_month_female_number'],
+                    'Total Balance' => 'Rs. ' . round($walletClearanceResponse['inactive']['six_month_female_amount'] / 100, 2)
+                ],
+                'Inactive Others (6-12 months)' => [
+                    'Number' => $walletClearanceResponse['inactive']['six_month_other_number'],
+                    'Total Balance' => 'Rs. ' . round($walletClearanceResponse['inactive']['six_month_other_amount'] / 100, 2)
                 ],
 
-                'Inactive (> 12 months)' => [
-                    'Number' => $walletClearanceResponse['inactive']['tweleve_month_number'],
-                    'Total Balance' => 'Rs. ' . round($walletClearanceResponse['inactive']['tweleve_month_amount'] / 100, 2)
+                'Inactive Male (> 12 months)' => [
+                    'Number' => $walletClearanceResponse['inactive']['tweleve_month_male_number'],
+                    'Total Balance' => 'Rs. ' . round($walletClearanceResponse['inactive']['tweleve_month_male_amount'] / 100, 2)
+                ],
+
+                'Inactive Female (> 12 months)' => [
+                    'Number' => $walletClearanceResponse['inactive']['tweleve_month_female_number'],
+                    'Total Balance' => 'Rs. ' . round($walletClearanceResponse['inactive']['tweleve_month_female_amount'] / 100, 2)
+                ],
+
+                'Inactive Others (> 12 months)' => [
+                    'Number' => $walletClearanceResponse['inactive']['tweleve_month_other_number'],
+                    'Total Balance' => 'Rs. ' . round($walletClearanceResponse['inactive']['tweleve_month_other_amount'] / 100, 2)
                 ],
 
 //                'Grand Total' => [

@@ -29,9 +29,11 @@ class FromDateFilter extends FilterAbstract
         if ($value === null) {
             return $builder;
         }
-        $value_converted = strtotime(str_replace(',', ' ', $value));
-        $month = date('m',$value_converted);
-        $year = date('Y',$value_converted);
-        return $builder->whereMonth('created_at',$month)->whereYear('created_at',$year);
+
+        $value_converted = date("Y-m-d",strtotime(str_replace(',', ' ', $value)));
+//        $month = date('m',$value_converted);
+//        $year = date('Y',$value_converted);
+//        return $builder->whereMonth('created_at',$month)->whereYear('created_at',$year);
+        return $builder->whereDate('created_at','=',$value_converted);
     }
 }

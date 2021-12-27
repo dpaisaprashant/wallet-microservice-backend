@@ -60,12 +60,18 @@ class NEAController extends Controller
         //changing date format for date_from and date_to starts
         // from date = start of the month to date = end of the month
         $formatted_request_date = date("Y-m-d",strtotime(str_replace(',', ' ', $nea_settlement['date_from'])));
-        $carbon_request_date = Carbon::createFromDate($formatted_request_date);
 
-        $start_of_the_month = $carbon_request_date->startOfMonth()->format('Y-m-d');
-        $end_of_the_month = $carbon_request_date->endOfMonth()->format('Y-m-d');
-        $nea_settlement['date_from'] = $start_of_the_month;
-        $nea_settlement['date_to'] = $end_of_the_month;
+//        FOR PARTICULAR MONTH
+
+//        $carbon_request_date = Carbon::createFromDate($formatted_request_date);
+//
+//        $start_of_the_month = $carbon_request_date->startOfMonth()->format('Y-m-d');
+//        $end_of_the_month = $carbon_request_date->endOfMonth()->format('Y-m-d');
+
+//        FOR PARTICULAR MONTH END
+
+        $nea_settlement['date_from'] = $formatted_request_date;
+        $nea_settlement['date_to'] = $formatted_request_date;
         //changing date format for date_from and date_to ends
 
         try {

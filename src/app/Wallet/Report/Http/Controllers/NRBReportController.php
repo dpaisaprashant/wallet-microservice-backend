@@ -376,7 +376,7 @@ class NRBReportController extends Controller
 
             $walletClearanceResponse = $walletClearance->dispatchReconciliationJobs(request());
 
-            $nrbReconciliationReport = 'Please Wait while the report is being generated.';
+            $nrbReconciliationReport = 'The report is being generated. Please check in at another time.';
 //            $nrbReconciliationReport = $walletClearanceResponse['message'];
 
             return view('WalletReport::nrbAnnex.nrb-recon-report', compact('nrbReconciliationReport'));
@@ -419,9 +419,9 @@ class NRBReportController extends Controller
                     ],
                 ],
 
-                'Balance (1+2-6)' => $walletClearanceResponse['recon_data']['opening_balance']/100 + $walletClearanceResponse['recon_data']['add']/100 - $walletClearanceResponse['recon_data']['less']/100,
-                'Balance as per Settlement Bank (Statement)' => $walletClearanceResponse['recon_data']['balance_per_statement'],
-                'Difference (10-11)' =>$walletClearanceResponse['recon_data']['opening_balance']/100 + $walletClearanceResponse['recon_data']['add']/100 - $walletClearanceResponse['recon_data']['less']/100 - $walletClearanceResponse['recon_data']['balance_per_statement'],
+                'Balance (1+2-6)' => round($walletClearanceResponse['recon_data']['opening_balance']/100 + $walletClearanceResponse['recon_data']['add']/100 - $walletClearanceResponse['recon_data']['less']/100,2),
+                'Balance as per Settlement Bank (Statement)' => round($walletClearanceResponse['recon_data']['balance_per_statement'],2),
+                'Difference (10-11)' =>round($walletClearanceResponse['recon_data']['opening_balance']/100 + $walletClearanceResponse['recon_data']['add']/100 - $walletClearanceResponse['recon_data']['less']/100 - $walletClearanceResponse['recon_data']['balance_per_statement'],2),
 
             ],
 

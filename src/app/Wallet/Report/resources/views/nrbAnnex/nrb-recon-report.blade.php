@@ -56,7 +56,7 @@
                                                         <input type="number" class="form-control"
                                                                placeholder="Insert Amount for Balance per Statement"
                                                                name="balanceAmount" autocomplete="off"
-                                                               value="" required>
+                                                               value="{{ !empty($_GET['balanceAmount']) ? $_GET['balanceAmount'] : '' }}" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -74,7 +74,7 @@
                                                         <input type="number" class="form-control"
                                                                placeholder="Insert Amount for Success in NCHL not in Settlement Bank"
                                                                name="nchlAmount" autocomplete="off"
-                                                               value="" required>
+                                                               value="{{!empty($_GET['nchlAmount']) ? $_GET['nchlAmount'] : '' }}" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -92,7 +92,7 @@
                                                         <input type="number" class="form-control"
                                                                placeholder="Insert Amount for Success in NPS not in Settlement Bank"
                                                                name="npsAmount" autocomplete="off"
-                                                               value="" required>
+                                                               value="{{!empty($_GET['npsAmount']) ? $_GET['npsAmount'] : '' }}" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -114,7 +114,7 @@
                                                         <input type="number" class="form-control"
                                                                placeholder="Insert Amount for NPAY Settled Amount"
                                                                name="npaySettledAmount" autocomplete="off"
-                                                               value="" required>
+                                                               value="{{!empty($_GET['npaySettledAmount']) ? $_GET['npaySettledAmount'] : '' }}" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -131,7 +131,7 @@
                                                         <input type="number" class="form-control"
                                                                placeholder="Insert Amount for Card Settled Amount"
                                                                name="cardSettledAmount" autocomplete="off"
-                                                               value="" required>
+                                                               value="{{!empty($_GET['cardSettledAmount']) ? $_GET['cardSettledAmount'] : '' }}" required>
                                                     </div>
                                                 </div>
                                             </div>

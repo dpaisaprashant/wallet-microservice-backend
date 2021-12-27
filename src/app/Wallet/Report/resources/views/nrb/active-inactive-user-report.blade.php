@@ -93,9 +93,9 @@
                         </div>
                         <div class="ibox-content">
                             <div><b>Total Users : </b>{{$totalUsers??0}}</div>
-                            <div><b>Total Balance : </b>{{$totalBalance??0}}</div>
-                            <div><b>Opening Balance : </b>{{$openingBalance??0}}</div>
-                            <div><b>(Active + Inactive) - Opening Balance : </b>{{$shouldBeZero??0}}</div>
+                            <div><b>Total Balance : </b>Rs. {{round($totalBalance??0,2)}}</div>
+                            <div><b>Opening Balance : </b>Rs. {{round($openingBalance??0,2)}}</div>
+                            <div><b>(Active + Inactive) - Opening Balance : </b>Rs. {{$shouldBeZero??0}}</div>
 
                             <br>
                             <div class="table-responsive">

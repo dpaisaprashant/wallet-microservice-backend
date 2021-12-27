@@ -34,20 +34,13 @@ class NRBReportController extends Controller
 
             $walletClearanceResponse = $walletClearance->dispatchActiveInactiveUserJobs(request(), request()->from);
             $activeInactiveUserReports = 'Report is being generated. Please be patient and check in at another time.';
-            $totalUsers=0;
-            $totalBalance=0;
-            $openingBalance=0;
-            $shouldBeZero=0;
 
             return view('WalletReport::nrb.active-inactive-user-report', compact('activeInactiveUserReports'));
         }
         if ($check) {
             if ($check->status == "PROCESSING") {
                 $activeInactiveUserReports = 'Generating Report .....';
-                $totalUsers=0;
-                $totalBalance=0;
-                $openingBalance=0;
-                $shouldBeZero=0;
+
                 return view('WalletReport::nrb.active-inactive-user-report', compact('activeInactiveUserReports'));
             }
         }
@@ -98,10 +91,7 @@ class NRBReportController extends Controller
                     'Total Balance' => 'Rs. ' . round($walletClearanceResponse['inactive']['total_amount'] / 100, 2)
                 ]
             ],
-//            'Total Users' => 'a',
-//            'Total Balance' => 'b',
-//            'Opening Balance' => 'b',
-//            '(Active + Inactive) - Opening Balance' => 'b',
+
         ];
 
         return view('WalletReport::nrb.active-inactive-user-report')->with(compact('activeInactiveUserReports','totalUsers','totalBalance','openingBalance','shouldBeZero'));

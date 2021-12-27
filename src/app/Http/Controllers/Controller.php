@@ -18,6 +18,7 @@ use App\Models\NICAsiaCyberSourceLoadTransaction;
 use App\Models\NPSAccountLinkLoad;
 use App\Models\NpsLoadTransaction;
 use App\Models\PaymentNepalLoadTransaction;
+use App\Models\TicketSale;
 use App\Models\User;
 use App\Models\UserLoadTransaction;
 use App\Models\UserMerchantEventTicketPayment;
@@ -111,7 +112,8 @@ class Controller extends BaseController
             BfiToUserFundTransfer::class => "BFI TO USER FUND TRANSFER",
             UserToBfiFundTransfer::class => "USER TO BFI FUND TRANSFER",
             BfiExecutePayment::class => "USER CREDIT BY BFI",
-            BfiGatewayDebitExecutePayment::class => "USER DEBIT BY BFI"
+            BfiGatewayDebitExecutePayment::class => "USER DEBIT BY BFI",
+            TicketSale::class
         ];
 
         $userTypes = [

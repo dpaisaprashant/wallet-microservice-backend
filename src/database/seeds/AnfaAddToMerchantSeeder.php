@@ -92,8 +92,8 @@ class AnfaAddToMerchantSeeder extends Seeder
                 'transaction_id' => $merchantRevenue->id,
                 'transaction_type' => MerchantRevenueRecord::class,
                 'uid' => TransactionIdGenerator::generateAlphaNumeric(8),
-                'balance' => $currentBalance->getOriginal('balance'),
-                'bonus_balance' => $currentBalance->getOriginal('bonus_balance'),
+                'balance' => $currentBalance->balance * 100,
+                'bonus_balance' => $currentBalance->bonus_balance * 100,
                 'created_at' => $createdAt,
                 'updated_at' => $createdAt
             ];

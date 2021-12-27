@@ -41,7 +41,12 @@ class NEAController extends Controller
         $nea_settlement = $request->all();
         $nea_settlement['transaction_sum'] = $nea_settlement['transaction_sum'] * 100;
 
-        $bank_details = config('nea-bank-details.'.$nea_settlement['nea_branch_code']);
+        try {
+            $bank_details = config('nea-bank-details.'.$nea_settlement['nea_branch_code']);
+        }catch (\Exception $exception){
+            Log::info($exception);
+            return back()->with('error','Cannot Settle For This Branch At The Moment, Sorry for the Inconvenience');
+        }
 
 
         $nea_bank_details = [

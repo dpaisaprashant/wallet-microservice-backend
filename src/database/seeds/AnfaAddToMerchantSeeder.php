@@ -31,7 +31,7 @@ class AnfaAddToMerchantSeeder extends Seeder
         foreach ($ticketTransactions as $ticketTransaction) {
 
             //check if revenue transaction exists
-            $oldRevenue = MerchantRevenueRecord::where('transaction_event_id', $ticketTransaction->id)
+            $oldRevenue = MerchantRevenueRecord::where('user_transaction_event_id', $ticketTransaction->id)
                 ->first();
 
             if ($oldRevenue) {
@@ -61,7 +61,7 @@ class AnfaAddToMerchantSeeder extends Seeder
 
             //create merchant revenue
             $merchantRevenue = [
-                'transaction_event_id' => $ticketTransaction->id,
+                'user_transaction_event_id' => $ticketTransaction->id,
                 'user_id' => $merchantUser->id,
                 'pre_transaction_id' => $preTransaction->pre_transaction_id,
                 'amount' => $amount,

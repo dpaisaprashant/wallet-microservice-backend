@@ -41,10 +41,11 @@ class AnfaAddToMerchantSeeder extends Seeder
 
 
             $currentBalance = $merchantUser->wallet()->first();
+            $amount = $ticketTransaction->amount * 100;
 
             //crate pre transaction
             $preTransaction = [
-                'amount' => $amount = $ticketTransaction->getOriginal('amount'),
+                'amount' => $amount,
                 'pre_transaction_id' => TransactionIdGenerator::generate(19),
                 'description' => 'Merchant Revenue Added from TICKETING for ' . $ticketTransaction->pre_transaction_id,
                 'vendor' => 'Wallet',
@@ -78,7 +79,7 @@ class AnfaAddToMerchantSeeder extends Seeder
                 'description' => 'Merchant Revenue',
                 'vendor' => 'REVENUE',
                 'service_type' => $ticketTransaction->service_type,
-                'user_id' => $merchantUser->user_id,
+                'user_id' => $merchantUser->id,
                 'transaction_id' => $merchantRevenue->id,
                 'transaction_type' => MerchantRevenueRecord::class,
                 'uid' => TransactionIdGenerator::generateAlphaNumeric(8),
@@ -87,6 +88,8 @@ class AnfaAddToMerchantSeeder extends Seeder
             ];
 
             $transactionEvent = TransactionEvent::create($transactionEvent);
+
+
         }
     }
 }

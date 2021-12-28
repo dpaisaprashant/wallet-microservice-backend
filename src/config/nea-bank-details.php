@@ -9,5 +9,4 @@ return [
     379 => ['bank_id'=>1501,'bank_name'=>"Machhapuchhre Bank Limited",'branch_id'=>null,'branch_name'=>"Head Office",'account_number'=>"1230014503500970",'account_name'=>"NEA-Lalbandi"],
     207 => ['bank_id'=>0301,'bank_name'=>"Agricultural Development Bank Limited",'branch_id'=>null,'branch_name'=>"Head Office",'account_number'=>"0212001473391011",'account_name'=>"NEA Pulchowk Collection Center"],
     312 => ['bank_id'=>2301,'bank_name'=>"NIC Asia Bank Limited",'branch_id'=>null,'branch_name'=>"Head Office",'account_number'=>"0524150055292002",'account_name'=>"Nepal Electricity Authority-Siraha"],
-
 ];

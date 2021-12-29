@@ -29,6 +29,8 @@ class ClearanceController extends Controller
         $totalTransactionFeeSum = 0;
         $info = "";
         if (!empty($_GET)) {
+
+            //interface implementation is binded in ClearanceServiceProvider
             $repository = resolve(ClearanceRepository::class);
             $transactions = $repository->paginatedTransactions();
             $totalTransactionCount = $repository->transactionsCount();

@@ -17,6 +17,7 @@ class TransactionFilters extends FiltersAbstract
         'user' => UserFilter::class,
         'user_id' => UserIdFilter::class,
         'transaction_type' => TransactionTypeFilter::class,
+        'transaction_event_transaction_type' => TransactionTypeFilter::class,
         'vendor' => VendorFilter::class,
         'service' => ServiceFilter::class,
         //'amount' => AmountFilter::class,

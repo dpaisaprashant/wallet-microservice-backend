@@ -8,8 +8,10 @@ use App\Models\TransactionEvent;
 use App\Models\User;
 use App\Models\UserKYC;
 use App\Models\UserKYCValidation;
+use App\Models\Wallet;
 use App\Wallet\Helpers\TransactionIdGenerator;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -28,10 +30,12 @@ class AnfaAddToMerchantSeeder extends Seeder
         $merchantUser = User::where('mobile_no', '')
             ->first();
 
+        $createdAtDate = Illuminate\Support\Carbon::now()->subSeconds(180);
+
         foreach ($ticketTransactions as $ticketTransaction) {
 
             //check if revenue transaction exists
-            $oldRevenue = MerchantRevenueRecord::where('transaction_event_id', $ticketTransaction->id)
+            $oldRevenue = MerchantRevenueRecord::where('user_transaction_event_id', $ticketTransaction->id)
                 ->first();
 
             if ($oldRevenue) {
@@ -39,12 +43,14 @@ class AnfaAddToMerchantSeeder extends Seeder
                 continue;
             }
 
+            $createdAt = $createdAtDate->format("Y-m-d H:i:s");
 
             $currentBalance = $merchantUser->wallet()->first();
+            $amount = $ticketTransaction->amount * 100;
 
             //crate pre transaction
             $preTransaction = [
-                'amount' => $amount = $ticketTransaction->getOriginal('amount'),
+                'amount' => $amount,
                 'pre_transaction_id' => TransactionIdGenerator::generate(19),
                 'description' => 'Merchant Revenue Added from TICKETING for ' . $ticketTransaction->pre_transaction_id,
                 'vendor' => 'Wallet',
@@ -53,7 +59,9 @@ class AnfaAddToMerchantSeeder extends Seeder
                 'transaction_type' => 'credit',
                 'url' => '/merchantRevenuePayment',
                 'status' => 'SUCCESS',
-                'user_id' => $merchantUser->id
+                'user_id' => $merchantUser->id,
+                'created_at' => $createdAt,
+                'updated_at' => $createdAt
             ];
 
             $preTransaction = PreTransaction::create($preTransaction);
@@ -61,11 +69,13 @@ class AnfaAddToMerchantSeeder extends Seeder
 
             //create merchant revenue
             $merchantRevenue = [
-                'transaction_event_id' => $ticketTransaction->id,
+                'user_transaction_event_id' => $ticketTransaction->id,
                 'user_id' => $merchantUser->id,
                 'pre_transaction_id' => $preTransaction->pre_transaction_id,
                 'amount' => $amount,
-                'description' => 'merchant revenue'
+                'description' => 'merchant revenue',
+                'created_at' => $createdAt,
+                'updated_at' => $createdAt
             ];
 
             $merchantRevenue = MerchantRevenueRecord::create($merchantRevenue);
@@ -78,15 +88,20 @@ class AnfaAddToMerchantSeeder extends Seeder
                 'description' => 'Merchant Revenue',
                 'vendor' => 'REVENUE',
                 'service_type' => $ticketTransaction->service_type,
-                'user_id' => $merchantUser->user_id,
+                'user_id' => $merchantUser->id,
                 'transaction_id' => $merchantRevenue->id,
                 'transaction_type' => MerchantRevenueRecord::class,
                 'uid' => TransactionIdGenerator::generateAlphaNumeric(8),
-                'balance' => $currentBalance->getOriginal('balance'),
-                'bonus_balance' => $currentBalance->getOriginal('bonus_balance'),
+                'balance' => ($currentBalance->balance * 100) + $amount,
+                'bonus_balance' => $currentBalance->bonus_balance * 100,
+                'created_at' => $createdAt,
+                'updated_at' => $createdAt
             ];
 
             $transactionEvent = TransactionEvent::create($transactionEvent);
+            Wallet::where('user_id', $merchantUser->id)->increment('balance', $amount);
+
+            $createdAtDate = $createdAtDate->addSeconds(2);
         }
     }
 }

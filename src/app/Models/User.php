@@ -143,6 +143,11 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserReferral::class);
     }
+    public function prizeCode()
+    {
+        return $this->hasOne(UserPrizeCode::class);
+    }
+
 
     public function userReferralBonus()
     {

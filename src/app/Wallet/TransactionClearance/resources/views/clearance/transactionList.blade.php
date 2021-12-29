@@ -63,14 +63,14 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <select data-placeholder="Choose transaction type..."
-                                                        class="chosen-select" tabindex="2" name="transaction_type" required>
+                                                        class="chosen-select" tabindex="2" name="transaction_event_transaction_type" required>
                                                     <option value="" selected disabled>Select Transaction Type...
                                                     </option>
                                                     <option value="">All</option>
-                                                    @if(!empty($_GET['transaction_type']))
+                                                    @if(!empty($_GET['transaction_event_transaction_type']))
                                                         @foreach($transactionTypes as $key => $transactionType)
                                                             <option value="{{ $key }}"
-                                                                    @if($_GET['transaction_type'] == $key) selected @endif>{{ $transactionType }}</option>
+                                                                    @if($_GET['transaction_event_transaction_type'] == $key) selected @endif>{{ $transactionType }}</option>
                                                         @endforeach
                                                     @else
                                                         @foreach($transactionTypes as $key => $transactionType)
@@ -117,7 +117,7 @@
                 @if(!empty($_GET['from']) && !empty($_GET['to']))
                     <div class="ibox ">
                         <div class="ibox-title">
-                            <h5>Paypoint report from {{ $_GET['from'] . ' to ' . $_GET['to'] }}</h5>
+                            <h5>Clearance report from {{ $_GET['from'] . ' to ' . $_GET['to'] }}</h5>
                         </div>
                         <div class="ibox-content">
                             <h5><b>Total Count:</b> {{ $totalTransactionCount }}</h5>
@@ -155,7 +155,7 @@
                                             @csrf
                                             <input type="hidden" name="from" value="{{ $_GET['from'] ?? "" }}">
                                             <input type="hidden" name="to" value="{{ $_GET['to'] ?? "" }}">
-                                            <input type="hidden" name="transaction_type" value="{{ $_GET['transaction_type'] ?? "" }}">
+                                            <input type="hidden" name="transaction_event_transaction_type" value="{{ $_GET['transaction_event_transaction_type'] ?? "" }}">
 
                                             <div class="input-group date">
                                                 <div class="custom-file" style="margin-right: 19px;">

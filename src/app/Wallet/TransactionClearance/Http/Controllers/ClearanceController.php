@@ -50,7 +50,7 @@ class ClearanceController extends Controller
 
     public function clearanceGenerate(Request $request)
     {
-        $transactionType = $request->transaction_type;
+        $transactionType = $request->transaction_type ?? $request->transaction_event_transaction_type;
         $fromDate = $request->from;
         $toDate = $request->to;
 

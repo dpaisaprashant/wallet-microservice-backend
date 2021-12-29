@@ -3,11 +3,11 @@
 namespace App\Wallet\TransactionClearance\Clearance\Repository;
 
 use App\Models\Microservice\PreTransaction;
-use App\Wallet\TransactionClearance\Clearance\contracts\ClearanceRepository;
+use App\Wallet\TransactionClearance\Clearance\contracts\ClearanceRepositoryContract;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
-class PreTransactionClearanceRepository implements ClearanceRepository
+class PreTransactionClearanceRepositoryContract implements ClearanceRepositoryContract
 {
     private Request $request;
 

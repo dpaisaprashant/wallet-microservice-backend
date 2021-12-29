@@ -2,7 +2,7 @@
 
 namespace App\Wallet\TransactionClearance\Clearance\contracts;
 
-interface ClearanceRepository
+interface ClearanceRepositoryContract
 {
     public function paginatedTransactions();
 

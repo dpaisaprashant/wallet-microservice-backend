@@ -26,7 +26,9 @@ class NPSAccountLinkLoadClearanceStrategy extends AbstractClearanceCompareStrate
     {
         return TransactionEvent::whereTransactionType(self::TRANSACTION_TYPE)
             ->with('transactionable')
-            ->filter(request())
+            ->wherehas("preTransaction", function ($query) {
+                return $query->filter(request());
+            })
             ->get()
             ->transform(function ($value) {
                 $value->linked_id = $value->transactionable->reference_id;

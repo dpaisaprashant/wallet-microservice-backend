@@ -3,10 +3,10 @@
 namespace App\Wallet\TransactionClearance\Clearance\Repository;
 
 use App\Models\TransactionEvent;
-use App\Wallet\TransactionClearance\Clearance\contracts\ClearanceRepository;
+use App\Wallet\TransactionClearance\Clearance\contracts\ClearanceRepositoryContract;
 use Illuminate\Http\Request;
 
-class TransactionEventClearanceRepository implements ClearanceRepository
+class TransactionEventClearanceRepositoryContract implements ClearanceRepositoryContract
 {
     private Request $request;
 

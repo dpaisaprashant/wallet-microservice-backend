@@ -9,9 +9,9 @@ use App\Logging\MongoErrorLoggerHandler;
 use App\Models\TransactionEvent;
 use App\Models\UserTransaction;
 use App\Traits\CollectionPaginate;
-use App\Wallet\TransactionClearance\Clearance\contracts\ClearanceRepository;
-use App\Wallet\TransactionClearance\Clearance\Repository\PreTransactionClearanceRepository;
-use App\Wallet\TransactionClearance\Clearance\Repository\TransactionEventClearanceRepository;
+use App\Wallet\TransactionClearance\Clearance\contracts\ClearanceRepositoryContract;
+use App\Wallet\TransactionClearance\Clearance\Repository\PreTransactionClearanceRepositoryContract;
+use App\Wallet\TransactionClearance\Clearance\Repository\TransactionEventClearanceRepositoryContract;
 use App\Wallet\TransactionClearance\Clearance\Resolver\ClearanceTransactionTypeResolver;
 use App\Wallet\TransactionEvent\Repository\TransactionEventRepository;
 use Illuminate\Http\Request;
@@ -29,9 +29,8 @@ class ClearanceController extends Controller
         $totalTransactionFeeSum = 0;
         $info = "";
         if (!empty($_GET)) {
-
-            //interface implementation is binded in ClearanceServiceProvider
-            $repository = resolve(ClearanceRepository::class);
+            //interface implementation is bound in ClearanceServiceProvider
+            $repository = resolve(ClearanceRepositoryContract::class);
             $transactions = $repository->paginatedTransactions();
             $totalTransactionCount = $repository->transactionsCount();
             $totalTransactionAmountSum = $repository->transactionAmountSum();

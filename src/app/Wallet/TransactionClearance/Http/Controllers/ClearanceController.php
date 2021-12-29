@@ -37,7 +37,7 @@ class ClearanceController extends Controller
             $totalTransactionAmountSum = $repository->transactionAmountSum();
             $totalTransactionFeeSum = $repository->transactionFeeSum();
 
-            $transactionType = $request->transaction_type;
+            $transactionType = $request->transaction_type ?? $request->transaction_event_transaction_type;
             $clearanceTypeResolver = (new ClearanceTransactionTypeResolver($transactionType))->resolve();
             if (method_exists($clearanceTypeResolver, "clearanceInfo")) {
                 $info = $clearanceTypeResolver->clearanceInfo();

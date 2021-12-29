@@ -8,6 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Models\TransactionEvent;
 use App\Models\UserTransaction;
 use App\Traits\CollectionPaginate;
+use App\Wallet\TransactionClearance\Clearance\contracts\ClearanceRepository;
+use App\Wallet\TransactionClearance\Clearance\Repository\PreTransactionClearanceRepository;
+use App\Wallet\TransactionClearance\Clearance\Repository\TransactionEventClearanceRepository;
 use App\Wallet\TransactionClearance\Clearance\Resolver\ClearanceTransactionTypeResolver;
 use App\Wallet\TransactionEvent\Repository\TransactionEventRepository;
 use Illuminate\Http\Request;
@@ -17,7 +20,7 @@ class ClearanceController extends Controller
 {
     use CollectionPaginate;
 
-    public function clearanceTransactions(Request $request, TransactionEventRepository $repository)
+    public function clearanceTransactions(Request $request, ClearanceRepository $repository)
     {
         $transactions  = [];
         $totalTransactionCount = 0;

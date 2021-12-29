@@ -53,6 +53,6 @@ class PreTransactionClearanceRepository implements ClearanceRepository
             ->get();
         //->sum('transactionEvent.fee');
 
-        return $preTransactions->sum(fn ($preTransaction) => $preTransaction->transactionEvent->sum('amount'));
+        return $preTransactions->filter(fn ($preTransaction) => $preTransaction->transactionEvent->fee);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Wallet\TransactionClearance\Http\Controllers;
 
 
 use App\Http\Controllers\Controller;
+use App\Logging\MongoErrorLoggerHandler;
 use App\Models\TransactionEvent;
 use App\Models\UserTransaction;
 use App\Traits\CollectionPaginate;
@@ -20,7 +21,7 @@ class ClearanceController extends Controller
 {
     use CollectionPaginate;
 
-    public function clearanceTransactions(Request $request, ClearanceRepository $repository)
+    public function clearanceTransactions(Request $request)
     {
         $transactions  = [];
         $totalTransactionCount = 0;
@@ -28,6 +29,7 @@ class ClearanceController extends Controller
         $totalTransactionFeeSum = 0;
         $info = "";
         if (!empty($_GET)) {
+            $repository = resolve(ClearanceRepository::class);
             $transactions = $repository->paginatedTransactions();
             $totalTransactionCount = $repository->transactionsCount();
             $totalTransactionAmountSum = $repository->transactionAmountSum();

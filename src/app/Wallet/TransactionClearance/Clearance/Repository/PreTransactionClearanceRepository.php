@@ -4,24 +4,28 @@ namespace App\Wallet\TransactionClearance\Clearance\Repository;
 
 use App\Models\Microservice\PreTransaction;
 use App\Wallet\TransactionClearance\Clearance\contracts\ClearanceRepository;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class PreTransactionClearanceRepository implements ClearanceRepository
 {
     private Request $request;
 
+    private Builder $preTransactionBuilder;
+
     public function __construct()
     {
         $this->request = request();
+        $this->preTransactionBuilder = PreTransaction::whereHas('transactionEvent', function ($query) {
+            return $query->doesntHave('refundTransaction');
+        });
     }
 
     private int $length = 15;
 
     public function paginatedTransactions()
     {
-        return PreTransaction::whereHas('transactionEvent', function ($query) {
-            return $query->doesntHave('refundTransaction');
-        })
+        return $this->preTransactionBuilder
             ->with(
                 'transactionEvent.transactionable',
                 'user',
@@ -35,24 +39,17 @@ class PreTransactionClearanceRepository implements ClearanceRepository
 
     public function transactionsCount()
     {
-        return PreTransaction::whereHas('transactionEvent', function ($query) {
-            return $query->doesntHave('refundTransaction');
-        })->filter($this->request)->count();
+        return $this->preTransactionBuilder->filter($this->request)->count();
     }
 
     public function transactionAmountSum()
     {
-        return PreTransaction::whereHas('transactionEvent', function ($query) {
-                return $query->doesntHave('refundTransaction');
-            })->filter($this->request)->sum('amount') / 100;
+        return $this->preTransactionBuilder->filter($this->request)->sum('amount') / 100;
     }
 
     public function transactionFeeSum()
     {
-        $preTransactions = PreTransaction::whereHas('transactionEvent', function ($query) {
-            return $query->doesntHave('refundTransaction');
-        })
-            ->filter($this->request)
+        $preTransactions = $this->preTransactionBuilder->filter($this->request)
             ->get();
         //->sum('transactionEvent.fee');
 

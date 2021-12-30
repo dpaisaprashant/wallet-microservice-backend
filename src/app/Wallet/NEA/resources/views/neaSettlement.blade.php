@@ -26,56 +26,59 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox">
-                    <div class="ibox-title collapse-link">
-                        <h5>Filter NEA Settlement</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                        </div>
-                    </div>
                     <div class="ibox-content">
                         <div class="row">
-                            <div class="col-sm-12">
-                                <form role="form" method="get" >
-                                    <div class="row">
-                                        <div class="col-md-6" style="padding-bottom: 15px;">
-                                            <div class="input-group date">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
-                                                </span>
-                                                <input id="date_load_from" type="text" class="form-control date_from"
-                                                       placeholder="From" name="from" autocomplete="off"
-                                                       value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}">
-                                            </div>
+                            <div class="col-lg-12">
+                                <div class="ibox ">
+                                    <div class="ibox-title collapse-link">
+                                        <h5>Filter NEA Settlements</h5>
+                                        <div class="ibox-tools">
+                                            <a class="collapse-link">
+                                                <i class="fa fa-chevron-up"></i>
+                                            </a>
                                         </div>
+                                    </div>
 
-                                        <div class="col-md-6" style="padding-bottom: 15px;">
-                                            <div class="input-group date">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
-                                                </span>
-                                                <input id="date_load_to" type="text" class="form-control date_to"
-                                                       placeholder="To" name="to" autocomplete="off"
-                                                       value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
-                                            </div>
-                                        </div>
-                                        <div style="padding-left: 10px; padding-right: 10px">
-                                            <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
-                                                    formaction="{{ route('ViewNEASettlement') }}"><strong>Filter</strong>
-                                            </button>
-                                        </div>
+                                    <div class="ibox-content">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <form role="form" method="get">
 
-                                        <div>
-                                            <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
-                                                    type="submit" style="margin-right: 10px;"
-                                                    formaction="#">
-                                                <strong>Excel</strong></button>
+                                                    <div class="row" style="margin-top: 20px">
+                                                        <div class="col-md-6">
+                                                            <div class="input-group date">
+                                                                <span class="input-group-addon">
+                                                                    <i class="fa fa-calendar"></i>
+                                                                </span>
+                                                                <input id="date_load_from" type="text" class="form-control date_from"
+                                                                       placeholder="From" name="from" autocomplete="off"
+                                                                       value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div style="padding-top: 50px">
+                                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
+                                                                formaction="{{ route('ViewNEASettlement') }}"><strong>Filter</strong>
+                                                        </button>
+                                                    </div>
+
+                                                    <div>
+                                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
+                                                                type="submit" style="margin-right: 10px;"
+                                                                formaction="#">
+                                                            <strong>Excel</strong></button>
+                                                    </div>
+                                                    @include('admin.asset.components.clearFilterButton')
+                                                </form>
+                                            </div>
+
                                         </div>
-                                    @include('admin.asset.components.clearFilterButton')
-                                </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -85,7 +88,7 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>List of disputed transactions</h5>
+                        <h5>List of Nea settlement per branch</h5>
                     </div>
                     <div class="ibox-content">
                         <div class="table-responsive">
@@ -109,44 +112,52 @@
                                         <td>{{$nea_information['transaction_count']}}</td>
                                         <td>{{$nea_information['transaction_sum']}}</td>
                                         <td>
-                                            <a data-toggle="modal" href="{{'#modal-settle-nea'.$loop->iteration}}">
-                                                <button style="margin-top: 5px;" class="btn btn-primary m-t-n-xs"
-                                                        rel="{{ route('user.forcePasswordChange') }}"><strong>Settle</strong></button>
-                                            </a>
-                                            <div id="{{'modal-settle-nea'.$loop->iteration}}" class="modal fade" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-body">
-                                                            <div class="row">
-                                                                <div class="col-sm-12">
-                                                                    <h3 class="m-t-none m-b">NEA Real Time Settlement</h3>
-                                                                    <hr>
-                                                                    <form action="{{route('SettleNea')}}" method="post">
-                                                                        @csrf
-                                                                        <input type="text" name="bank_name" placeholder="Enter Bank Name" class="form-control" style="margin-bottom: 15px">
-                                                                        <input type="text" name="branch_name" placeholder="Enter Bank Branch" class="form-control" style="margin-bottom: 15px">
-                                                                        <input type="text" name="bank_account_name" placeholder="Enter Account Name" class="form-control" style="margin-bottom: 15px">
-                                                                        <input type="text" name="bank_account_number" placeholder="Enter Account Number" class="form-control" style="margin-bottom: 15px">
-{{--                                                                        hidden fields starts--}}
-                                                                        <input type="text" name="nea_branch_code" value="{{$nea_information['branch_code']}}" class="form-control" style="display: none">
-                                                                        <input type="text" name="nea_branch_name" value="{{$nea_information['branch_name']}}" class="form-control" style="display: none">
-                                                                        <input type="text" name="transaction_count" value="{{$nea_information['transaction_count']}}" class="form-control" style="display: none">
-                                                                        <input type="text" name="transaction_sum" value="{{$nea_information['transaction_sum']}}" class="form-control" style="display: none">
-                                                                        <input id="date_load_from" type="text" class="form-control date_from"
-                                                                               placeholder="From" name="date_from" autocomplete="off"
-                                                                               value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}" style="display: none">
-                                                                        <input id="date_load_to" type="text" class="form-control date_to"
-                                                                               placeholder="To" name="date_to" autocomplete="off"
-                                                                               value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}" style="display: none">
-{{--                                                                        hidden fields end--}}
-                                                                        <button class="btn btn-primary" type="submit">Settle</button>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            @php
+                                              $from = date("Y-m-d", strtotime($_GET['from']));
+                                            @endphp
+                                            @if(!$nea_settlements->count())
+                                                <form action="{{route('SettleNea')}}" method="post">
+                                                    @csrf
+                                                    {{-- hidden fields starts--}}
+                                                    <input type="text" name="nea_branch_code" value="{{$nea_information['branch_code']}}" class="form-control" style="display: none">
+                                                    <input type="text" name="nea_branch_name" value="{{$nea_information['branch_name']}}" class="form-control" style="display: none">
+                                                    <input type="text" name="transaction_count" value="{{$nea_information['transaction_count']}}" class="form-control" style="display: none">
+                                                    <input type="text" name="transaction_sum" value="{{$nea_information['transaction_sum']}}" class="form-control" style="display: none">
+                                                    <input id="date_load_from" type="text" class="form-control date_from"
+                                                           placeholder="From" name="date_from" autocomplete="off"
+                                                           value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}" style="display: none">
+                                                    {{-- hidden fields end--}}
+                                                    <button href="#" class="reset btn btn-sm btn-success m-t-n-xs" rel="{{ $loop->iteration }}"><strong>Settle</strong></button>
+                                                    <button id="resetBtn-{{ $loop->iteration }}" style="display: none" type="submit" href="#"  class="resetBtn btn btn-sm btn-success m-t-n-xs"><strong>Settle</strong></button>
+                                                </form>
+                                            @else
+                                                @foreach($nea_settlements as $nea_settlement)
+                                                    @if(($from == $nea_settlement->date_from)&& $nea_settlement->nea_branch_code == $nea_information['branch_code'] && $nea_settlement->status == "SUCCESS")
+                                                        @php($form_needed = "no")
+                                                        @break
+                                                    @else
+                                                        @php($form_needed = "yes")
+                                                    @endif
+                                                @endforeach
+                                                @if($form_needed == "no")
+                                                    <p>Already Setteled</p>
+                                                @else
+                                                        <form action="{{route('SettleNea')}}" method="post">
+                                                            @csrf
+                                                            {{-- hidden fields starts--}}
+                                                            <input type="text" name="nea_branch_code" value="{{$nea_information['branch_code']}}" class="form-control" style="display: none">
+                                                            <input type="text" name="nea_branch_name" value="{{$nea_information['branch_name']}}" class="form-control" style="display: none">
+                                                            <input type="text" name="transaction_count" value="{{$nea_information['transaction_count']}}" class="form-control" style="display: none">
+                                                            <input type="text" name="transaction_sum" value="{{$nea_information['transaction_sum']}}" class="form-control" style="display: none">
+                                                            <input id="date_load_from" type="text" class="form-control date_from"
+                                                                   placeholder="From" name="date_from" autocomplete="off"
+                                                                   value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}" style="display: none">
+                                                            {{-- hidden fields end--}}
+                                                            <button href="#" class="reset btn btn-sm btn-success m-t-n-xs" rel="{{ $loop->iteration }}"><strong>Settle</strong></button>
+                                                            <button id="resetBtn-{{ $loop->iteration }}" style="display: none" type="submit" href="#"  class="resetBtn btn btn-sm btn-success m-t-n-xs"><strong>Settle</strong></button>
+                                                        </form>
+                                                @endif
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
@@ -164,6 +175,9 @@
     @include('admin.asset.css.chosen')
     @include('admin.asset.css.datepicker')
     @include('admin.asset.css.datatable')
+
+    <link href="{{ asset('admin/css/plugins/sweetalert/sweetalert.css') }}" rel="stylesheet">
+
 
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/css/ion.rangeSlider.min.css"/>
@@ -196,28 +210,27 @@
             prefix: "Rs."
         });
     </script>
+    <script src="{{ asset('admin/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
     <script>
-        $('#forcePasswordChange').on('click', function (e) {
-
+        $('.reset').on('click', function (e) {
             e.preventDefault();
-            let url = $(this).attr('rel');
-
+            let userId = $(this).attr('rel');
             swal({
                 title: "Are you sure?",
-                text: "This user will be forced to change password",
+                text: "The Funds Will Be Transferred to The Nea Branches' Bank Account",
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#ed5565",
-                confirmButtonText: "Yes, force password change!",
-                closeOnConfirm: true,
-                closeOnClickOutside: true
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, settle funds",
+                closeOnConfirm: false
             }, function () {
-                $('#forcePasswordChangeBtn').trigger('click');
+                $('#resetBtn-' + userId).trigger('click');
                 swal.close();
 
             })
         });
     </script>
 @endsection
+
 
 

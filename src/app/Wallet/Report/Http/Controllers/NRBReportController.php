@@ -48,6 +48,7 @@ class NRBReportController extends Controller
         $walletClearance = new WalletClearanceMicroService();
         $walletClearanceResponse = $walletClearance->dispatchActiveInactiveUserJobs(request(), request()->from);
 
+//        dd($walletClearanceResponse);
         $totalUsers=$walletClearanceResponse['active']['total_number']+$walletClearanceResponse['inactive']['total_number'];
         $totalBalance=$walletClearanceResponse['active']['total_amount']/100+$walletClearanceResponse['inactive']['total_amount']/100;
         $openingBalance=$walletClearanceResponse['wallet_balance'][0]['sum'];

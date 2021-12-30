@@ -1441,6 +1441,7 @@
     'CELLPAY' => '',
     'SAJILOPAY_REMITTANCE' => '',
     'PAYMENT_NEPAL' => '',
+    'CLEARANCE' => 'nginx_clearance/',
   ),
   'nea-bank-details' => 
   array (

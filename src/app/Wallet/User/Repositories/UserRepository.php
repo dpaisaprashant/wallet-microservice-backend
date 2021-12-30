@@ -7,6 +7,7 @@ namespace App\Wallet\User\Repositories;
 use App\Models\TransactionEvent;
 use App\Models\User;
 use App\Models\UserBankAccount;
+use App\Models\UserKYC;
 use App\Traits\CollectionPaginate;
 use Illuminate\Http\Request;
 
@@ -35,7 +36,7 @@ class UserRepository
 
     private function wallerBalanceSorted()
     {
-        $unsortedUsers = User::with('wallet', 'userType','merchant','agent')->whereHas('userType')->filter($this->request)->get();
+        $unsortedUsers = User::with('wallet', 'kyc', 'userType','merchant','agent', 'prizeCode')->whereHas('userType')->filter($this->request)->get();
         $users = $unsortedUsers->map(function ($value, $key) {
             $value['balance'] = $value->wallet->balance;
             return $value;
@@ -46,7 +47,7 @@ class UserRepository
 
     private function transactionPaymentSorted()
     {
-        $unsortedUsers = User::with('wallet', 'userType','merchant','agent')->whereHas('userType')->filter($this->request)->get();
+        $unsortedUsers = User::with('wallet', 'kyc', 'userType','merchant','agent', 'prizeCode')->whereHas('userType')->filter($this->request)->get();
         $users = $unsortedUsers->map(function (User $value, $key) {
             $value['amount_sum'] = $value->totalTransactionPaymentAmount();
             return $value;
@@ -55,9 +56,35 @@ class UserRepository
         return $this->collectionPaginate($this->length, $users, $this->request);
     }
 
+    public function rejectedKycUsers(){
+        $rejectedKycUsers = User::with('wallet', 'kyc', 'userType','merchant','agent', 'prizeCode','kyc')->whereHas('userType')->whereHas('kyc',function($query){
+            return $query->where('accept',0);
+        })->filter(request())->get();
+        return $this->collectionPaginate($this->length,$rejectedKycUsers,$this->request);
+    }
+
+    public function acceptedKycUsers(){
+        $acceptedKycUsers = User::with('wallet', 'kyc', 'userType','merchant','agent', 'prizeCode','kyc')->whereHas('userType')->whereHas('kyc',function($query){
+            return $query->where('accept',1);
+        })->filter(request())->get();
+        return $this->collectionPaginate($this->length,$acceptedKycUsers,$this->request);
+    }
+
+    public function pendingKycUsers(){
+        $pendingKycUsers = User::with('wallet', 'kyc', 'userType','merchant','agent', 'prizeCode','kyc')->whereHas('userType')->whereHas('kyc',function($query){
+            return $query->where('accept',null);
+        })->filter(request())->get();
+        return $this->collectionPaginate($this->length,$pendingKycUsers,$this->request);
+    }
+
+    public function kycNotFilledUsers(){
+        $kycNotFilledUsers = User::with('wallet', 'kyc', 'userType','merchant','agent', 'prizeCode','kyc')->whereHas('userType')->doesntHave('kyc')->filter(request())->get();
+        return $this->collectionPaginate($this->length,$kycNotFilledUsers,$this->request);
+    }
+
     private function transactionLoadSorted()
     {
-        $unsortedUsers = User::with('wallet', 'userType','merchant','agent')->whereHas('userType')->filter($this->request)->get();
+        $unsortedUsers = User::with('wallet', 'kyc', 'userType','merchant','agent', 'prizeCode')->whereHas('userType')->filter($this->request)->get();
         $users = $unsortedUsers->map(function (User $value, $key) {
             $value['amount_sum'] = (float) $value->totalLoadFundAmount();
             return $value;
@@ -68,12 +95,12 @@ class UserRepository
 
     private function sortedUsers()
     {
-        return User::with('wallet', 'userType','merchant','agent')->whereHas('userType')->filter($this->request)->paginate($this->length);
+        return User::with('wallet', 'kyc', 'userType','merchant','agent', 'prizeCode')->whereHas('userType')->filter($this->request)->paginate($this->length);
     }
 
     private function latestUsers()
     {
-        return User::with('wallet', 'userType','merchant','agent')->whereHas('userType')->latest()->filter($this->request)->paginate($this->length);
+        return User::with('wallet', 'kyc', 'userType','merchant','agent', 'prizeCode')->whereHas('userType')->latest()->filter($this->request)->paginate($this->length);
 
     }
 

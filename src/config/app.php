@@ -195,10 +195,16 @@ return [
         App\Wallet\NicAsia\NICAsiaCyberSourceLoadTransactionServiceProvider::class,
         App\Wallet\NPSAccountLinkLoad\NPSAccountLinkLoadServiceProvider::class,
         App\Wallet\LinkedAccounts\LinkedAccountsServiceProvider::class,
-        App\Wallet\WalletAPI\WalletAPIServiceProvider::class
-
-
-
+        App\Wallet\WalletAPI\WalletAPIServiceProvider::class,
+        App\Wallet\MiracleInfoSMS\MiracleInfoServiceProvider::class,
+        App\Wallet\Scheme\SchemeServiceProvider::class,
+        App\Wallet\WalletRegistration\WalletRegistrationServiceProvider::class,
+        App\Wallet\IssueTicket\IssueTicketServiceProvider::class,
+        App\Wallet\BonusToMainBalanceTransfer\BonusToMainBalanceTransferServiceProvider::class,
+        App\Wallet\SocialMediaChallenge\SocialMediaChallengeServiceProvider::class,
+        App\Wallet\RefundPreTransaction\RefundPreTransactionServiceProvider::class,
+        App\Wallet\NEA\NEASettlementServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
     ],
 
     /*
@@ -254,6 +260,7 @@ return [
         'FCMGroup' => LaravelFCM\Facades\FCMGroup::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
     ],
 
 ];

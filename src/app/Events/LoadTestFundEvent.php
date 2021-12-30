@@ -16,14 +16,20 @@ class LoadTestFundEvent
 
     public $transaction;
 
+    public $vendor;
+
+    public $serviceType;
+
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($transaction)
+    public function __construct($transaction, $vendor = null, $serviceType = null)
     {
         $this->transaction = $transaction;
+        $this->vendor = $vendor;
+        $this->serviceType = $serviceType;
     }
 
     /**

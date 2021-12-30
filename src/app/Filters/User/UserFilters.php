@@ -20,6 +20,7 @@ class UserFilters extends FiltersAbstract
         'transaction_payment' => TransactionPaymentFilter::class,
         'transaction_loaded' => TransactionLoadedFilter::class,
         'sort' => SortFilter::class,
+//        'sortTot' => SortTransactionTotalFilter::class,
         'from' => FromDateFilter::class,
         'from_agent_created_at' => FromAgentDateFilter::class,
         'to_agent_created_at' => ToAgentDateFilter::class,
@@ -29,6 +30,18 @@ class UserFilters extends FiltersAbstract
         'kyc_status' => KycFilter::class,
         'user_name' =>MismatchUserFilter::class,
         'mobile_no'=>MismatchUserNumberFilter::class,
+        'parent_agent'=>ParentAgentFilter::class,
+        'agent_number_email'=>AgentNumberEmailFilter::class,
+        'parent_agent_number_email'=>ParentAgentNumberEmailFilter::class,
+        'agent_status'=>AgentStatusFilter::class,
+        'merchant_type' => MerchantTypeFilter::class,
+        'user_type' => UserTypeFilter::class,
+        'user_activity_status' => UserActivityStatusFilter::class,
+        'from_transaction_date' => FromTransactionDateFilter::class,
+        'to_transaction_date' => ToTransactionDateFilter::class,
+        'from_kyc_date' => FromKYCDateFilter::class,
+        'to_kyc_date' => ToKYCDateFilter::class,
+        'district'=> DistrictFilter::class,
     ];
 
 

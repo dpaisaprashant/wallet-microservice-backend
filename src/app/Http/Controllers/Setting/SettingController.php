@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Setting;
 
 use App\Http\Controllers\Controller;
+use App\Models\AgentSetting;
 use App\Models\CybersourceSetting;
 use App\Models\NchlSetting;
 use App\Models\NpaySetting;
@@ -163,5 +164,12 @@ class SettingController extends Controller
         $settings = $this->updatedSettingsCollection($request);
 
         return view('admin.setting.redirectSetting')->with(compact('settings'));
+    }
+
+    public function agentBonusBalanceSetting(Request $request)
+    {
+        $settings = $this->updatedSettingsCollection($request);
+        $settings = $this->updatedSettingsCollection($request, AgentSetting::class);
+        return view('admin.setting.agentSetting')->with(compact('settings'));
     }
 }

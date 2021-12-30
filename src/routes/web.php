@@ -13,6 +13,7 @@
 
 use App\Models\Admin;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MerchantTransactionController;
 
 Route::match(['get', 'post'], '/', 'AdminController@login')->middleware('guest'); //admin login
 Route::group(['prefix' => 'admin'], function () {
@@ -99,24 +100,45 @@ Route::group(['prefix' => 'admin'], function () {
 
         //redirect settings
         Route::match(['get', 'post'], '/settings/redirect', 'Setting\SettingController@redirectSetting')->name('settings.redirect')->middleware('permission:Redirect setting view');
+
+        //Agent Bonus Balance
+        Route::match(['get', 'post'], '/settings/agent', 'Setting\SettingController@agentBonusBalanceSetting')->name('settings.agent');
+
         /**
          * Users
          */
         Route::get('/users', 'UserController@view')->name('user.view')->middleware('permission:Users view');//all users
 
+        Route::get('/rejected-kyc-users','UserController@rejectKycUsers')->name('reject.kycUsers')->middleware('permission:Rejected user kyc');
+        Route::get('/accepted-kyc-users','UserController@acceptedKycUsers')->name('accept.kycUsers')->middleware('permission:Accepted user kyc');
+        Route::get('/pending-kyc-users','UserController@pendingKycUsers')->name('pending.kycUsers')->middleware('permission:Pending user kyc');
+        Route::get('/kyc-not-filled-users','UserController@kycNotFilledUsers')->name('kycNotFilled.Users')->middleware('permission:KYC not filled users');
+
         Route::get('kyc-not-filled-user', 'UserController@kycNotFilledView')->name('user.kycNotFilled.view')->middleware('permission:KYC not filled users view'); // KYC not filled user view page
         Route::get('unverified-kyc-user', 'UserController@unverifiedKYCView')->name('user.unverifiedKYC.view')->middleware('permission:Unverified KYC users view'); // Unverified KYC view
         Route::post('change-kyc-status', 'UserController@changeKYCStatus')->name('user.changeKYCStatus')->middleware('permission:KYC accept|KYC reject'); // Change KYC status
+        Route::get('admin-updated-user-kyc', 'UserController@showAdminUpdatedKyc')->name('user.showAdminUpdatedKyc')->middleware('permission:View admin edited kyc'); // show kyc edited by admin
+        Route::get('create-user-kyc/{id}','UserController@createUserKyc')->name('user.createUserKyc')->middleware('permission:Create user kyc');
+        Route::post('create-user-kyc/{id}','UserController@storeUserKyc')->name('user.storeUserKyc')->middleware('permission:Create user kyc');
 
+        Route::get('unverified-merchant-kyc',[\App\Http\Controllers\Merchant\MerchantController::class,'unverifiedMerchantKYCView'])->name('merchant.unverifiedMerchantKYC.view')->middleware('permission:View unverified merchant kyc');
+        Route::get('accepted-merchant-kyc',[\App\Http\Controllers\Merchant\MerchantController::class,'acceptedMerchantKYCView'])->name('merchant.acceptedMerchantKYC.view')->middleware('permission:Accepted merchant kyc');
+        Route::get('rejected-merchant-kyc',[\App\Http\Controllers\Merchant\MerchantController::class,'rejectedMerchantKYCView'])->name('merchant.rejectedMerchantKYC.view')->middleware('permission:Rejected merchant kyc');
+        Route::get('unfilled-merchant-kyc',[\App\Http\Controllers\Merchant\MerchantController::class,'unfilledMerchantKYCView'])->name('merchant.unfilledMerchantKYC.view')->middleware('permission:KYC not filled merchant');
 
-        Route::get('unverified-merchant-kyc-user',[\App\Http\Controllers\Merchant\MerchantController::class,'unverifiedMerchantKYCView'])->name('merchant.unverifiedMerchantKYC.view');
         Route::get('/merchants',[\App\Http\Controllers\Merchant\MerchantController::class,'view'])->name('merchant.view')->middleware('permission:Merchant dashboard');
+        Route::get('/update-merchant-detail',[App\Http\Controllers\Merchant\MerchantController::class,'merchantUpdateView'])->name('merchant.update.view');
+        Route::post('/update-merchant-detail',[\App\Http\Controllers\Merchant\MerchantController::class,'merchantUpdate'])->name('merchant.update');
+        Route::get('/merchant-qr/{id}',[App\Http\Controllers\Merchant\MerchantController::class,'DownloadQr'])->name('merchant.download.qr');
+
 
         Route::get('/merchant-details/kyc/{id}',[\App\Http\Controllers\Merchant\MerchantController::class,'merchantDetailKyc'])->name('merchant.kyc.detail');
         Route::get('/merchant-change-kyc-status',[\App\Http\Controllers\Merchant\MerchantController::class,'changeKYCStatus'])->name('merchant.changeKYCStatus');
 
         Route::get('/users/profile/{id}', 'UserController@profile')->name('user.profile')->middleware('permission:User profile|View agent profile|Merchant profile');
         Route::get('/users/kyc/{id}', 'UserController@kyc')->name('user.kyc')->middleware('permission:User KYC view');
+        Route::get('/users/edit-kyc/{id}', 'UserController@EditKyc')->name('user.editKyc')->middleware('permission:Edit user kyc');
+        Route::post('/users/edit-kyc/{id}', 'UserController@UpdateKyc')->name('user.updateKyc')->middleware('permission:Edit user kyc');
         Route::get('/users/transactions/{id}', 'UserController@transaction')->name('user.transaction')->middleware('permission:User transactions');
 
         Route::post('/user/deactivate', 'UserController@deactivateUser')->name('user.deactivate')->middleware('permission:User deactivate'); //deactivate user
@@ -151,8 +173,9 @@ Route::group(['prefix' => 'admin'], function () {
          */
         Route::get('/agents', 'AgentController@view')->name('agent.view')->middleware('permission:Agent view');
         Route::match(['get', 'post'],'/agent/create', 'AgentController@create')->name('agent.create')->middleware('permission:Agent create');
-        Route::match(['get', 'post'], '/agent/edit/{id}', 'AgentController@edit')->name('agent.edit');
-        Route::post('/agent/delete/{id}', 'AgentController@delete')->name('agent.delete');
+        Route::match(['get', 'post'], '/agent/edit/{id}', 'AgentController@edit')->name('agent.edit')->middleware('permission:Agent edit');
+        Route::post('/agent/delete/{id}', 'AgentController@delete')->name('agent.delete')->middleware('permission:Agent delete');
+        Route::get('/admin-altered-agents','AgentController@showAdminAlteredAgents')->name('agent.AdminAlteredAgents');
 
         //agent type
         Route::get('agent-types', 'AgentTypeController@view')->name('agent.type.view')->middleware('permission:Agent type view');
@@ -177,6 +200,7 @@ Route::group(['prefix' => 'admin'], function () {
          * Transactions
          */
         Route::get('transaction/complete', 'TransactionController@complete')->name('transaction.complete')->middleware('permission:Complete transaction view');
+            Route::get('transaction/complete-user-list', 'TransactionController@completeUserList')->name('transaction.complete.user')->middleware('permission:Complete transaction view');
 
         //Fund Request
         Route::get('/transaction/fund-request' , 'TransactionController@fundRequest')->name('fundRequest')->middleware('permission:Fund request view');
@@ -192,6 +216,7 @@ Route::group(['prefix' => 'admin'], function () {
 
         //(NPS)
         Route::get('/transaction/nps','TransactionController@nps')->name('nps')->middleware('permission:Transaction nps view');
+        Route::get('/transaction/nps/detail/{id}','TransactionController@npsDetail')->name('nps.detail');
         //paypoint (Utility)
         Route::get('/transaction/paypoint', 'TransactionController@paypoint')->name('paypoint')->middleware('permission:Paypoint view');
         Route::get('transaction/paypoint/detail/{id}', 'TransactionController@paypointDetail')->name('paypoint.detail')->middleware('permission:Paypoint detail|Failed paypoint detail');
@@ -217,7 +242,7 @@ Route::group(['prefix' => 'admin'], function () {
 //        Route::get('transaction/nicasia-cybesource-load-transaction','TransactionController@nicAsiaCyberSourceLoad')->name('nicasia.cyberSourceLoad')->middleware('permission:Nicasia cybersource load transaction');
 //        Route::get('transaction/nicasia-cybesource-load-transaction/detail/{id}', 'TransactionController@nicAsiaCyberSourceLoadDetail')->name('nicasia.cyberSourceLoadTransaction.detail');
 
-        //Khalti
+        //Khaltia
         Route::get('transaction/khalti-payment-transaction/detail/{id}', 'TransactionController@khaltiPaymentDetail')->name('khalti.payment.detail');
 
 
@@ -236,6 +261,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/transaction/khalti','TransactionController@khaltiTransaction')->name('khalti.transaction')->middleware('permission:View khalti details');
         Route::get('/transaction/khalti/{id}','TransactionController@khaltiSpecificDetail')->name('khalti.specific')->middleware('permission:View khalti detail page');
 
+        //MerchantTransactions
+        Route::get('/transaction/merchant-transaction','MerchantTransactionController@index')->name('merchant-transaction.index')->middleware('permission:Merchant revenue view');
+        Route::get('/transaction/merchant-transaction/detail/{id}','MerchantTransactionController@detail')->name('merchant-transaction.detail')->middleware('permission:Merchant revenue view');
         /**
          * Clearance
          */
@@ -325,6 +353,7 @@ Route::group(['prefix' => 'admin'], function () {
          */
         Route::get('/load-test-fund', 'LoadTestFundController@index')->name('loadTestFund.index');
         Route::match(['get', 'post'], '/load-test-fund/create', 'LoadTestFundController@create')->name('loadTestFund.create');
+        Route::get('/load-test-fun/detail/{id}','LoadTestFundController@loadTestDetail')->name('loadTestFund.detail');
 
         /**
          * Load paypoint fund
@@ -337,6 +366,13 @@ Route::group(['prefix' => 'admin'], function () {
          */
         Route::get('/refunds', 'RefundController@index')->name('refund.index')->middleware('permission:Refund view');
         Route::match(['get', 'post'], '/refund/create', 'RefundController@create')->name('refund.create')->middleware('permission:Refund create');
+
+
+        /**
+         * Lucky Winner
+         */
+        Route::get('/lucky-winners', 'LuckyWinnerController@index')->name('luckyWinner.index')->middleware('permission:Lucky winner view');
+        Route::match(['get', 'post'], '/lucky-winners/create', 'LuckyWinnerController@create')->name('luckyWinner.create')->middleware('permission:Lucky winner create');
 
         /**
          * Repost transaction
@@ -388,10 +424,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/sparrow-sms', 'SparrowSMSController@index')->name('sparrow.view')->middleware('permission:Sparrow SMS view');
         Route::get('/sparrow-sms/detail', 'SparrowSMSController@detail')->name('sparrow.detail')->middleware('permission:Sparrow SMS detail view');
 
-        /**
-         * Miracle Info sms
-         */
-        Route::get('/miracle-info-sms','MiracleInfoSMSController@index')->name('miracle-info.view')->middleware('permission:Miracle info SMS view');
+
 
         /**
          * Terms and Condition
@@ -418,6 +451,21 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::get('/excel/npay', 'ExcelExportController@nPay')->name('npay.excel');
         Route::get('/excel/paypoint', 'ExcelExportController@payPoint')->name('paypoint.excel');
+        Route::get('/excel/nps', 'ExcelExportController@nps')->name('nps.excel');
+        Route::get('/excel/nchl-aggregated', 'ExcelExportController@nchlAggregated')->name('nchlAggregated.excel');
+        Route::get('/excel/cellpay', 'ExcelExportController@cellPay')->name('cellpay.excel');
+        Route::get('/excel/nchl-bank-transfer', 'ExcelExportController@nchlBankTransfer')->name('nchlBankTransfer.excel');
+        Route::get('/excel/khalti', 'ExcelExportController@khalti')->name('khalti.excel');
+        Route::get('/excel/cybersource', 'ExcelExportController@cyberSource')->name('cybersource.excel');
+
+        //Report Excel
+        Route::get('/excel/paypoint-report', 'ExcelExportController@payPointReport')->name('paypoint.report.excel');
+        Route::get('/excel/nchl-load-report', 'ExcelExportController@nchlLoadReport')->name('nchl.load.report.excel');
+        Route::get('/excel/npay-report', 'ExcelExportController@nPayReport')->name('npay.report.excel');
+        Route::get('/excel/bfi-to-user', 'ExcelExportController@bfiToUserReport')->name('bfi.to.user.report.excel');
+        Route::get('/excel/user-to-bfi', 'ExcelExportController@userToBFIReport')->name('user.to.bfi.report.excel');
+        Route::get('/excel/execute-payment', 'ExcelExportController@executePaymentReport')->name('execute.payment.report.excel');
+
 
         //user
         Route::get('/excel/complete-transaction/user', 'ExcelExportController@userCompleteTransactions')->name('user.transaction.complete.excel');
@@ -460,24 +508,58 @@ Route::group(['prefix' => 'admin'], function () {
          */
         //header
         Route::match(['get', 'post'],'frontend/header', 'Frontend\HeaderController@index')->name('frontend.header')->middleware('permission:Frontend header view');
+        Route::get('frontend/multiple-headers','Frontend\HeaderController@MultipleHeadersIndex')->name('frontend.multipleHeader')->middleware('permission:Frontend header view');
+        Route::get('frontend/create/header','Frontend\HeaderController@create')->name('frontend.header.create')->middleware('permission:Frontend header create');
+        Route::post('frontend/create/header','Frontend\HeaderController@store')->name('frontend.header.create')->middleware('permission:Frontend header create');
+        Route::get('frontend/edit/header{id}','Frontend\HeaderController@edit')->name('frontend.header.edit')->middleware('permission:Frontend header update');
+        Route::post('frontend/edit/header{id}','Frontend\HeaderController@update')->name('frontend.header.edit')->middleware('permission:Frontend header update');
+        Route::post('frontend/delete/header','Frontend\HeaderController@delete')->name('frontend.header.delete')->middleware('permission:Frontend header delete');
+
+        // FAQ
+        //todo: create permission
+        Route::get('frontend/faq','Frontend\FaqController@index')->name('frontend.faq.index')->middleware('permission:Frontend faq view');
+        Route::match(['get', 'post'],'frontend/create/faq', 'Frontend\FaqController@create')->name('frontend.faq.create')->middleware('permission:Frontend faq create');
+        Route::match(['get', 'post'],'frontend/update/faq/{id}', 'Frontend\FaqController@update')->name('frontend.faq.update')->middleware('permission:Frontend faq update');
+        Route::post('frontend/delete/faq/','Frontend\FaqController@delete')->name('frontend.faq.delete')->middleware('permission:Frontend faq delete');
+
+        //NeWS
+        //todo: create permission
+        Route::get('frontend/news','Frontend\NewsController@index')->name('frontend.news.index')->middleware('permission:Frontend news view');
+        Route::match(['get', 'post'],'frontend/create/news', 'Frontend\NewsController@create')->name('frontend.news.create')->middleware('permission:Frontend news create');
+        Route::match(['get', 'post'],'frontend/update/news/{id}', 'Frontend\NewsController@update')->name('frontend.news.update')->middleware('permission:Frontend news update');
+        Route::post('frontend/delete/news/','Frontend\NewsController@delete')->name('frontend.news.delete')->middleware('permission:Frontend news delete');
+
+        //Solutions
+        //todo: create permission
+        Route::get('frontend/solutions','Frontend\SolutionController@index')->name('frontend.solution.index')->middleware('permission:Frontend solution view');
+        Route::match(['get', 'post'],'frontend/create/solution', 'Frontend\SolutionController@create')->name('frontend.solution.create')->middleware('permission:Frontend solution create');
+        Route::match(['get', 'post'],'frontend/update/solution/{id}', 'Frontend\SolutionController@update')->name('frontend.solution.update')->middleware('permission:Frontend solution update');
+        Route::post('frontend/delete/solution/','Frontend\SolutionController@delete')->name('frontend.solution.delete')->middleware('permission:Frontend solution delete');
+
+        //Partners
+        //todo: create permission
+        Route::get('frontend/partners','Frontend\PartnerController@index')->name('frontend.partner.index')->middleware('permission:Frontend partner view');
+        Route::match(['get', 'post'],'frontend/create/partner', 'Frontend\PartnerController@create')->name('frontend.partner.create')->middleware('permission:Frontend partner create');
+        Route::match(['get', 'post'],'frontend/update/partner/{id}', 'Frontend\PartnerController@update')->name('frontend.partner.update')->middleware('permission:Frontend partner update');
+        Route::post('frontend/delete/partner/','Frontend\PartnerController@delete')->name('frontend.partner.delete')->middleware('permission:Frontend partner delete');
 
         //services
         Route::get('frontend/services', 'Frontend\ServiceController@index')->name('frontend.service.index')->middleware('permission:Frontend service view');
-        Route::match(['get','post'],'frontend/service/create', 'Frontend\ServiceController@create')->name('frontend.service.create');
-        Route::match(['get','post'],'frontend/service/update/{id}', 'Frontend\ServiceController@update')->name('frontend.service.update');
-        Route::post('frontend/service/delete/', 'Frontend\ServiceController@delete')->name('frontend.service.delete');
+        Route::match(['get','post'],'frontend/service/create', 'Frontend\ServiceController@create')->name('frontend.service.create')->middleware('permission:Frontend service create');
+        Route::match(['get','post'],'frontend/service/update/{id}', 'Frontend\ServiceController@update')->name('frontend.service.update')->middleware('permission:Frontend service update');
+        Route::post('frontend/service/delete/', 'Frontend\ServiceController@delete')->name('frontend.service.delete')->middleware('permission:Frontend service delete');
 
         //abouts
         Route::get('frontend/abouts', 'Frontend\AboutController@index')->name('frontend.about.index')->middleware('permission:Frontend about view');
-        Route::match(['get','post'],'frontend/about/create', 'Frontend\AboutController@create')->name('frontend.about.create');
-        Route::match(['get','post'],'frontend/about/update/{id}', 'Frontend\AboutController@update')->name('frontend.about.update');
-        Route::post('frontend/about/delete/', 'Frontend\AboutController@delete')->name('frontend.about.delete');
+        Route::match(['get','post'],'frontend/about/create', 'Frontend\AboutController@create')->name('frontend.about.create')->middleware('permission:Frontend about create');
+        Route::match(['get','post'],'frontend/about/update/{id}', 'Frontend\AboutController@update')->name('frontend.about.update')->middleware('permission:Frontend about update');
+        Route::post('frontend/about/delete/', 'Frontend\AboutController@delete')->name('frontend.about.delete')->middleware('permission:Frontend about delete');
 
         //Process
         Route::get('frontend/processes', 'Frontend\ProcessController@index')->name('frontend.process.index')->middleware('permission:Frontend process view');
-        Route::match(['get','post'],'frontend/process/create', 'Frontend\ProcessController@create')->name('frontend.process.create');
-        Route::match(['get','post'],'frontend/process/update/{id}', 'Frontend\ProcessController@update')->name('frontend.process.update');
-        Route::post('frontend/process/delete/', 'Frontend\ProcessController@delete')->name('frontend.process.delete');
+        Route::match(['get','post'],'frontend/process/create', 'Frontend\ProcessController@create')->name('frontend.process.create')->middleware('permission:Frontend process create');
+        Route::match(['get','post'],'frontend/process/update/{id}', 'Frontend\ProcessController@update')->name('frontend.process.update')->middleware('permission:Frontend process update');
+        Route::post('frontend/process/delete/', 'Frontend\ProcessController@delete')->name('frontend.process.delete')->middleware('permission:Frontend process delete');
 
         //Banner
         Route::get('frontend/banner', 'Frontend\BannerController@index')->name('frontend.banner.index')->middleware('permission:Frontend banner view');

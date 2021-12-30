@@ -66,7 +66,7 @@
                                         <div class="row" style="margin-top: 20px;">
                                             <div class="col-md-4">
                                                 <img class="d-block w-100"
-                                                     src="{{ asset('storage/uploads/frontend/' . $process->image) }}"
+                                                     src="{{ config('dpaisa-api-url.public_document_url') . $process->image }}"
                                                      alt="First slide">
                                             </div>
                                         </div>

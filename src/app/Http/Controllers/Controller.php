@@ -13,10 +13,12 @@ use App\Models\MerchantTransaction;
 use App\Models\NchlAggregatedPayment;
 use App\Models\NchlBankTransfer;
 use App\Models\NchlLoadTransaction;
+use App\Models\NeaTransaction;
 use App\Models\NICAsiaCyberSourceLoadTransaction;
 use App\Models\NPSAccountLinkLoad;
 use App\Models\NpsLoadTransaction;
 use App\Models\PaymentNepalLoadTransaction;
+use App\Models\TicketSale;
 use App\Models\User;
 use App\Models\UserLoadTransaction;
 use App\Models\UserMerchantEventTicketPayment;
@@ -87,7 +89,8 @@ class Controller extends BaseController
 
         View::share('paypointVendors', $paypointVendors);
 
-        $walletVendors = WalletTransactionType::groupBy('vendor')->pluck('vendor')->toArray();
+        //$walletVendors = WalletTransactionType::groupBy('vendor')->pluck('vendor')->toArray();
+        $walletVendors = (new WalletTransactionType())->getCachedWalletVendors();
         View::share('walletVendors', $walletVendors);
 
         $transactionTypes = [
@@ -95,6 +98,7 @@ class Controller extends BaseController
             KhaltiUserTransaction::class => "KHALTI",
             UserLoadTransaction::class => "NPAY",
             NpsLoadTransaction::class => "NPS",
+            NeaTransaction::class => "NEA",
             NchlLoadTransaction::class => "NCHL LOAD",
             NchlAggregatedPayment::class => "NCHL AGGREGATED PAYMENT",
             NchlBankTransfer::class => "BANK TRANSFER",
@@ -108,7 +112,8 @@ class Controller extends BaseController
             BfiToUserFundTransfer::class => "BFI TO USER FUND TRANSFER",
             UserToBfiFundTransfer::class => "USER TO BFI FUND TRANSFER",
             BfiExecutePayment::class => "USER CREDIT BY BFI",
-            BfiGatewayDebitExecutePayment::class => "USER DEBIT BY BFI"
+            BfiGatewayDebitExecutePayment::class => "USER DEBIT BY BFI",
+            TicketSale::class => "TICKET SALE"
         ];
 
         $userTypes = [

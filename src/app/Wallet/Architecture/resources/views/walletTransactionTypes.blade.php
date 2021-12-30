@@ -125,11 +125,15 @@
                                     <th>S.No.</th>
                                     <th>User Type</th>
                                     <th>Vendor</th>
+                                    @if($vendorName == "BFI")
+                                        <th>BFI Name</th>
+                                    @endif
                                     <th>Transaction Category</th>
                                     <th>Service Type</th>
                                     <th>Service</th>
                                     <th>Service Enabled</th>
                                     <th>Payment Type</th>
+                                    <th>Specials</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -146,7 +150,21 @@
                                         </td>
                                         <td>
                                             {{ $transactionType->vendor }}
+                                            @if($vendorName == "BFI")
+                                                @if($transactionType->special1 == null)
+                                                    <span class="badge badge-danger"></span>
+                                                @else
+                                                    <span class="badge badge-success"> {{ $transactionType->special1 }}</span>
+                                                @endif
+                                                @endif
                                         </td>
+                                        @if($vendorName == "BFI")
+                                            @if($transactionType->special2 == null)
+                                            <td>  </td>
+                                            @else
+                                                <td> <span class="badge badge-success">{{ $transactionType->special2 }}</span></td>
+                                                @endif
+                                        @endif
                                         <td>
                                             {{ $transactionType->transaction_category }}
                                         </td>
@@ -165,7 +183,7 @@
                                         </td>
 
                                         <td>{{ $transactionType->payment_type }}</td>
-
+                                        <td>{{ $transactionType->special1 }} @if($transactionType->special1) | {{ $transactionType->special2 }} @endif</td>
                                         <td class="center">
                                             <a style="margin-top: 5px;"
                                                href="{{ route('architecture.transaction.cashback', $transactionType->id) }}"
@@ -192,6 +210,12 @@
                                                href="{{ route('walletBonus.index', $transactionType->id) }}"
                                                class="btn btn-sm btn-warning m-t-n-xs" title="User Commissions"><i
                                                     class="fa fa-dollar"></i>&nbsp;Bonus</a>
+                                            @can('Add merchant revenue')
+                                                <a style="margin-top: 5px;"
+                                                   href="{{ route('architecture.wallet.merchantRevenue', $transactionType->id) }}"
+                                                   class="btn btn-sm btn-info m-t-n-xs" title="User Commissions"><i
+                                                        class="fa fa-dollar"></i> Merchant Revenue</a>
+                                            @endcan
 
                                         </td>
                                     </tr>

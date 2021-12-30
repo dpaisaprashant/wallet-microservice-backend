@@ -27,7 +27,9 @@ class NchlLoadClearanceStrategy extends AbstractClearanceCompareStrategy
     {
         return TransactionEvent::whereTransactionType(self::TRANSACTION_TYPE)
             ->with('transactionable')
-            ->filter(request())
+            ->wherehas("preTransaction", function ($query) {
+                return $query->filter(request());
+            })
             ->get()
             ->transform(function ($value) {
                 $value->linked_id = $value->transactionable->transaction_id;

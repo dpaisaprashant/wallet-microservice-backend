@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\SaveFCMNotificationEvent;
 use App\Events\SendFcmNotification;
 use App\Models\Admin;
+use App\Models\AdminUpdateKyc;
 use App\Models\AdminUserKYC;
 use App\Models\Agent;
 use App\Models\AgentType;
@@ -23,6 +24,7 @@ use App\Models\UserReferralLimit;
 use App\Models\UserType;
 use App\Models\Wallet;
 use App\Traits\CollectionPaginate;
+use App\Traits\UploadImage;
 use App\Wallet\AuditTrail\AuditTrial;
 use App\Wallet\AuditTrail\Behaviors\BAll;
 use App\Wallet\AuditTrail\Behaviors\BLoginHistory;
@@ -30,13 +32,23 @@ use App\Wallet\AuditTrail\Behaviors\BNpay;
 use App\Wallet\AuditTrail\Behaviors\BPayPoint;
 use App\Wallet\User\Repositories\UserKYCRepository;
 use App\Wallet\User\Repositories\UserRepository;
+use App\Wallet\WalletAPI\Microservice\UploadImageToCoreMicroservice;
 use Carbon\Carbon;
+use Doctrine\DBAL\Query\QueryException;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
+use mysql_xdevapi\Exception;
+use App\Traits\DateConverter;
+
 
 class UserController extends Controller
 {
 
     use CollectionPaginate;
+    use UploadImage;
+    use DateConverter;
+
 
     public $admin_data;
 
@@ -71,18 +83,60 @@ class UserController extends Controller
     public function view(UserRepository $repository)
     {
         $users = $repository->paginatedUsers();
+
+        $districts = config('districts.district_list');
+        View::share('districts', $districts);
+
         return view('admin.user.view')->with(compact('users'));
+    }
+
+    public function rejectKycUsers(UserRepository $repository)
+    {
+        $rejectedKycUsers = $repository->rejectedKycUsers();
+
+        $districts = config('districts.district_list');
+        View::share('districts', $districts);
+
+        return view('admin.user.rejectedKycUser')->with(compact('rejectedKycUsers'));
+    }
+
+    public function acceptedKycUsers(UserRepository $repository)
+    {
+        $accpetedKycUsers = $repository->acceptedKycUsers();
+        $districts = config('districts.district_list');
+        View::share('districts', $districts);
+        return view('admin.user.acceptedKycUser')->with(compact('accpetedKycUsers'));
+    }
+
+    public function pendingKycUsers(UserRepository $repository)
+    {
+        $pendingKycUsers = $repository->pendingKycUsers();
+        $districts = config('districts.district_list');
+        View::share('districts', $districts);
+        return view('admin.user.pendingKycUser')->with(compact('pendingKycUsers'));
+    }
+
+    public function kycNotFilledUsers(UserRepository $repository)
+    {
+        $kycNotFilledUsers = $repository->kycNotFilledUsers();
+        $districts = config('districts.district_list');
+        View::share('districts', $districts);
+        return view('admin.user.kycNotFilledUser')->with(compact('kycNotFilledUsers'));
     }
 
     public function kycNotFilledView(UserKYCRepository $repository)
     {
         $users = $repository->paginatedKycNotFilledUsers();
+        $districts = config('districts.district_list');
+        View::share('districts', $districts);
         return view('admin.user.kycNotFilledView')->with(compact('users'));
     }
 
     public function unverifiedKYCView(UserKYCRepository $repository)
     {
         $users = $repository->paginatedUnverifiedKycUsers();
+        $districts = config('districts.district_list');
+        View::share('districts', $districts);
         return view('admin.user.unverifiedKYCView')->with(compact('users'));
     }
 
@@ -125,62 +179,145 @@ class UserController extends Controller
         }
 
 
-
         //$user = User::with(['userLoadTransactions', 'userLoginHistories', 'userCheckPayment', 'fromFundTransfers', 'receiveFundTransfers', 'fromFundRequests', 'receiveFundRequests', 'kyc', 'wallet'])->findOrFail($id);
-        $user = User::with(['userReferral', 'userReferralLimit','merchant','bankAccount','preTransactions', 'requestInfos', 'userLoginHistories', 'fromFundTransfers', 'receiveFundTransfers', 'fromFundRequests', 'receiveFundRequests', 'kyc', 'wallet', 'agent', 'userReferralBonus'])->findOrFail($id);
-        $userBonus = UserBonus::whereHas('user')->where('user_id',$id)->first()->bonus;
-        $userBonusBalance = Wallet::whereHas('user')->where('user_id',$id)->first()->bonus_balance;
+        $user = User::with(['userReferral', 'userReferralLimit', 'merchant', 'bankAccount', 'preTransactions', 'requestInfos', 'userLoginHistories', 'fromFundTransfers', 'receiveFundTransfers', 'fromFundRequests', 'receiveFundRequests', 'kyc', 'wallet', 'agent', 'userReferralBonus'])->findOrFail($id);
+        $userBonus = UserBonus::whereHas('user')->where('user_id', $id)->first()->bonus;
+        $userBonusBalance = Wallet::whereHas('user')->where('user_id', $id)->first()->bonus_balance;
         $admin = $request->user();
         if (!$admin->hasPermissionTo('User profile')) {
 
             //merchant
             if ($user->merchant) {
                 if (!$admin->hasPermissionTo('Merchant profile')) {
-                    abort(403,'User does not have the right permissions to view merchant profile.');
+                    abort(403, 'User does not have the right permissions to view merchant profile.');
                 }
             }
 
             //agent
             if ($user->agent) { //has row in agents table but is a verified agent
                 if (!$admin->hasPermissionTo('View agent profile')) {
-                    abort(403,'User does not have the right permissions to view agent profile');
+                    abort(403, 'User does not have the right permissions to view agent profile');
                 }
             }
 
             //normal user
             if (empty($user->agent) && empty($user->merchant)) {
-                abort(403,'User does not have the right permissions to view user profile');
+                abort(403, 'User does not have the right permissions to view user profile');
             }
         }
 
-            //Audit Trial section
-            $allAudits = $this->allAudits($user, $request);
-            //$nPayAudits = $this->nPayAudits($user);
-            // $payPointAudits = $this->payPointAudits($user);
-            $loginHistoryAudits = $this->loginHistoryAudits($user);
+        //Audit Trial section
+        $allAudits = $this->allAudits($user, $request);
+        //$nPayAudits = $this->nPayAudits($user);
+        // $payPointAudits = $this->payPointAudits($user);
+        $loginHistoryAudits = $this->loginHistoryAudits($user);
 
-            //$userLoadTransactions = UserLoadTransaction::with('commission')->where('user_id', $user->id)->where('status', 'COMPLETED')->latest()->filter($request)->paginate($length,['*'], 'user-load-fund');
-            $loadPTIds = TransactionEvent::where('transaction_type', UserLoadTransaction::class)->where('user_id', $user->id)->pluck('pre_transaction_id');
-            $userTransactionEvents = TransactionEvent::where('user_id', $user->id)->latest()->filter($request)->paginate($length, ['*'], 'user-transaction-event');
-            $userTransactionStatements = TransactionEvent::where('user_id', $user->id)->latest()->filter($request)->paginate($length, ['*'], 'user-transaction-statement');
-            $loadFundSum = $user->loadedFundSum();
-            $userLoadCommission = (new UserCommissionValue())->getUserCommission($user->id, NICAsiaCyberSourceLoadTransaction::class);
-            $user_id = UserKYC::where('user_id', $id)->first();
+        //$userLoadTransactions = UserLoadTransaction::with('commission')->where('user_id', $user->id)->where('status', 'COMPLETED')->latest()->filter($request)->paginate($length,['*'], 'user-load-fund');
+        $loadPTIds = TransactionEvent::where('transaction_type', UserLoadTransaction::class)->where('user_id', $user->id)->pluck('pre_transaction_id');
+        $userTransactionEvents = TransactionEvent::where('user_id', $user->id)->latest()->filter($request)->paginate($length, ['*'], 'user-transaction-event');
+        $userTransactionStatements = TransactionEvent::where('user_id', $user->id)->latest()->filter($request)->paginate($length, ['*'], 'user-transaction-statement');
+        $loadFundSum = $user->loadedFundSum();
+        $userLoadCommission = (new UserCommissionValue())->getUserCommission($user->id, NICAsiaCyberSourceLoadTransaction::class);
+        $user_id = UserKYC::where('user_id', $id)->first();
 
-            if ($user_id != null) {
-                $ids = $user_id->id;
-                $admin = AdminUserKYC::where('kyc_id', $ids)->orderBy('created_at', 'DESC')->first();
-                $admin_id = optional($admin)->admin_id;
-                $admin_details = Admin::where('id', $admin_id)->first();
-            } else {
-                $admin_details = collect(array('nodata'));
-                $admin = collect(array('nodata'));
-                $admin_data = collect(array('nodata'));
+        if ($user_id != null) {
+            $ids = $user_id->id;
+            $admin = AdminUserKYC::where('kyc_id', $ids)->orderBy('created_at', 'DESC')->first();
+            $admin_id = optional($admin)->admin_id;
+            $admin_details = Admin::where('id', $admin_id)->first();
+        } else {
+            $admin_details = collect(array('nodata'));
+            $admin = collect(array('nodata'));
+            $admin_data = collect(array('nodata'));
+        }
+        return view('admin.user.profile')->with(compact('userLoadCommission', 'admin_details', 'admin', 'loginHistoryAudits', 'allAudits', 'user', 'loadFundSum', 'activeTab', 'userTransactionStatements', 'userTransactionEvents', 'userBonus', 'userBonusBalance'));
+    }
+
+    public function createUserKyc($id)
+    {
+        $user = User::findOrFail($id);
+        return view('admin.user.createUserKyc')->with(compact('user'));
+    }
+
+    public function storeUserKyc(Request $request, $id)
+    {
+
+        $disk = "kyc_images";
+        $kycRequest = $request->all();
+        $selectedUser = User::where('id', '=', $id)->first();
+
+        if ($kycRequest['date_format'] == "BS") {
+            $dateAD = $this->ConvertNepaliDateFromRequest($kycRequest, 'yearDob', 'monthDob', 'dayDob');
+            $kycRequest['date_of_birth'] = $dateAD;
+        }
+
+        if ($kycRequest['date_format_issueDate'] == "BS_issue") {
+            $dateAD = $this->ConvertNepaliDateFromRequest($kycRequest, 'yearIssue', 'monthIssue', 'dayIssue');
+            $kycRequest['c_issued_date'] = $dateAD;
+        }
+
+        $responseData = $this->uploadImageToCoreBase64($disk, $kycRequest, $request);
+
+        if (!empty($responseData['date_of_birth'])) {
+            $dateConvert = strtotime(str_replace(',', '', $responseData['date_of_birth']));
+            $convertedDate = date('Y-m-d', $dateConvert);
+            $responseData['date_of_birth'] = $convertedDate;
+        }
+
+        if (!empty($responseData['c_issued_date'])) {
+            $dateConvert = strtotime(str_replace(',', '', $responseData['c_issued_date']));
+            $convertedDate = date('Y-m-d', $dateConvert);
+            $responseData['c_issued_date'] = $convertedDate;
+        }
+
+//        foreach ($kycRequest as $key => $value) {
+//            if ($request->hasFile($key)) {
+//                $encoded_image = base64_encode(file_get_contents($request->file($key)->path()));
+//                $uploadImage = new UploadImageToCoreMicroservice($encoded_image, $disk);
+//                $uploadResponse = $uploadImage->uploadImageToCore();
+//                $decodedUploadResponse = json_decode($uploadResponse);
+//                $image_file_name = $decodedUploadResponse->filename;
+//                $kycRequest[$key] = $image_file_name;
+//            }
+//        }
+        $responseData['user_id'] = $id;
+        $responseData['status'] = 1;
+        $userKycs = UserKYC::where('user_id', '=', $id)->first();
+
+        if ($userKycs) {
+            return back()->with('error', 'User KYC Already Exists');
+        }
+
+        try {
+            if (!$selectedUser->merchant()->exists()) {
+                $userUpdateValues = [];
+                $userUpdateValues['name'] = $responseData['first_name'] . " " . $responseData['middle_name'] . " " . $responseData['last_name'];
+                $userUpdateValues['email'] = $responseData['email'];
+                $userUpdateValues['gender'] = $responseData['gender'];
+                $selectedUser->update($userUpdateValues);
             }
+        } catch (\Exception $e) {
+            return back()->with('error', 'Duplicated Email! Enter Unique Email');
+        }
 
+        try {
 
+            $userKyc = UserKYC::create($responseData);
+            $user = User::with('kyc')->findOrFail($id); //to pass to view
+            $kyc_after_change = json_encode($userKyc); //for adminUpdateKyc
+            $adminId = auth()->user()->getAuthIdentifier(); //for adminUpdateKyc
+            $user_kyc_id = $userKyc->id; //for adminUpdateKyc
+            $admin = 'admin';
+            $adminUpdateKyc = new AdminUpdateKyc();
+            $adminUpdateKyc->admin_id = $adminId;
+            $adminUpdateKyc->user_kyc_id = $user_kyc_id;
+            $adminUpdateKyc->kyc_after_change = $kyc_after_change;
+            $adminUpdateKyc->save();
+            return redirect()->route('user.kyc', $id)->with(compact('user', 'admin'))->with('success', 'User Kyc created successfully');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Something went wrong!Please try again later');
+        }
 
-        return view('admin.user.profile')->with(compact('userLoadCommission', 'admin_details', 'admin', 'loginHistoryAudits', 'allAudits', 'user', 'loadFundSum', 'activeTab', 'userTransactionStatements', 'userTransactionEvents','userBonus','userBonusBalance'));
     }
 
 
@@ -191,11 +328,118 @@ class UserController extends Controller
         return view('admin.user.kyc')->with(compact('user', 'admin'));
     }
 
+    public function EditKyc($id)
+    {
+        $user = User::with('kyc')->findOrFail($id);
+        if ($user->kyc == null) {
+            return back()->with('error', 'User Has not Filled Kyc');
+        }
+        $admin = 'admin';
+        $DobBs = $this->EnglishToNepali(date('Y-m-d', strtotime(str_replace(',', '', $user->kyc->date_of_birth))));
+        $DateOfIssueBs = $this->EnglishToNepali(date('Y-m-d', strtotime(str_replace(',', '', $user->kyc->c_issued_date))));
+        $date_of_birth = strtotime($user->kyc->date_of_birth);
+        $date_of_birth_formatted = date('j F, Y', $date_of_birth);
+        $date_of_issue = strtotime($user->kyc->c_issued_date);
+        $date_of_issue_formatted = date('j F, Y', $date_of_issue);
+        return view('admin.user.EditKyc')->with(compact('user', 'admin', 'DobBs', 'DateOfIssueBs', 'date_of_birth_formatted', 'date_of_issue_formatted'));
+    }
+
+    public function UpdateKyc(Request $request, $id)
+    {
+        $selectedUserKYC = UserKYC::where('user_id', '=', $id)->first();
+        $selectedUser = User::where('id', '=', $id)->first();
+        $kyc_before_change = json_encode($selectedUserKYC);
+        $disk = "kyc_images";
+        $kycRequest = $request->all();
+
+        if ($kycRequest['date_format'] == "BS") {
+            $dateAD = $this->ConvertNepaliDateFromRequest($kycRequest, 'yearDob', 'monthDob', 'dayDob');
+            $kycRequest['date_of_birth'] = $dateAD;
+        }
+
+        if ($kycRequest['date_format_issueDate'] == "BS_issue") {
+            $dateAD = $this->ConvertNepaliDateFromRequest($kycRequest, 'yearIssue', 'monthIssue', 'dayIssue');
+            $kycRequest['c_issued_date'] = $dateAD;
+        }
+
+        $responseData = $this->uploadImageToCoreBase64($disk, $kycRequest, $request); // this is more efficient that the commented out code below
+
+        //note: the below code works just fine but is tedious can be deleted, for now i have just commented it out
+//        $kycImageOnly = $request->allFiles();
+//        foreach ($kycImageOnly as $key => $value) {
+//            if ($request->hasFile($key)) {
+//                $encoded_image = base64_encode(file_get_contents($request->file($key)->path()));
+//                $uploadImage = new UploadImageToCoreMicroservice($encoded_image, $disk);
+//                $uploadResponse = $uploadImage->uploadImageToCore();
+//                $decodedUploadResponse = json_decode($uploadResponse);
+//                $image_file_name = $decodedUploadResponse->filename;
+//                $kycRequest[$key] = $image_file_name;
+//            }
+//            else{
+//                $kycRequest[$key] = $selectedUserKYC->$key;
+//            }
+//        }
+        //note: the above code works just fine but is tedious can be deleted, for now i have just commented it out
+
+        if (!empty($responseData['date_of_birth'])) {
+            $dateConvert = strtotime(str_replace(',', '', $responseData['date_of_birth']));
+            $convertedDate = date('Y-m-d', $dateConvert);
+            $responseData['date_of_birth'] = $convertedDate;
+        }
+
+        if (!empty($responseData['c_issued_date'])) {
+            $dateConvert = strtotime(str_replace(',', '', $responseData['c_issued_date']));
+            $convertedDate = date('Y-m-d', $dateConvert);
+            $responseData['c_issued_date'] = $convertedDate;
+        }
+        try {
+            if (!$selectedUser->merchant()->exists()) {
+                $userUpdateValues = [];
+                $userUpdateValues['name'] = $responseData['first_name'] . " " . $responseData['middle_name'] . " " . $responseData['last_name'];
+                $userUpdateValues['email'] = $responseData['email'];
+                $userUpdateValues['gender'] = $responseData['gender'];
+                $selectedUser->update($userUpdateValues);
+            }
+        } catch (\Exception $e) {
+            return back()->with('error', 'Duplicated Email, Please Enter a Valid Email');
+        }
+        try {
+            $adminId = auth()->user()->id;
+            $user_kyc_id = $selectedUserKYC->id; // for Admin Update KYC
+            $selectedUserKYC->update($responseData);
+            $status = $selectedUserKYC->save();
+            $kyc_after_change = json_encode($selectedUserKYC);
+            $user = User::with('kyc')->findOrFail($id);
+            $admin = 'admin';
+            if ($status == true) {
+                $adminUpdateKyc = new AdminUpdateKyc();
+                $adminUpdateKyc->admin_id = $adminId;
+                $adminUpdateKyc->user_kyc_id = $user_kyc_id;
+                $adminUpdateKyc->kyc_before_change = $kyc_before_change;
+                $adminUpdateKyc->kyc_after_change = $kyc_after_change;
+                $adminUpdateKyc->save();
+                return redirect()->route('user.kyc', $id)->with(compact('user', 'admin'))->with('success', 'User Kyc updated successfully');
+            } else {
+                return redirect()->route('user.kyc', $id)->with(compact('user', 'admin'))->with('error', 'Something went wrong!Please try again later');
+            }
+        } catch (\Exception $e) {
+            return back()->with('error', 'Something went wrong!Please try again later');
+        }
+
+    }
+
+    public function showAdminUpdatedKyc()
+    {
+        $adminUpdatedKycs = AdminUpdateKyc::filter(request())->with('admin', 'userKyc')->latest()->paginate(10);
+//        dd($adminUpdatedKycs);
+        return view('admin.user.AdminUpdatedKyc')->with(compact('adminUpdatedKycs'));
+    }
+
+
     public function userYearlyGraph(Request $request)
     {
         $now = Carbon::now();
         $year = $now->format('Y');
-
         //get current year transaction
         $transactions = TransactionEvent::where('user_id', $request->user_id)
             ->with('transactionable')

@@ -26,7 +26,6 @@ class BackendWalletAPIMicroservice extends BackendWalletAPIJSONAbstract
     private $special3;
     private $special4;
     private $status;
-
     private $amount;
     private $accountNumber;
     private $accountName;
@@ -150,6 +149,18 @@ class BackendWalletAPIMicroservice extends BackendWalletAPIJSONAbstract
         return $this;
     }
 
+    public function setStartDate($startDate)
+    {
+        $this->startDate = $startDate;
+        return $this;
+    }
+
+    public function setEndDate($endDate)
+    {
+        $this->endDate = $endDate;
+        return $this;
+    }
+
     private function preRequest()
     {
         $this->addParam('reference', $this->requestId)
@@ -165,7 +176,9 @@ class BackendWalletAPIMicroservice extends BackendWalletAPIJSONAbstract
             ->addParam('special4', $this->special4)
             ->addParam('user_id', $this->userId ?? "")
             ->addParam('request_param', $this->requestParam)
-            ->addParam('refStan', $this->refStan ?? "");
+            ->addParam('refStan', $this->refStan ?? -1)
+            ->addParam('startDate', $this->startDate ?? "")
+            ->addParam('endDate', $this->endDate ?? "");
 
         $this->setBaseUrl(config('microservices.' . $this->microservice));
         $requestInfo = $this->apiParams;

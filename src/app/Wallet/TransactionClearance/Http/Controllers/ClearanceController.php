@@ -5,9 +5,13 @@ namespace App\Wallet\TransactionClearance\Http\Controllers;
 
 
 use App\Http\Controllers\Controller;
+use App\Logging\MongoErrorLoggerHandler;
 use App\Models\TransactionEvent;
 use App\Models\UserTransaction;
 use App\Traits\CollectionPaginate;
+use App\Wallet\TransactionClearance\Clearance\contracts\ClearanceRepositoryContract;
+use App\Wallet\TransactionClearance\Clearance\Repository\PreTransactionClearanceRepositoryContract;
+use App\Wallet\TransactionClearance\Clearance\Repository\TransactionEventClearanceRepositoryContract;
 use App\Wallet\TransactionClearance\Clearance\Resolver\ClearanceTransactionTypeResolver;
 use App\Wallet\TransactionEvent\Repository\TransactionEventRepository;
 use Illuminate\Http\Request;
@@ -17,20 +21,22 @@ class ClearanceController extends Controller
 {
     use CollectionPaginate;
 
-    public function clearanceTransactions(Request $request, TransactionEventRepository $repository)
+    public function clearanceTransactions(Request $request)
     {
         $transactions  = [];
         $totalTransactionCount = 0;
         $totalTransactionAmountSum = 0;
         $totalTransactionFeeSum = 0;
         $info = "";
-        if (isset($_GET) || count($_GET) > 0 || isset($_GET['from'])) {
+        if (!empty($_GET)) {
+            //interface implementation is bound in ClearanceServiceProvider
+            $repository = resolve(ClearanceRepositoryContract::class);
             $transactions = $repository->paginatedTransactions();
             $totalTransactionCount = $repository->transactionsCount();
             $totalTransactionAmountSum = $repository->transactionAmountSum();
             $totalTransactionFeeSum = $repository->transactionFeeSum();
 
-            $transactionType = $request->transaction_type;
+            $transactionType = $request->transaction_type ?? $request->transaction_event_transaction_type;
             $clearanceTypeResolver = (new ClearanceTransactionTypeResolver($transactionType))->resolve();
             if (method_exists($clearanceTypeResolver, "clearanceInfo")) {
                 $info = $clearanceTypeResolver->clearanceInfo();
@@ -43,7 +49,7 @@ class ClearanceController extends Controller
 
     public function clearanceGenerate(Request $request)
     {
-        $transactionType = $request->transaction_type;
+        $transactionType = $request->transaction_type ?? $request->transaction_event_transaction_type;
         $fromDate = $request->from;
         $toDate = $request->to;
 

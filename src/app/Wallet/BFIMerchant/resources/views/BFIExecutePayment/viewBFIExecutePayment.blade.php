@@ -33,203 +33,119 @@
                             <div class="col-sm-12">
                                 <form role="form" method="get">
                                     <div class="row">
-                                        {{--<div class="col-md-4">
-                                            <div class="form-group">
-                                                <input type="text" name="transaction_id" placeholder="Transaction ID" class="form-control" value="{{ !empty($_GET['transaction_id']) ? $_GET['transaction_id'] : '' }}">
-                                            </div>
-                                        </div>--}}
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <input type="text" name="from_user"
-                                                       placeholder="From User Email or Number" class="form-control"
-                                                       value="{{ !empty($_GET['from_user']) ? $_GET['from_user'] : '' }}">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <input type="text" name="to_user" placeholder="To User Email or Number"
+                                                <input type="text" name="transaction_id" placeholder="Transaction ID"
                                                        class="form-control"
-                                                       value="{{ !empty($_GET['to_user']) ? $_GET['to_user'] : '' }}">
+                                                       value="{{ !empty($_GET['transaction_id']) ? $_GET['transaction_id'] : '' }}">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <div class="form-group">
-                                                    <select data-placeholder="Sort By..." class="chosen-select"
-                                                            tabindex="2" name="sort">
-                                                        <option value="" selected disabled>Sort By...</option>
-                                                        @if(!empty($_GET['sort']))
-                                                            <option value="request_date"
-                                                                    @if($_GET['sort'] == 'request_date') selected @endif>
-                                                                Request Date
-                                                            </option>
-                                                            <option value="response_date"
-                                                                    @if($_GET['sort'] == 'response_date') selected @endif>
-                                                                Latest Date
-                                                            </option>
-                                                            <option value="amount"
-                                                                    @if($_GET['sort'] == 'amount') selected @endif>
-                                                                Highest amount
-                                                            </option>
-                                                        @else
-                                                            <option value="request_date">Request Date</option>
-                                                            <option value="response_date">Response Date</option>
-                                                            <option value="amount">Amount</option>
-                                                        @endif
-                                                    </select>
-                                                </div>
+                                                <input type="text" name="user"
+                                                       placeholder="User Name" class="form-control"
+                                                       value="{{ !empty($_GET['user']) ? $_GET['user'] : '' }}">
                                             </div>
                                         </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="text" name="process_id" placeholder="Process ID"
+                                                       class="form-control"
+                                                       value="{{ !empty($_GET['process_id']) ? $_GET['process_id'] : '' }}">
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-3" style="padding-top: 15px;">
-                                            <label for="request_status">Request Status</label>
+
+
+                                        <div class="col-md-4" style="padding-top: 10px;">
                                             <div class="form-group">
-                                                <select name="request_status"
-                                                        data-placeholder="Choose transaction status..."
-                                                        class="chosen-select" tabindex="2">
-                                                    <option value="" selected disabled>Select Request Status...</option>
-                                                    <option value="">All</option>
-                                                    @if(!empty($_GET['request_status']))
-                                                        <option value="successful"
-                                                                @if($_GET['request_status']  == 'successful') selected @endif>
-                                                            Successful
-                                                        </option>
-                                                        <option value="failed"
-                                                                @if($_GET['request_status']  == 'failed') selected @endif>
-                                                            Failed
-                                                        </option>
+                                                <label for="status">Status</label>
+                                                <select data-placeholder="Select Status...." class="chosen-select"
+                                                        tabindex="2" name="status">
+                                                    <option value="" selected disabled>Select Status...</option>
+                                                    @if(!empty($_GET['status']))
+                                                        @foreach($status as $stat)
+                                                            <option value="{{$stat}}"
+                                                                    @if($_GET['status']  == $stat) selected @endif >{{$stat}}</option>
+                                                        @endforeach
                                                     @else
-                                                        <option value="successful">Successful</option>
-                                                        <option value="failed">Failed</option>
-                                                    @endif
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3" style="padding-top: 15px;">
-                                            <label for="response_status">Response Status</label>
-                                            <div class="form-group">
-                                                <select name="response_status"
-                                                        data-placeholder="Choose transaction status..."
-                                                        class="chosen-select" tabindex="2">
-                                                    <option value="" selected disabled>Select Response Status...
-                                                    </option>
-                                                    <option value="">All</option>
-                                                    @if(!empty($_GET['response_status']))
-                                                        <option value="accepted"
-                                                                @if($_GET['response_status']  == 'accepted') selected @endif>
-                                                            Accepted
-                                                        </option>
-                                                        <option value="rejected"
-                                                                @if($_GET['response_status']  == 'rejected') selected @endif>
-                                                            Rejected
-                                                        </option>
-                                                        <option value="pending"
-                                                                @if($_GET['response_status']  == 'pending') selected @endif>
-                                                            Pending
-                                                        </option>
-                                                    @else
-                                                        <option value="accepted">Accepted</option>
-                                                        <option value="rejected">Rejected</option>
-                                                        <option value="pending">Pending</option>
+                                                        @foreach($status as $stat)
+                                                            <option value="{{$stat}}">{{$stat}}</option>
+                                                        @endforeach
                                                     @endif
                                                 </select>
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6 mt-3">
+                                        <div class="col-md-4" style="padding-top: 8px;">
                                             <label for="ionrange_amount">Amount</label>
-                                            {{--                                            <input type="text" name="amount" class="ionrange_amount">--}}
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="input-group date">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-dollar"></i>
-                                                </span>
-                                                        <input type="number" class="form-control"
-                                                               placeholder="From Amount" name="from_amount"
-                                                               autocomplete="off"
-                                                               value="{{ !empty($_GET['from_amount']) ? $_GET['from_amount'] : '' }}">
-                                                    </div>
-                                                </div>
 
-                                                <div class="col-md-6">
-                                                    <div class="input-group date">
+                                            <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-dollar"></i>
                                                 </span>
-                                                        <input type="number" class="form-control"
-                                                               placeholder="To Amount" name="to_amount"
-                                                               autocomplete="off"
-                                                               value="{{ !empty($_GET['to_amount']) ? $_GET['to_amount'] : '' }}">
-                                                    </div>
-                                                </div>
+                                                <input type="number" class="form-control"
+                                                       placeholder="From Amount" name="from_amount"
+                                                       autocomplete="off"
+                                                       value="{{ !empty($_GET['from_amount']) ? $_GET['from_amount'] : '' }}">
+                                                {{--                                                    </div>--}}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4" style="margin-top: 34px;">
+                                            <div class="input-group date">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-dollar"></i>
+                                                </span>
+                                                <input type="number" class="form-control"
+                                                       placeholder="To Amount" name="to_amount"
+                                                       autocomplete="off"
+                                                       value="{{ !empty($_GET['to_amount']) ? $_GET['to_amount'] : '' }}">
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-3" style="padding-top: 40px;">
-                                            <label for="request_date_load_from">Request Date From</label>
+                                        <div class="col-md-4" style="padding-top: 10px;">
+                                            <label for="request_date_load_from">Created At Date</label>
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
                                                  <i class="fa fa-calendar"></i>
                                              </span>
-                                                <input id="request_date_load_from" type="text"
-                                                       class="form-control request_date_from" placeholder="From"
-                                                       name="request_from" autocomplete="off"
-                                                       value="{{ !empty($_GET['request_from']) ? $_GET['request_from'] : '' }}">
+                                                <input id="from" type="text"
+                                                       class="form-control from" placeholder="From"
+                                                       name="from" autocomplete="off"
+                                                       value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}">
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3" style="padding-top: 40px;">
-                                            <label for="request_date_load_to">Request Date To</label>
+                                        <div class="col-md-4" style="margin-top: 35px;">
+{{--                                            <label for="request_date_load_to">Created At Date To</label>--}}
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
                                                      <i class="fa fa-calendar"></i>
                                                 </span>
-                                                <input id="request_date_load_to" type="text"
-                                                       class="form-control request_date_to" placeholder="To"
-                                                       name="request_to" autocomplete="off"
-                                                       value="{{ !empty($_GET['request_to']) ? $_GET['request_to'] : '' }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3" style="padding-top: 40px;">
-                                            <label for="response_date_load_from">Response Date From</label>
-                                            <div class="input-group date">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
-                                                </span>
-                                                <input id="response_date_load_from" type="text"
-                                                       class="form-control response_date_from" placeholder="From"
-                                                       name="response_from" autocomplete="off"
-                                                       value="{{ !empty($_GET['response_from']) ? $_GET['response_from'] : '' }}">
+                                                <input id="to" type="text"
+                                                       class="form-control to" placeholder="To"
+                                                       name="to" autocomplete="off"
+                                                       value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3" style="padding-top: 40px;">
-                                            <label for="response_date_load_to">Response Date To</label>
-                                            <div class="input-group date">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
-                                                </span>
-                                                <input id="response_date_load_to" type="text"
-                                                       class="form-control response_date_to" placeholder="To"
-                                                       name="response_to" autocomplete="off"
-                                                       value="{{ !empty($_GET['response_to']) ? $_GET['response_to'] : '' }}">
-                                            </div>
-                                        </div>
                                     </div>
                                     <br>
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
-                                                formaction="{{ route('fundRequest') }}"><strong>Filter</strong></button>
+                                                formaction="{{ route('view.bfi.execute.payment') }}">
+                                            <strong>Filter</strong></button>
                                     </div>
                                     <div>
                                         <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
                                                 type="submit" style="margin-right: 10px;"
-                                                formaction="{{ route('fundRequest.excel') }}"><strong>Excel</strong>
+                                                formaction="{{ route('execute.payment.report.excel') }}">
+                                            <strong>Excel</strong>
                                         </button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
@@ -247,7 +163,7 @@
                         <h5>List of BFI execute Payment</h5>
                     </div>
                     <div class="ibox-content">
-                        <h5><b>Total Count:</b>  {{ $bfiExecutePaymentsTotalCount }}</h5>
+                        <h5><b>Total Count:</b> {{ $bfiExecutePaymentsTotalCount }}</h5>
                         <h5><b>Total Amount Sum:</b> Rs. {{ $bfiExecutePaymentsTotalAmount }} </h5>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover dataTables-example"
@@ -349,7 +265,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                                                                                    {{ $bfiExecutePayments->appends(request()->query())->links() }}
+                            {{ $bfiExecutePayments->appends(request()->query())->links() }}
                         </div>
                     </div>
                 </div>
@@ -374,7 +290,7 @@
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
     <script>
-        $(".request_date_from").datepicker({
+        $(".from").datepicker({
             autoclose: true,
             todayHighlight: true,
             format: 'dd M, yyyy',
@@ -383,13 +299,13 @@
     </script>
 
     <script>
-        $(".request_date_from").change(function () {
+        $(".from").change(function () {
             var start_date = $(this).val();
 
-            $(".request_date_to").val('');
-            $(".request_date_to").removeAttr('readonly');
-            $(".request_date_to").datepicker('destroy');
-            $(".request_date_to").datepicker({
+            $(".to").val('');
+            $(".to").removeAttr('readonly');
+            $(".to").datepicker('destroy');
+            $(".to").datepicker({
                 autoclose: true,
                 todayHighlight: true,
                 startDate: new Date(start_date),
@@ -397,49 +313,20 @@
             });
         });
 
-        $(".request_date_to").keyup(function () {
+        $(".to").keyup(function () {
             $(this).val('');
         });
     </script>
 
-    <script>
-        $(".response_date_from").datepicker({
-            autoclose: true,
-            todayHighlight: true,
-            format: 'dd M, yyyy',
-            keyboardNavigation: false,
-        });
-
-    </script>
-
-    <script>
-        $(".response_date_from").change(function () {
-            var start_date = $(this).val();
-
-            $(".response_date_to").val('');
-            $(".response_date_to").removeAttr('readonly');
-            $(".response_date_to").datepicker('destroy');
-            $(".response_date_to").datepicker({
-                autoclose: true,
-                todayHighlight: true,
-                startDate: new Date(start_date),
-                format: 'dd M, yyyy'
-            });
-        });
-
-        $(".response_date_to").keyup(function () {
-            $(this).val('');
-        });
-    </script>
     <!-- End Date picker -->
 
     @include('admin.asset.js.datatable')
-        <script>
-            $(document).ready(function (e) {
-                let a = "Showing {{ $bfiExecutePayments->firstItem() }} to {{ $bfiExecutePayments->lastItem() }} of {{ $bfiExecutePayments->total() }} entries";
-                $('.dataTables_info').text(a);
-            });
-        </script>
+    <script>
+        $(document).ready(function (e) {
+            let a = "Showing {{ $bfiExecutePayments->firstItem() }} to {{ $bfiExecutePayments->lastItem() }} of {{ $bfiExecutePayments->total() }} entries";
+            $('.dataTables_info').text(a);
+        });
+    </script>
 
     <!-- IonRangeSlider -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js"></script>

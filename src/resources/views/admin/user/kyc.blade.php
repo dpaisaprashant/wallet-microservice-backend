@@ -25,7 +25,7 @@
                             @if(!empty($user->kyc))
                                 <h4>Address: {{ $user->kyc->district }}, Province {{ $user->kyc->province }}</h4>
                             @endif
-
+                            @include('admin.user.userType.displayUserTypes',['user' => $user])
                         </div>
                     </div>
                 </div>
@@ -42,6 +42,25 @@
                 <div class="ibox ">
                     <div class="ibox-title">
                         <h5>User KYC Details</h5>
+                        @if($user->kyc)
+                            @can('Edit user kyc')
+                                <a style="margin-top: -10px; padding: 8px;display: inline; float: right"
+                                   href="{{route('user.editKyc',$user->id)}}"
+                                   class="btn btn-sm btn-primary m-t-n-xs"
+                                   title="user profile">
+                                    <i class="fa fa-pencil"> EDIT</i>
+                                </a>
+                            @endcan
+                        @else
+                            @can('Create user kyc')
+                                    <a style="margin-top: -10px; padding: 8px;display: inline; float: right"
+                                       href="{{route('user.createUserKyc',$user->id)}}"
+                                       class="btn btn-sm btn-primary m-t-n-xs"
+                                       title="user profile">
+                                        <i class="fa fa-pencil"> CREATE</i>
+                                    </a>
+                            @endcan
+                        @endif
                     </div>
                     <div class="ibox-content">
                         @if($user->merchant()->first())
@@ -315,7 +334,10 @@
                                                     </label>
                                                 </div>
                                             </dt>
-                                            <dd class="col-md-8">{{ $user->kyc->date_of_birth }}</dd>
+                                            <dd class="col-md-8">{{ $user->kyc->date_of_birth }} AD
+                                                <br>
+                                                {{$user->kyc->date_of_birth_bs}} @if($user->kyc->date_of_birth_bs)BS @endif
+                                            </dd>
 
                                             <dt class="col-md-3 text-right">
                                                 <div class="i-checks">
@@ -425,7 +447,10 @@
                                                     </label>
                                                 </div>
                                             </dt>
-                                            <dd class="col-md-8">{{ date('M d, Y', strtotime($user->kyc->c_issued_date)) }}</dd>
+                                            <dd class="col-md-8">{{ ($user->kyc->c_issued_date) }} AD
+                                                <br>
+                                                {{$user->kyc->c_issued_date_bs}} @if($user->kyc->c_issued_date_bs)BS @endif
+                                            </dd>
 
                                             <dt class="col-md-3 text-right">
                                                 <div class="i-checks">

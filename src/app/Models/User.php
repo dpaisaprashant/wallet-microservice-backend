@@ -5,6 +5,9 @@ namespace App\Models;
 use App\Filters\User\UserFilters;
 use App\Models\Architecture\SingleUserCashback;
 use App\Models\Architecture\SingleUserCommission;
+use App\Models\Architecture\WalletTransactionTypeMerchantRevenue;
+use App\Models\BonusToMainBalanceTransfer\BonusBalanceDeduction;
+use App\Models\BonusToMainBalanceTransfer\MainBalanceAddition;
 use App\Models\Merchant\Merchant;
 use App\Models\Microservice\PreTransaction;
 use App\Models\Microservice\RequestInfo;
@@ -31,16 +34,22 @@ class User extends Authenticatable
     protected $table = "users";
     protected $connection = 'dpaisa';
 
+//    public function __construct(array $attributes = [])
+//    {
+//        $this->table = env('DB_DATABASE_2').'.'.$this->table;
+//        parent::__construct();
+//    }
+
     const AGENT = 'agent';
 
-    const LOCK_MINUTES =  60;
+    const LOCK_MINUTES =  360;
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'should_change_password', 'should_change_password_message'
+        'name', 'email', 'password', 'should_change_password', 'should_change_password_message' , 'gender'
     ];
 
     /**
@@ -102,6 +111,9 @@ class User extends Authenticatable
         return $this->belongsTo(UserType::class, 'user_type_id');
     }
 
+    /*public function merchantReseller(){
+        return $this->hasOne(MerchantReseller::class,'user_id');
+    }*/
 
 
     public function agentType()
@@ -131,6 +143,11 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserReferral::class);
     }
+    public function prizeCode()
+    {
+        return $this->hasOne(UserPrizeCode::class);
+    }
+
 
     public function userReferralBonus()
     {
@@ -232,6 +249,11 @@ class User extends Authenticatable
     public function merchantTransactions()
     {
         return $this->hasMany(MerchantTransaction::class, 'user_id');
+    }
+
+    public function merchantTransactionsMerchant()
+    {
+        return $this->hasMany(MerchantTransaction::class, 'merchant_id');
     }
 
     public function merchant()
@@ -409,7 +431,7 @@ class User extends Authenticatable
             $status =  'not filled';
         } elseif($this->kyc->status == 0 && $this->kyc->accept !== 0) {
             $status =  'not verified';
-        } elseif($this->kyc->status == 0 && $this->kyc->accept === 0) {
+        } elseif($this->kyc->accept === 0) {
             $status =  'kyc rejected';
         } elseif($this->kyc->status == 1) {
             $status =  'verified';
@@ -471,5 +493,25 @@ class User extends Authenticatable
     {
         return $this->morphMany(SingleUserCommission::class, 'userCommissionable', 'user_type', 'user_id', 'id');
     }
+
+    public function issueTicket()
+    {
+        return $this->setConnection('mysql')->hasMany(IssueTicket::class, 'user_id', 'id');
+    }
+
+    public function mainBalanceDeduction()
+    {
+        return $this->hasMany(MainBalanceAddition::class);
+    }
+
+    public function bonusBalanceDeduction()
+    {
+        return $this->hasMany(BonusBalanceDeduction::class);
+    }
+
+    public function merchantRevenue(){
+        return $this->hasOne(WalletTransactionTypeMerchantRevenue::class);
+    }
+
 
 }

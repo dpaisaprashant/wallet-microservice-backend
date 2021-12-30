@@ -164,7 +164,7 @@ class AdminController extends Controller
         if ($request->isMethod('post'))
         {
             $data = $request->input();
-            if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])){
+            if(Auth::attempt(['email' => $data['email'], 'password' => $data['password'], 'status' => 1])){
                 $admin = Admin::whereId(auth()->user()->id)->first();
                /* event(new SendOTPCodeEvent($admin));
                 Auth::logout();
@@ -172,13 +172,14 @@ class AdminController extends Controller
 
                 if (!$this->checkOldSession($admin->id)) {
                     Auth::logout();
-                    return redirect()->route('admin.login')->with('error', 'Already logged in from another session');
+                    return redirect()->route('admin.login')->with('error', 'Already logged in from another session')->withInput();
                 }
 
                 return redirect()->route('admin.dashboard');
 
             } else {
-                return redirect()->back()->with('error', 'Invalid Username or Password');
+                $email = $request->email;
+                return redirect()->back()->with('error', 'Invalid Username or Password')->withInput();
             }
         }
         return view('admin.login');

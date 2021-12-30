@@ -15,9 +15,23 @@ class NchlAggregatedMicroservice
             ->setVendor("NCHL Aggregated Payment")
             ->setMicroservice("NCHL")
             ->setUrl("/nchl/report/by-id")
-            ->addParam()
             ->setRequestParam(['batch_id' => $id]);
 
+        $response = $microservice->processRequest();
+        $nchlAggregatedAPI = json_decode($response, true);
+        return $nchlAggregatedAPI;
+    }
+
+    public function getNchlAggregatedAPIByDate(Request $request, $dateFrom, $dateTo)
+    {
+        $microservice = new BackendWalletAPIMicroservice($request);
+        $microservice->setServiceType("NCHL_AGGREGATED_PAYMENT")
+            ->setDescription("Nchl Aggregated Payment")
+            ->setVendor("NCHL Aggregated Payment")
+            ->setMicroservice("NCHL")
+            ->setUrl("/nchl/report/by-date")
+            ->setRequestParam(['txnDateFrom' => $dateFrom,
+                                'txnDateTo' => $dateTo]);
         $response = $microservice->processRequest();
         $nchlAggregatedAPI = json_decode($response, true);
         return $nchlAggregatedAPI;

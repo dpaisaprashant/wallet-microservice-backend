@@ -43,7 +43,8 @@
                             <dd class="col-md-8">{{ $transaction->account }}</dd>
 
                             <dt class="col-md-3 text-right">User</dt>
-                            <dd class="col-md-8">{{ $transaction->user['name'] ?? "" }}</dd>
+                            <dd class="col-md-8">{{ $transaction->user['name'] ?? null }}</dd>
+
 
                             <dt class="col-md-3 text-right">KYC Status</dt>
                             <dd class="col-md-8">

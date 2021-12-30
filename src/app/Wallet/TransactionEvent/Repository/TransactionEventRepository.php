@@ -7,6 +7,7 @@ namespace App\Wallet\TransactionEvent\Repository;
 use App\Models\TransactionEvent;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class TransactionEventRepository
 {
@@ -33,16 +34,17 @@ class TransactionEventRepository
 
     public function sortedTransactions()
     {
-        return TransactionEvent::with('transactionable', 'user')
+        return TransactionEvent::with('transactionable', 'user', 'commission', 'commission.transactions')
             ->doesntHave('refundTransaction')
             ->filter($this->request)->paginate($this->length);
     }
 
     public function latestTransactions()
     {
-        return TransactionEvent::with('transactionable', 'user')
+        return TransactionEvent::with('transactionable', 'user', 'commission', 'commission.transactions')
             ->doesntHave('refundTransaction')
             ->latest()->filter($this->request)->paginate($this->length);
+        //->filter($this->request)->paginate($this->length);
     }
 
     public function currentMonthTransactions()
@@ -123,8 +125,16 @@ class TransactionEventRepository
     }
 
     public function getUniqueVendors(){
-        $vendors = TransactionEvent::groupBy('vendor')->pluck('vendor');
-        return $vendors;
+        return Cache::remember('transactionVendors', 86400, function () {
+            return  TransactionEvent::groupBy('vendor')->pluck('vendor');
+        });
+    }
+
+    //For Individual User
+    public function totalLoadedAmountUser()
+    {
+        return TransactionEvent::doesntHave('refundTransaction')
+            ->filter($this->request)->count();
     }
 
 }

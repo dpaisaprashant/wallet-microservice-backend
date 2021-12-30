@@ -21,6 +21,15 @@ class LoadTestFundListener
      */
     public function handle($event)
     {
+        $vendor = $event->vendor
+            ?: ($event->transaction->pre_transaction_id ? "REFUND" : "TEST FUND");
+
+        $serviceType = $event->serviceType
+            ?: ($event->transaction->pre_transaction_id ? "REFUND" : "LOAD_TEST_FUND");
+
+        $uid  = $event->serviceType
+            ?: ($event->transaction->pre_transaction_id ? "REFUND" : "LOAD-TEST-FUND");
+
         $currentBalance = Wallet::whereUserId($event->transaction->user_id)->first()->balance * 100;
         $currentBonusBalance = Wallet::whereUserId($event->transaction->user_id)->first()->bonus_balance * 100;
         $amount = $event->transaction->amount * 100;
@@ -28,15 +37,15 @@ class LoadTestFundListener
         $event->transaction->transactions()->create([
             "account" => $event->transaction->user->mobile_no,
             "amount" => $amount + $bonusAmount,
-            "vendor" => $event->transaction->pre_transaction_id ? "REFUND" : "TEST FUND",
+            "vendor" => $vendor,
             "user_id" => $event->transaction->user_id,
             "description" => $event->transaction->description,
-            "service_type" => $event->transaction->pre_transaction_id ? "REFUND" : "LOAD_TEST_FUND",
+            "service_type" => $serviceType,
             "balance" => $currentBalance + $amount ,
             "bonus_balance" => $currentBonusBalance + $bonusAmount,
             "uid" => $event->transaction->pre_transaction_id
-                ? "REFUND-" . TransactionIdGenerator::generateAlphaNumeric(7)
-                : 'LOAD-TEST-FUND-' . TransactionIdGenerator::generateAlphaNumeric(7)
+                ? $uid . "-" . TransactionIdGenerator::generateAlphaNumeric(7)
+                : $uid . '-' . TransactionIdGenerator::generateAlphaNumeric(7)
         ]);
 
 

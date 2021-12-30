@@ -13,13 +13,20 @@ class CreateMerchantProducts extends Migration
      */
     public function up()
     {
-        Schema::create('merchant_products', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('type')->nullable();
-            $table->string('user_id')->nullable();
-            $table->json('json_data')->nullable();
-            $table->timestamps();
-        });
+
+        if (!Schema::connection('dpaisa')->hasTable('merchant_products')) {
+            Schema::connection('dpaisa')->create('merchant_products', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('name')->nullable();
+                $table->text('description')->nullable();
+                $table->integer('service_charge')->nullable();
+                $table->string('type')->nullable();
+                $table->integer('price')->nullable();
+                $table->string('merchant_id')->nullable();
+                $table->timestamps();
+            });
+        }
+
     }
 
     /**

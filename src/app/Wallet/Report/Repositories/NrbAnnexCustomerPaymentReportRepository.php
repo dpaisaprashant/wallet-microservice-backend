@@ -40,19 +40,19 @@ class NrbAnnexCustomerPaymentReportRepository extends AbstractReportRepository
         parent::__construct($request);
         $this->fromDate = date('Y-m-d', strtotime(str_replace(',', ' ', $request->from)));
         $this->toDate = date('Y-m-d', strtotime(str_replace(',', ' ', $request->to)));
-        $this->fromAmount = $request->from_amount;
-        $this->toAmount = $request->to_amount;
+        $this->fromAmount = $request->fromAmount;
+        $this->toAmount = $request->toAmount;
     }
 
     public function customerTransactions()
     {
         $customerTransactions = DB::connection('dpaisa')->select("CREATE TEMPORARY TABLE temp_agents
-SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';
+                                                                                SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';
 
-SELECT COUNT(*)
-FROM transaction_events t
-LEFT JOIN temp_agents a ON a.user_id = t.user_id
-WHERE a.user_id IS NULL
+                                                                                SELECT COUNT(*)
+                                                                                FROM transaction_events t
+                                                                                LEFT JOIN temp_agents a ON a.user_id = t.user_id
+                                                                                WHERE a.user_id IS NULL
 
                                                       ");
 

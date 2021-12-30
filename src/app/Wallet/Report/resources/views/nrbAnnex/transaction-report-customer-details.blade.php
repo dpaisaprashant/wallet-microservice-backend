@@ -44,19 +44,6 @@
                                 <form role="form" method="get" action="{{ route('report.nrb.annex.customer.payments') }}"
                                       id="filter">
 
-                                    <div class="form-group  row"><label class="col-sm-2 col-form-label">Amount</label>
-                                        <div class="col-sm-6">
-                                            <select data-placeholder="Choose Amount Range..." class="chosen-select"  tabindex="2" name="amount_range" required>
-                                                <option value="" selected disabled>-- Select Amount Range --</option>
-                                                <option value='{"fromAmount":"0","toAmount":"1000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"0","toAmount":"1000"}') selected @endif>0 - 1,000</option>
-                                                <option value='{"fromAmount":"1001","toAmount":"5000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"1001","toAmount":"5000"}') selected @endif>1,000 - 5,000</option>
-                                                <option value='{"fromAmount":"5001","toAmount":"10000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"5001","toAmount":"10000"}') selected @endif >5,000 - 10,000</option>
-                                                <option value='{"fromAmount":"10001","toAmount":"25000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"10001","toAmount":"25000"}') selected @endif>10,000 - 25,000</option>
-{{--                                                <option value='{"fromAmount":"20001","toAmount":"25000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"20001","toAmount":"25000"}') selected @endif>20,000 - 25,000</option>--}}
-                                                <option value='{"fromAmount":"25001","toAmount":"1000000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"25001","toAmount":"1000000"}') selected @endif >> 25,000</option>
-                                            </select>
-                                        </div>
-                                    </div>
 {{--                                    <div class="row">--}}
 {{--                                        <div class="col-12 mt-3">--}}
 {{--                                            <label for="ionrange_amount">Amount</label><br>--}}
@@ -87,10 +74,23 @@
 {{--                                            </div>--}}
 {{--                                        </div>--}}
 {{--                                    </div>--}}
+
+                                    <div class="form-group  row"><label class="col-sm-2 col-form-label">Amount</label>
+                                        <div class="col-sm-5">
+                                            <select data-placeholder="Choose Amount Range..." class="chosen-select"  tabindex="2" name="amount_range" required>
+                                                <option value="" selected disabled>-- Select Amount Range --</option>
+                                                <option value='{"fromAmount":"0","toAmount":"1000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"0","toAmount":"1000"}') selected @endif>0 - 1,000</option>
+                                                <option value='{"fromAmount":"1001","toAmount":"5000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"1001","toAmount":"5000"}') selected @endif>1,000 - 5,000</option>
+                                                <option value='{"fromAmount":"5001","toAmount":"10000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"5001","toAmount":"10000"}') selected @endif >5,000 - 10,000</option>
+                                                <option value='{"fromAmount":"10001","toAmount":"20000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"10001","toAmount":"20000"}') selected @endif>10,000 - 20,000</option>
+                                                <option value='{"fromAmount":"20001","toAmount":"25000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"20001","toAmount":"25000"}') selected @endif>20,000 - 25,000</option>
+                                                <option value='{"fromAmount":"25001","toAmount":"1000000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"25001","toAmount":"1000000"}') selected @endif >> 25,000</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <br>
                                     <div class="row">
-                                        <label class="col-sm-2 col-form-label">Select Date</label>
-                                        <div class="col-3">
+                                        <div class="col-5">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
@@ -102,7 +102,7 @@
                                             </div>
                                             <br>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-5">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>

@@ -38,8 +38,8 @@ class SubscriberReportRepository extends AbstractReportRepository
     }
 
     public function totalKycRejectedSubscriber(){
-        return User::whereHas('kyc',function ($query) {
-            $query->where('accept',UserKyc::ACCEPT_REJECTED);
+        return User::whereHas('kyc', function ($query){
+           $query->where('accept',UserKyc::ACCEPT_REJECTED);
         })->filter($this->request)->count();
     }
 

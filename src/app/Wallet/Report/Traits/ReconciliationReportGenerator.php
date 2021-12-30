@@ -24,22 +24,10 @@ trait ReconciliationReportGenerator
                 "transaction_type" => "debit"
             ],
 
-            'NEA' => [
-                "amount" => $repository->totalNeaTransactionAmount() / 100,
-                "count" => $repository->totalNeaTransactionCount(),
-                "transaction_type" => "debit"
-            ],
-
             'NPay' => [
                 "amount" => $repository->totalNPayTransactionAmount() / 100,
                 "count" => $repository->totalNPayTransactionCount(),
                 "transaction_type" => "credit"
-            ],
-
-            'CellPay' => [
-                "amount" => $repository->totalCellPayAmount() / 100,
-                "count" => $repository->totalCellPayCount(),
-                "transaction_type" => "debit"
             ],
 
             'NPS' => [
@@ -66,30 +54,6 @@ trait ReconciliationReportGenerator
                 "transaction_type" => "credit"
             ],
 
-            'User sends balance to other User' => [
-                "amount" => $repository->totalUserSendsBalanceToOtherUserAmount() / 100,
-                "count" => $repository->totalUserSendsBalanceToOtherUserCount(),
-                "transaction_type" => "debit"
-            ],
-
-            'User receives balance from other User' => [
-                "amount" => $repository->totalUserRecevicesBalanceFromOtherUserAmount() / 100,
-                "count" => $repository->totalUserRecevicesBalanceFromOtherUserCount(),
-                "transaction_type" => "credit"
-            ],
-
-            "User receives balance from other user after request fund" => [
-                "amount" => $repository->totalUserRequestFundFromOtherUserAmount(),
-                "count" => $repository->totalUserRequestFundFromOtherUserCount(),
-                "transaction_type" => "credit"
-            ],
-
-            "User sends balance to other user after request fund" => [
-                "amount" => $repository->totalUserSendsFundToOtherUserAmount(),
-                "count" => $repository->totalUserSendsFundToOtherUserCount(),
-                "transaction_type" => 'debit',
-            ],
-
             /*'Refund' => [
                 "amount" => $repository->totalRefundAmount() / 100,
                 "count" => $repository->totalRefundCount(),
@@ -99,30 +63,6 @@ trait ReconciliationReportGenerator
             'Referral' => [
                 "amount" => $repository->totalReferralAmount() / 100,
                 "count" => $repository->totalReferralCount(),
-                "transaction_type" => "credit"
-            ],
-
-            'User sends fund to bfi' => [
-                "amount" => $repository->totaluserSendsFundToBfiAmount() / 100,
-                "count" => $repository->totaluserSendsFundToBfiCount(),
-                "transaction_type" => "debit"
-            ],
-
-            'Bfi receives funds from user' => [
-                "amount" => $repository->totalBfiReceiveFundFromUserAmount() / 100,
-                "count" => $repository->totalBfiReceiveFundFromUserCount(),
-                "transaction_type" => "credit"
-            ],
-
-            'Bfi sends fund to user' => [
-                "amount" => $repository->totalbfiSendFundToUserAmount()/100,
-                "count" => $repository->totalbfiSendFundToUserCount(),
-                "transaction_type" => "debit",
-            ],
-
-            'User receives fund from bfi' => [
-                "amount" => $repository->totalUserReceiveFundFromUserAmount()/100,
-                "count" => $repository->totalUserReceiveFundFromUserCount(),
                 "transaction_type" => "credit"
             ],
 
@@ -150,28 +90,10 @@ trait ReconciliationReportGenerator
                 "transaction_type" => "debit"
             ],
 
-            'User Send to Merchant Transaction' => [
-                "amount" => $repository->totalUserSendToMerchantAmount() / 100,
-                "count" => $repository->totalUserSendToMerchantCount(),
+            'User to Merchant Transaction' => [
+                "amount" => $repository->totalUserToMerchantAmount() / 100,
+                "count" => $repository->totalUserToMerchantCount(),
                 "transaction_type" => "debit"
-            ],
-
-            'Merchant Receives From User Transaction' => [
-                "amount" => $repository->totalMerchantReceiveFromUserAmount() / 100,
-                "count" => $repository->totalMerchantReceiveFromUserCount(),
-                "transaction_type" => 'credit',
-            ],
-
-            "BFI Credit" => [
-                "amount" => $repository->totalBFICreditAmount() / 100,
-                "count" => $repository->totalBFICreditCount(),
-                "transaction_type" => 'credit',
-            ],
-
-            "BFI Debit" => [
-                "amount" => $repository->totalBFIDebitAmount() / 100,
-                "count" => $repository->totalBFIDebitCount(),
-                "transaction_type" => 'debit'
             ],
 
             'Merchant Ticket Payment' => [
@@ -180,25 +102,13 @@ trait ReconciliationReportGenerator
                 'transaction_type' => 'debit'
             ],
 
-            "Refund for successful transaction"=>[
-                'amount' => $repository->totalRefundAmount()/100,
-                'count' => $repository->totalRefundCount(),
-                "transaction_type" => 'credit'
-            ],
-
-            "Refund for failure transaction"=>[
-                "amount" => $repository->totalRefundForFailureAmount()/100,
-                "count" => $repository->totalRefundForFailureCount(),
-                "transaction_type" => 'credit'
-            ],
-
             'Rounding off' => [
                 'amount' => $repository->totalRoundOffAmount(),
                 'count' => $repository->totalRoundOffCount(),
                 'transaction_type' => 'rounding off'
             ],
 
-          /*  'WalletBalance' => [
+            'WalletBalance' => [
                 "amount" => $repository->totalWalletBalanceAmount() / 100,
                 "count" => $repository->totalWalletBalanceCount() .' number of users',
                 "transaction_type" => "balance"
@@ -214,27 +124,7 @@ trait ReconciliationReportGenerator
                 "amount" => ($repository->totalWalletBalanceAmount() + $repository->totalBonusBalanceAmount()) / 100 ,
                 "count" => $repository->totalWalletBalanceCount().' number of users',
                 "transaction_type" => "balance"
-            ],*/
-
-            "Ntc direct" => [
-                "amount" => $repository->totalNtcDirectAmount() / 100,
-                "count" => $repository->totalNtcDirectCount(),
-                "transaction_type" => "debit"
-            ],
-
-            "Payment Nepal" => [
-                "amount" => $repository->totalPaymentNepalAmount() / 100,
-                "count" => $repository->totalPaymentNepalCount(),
-                "transaction_type" => "credit"
-            ],
-
-            "NPS Account Link Load" => [
-                "amount" => $repository->totalNPSAccountLinkAmount() / 100,
-                "count" => $repository->totalNPSAccountLinkCount(),
-                "transaction_type" => "credit"
             ],
         ];
     }
-
-
 }

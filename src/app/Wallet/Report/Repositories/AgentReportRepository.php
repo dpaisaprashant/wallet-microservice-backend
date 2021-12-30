@@ -5,16 +5,12 @@ namespace App\Wallet\Report\Repositories;
 
 
 use App\Models\Agent;
-use App\Models\CellPayUserTransaction;
-use App\Models\KhaltiUserTransaction;
 use App\Models\MerchantTransaction;
 use App\Models\NchlAggregatedPayment;
-use App\Models\NchlBankTransfer;
 use App\Models\TransactionEvent;
 use App\Models\UserToUserFundTransfer;
 use App\Models\UserTransaction;
 use Illuminate\Http\Request;
-use App\Models\Microservice\PreTransaction;
 
 class AgentReportRepository extends AbstractReportRepository
 {
@@ -54,7 +50,7 @@ class AgentReportRepository extends AbstractReportRepository
     {
         $userId = $this->agent->user_id;
         return TransactionEvent::where('user_id', $userId)
-            ->whereIn('transaction_type', [KhaltiUserTransaction::class,NchlAggregatedPayment::class])
+            ->whereIn('transaction_type', [UserTransaction::class, NchlAggregatedPayment::class])
             ->filter($this->request)
             ->sum('amount');
     }
@@ -62,41 +58,30 @@ class AgentReportRepository extends AbstractReportRepository
     public function totalP2PTransfer()
     {
         $userId = $this->agent->user_id;
-    /*    return TransactionEvent::where('user_id', $userId)
+        return TransactionEvent::where('user_id', $userId)
             ->where('transaction_type', UserToUserFundTransfer::class)
             ->filter($this->request)
             ->where('vendor', 'Transfer Funds')
-            ->sum('amount');*/
-        return TransactionEvent::where('user_id', $userId)
-            ->where('transaction_type', MerchantTransaction::class)
-            ->whereHas('preTransaction',function($query){
-                return $query->where('transaction_type',PreTransaction::TRANSACTION_TYPE_DEBIT);
-            })
-            ->filter($this->request)
             ->sum('amount');
     }
 
     public function totalCashIn()
     {
         $userId = $this->agent->user_id;
-    /*    return TransactionEvent::where('user_id', $userId)
+        return TransactionEvent::where('user_id', $userId)
             ->where('transaction_type', UserToUserFundTransfer::class)
             ->filter($this->request)
             ->where('vendor', 'Recieved Funds')
-            ->sum('amount');*/
-
-        return TransactionEvent::where('user_id', $userId)
-            ->where('transaction_type', UserToUserFundTransfer::class)
-            ->whereHas('preTransaction',function($query){
-               return $query->where('transaction_type',PreTransaction::TRANSACTION_TYPE_DEBIT);
-            })
-            ->filter($this->request)
             ->sum('amount');
     }
 
     public function otherPayment()
     {
-        return 0;
+        $userId = $this->agent->user_id;
+        return TransactionEvent::where('user_id', $userId)
+            ->whereIn('transaction_type', [MerchantTransaction::class])
+            ->filter($this->request)
+            ->sum('amount');
     }
 
     public function totalPayment()

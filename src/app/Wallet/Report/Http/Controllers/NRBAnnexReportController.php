@@ -243,18 +243,18 @@ class NRBAnnexReportController extends Controller
             ],
 
             'Topup' => [
-                'successful' => $repository->getSuccessfulPaypointCount(),
-                'failed' => ($repository->getFailedPaypointCount())
+                'successful' => $repository->getSuccessfulTopUpCount(),
+                'failed' => ($repository->getFailedTopUpCount())
             ],
 
             'Cash in' => [
-                'successful' => $repository->getSuccessfulAgentReceivedFundsCount(),
-                'failed' => ($repository->getFailedAgentReceivedFundsCount())
+                'successful' => $repository->getSuccessfulCashInCount(),
+                'failed' => ($repository->getFailedCashInCount())
             ],
 
             'Cash out' => [
-                'successful' => $repository->getSuccessfulAgentTransferFundsCount(),
-                'failed' => ($repository->getFailedAgentTransferFundsCount())
+                'successful' => $repository->getSuccessfulCashOutCount(),
+                'failed' => ($repository->getFailedCashOutCount())
             ],
 
         ];

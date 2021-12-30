@@ -161,15 +161,15 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
         return $count;
     }
 
-    public function getSuccessfulPaypointCount()
+    public function getSuccessfulTopUpCount()
     {
         $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
                                                                             WHERE
-                                                                            ((service_type='' AND status = 'SUCCESS')
+                                                                            ((vendor='KHALTI' AND status = 'SUCCESS')
                                                                             OR
-                                                                            (service_type='internet' AND status = 'SUCCESS')
+                                                                            (vendor='NEA' AND status = 'SUCCESS')
                                                                             OR
-                                                                            (service_type='tv' AND status = 'SUCCESS'))
+                                                                            (vendor='Samsara Remittance' AND status = 'SUCCESS'))
                                                                             AND
                                                                             date(created_at) >= date('$this->fromDate')
                                                                             AND
@@ -179,15 +179,15 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
         return $count;
     }
 
-    public function getFailedPaypointCount()
+    public function getFailedTopUpCount()
     {
         $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
                                                                             WHERE
-                                                                            ((service_type='' AND status != 'SUCCESS')
+                                                                           ((vendor='KHALTI' AND status != 'SUCCESS')
                                                                             OR
-                                                                            (service_type='internet' AND status != 'SUCCESS')
+                                                                            (vendor='NEA' AND status != 'SUCCESS')
                                                                             OR
-                                                                            (service_type='tv' AND status != 'SUCCESS'))
+                                                                            (vendor='Samsara Remittance' AND status != 'SUCCESS'))
                                                                             AND
                                                                             date(created_at) >= date('$this->fromDate')
                                                                             AND
@@ -197,27 +197,82 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
         return $count;
     }
 
-    public function getSuccessfulAgentReceivedFundsCount()
+    public function getSuccessfulCashInCount()
     {
-        return 0;
+        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
+                                                                            WHERE
+                                                                           ((vendor='NPS' AND status = 'SUCCESS')
+                                                                            OR
+                                                                            (vendor='NCHL_LOAD' AND status = 'SUCCESS')
+                                                                            OR
+                                                                            (vendor='NIC_ASIA_LOAD' AND status = 'SUCCESS')
+                                                                                OR
+                                                                            (vendor='NPAY' AND status = 'SUCCESS')
+                                                                                OR
+                                                                            (vendor='PAYMENT_NEPAL' AND status = 'SUCCESS')
+                                                                                OR
+                                                                            (vendor='Kumari Bank' AND status = 'SUCCESS'))
+                                                                            AND
+                                                                            date(created_at) >= date('$this->fromDate')
+                                                                            AND
+                                                                            date(created_at) <= date('$this->toDate')
+                                                                               ");
+        $count = $count[0]->totalCount;
+        return $count;
 
     }
 
-    public function getFailedAgentReceivedFundsCount()
+    public function getFailedCashInCount()
     {
-        return 0;
+        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
+                                                                            WHERE
+                                                                           ((vendor='NPS' AND status != 'SUCCESS')
+                                                                            OR
+                                                                            (vendor='NCHL_LOAD' AND status != 'SUCCESS')
+                                                                            OR
+                                                                            (vendor='NIC_ASIA_LOAD' AND status != 'SUCCESS')
+                                                                                OR
+                                                                            (vendor='NPAY' AND status != 'SUCCESS')
+                                                                                OR
+                                                                            (vendor='PAYMENT_NEPAL' AND status != 'SUCCESS')
+                                                                                OR
+                                                                            (vendor='Kumari Bank' AND status != 'SUCCESS'))
+                                                                            AND
+                                                                            date(created_at) >= date('$this->fromDate')
+                                                                            AND
+                                                                            date(created_at) <= date('$this->toDate')
+                                                                               ");
+        $count = $count[0]->totalCount;
+        return $count;
 
     }
 
-    public function getSuccessfulAgentTransferFundsCount()
+    public function getSuccessfulCashOutCount()
     {
-        return 0;
+        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
+                                                                            WHERE
+                                                                            service_type='BANK_TRANSFER'  AND status = 'SUCCESS'
+                                                                            AND
+                                                                            date(created_at) >= date('$this->fromDate')
+                                                                            AND
+                                                                            date(created_at) <= date('$this->toDate')
+                                                                               ");
+        $count = $count[0]->totalCount;
+        return $count;
 
     }
 
-    public function getFailedAgentTransferFundsCount()
-    {
-        return 0;
+    public function getFailedCashOutCount(){
+        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
+                                                                            WHERE
+                                                                            service_type='BANK_TRANSFER'  AND status != 'SUCCESS'
+                                                                            AND
+                                                                            date(created_at) >= date('$this->fromDate')
+                                                                            AND
+                                                                            date(created_at) <= date('$this->toDate')
+                                                                               ");
+        $count = $count[0]->totalCount;
+        return $count;
 
     }
 

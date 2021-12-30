@@ -63,9 +63,11 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 AND
                                                                                 (t.transaction_type ='App\\\Models\\\NchlAggregatedPayment'
                                                                                  OR
-                                                                                 t.transaction_type = 'App\\\Models\\\UserMerchantEventTicketPayment'
+                                                                                 t.transaction_type = 'App\\\Models\\\KhaltiUserTransaction'
                                                                                  OR
-                                                                                 t.transaction_type = 'App\\\Models\\\UserTransaction'
+                                                                                 t.transaction_type = 'App\\\Models\\\NeaTransaction'
+                                                                                 OR
+                                                                                 t.transaction_type = 'App\\\Models\\\UserToBfiFundTransfer'
                                                                                 )
                                                                                 AND
                                                                                 date(t.created_at) >= date('$this->fromDate')
@@ -89,9 +91,11 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 AND
                                                                                 (t.transaction_type ='App\\\Models\\\NchlAggregatedPayment'
                                                                                  OR
-                                                                                 t.transaction_type = 'App\\\Models\\\UserMerchantEventTicketPayment'
+                                                                                 t.transaction_type = 'App\\\Models\\\KhaltiUserTransaction'
                                                                                  OR
-                                                                                 t.transaction_type = 'App\\\Models\\\UserTransaction'
+                                                                                 t.transaction_type = 'App\\\Models\\\NeaTransaction'
+                                                                                 OR
+                                                                                 t.transaction_type = 'App\\\Models\\\UserToBfiFundTransfer'
                                                                                 )
                                                                                 AND
                                                                                 date(t.created_at) >= date('$this->fromDate')
@@ -157,11 +161,13 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 AND
                                                                                 (t.transaction_type ='App\\\Models\\\NchlLoadTransaction'
                                                                                  OR
-                                                                                 t.transaction_type = 'App\\\Models\\\NICAsiaCyberSourceLoadTransaction'
+                                                                                 t.transaction_type = 'App\\\Models\\\PaymentNepalLoadTransaction'
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\NpsLoadTransaction'
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\UserLoadTransaction'
+                                                                                     OR
+                                                                                 t.transaction_type = 'App\\\Models\\\BfiGatewayExecutePayment'
                                                                                 )
                                                                                 AND
                                                                                 date(t.created_at) >= date('$this->fromDate')
@@ -184,11 +190,13 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 AND
                                                                                 (t.transaction_type ='App\\\Models\\\NchlLoadTransaction'
                                                                                  OR
-                                                                                 t.transaction_type = 'App\\\Models\\\NICAsiaCyberSourceLoadTransaction'
+                                                                                 t.transaction_type = 'App\\\Models\\\PaymentNepalLoadTransaction'
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\NpsLoadTransaction'
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\UserLoadTransaction'
+                                                                                     OR
+                                                                                 t.transaction_type = 'App\\\Models\\\BfiGatewayExecutePayment'
                                                                                 )
                                                                                 AND
                                                                                 date(t.created_at) >= date('$this->fromDate')
@@ -208,14 +216,10 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 RIGHT JOIN agents as a ON a.user_id = t.user_id
                                                                                 WHERE t.user_id = a.user_id and a.status = 'ACCEPTED'
                                                                                 AND
-                                                                                (t.transaction_type ='App\\\Models\\\UsedUserReferral'
-                                                                                 OR
-                                                                                 t.transaction_type = 'App\\\Models\\\UserReferralBonusTransaction'
-                                                                                 OR
-                                                                                 (t.transaction_type = 'App\\\Wallet\\Commission\\\Models\\\Commission' AND t.service_type='CASHBACK')
+                                                                                 (t.transaction_type = 'App\\\Wallet\\Commission\\\Models\\\Commission' AND (t.service_type='CASHBACK' OR t.service_type='AGENT_CASHBACK'))
                                                                                      OR
                                                                                  (t.transaction_type = 'App\\\Models\\\LoadTestFund' AND t.service_type='LUCKY WINNER')
-                                                                                )
+
                                                                                 AND
                                                                                 date(t.created_at) >= date('$this->fromDate')
                                                                                 AND
@@ -234,14 +238,10 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 RIGHT JOIN agents as a ON a.user_id = t.user_id
                                                                                 WHERE t.user_id = a.user_id and a.status = 'ACCEPTED'
                                                                                 AND
-                                                                                (t.transaction_type ='App\\\Models\\\UsedUserReferral'
-                                                                                 OR
-                                                                                 t.transaction_type = 'App\\\Models\\\UserReferralBonusTransaction'
-                                                                                 OR
-                                                                                 (t.transaction_type = 'App\\\Wallet\\Commission\\\Models\\\Commission' AND t.service_type='CASHBACK')
+                                                                                 (t.transaction_type = 'App\\\Wallet\\Commission\\\Models\\\Commission' AND (t.service_type='CASHBACK' OR t.service_type='AGENT_CASHBACK'))
                                                                                      OR
                                                                                  (t.transaction_type = 'App\\\Models\\\LoadTestFund' AND t.service_type='LUCKY WINNER')
-                                                                                )
+
                                                                                 AND
                                                                                 date(t.created_at) >= date('$this->fromDate')
                                                                                 AND
@@ -260,10 +260,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 RIGHT JOIN agents as a ON a.user_id = t.user_id
                                                                                 WHERE t.user_id = a.user_id and a.status = 'ACCEPTED'
                                                                                 AND
-                                                                                (t.transaction_type ='App\\\Wallet\\\Commission\\\Models\\\Commission'
-                                                                                 OR
                                                                                  (t.transaction_type = 'App\\\Wallet\\Commission\\\Models\\\Commission' AND t.service_type='COMMISSION')
-                                                                                )
                                                                                 AND
                                                                                 date(t.created_at) >= date('$this->fromDate')
                                                                                 AND
@@ -282,10 +279,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 RIGHT JOIN agents as a ON a.user_id = t.user_id
                                                                                 WHERE t.user_id = a.user_id and a.status = 'ACCEPTED'
                                                                                 AND
-                                                                                (t.transaction_type ='App\\\Wallet\\\Commission\\\Models\\\Commission'
-                                                                                 OR
                                                                                  (t.transaction_type = 'App\\\Wallet\\Commission\\\Models\\\Commission' AND t.service_type='COMMISSION')
-                                                                                )
                                                                                 AND
                                                                                 date(t.created_at) >= date('$this->fromDate')
                                                                                 AND
@@ -344,9 +338,11 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 RIGHT JOIN agents as a ON a.user_id = t.user_id
                                                                                 WHERE t.user_id = a.user_id and a.status = 'ACCEPTED'
                                                                                 AND
-                                                                                (t.transaction_type ='App\\\Models\\\MerchantTransaction'
+                                                                                (t.transaction_type ='App\\\Models\\\TicketSale'
                                                                                     OR
-                                                                                t.transaction_type ='App\\\Models\\\UserMerchantEventTicketPayment'
+                                                                                t.transaction_type ='App\\\Models\\\EventTicketSale'
+                                                                                     OR
+                                                                                t.transaction_type ='App\\\Models\\\MerchantTransaction'
                                                                                  )
                                                                                 AND
                                                                                 date(t.created_at) >= date('$this->fromDate')
@@ -365,10 +361,12 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
         $qrPaymentValue = DB::connection('dpaisa')->select("SELECT SUM(t.amount/100) as totalSum FROM transaction_events as t
                                                                                 RIGHT JOIN agents as a ON a.user_id = t.user_id
                                                                                 WHERE t.user_id = a.user_id and a.status = 'ACCEPTED'
-                                                                                AND
-                                                                                (t.transaction_type ='App\\\Models\\\MerchantTransaction'
+                                                                                 AND
+                                                                                (t.transaction_type ='App\\\Models\\\TicketSale'
                                                                                     OR
-                                                                                t.transaction_type ='App\\\Models\\\UserMerchantEventTicketPayment'
+                                                                                t.transaction_type ='App\\\Models\\\EventTicketSale'
+                                                                                     OR
+                                                                                t.transaction_type ='App\\\Models\\\MerchantTransaction'
                                                                                  )
                                                                                 AND
                                                                                 date(t.created_at) >= date('$this->fromDate')

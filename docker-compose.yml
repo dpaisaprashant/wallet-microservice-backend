@@ -14,6 +14,14 @@ networks:
     external: true
   linked-account-integration-project_spring-boot-mysql-network:
     external: true
+  wallet-microservice-nea_spring-boot-mysql-network:
+    external: true
+  ticketing_spring-boot-mysql-network:
+    external: true
+  wallet-microservice-event-ticketing_spring-boot-mysql-network:
+    external: true
+  wallet_clearance_laravel:
+    external: true
 
 
 services:
@@ -30,8 +38,8 @@ services:
       - php
       - mysql
       - phpmyadmin
-      - mongo
-      - mongo-express
+    #      - mongo
+    #      - mongo-express
     networks:
       - laravel
       - wallet-microservice-core_laravel
@@ -40,6 +48,10 @@ services:
       - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paymentnepal_spring-boot-mysql-network
       - linked-account-integration-project_spring-boot-mysql-network
+      - wallet-microservice-nea_spring-boot-mysql-network
+      - ticketing_spring-boot-mysql-network
+      - wallet-microservice-event-ticketing_spring-boot-mysql-network
+      - wallet_clearance_laravel
 
   mysql:
     image: mysql:5.7.29
@@ -65,6 +77,10 @@ services:
       - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paymentnepal_spring-boot-mysql-network
       - linked-account-integration-project_spring-boot-mysql-network
+      - wallet-microservice-nea_spring-boot-mysql-network
+      - ticketing_spring-boot-mysql-network
+      - wallet-microservice-event-ticketing_spring-boot-mysql-network
+      - wallet_clearance_laravel
 
   php:
     build:
@@ -84,6 +100,10 @@ services:
       - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paymentnepal_spring-boot-mysql-network
       - linked-account-integration-project_spring-boot-mysql-network
+      - wallet-microservice-nea_spring-boot-mysql-network
+      - ticketing_spring-boot-mysql-network
+      - wallet-microservice-event-ticketing_spring-boot-mysql-network
+      - wallet_clearance_laravel
 
   composer:
     build:
@@ -104,6 +124,10 @@ services:
       - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paymentnepal_spring-boot-mysql-network
       - linked-account-integration-project_spring-boot-mysql-network
+      - wallet-microservice-nea_spring-boot-mysql-network
+      - ticketing_spring-boot-mysql-network
+      - wallet-microservice-event-ticketing_spring-boot-mysql-network
+      - wallet_clearance_laravel
 
     entrypoint: ['composer', '--ignore-platform-reqs']
 
@@ -127,6 +151,10 @@ services:
       - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paymentnepal_spring-boot-mysql-network
       - linked-account-integration-project_spring-boot-mysql-network
+      - wallet-microservice-nea_spring-boot-mysql-network
+      - ticketing_spring-boot-mysql-network
+      - wallet-microservice-event-ticketing_spring-boot-mysql-network
+      - wallet_clearance_laravel
 
   phpmyadmin:
     depends_on:
@@ -139,6 +167,7 @@ services:
     environment:
       PMA_HOST: mysql_backend_wallet
       MYSQL_ROOT_PASSWORD: secret
+      UPLOAD_LIMIT: 10000M
     networks:
       - laravel
       - wallet-microservice-core_laravel
@@ -147,31 +176,35 @@ services:
       - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paymentnepal_spring-boot-mysql-network
       - linked-account-integration-project_spring-boot-mysql-network
+      - wallet-microservice-nea_spring-boot-mysql-network
+      - ticketing_spring-boot-mysql-network
+      - wallet-microservice-event-ticketing_spring-boot-mysql-network
+      - wallet_clearance_laravel
 
 
-  mongo:
-    container_name: mongo-backend
-    image: mongo
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
-    ports:
-      - "27019:27017"
-    restart: always
-    volumes:
-      - ./mongo:/data/db
-    networks:
-      - laravel
-
-  mongo-express:
-    container_name: mongo-express-backend
-    image: mongo-express
-    restart: always
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: password
-    ports:
-      - "8021:8081"
-    networks:
-      - laravel
+#  mongo:
+#    container_name: mongo-backend
+#    image: mongo
+#    restart: always
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: root
+#      MONGO_INITDB_ROOT_PASSWORD: password
+#    ports:
+#      - "27019:27017"
+#    restart: always
+#    volumes:
+#      - ./mongo:/data/db
+#    networks:
+#      - laravel
+#
+#  mongo-express:
+#    container_name: mongo-express-backend
+#    image: mongo-express
+#    restart: always
+#    environment:
+#      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+#      ME_CONFIG_MONGODB_ADMINPASSWORD: password
+#    ports:
+#      - "8021:8081"
+#    networks:
+#      - laravel

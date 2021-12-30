@@ -41,8 +41,7 @@
                     <div class="ibox-content">
                         <div class="row">
                             <div class="col-sm-12">
-                                <form role="form" method="get" action="{{ route('report.nonBankPaymentReport') }}"
-                                      id="filter">
+                                <form role="form" method="get" action="{{ route('report.nonBankPaymentReport') }}" id="filter">
 
                                     <div class="row">
                                         <div class="col-12 mt-3">
@@ -74,67 +73,34 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <br>
                                     <div class="row">
-                                        <div class="col-4">
-                                            <div class="input-group date">
+
+                                        <div class="col-md-12 mt-3">
+                                            <label for="ionrange_amount">Date</label><br>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </span>
-                                                <input id="date_load_from" type="text"
-                                                       class="form-control date_from" placeholder="From"
-                                                       name="from" autocomplete="off"
-                                                       value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}">
-                                            </div>
-                                            <br>
-                                        </div>
-                                        <div class="col-4">
-                                            <div class="input-group date">
+                                                        <input id="date_load_from" type="text"
+                                                               class="form-control date_from" placeholder="From"
+                                                               name="from" autocomplete="off"
+                                                               value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}">
+                                                    </div>
+                                                    <br>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </span>
-                                                <input id="date_load_to" type="text"
-                                                       class="form-control date_to" placeholder="To" name="to"
-                                                       autocomplete="off"
-                                                       value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <select data-placeholder="User Type..." class="chosen-select"
-                                                        tabindex="2"
-                                                        name="user_type">
-                                                    <option value="" selected disabled>User Type...</option>
-                                                    @if(!empty($_GET['user_type']))
-                                                        <option value="all"
-                                                                @if($_GET['user_type'] == 'all') selected @endif>All
-                                                        </option>
-                                                        <option value="user"
-                                                                @if($_GET['user_type'] == 'user') selected @endif>User
-                                                        </option>
-                                                        <option value="merchant"
-                                                                @if($_GET['user_type'] == 'merchant') selected @endif>
-                                                            Merchant
-                                                        </option>
-                                                        <option value="agent"
-                                                                @if($_GET['user_type'] == 'agent') selected @endif>Agent
-                                                        </option>
-                                                    @else
-                                                        <option value="all">All</option>
-                                                        <option value="user">User</option>
-                                                        <option value="merchant">Merchant</option>
-                                                        <option value="agent">Agent</option>
-                                                    @endif
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <div class="form-group">
-                                                <input type="text" name="user" placeholder="Email or number"
-                                                       class="form-control"
-                                                       value="{{ !empty($_GET['user']) ? $_GET['user'] : '' }}">
+                                                        <input id="date_load_to" type="text"
+                                                               class="form-control date_to" placeholder="To" name="to"
+                                                               autocomplete="off"
+                                                               value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -142,8 +108,7 @@
 
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
-                                                formaction="{{ route('report.nonBankPaymentReport') }}">
-                                            <strong>Filter</strong>
+                                                formaction="{{ route('report.nonBankPaymentReport') }}"><strong>Filter</strong>
                                         </button>
                                     </div>
 
@@ -162,44 +127,42 @@
                 </div>
             </div>
         </div>
-        @if(!empty($_GET))
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="ibox ">
-                        <div class="ibox-title">
-                            <h5>List of all Non bank payment reports</h5>
-                        </div>
-                        <div class="ibox-content">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover dataTables-example"
-                                       title="Non bank payment report">
-                                    <thead>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h5>List of all Non bank payment reports</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover dataTables-example"
+                                   title="Non bank payment report">
+                                <thead>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>Transaction channel</th>
+                                    <th>Form of transaction</th>
+                                    <th>Number (Count)</th>
+                                    <th>Value (Amount sum)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($nonBankPayments as $title=>$nonBankPayment)
                                     <tr>
-                                        <th>S.No.</th>
-                                        <th>Transaction channel</th>
-                                        <th>Form of transaction</th>
-                                        <th>Number (Count)</th>
-                                        <th>Value (Amount sum)</th>
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>Customer initiated</td>
+                                        <td>{{$title}}</td>
+                                        <td>{{$nonBankPayment['number']}}</td>
+                                        <td>Rs. {{$nonBankPayment['value']}}</td>
                                     </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($nonBankPayments as $title=>$nonBankPayment)
-                                        <tr>
-                                            <td>{{$loop->index+1}}</td>
-                                            <td>Customer initiated</td>
-                                            <td>{{$title}}</td>
-                                            <td>{{$nonBankPayment['number']}}</td>
-                                            <td>Rs. {{$nonBankPayment['value']}}</td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-        @endif
+        </div>
     </div>
 @endsection
 

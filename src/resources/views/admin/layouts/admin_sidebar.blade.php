@@ -717,15 +717,7 @@ $url = url()->current();
                               </li>
                           @endcan--}}
                         {{--<li><a href="{{ route('report.user.reconciliation') }}">User Reconciliation Report</a></li>--}}
-                        @can('Report nrb active and inactive user')
-                            <li><a href="{{ route('report.nrb.activeUser') }}">NRB Active User Report</a>
-                            </li>
-                            <li><a href="{{ route('report.nrb.inactiveUser') }}">NRB Inactive User Report</a>
-                            </li>
-                            <li><a href="{{ route('report.nrb.activeInactiveTransaction') }}">Active/Inactive
-                                    Transaction Report</a>
-                            </li>
-                        @endcan
+
                         @can('Report nrb agent')
                             <li><a href="{{ route('report.agent') }}">NRB Agent Report</a></li>
                         @endcan
@@ -750,17 +742,44 @@ $url = url()->current();
 
                             {{--<li><a href="{{route('report.closing.balance')}}">Closing Balance</a></li>--}}
                         @endcan
-                        @can('Report commission')
-                            <li><a href="{{ route('report.nrb.annex.agent.payments') }}">NRB Annex 10.1.5 Agents
+
+
+                    </ul>
+                </li>
+            @endif
+
+            @if(auth()->user()->hasAnyPermission(['Monthly report view', 'Yearly report view','Report paypoint','Report npay','Report nchl load','Report referral','Report register using referral user','Report subscriber daily','Report reconciliation','Report nrb active and inactive user','Report non bank payment','Report wallet end balance','Report admin kyc','Report commission']))
+                <li @if(preg_match('/report/i', $url)) class="active" @endif>
+                    <a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">NRB Annex Reports</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        @can('Monthly report view')
+                            <li><a href="{{ route('report.nrb.annex.agent.payments') }}">Nrb Annex 10.1.5 Agent
                                     Report</a></li>
                         @endcan
-                        @can('Report commission')
-                            <li><a href="{{ route('report.nrb.annex.customer.payments') }}">NRB Annex 10.1.5 Initiated Customer
+                        @can('Monthly report view')
+                            <li><a href="{{ route('report.nrb.annex.customer.payments') }}">Nrb Annex 10.1.5 Initiated
+                                    Customer Report</a></li>
+                        @endcan
+                        @can('Monthly report view')
+                            <li><a href="{{ route('report.nrb.annex.merchant.payments') }}">Nrb Annex 10.1.6 Report</a>
+                            </li>
+                        @endcan
+                        @can('Monthly report view')
+                            <li><a href="{{ route('report.statement.settlement.bank') }}">Statement Settlement Bank
                                     Report</a></li>
                         @endcan
-                        @can('Report commission')
-                            <li><a href="{{ route('report.nrb.annex.merchant.payments') }}">NRB Annex 10.1.6 Merchant Payments
-                                    Report</a></li>
+                        @can('Report nrb active and inactive user')
+                            <li><a href="{{ route('report.active.inactive.user') }}">NRB Active/Inactive User Report</a>
+                            </li>
+                        @endcan
+                        @can('Report nrb active and inactive user')
+                            <li><a href="{{ route('report.active.inactive.user.slab') }}">NRB Active/Inactive User Slab
+                                    Report</a>
+                            </li>
+                        @endcan
+                        @can('Report nrb reconciliation')
+                            <li><a href="{{ route('report.nrb.annex.reconciliation') }}">NRB Reconciliation Report</a></li>
                         @endcan
 
                     </ul>
@@ -768,7 +787,7 @@ $url = url()->current();
             @endif
 
 
-            @if(auth()->user()->hasAnyPermission(['View blocked ip', 'View whitelisted ip']))
+        @if(auth()->user()->hasAnyPermission(['View blocked ip', 'View whitelisted ip']))
                 <li @if(preg_match('/ip/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-server"></i> <span class="nav-label">Block / Whitelist IPs</span><span
                             class="fa arrow"></span></a>

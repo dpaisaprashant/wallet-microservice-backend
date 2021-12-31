@@ -236,7 +236,32 @@ class UserController extends Controller
     public function createUserKyc($id)
     {
         $user = User::findOrFail($id);
-        return view('admin.user.createUserKyc')->with(compact('user'));
+        $provinces = [
+            "Province No. 1",
+            "Province No. 2",
+            "Province No. 3",
+            "Gandaki Pradesh",
+            "Province No. 5",
+            "Karnali Pradesh",
+            "Sudurpashchim Pradesh"
+        ];
+        $zones = [
+            'MECHI',
+            'KOSHI',
+            'SAGARMATHA',
+            'JANAKPUR',
+            'BAGMATI',
+            'NARAYANI',
+            'GANDAKI',
+            'DHAULAGIRI',
+            'LUMBINI',
+            'RAPTI',
+            'BHERI',
+            'KARNALI',
+            'SETI',
+            'MAHAKALI'
+        ];
+        return view('admin.user.createUserKyc')->with(compact('user','provinces','zones'));
     }
 
     public function storeUserKyc(Request $request, $id)
@@ -341,7 +366,224 @@ class UserController extends Controller
         $date_of_birth_formatted = date('j F, Y', $date_of_birth);
         $date_of_issue = strtotime($user->kyc->c_issued_date);
         $date_of_issue_formatted = date('j F, Y', $date_of_issue);
-        return view('admin.user.EditKyc')->with(compact('user', 'admin', 'DobBs', 'DateOfIssueBs', 'date_of_birth_formatted', 'date_of_issue_formatted'));
+        $provinces = [
+            "Province No. 1",
+            "Province No. 2",
+            "Province No. 3",
+            "Gandaki Pradesh",
+            "Province No. 5",
+            "Karnali Pradesh",
+            "Sudurpashchim Pradesh"
+        ];
+        $zones = [
+            'MECHI',
+            'KOSHI',
+            'SAGARMATHA',
+            'JANAKPUR',
+            'BAGMATI',
+            'NARAYANI',
+            'GANDAKI',
+            'DHAULAGIRI',
+            'LUMBINI',
+            'RAPTI',
+            'BHERI',
+            'KARNALI',
+            'SETI',
+            'MAHAKALI'
+        ];
+        return view('admin.user.EditKyc')->with(compact('user', 'admin', 'DobBs', 'DateOfIssueBs', 'date_of_birth_formatted', 'date_of_issue_formatted','provinces','zones'));
+    }
+
+    public function GetDistrictFromProvince(Request $request){
+        $province = $request->province;
+        $districts = [
+          'Province No. 1' => [
+                  'Bhojpur',
+                  'Dhankuta',
+                  'Ilam',
+                  'Jhapa',
+                  'Khotang',
+                  'Morang',
+                  'Okhaldhunga',
+                  'Panchthar',
+                  'Sankhuwasabha',
+                  'Solukhumbu',
+                  'Sunsari',
+                  'Taplejung',
+                  'Terhathum',
+                  'Udayapur',
+              ],
+          'Province No. 2' => [
+                  'Bara',
+                  'Parsa',
+                  'Dhanusa',
+                  'Mahottari',
+                  'Rautahat',
+                  'Saptari',
+                  'Sarlahi',
+                  'Siraha',
+              ],
+          'Province No. 3' => [
+                  'Bhaktapur',
+                  'Chitwan',
+                  'Dhading',
+                  'Dolakha',
+                  'Kathmandu',
+                  'Kavrepalanchok',
+                  'Lalitpur',
+                  'Makwanpur',
+                  'Nuwakot',
+                  'Ramechhap',
+                  'Rasuwa',
+                  'Sindhuli',
+                  'Sindhupalchok',
+              ],
+          'Gandaki Pradesh' => [
+                  'Baglung',
+                  'Gorkha',
+                  'Kaski',
+                  'Lamjung',
+                  'Manang',
+                  'Mustang',
+                  'Myagdi',
+                  'Nawalparasi (East)',
+                  'Nawalparasi (West)',
+                  'Parbat',
+                  'Syangja',
+                  'Tanahun',
+              ],
+          'Province No. 5' => [
+                  'Arghakhanchi',
+                  'Banke',
+                  'Bardiya',
+                  'Dang Deukhuri',
+                  'Rukum (East)',
+                  'Gulmi',
+                  'Kapilvastu',
+                  'Palpa',
+                  'Pyuthan',
+                  'Rolpa',
+                  'Rupandehi',
+              ],
+          'Karnali Pradesh' => [
+                  'Dailekh',
+                  'Dolpa',
+                  'Humla',
+                  'Jajarkot',
+                  'Jumla',
+                  'Kalikot',
+                  'Mugu',
+                  'Salyan',
+                  'Surkhet',
+                  'Rukum (West)',
+              ],
+          'Sudurpashchim Pradesh' => [
+                  'Achham',
+                  'Baitadi',
+                  'Bajhang',
+                  'Bajura',
+                  'Dadeldhura',
+                  'Darchula',
+                  'Doti',
+                  'Kailali',
+                  'Kanchanpur',
+              ],
+        ];
+
+        if (array_key_exists($province,$districts)){
+            return $districts[$province];
+        }else{
+            return false;
+        }
+
+    }
+
+    public function GetMunicipalityFromDistrict(Request $request){
+        $district = $request->district;
+        $municipalities= [
+            'Achham'=> ['Kamalbazar','Mangalsen','Panchadewal Binayak', 'Sanphebagar'],
+            'Arghakhanchi'=> ['Bhumekasthan', 'Sandhikharka', 'Sitganga'],
+            'Baglung'=> ['Baglung', 'Dhorpatan', 'Galkot', 'Jaimuni'],
+            'Baitadi'=> ['Dasharathchanda', 'Melauli', 'Patan', 'Purchaudi'],
+            'Bajhang'=> ['Bungal', 'Jaya Prithivi'],
+            'Bajura'=> ['Badimalika', 'Budhiganga', 'Budhinanda', 'Tribeni'],
+            'Banke'=> ['Nepalganj', 'Kohalpur'],
+            'Bara'=> ['Jitpur Simara','Kalaiya','Kolhabi','Mahagadhimai','Nijgadh','Pacharauta','Simroungadh'],
+            'Bardiya'=> ['Bansgadhi', 'Barbardiya', 'Gulariya','Madhuwan','Rajapur','Thakurbaba'],
+            'Bhaktapur'=> ['Bhaktapur','Changunarayan','Madhyapur Thimi','Suryabinayak'],
+            'Bhojpur'=> ['Bhojpur', 'Shadananda'],
+            'Chitwan'=> ['Bharatpur','Kalika','Khairahani','Madi','Rapti','Ratnangar'],
+            'Dadeldhura'=> ['Amargadhi', 'Parashuram'],
+            'Dailekh'=> ['Aathabis','Chamunda Bindrasaini','Dullu','Narayan'],
+            'Dang Deukhuri'=> ['Ghorahi', 'Tulsipur', 'Lamahi'],
+            'Darchula'=> ['Mahakali', 'Shailyashikhar'],
+            'Dhading'=> ['Dhunibesi', 'Nilakantha'],
+            'Dhankuta'=> ['Dhankuta', 'Mahalaxmi', 'Pakhribas'],
+            'Dhanusa'=> ['Janakpur','Bidehi','Chhireshwornath','Dhanusadham','Ganeshman Charnath','Hansapur','Kamala','Mithila','Mithila Bihari','Nagarain','Sabaila','Sahidnagar'],
+            'Dolakha'=> ['Bhimeshwor', 'Jiri'],
+            'Dolpa'=> ['Thuli Bheri', 'Tripurasundari'],
+            'Doti'=> ['Dipayal Silgadhi', 'Shikhar'],
+            'Gorkha'=> ['Gorkha', 'Palungtar'],
+            'Gulmi'=> ['Musikot', 'Resunga'],
+            'Humla'=> ['Humla'],
+            'Ilam'=> ['Deumai', 'Ilam', 'Mai', 'Suryodaya'],
+            'Jajarkot'=> ['Bheri', 'Chhedagad', 'Tribeni Nalagad'],
+            'Jhapa'=> ['Arjundhara','Bhadrapur','Birtamod','Damak','Gauradhaha','Kankai','Mechinagar','Shivasataxi'],
+            'Jumla'=> ['Chandannath'],
+            'Kavrepalanchok'=> ['Banepa','Dhulikhel','Mandandeupur','Namobuddha','Panauti','Panchkhal'],
+            'Kailali'=> ['Dhangadhi','Bhajani','Gauriganga','Ghodaghodi','Godawari','Lamkichuha','Tikapur'],
+            'Kalikot'=> ['Khandachakra', 'Raskot', 'Tilagufa'],
+            'Kanchanpur'=> ['Bedkot','Belauri','Bhimdatta','Krishnapur','Mahakali','Punarbas','Suklaphanta'],
+            'Kapilvastu'=> ['Banganga','Buddhabhumi','Kapilbastu','Krishnanagar','Maharajgunj','Shivaraj'],
+            'Kaski'=> ['Pokhara Lekhnath'],
+            'Kathmandu'=> ['Kathmandu','Budhanilakantha','Chandragiri','Dakshinkali','Gokarneshwor','Kageshwori Manahara','Kirtipur','Nagarjun','Shankharapur','Tarakeshwar','Tokha'],
+            'Khotang'=> ['Halesi Tuwachung', 'Rupakot Majhuwagadhi'],
+            'Lalitpur' => ['Godawari', 'Mahalaxmi'],
+            'Lamjung'=> ['Besishahar','Madhyanepal','Rainas','Sundarbazar'],
+            'Mahottari'=> ['Aurahi','Balwa','Bardibas','Bhangaha','Gaushala','Jaleswar','Loharpatti','Manra Sisawa','Matihani','Ramgopalpur'],
+            'Makwanpur'=> ['Hetauda', 'Thaha'],
+            'Manang'=> ['Manang'],
+            'Morang'=> ['Biratnagar','Belbari','Letang','Patahri Shanishchare','Rangeli','Ratuwamai','Sundarharaicha','Sunwarshi','Uralabari'],
+            'Mugu'=> ['Chhayanath Rara'],
+            'Mustang'=> ['Mustang'],
+            'Myagdi'=> ['Beni'],
+            'Nawalparasi (East)'=> ['Devchuli', 'Gaidakot', 'Kawaswoti', 'Madhyabindu'],
+            'Nawalparasi (West)'=> ['Bardaghat', 'Ramgram', 'Sunwal'],
+            'Nuwakot'=> ['Belkotgadhi', 'Bidur'],
+            'Okhaldhunga'=> ['Siddhicharan'],
+            'Palpa'=> ['Rampur', 'Tansen'],
+            'Panchthar'=> ['Phidim'],
+            'Parsa'=> ['Birgunj', 'Bahudaramai', 'Parsagadi', 'Pokhariya'],
+            'Parbat'=> ['Kushma', 'Phalebas'],
+            'Pyuthan'=> ['Pyuthan', 'Sworgadwary'],
+            'Ramechhap'=> ['Manthali', 'Ramechhap'],
+            'Rasuwa'=> ['Rasuwa'],
+            'Rautahat'=> ['Baudhimai','Brindaban','Chandrapur','Devahi Gonahi','Gadhimai','Garuda','Gaur','Gujara','Ishanath','Katahariya','Madav Narayan','Maulapur','Paroha', 'Phatuwa Bijayapur','Rajdevi','Rajpur'],
+            'Rolpa'=> ['Rolpa'],
+            'Rukum (East)'=> ['Rukum (East)'],
+            'Rukum (West)'=> ['Aathbiskot', 'Chaurjahari', 'Musikot'],
+            'Rupandehi'=> ['Butwal','Devdaha','Lumbini Sanskritik','Sainamaina','Siddharthanagar','Tilottama'],
+            'Salyan'=> ['Bagchaur', 'Bangad Kupinde', 'Sharada'],
+            'Sankhuwasabha'=> ['Chainpur','Dharmadevi','Khandbari','Madi','Panchakhapan'],
+            'Saptari'=> ['Bodebarsaien','Dakneshwori','Hanumannagar Kankalani','Kanchanrup','Khadak','Rajbiraj','Saptakoshi','Shambhunath','Surunga'],
+            'Sarlahi'=> ['Bagmati','Balara','Barahathawa','Godaita','Haripur','Haripurwa','Hariwan','Ishworpur','Kabilasi','Lalbandi','Malangawa'],
+            'Sindhuli'=> ['Dudhouli', 'Kamalamai'],
+            'Sindhupalchok'=> ['Barhabise', 'Chautara Sangachokgadhi', 'Melamchi'],
+            'Siraha'=> ['Dhangadhimai','Golbazar','Kalyanpur','Karjanha','Lahan','Mirchaiya','Siraha','Sukhipur'],
+            'Solukhumbu'=> ['Solududhakunda'],
+            'Sunsari'=> ['Dharan','Itahari','Barah','Duhabi','Inarwa','Ramdhuni'],
+            'Surkhet'=> ['Bheriganga','Birendranagar','Gurbhakot','Lekbesi','Panchpuri'],
+            'Syangja'=> ['Bhirkot','Chapakot','Galyang','Putalibazar','Waling'],
+            'Tanahun'=> ['Bhanu', 'Bhimad', 'Byas', 'Shuklagandaki'],
+            'Taplejung'=> ['Phungling'],
+            'Terhathum'=> ['Laligurans', 'Myanglung'],
+            'Udayapur'=> ['Belaka', 'Chaudandigadhi', 'Katari', 'Triyuga'],
+        ];
+        if (array_key_exists($district,$municipalities)){
+            return $municipalities[$district];
+        }else{
+            return false;
+        }
     }
 
     public function UpdateKyc(Request $request, $id)

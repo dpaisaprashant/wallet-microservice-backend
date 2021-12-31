@@ -140,6 +140,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/users/edit-kyc/{id}', 'UserController@EditKyc')->name('user.editKyc')->middleware('permission:Edit user kyc');
         Route::post('/users/edit-kyc/{id}', 'UserController@UpdateKyc')->name('user.updateKyc')->middleware('permission:Edit user kyc');
         Route::get('/users/transactions/{id}', 'UserController@transaction')->name('user.transaction')->middleware('permission:User transactions');
+        Route::post('/users/kyc/get-districts','UserController@GetDistrictFromProvince')->name('get.district');
+        Route::post('/users/kyc/get-municipality','UserController@GetMunicipalityFromDistrict')->name('get.municipality');
 
         Route::post('/user/deactivate', 'UserController@deactivateUser')->name('user.deactivate')->middleware('permission:User deactivate'); //deactivate user
         Route::post('/user/activate', 'UserController@activateUser')->name('user.activate')->middleware('permission:User activate');

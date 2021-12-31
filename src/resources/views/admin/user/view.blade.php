@@ -69,7 +69,7 @@
                                                     &nbsp;{{ $user->mobile_no }}
                                                 @endif
                                             </td>
-                                            <td>{{ $user->prizeCode->code }}</td>
+                                            <td>{{ optional($user->prizeCode)->code }}</td>
                                             {{--<td class="center">
                                                 @if(!empty($user->email_verified_at))
                                                     <i class="fa fa-check-circle" style="color: green;"></i> &nbsp;{{ $user->email }}

@@ -43,7 +43,7 @@
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </span>
-                                                <input id="date_load_from" type="text" class="form-control date_pre_transaction_from"
+                                                <input id="date_load_from" type="text" class="form-control date_from"
                                                        placeholder="From" name="pre_transaction_from" autocomplete="off"
                                                        value="{{ !empty($_GET['pre_transaction_from']) ? $_GET['pre_transaction_from'] : '' }}" required>
                                             </div>

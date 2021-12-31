@@ -22,7 +22,7 @@ class ClearanceServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/routes/clearance.php');
         $this->loadViewsFrom(__DIR__.'/resources/views', 'Clearance');
         //$this->app->bind(ClearanceRepositoryContract::class, TransactionEventClearanceRepositoryContract::class);
-        $this->app->bind(ClearanceRepositoryContract::class, PreTransactionClearanceRepositoryContract::class);
+        //$this->app->bind(ClearanceRepositoryContract::class, PreTransactionClearanceRepositoryContract::class);
     }
 
 }

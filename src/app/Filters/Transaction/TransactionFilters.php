@@ -25,6 +25,8 @@ class TransactionFilters extends FiltersAbstract
         'to_amount' => ToAmountFilter::class,
         'from' => FromDateFilter::class,
         'to' => ToDateFilter::class,
+        'pre_transaction_from' => PreTransactionFromDateFilter::class,
+        'pre_transaction_to' => PreTransactionToDateFilter::class,
         'transaction_from' => FromDateFilter::class,
         'transaction_to' => ToDateFilter::class,
         'date_year' => YearFilter::class,

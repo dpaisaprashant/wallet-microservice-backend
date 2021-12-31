@@ -43,9 +43,9 @@
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </span>
-                                                <input id="date_load_from" type="text" class="form-control date_from"
-                                                       placeholder="From" name="from" autocomplete="off"
-                                                       value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}" required>
+                                                <input id="date_load_from" type="text" class="form-control date_pre_transaction_from"
+                                                       placeholder="From" name="pre_transaction_from" autocomplete="off"
+                                                       value="{{ !empty($_GET['pre_transaction_from']) ? $_GET['pre_transaction_from'] : '' }}" required>
                                             </div>
                                         </div>
 
@@ -55,8 +55,8 @@
                                                         <i class="fa fa-calendar"></i>
                                                     </span>
                                                 <input id="date_load_to" type="text" class="form-control date_to"
-                                                       placeholder="To" name="to" autocomplete="off"
-                                                       value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}" required>
+                                                       placeholder="To" name="pre_transaction_to" autocomplete="off"
+                                                       value="{{ !empty($_GET['pre_transaction_to']) ? $_GET['pre_transaction_to'] : '' }}" required>
                                             </div>
                                         </div>
 
@@ -96,7 +96,7 @@
                                 </form>
                             </div>
                         </div>
-                        @if(!empty($_GET['from']) && !empty($_GET['to']))
+                        @if(!empty($_GET['pre_transaction_from']) && !empty($_GET['pre_transaction_to']))
                             @if(!empty($info))
                                 <div class="row" style="margin-top: 10px">
                                     <div class="col-sm-12">
@@ -114,10 +114,10 @@
 
         <div class="row">
             <div class="col-lg-12">
-                @if(!empty($_GET['from']) && !empty($_GET['to']))
+                @if(!empty($_GET['pre_transaction_from']) && !empty($_GET['pre_transaction_to']))
                     <div class="ibox ">
                         <div class="ibox-title">
-                            <h5>Clearance report from {{ $_GET['from'] . ' to ' . $_GET['to'] }}</h5>
+                            <h5>Clearance report pre_transaction_from {{ $_GET['pre_transaction_from'] . ' to ' . $_GET['pre_transaction_to'] }}</h5>
                         </div>
                         <div class="ibox-content">
                             <h5><b>Total Count:</b> {{ $totalTransactionCount }}</h5>
@@ -153,8 +153,8 @@
 
                                         <form id="excelClearance" action="{{ route('clearance.generate') }}" method="post" enctype="multipart/form-data">
                                             @csrf
-                                            <input type="hidden" name="from" value="{{ $_GET['from'] ?? "" }}">
-                                            <input type="hidden" name="to" value="{{ $_GET['to'] ?? "" }}">
+                                            <input type="hidden" name="pre_transaction_from" value="{{ $_GET['pre_transaction_from'] ?? "" }}">
+                                            <input type="hidden" name="pre_transaction_to" value="{{ $_GET['pre_transaction_to'] ?? "" }}">
                                             <input type="hidden" name="transaction_event_transaction_type" value="{{ $_GET['transaction_event_transaction_type'] ?? "" }}">
 
                                             <div class="input-group date">

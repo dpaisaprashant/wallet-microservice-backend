@@ -30,7 +30,7 @@ class ClearanceController extends Controller
         $info = "";
         if (!empty($_GET)) {
             //interface implementation is bound in ClearanceServiceProvider
-            $repository = resolve(ClearanceRepositoryContract::class);
+            $repository = new TransactionEventClearanceRepositoryContract();
             $transactions = $repository->paginatedTransactions();
             $totalTransactionCount = $repository->transactionsCount();
             $totalTransactionAmountSum = $repository->transactionAmountSum();

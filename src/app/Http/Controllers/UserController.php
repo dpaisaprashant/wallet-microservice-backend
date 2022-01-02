@@ -40,6 +40,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use mysql_xdevapi\Exception;
 use App\Traits\DateConverter;
+use QrCode;
 
 
 class UserController extends Controller
@@ -88,6 +89,15 @@ class UserController extends Controller
         View::share('districts', $districts);
 
         return view('admin.user.view')->with(compact('users'));
+    }
+
+    public function DownloadQr($id){
+        $user = User::where('id','=',$id)->first();
+        $data_for_qr = ['number'=>$user->mobile_no,'service'=>'SajiloPay','name'=>$user->name,'type'=>'user'];
+        $data_for_qr_json = json_encode($data_for_qr,true);
+        $filename = $user->mobile_no . '_' .time() .".svg";
+        $qr =  QrCode::generate($data_for_qr_json, storage_path("app/public/") . $filename);
+        return view('admin.merchant.qr')->with(compact('data_for_qr','data_for_qr_json','filename'));
     }
 
     public function rejectKycUsers(UserRepository $repository)

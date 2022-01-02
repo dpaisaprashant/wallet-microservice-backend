@@ -108,6 +108,7 @@ Route::group(['prefix' => 'admin'], function () {
          * Users
          */
         Route::get('/users', 'UserController@view')->name('user.view')->middleware('permission:Users view');//all users
+        Route::get('/users/downloads/qr/{id}','UserController@DownloadQr')->name('user.download.qr');
 
         Route::get('/rejected-kyc-users','UserController@rejectKycUsers')->name('reject.kycUsers')->middleware('permission:Rejected user kyc');
         Route::get('/accepted-kyc-users','UserController@acceptedKycUsers')->name('accept.kycUsers')->middleware('permission:Accepted user kyc');

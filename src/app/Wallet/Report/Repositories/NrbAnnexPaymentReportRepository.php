@@ -68,12 +68,12 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                  t.transaction_type = 'App\\\Models\\\UserTransaction'
                                                                                 )
                                                                                 AND
-                                                                                date(t.created_at) >= date('$this->fromDate')
+                                                                                date(t.created_at) >= date(:fromDate)
                                                                                 AND
-                                                                                date(t.created_at) <= date('$this->toDate')
+                                                                                date(t.created_at) <= date(:toDate)
                                                                                 AND
-                                                                                (t.amount/100) > '$this->fromAmount' and (t.amount/100) <= '$this->toAmount'
-                                                                               ");
+                                                                                (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
 
         $billPaymentTotalCount = $billPaymentTotalCount[0]->totalCount;
 
@@ -94,12 +94,12 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                  t.transaction_type = 'App\\\Models\\\UserTransaction'
                                                                                 )
                                                                                 AND
-                                                                                date(t.created_at) >= date('$this->fromDate')
+                                                                                date(t.created_at) >= date(:fromDate)
                                                                                 AND
-                                                                                date(t.created_at) <= date('$this->toDate')
+                                                                                date(t.created_at) <= date(:toDate)
                                                                                 AND
-                                                                                (t.amount/100) > '$this->fromAmount' and (t.amount/100) <= '$this->toAmount'
-                                                                               ");
+                                                                                (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
         $billPaymentTotalValue = $billPaymentTotalValue[0]->totalSum;
 
         return $billPaymentTotalValue;
@@ -116,12 +116,12 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                  t.transaction_type = 'App\\\Models\\\UserToUserFundTransfer'
                                                                                 )
                                                                                 AND
-                                                                                date(t.created_at) >= date('$this->fromDate')
+                                                                                date(t.created_at) >= date(:fromDate)
                                                                                 AND
-                                                                                date(t.created_at) <= date('$this->toDate')
+                                                                                date(t.created_at) <= date(:toDate)
                                                                                 AND
-                                                                                (t.amount/100) > '$this->fromAmount' and (t.amount/100) <= '$this->toAmount'
-                                                                               ");
+                                                                                (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
 
         $transferTotalCount = $transferTotalCount[0]->totalCount;
         return $transferTotalCount;
@@ -138,12 +138,12 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                  t.transaction_type = 'App\\\Models\\\UserToUserFundTransfer'
                                                                                 )
                                                                                 AND
-                                                                                date(t.created_at) >= date('$this->fromDate')
+                                                                                date(t.created_at) >= date(:fromDate)
                                                                                 AND
-                                                                                date(t.created_at) <= date('$this->toDate')
+                                                                                date(t.created_at) <= date(:toDate)
                                                                                 AND
-                                                                                (t.amount/100) > '$this->fromAmount' and (t.amount/100) <= '$this->toAmount'
-                                                                               ");
+                                                                                (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
 
         $transferTotalValue = $transferTotalValue[0]->totalSum;
         return $transferTotalValue;
@@ -164,12 +164,12 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                  t.transaction_type = 'App\\\Models\\\UserLoadTransaction'
                                                                                 )
                                                                                 AND
-                                                                                date(t.created_at) >= date('$this->fromDate')
+                                                                                date(t.created_at) >= date(:fromDate)
                                                                                 AND
-                                                                                date(t.created_at) <= date('$this->toDate')
+                                                                                date(t.created_at) <= date(:toDate)
                                                                                 AND
-                                                                                (t.amount/100) > '$this->fromAmount' and (t.amount/100) <= '$this->toAmount'
-                                                                               ");
+                                                                                (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
 
         $cashInTotalCount = $cashInTotalCount[0]->totalCount;
 
@@ -191,12 +191,12 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                  t.transaction_type = 'App\\\Models\\\UserLoadTransaction'
                                                                                 )
                                                                                 AND
-                                                                                date(t.created_at) >= date('$this->fromDate')
+                                                                                date(t.created_at) >= date(:fromDate)
                                                                                 AND
-                                                                                date(t.created_at) <= date('$this->toDate')
+                                                                                date(t.created_at) <= date(:toDate)
                                                                                 AND
-                                                                                (t.amount/100) > '$this->fromAmount' and (t.amount/100) <= '$this->toAmount'
-                                                                               ");
+                                                                                (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
 
         $cashInTotalValue = $cashInTotalValue[0]->totalSum;
         return $cashInTotalValue;
@@ -217,12 +217,12 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                  (t.transaction_type = 'App\\\Models\\\LoadTestFund' AND t.service_type='LUCKY WINNER')
                                                                                 )
                                                                                 AND
-                                                                                date(t.created_at) >= date('$this->fromDate')
+                                                                                date(t.created_at) >= date(:fromDate)
                                                                                 AND
-                                                                                date(t.created_at) <= date('$this->toDate')
+                                                                                date(t.created_at) <= date(:toDate)
                                                                                 AND
-                                                                                (t.amount/100) > '$this->fromAmount' and (t.amount/100) <= '$this->toAmount'
-                                                                               ");
+                                                                                (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
 
         $cashBackOfferTotalNumber = $cashBackOfferTotalNumber[0]->totalCount;
         return $cashBackOfferTotalNumber;
@@ -243,12 +243,12 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                  (t.transaction_type = 'App\\\Models\\\LoadTestFund' AND t.service_type='LUCKY WINNER')
                                                                                 )
                                                                                 AND
-                                                                                date(t.created_at) >= date('$this->fromDate')
+                                                                                date(t.created_at) >= date(:fromDate)
                                                                                 AND
-                                                                                date(t.created_at) <= date('$this->toDate')
+                                                                                date(t.created_at) <= date(:toDate)
                                                                                 AND
-                                                                                (t.amount/100) > '$this->fromAmount' and (t.amount/100) <= '$this->toAmount'
-                                                                               ");
+                                                                                (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
 
         $cashBackOfferTotalValue = $cashBackOfferTotalValue[0]->totalSum;
         return $cashBackOfferTotalValue;
@@ -265,12 +265,12 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                  (t.transaction_type = 'App\\\Wallet\\Commission\\\Models\\\Commission' AND t.service_type='COMMISSION')
                                                                                 )
                                                                                 AND
-                                                                                date(t.created_at) >= date('$this->fromDate')
+                                                                                date(t.created_at) >= date(:fromDate)
                                                                                 AND
-                                                                                date(t.created_at) <= date('$this->toDate')
+                                                                                date(t.created_at) <= date(:toDate)
                                                                                 AND
-                                                                                (t.amount/100) > '$this->fromAmount' and (t.amount/100) <= '$this->toAmount'
-                                                                               ");
+                                                                                (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
 
         $commissionTotalNumber = $commissionTotalNumber[0]->totalCount;
         return $commissionTotalNumber;
@@ -287,12 +287,12 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                  (t.transaction_type = 'App\\\Wallet\\Commission\\\Models\\\Commission' AND t.service_type='COMMISSION')
                                                                                 )
                                                                                 AND
-                                                                                date(t.created_at) >= date('$this->fromDate')
+                                                                                date(t.created_at) >= date(:fromDate)
                                                                                 AND
-                                                                                date(t.created_at) <= date('$this->toDate')
+                                                                                date(t.created_at) <= date(:toDate)
                                                                                 AND
-                                                                                (t.amount/100) > '$this->fromAmount' and (t.amount/100) <= '$this->toAmount'
-                                                                               ");
+                                                                                (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
 
         $commissionTotalValue = $commissionTotalValue[0]->totalSum;
         return $commissionTotalValue;
@@ -307,12 +307,12 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 (t.transaction_type ='App\\\Models\\\NchlBankTransfer'
                                                                                 )
                                                                                 AND
-                                                                                date(t.created_at) >= date('$this->fromDate')
+                                                                                date(t.created_at) >= date(:fromDate)
                                                                                 AND
-                                                                                date(t.created_at) <= date('$this->toDate')
+                                                                                date(t.created_at) <= date(:toDate)
                                                                                 AND
-                                                                                (t.amount/100) > '$this->fromAmount' and (t.amount/100) <= '$this->toAmount'
-                                                                               ");
+                                                                                (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
 
         $cashOutTotalNumber = $cashOutTotalNumber[0]->totalCount;
         return $cashOutTotalNumber;
@@ -327,12 +327,12 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 (t.transaction_type ='App\\\Models\\\NchlBankTransfer'
                                                                                 )
                                                                                 AND
-                                                                                date(t.created_at) >= date('$this->fromDate')
+                                                                                date(t.created_at) >= date(:fromDate)
                                                                                 AND
-                                                                                date(t.created_at) <= date('$this->toDate')
+                                                                                date(t.created_at) <= date(:toDate)
                                                                                 AND
-                                                                                (t.amount/100) > '$this->fromAmount' and (t.amount/100) <= '$this->toAmount'
-                                                                               ");
+                                                                                (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
 
         $cashOutTotalValue = $cashOutTotalValue[0]->totalSum;
         return $cashOutTotalValue;
@@ -349,12 +349,12 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 t.transaction_type ='App\\\Models\\\UserMerchantEventTicketPayment'
                                                                                  )
                                                                                 AND
-                                                                                date(t.created_at) >= date('$this->fromDate')
+                                                                                date(t.created_at) >= date(:fromDate)
                                                                                 AND
-                                                                                date(t.created_at) <= date('$this->toDate')
+                                                                                date(t.created_at) <= date(:toDate)
                                                                                 AND
-                                                                                (t.amount/100) > '$this->fromAmount' and (t.amount/100) <= '$this->toAmount'
-                                                                               ");
+                                                                                (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
 
         $qrPaymentCount = $qrPaymentCount[0]->totalCount;
         return $qrPaymentCount;
@@ -371,12 +371,12 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 t.transaction_type ='App\\\Models\\\UserMerchantEventTicketPayment'
                                                                                  )
                                                                                 AND
-                                                                                date(t.created_at) >= date('$this->fromDate')
+                                                                                date(t.created_at) >= date(:fromDate)
                                                                                 AND
-                                                                                date(t.created_at) <= date('$this->toDate')
+                                                                                date(t.created_at) <= date(:toDate)
                                                                                 AND
-                                                                                (t.amount/100) > '$this->fromAmount' and (t.amount/100) <= '$this->toAmount'
-                                                                               ");
+                                                                                (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
 
         $qrPaymentValue = $qrPaymentValue[0]->totalSum;
         return $qrPaymentValue;
@@ -392,12 +392,12 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                     t.transaction_type ='App\\\Models\\\LoadTestFund' AND t.service_type='REFUND' AND t.pre_transaction_id IS NULL
                                                                                  )
                                                                                 AND
-                                                                                date(t.created_at) >= date('$this->fromDate')
+                                                                                date(t.created_at) >= date(:fromDate)
                                                                                 AND
-                                                                                date(t.created_at) <= date('$this->toDate')
+                                                                                date(t.created_at) <= date(:toDate)
                                                                                 AND
-                                                                                (t.amount/100) > '$this->fromAmount' and (t.amount/100) <= '$this->toAmount'
-                                                                               ");
+                                                                                (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
 
         $serviceRefundCount = $serviceRefundCount[0]->totalCount;
         return $serviceRefundCount;
@@ -413,12 +413,12 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                     t.transaction_type ='App\\\Models\\\LoadTestFund' AND t.service_type='REFUND' AND t.pre_transaction_id IS NULL
                                                                                  )
                                                                                 AND
-                                                                                date(t.created_at) >= date('$this->fromDate')
+                                                                                date(t.created_at) >= date(:fromDate)
                                                                                 AND
-                                                                                date(t.created_at) <= date('$this->toDate')
+                                                                                date(t.created_at) <= date(:toDate)
                                                                                 AND
-                                                                                (t.amount/100) > '$this->fromAmount' and (t.amount/100) <= '$this->toAmount'
-                                                                               ");
+                                                                                (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
 
         $serviceRefundValue = $serviceRefundValue[0]->totalSum;
         return $serviceRefundValue;
@@ -434,9 +434,9 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
 //                                                                                    t.transaction_type ='App\\\Models\\\LoadTestFund' AND t.service_type='REFUND' AND t.pre_transaction_id=NULL
 //                                                                                 )
 //                                                                                AND
-//                                                                                date(t.created_at) >= date('$this->fromDate')
+//                                                                                date(t.created_at) >= date(:fromDate)
 //                                                                                AND
-//                                                                                date(t.created_at) <= date('$this->toDate')
+//                                                                                date(t.created_at) <= date(:toDate)
 //                                                                               ");
 //
 //        $serviceRefundTotal = $serviceRefundTotal[0]->totalCount;

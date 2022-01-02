@@ -50,10 +50,10 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             WHERE
                                                                             service_type='MERCHANT'  AND status = 'SUCCESS'
                                                                             AND
-                                                                            date(created_at) >= date('$this->fromDate')
+                                                                            date(created_at) >= date(:fromDate)
                                                                             AND
-                                                                            date(created_at) <= date('$this->toDate')
-                                                                               ");
+                                                                            date(created_at) <= date(:toDate)
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -110,10 +110,10 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             WHERE
                                                                             service_type='BANK_TRANSFER'  AND status = 'SUCCESS'
                                                                             AND
-                                                                            date(created_at) >= date('$this->fromDate')
+                                                                            date(created_at) >= date(:fromDate)
                                                                             AND
-                                                                            date(created_at) <= date('$this->toDate')
-                                                                               ");
+                                                                            date(created_at) <= date(:toDate)
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
 
@@ -125,10 +125,10 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             WHERE
                                                                             service_type='BANK_TRANSFER'  AND status != 'SUCCESS'
                                                                             AND
-                                                                            date(created_at) >= date('$this->fromDate')
+                                                                            date(created_at) >= date(:fromDate)
                                                                             AND
-                                                                            date(created_at) <= date('$this->toDate')
-                                                                               ");
+                                                                            date(created_at) <= date(:toDate)
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -139,10 +139,10 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             WHERE
                                                                             service_type='NCHL_AGGREGATED_PAYMENTS'  AND status = 'SUCCESS'
                                                                             AND
-                                                                            date(created_at) >= date('$this->fromDate')
+                                                                            date(created_at) >= date(:fromDate)
                                                                             AND
-                                                                            date(created_at) <= date('$this->toDate')
-                                                                               ");
+                                                                            date(created_at) <= date(:toDate)
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -153,10 +153,10 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             WHERE
                                                                             service_type='NCHL_AGGREGATED_PAYMENTS'  AND status != 'SUCCESS'
                                                                             AND
-                                                                            date(created_at) >= date('$this->fromDate')
+                                                                            date(created_at) >= date(:fromDate)
                                                                             AND
-                                                                            date(created_at) <= date('$this->toDate')
-                                                                               ");
+                                                                            date(created_at) <= date(:toDate)
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -171,10 +171,10 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             OR
                                                                             (service_type='tv' AND status = 'SUCCESS'))
                                                                             AND
-                                                                            date(created_at) >= date('$this->fromDate')
+                                                                            date(created_at) >= date(:fromDate)
                                                                             AND
-                                                                            date(created_at) <= date('$this->toDate')
-                                                                               ");
+                                                                            date(created_at) <= date(:toDate)
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -189,10 +189,10 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             OR
                                                                             (service_type='tv' AND status != 'SUCCESS'))
                                                                             AND
-                                                                            date(created_at) >= date('$this->fromDate')
+                                                                            date(created_at) >= date(:fromDate)
                                                                             AND
-                                                                            date(created_at) <= date('$this->toDate')
-                                                                               ");
+                                                                            date(created_at) <= date(:toDate)
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }

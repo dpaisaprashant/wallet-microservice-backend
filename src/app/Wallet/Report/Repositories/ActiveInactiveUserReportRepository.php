@@ -23,14 +23,16 @@ class ActiveInactiveUserReportRepository extends AbstractReportRepository
     public function __construct(Request $request)
     {
         parent::__construct($request);
-
-        $this->date = date('Y-m-d', strtotime(str_replace(',', ' ', $request->from)));
+        if (isset($request->from)) {
+            $this->date = date('Y-m-d', strtotime(str_replace(',', ' ', $request->from)));
+        }
 //        dd($this->date);
 //        $this->fromAmount = $request->fromAmount;
 //        $this->toAmount = $request->toAmount;
     }
 
-    public function checkForReport(){
+    public function checkForReport()
+    {
         return DB::connection('clearance')->table('nrb_active_inactive')->where('as_of_date', $this->date)->first();
     }
 

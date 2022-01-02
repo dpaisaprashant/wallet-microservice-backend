@@ -267,7 +267,6 @@ class NRBAnnexReportController extends Controller
         $repository = new StatementSettlementBankRepository($request);
 
         $check = $repository->checkForReport();
-
         if ($check == null) {
             $walletClearance = new WalletClearanceMicroService();
             $walletClearanceResponse['message'] = '';
@@ -276,13 +275,13 @@ class NRBAnnexReportController extends Controller
                 $walletClearanceResponse = $walletClearance->dispatchStatementSettlementJobs(request(), request()->from);
             }
 
-            $statementSettlementBanks = $walletClearanceResponse['message'];
+            $statementSettlementBanks = 'The report is being generated. Please check in at another time. Current Status: Starting Report Generation ....';
 
             return view('WalletReport::nrbAnnex.statement-settlement-bank', compact('statementSettlementBanks'));
         }
         if ($check) {
             if ($check->status == "PROCESSING") {
-                $statementSettlementBanks = 'Generating Report .....';
+                $statementSettlementBanks = 'The report is being generated. Please check in at another time. Current Status: Processing Report Generation ....';
                 return view('WalletReport::nrbAnnex.statement-settlement-bank', compact('statementSettlementBanks'));
             }
         }

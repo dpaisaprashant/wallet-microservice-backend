@@ -19,6 +19,7 @@ class WalletClearanceMicroService
 
         $response = $microservice->processRequest();
         $statementSettlement = json_decode($response, true);
+
         return $statementSettlement;
     }
 

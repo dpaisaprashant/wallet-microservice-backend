@@ -108,6 +108,7 @@ Route::group(['prefix' => 'admin'], function () {
          * Users
          */
         Route::get('/users', 'UserController@view')->name('user.view')->middleware('permission:Users view');//all users
+        Route::get('/users/downloads/qr/{id}','UserController@DownloadQr')->name('user.download.qr');
 
         Route::get('/rejected-kyc-users','UserController@rejectKycUsers')->name('reject.kycUsers')->middleware('permission:Rejected user kyc');
         Route::get('/accepted-kyc-users','UserController@acceptedKycUsers')->name('accept.kycUsers')->middleware('permission:Accepted user kyc');
@@ -140,6 +141,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/users/edit-kyc/{id}', 'UserController@EditKyc')->name('user.editKyc')->middleware('permission:Edit user kyc');
         Route::post('/users/edit-kyc/{id}', 'UserController@UpdateKyc')->name('user.updateKyc')->middleware('permission:Edit user kyc');
         Route::get('/users/transactions/{id}', 'UserController@transaction')->name('user.transaction')->middleware('permission:User transactions');
+        Route::post('/users/kyc/get-districts','UserController@GetDistrictFromProvince')->name('get.district');
+        Route::post('/users/kyc/get-municipality','UserController@GetMunicipalityFromDistrict')->name('get.municipality');
 
         Route::post('/user/deactivate', 'UserController@deactivateUser')->name('user.deactivate')->middleware('permission:User deactivate'); //deactivate user
         Route::post('/user/activate', 'UserController@activateUser')->name('user.activate')->middleware('permission:User activate');

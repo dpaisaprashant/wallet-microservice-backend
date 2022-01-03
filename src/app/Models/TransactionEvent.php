@@ -56,11 +56,11 @@ class TransactionEvent extends Model
 
     public function getFeeAttribute()
     {
-        $createdAtDate = Carbon::createFromFormat("Y-m-d", $this->created_at);
+        $createdAtDate = Carbon::parse($this->created_at)->format("Y-m-d");
         switch ($this->transaction_type) {
             case NchlLoadTransaction::class:
 
-                if ($createdAtDate->gte(Carbon::createFromFormat("Y-m-d", '2021-11-23'))) {
+                if ($createdAtDate >= Carbon::parse("2021-11-23")) {
                     if ($this->amount <= 500) {
                         return 2;
                     }elseif ($this->amount >= 501 && $this->amount <= 50000) {
@@ -117,7 +117,7 @@ class TransactionEvent extends Model
                 } elseif ($this->vendor == "NCELL")
                 {
                     //if ($this->created_at > '2020-03-24') {
-                        return (3.25 / 100) * $this->amount;
+                    return (3.25 / 100) * $this->amount;
                     //}
                     //return (4 / 100) * $this->amount;
 
@@ -128,7 +128,7 @@ class TransactionEvent extends Model
                     if ($this->service_type == "EPIN")
                     {
                         //if (Carbon::createFromFormat('Y-m-d', $this->created_at)->gt(Carbon::createFromFormat('Y-m-d', '2020-07-22'))) {
-                          //  return (4.5 / 100) * $this->amount;
+                        //  return (4.5 / 100) * $this->amount;
                         //}
                         return (2.7 / 100) * $this->amount;
                     }
@@ -159,9 +159,9 @@ class TransactionEvent extends Model
         }
     }
 
-   /* public function getCurrentBalanceAttribute(){
-        return $this->attributes['balance'] / 100;
-    }*/
+    /* public function getCurrentBalanceAttribute(){
+         return $this->attributes['balance'] / 100;
+     }*/
 
     public function scopeFilter(Builder $builder, Request $request, array $filters = [])
     {

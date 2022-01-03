@@ -451,9 +451,9 @@ $url = url()->current();
                         @can('Report nchl load')
                             <li><a href="{{ route('report.nchl.load') }}">NCHL Load Report</a></li>
                         @endcan
-                        @can('Report referral')
-                            <li><a href="{{ route('referral.report') }}">Referral Report</a></li>
-                        @endcan
+{{--                        @can('Report referral')--}}
+{{--                            <li><a href="{{ route('referral.report') }}">Referral Report</a></li>--}}
+{{--                        @endcan--}}
                         @can('Report register using referral user')
                             <li><a href="{{ route('referral.registerUsingReferralUserReport') }}">Registered Using
                                     Referral
@@ -471,12 +471,12 @@ $url = url()->current();
 {{--                            @endcan--}}
                         {{--<li><a href="{{ route('report.user.reconciliation') }}">User Reconciliation Report</a></li>--}}
 
-                        @can('Report nrb agent')
-                            <li><a href="{{ route('report.agent') }}">NRB Agent Report</a></li>
-                        @endcan
-                        @can('Report non bank payment')
-                            <li><a href="{{ route('report.nonBankPaymentReport') }}">Non bank payment report</a></li>
-                        @endcan
+{{--                        @can('Report nrb agent')--}}
+{{--                            <li><a href="{{ route('report.agent') }}">NRB Agent Report</a></li>--}}
+{{--                        @endcan--}}
+{{--                        @can('Report non bank payment')--}}
+{{--                            <li><a href="{{ route('report.nonBankPaymentReport') }}">Non bank payment report</a></li>--}}
+{{--                        @endcan--}}
                         @can('Report wallet end balance')
                             <li><a href="{{ route('wallet.endbalance') }}">Wallet end balance report</a></li>
                         @endcan

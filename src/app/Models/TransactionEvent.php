@@ -56,8 +56,20 @@ class TransactionEvent extends Model
 
     public function getFeeAttribute()
     {
+        $createdAtDate = Carbon::createFromFormat("Y-m-d", $this->created_at);
         switch ($this->transaction_type) {
             case NchlLoadTransaction::class:
+
+                if ($createdAtDate->gte(Carbon::createFromFormat("Y-m-d", '2021-11-23'))) {
+                    if ($this->amount <= 500) {
+                        return 2;
+                    }elseif ($this->amount >= 501 && $this->amount <= 50000) {
+                        return 4;
+                    }elseif ($this->amount >= 50001) {
+                        return 8;
+                    }
+                }
+
                 if ($this->amount <= 500) {
                     return 2;
                 }elseif ($this->amount >= 501 && $this->amount <= 50000) {

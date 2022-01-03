@@ -247,34 +247,65 @@
                                                     <label for="province">Province:</label>
                                                 </dt>
                                                 <dd class="col-md-8">
-                                                    <input type="text" class="form-control form-control-sm"
-                                                           name="province" value="{{ $user->kyc->province }}" required>
+                                                    <select name="province" id="province" class="form-control form-control-sm" required>
+                                                        @if($user->kyc->province)
+                                                            <option value="" disabled><b>-- Select Province --</b></option>
+                                                            <option value="{{$user->kyc->province}}" selected>{{$user->kyc->province}}</option>
+                                                        @else
+                                                            <option value="" selected disabled>-- Select Province --</option>
+                                                        @endif
+                                                        @foreach($provinces as $province)
+                                                            @if(!($user->kyc->province == $province))
+                                                                <option value="{{$province}}">{{$province}}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
                                                 </dd>
 
-                                                <dt class="col-md-3 text-right">
-                                                    <label for="zone">Zone:</label>
-                                                </dt>
-                                                <dd class="col-md-8">
-                                                    <input type="text" class="form-control form-control-sm" name="zone"
-                                                           value="{{ $user->kyc->zone }}" required>
-                                                </dd>
 
-                                                <dt class="col-md-3 text-right">
+                                                    <dt class="col-md-3 text-right">
                                                     <label for="district">District:</label>
-                                                </dt>
-                                                <dd class="col-md-8">
-                                                    <input type="text" class="form-control form-control-sm"
-                                                           name="district" value="{{ $user->kyc->district }}" required>
-                                                </dd>
+                                                    </dt>
+                                                    <dd class="col-md-8">
+                                                    <select name="district" id="district" class="form-control form-control-sm" required>
+                                                @if($user->kyc->province)
+                                                        <option value="" disabled><b>-- Select District --</b></option>
+                                            @else
+                                                <option value="" selected disabled>-- Select District --</option>
+                                                    @endif
+                                                </select>
+                                                    </dd>
 
-                                                <dt class="col-md-3 text-right">
+                                                    <dt class="col-md-3 text-right">
                                                     <label for="municipality">Municipality:</label>
-                                                </dt>
-                                                <dd class="col-md-8">
-                                                    <input type="text" class="form-control form-control-sm"
-                                                           name="municipality" value="{{ $user->kyc->municipality }}"
-                                                           required>
-                                                </dd>
+                                                    </dt>
+                                                    <dd class="col-md-8">
+                                                    <select name="municipality" id="municipality" class="form-control form-control-sm" required>
+                                                @if($user->kyc->municipality)
+                                                        <option value="" disabled><b>-- Select Municipality --</b></option>
+                                            @else
+                                                <option value="" selected disabled>-- Select Municipality --</option>
+                                                    @endif
+                                                </select>
+                                                    </dd>
+                                                    <dt class="col-md-3 text-right">
+                                                        <label for="zone">Zone:</label>
+                                                    </dt>
+                                                    <dd class="col-md-8">
+                                                        <select name="zone" class="form-control form-control-sm">
+                                                            @if($user->kyc->zone)
+                                                                <option value="" disabled><b>-- Select Zone --</b></option>
+                                                                <option value="{{strtoupper($user->kyc->zone)}}" selected>{{$user->kyc->zone}}</option>
+                                                            @else
+                                                                <option value="" selected disabled>-- Select Zone --</option>
+                                                            @endif
+                                                            @foreach($zones as $zone)
+                                                                @if(!(strtoupper($user->kyc->zone) == $zone))
+                                                                    <option value="{{$zone}}">{{$zone}}</option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                    </dd>
 
                                                 <dt class="col-md-3 text-right">
                                                     <label for="ward_no">Ward No:</label>
@@ -288,36 +319,65 @@
                                                     <label for="tmp_province">Temporary Province:</label>
                                                 </dt>
                                                 <dd class="col-md-8">
-                                                    <input type="text" class="form-control form-control-sm"
-                                                           name="tmp_province" value="{{ $user->kyc->tmp_province }}"
-                                                           required>
+                                                    <select name="tmp_province" id="tmp_province" class="form-control form-control-sm" required>
+                                                        @if($user->kyc->tmp_province)
+                                                            <option value="" disabled><b>-- Select Temporary Province --</b></option>
+                                                            <option value="{{$user->kyc->tmp_province}}" selected>{{$user->kyc->tmp_province}}</option>
+                                                        @else
+                                                            <option value="" selected disabled>-- Select Temporary Province --</option>
+                                                        @endif
+                                                        @foreach($provinces as $province)
+                                                            @if(!($user->kyc->tmp_province == $province))
+                                                                <option value="{{$province}}">{{$province}}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
                                                 </dd>
 
-                                                <dt class="col-md-3 text-right">
-                                                    <label for="tmp_zone">Temporary Zone:</label>
-                                                </dt>
-                                                <dd class="col-md-8">
-                                                    <input type="text" class="form-control form-control-sm"
-                                                           name="tmp_zone" value="{{ $user->kyc->tmp_zone }}" required>
-                                                </dd>
 
-                                                <dt class="col-md-3 text-right">
+                                                    <dt class="col-md-3 text-right">
                                                     <label for="tmp_district">Temporary District:</label>
-                                                </dt>
-                                                <dd class="col-md-8">
-                                                    <input type="text" class="form-control form-control-sm"
-                                                           name="tmp_district" value="{{ $user->kyc->tmp_district }}"
-                                                           required>
-                                                </dd>
+                                                    </dt>
+                                                    <dd class="col-md-8">
+                                                    <select name="tmp_district" id="tmp_district" class="form-control form-control-sm" required>
+                                                @if($user->kyc->tmp_province)
+                                                        <option value="" disabled><b>-- Select Temporary District --</b></option>
+                                            @else
+                                                <option value="" selected disabled>-- Select Temporary District --</option>
+                                                    @endif
+                                                </select>
+                                                    </dd>
 
-                                                <dt class="col-md-3 text-right">
+                                                    <dt class="col-md-3 text-right">
                                                     <label for="tmp_municipality">Temporary Municipality:</label>
-                                                </dt>
-                                                <dd class="col-md-8">
-                                                    <input type="text" class="form-control form-control-sm"
-                                                           name="tmp_municipality"
-                                                           value="{{ $user->kyc->tmp_municipality }}" required>
-                                                </dd>
+                                                    </dt>
+                                                    <dd class="col-md-8">
+                                                    <select name="tmp_municipality" id="tmp_municipality" class="form-control form-control-sm" required>
+                                                @if($user->kyc->tmp_municipality)
+                                                        <option value="" disabled><b>-- Select Municipality --</b></option>
+                                            @else
+                                                <option value="" selected disabled>-- Select Municipality --</option>
+                                                    @endif
+                                                </select>
+                                                    </dd>
+                                                    <dt class="col-md-3 text-right">
+                                                        <label for="tmp_zone">Temporary Zone:</label>
+                                                    </dt>
+                                                    <dd class="col-md-8">
+                                                        <select name="tmp_zone" class="form-control form-control-sm">
+                                                            @if($user->kyc->tmp_zone)
+                                                                <option value="" disabled><b>-- Select Temporary Zone --</b></option>
+                                                                <option value="{{strtoupper($user->kyc->tmp_zone)}}" selected>{{$user->kyc->tmp_zone}}</option>
+                                                            @else
+                                                                <option value="" selected disabled>-- Select Temporary Zone --</option>
+                                                            @endif
+                                                            @foreach($zones as $zone)
+                                                                @if(!(strtoupper($user->kyc->tmp_zone) == $zone))
+                                                                    <option value="{{$zone}}">{{$zone}}</option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                    </dd>
 
                                                 <dt class="col-md-3 text-right">
                                                     <label for="tmp_ward_no">Temporary Ward No:</label>
@@ -727,6 +787,461 @@
             document.getElementById('BS_issue').style.display ='none';
         }
     </script>
+{{--pre loading the districts, the municipalities--}}
+    <script>
+        $(window).on('load',function() {
+            //pre-loading permanent Districts
+            if (`{{$user->kyc->province}}`){
+                $('select#province').filter(function (e) {
+                    let province = `{{$user->kyc->province}}`;
+
+                    let url = `{{ route('get.district') }}`
+
+
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: url,
+                        method: "POST",
+                        data: {province: province},
+                        dataType: 'JSON',
+                        cache: false,
+                        async: true,
+                        beforeSend: function () {
+                            $("#overlay").fadeIn(300);
+                        },
+                        success: function (resp) {
+                            console.log(resp)
+
+                            let select = $('#district');
+                            select.find('option').remove().end();
+
+                            $.each(resp, function (key, value) {
+                                if (`{{$user->kyc->district}}` == value){
+                                    let o = new Option(value, value, false, true);
+                                    select.append(o);
+                                }else {
+                                    let o = new Option(value, value, false, false);
+                                    select.append(o);
+                                }
+                            });
+                            select.trigger("chosen:updated");
+
+                            $(".stats").fadeIn(300);
+                            $("#overlay").fadeOut(300);
+
+                        },
+                        error: function (resp) {
+                            console.log(resp);
+                            alert('error');
+
+                            $(".stats").fadeIn(300);
+                            $("#overlay").fadeOut(300);
+                        }
+                    });
+                });
+            }
+            //pre-loading permanent Districts Ends
+
+            //pre-loading permanent Municipalities
+            if (`{{$user->kyc->district}}`){
+                $('select#district').filter(function (e) {
+                    let district = `{{$user->kyc->district}}`;
+
+                    let url = `{{ route('get.municipality') }}`
+
+
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: url,
+                        method: "POST",
+                        data: {district: district},
+                        dataType: 'JSON',
+                        cache: false,
+                        async: true,
+                        beforeSend: function () {
+                            $("#overlay").fadeIn(300);
+                        },
+                        success: function (resp) {
+                            console.log(resp)
+
+                            let select = $('#municipality');
+                            select.find('option').remove().end();
+
+                            $.each(resp, function (key, value) {
+                                if (`{{$user->kyc->municipality}}` == value){
+                                    let o = new Option(value, value, false, true);
+                                    select.append(o);
+                                }else {
+                                    let o = new Option(value, value, false, false);
+                                    select.append(o);
+                                }
+                            });
+                            select.trigger("chosen:updated");
+
+                            $(".stats").fadeIn(300);
+                            $("#overlay").fadeOut(300);
+
+                        },
+                        error: function (resp) {
+                            console.log(resp);
+                            alert('error');
+
+                            $(".stats").fadeIn(300);
+                            $("#overlay").fadeOut(300);
+                        }
+                    });
+                });
+            }
+            //pre-loading permanent Municipalities Ends
+
+        //    pre-loading temporary Districts
+            if (`{{$user->kyc->tmp_province}}`){
+                $('select#tmp_province').filter(function (e) {
+                    let province = `{{$user->kyc->tmp_province}}`;
+
+                    let url = `{{ route('get.district') }}`
+
+
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: url,
+                        method: "POST",
+                        data: {province: province},
+                        dataType: 'JSON',
+                        cache: false,
+                        async: true,
+                        beforeSend: function () {
+                            $("#overlay").fadeIn(300);
+                        },
+                        success: function (resp) {
+                            console.log(resp)
+
+                            let select = $('#tmp_district');
+                            select.find('option').remove().end();
+
+                            $.each(resp, function (key, value) {
+                                if (`{{$user->kyc->tmp_district}}` == value){
+                                    let o = new Option(value, value, false, true);
+                                    select.append(o);
+                                }else {
+                                    let o = new Option(value, value, false, false);
+                                    select.append(o);
+                                }
+                            });
+                            select.trigger("chosen:updated");
+
+                            $(".stats").fadeIn(300);
+                            $("#overlay").fadeOut(300);
+
+                        },
+                        error: function (resp) {
+                            console.log(resp);
+                            alert('error');
+
+                            $(".stats").fadeIn(300);
+                            $("#overlay").fadeOut(300);
+                        }
+                    });
+                });
+            }
+        //    pre-loadiing Temporary Districts Ends
+
+        //    pre_loading Temporary Municipalities Starts
+            if (`{{$user->kyc->tmp_district}}`){
+                $('select#tmp_district').filter(function (e) {
+                    let district = `{{$user->kyc->tmp_district}}`;
+
+                    let url = `{{ route('get.municipality') }}`
+
+
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: url,
+                        method: "POST",
+                        data: {district: district},
+                        dataType: 'JSON',
+                        cache: false,
+                        async: true,
+                        beforeSend: function () {
+                            $("#overlay").fadeIn(300);
+                        },
+                        success: function (resp) {
+                            console.log(resp)
+
+                            let select = $('#tmp_municipality');
+                            select.find('option').remove().end();
+
+                            $.each(resp, function (key, value) {
+                                if (`{{$user->kyc->tmp_municipality}}` == value){
+                                    let o = new Option(value, value, false, true);
+                                    select.append(o);
+                                }else {
+                                    let o = new Option(value, value, false, false);
+                                    select.append(o);
+                                }
+                            });
+                            select.trigger("chosen:updated");
+
+                            $(".stats").fadeIn(300);
+                            $("#overlay").fadeOut(300);
+
+                        },
+                        error: function (resp) {
+                            console.log(resp);
+                            alert('error');
+
+                            $(".stats").fadeIn(300);
+                            $("#overlay").fadeOut(300);
+                        }
+                    });
+                });
+            }
+        //    pre_loading Temporary Municipalities Ends
+
+        });
+    </script>
+{{--pre loading the districts, the municipalities ends --}}
+
+{{--for permanent district--}}
+    <script>
+        $('#province').on('change', function (e) {
+            let province = $(this).val();
+            console.log(province);
+
+            let url = `{{ route('get.district') }}`
+
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: url,
+                method: "POST",
+                data: {province: province},
+                dataType: 'JSON',
+                cache: false,
+                async: true,
+                beforeSend: function () {
+                    $("#overlay").fadeIn(300);
+                },
+                success: function (resp) {
+                    console.log(resp)
+
+                    let select = $('#district');
+                    select.find('option').remove().end();
+
+                    let municipality = $('#municipality');
+                    municipality.find('option').remove().end();
+                    let m = new Option('--Select District First',null,false,);
+                    municipality.append(m);
+                    municipality.find('option').attr("disabled","disabled");
+
+                    $.each(resp, function (key, value) {
+                        if (`{{$user->kyc->district}}` == value){
+                            let o = new Option(value, value, false, true);
+                            select.append(o);
+                        }else {
+                            let o = new Option(value, value, false, false);
+                            select.append(o);
+                        }
+                    });
+                    select.trigger("chosen:updated");
+
+                    $(".stats").fadeIn(300);
+                    $("#overlay").fadeOut(300);
+
+                },
+                error: function (resp) {
+                    console.log(resp);
+                    alert('error');
+
+                    $(".stats").fadeIn(300);
+                    $("#overlay").fadeOut(300);
+                }
+            });
+        });
+    </script>
+{{--for permanent district ENDS--}}
+
+{{-- for permanent municipalities--}}
+    <script>
+        $('#district').on('change', function (e) {
+            let district = $(this).val();
+            console.log(district);
+
+            let url = `{{ route('get.municipality') }}`
+
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: url,
+                method: "POST",
+                data: {district: district},
+                dataType: 'JSON',
+                cache: false,
+                async: true,
+                beforeSend: function () {
+                    $("#overlay").fadeIn(300);
+                },
+                success: function (resp) {
+                    console.log(resp)
+
+                    let select = $('#municipality');
+                    select.find('option').remove().end();
+
+                    $.each(resp, function (key, value) {
+                        if (`{{$user->kyc->municipality}}` == value){
+                            let o = new Option(value, value, false, true);
+                            select.append(o);
+                        }else {
+                            let o = new Option(value, value, false, false);
+                            select.append(o);
+                        }
+                    });
+                    select.trigger("chosen:updated");
+
+                    $(".stats").fadeIn(300);
+                    $("#overlay").fadeOut(300);
+
+                },
+                error: function (resp) {
+                    console.log(resp);
+                    alert('error');
+
+                    $(".stats").fadeIn(300);
+                    $("#overlay").fadeOut(300);
+                }
+            });
+        });
+    </script>
+{{--    for permanent municipalities ends--}}
+
+{{--    for temporary Districts starts--}}
+    <script>
+        $('#tmp_province').on('change', function (e) {
+            let province = $(this).val();
+            console.log(province);
+
+            let url = `{{ route('get.district') }}`
+
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: url,
+                method: "POST",
+                data: {province: province},
+                dataType: 'JSON',
+                cache: false,
+                async: true,
+                beforeSend: function () {
+                    $("#overlay").fadeIn(300);
+                },
+                success: function (resp) {
+                    console.log(resp)
+
+                    let select = $('#tmp_district');
+                    select.find('option').remove().end();
+
+                    let municipality = $('#tmp_municipality');
+                    municipality.find('option').remove().end();
+                    let m = new Option('--Select Temporary District First',null,false,);
+                    municipality.append(m);
+                    municipality.find('option').attr("disabled","disabled")
+
+                    $.each(resp, function (key, value) {
+                        if (`{{$user->kyc->tmp_district}}` == value){
+                            let o = new Option(value, value, false, true);
+                            select.append(o);
+                        }else {
+                            let o = new Option(value, value, false, false);
+                            select.append(o);
+                        }
+                    });
+                    select.trigger("chosen:updated");
+
+                    $(".stats").fadeIn(300);
+                    $("#overlay").fadeOut(300);
+
+                },
+                error: function (resp) {
+                    console.log(resp);
+                    alert('error');
+
+                    $(".stats").fadeIn(300);
+                    $("#overlay").fadeOut(300);
+                }
+            });
+        });
+    </script>
+{{--    for temporary Districts ends--}}
+
+{{--    for temporary Municipality Starts--}}
+    <script>
+        $('#tmp_district').on('change', function (e) {
+            let district = $(this).val();
+            console.log(district);
+
+            let url = `{{ route('get.municipality') }}`
+
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: url,
+                method: "POST",
+                data: {district: district},
+                dataType: 'JSON',
+                cache: false,
+                async: true,
+                beforeSend: function () {
+                    $("#overlay").fadeIn(300);
+                },
+                success: function (resp) {
+                    console.log(resp)
+
+                    let select = $('#tmp_municipality');
+                    select.find('option').remove().end();
+
+                    $.each(resp, function (key, value) {
+                        if (`{{$user->kyc->tmp_municipality}}` == value){
+                            let o = new Option(value, value, false, true);
+                            select.append(o);
+                        }else {
+                            let o = new Option(value, value, false, false);
+                            select.append(o);
+                        }
+                    });
+                    select.trigger("chosen:updated");
+
+                    $(".stats").fadeIn(300);
+                    $("#overlay").fadeOut(300);
+
+                },
+                error: function (resp) {
+                    console.log(resp);
+                    alert('error');
+
+                    $(".stats").fadeIn(300);
+                    $("#overlay").fadeOut(300);
+                }
+            });
+        });
+    </script>
+{{--    for temporary Municipality Ends--}}
+
 @endsection
 
 

@@ -40,6 +40,7 @@ class TransactionEventResource extends JsonResource
             'USER EMAIL' => $this->user->email,
             'ACCOUNT' => $this->account,
             'AMOUNT' => (double) $this->amount,
+            'FEE' => (double) $this->fee ?? 0,
             'VENDOR' => $this->vendor,
             'SERVICE TYPE' => $this->service_type,
             'TRANSACTION ID' => $transactionId,

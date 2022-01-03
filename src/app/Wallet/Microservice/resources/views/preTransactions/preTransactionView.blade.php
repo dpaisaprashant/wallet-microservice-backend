@@ -322,7 +322,13 @@
                                 @foreach($preTransactions as $preTransaction)
                                     <tr class="gradeC">
                                         <td>{{ $loop->index + ($preTransactions->perPage() * ($preTransactions->currentPage() - 1)) + 1 }}</td>
-                                        <td>{{optional($preTransaction->user)->mobile_no}}</td>
+                                        <td>
+                                            @if(empty($preTransaction->user))
+                                                {{optional($preTransaction->user)->mobile_no}}
+                                            @else
+                                                <a @can('User profile') href="{{route('user.profile', $preTransaction->user->id)}}" @endcan>{{ $preTransaction->user->mobile_no }}</a>
+                                            @endif
+                                        </td>
                                         <td>{{ $preTransaction->pre_transaction_id }}</td>
                                         <td>Rs. {{$preTransaction->amount}}</td>
                                         <td>{{$preTransaction->description}}</td>

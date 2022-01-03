@@ -49,10 +49,11 @@ class PreTransactionClearanceRepositoryContract implements ClearanceRepositoryCo
 
     public function transactionFeeSum()
     {
-        $preTransactions = $this->preTransactionBuilder->filter($this->request)
-            ->get();
+        return 0;
+        //$preTransactions = $this->preTransactionBuilder->filter($this->request)
+            //->get();
         //->sum('transactionEvent.fee');
 
-        return $preTransactions->sum(fn ($preTransaction) => $preTransaction->transactionEvent->fee);
+        //return $preTransactions->sum(fn ($preTransaction) => $preTransaction->transactionEvent->fee);
     }
 }

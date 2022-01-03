@@ -28,9 +28,7 @@ class NicAsiaCybersourceClearanceStrategy extends AbstractClearanceCompareStrate
     {
         return TransactionEvent::whereTransactionType(self::TRANSACTION_TYPE)
             ->with('transactionable')
-            ->wherehas("preTransaction", function ($query) {
-                return $query->filter(request());
-            })
+            ->filter(request())
             ->get()
             ->transform(function ($value) {
                 $value->linked_id = $value->transactionable->reference_number;

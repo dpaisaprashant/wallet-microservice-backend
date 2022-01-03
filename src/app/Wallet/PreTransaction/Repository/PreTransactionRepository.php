@@ -4,6 +4,7 @@
 namespace App\Wallet\PreTransaction\Repository;
 
 use App\Models\Microservice\PreTransaction;
+use App\Models\TransactionEvent;
 use App\Models\UserCheckPayment;
 use App\Models\UserTransaction;
 use App\Traits\CollectionPaginate;
@@ -59,5 +60,48 @@ class PreTransactionRepository
 
 
         return $this->collectionPaginate($this->length, $transactions, $this->request);
+    }
+
+    public function paginatedTransactionEventPreTransactions()
+    {
+        return PreTransaction::whereHas('transactionEvent', function ($query) {
+            return $query->doesntHave('refundTransaction');
+        })
+            ->with(
+                'transactionEvent.transactionable',
+                'user',
+                'transactionEvent.commission',
+                'transactionEvent.commission.transactions',
+            )
+            ->latest()
+            ->filter($this->request)
+            ->paginate($this->length);
+    }
+
+    public function transactionEventPreTransactionCount()
+    {
+        return PreTransaction::whereHas('transactionEvent', function ($query) {
+            return $query->doesntHave('refundTransaction');
+        })->filter($this->request)->count();
+    }
+
+    public function transactionEventPreTransactionAmountSum()
+    {
+        return PreTransaction::whereHas('transactionEvent', function ($query) {
+            return $query->doesntHave('refundTransaction');
+        })->filter($this->request)->sum('amount') / 100;
+    }
+
+    public function transactionEventPreTransactionFeeSum()
+    {
+        return 0;
+        $preTransactions = PreTransaction::whereHas('transactionEvent', function ($query) {
+                return $query->doesntHave('refundTransaction');
+            })
+            ->filter($this->request)
+            ->get();
+            //->sum('transactionEvent.fee');
+
+        return $preTransactions->sum(fn ($preTransaction) => $preTransaction->transactionEvent->sum('amount'));
     }
 }

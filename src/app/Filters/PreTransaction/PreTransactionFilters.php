@@ -17,6 +17,7 @@ class PreTransactionFilters extends FiltersAbstract
         'service_type' => PreTransactionServiceTypeFilter::class,
         'microservice_type' => PreTransactionMicroServiceTypeFilter::class,
         'transaction_type' => PreTransactionTypeFilter::class,
+        'transaction_event_transaction_type' => TransactionTypeFilter::class,
         'from_preTransaction_amount' => FromPreTransactionAmountFilter::class,
         'to_preTransaction_amount' => ToPreTransactionAmountFilter::class,
         'from' => PreTransactionDateFrom::class,

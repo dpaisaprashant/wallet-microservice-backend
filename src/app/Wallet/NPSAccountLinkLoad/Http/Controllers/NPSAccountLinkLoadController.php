@@ -36,6 +36,10 @@ class NPSAccountLinkLoadController extends Controller
         return view('NPSAccountLinkLoad::transactionReport')->with(compact('npsAccountLinkLoad'));
     }
 
+    public function viewLinkedAccounts(){
+
+    }
+
 
 
 }

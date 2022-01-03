@@ -169,29 +169,44 @@
                                                     <label for="province">Province:</label>
                                                 </dt>
                                                 <dd class="col-md-8">
-                                                    <input type="text" class="form-control form-control-sm" name="province" placeholder="Enter Province" required>
+                                                    <select name="province" id="province" class="form-control form-control-sm" required>
+                                                        <option value="" selected disabled>-- Select Province --</option>
+                                                        @foreach($provinces as $province)
+                                                            <option value="{{$province}}">{{$province}}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </dd>
 
-                                                <dt class="col-md-3 text-right">
-                                                    <label for="zone">Zone:</label>
-                                                </dt>
-                                                <dd class="col-md-8">
-                                                    <input type="text" class="form-control form-control-sm" name="zone" placeholder="Enter Zone" required>
-                                                </dd>
 
-                                                <dt class="col-md-3 text-right">
-                                                    <label for="district">District:</label>
-                                                </dt>
-                                                <dd class="col-md-8">
-                                                    <input type="text" class="form-control form-control-sm" name="district" placeholder="Enter District" required>
-                                                </dd>
+                                            <dt class="col-md-3 text-right">
+                                            <label for="district">District:</label>
+                                            </dt>
+                                            <dd class="col-md-8">
+                                            <select name="district" id="district" class="form-control form-control-sm" required>
+                                            <option value="" selected disabled>-- Select District --</option>
+                                            </select>
+                                            </dd>
 
-                                                <dt class="col-md-3 text-right">
-                                                    <label for="municipality">Municipality:</label>
-                                                </dt>
-                                                <dd class="col-md-8">
-                                                    <input type="text" class="form-control form-control-sm" name="municipality" placeholder="Enter Municipality" required>
-                                                </dd>
+                                            <dt class="col-md-3 text-right">
+                                            <label for="municipality">Municipality:</label>
+                                            </dt>
+                                            <dd class="col-md-8">
+                                            <select name="municipality" id="municipality" class="form-control form-control-sm" required>
+                                            <option value="" selected disabled>-- Select Municipality --</option>
+                                            </select>
+                                            </dd>
+
+                                            <dt class="col-md-3 text-right">
+                                                <label for="zone">Zone:</label>
+                                            </dt>
+                                            <dd class="col-md-8">
+                                                <select name="zone" class="form-control form-control-sm">
+                                                    <option value="" selected disabled>-- Select Zone --</option>
+                                                    @foreach($zones as $zone)
+                                                        <option value="{{$zone}}">{{$zone}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </dd>
 
                                                 <dt class="col-md-3 text-right">
                                                     <label for="ward_no">Ward No:</label>
@@ -204,31 +219,45 @@
                                                     <label for="tmp_province">Temporary Province:</label>
                                                 </dt>
                                                 <dd class="col-md-8">
-                                                    <input type="text" class="form-control form-control-sm" name="tmp_province" placeholder="Enter Temporary Province" required>
+                                                    <select name="tmp_province" id="tmp_province" class="form-control form-control-sm" required>
+                                                        <option value="" selected disabled>-- Select Temporary Province --</option>
+                                                        @foreach($provinces as $province)
+                                                            <option value="{{$province}}">{{$province}}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </dd>
 
-                                                <dt class="col-md-3 text-right">
-                                                    <label for="tmp_zone">Temporary Zone:</label>
-                                                </dt>
-                                                <dd class="col-md-8">
-                                                    <input type="text" class="form-control form-control-sm" name="tmp_zone" placeholder="Enter Temporary Zone" required>
-                                                </dd>
 
-                                                <dt class="col-md-3 text-right">
-                                                    <label for="tmp_district">Temporary District:</label>
-                                                </dt>
-                                                <dd class="col-md-8">
-                                                    <input type="text" class="form-control form-control-sm" name="tmp_district" placeholder="Enter Temporary District" required>
-                                                </dd>
+                                            <dt class="col-md-3 text-right">
+                                            <label for="tmp_district">Temporary District:</label>
+                                            </dt>
+                                            <dd class="col-md-8">
+                                            <select name="tmp_district" id="tmp_district" class="form-control form-control-sm" required>
+                                            <option value="" selected disabled>-- Select Temporary District --</option>
+                                            </select>
+                                            </dd>
 
-                                                <dt class="col-md-3 text-right">
-                                                    <label for="tmp_municipality">Temporary Municipality:</label>
-                                                </dt>
-                                                <dd class="col-md-8">
-                                                    <input type="text" class="form-control form-control-sm" name="tmp_municipality" placeholder="Enter Temporary Municipality" required>
-                                                </dd>
+                                            <dt class="col-md-3 text-right">
+                                            <label for="tmp_municipality">Temporary Municipality:</label>
+                                            </dt>
+                                            <dd class="col-md-8">
+                                            <select name="tmp_municipality" id="tmp_municipality" class="form-control form-control-sm" required>
+                                            <option value="" selected disabled>-- Select Municipality --</option>
+                                            </select>
+                                            </dd>
 
-                                                <dt class="col-md-3 text-right">
+                                            <dt class="col-md-3 text-right">
+                                                <label for="tmp_zone">Temporary Zone:</label>
+                                            </dt>
+                                            <dd class="col-md-8">
+                                                <select name="tmp_zone" class="form-control form-control-sm">
+                                                    <option value="" selected disabled>-- Select Temporary Zone --</option>
+                                                    @foreach($zones as $zone)
+                                                        <option value="{{$zone}}">{{$zone}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </dd>
+                                            <dt class="col-md-3 text-right">
                                                     <label for="tmp_ward_no">Temporary Ward No:</label>
                                                 </dt>
                                                 <dd class="col-md-8">
@@ -416,6 +445,218 @@
             document.getElementById('BS_issue').style.display ='none';
         }
     </script>
+
+    {{--for permanent district--}}
+    <script>
+        $('#province').on('change', function (e) {
+            let province = $(this).val();
+            console.log(province);
+
+            let url = `{{ route('get.district') }}`
+
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: url,
+                method: "POST",
+                data: {province: province},
+                dataType: 'JSON',
+                cache: false,
+                async: true,
+                beforeSend: function () {
+                    $("#overlay").fadeIn(300);
+                },
+                success: function (resp) {
+                    console.log(resp)
+
+                    let select = $('#district');
+                    select.find('option').remove().end();
+
+                    let municipality = $('#municipality');
+                    municipality.find('option').remove().end();
+                    let m = new Option('--Select District First',null,false,);
+                    municipality.append(m);
+                    municipality.find('option').attr("disabled","disabled");
+
+                    $.each(resp, function (key, value) {
+                        let o = new Option(value, value, false, false);
+                        select.append(o);
+                    });
+                    select.trigger("chosen:updated");
+
+                    $(".stats").fadeIn(300);
+                    $("#overlay").fadeOut(300);
+
+                },
+                error: function (resp) {
+                    console.log(resp);
+                    alert('error');
+
+                    $(".stats").fadeIn(300);
+                    $("#overlay").fadeOut(300);
+                }
+            });
+        });
+    </script>
+    {{--for permanent district ENDS--}}
+
+    {{-- for permanent municipalities--}}
+    <script>
+        $('#district').on('change', function (e) {
+            let district = $(this).val();
+            console.log(district);
+
+            let url = `{{ route('get.municipality') }}`
+
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: url,
+                method: "POST",
+                data: {district: district},
+                dataType: 'JSON',
+                cache: false,
+                async: true,
+                beforeSend: function () {
+                    $("#overlay").fadeIn(300);
+                },
+                success: function (resp) {
+                    console.log(resp)
+
+                    let select = $('#municipality');
+                    select.find('option').remove().end();
+
+                    $.each(resp, function (key, value) {
+                            let o = new Option(value, value, false, false);
+                            select.append(o);
+                    });
+                    select.trigger("chosen:updated");
+
+                    $(".stats").fadeIn(300);
+                    $("#overlay").fadeOut(300);
+
+                },
+                error: function (resp) {
+                    console.log(resp);
+                    alert('error');
+
+                    $(".stats").fadeIn(300);
+                    $("#overlay").fadeOut(300);
+                }
+            });
+        });
+    </script>
+    {{--    for permanent municipalities ends--}}
+
+    {{--    for temporary Districts starts--}}
+    <script>
+        $('#tmp_province').on('change', function (e) {
+            let province = $(this).val();
+            console.log(province);
+
+            let url = `{{ route('get.district') }}`
+
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: url,
+                method: "POST",
+                data: {province: province},
+                dataType: 'JSON',
+                cache: false,
+                async: true,
+                beforeSend: function () {
+                    $("#overlay").fadeIn(300);
+                },
+                success: function (resp) {
+                    console.log(resp)
+
+                    let select = $('#tmp_district');
+                    select.find('option').remove().end();
+
+                    let municipality = $('#tmp_municipality');
+                    municipality.find('option').remove().end();
+                    let m = new Option('--Select Temporary District First',null,false,);
+                    municipality.append(m);
+                    municipality.find('option').attr("disabled","disabled")
+
+                    $.each(resp, function (key, value) {
+                            let o = new Option(value, value, false, false);
+                            select.append(o);
+                    });
+                    select.trigger("chosen:updated");
+
+                    $(".stats").fadeIn(300);
+                    $("#overlay").fadeOut(300);
+
+                },
+                error: function (resp) {
+                    console.log(resp);
+                    alert('error');
+
+                    $(".stats").fadeIn(300);
+                    $("#overlay").fadeOut(300);
+                }
+            });
+        });
+    </script>
+    {{--    for temporary Districts ends--}}
+
+    {{--    for temporary Municipality Starts--}}
+    <script>
+        $('#tmp_district').on('change', function (e) {
+            let district = $(this).val();
+            console.log(district);
+
+            let url = `{{ route('get.municipality') }}`
+
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: url,
+                method: "POST",
+                data: {district: district},
+                dataType: 'JSON',
+                cache: false,
+                async: true,
+                beforeSend: function () {
+                    $("#overlay").fadeIn(300);
+                },
+                success: function (resp) {
+                    console.log(resp)
+
+                    let select = $('#tmp_municipality');
+                    select.find('option').remove().end();
+
+                    $.each(resp, function (key, value) {
+                            let o = new Option(value, value, false, false);
+                            select.append(o);
+                    });
+                    select.trigger("chosen:updated");
+
+                    $(".stats").fadeIn(300);
+                    $("#overlay").fadeOut(300);
+
+                },
+                error: function (resp) {
+                    console.log(resp);
+                    alert('error');
+
+                    $(".stats").fadeIn(300);
+                    $("#overlay").fadeOut(300);
+                }
+            });
+        });
+    </script>
+    {{--    for temporary Municipality Ends--}}
 
 @endsection
 

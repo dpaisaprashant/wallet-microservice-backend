@@ -37,6 +37,7 @@
                                     <th>S.No.</th>
                                     <th>User</th>
                                     <th>Contact Number</th>
+                                    <th>Prize Code</th>
                                     {{--<th>Email</th>--}}
                                     <th>KYC status</th>
                                     <th>Wallet Balance</th>
@@ -68,6 +69,7 @@
                                                     &nbsp;{{ $user->mobile_no }}
                                                 @endif
                                             </td>
+                                            <td>{{ optional($user->prizeCode)->code }}</td>
                                             {{--<td class="center">
                                                 @if(!empty($user->email_verified_at))
                                                     <i class="fa fa-check-circle" style="color: green;"></i> &nbsp;{{ $user->email }}
@@ -125,6 +127,11 @@
                                                            title="user profile"><i class="fa fa-plus"></i></a>
                                                     @endif
                                                 @endcan
+
+                                                    <a style="margin-top: 5px;" target="_blank"
+                                                       href="{{route('user.download.qr',$user->id)}}"
+                                                       class="btn btn-sm btn-icon btn-secondary m-t-n-xs"
+                                                       title="download qr"><i class="fa fa-qrcode"></i></a>
 
                                             </td>
                                         </tr>

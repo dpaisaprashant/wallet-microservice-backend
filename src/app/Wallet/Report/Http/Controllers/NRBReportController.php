@@ -11,95 +11,184 @@ use App\Traits\CollectionPaginate;
 use App\Wallet\Report\Repositories\AbstractReportRepository;
 use App\Wallet\Report\Repositories\ActiveInactiveCustomerReportRepository;
 use App\Wallet\Report\Repositories\ActiveInactiveTransactionRepository;
+use App\Wallet\Report\Repositories\ActiveInactiveUserReportRepository;
+use App\Wallet\Report\Repositories\ActiveInactiveUserSlabReportRepository;
 use App\Wallet\Report\Repositories\AgentReportRepository;
 use App\Wallet\Report\Repositories\NonBankPaymentReportRepository;
+use App\Wallet\Report\Repositories\NrbReconciliationReportRepository;
+use App\Wallet\WalletAPI\Microservice\WalletClearanceMicroService;
 use Illuminate\Http\Request;
 
 class NRBReportController extends Controller
 {
     use CollectionPaginate;
 
-    public function activeCustomerReport(Request $request)
+    public function activeInactiveUserReport(Request $request)
     {
-        $activityReports = [];
-        if(!empty($_GET)) {
-            $repository = new ActiveInactiveCustomerReportRepository($request);
-            $activityReports = [
-                'Active Customer Wallet' => [
-                    'Male' => [
-                        'Number' => $repository->activeMaleUserCount(),
-                        'Value' =>'Rs.' . $repository->activeMaleUserBalance()
-                    ],
+        $repository = new ActiveInactiveUserReportRepository($request);
 
-                    'Female' => [
-                        'Number' => $repository->activeFemaleUserCount(),
-                        'Value' => 'Rs.' . $repository->activeFemaleUserBalance()
-                    ],
+        $check = $repository->checkForReport();
 
-                    'Other' => [
-                        'Number' => $repository->activeOtherUserCount(),
-                        'Value' => 'Rs.' . $repository->activeOtherUserBalance()
-                    ],
+        if ($check == null) {
+            $walletClearance = new WalletClearanceMicroService();
+            $walletClearanceResponse = $walletClearance->dispatchActiveInactiveUserJobs(request(), request()->from);
 
-                    'Unknown' => [
-                        'Number' => $repository->activeUnknownUserCount(),
-                        'Value' => 'Rs.' . $repository->activeUnknownUserBalance()
-                    ],
+            $activeInactiveUserReports = 'Report is being generated. Please be patient and check in at another time. Current Status: Started Report Generation ....';
+            return view('WalletReport::nrb.active-inactive-user-report', compact('activeInactiveUserReports'));
 
-                    'Grand Total' => [
-                        'Number' => $repository->activeTotalUserCount(),
-                        'Value' => 'Rs.' . $repository->activeTotalUserBalance()
-                    ],
+        }
+        if ($check) {
+            if ($check->status == "PROCESSING") {
+                $activeInactiveUserReports = 'Report is being generated. Please be patient and reload the page at another time. Current Status: Processing Report ....';
+
+                return view('WalletReport::nrb.active-inactive-user-report', compact('activeInactiveUserReports'));
+            }
+        }
+
+        $walletClearance = new WalletClearanceMicroService();
+        $walletClearanceResponse = $walletClearance->dispatchActiveInactiveUserJobs(request(), request()->from);
+
+        $totalUsers = $walletClearanceResponse['active']['total_number'] + $walletClearanceResponse['inactive']['total_number'];
+        $totalBalance = $walletClearanceResponse['active']['total_amount'] / 100 + $walletClearanceResponse['inactive']['total_amount'] / 100;
+        $openingBalance = $walletClearanceResponse['wallet_balance'][0]['sum'];
+        $shouldBeZero = $totalBalance - $openingBalance;
+
+        $activeInactiveUserReports = [
+            'Active Customer Wallet' => [
+                'Male' => [
+                    'Number' => $walletClearanceResponse['active']['male_number'],
+                    'Total Balance' => 'Rs. ' . round($walletClearanceResponse['active']['male_amount'] / 100, 2)
                 ],
 
-               /* 'Inactive Customer Wallet' => [
-                    'Inactive (6-12 months)' => [
-                        'Number' => $repository->inactiveFor6To12MonthsUserCount(),
-                        'Value' => 'Rs.' . $repository->inactiveFor6To12MonthsUserBalance()
-                    ],
+                'Female' => [
+                    'Number' => $walletClearanceResponse['active']['female_number'],
+                    'Total Balance' => 'Rs. ' . round($walletClearanceResponse['active']['female_amount'] / 100, 2)
+                ],
 
-                    'Inactive (> 12 months)' => [
-                        'Number' => $repository->inactiveForMoreThan12MonthsUserCount(),
-                        'Value' => 'Rs.' . $repository->inactiveForMoreThan12MonthsUserBalance()
-                    ],
+                'Other' => [
+                    'Number' => $walletClearanceResponse['active']['others_number'],
+                    'Total Balance' => 'Rs. ' . round($walletClearanceResponse['active']['others_amount'] / 100, 2)
+                ],
 
-                    'Grand Total' => [
-                        'Number' => $repository->inactiveTotalUserCount(),
-                        'Value' => 'Rs.' . $repository->inactiveTotalUserBalance()
-                    ]
-                ]*/
-            ];
-        }
+                'Grand Total' => [
+                    'Number' => $walletClearanceResponse['active']['total_number'],
+                    'Total Balance' => 'Rs. ' . round($walletClearanceResponse['active']['total_amount'] / 100, 2)
+                ]
+            ],
+            'Inactive Customer Wallet' => [
+                'Inactive  (6-12 months)' => [
+                    'Number' => $walletClearanceResponse['inactive']['six_month_number'],
+                    'Total Balance' => 'Rs. ' . round($walletClearanceResponse['inactive']['six_month_amount'] / 100, 2)
+                ],
 
-        return view('WalletReport::nrb.activeUserReport')->with(compact('activityReports'));
+                'Inactive (> 12 months)' => [
+                    'Number' => $walletClearanceResponse['inactive']['tweleve_month_number'],
+                    'Total Balance' => 'Rs. ' . round($walletClearanceResponse['inactive']['tweleve_month_amount'] / 100, 2)
+                ],
+
+                'Grand Total' => [
+                    'Number' => $walletClearanceResponse['inactive']['total_number'],
+                    'Total Balance' => 'Rs. ' . round($walletClearanceResponse['inactive']['total_amount'] / 100, 2)
+                ]
+            ],
+
+        ];
+
+        return view('WalletReport::nrb.active-inactive-user-report')->with(compact('activeInactiveUserReports','totalUsers','totalBalance','openingBalance','shouldBeZero'));
     }
 
-    public function inactiveCustomerReport(Request $request)
+    public function activeInactiveUserSlabReport(Request $request)
     {
-        $activityReports = [];
-        if(!empty($_GET)) {
-            $repository = new ActiveInactiveCustomerReportRepository($request);
-            $activityReports = [
-                 'Inactive Customer Wallet' => [
-                     'Inactive (6-12 months)' => [
-                         'Number' => $repository->inactiveFor6To12MonthsUserCount(),
-                         'Value' => 'Rs.' . $repository->inactiveFor6To12MonthsUserBalance()
-                     ],
-
-                     'Inactive (> 12 months)' => [
-                         'Number' => $repository->inactiveForMoreThan12MonthsUserCount(),
-                         'Value' => 'Rs.' . $repository->inactiveForMoreThan12MonthsUserBalance()
-                     ],
-
-                     'Grand Total' => [
-                         'Number' => $repository->inactiveTotalUserCount(),
-                         'Value' => 'Rs.' . $repository->inactiveTotalUserBalance()
-                     ]
-                 ]
-            ];
+        if ($request->all() != NULL) {
+            $amountRange = json_decode($request->amount_range);
+            $fromAmount = $amountRange->fromAmount;
+            $toAmount = $amountRange->toAmount;
+            $request->merge(['fromAmount' => $fromAmount, 'toAmount' => $toAmount]);
         }
 
-        return view('WalletReport::nrb.inactiveUserReport')->with(compact('activityReports'));
+        $repository = new ActiveInactiveUserSlabReportRepository($request);
+
+        $check = $repository->checkForReport();
+
+        if ($check == null) {
+            $walletClearance = new WalletClearanceMicroService();
+
+            $walletClearanceResponse = $walletClearance->dispatchActiveInactiveUserSlabJobs(request());
+
+            $activeInactiveUserReports = 'Report is being generated. Please be patient and check in at another time. Current Status: Starting Report Generation ....';
+
+
+            return view('WalletReport::nrb.active-inactive-user-slab-report', compact('activeInactiveUserReports'));
+        }
+        if ($check) {
+            if ($check->status == "PROCESSING") {
+                $activeInactiveUserReports = 'Report is being generated. Please be patient and check in at another time. Current Status: Processing Report ....';
+                return view('WalletReport::nrb.active-inactive-user-slab-report', compact('activeInactiveUserReports'));
+            }
+        }
+
+        $walletClearance = new WalletClearanceMicroService();
+        $walletClearanceResponse = $walletClearance->dispatchActiveInactiveUserSlabJobs(request());
+
+        $activeInactiveUserReports = [
+            'Active Customer Wallet' => [
+                'Male' => [
+                    'Number' => $walletClearanceResponse['active']['male_number'],
+                    'Total Balance' => 'Rs. ' . round($walletClearanceResponse['active']['male_amount'] / 100, 2)
+                ],
+
+                'Female' => [
+                    'Number' => $walletClearanceResponse['active']['female_number'],
+                    'Total Balance' => 'Rs. ' . round($walletClearanceResponse['active']['female_amount'] / 100, 2)
+                ],
+
+                'Other' => [
+                    'Number' => $walletClearanceResponse['active']['others_number'],
+                    'Total Balance' => 'Rs. ' . round($walletClearanceResponse['active']['others_amount'] / 100, 2)
+                ],
+
+//                'Grand Total' => [
+//                    'Number' => $walletClearanceResponse['active']['total_number'],
+//                    'Total Balance' => 'Rs. '.$walletClearanceResponse['active']['total_amount']
+//                ]
+            ],
+            'Inactive Customer Wallet' => [
+                'Inactive Male (6-12 months)' => [
+                    'Number' => $walletClearanceResponse['inactive']['six_month_male_number'],
+                    'Total Balance' => 'Rs. ' . round($walletClearanceResponse['inactive']['six_month_male_amount'] / 100, 2)
+                ],
+                'Inactive Female (6-12 months)' => [
+                    'Number' => $walletClearanceResponse['inactive']['six_month_female_number'],
+                    'Total Balance' => 'Rs. ' . round($walletClearanceResponse['inactive']['six_month_female_amount'] / 100, 2)
+                ],
+                'Inactive Others (6-12 months)' => [
+                    'Number' => $walletClearanceResponse['inactive']['six_month_other_number'],
+                    'Total Balance' => 'Rs. ' . round($walletClearanceResponse['inactive']['six_month_other_amount'] / 100, 2)
+                ],
+
+                'Inactive Male (> 12 months)' => [
+                    'Number' => $walletClearanceResponse['inactive']['tweleve_month_male_number'],
+                    'Total Balance' => 'Rs. ' . round($walletClearanceResponse['inactive']['tweleve_month_male_amount'] / 100, 2)
+                ],
+
+                'Inactive Female (> 12 months)' => [
+                    'Number' => $walletClearanceResponse['inactive']['tweleve_month_female_number'],
+                    'Total Balance' => 'Rs. ' . round($walletClearanceResponse['inactive']['tweleve_month_female_amount'] / 100, 2)
+                ],
+
+                'Inactive Others (> 12 months)' => [
+                    'Number' => $walletClearanceResponse['inactive']['tweleve_month_other_number'],
+                    'Total Balance' => 'Rs. ' . round($walletClearanceResponse['inactive']['tweleve_month_other_amount'] / 100, 2)
+                ],
+
+//                'Grand Total' => [
+//                    'Number' => $walletClearanceResponse['inactive']['total_number'],
+//                    'Total Balance' => 'Rs. '.$walletClearanceResponse['inactive']['total_amount']
+//                ]
+            ]
+        ];
+
+        return view('WalletReport::nrb.active-inactive-user-slab-report')->with(compact('activeInactiveUserReports'));
     }
 
     public function agentReport(Request $request)
@@ -115,7 +204,7 @@ class NRBReportController extends Controller
                 $repository = new AgentReportRepository($request, $value);
                 $value->totalSubAgent = $repository->totalSubAgent();
                 $value->previousReportingBalance = 'Rs.' . $repository->previousReportingBalance();
-                $value->currentReportingBalance = 'Rs.'. $value->user->wallet->balance;
+                $value->currentReportingBalance = 'Rs.' . ($value->user->wallet->balance + $value->user->wallet->bonus_balance);
                 $value->billPayment = 'Rs.' . $repository->totalBillPayment() / 100;
                 $value->p2pTransfer = 'Rs.' . $repository->totalP2PTransfer() / 100;
                 $value->cashIn = 'Rs.' . $repository->totalCashIn() / 100;
@@ -129,38 +218,39 @@ class NRBReportController extends Controller
 
     }
 
-    public function nonBankPaymentReport(Request $request){
+    public function nonBankPaymentReport(Request $request)
+    {
         $repository = new NonBankPaymentReportRepository($request);
 
         $nonBankPayments = [
             'Bill Payment' => [
                 'number' => $repository->getBillPaymentNumber(),
-                'value' => ($repository->getBillPaymentValue())/100
+                'value' => ($repository->getBillPaymentValue()) / 100
             ],
 
             'Transfer (A/c to A/c)' => [
                 'number' => $repository->getTransferNumber(),
-                'value' => ($repository->getTransferValue())/100,
+                'value' => ($repository->getTransferValue()) / 100,
             ],
 
             'Cash In (wallet load)' => [
                 'number' => $repository->getCashInNumber(),
-                'value' => ($repository->getCashInValue())/100
+                'value' => ($repository->getCashInValue()) / 100
             ],
 
             'Offer/Cashback/Coupon' => [
                 'number' => $repository->getOfferNumber(),
-                'value' => ($repository->getOfferValue())/100
+                'value' => ($repository->getOfferValue()) / 100
             ],
 
             'Commission/Fees and Charges' => [
                 'number' => $repository->getFeesChargesNumber(),
-                'value' => ($repository->getFeesChargesValue())/100
+                'value' => ($repository->getFeesChargesValue()) / 100
             ],
 
             'Cash Out (Bank withdrawal)' => [
                 'number' => $repository->getCashOutNumber(),
-                'value' => ($repository->getCashOutValue())/100,
+                'value' => ($repository->getCashOutValue()) / 100,
             ],
 
             'Bank Transfer' => [
@@ -178,10 +268,11 @@ class NRBReportController extends Controller
                 'value' => $repository->getGovernmentPaymentValue() / 100,
             ]
         ];
-        return view('WalletReport::nrb.nonBankPaymentReport',compact('nonBankPayments'));
+        return view('WalletReport::nrb.nonBankPaymentReport', compact('nonBankPayments'));
     }
 
-    public function nonBankPaymentCountReport(Request $request){
+    public function nonBankPaymentCountReport(Request $request)
+    {
         $repository = new NonBankPaymentReportRepository($request);
 
         $nonBankPayments = [
@@ -221,7 +312,7 @@ class NRBReportController extends Controller
                 'Failed Count' => $repository->checkCountCashOut()['failedCashOutCount'],
             ],
         ];
-        return view('WalletReport::nrb.nonBankPaymentCountReport',compact('nonBankPayments'));
+        return view('WalletReport::nrb.nonBankPaymentCountReport', compact('nonBankPayments'));
     }
 
     public function activeInactiveTransaction(Request $request)
@@ -251,5 +342,81 @@ class NRBReportController extends Controller
         }
         return view('WalletReport::nrb.activeInactiveTransactionReport')->with(compact('reports'));
 
+    }
+
+    public function reconciliationReport(Request $request)
+    {
+//        if ($request->all() != NULL) {
+//            $amountRange = json_decode($request->amount_range);
+//            $npsAmount = $amountRange->fromAmount;
+//            $npsAmount = $amountRange->fromAmount;
+//            $toAmount = $amountRange->toAmount;
+//            $request->merge(['fromAmount' => $fromAmount, 'toAmount' => $toAmount]);
+//        }
+
+        $repository = new nrbReconciliationReportRepository($request);
+
+        $check = $repository->checkForReport();
+
+        if ($check == null) {
+            $walletClearance = new WalletClearanceMicroService();
+
+            if (!empty($_GET)) {
+                $walletClearanceResponse = $walletClearance->dispatchReconciliationJobs(request());
+            }
+
+            $nrbReconciliationReport = 'The report is being generated. Please check in at another time. Current Status: Starting Report Generation ....';
+//            $nrbReconciliationReport = $walletClearanceResponse['message'];
+
+            return view('WalletReport::nrbAnnex.nrb-recon-report', compact('nrbReconciliationReport'));
+        }
+        if ($check) {
+            if ($check->status == "PROCESSING") {
+                $nrbReconciliationReport = 'The report is being generated. Please check in at another time. Current Status: Processing Report Generation ....';
+                return view('WalletReport::nrbAnnex.nrb-recon-report', compact('nrbReconciliationReport'));
+            }
+        }
+
+        $walletClearance = new WalletClearanceMicroService();
+        $walletClearanceResponse = $walletClearance->dispatchReconciliationJobs(request());
+
+        $nrbReconciliationReport = [
+            'NRB Reconciliation Report' => [
+                'E-Money Balance as per Wallet (1) :' => round($walletClearanceResponse['recon_data']['opening_balance'] / 100, 2),
+
+                'Add (2) :' => [
+                    'Debited in Wallet but not Debited in Settlement Bank' => [
+                        'Paypoint' => round($walletClearanceResponse['generated_sums_title'][1]['amount'] / 100, 2),
+                        'Wallet User Commission' => round($walletClearanceResponse['generated_sums_title'][2]['amount'] / 100, 2)],
+                    'Credited in Settlement Bank but not Credited in Wallet' => [
+                        'Success in NCHL not in Wallet' => $request->nchlAmount,
+                        'Success in NPS not in Wallet' => $request->npsAmount,
+                    ],
+                ],
+                'Less (6) :' => [
+                    'Credited in Wallet but not Credited in Settlement Bank' => [
+                        'NPAY' => round($walletClearanceResponse['generated_sums_title'][3]['amount'] / 100, 2),
+                        'CARD' => round($walletClearanceResponse['generated_sums_title'][4]['amount'] / 100, 2),
+                        'NPS Load Commission to Dpaisa' => round($walletClearanceResponse['generated_sums_title'][5]['amount'] / 100, 2),
+                        'NCHL Load Commission to Dpaisa' => round($walletClearanceResponse['generated_sums_title'][6]['amount'] / 100, 2),
+                        'Wallet User Cashback, Lucky Winner and Referral' => round($walletClearanceResponse['generated_sums_title'][8]['amount'] / 100, 2)],
+                    'Debited in Settlement Bank but not Debited in Wallet' => [
+                        'NCHL Bank Transfer' => round($walletClearanceResponse['generated_sums_title'][7]['amount'] / 100, 2),
+                        'NCHL Agg Commission to Dpaisa' => round($walletClearanceResponse['generated_sums_title'][9]['amount'] / 100, 2),
+                        'NPS FT Commission to Dpaisa' => 0,
+                        'Paypoint Advance' => round($walletClearanceResponse['generated_sums_title'][10]['amount'] / 100, 2),
+                    ],
+                ],
+
+                'Balance (1+2-6)' => round($walletClearanceResponse['recon_data']['opening_balance'] / 100 + $walletClearanceResponse['recon_data']['add'] / 100 - $walletClearanceResponse['recon_data']['less'] / 100, 2),
+                'Balance as per Settlement Bank (Statement)' => round($walletClearanceResponse['recon_data']['balance_per_statement'], 2),
+                'Difference (10-11)' => round($walletClearanceResponse['recon_data']['opening_balance'] / 100 + $walletClearanceResponse['recon_data']['add'] / 100 - $walletClearanceResponse['recon_data']['less'] / 100 - $walletClearanceResponse['recon_data']['balance_per_statement'], 2),
+
+            ],
+
+
+        ];
+
+        return view('WalletReport::nrbAnnex.nrb-recon-report')->with(compact('nrbReconciliationReport'));
     }
 }

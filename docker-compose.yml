@@ -20,6 +20,10 @@ networks:
     external: true
   wallet-microservice-bfigateway_laravel:
     external: true
+  linked-account-integration-project_spring-boot-mysql-network:
+    external: true
+  wallet-microservice-nea_spring-boot-mysql-network:
+    external: true
 
 
 
@@ -51,6 +55,8 @@ services:
       - wallet-microservice-ntc_laravel
       - wallet-microservice-cellpay_spring-boot-mysql-network
       - wallet-microservice-bfigateway_laravel
+      - linked-account-integration-project_spring-boot-mysql-network
+      - wallet-microservice-nea_spring-boot-mysql-network
 
   mysql:
     image: mysql:5.7.29
@@ -79,6 +85,8 @@ services:
       - wallet-microservice-ntc_laravel
       - wallet-microservice-cellpay_spring-boot-mysql-network
       - wallet-microservice-bfigateway_laravel
+      - linked-account-integration-project_spring-boot-mysql-network
+      - wallet-microservice-nea_spring-boot-mysql-network
 
   php:
     build:
@@ -101,6 +109,8 @@ services:
       - wallet-microservice-ntc_laravel
       - wallet-microservice-cellpay_spring-boot-mysql-network
       - wallet-microservice-bfigateway_laravel
+      - linked-account-integration-project_spring-boot-mysql-network
+      - wallet-microservice-nea_spring-boot-mysql-network
 
   composer:
     build:
@@ -125,6 +135,8 @@ services:
       - wallet-microservice-ntc_laravel
       - wallet-microservice-cellpay_spring-boot-mysql-network
       - wallet-microservice-bfigateway_laravel
+      - linked-account-integration-project_spring-boot-mysql-network
+      - wallet-microservice-nea_spring-boot-mysql-network
     entrypoint: ['composer', '--ignore-platform-reqs']
 
   artisan:
@@ -151,6 +163,8 @@ services:
       - wallet-microservice-ntc_laravel
       - wallet-microservice-cellpay_spring-boot-mysql-network
       - wallet-microservice-bfigateway_laravel
+      - linked-account-integration-project_spring-boot-mysql-network
+      - wallet-microservice-nea_spring-boot-mysql-network
 
   phpmyadmin:
     depends_on:
@@ -175,6 +189,8 @@ services:
       - wallet-microservice-ntc_laravel
       - wallet-microservice-cellpay_spring-boot-mysql-network
       - wallet-microservice-bfigateway_laravel
+      - linked-account-integration-project_spring-boot-mysql-network
+      - wallet-microservice-nea_spring-boot-mysql-network
 
   mongo:
     container_name: mongo-backend

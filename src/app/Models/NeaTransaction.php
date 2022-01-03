@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Filters\FiltersAbstract;
 use App\Filters\Khalti\KhaltiFilters;
+use App\Filters\NEASettlement\NEASettlementFilters;
 use App\Models\Microservice\PreTransaction;
 use App\Traits\BelongsToPreTransaction;
 use App\Traits\BelongsToUser;
@@ -29,6 +30,11 @@ class NeaTransaction extends Model
      * @param $amount
      * @return float|int
      */
+
+    public function scopeFilter(Builder $builder, Request $request, array $filters = [])
+    {
+        return (new NEASettlementFilters($request))->add($filters)->filter($builder);
+    }
     public function getAmountAttribute($amount)
     {
         return ($amount / 100);

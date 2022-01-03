@@ -7,6 +7,7 @@ use App\Models\LoadTestFund;
 use App\Models\TransactionEvent;
 use App\Models\User;
 use App\Models\Wallet;
+use App\Wallet\Notification\Repository\NotificationRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -47,10 +48,13 @@ class LuckyWinnerController extends Controller
             Log::info("before_balance: " . $currentBalance);
             Log::info("after_balance: " . ($currentBalance + ($request['amount'] * 100)));
 
+            $description = $request->vendor
+                ? $request->vendor . " winner deposit for: " . today()
+                : "Winner deposit for: " . today();
             $data = [
                 'admin_id' => auth()->user()->id,
                 'user_id' => $user->id,
-                'description' => $request['description'] ?? "Lucky winner for: " . today(),
+                'description' => $request['description'] ?? $description,
                 'before_amount' => $currentBalance,
                 'after_amount' => $currentBalance + ($request['amount'] * 100),
                 //'after_amount' => $currentBalance + ($preTransaction->getOriginal('amount')),
@@ -58,13 +62,24 @@ class LuckyWinnerController extends Controller
                 'after_bonus_balance' => $currentBonusBalance + ($request['bonus_amount'] * 100)
             ];
 
+            $vendor = $request->vendor ?? self::VENDOR;
+
             DB::beginTransaction();
             try {
                 $transaction = LoadTestFund::create($data);
                 if (! $transaction) return redirect(route('luckyWinner.index'))->with('error', 'Transaction not created successfully');
 
-                event(new LoadTestFundEvent($transaction, self::VENDOR, self::SERVICE_TYPE));
+                event(new LoadTestFundEvent($transaction, $vendor, self::SERVICE_TYPE));
                 DB::commit();
+
+                if (!empty($vendor)) {
+                    $notificationRepository = new NotificationRepository($request);
+                    $notificationRepository->sendUserNotification($user, [
+                        "title" => "Winner Deposit",
+                        "message" => "Congratulations!!! You have won Rs. ". ($request['amount'] + $request['bonus_amount']) ." from " .$vendor
+                    ]);
+                }
+
                 return redirect(route('luckyWinner.index'))->with('success', 'Transaction created successfully');
             } catch (\Exception $e) {
                 Log::info($e);

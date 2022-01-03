@@ -669,12 +669,12 @@ $url = url()->current();
                 </li>
             @endif
 
-            @can('Report nrb active and inactive user')
-                <li @if($url == route('report.nrb.activeUser')) class="active" @endif>
-                    <a href="{{ route('report.nrb.activeUser') }}"><i class="fa fa-users"></i> <span
-                            class="nav-label">Active/Inactive Report</span></a>
-                </li>
-            @endcan
+{{--            @can('Report nrb active and inactive user')--}}
+{{--                <li @if($url == route('report.nrb.activeUser')) class="active" @endif>--}}
+{{--                    <a href="{{ route('report.nrb.activeUser') }}"><i class="fa fa-users"></i> <span--}}
+{{--                            class="nav-label">Active/Inactive Report</span></a>--}}
+{{--                </li>--}}
+{{--            @endcan--}}
 
             @if(auth()->user()->hasAnyPermission(['Monthly report view', 'Yearly report view','Report paypoint','Report npay','Report nchl load','Report referral','Report register using referral user','Report subscriber daily','Report reconciliation','Report nrb active and inactive user','Report non bank payment','Report wallet end balance','Report admin kyc','Report commission']))
                 <li @if(preg_match('/report/i', $url)) class="active" @endif>
@@ -696,9 +696,9 @@ $url = url()->current();
                         @can('Report nchl load')
                             <li><a href="{{ route('report.nchl.load') }}">NCHL Load Report</a></li>
                         @endcan
-                        @can('Report referral')
-                            <li><a href="{{ route('referral.report') }}">Referral Report</a></li>
-                        @endcan
+{{--                        @can('Report referral')--}}
+{{--                            <li><a href="{{ route('referral.report') }}">Referral Report</a></li>--}}
+{{--                        @endcan--}}
                         @can('Report register using referral user')
                             <li><a href="{{ route('referral.registerUsingReferralUserReport') }}">Registered Using
                                     Referral
@@ -710,25 +710,25 @@ $url = url()->current();
                         @can('Report reconciliation')
                             <li><a href="{{ route('report.reconciliation') }}">Reconciliation Report</a></li>
                         @endcan
-                        @can('Report nrb reconciliation')
-                            <li><a href="{{ route('report.nrb.reconciliation') }}">NRB Reconciliation Report</a></li>
-                        @endcan
+{{--                        @can('Report nrb reconciliation')--}}
+{{--                            <li><a href="{{ route('report.nrb.reconciliation') }}">NRB Reconciliation Report</a></li>--}}
+{{--                        @endcan--}}
                         {{--  @can('Report reconciliation')
                               <li><a href="{{ route('mismatched.reconciliation') }}">Mismatchced Reconciliation Report</a>
                               </li>
                           @endcan--}}
                         {{--<li><a href="{{ route('report.user.reconciliation') }}">User Reconciliation Report</a></li>--}}
 
-                        @can('Report nrb agent')
-                            <li><a href="{{ route('report.agent') }}">NRB Agent Report</a></li>
-                        @endcan
-                        @can('Report non bank payment count')
-                            <li><a href="{{ route('report.nonBankPaymentCountReport') }}">Non Bank Payment Count
-                                    Report</a></li>
-                        @endcan
-                        @can('Report non bank payment')
-                            <li><a href="{{ route('report.nonBankPaymentReport') }}">Non bank payment report</a></li>
-                        @endcan
+{{--                        @can('Report nrb agent')--}}
+{{--                            <li><a href="{{ route('report.agent') }}">NRB Agent Report</a></li>--}}
+{{--                        @endcan--}}
+{{--                        @can('Report non bank payment count')--}}
+{{--                            <li><a href="{{ route('report.nonBankPaymentCountReport') }}">Non Bank Payment Count--}}
+{{--                                    Report</a></li>--}}
+{{--                        @endcan--}}
+{{--                        @can('Report non bank payment')--}}
+{{--                            <li><a href="{{ route('report.nonBankPaymentReport') }}">Non bank payment report</a></li>--}}
+{{--                        @endcan--}}
                         @can('Report wallet end balance')
                             <li><a href="{{ route('wallet.endbalance') }}">Wallet end balance report</a></li>
                         @endcan

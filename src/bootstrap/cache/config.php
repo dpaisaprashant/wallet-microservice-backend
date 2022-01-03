@@ -131,11 +131,11 @@
   ),
   'app' => 
   array (
-    'name' => 'master',
+    'name' => 'WalletBackend',
     'env' => 'local',
     'debug' => true,
     'url' => 'http://localhost/',
-    'logo' => 'sajilopay',
+    'logo' => 'http://localhost',
     'core_url' => '',
     'asset_url' => NULL,
     'timezone' => 'Asia/Kathmandu',
@@ -288,7 +288,7 @@
   array (
     'backup' => 
     array (
-      'name' => 'master',
+      'name' => 'WalletBackend',
       'source' => 
       array (
         'files' => 
@@ -368,7 +368,7 @@
     array (
       0 => 
       array (
-        'name' => 'master',
+        'name' => 'WalletBackend',
         'disks' => 
         array (
           0 => 'local',
@@ -397,7 +397,7 @@
     array (
       0 => 
       array (
-        'name' => 'master',
+        'name' => 'WalletBackend',
         'disks' => 
         array (
           0 => 'local',
@@ -500,7 +500,7 @@
         'endpoint' => NULL,
       ),
     ),
-    'prefix' => 'master_cache',
+    'prefix' => 'walletbackend_cache',
   ),
   'database' => 
   array (
@@ -522,7 +522,7 @@
         'host' => 'mysql_backend_wallet',
         'port' => '3306',
         'database' => 'mysql_backend_wallet',
-        'username' => 'root',
+        'username' => 'mysql_backend_wallet',
         'password' => 'secret',
         'unix_socket' => '',
         'charset' => 'utf8mb4',
@@ -753,11 +753,11 @@
       array (
         'driver' => 'mysql',
         'url' => NULL,
-        'host' => 'mysql_bfigateway',
+        'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'mysql_bfigateway',
-        'username' => 'mysql_bfigateway',
-        'password' => 'secret',
+        'database' => 'forge',
+        'username' => 'forge',
+        'password' => '',
         'unix_socket' => '',
         'charset' => 'utf8mb4',
         'collation' => 'utf8mb4_unicode_ci',
@@ -779,11 +779,11 @@
       array (
         'driver' => 'mysql',
         'url' => NULL,
-        'host' => 'mysql_khalti',
+        'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'mysql_khalti',
-        'username' => 'root',
-        'password' => 'secret',
+        'database' => 'forge',
+        'username' => 'forge',
+        'password' => '',
         'unix_socket' => '',
         'charset' => 'utf8mb4',
         'collation' => 'utf8mb4_unicode_ci',
@@ -805,11 +805,11 @@
       array (
         'driver' => 'mysql',
         'url' => NULL,
-        'host' => 'mysql_cellpay',
+        'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'mysql_cellpay',
-        'username' => 'root',
-        'password' => 'secret',
+        'database' => 'forge',
+        'username' => 'forge',
+        'password' => '',
         'unix_socket' => '',
         'charset' => 'utf8mb4',
         'collation' => 'utf8mb4_unicode_ci',
@@ -831,11 +831,11 @@
       array (
         'driver' => 'mysql',
         'url' => NULL,
-        'host' => 'mysql_clearance',
+        'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'mysql_clearance',
-        'username' => 'root',
-        'password' => 'secret',
+        'database' => 'forge',
+        'username' => 'forge',
+        'password' => '',
         'unix_socket' => '',
         'charset' => 'utf8mb4',
         'collation' => 'utf8mb4_unicode_ci',
@@ -883,11 +883,11 @@
       array (
         'driver' => 'mysql',
         'url' => NULL,
-        'host' => 'mysql_account_link',
+        'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'mysql_account_link',
-        'username' => 'mysql_account_link',
-        'password' => 'secret',
+        'database' => 'forge',
+        'username' => 'forge',
+        'password' => '',
         'unix_socket' => '',
         'charset' => 'utf8mb4',
         'collation' => 'utf8mb4_unicode_ci',
@@ -1016,7 +1016,7 @@
         'host' => 'mysql_backend_wallet',
         'port' => '3306',
         'database' => 'mysql_backend_wallet',
-        'username' => 'root',
+        'username' => 'mysql_backend_wallet',
         'password' => 'secret',
         'charset' => 'utf8',
         'prefix' => '',
@@ -1031,7 +1031,7 @@
         'host' => 'mysql_backend_wallet',
         'port' => '3306',
         'database' => 'mysql_backend_wallet',
-        'username' => 'root',
+        'username' => 'mysql_backend_wallet',
         'password' => 'secret',
         'charset' => 'utf8',
         'prefix' => '',
@@ -1051,7 +1051,7 @@
       'options' => 
       array (
         'cluster' => 'redis',
-        'prefix' => 'master_database_',
+        'prefix' => 'walletbackend_database_',
       ),
       'default' => 
       array (
@@ -1181,11 +1181,11 @@
   ),
   'dpaisa-api-url' => 
   array (
-    'kyc_documentation_url' => 'http://localhost:5052/storage/img/kyc/',
+    'kyc_documentation_url' => 'https://dpaisa.com/storage/img/kyc/',
     'admin_documentation_url' => 'https://api.sajilopay.com.np/storage/img/agent/',
-    'agent_url' => 'http://localhost:5052/storage/img/agent/',
+    'agent_url' => 'https://api.dpaisa.com/storage/img/agent/',
     'merchant_kyc_documentation_url' => 'https://staging.merchant.silkinv.com/storage/img/kyc/',
-    'public_document_url' => 'http://localhost:5052/storage/',
+    'public_document_url' => 'https://dpaisa.com/storage/',
   ),
   'fcm' => 
   array (
@@ -1430,18 +1430,18 @@
   ),
   'microservices' => 
   array (
-    'PAYPOINT' => 'nginx_paypoint/api/microservice',
-    'NCHL' => 'nginx_nchl/api/microservice',
-    'NIC_ASIA' => 'nginx_cybersource/api/microservice',
+    'PAYPOINT' => '',
+    'NCHL' => '',
+    'NIC_ASIA' => '',
     'NTC' => '',
-    'NPAY' => 'nginx_npay/api/microservice',
-    'NPS' => 'nginx_nps/api/microservice',
+    'NPAY' => '',
+    'NPS' => '',
     'NPS_ACCOUNT_LINK' => '',
     'KHALTI' => '',
     'CELLPAY' => '',
     'SAJILOPAY_REMITTANCE' => '',
     'PAYMENT_NEPAL' => '',
-    'WALLET_CLEARANCE' => 'nginx_clearance/',
+    'WALLET_CLEARANCE' => '',
   ),
   'nea-bank-details' => 
   array (
@@ -3343,7 +3343,7 @@
       0 => 2,
       1 => 100,
     ),
-    'cookie' => 'master_session',
+    'cookie' => 'walletbackend_session',
     'path' => '/',
     'domain' => NULL,
     'secure' => NULL,

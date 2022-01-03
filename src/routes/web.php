@@ -352,7 +352,7 @@ Route::group(['prefix' => 'admin'], function () {
         //report (npay, paypoint)
         Route::get('/report/paypoint', 'ReportController@paypoint')->name('report.paypoint')->middleware('permission:Report paypoint');
         Route::get('/report/npay', 'ReportController@npay')->name('report.npay')->middleware('permission:Report npay');
-        /*
+        /**
  * wallet end balance Report
  * */
 

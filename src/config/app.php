@@ -186,6 +186,7 @@ return [
         App\Wallet\Architecture\ArchitectureServiceProvider::class,
         App\Wallet\TransactionClearance\ClearanceServiceProvider::class,
         App\Wallet\MiracleInfoSms\MiracleInfoServiceProvider::class,
+        App\Wallet\WalletAPI\WalletAPIServiceProvider::class,
 
 
     ],

@@ -16,6 +16,7 @@ class TransactionEventResource extends JsonResource
     {
         return [
             'USER TRANSACTION ID' => $this->uid ?? '---',
+            'PRE TRANSACTION ID' =>(string) $this->pre_transaction_id ?? '---',
             'USER' => $this->user->name,
             'USER CONTACT NO.' => $this->user->mobile_no,
             'USER EMAIL' => $this->user->email,
@@ -25,7 +26,7 @@ class TransactionEventResource extends JsonResource
             'VENDOR' => $this->vendor,
             'SERVICE TYPE' => $this->service_type,
             'DESCRIPTION' => $this->description,
-            'CREATED AT' => $this->created_at
+            'CREATED AT' => (string)$this->created_at
         ];
     }
 }

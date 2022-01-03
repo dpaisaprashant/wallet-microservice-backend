@@ -13,6 +13,8 @@ use App\Wallet\TransactionEvent\Repository\TransactionEventRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
+use DB;
+
 class ReportController extends Controller
 {
 
@@ -49,14 +51,31 @@ class ReportController extends Controller
 
     public function walletEndBalance(WalletEndBalanceRepository $repository,Request $request){
         $date = $request->get('till');
-        $datas = $repository->getWalletEndBalance($date);
-        $totalSum = $repository->getTotalWalletEndBalanceAmount($date);
-        if($datas != null) {
-            $totalCount = count($datas);
-        }else{
-            $totalCount = null;
-        }
-        return view('admin.report.walletEndBalance',compact('datas','totalCount','totalSum'));
+        $formatted_date = str_replace('T', ' ', $date);
+        //dd($formatted_date);
+        //$datas = $repository->getWalletEndBalance($date);
+        //$totalSum = $repository->getTotalWalletEndBalanceAmount($date);
+
+        $total = \DB::connection('dpaisa')->select(DB::raw("SELECT SUM(transaction_events.balance+transaction_events.bonus_balance) as total_wallet_balance
+	FROM (
+        SELECT user_id, MAX(created_at) as max_created_at, MAX(id) as max_id
+			FROM transaction_events 
+        	WHERE Date(created_at) <= date('$formatted_date')
+			GROUP BY user_id
+    ) AS latest_transactions 
+    JOIN transaction_events 
+    	ON transaction_events.id = latest_transactions.max_id
+	JOIN users 
+    	ON users.id = latest_transactions.user_id
+  JOIN wallets
+    	ON users.id = wallets.user_id"));
+
+        //dd($totalSum[0]->total_wallet_balance);
+
+        $totalSum = $total[0]->total_wallet_balance;
+        $totalCount = "N/A";
+
+        return view('admin.report.walletEndBalance',compact('totalSum'));
     }
 
     public function commissionReport(CommissionReportRepository $repository,Request $request){

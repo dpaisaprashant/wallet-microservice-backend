@@ -22,6 +22,7 @@ class TransactionEvent extends Model
 
     protected $appends = ["fee", "cashback_amount"];
 
+
     /**
      * @param $amount
      * @return float|int

@@ -27,12 +27,17 @@ class RefundController extends Controller
     {
         $users = User::latest()->get();
         if ($request->isMethod('post')) {
-
             $user = User::where('mobile_no', $request->mobile_no)->firstOrFail();
             $preTransaction = PreTransaction::where('pre_transaction_id', $request->pre_transaction_id)->firstOrfail();
+            $total = $request->amount + $request->bonus_amount;
+
 
             if ($user->id != $preTransaction->user_id) {
                 return redirect()->back()->with('error', "Pre transaction and user doesn't match");
+            }
+
+            if ($total != (int)$preTransaction->amount){
+                return back()->with('error','Invalid Amount Details Have Been Entered');
             }
 
             $currentBalance = Wallet::whereUserId($user->id)->first()->balance * 100;

@@ -219,6 +219,10 @@ class NRBAnnexReportController extends Controller
 //            $request->merge(['fromAmount' => $fromAmount, 'toAmount' => $toAmount]);
 //        }
 
+//        if($request->all() == null){
+//            return view('WalletReport::nrbAnnex.transaction-report-merchant');
+//        }
+
         $repository = new NrbAnnexMerchantPaymentReportRepository($request);
 
         $nrbAnnexMerchantPayments = [
@@ -264,6 +268,9 @@ class NRBAnnexReportController extends Controller
 
     public function statementSettlementBank(Request $request)
     {
+        if($request->all() == null){
+            return view('WalletReport::nrbAnnex.statement-settlement-bank');
+        }
         $repository = new StatementSettlementBankRepository($request);
 
         $check = $repository->checkForReport();

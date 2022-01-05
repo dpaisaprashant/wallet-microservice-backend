@@ -264,6 +264,10 @@ class NRBAnnexReportController extends Controller
 
     public function statementSettlementBank(Request $request)
     {
+        if($request->all()==null){
+            return view('WalletReport::nrbAnnex.statement-settlement-bank');
+        }
+
         $repository = new StatementSettlementBankRepository($request);
 
         $check = $repository->checkForReport();

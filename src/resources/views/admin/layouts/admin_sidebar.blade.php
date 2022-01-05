@@ -778,6 +778,11 @@ $url = url()->current();
                                     Report</a>
                             </li>
                         @endcan
+                        @can('Report nrb active and inactive user')
+                            <li><a href="{{ route('report.nrb.annex.agent.payment') }}">NRB Annex 10.1.11
+                                    Report</a>
+                            </li>
+                        @endcan
 {{--                        @can('Report nrb reconciliation')--}}
 {{--                            <li><a href="{{ route('report.nrb.annex.reconciliation') }}">NRB Reconciliation Report</a></li>--}}
 {{--                        @endcan--}}

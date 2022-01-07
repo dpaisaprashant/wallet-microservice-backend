@@ -14,14 +14,16 @@ networks:
     external: true
   linked-account-integration-project_spring-boot-mysql-network:
     external: true
-  wallet-microservice-nea_spring-boot-mysql-network:
+  wallet-microservice-cellpay_spring-boot-mysql-network:
     external: true
-  ticketing_spring-boot-mysql-network:
-    external: true
-  wallet-microservice-event-ticketing_spring-boot-mysql-network:
-    external: true
-  wallet_clearance_laravel:
-    external: true
+#  wallet-microservice-nea_spring-boot-mysql-network:
+#    external: true
+#  ticketing_spring-boot-mysql-network:
+#    external: true
+#  wallet-microservice-event-ticketing_spring-boot-mysql-network:
+#    external: true
+#  wallet_clearance_laravel:
+#    external: true
 
 
 services:
@@ -48,10 +50,11 @@ services:
       - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paymentnepal_spring-boot-mysql-network
       - linked-account-integration-project_spring-boot-mysql-network
-      - wallet-microservice-nea_spring-boot-mysql-network
-      - ticketing_spring-boot-mysql-network
-      - wallet-microservice-event-ticketing_spring-boot-mysql-network
-      - wallet_clearance_laravel
+      - wallet-microservice-cellpay_spring-boot-mysql-network
+#      - wallet-microservice-nea_spring-boot-mysql-network
+#      - ticketing_spring-boot-mysql-network
+#      - wallet-microservice-event-ticketing_spring-boot-mysql-network
+#      - wallet_clearance_laravel
 
   mysql:
     image: mysql:5.7.29
@@ -77,10 +80,11 @@ services:
       - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paymentnepal_spring-boot-mysql-network
       - linked-account-integration-project_spring-boot-mysql-network
-      - wallet-microservice-nea_spring-boot-mysql-network
-      - ticketing_spring-boot-mysql-network
-      - wallet-microservice-event-ticketing_spring-boot-mysql-network
-      - wallet_clearance_laravel
+      - wallet-microservice-cellpay_spring-boot-mysql-network
+#      - wallet-microservice-nea_spring-boot-mysql-network
+#      - ticketing_spring-boot-mysql-network
+#      - wallet-microservice-event-ticketing_spring-boot-mysql-network
+#      - wallet_clearance_laravel
 
   php:
     build:
@@ -100,10 +104,11 @@ services:
       - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paymentnepal_spring-boot-mysql-network
       - linked-account-integration-project_spring-boot-mysql-network
-      - wallet-microservice-nea_spring-boot-mysql-network
-      - ticketing_spring-boot-mysql-network
-      - wallet-microservice-event-ticketing_spring-boot-mysql-network
-      - wallet_clearance_laravel
+      - wallet-microservice-cellpay_spring-boot-mysql-network
+#      - wallet-microservice-nea_spring-boot-mysql-network
+#      - ticketing_spring-boot-mysql-network
+#      - wallet-microservice-event-ticketing_spring-boot-mysql-network
+#      - wallet_clearance_laravel
 
   composer:
     build:
@@ -124,10 +129,11 @@ services:
       - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paymentnepal_spring-boot-mysql-network
       - linked-account-integration-project_spring-boot-mysql-network
-      - wallet-microservice-nea_spring-boot-mysql-network
-      - ticketing_spring-boot-mysql-network
-      - wallet-microservice-event-ticketing_spring-boot-mysql-network
-      - wallet_clearance_laravel
+      - wallet-microservice-cellpay_spring-boot-mysql-network
+#      - wallet-microservice-nea_spring-boot-mysql-network
+#      - ticketing_spring-boot-mysql-network
+#      - wallet-microservice-event-ticketing_spring-boot-mysql-network
+#      - wallet_clearance_laravel
 
     entrypoint: ['composer', '--ignore-platform-reqs']
 
@@ -151,10 +157,11 @@ services:
       - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paymentnepal_spring-boot-mysql-network
       - linked-account-integration-project_spring-boot-mysql-network
-      - wallet-microservice-nea_spring-boot-mysql-network
-      - ticketing_spring-boot-mysql-network
-      - wallet-microservice-event-ticketing_spring-boot-mysql-network
-      - wallet_clearance_laravel
+      - wallet-microservice-cellpay_spring-boot-mysql-network
+#      - wallet-microservice-nea_spring-boot-mysql-network
+#      - ticketing_spring-boot-mysql-network
+#      - wallet-microservice-event-ticketing_spring-boot-mysql-network
+#      - wallet_clearance_laravel
 
   phpmyadmin:
     depends_on:
@@ -176,10 +183,11 @@ services:
       - wallet-microservice-khalti_spring-boot-mysql-network
       - wallet-microservice-paymentnepal_spring-boot-mysql-network
       - linked-account-integration-project_spring-boot-mysql-network
-      - wallet-microservice-nea_spring-boot-mysql-network
-      - ticketing_spring-boot-mysql-network
-      - wallet-microservice-event-ticketing_spring-boot-mysql-network
-      - wallet_clearance_laravel
+      - wallet-microservice-cellpay_spring-boot-mysql-network
+#      - wallet-microservice-nea_spring-boot-mysql-network
+#      - ticketing_spring-boot-mysql-network
+#      - wallet-microservice-event-ticketing_spring-boot-mysql-network
+#      - wallet_clearance_laravel
 
 
 #  mongo:

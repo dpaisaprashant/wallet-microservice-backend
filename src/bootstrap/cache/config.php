@@ -131,11 +131,11 @@
   ),
   'app' => 
   array (
-    'name' => 'master',
+    'name' => 'icash',
     'env' => 'local',
     'debug' => true,
     'url' => 'http://localhost/',
-    'logo' => 'sajilopay',
+    'logo' => 'http://localhost',
     'core_url' => '',
     'asset_url' => NULL,
     'timezone' => 'Asia/Kathmandu',
@@ -288,7 +288,7 @@
   array (
     'backup' => 
     array (
-      'name' => 'master',
+      'name' => 'icash',
       'source' => 
       array (
         'files' => 
@@ -368,7 +368,7 @@
     array (
       0 => 
       array (
-        'name' => 'master',
+        'name' => 'icash',
         'disks' => 
         array (
           0 => 'local',
@@ -397,7 +397,7 @@
     array (
       0 => 
       array (
-        'name' => 'master',
+        'name' => 'icash',
         'disks' => 
         array (
           0 => 'local',
@@ -500,7 +500,7 @@
         'endpoint' => NULL,
       ),
     ),
-    'prefix' => 'master_cache',
+    'prefix' => 'icash_cache',
   ),
   'database' => 
   array (
@@ -522,7 +522,7 @@
         'host' => 'mysql_backend_wallet',
         'port' => '3306',
         'database' => 'mysql_backend_wallet',
-        'username' => 'root',
+        'username' => 'mysql_backend_wallet',
         'password' => 'secret',
         'unix_socket' => '',
         'charset' => 'utf8mb4',
@@ -753,11 +753,11 @@
       array (
         'driver' => 'mysql',
         'url' => NULL,
-        'host' => 'mysql_bfigateway',
+        'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'mysql_bfigateway',
-        'username' => 'mysql_bfigateway',
-        'password' => 'secret',
+        'database' => 'forge',
+        'username' => 'forge',
+        'password' => '',
         'unix_socket' => '',
         'charset' => 'utf8mb4',
         'collation' => 'utf8mb4_unicode_ci',
@@ -782,7 +782,7 @@
         'host' => 'mysql_khalti',
         'port' => '3306',
         'database' => 'mysql_khalti',
-        'username' => 'root',
+        'username' => 'mysql_khalti',
         'password' => 'secret',
         'unix_socket' => '',
         'charset' => 'utf8mb4',
@@ -808,7 +808,7 @@
         'host' => 'mysql_cellpay',
         'port' => '3306',
         'database' => 'mysql_cellpay',
-        'username' => 'root',
+        'username' => 'mysql_cellpay',
         'password' => 'secret',
         'unix_socket' => '',
         'charset' => 'utf8mb4',
@@ -831,11 +831,11 @@
       array (
         'driver' => 'mysql',
         'url' => NULL,
-        'host' => 'mysql_clearance',
+        'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'mysql_clearance',
-        'username' => 'root',
-        'password' => 'secret',
+        'database' => 'forge',
+        'username' => 'forge',
+        'password' => '',
         'unix_socket' => '',
         'charset' => 'utf8mb4',
         'collation' => 'utf8mb4_unicode_ci',
@@ -1016,7 +1016,7 @@
         'host' => 'mysql_backend_wallet',
         'port' => '3306',
         'database' => 'mysql_backend_wallet',
-        'username' => 'root',
+        'username' => 'mysql_backend_wallet',
         'password' => 'secret',
         'charset' => 'utf8',
         'prefix' => '',
@@ -1031,7 +1031,7 @@
         'host' => 'mysql_backend_wallet',
         'port' => '3306',
         'database' => 'mysql_backend_wallet',
-        'username' => 'root',
+        'username' => 'mysql_backend_wallet',
         'password' => 'secret',
         'charset' => 'utf8',
         'prefix' => '',
@@ -1051,7 +1051,7 @@
       'options' => 
       array (
         'cluster' => 'redis',
-        'prefix' => 'master_database_',
+        'prefix' => 'icash_database_',
       ),
       'default' => 
       array (
@@ -1193,8 +1193,8 @@
     'log_enabled' => false,
     'http' => 
     array (
-      'server_key' => 'AAAAkRD5jcs:APA91bEd3o53seiqkw_XSHd54N3rMKpsn2HbE0qQSbr6JHTEt5jgnla29puB1jnq6DcGo29Sl-k1irOaZ-NhgWwPWjaf6SzQeKIKwvkc56yEWDhpVrQD-P-W0MjFvzWMWLtbW2pXkTgH',
-      'sender_id' => '623055048139',
+      'server_key' => 'asdfkjas;dfj',
+      'sender_id' => 'al;dsjf',
       'server_send_url' => 'https://fcm.googleapis.com/fcm/send',
       'server_group_url' => 'https://android.googleapis.com/gcm/notification',
       'timeout' => 30.0,
@@ -1430,18 +1430,18 @@
   ),
   'microservices' => 
   array (
-    'PAYPOINT' => 'nginx_paypoint/api/microservice',
-    'NCHL' => 'nginx_nchl/api/microservice',
-    'NIC_ASIA' => 'nginx_cybersource/api/microservice',
+    'PAYPOINT' => '',
+    'NCHL' => 'nginx_nchl',
+    'NIC_ASIA' => '',
     'NTC' => '',
-    'NPAY' => 'nginx_npay/api/microservice',
-    'NPS' => 'nginx_nps/api/microservice',
+    'NPAY' => '',
+    'NPS' => '',
     'NPS_ACCOUNT_LINK' => '',
     'KHALTI' => '',
     'CELLPAY' => '',
     'SAJILOPAY_REMITTANCE' => '',
     'PAYMENT_NEPAL' => '',
-    'WALLET_CLEARANCE' => 'nginx_clearance/',
+    'WALLET_CLEARANCE' => '',
   ),
   'nea-bank-details' => 
   array (
@@ -3162,8 +3162,8 @@
   'onesignal' => 
   array (
     'url' => 'https://onesignal.com/api/v1/notifications',
-    'app_id' => '8047c82e-b39a-45a7-98a7-12200d78888d',
-    'auth_code' => 'MGQ3ZWFhNTEtYTQ4Ny00NGFkLWEyYTAtNWNmMWI2MmIxOGFh',
+    'app_id' => 'jtadf',
+    'auth_code' => 'asdf',
     'tags' => 
     array (
       'kyc_filled_users' => 
@@ -3343,7 +3343,7 @@
       0 => 2,
       1 => 100,
     ),
-    'cookie' => 'master_session',
+    'cookie' => 'icash_session',
     'path' => '/',
     'domain' => NULL,
     'secure' => NULL,

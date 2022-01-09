@@ -478,6 +478,9 @@ class RolesAndPermissionsSeeder extends Seeder
             //Merchant Revenues
             'Merchant revenue view',
 
+            //Merchant Ledgers
+            'View Merchant Ledger',
+
             //Social Media Challenge
             'View social media challenge',
             'Edit social media challenge',

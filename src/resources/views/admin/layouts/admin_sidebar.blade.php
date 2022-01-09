@@ -193,6 +193,9 @@ $url = url()->current();
                             <li><a href="{{ route('merchant.address.list') }}">Set Merchant Address</a></li>
                         @endcan
 
+                        @can('View Merchant Ledger')
+                            <li><a href="{{route('admin.merchant.ledger.index')}}">Merchant Ledger</a></li>
+                        @endcan
 
                     </ul>
                 </li>
@@ -840,9 +843,7 @@ $url = url()->current();
                 </li>
             @endif
 
-{{--            todo: add permissions--}}
-            <li><a href="{{route('admin.merchant.ledger.index')}}"><i class="fa fa-th-list"></i>Merchant Ledger</a></li>
-{{--            todo:end add permissions--}}
+
 
             @if(auth()->user()->hasPermissionTo('View issue ticket'))
                 <li @if($url == route('issue.ticket.view'))class="active" @endif>

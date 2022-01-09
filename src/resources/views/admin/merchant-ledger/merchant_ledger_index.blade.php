@@ -25,82 +25,61 @@
     </div>
     <div class="wrapper wrapper-content animated fadeInRight">
 
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-title collapse-link">
+                        <h5>Filter Merchant Ledgers</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content" @if( empty($_GET) || (!empty($_GET['page']) && count($_GET) === 1)  ) style="display: none" @endif>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <form role="form" method="get">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="input-group date">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                                <input id="date_load_from" type="text" class="form-control date_from" placeholder="From" name="from" autocomplete="off"  value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}">
+                                            </div>
+                                        </div>
 
-{{--        <div class="row">--}}
-{{--            <div class="col-lg-12">--}}
-{{--                <div class="ibox ">--}}
-{{--                    <div class="ibox-title collapse-link">--}}
-{{--                        <h5>Filter Session Log</h5>--}}
-{{--                        <div class="ibox-tools">--}}
-{{--                            <a class="collapse-link">--}}
-{{--                                <i class="fa fa-chevron-up"></i>--}}
-{{--                            </a>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="ibox-content" @if( empty($_GET) || (!empty($_GET['page']) && count($_GET) === 1)  ) style="display: none" @endif>--}}
-{{--                        <div class="row">--}}
-{{--                            <div class="col-sm-12">--}}
-{{--                                <form role="form" method="get">--}}
-{{--                                    <div class="row">--}}
-{{--                                        <div class="col-md-4">--}}
-{{--                                            <div class="form-group">--}}
-{{--                                                <input type="text" name="user" placeholder="User" class="form-control"  value="{{ !empty($_GET['user']) ? $_GET['user'] : '' }}">--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
+                                        <div class="col-md-6">
+                                            <div class="input-group date">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                                <input id="date_load_to" type="text" class="form-control date_to" placeholder="To" name="to" autocomplete="off"  value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
+                                            </div>
+                                        </div>
 
-{{--                                        <div class="col-md-4">--}}
-{{--                                            <div class="form-group">--}}
-{{--                                                <input type="text" name="public_ip" placeholder="Public IP" class="form-control"  value="{{ !empty($_GET['public_ip']) ? $_GET['public_ip'] : '' }}">--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-
-{{--                                        <div class="col-md-4">--}}
-{{--                                            <div class="form-group">--}}
-{{--                                                <input type="text" name="server_ip" placeholder="Server IP" class="form-control"  value="{{ !empty($_GET['server_ip']) ? $_GET['server_ip'] : '' }}">--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-
-{{--                                    </div>--}}
-
-{{--                                    <div class="row">--}}
-{{--                                        <div class="col-md-12">--}}
-{{--                                            <div class="form-group">--}}
-{{--                                                <input type="text" name="agent" placeholder="User Agent" class="form-control"  value="{{ !empty($_GET['agent']) ? $_GET['agent'] : '' }}">--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-
-{{--                                    <div class="row">--}}
-{{--                                        <div class="col-md-6">--}}
-{{--                                            <div class="input-group date">--}}
-{{--                                                <span class="input-group-addon">--}}
-{{--                                                    <i class="fa fa-calendar"></i>--}}
-{{--                                                </span>--}}
-{{--                                                <input id="date_load_from" type="text" class="form-control date_from" placeholder="From" name="from" autocomplete="off"  value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}">--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-
-{{--                                        <div class="col-md-6">--}}
-{{--                                            <div class="input-group date">--}}
-{{--                                                <span class="input-group-addon">--}}
-{{--                                                    <i class="fa fa-calendar"></i>--}}
-{{--                                                </span>--}}
-{{--                                                <input id="date_load_to" type="text" class="form-control date_to" placeholder="To" name="to" autocomplete="off"  value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                    <br>--}}
-
-{{--                                    <div>--}}
-{{--                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('admin.log.userSession') }}"><strong>Filter</strong></button>--}}
-{{--                                    </div>--}}
-{{--                                </form>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
+                                        <div class = "col-6" style="padding-top: 10px">
+                                            <select name="merchant" class="form-control form-control-sm" required>
+                                                <option value="" selected disabled>-- Select Merchant --</option>
+                                                @foreach($merchants as $merchant)
+                                                    <option value="{{$merchant->id}}">{{$merchant->mobile_no . "-" .$merchant->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div>
+                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('admin.merchant.ledger.index') }}"><strong>Filter</strong></button>
+                                    </div>
+                                    @include('admin.asset.components.clearFilterButton')
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-lg-12">
@@ -109,23 +88,6 @@
                         <div class="row">
                             <div class = "col-3">
                                 <h5>List of Merchant Ledgers</h5>
-                            </div>
-                            <div class="col-6 pb-3">
-                                <form action="#" method="get">
-                                    <div class="row">
-                                        <div class = "col-8">
-                                            <select name="merchant" class="form-control form-control-sm">
-                                                <option value="" selected disabled>-- Select Merchant --</option>
-                                                @foreach($merchants as $merchant)
-                                                    <option value="{{$merchant->id}}">{{$merchant->mobile_no . "-" .$merchant->name}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class = "col-4" style="padding-top: 7px">
-                                            <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="#"><strong>Search</strong></button>
-                                        </div>
-                                    </div>
-                                </form>
                             </div>
                         </div>
                     </div>
@@ -137,8 +99,8 @@
                                 <tr>
                                     <th>S.No.</th>
                                     <th>Date</th>
-                                    <th>Voucher</th>
-                                    <th>Lekha Code</th>
+                                    <th>Transaction Code</th>
+                                    <th>Merchant Name</th>
                                     <th>Account Name</th>
                                     <th>Debit</th>
                                     <th>Credit</th>
@@ -146,12 +108,39 @@
                                     <th>Description(Kaifhiyat)</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-
-                                </tbody>
-
+                                @isset($ledgers)
+                                    @php($amount = 0)
+                                    @foreach($ledgers as $ledger)
+                                        <tbody>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$ledger->created_at}}</td>
+                                            <td>{{$ledger->uid}}</td>
+                                            <td>{{$ledger->user->name}}</td>
+                                            <td>{{$ledger->account_mobile_no}}</td>
+                                            @if($ledger->uniquePreTransaction->transaction_type == \App\Models\Microservice\PreTransaction::TRANSACTION_TYPE_DEBIT)
+                                                <td style="color: red">{{$ledger->amount}}</td>
+                                                <td>--</td>
+{{--                                                <td>--}}
+{{--                                                    @php($amount = $amount - $ledger->amount)--}}
+{{--                                                    {{$amount}}--}}
+{{--                                                </td>--}}
+                                            @else
+                                                <td>--</td>
+                                                <td style="color: green">{{$ledger->amount}}</td>
+{{--                                                <td>--}}
+{{--                                                    @php($amount = $amount + $ledger->amount)--}}
+{{--                                                    {{$amount}}--}}
+{{--                                                </td>--}}
+                                            @endif
+                                            <td>{{$ledger->balance}}</td>
+                                            <td>{{$ledger->descripiton}}</td>
+                                        </tbody>
+                                    @endforeach
+                                @endisset
                             </table>
-{{--                            {{ $sessions->links() }}--}}
+                            @isset($ledgers)
+                            {{ $ledgers->appends(request()->query())->links()}}
+                            @endisset
                         </div>
 
                     </div>
@@ -171,10 +160,12 @@
     @include('admin.asset.js.chosen')
     @include('admin.asset.js.datepicker')
     @include('admin.asset.js.datatable')
-{{--    <script>--}}
-{{--        $(document).ready(function (e) {--}}
-{{--            let a = "Showing {{ $sessions->firstItem() }} to {{ $sessions->lastItem() }} of {{ $sessions->total() }} entries";--}}
-{{--            $('.dataTables_info').text(a);--}}
-{{--        });--}}
-{{--    </script>--}}
+    @isset($ledgers)
+        <script>
+            $(document).ready(function (e) {
+                let a = "Showing {{ $ledgers->firstItem() }} to {{ $ledgers->lastItem() }} of {{ $ledgers->total() }} entries";
+                $('.dataTables_info').text(a);
+            });
+        </script>
+    @endisset
 @endsection

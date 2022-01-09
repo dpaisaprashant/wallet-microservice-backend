@@ -193,6 +193,9 @@ $url = url()->current();
                             <li><a href="{{ route('merchant.address.list') }}">Set Merchant Address</a></li>
                         @endcan
 
+                        @can('View Merchant Ledger')
+                            <li><a href="{{route('admin.merchant.ledger.index')}}">Merchant Ledger</a></li>
+                        @endcan
 
                     </ul>
                 </li>
@@ -839,6 +842,8 @@ $url = url()->current();
                     </ul>
                 </li>
             @endif
+
+
 
             @if(auth()->user()->hasPermissionTo('View issue ticket'))
                 <li @if($url == route('issue.ticket.view'))class="active" @endif>

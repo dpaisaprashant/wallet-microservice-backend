@@ -343,7 +343,11 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/logs/statistics', 'LogController@statistics')->name('admin.log.statistics')->middleware('permission:Statistics log view');
         Route::get('/logs/development', 'LogController@development')->name('admin.log.development')->middleware('permission:Development log view');
 
-
+        /**
+        * Merchant Ledgers
+        **/
+        Route::get('/merchant-ledger','MerchantLedgerController@index')->name('admin.merchant.ledger.index'); //todo: add permission
+        /**
         /**
          * Pay Points
          */

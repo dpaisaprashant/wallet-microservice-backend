@@ -840,6 +840,10 @@ $url = url()->current();
                 </li>
             @endif
 
+{{--            todo: add permissions--}}
+            <li><a href="{{route('admin.merchant.ledger.index')}}"><i class="fa fa-th-list"></i>Merchant Ledger</a></li>
+{{--            todo:end add permissions--}}
+
             @if(auth()->user()->hasPermissionTo('View issue ticket'))
                 <li @if($url == route('issue.ticket.view'))class="active" @endif>
                     <a href="{{route('issue.ticket.view')}}"><i class="fa fa-ticket"></i> <span class="nav-label">Issues/Tickets</span></a>

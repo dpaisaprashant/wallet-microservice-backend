@@ -26,15 +26,15 @@ class NeaTransaction extends Model
         "amount" => "number"
     ];
 
-    /**
-     * @param $amount
-     * @return float|int
-     */
-
     public function scopeFilter(Builder $builder, Request $request, array $filters = [])
     {
         return (new NEASettlementFilters($request))->add($filters)->filter($builder);
     }
+
+    /**
+     * @param $amount
+     * @return float|int
+     */
     public function getAmountAttribute($amount)
     {
         return ($amount / 100);

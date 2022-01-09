@@ -10,6 +10,7 @@ use App\Wallet\Helpers\TransactionIdGenerator;
 use App\Wallet\WalletAPI\NeaSettlementAPIMicroservice;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use function PHPUnit\Framework\isEmpty;
 
@@ -61,7 +62,6 @@ class NEAController extends Controller
 
         $nea_settlement = array_merge($nea_settlement,$nea_bank_details);
 
-
         //changing date format for date_from and date_to starts
         // from date = start of the month to date = end of the month
         $formatted_request_date = date("Y-m-d",strtotime(str_replace(',', ' ', $nea_settlement['date_from'])));
@@ -82,7 +82,6 @@ class NEAController extends Controller
         try {
             $createSettlement = NeaSettlement::create($nea_settlement);
             $nea_settlement['branch_id'] = $bank_details['branch_id'];
-
             // calling the api
             $neaSettlementAPI = new NeaSettlementAPIMicroservice();
             $settleNeaResponse = $neaSettlementAPI->processBankTransferRequest($nea_settlement); // saving the response from the called api
@@ -112,7 +111,6 @@ class NEAController extends Controller
                 ]);
                 return back()->with('error','nea settlement failed.');
             }
-            return back()->with('error','nea settlement failed.');
 
         }catch (\Exception $exception){
             Log::info($exception);

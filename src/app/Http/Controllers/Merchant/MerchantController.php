@@ -261,7 +261,7 @@ class MerchantController extends Controller
 
     public function DownloadQr($id){
         $merchant = User::where('id','=',$id)->first();
-        $data_for_qr = ['number'=>$merchant->mobile_no,'service'=>'SajiloPay','name'=>$merchant->name,'type'=>'merchant'];
+        $data_for_qr = ['number'=>$merchant->mobile_no,'service'=>config('app.qr_name'),'name'=>$merchant->name,'type'=>'merchant'];
         $data_for_qr_json = json_encode($data_for_qr,true);
         $filename = $merchant->mobile_no . '_' .time() .".svg";
         $qr =  QrCode::generate($data_for_qr_json, storage_path("app/public/") . $filename);

@@ -436,12 +436,12 @@ $url = url()->current();
                     <a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">Report</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        @can('Monthly report view')
+                       {{-- @can('Monthly report view')
                             <li><a href="{{ route('report.monthly') }}">Monthly Report</a></li>
                         @endcan
                         @can('Yearly report view')
                             <li><a href="{{ route('report.yearly') }}">Yearly Report</a></li>
-                        @endcan
+                        @endcan--}}
                         @can('Report paypoint')
                             <li><a href="{{ route('report.paypoint') }}">PayPoint Report</a></li>
                         @endcan
@@ -459,9 +459,9 @@ $url = url()->current();
                                     Referral
                                     Report</a></li>
                         @endcan
-                        @can('Report subscriber daily')
+                        {{--@can('Report subscriber daily')
                             <li><a href="{{ route('report.subscriber') }}">Subscriber Report</a></li>
-                        @endcan
+                        @endcan--}}
                         @can('Report reconciliation')
                             <li><a href="{{ route('report.dailyDashboard') }}">Daily Dashboard</a></li>
                             <li><a href="{{ route('report.reconciliation') }}">Reconciliation Report</a></li>
@@ -479,15 +479,15 @@ $url = url()->current();
 {{--                        @can('Report non bank payment')--}}
 {{--                            <li><a href="{{ route('report.nonBankPaymentReport') }}">Non bank payment report</a></li>--}}
 {{--                        @endcan--}}
-                        @can('Report wallet end balance')
+                       {{-- @can('Report wallet end balance')
                             <li><a href="{{ route('wallet.endbalance') }}">Wallet end balance report</a></li>
-                        @endcan
+                        @endcan--}}
                         @can('Report admin kyc')
                             <li><a href="{{ route('report.adminKyc') }}">Admin kyc report</a></li>
                         @endcan
-                        @can('Report commission')
+                       {{-- @can('Report commission')
                             <li><a href="{{ route('commission.report') }}">Commission report</a></li>
-                        @endcan
+                        @endcan--}}
 
                     </ul>
                 </li>

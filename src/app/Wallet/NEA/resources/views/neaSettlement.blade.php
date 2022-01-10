@@ -96,13 +96,13 @@
                             <h5>Transaction Sum Total: {{$transaction_sum_total}}</h5>
                             <table class="table table-striped table-bordered table-hover dataTables-example" title="Dispute transactions list">
                                 <thead>
-                                    <tr>
-                                        <th>S.No.</th>
-                                        <th>Branch</th>
-                                        <th>Transaction Count</th>
-                                        <th>Transaction Sum</th>
-                                        <th>Actions</th>
-                                    </tr>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>Branch</th>
+                                    <th>Transaction Count</th>
+                                    <th>Transaction Sum</th>
+                                    <th>Actions</th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($nea_informations as $nea_information)
@@ -113,7 +113,7 @@
                                         <td>{{$nea_information['transaction_sum']}}</td>
                                         <td>
                                             @php
-                                              $from = date("Y-m-d", strtotime($_GET['from']));
+                                                $from = date("Y-m-d", strtotime($_GET['from']));
                                             @endphp
                                             @if(!$nea_settlements->count())
                                                 <form action="{{route('SettleNea')}}" method="post">
@@ -142,20 +142,20 @@
                                                 @if($form_needed == "no")
                                                     <p>Already Setteled</p>
                                                 @else
-                                                        <form action="{{route('SettleNea')}}" method="post">
-                                                            @csrf
-                                                            {{-- hidden fields starts--}}
-                                                            <input type="text" name="nea_branch_code" value="{{$nea_information['branch_code']}}" class="form-control" style="display: none">
-                                                            <input type="text" name="nea_branch_name" value="{{$nea_information['branch_name']}}" class="form-control" style="display: none">
-                                                            <input type="text" name="transaction_count" value="{{$nea_information['transaction_count']}}" class="form-control" style="display: none">
-                                                            <input type="text" name="transaction_sum" value="{{$nea_information['transaction_sum']}}" class="form-control" style="display: none">
-                                                            <input id="date_load_from" type="text" class="form-control date_from"
-                                                                   placeholder="From" name="date_from" autocomplete="off"
-                                                                   value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}" style="display: none">
-                                                            {{-- hidden fields end--}}
-                                                            <button href="#" class="reset btn btn-sm btn-success m-t-n-xs" rel="{{ $loop->iteration }}"><strong>Settle</strong></button>
-                                                            <button id="resetBtn-{{ $loop->iteration }}" style="display: none" type="submit" href="#"  class="resetBtn btn btn-sm btn-success m-t-n-xs"><strong>Settle</strong></button>
-                                                        </form>
+                                                    <form action="{{route('SettleNea')}}" method="post">
+                                                        @csrf
+                                                        {{-- hidden fields starts--}}
+                                                        <input type="text" name="nea_branch_code" value="{{$nea_information['branch_code']}}" class="form-control" style="display: none">
+                                                        <input type="text" name="nea_branch_name" value="{{$nea_information['branch_name']}}" class="form-control" style="display: none">
+                                                        <input type="text" name="transaction_count" value="{{$nea_information['transaction_count']}}" class="form-control" style="display: none">
+                                                        <input type="text" name="transaction_sum" value="{{$nea_information['transaction_sum']}}" class="form-control" style="display: none">
+                                                        <input id="date_load_from" type="text" class="form-control date_from"
+                                                               placeholder="From" name="date_from" autocomplete="off"
+                                                               value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}" style="display: none">
+                                                        {{-- hidden fields end--}}
+                                                        <button href="#" class="reset btn btn-sm btn-success m-t-n-xs" rel="{{ $loop->iteration }}"><strong>Settle</strong></button>
+                                                        <button id="resetBtn-{{ $loop->iteration }}" style="display: none" type="submit" href="#"  class="resetBtn btn btn-sm btn-success m-t-n-xs"><strong>Settle</strong></button>
+                                                    </form>
                                                 @endif
                                             @endif
                                         </td>
@@ -188,12 +188,12 @@
     @include('admin.asset.js.datepicker')
     @include('admin.asset.js.chosen')
     @include('admin.asset.js.datatable')
-{{--    <script>--}}
-{{--        $(document).ready(function (e) {--}}
-{{--            let a = "Showing {{ $disputes->firstItem() }} to {{ $disputes->lastItem() }} of {{ $disputes->total() }} entries";--}}
-{{--            $('.dataTables_info').text(a);--}}
-{{--        });--}}
-{{--    </script>--}}
+    {{--    <script>--}}
+    {{--        $(document).ready(function (e) {--}}
+    {{--            let a = "Showing {{ $disputes->firstItem() }} to {{ $disputes->lastItem() }} of {{ $disputes->total() }} entries";--}}
+    {{--            $('.dataTables_info').text(a);--}}
+    {{--        });--}}
+    {{--    </script>--}}
     <!-- IonRangeSlider -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js"></script>
     <script>
@@ -231,6 +231,4 @@
         });
     </script>
 @endsection
-
-
 

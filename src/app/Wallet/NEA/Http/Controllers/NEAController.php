@@ -40,6 +40,7 @@ class NEAController extends Controller
 
     public function SettleNea(Request $request){
         $nea_settlement = $request->all();
+
         $nea_settlement['transaction_sum'] = $nea_settlement['transaction_sum'] * 100;
 
         try {
@@ -55,7 +56,7 @@ class NEAController extends Controller
             'bank_name' => $bank_details['bank_name'],
             'bank_account_name' => $bank_details['account_name'],
             'bank_account_number' => $bank_details['account_number'],
-            'status' => 'STARTED',
+            'status' => NeaSettlement::STATUS_STARTED,
             'non_real_time_bank_transfer_id' => 0,
             'pre_transaction_id' => TransactionIdGenerator::generate(19)
         ];
@@ -80,6 +81,18 @@ class NEAController extends Controller
         //changing date format for date_from and date_to ends
 
         try {
+            $date = date("Y-m-d",strtotime(str_replace(',', ' ', $nea_settlement['date_from'])));
+            $code = $nea_settlement['nea_branch_code'];
+            $status = NeaSettlement::STATUS_SUCCESS;
+
+
+            $alreadySettled = NeaSettlement::where('date_from', $date)
+                ->where('nea_branch_code', $code)
+                ->where('status',$status )
+                ->count();
+
+            if ($alreadySettled) return back()->with('error','Already settled');
+
             $createSettlement = NeaSettlement::create($nea_settlement);
             $nea_settlement['branch_id'] = $bank_details['branch_id'];
             // calling the api
@@ -102,12 +115,12 @@ class NEAController extends Controller
             // check if the response yielded success OR failure and update status of nea_settlements accordingly
             if ($settleNeaResponse['transaction']['pre_transaction_status'] == "true"){
                 $updateStatusNeaSettlement = NeaSettlement::where('id','=',$createSettlement->id)->update([
-                    'status'=> 'SUCCESS'
+                    'status'=> NeaSettlement::STATUS_SUCCESS
                 ]);
                 return back()->with('success','nea settlement successful.');
             }else{
                 $updateStatusNeaSettlement = NeaSettlement::where('id','=',$createSettlement->id)->update([
-                    'status'=> 'ERROR'
+                    'status'=> NeaSettlement::STATUS_FAILED
                 ]);
                 return back()->with('error','nea settlement failed.');
             }

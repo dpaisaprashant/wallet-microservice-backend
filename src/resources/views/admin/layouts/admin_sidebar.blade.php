@@ -459,9 +459,9 @@ $url = url()->current();
                                     Referral
                                     Report</a></li>
                         @endcan
-                        {{--@can('Report subscriber daily')
+                        @can('Report subscriber daily')
                             <li><a href="{{ route('report.subscriber') }}">Subscriber Report</a></li>
-                        @endcan--}}
+                        @endcan
                         @can('Report reconciliation')
                             <li><a href="{{ route('report.dailyDashboard') }}">Daily Dashboard</a></li>
                             <li><a href="{{ route('report.reconciliation') }}">Reconciliation Report</a></li>

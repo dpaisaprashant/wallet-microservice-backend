@@ -48,7 +48,7 @@ trait ReconciliationReportGenerator
                 "transaction_type" => "debit"
             ],
 
-            'TestFund' => [
+            'Refund/Lucky Winner/Paypoint Advance' => [
                 "amount" => $repository->totalTestFundsAmount() / 100,
                 "count" => $repository->totalTestFundsCount(),
                 "transaction_type" => "credit"

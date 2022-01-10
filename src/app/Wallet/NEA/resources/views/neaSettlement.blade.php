@@ -132,7 +132,7 @@
                                                 </form>
                                             @else
                                                 @foreach($nea_settlements as $nea_settlement)
-                                                    @if(($from == $nea_settlement->date_from)&& $nea_settlement->nea_branch_code == $nea_information['branch_code'] && $nea_settlement->status == "SUCCESS")
+                                                    @if(($from == $nea_settlement->date_from)&& $nea_settlement->nea_branch_code == $nea_information['branch_code'] && $nea_settlement->status == \App\Models\NeaSettlement::STATUS_SUCCESS)
                                                         @php($form_needed = "no")
                                                         @break
                                                     @else

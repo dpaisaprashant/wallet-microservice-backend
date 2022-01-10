@@ -463,6 +463,7 @@ $url = url()->current();
                             <li><a href="{{ route('report.subscriber') }}">Subscriber Report</a></li>
                         @endcan
                         @can('Report reconciliation')
+                            <li><a href="{{ route('report.dailyDashboard') }}">Daily Dashboard</a></li>
                             <li><a href="{{ route('report.reconciliation') }}">Reconciliation Report</a></li>
                         @endcan
 {{--                            @can('Report nrb reconciliation')--}}

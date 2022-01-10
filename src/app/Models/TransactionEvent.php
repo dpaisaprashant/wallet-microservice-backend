@@ -159,6 +159,10 @@ class TransactionEvent extends Model
         return $this->hasMany(PreTransaction::class,"pre_transaction_id",'pre_transaction_id');
     }
 
+    public function uniquePreTransaction(){
+        return $this->hasOne(PreTransaction::class,"pre_transaction_id",'pre_transaction_id');
+    }
+
     public function preTransactionMicroservice(){
         return $this->belongsTo(PreTransaction::class,'pre_transaction_id','pre_transaction_id');
     }

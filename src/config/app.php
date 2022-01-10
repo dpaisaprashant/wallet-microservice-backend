@@ -14,6 +14,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'SajiloPay Admin Panel'),
+    'qr_name' => env('QR_NAME', ''),
 
     /*
     |--------------------------------------------------------------------------

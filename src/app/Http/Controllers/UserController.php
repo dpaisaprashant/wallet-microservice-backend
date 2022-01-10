@@ -93,7 +93,7 @@ class UserController extends Controller
 
     public function DownloadQr($id){
         $user = User::where('id','=',$id)->first();
-        $data_for_qr = ['number'=>$user->mobile_no,'service'=>'SajiloPay','name'=>$user->name,'type'=>'user'];
+        $data_for_qr = ['number'=>$user->mobile_no,'service'=> config('app.qr_name'),'name'=>$user->name,'type'=>'user'];
         $data_for_qr_json = json_encode($data_for_qr,true);
         $filename = $user->mobile_no . '_' .time() .".svg";
         $qr =  QrCode::generate($data_for_qr_json, storage_path("app/public/") . $filename);

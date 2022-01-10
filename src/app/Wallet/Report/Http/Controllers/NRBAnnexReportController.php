@@ -316,6 +316,11 @@ class NRBAnnexReportController extends Controller
                 'debit' => $repository->getCreditByTitle($check->id, "PP_ADVANCE"),
                 'credit' => 0
             ],
+
+            'Bank Transfer' => [
+                'debit' => $repository->getCreditByTitle($check->id, "BANK_TRANSFER"),
+                'credit' => 0
+            ]
         ];
 
         return view('WalletReport::nrbAnnex.statement-settlement-bank')->with(compact('statementSettlementBanks'));

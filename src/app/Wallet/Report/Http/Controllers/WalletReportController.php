@@ -229,7 +229,7 @@ class WalletReportController extends Controller
             'lucky_winner' => $lucky_winner[0]->lucky_winner_total
         ];
 
-        return view('WalletReport::reconciliation.report-rang')->with(['data' => $data]);
+        return view('WalletReport::reconciliation.report-range')->with(['data' => $data]);
 
 //        dd($ledger);
 //

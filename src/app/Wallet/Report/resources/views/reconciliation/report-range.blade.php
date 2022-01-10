@@ -43,7 +43,7 @@
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </span>
-                                                <input id="date_load_from" type="text" class="form-control date_from" placeholder="From" name="from" autocomplete="off" value="{{ !empty($_GET['date']) ? $_GET['date'] : '' }}">
+                                                <input id="date_load_from" type="text" class="form-control date_from" placeholder="From" name="from" autocomplete="off" value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -74,7 +74,7 @@
 
         <div class="row">
             <div class="col-lg-12">
-                @if(!empty($_GET['date']))
+                @if(!empty($_GET['from']))
                     <div class="ibox ">
                         <div class="ibox-title">
                             <h5>Reconciliation for {{$data['from_date']}} @if(isset($data['to_date'])) to {{$data['to_date']}} @endif</h5>

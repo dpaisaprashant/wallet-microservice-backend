@@ -94,7 +94,7 @@ class NRBReportController extends Controller
 
         ];
 
-        return view('WalletReport::nrb.active-inactive-user-report')->with(compact('activeInactiveUserReports', 'totalUsers', 'totalBalance', 'openingBalance', 'shouldBeZero'));
+        return view('WalletReport::nrb.active-inactive-user-report')->with(compact('activeInactiveUserReports','totalUsers','totalBalance','openingBalance','shouldBeZero'));
     }
 
     public function activeInactiveUserSlabReport(Request $request)

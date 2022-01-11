@@ -5,8 +5,12 @@ namespace App\Wallet\Agent\Repositories;
 
 
 use App\Models\AgentType;
+use App\Models\Architecture\WalletTransactionType;
+use App\Models\Architecture\WalletTransactionTypeCashback;
 use App\Models\Setting;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 
 class AgentTypeRepository
@@ -21,22 +25,55 @@ class AgentTypeRepository
         $this->request = $request;
     }
 
+
+    private function createHierarchyCashback(AgentType $agentType)
+    {
+        $allParentAgentTypesList = $agentType->getAllParentAgentTypes();
+
+        $walletTransactionTypes = WalletTransactionType::where('user_type', User::class)->get();
+
+        //create cashback for each wallet transaction type
+        foreach ($walletTransactionTypes as $walletTransactionType) {
+            //create row for cashback having no parent
+
+            $title = null;
+            $cashbacks = WalletTransactionTypeCashback::where('wallet_transaction_type_id', $walletTransactionType->id)->get();
+            foreach ($cashbacks as $cashback) {
+                if (isset($cashback->title)) {
+                    Log::info("cashback has title", [$cashback]);
+                    $title = $cashback->title;
+                    break;
+                }
+            }
+
+
+            $agentType->agentTypeHierarchyCashbacks()->create([
+                'wallet_transaction_type_id' => $walletTransactionType->id,
+                'title' => $title
+            ]);
+            //create cashback for each parent
+            foreach ($allParentAgentTypesList as $parentAgentType) {
+                $agentType->agentTypeHierarchyCashbacks()->create([
+                    'parent_agent_type_id' => $parentAgentType->id,
+                    'wallet_transaction_type_id' => $walletTransactionType->id,
+                    'title' => $title
+                ]);
+            }
+
+        }
+    }
+
+
+
     public function createAgentType()
     {
         $agentType = AgentType::create($this->request->all());
 
+        //create linit for agent type
         $agentName = str_replace(" ", "_", $agentType->name);
         $agentName = strtolower($agentName);
 
         if ($agentType->agent_type_id) {
-
-            /*$cashbacks = $this->defaultSubAgentCashbacks();
-            $newAgentCashback = [];
-            foreach ($cashbacks as $cashback) {
-                $cashback['option'] = str_replace(self::DEFAULT_SUB_AGENT, $agentName, $cashback['option']);
-                Setting::updateOrCreate($cashback);
-            }*/
-
 
             $limits = $this->defaultSubAgentLimits();
             $newAgentLimit = [];
@@ -47,15 +84,6 @@ class AgentTypeRepository
             }
 
         }else {
-            /*$cashbacks = $this->defaultAgentCashbacks();
-            $newAgentCashback = [];
-            foreach ($cashbacks as $cashback) {
-                $cashback['option'] = str_replace(self::DEFAULT_AGENT, $agentName, $cashback['option']);
-                Setting::updateOrCreate($cashback);
-                //array_push($newAgentCashback, $cashback);
-            }*/
-
-
             $limits = $this->defaultAgentLimits();
             $newAgentLimit = [];
             foreach ($limits as $limit) {
@@ -65,8 +93,9 @@ class AgentTypeRepository
             }
         }
 
-        //Setting::insert($newAgentCashback);
-        //Setting::insert($newAgentLimit);
+
+        //create hierarchy cashback for agent type
+        $this->createHierarchyCashback($agentType);
 
         return $agentType;
     }

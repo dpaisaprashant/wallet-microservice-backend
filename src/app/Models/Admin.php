@@ -117,10 +117,19 @@ class Admin extends Authenticatable
     public function kycList(Admin $user, $request)
     {
         //return $user->userKYC()->orderBy('admin_user_k_y_c.updated_at', 'desc')->filter($request)->get();
-        return UserKYC::orderBy('updated_at', 'desc')->filter($request)->get();
+        return UserKYC::with('user')->orderBy('updated_at', 'desc')->filter($request)->paginate(15);
     }
 
+    public function adminUpdateKyc(){
+        return $this->hasMany(AdminUpdateKyc::class,'admin_id');
+    }
 
+    public function adminAlteredAgent(){
+        return $this->hasMany(AdminAlteredAgent::class, 'admin_id');
+    }
 
-
+    public function issueTicket()
+    {
+        return $this->hasMany(IssueTicket::class, 'issued_by', 'id');
+    }
 }

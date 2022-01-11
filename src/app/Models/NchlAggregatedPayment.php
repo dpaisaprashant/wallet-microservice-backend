@@ -4,16 +4,18 @@ namespace App\Models;
 
 use App\Filters\NchlAggregatedPayment\NchlAggregatedPaymentFilters;
 use App\Traits\BelongsToUser;
+use App\Traits\BelongsToUseThroughMicroservice;
 use App\Traits\MorphOneCommission;
 use App\Traits\MorphOneDispute;
 use App\Traits\MorphOneTransaction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use App\Models\Microservice\PreTransaction;
 
 class NchlAggregatedPayment extends Model
 {
-    use BelongsToUser, MorphOneTransaction, MorphOneCommission, MorphOneDispute;
+    use BelongsToUser, MorphOneTransaction, MorphOneCommission, MorphOneDispute, BelongsToUseThroughMicroservice;
 
     protected $connection = 'nchl';
     protected $appends = ['commission_amount'];
@@ -27,6 +29,10 @@ class NchlAggregatedPayment extends Model
     public function getAmountAttribute($amount)
     {
         return ($amount/100);
+    }
+
+    public function preTransaction(){
+        return $this->belongsTo(PreTransaction::class,'pre_transaction_id','pre_transaction_id');
     }
 
     public function getCommissionAmountAttribute()

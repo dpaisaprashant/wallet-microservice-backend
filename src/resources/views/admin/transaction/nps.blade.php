@@ -59,8 +59,8 @@
 
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <input type="text" name="gateway_ref" placeholder="Gateway Ref no." class="form-control"
-                                                       value="{{ !empty($_GET['gateway_ref']) ? $_GET['gateway_ref'] : '' }}">
+                                                <input type="text" name="bank" placeholder="Bank" class="form-control"
+                                                       value="{{ !empty($_GET['bank']) ? $_GET['bank'] : '' }}">
                                             </div>
                                         </div>
 
@@ -102,28 +102,23 @@
                                                         <option value="all"
                                                                 @if($_GET['status'] == 'all') selected @endif>All
                                                         </option>
-                                                        <option value="complete"
-                                                                @if($_GET['status']  == 'complete') selected @endif>
-                                                            Complete
+                                                        <option value="completed"
+                                                                @if($_GET['status']  == 'completed') selected @endif>
+                                                            Completed
                                                         </option>
-                                                        <option value="pending"
-                                                                @if($_GET['status']  == 'pending') selected @endif>
-                                                            Pending
+                                                        <option value="validated"
+                                                                @if($_GET['status']  == 'validated') selected @endif>
+                                                            Validated
                                                         </option>
-                                                        <option value="failed"
-                                                                @if($_GET['status']  == 'failed') selected @endif>
-                                                            Failed
-                                                        </option>
-                                                        <option value="incomplete"
-                                                            @if($_GET['status']  == 'incomplete') selected @endif>
-                                                            Incomplete
+                                                        <option value="error"
+                                                                @if($_GET['status']  == 'error') selected @endif>
+                                                            Error
                                                         </option>
                                                     @else
                                                         <option value="all">All</option>
-                                                        <option value="complete">Completed</option>
-                                                        <option value="pending">Pending</option>
-                                                        <option value="failed">Failed</option>
-                                                        <option value="incomplete">Incomplete</option>
+                                                        <option value="completed">Completed</option>
+                                                        <option value="validated">Validated</option>
+                                                        <option value="error">Error</option>
                                                     @endif
                                                 </select>
                                             </div>
@@ -247,6 +242,7 @@
                                         <th>Status</th>
                                         <th>Date</th>
                                         <th style="width: 1%">Response</th>
+                                        <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -267,10 +263,6 @@
                                                 @if(isset($npsLoadTransaction->preTransaction->transactionEvent))
 
                                                     <span class="badge badge-primary">Complete</span>
-                                                @elseif($npsLoadTransaction->status == \App\Models\NpsLoadTransaction::STATUS_PENDING)
-                                                    <span class="badge badge-warning">Pending</span>
-                                                    @elseif($npsLoadTransaction->status == \App\Models\NpsLoadTransaction::STATUS_FAILED)
-                                                    <span class="badge badge-dark">Failed</span>
                                                 @else
                                                     <span class="badge badge-danger">Incomplete</span>
                                                 @endif
@@ -278,6 +270,14 @@
 
                                             <td>{{$npsLoadTransaction->created_at}}</td>
                                             <td>{{$npsLoadTransaction->response}}</td>
+                                            <td>
+                                                @include('admin.transaction.nps.detail', ['transaction' => $npsLoadTransaction])
+                                                {{--                                                todo: add permission--}}
+                                                <a href="{{ route('nps.detail', $npsLoadTransaction->id) }}">
+                                                    <button class="btn btn-primary btn-icon" type="button"><i
+                                                            class="fa fa-eye"></i></button>
+                                                </a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>

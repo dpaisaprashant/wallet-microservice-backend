@@ -76,52 +76,52 @@
                         </div>
                         <div class="ibox-content">
                             <h5><b>Total Wallet Balance [Main Balance + Bonus Balance]:</b> Rs.
-                             {{ $totalSum }}
+                                {{ $totalSum }}
                             </h5>
 
                             {{--<div class="table-responsive">--}}
-                                {{--<table class="table table-striped table-bordered table-hover dataTables-example" title="Complete transactions list">--}}
-                                    {{--<thead>--}}
-                                    {{--<tr>--}}
-                                        {{--<th>S.No.</th>--}}
-                                        {{--<th>Account</th>--}}
-                                        {{--<th>Description</th>--}}
-                                        {{--<th>Vendor</th>--}}
-                                        {{--<th>Service Type</th>--}}
-                                        {{--<th>User Id</th>--}}
-                                        {{--<th>Pre Transaction Id</th>--}}
-                                        {{--<th>Phone</th>--}}
-                                        {{--<th>Date</th>--}}
-                                        {{--<th>Balance</th>--}}
-                                        {{--<th>Bonus Balance</th>--}}
-                                    {{--</tr>--}}
-                                    {{--</thead>--}}
-                                    {{--<tbody>--}}
-                                        {{--@foreach($datas as $data)--}}
-                                            {{--<tr>--}}
-                                                {{--<td>{{$loop->index+1}}</td>--}}
-                                                {{--<td>{{$data->account}}</td>--}}
-                                                {{--<td>--}}
-                                                    {{--@if($data->description == null)--}}
-                                                        {{--<span class="badge badge-danger">Empty</span>--}}
-                                                        {{--@else--}}
-                                                        {{--{{$data->description}}--}}
-                                                    {{--@endif--}}
-                                                {{--</td>--}}
-                                                {{--<td>{{$data->vendor}}</td>--}}
-                                                {{--<td>{{$data->service_type}}</td>--}}
-                                                {{--<td>{{$data->user_id}}</td>--}}
-                                                {{--<td>{{$data->pre_transaction_id}}</td>--}}
-                                                {{--<td>{{$data->number}}</td>--}}
-                                                {{--<td>{{$data->created_at}}</td>--}}
-                                                {{--<td>{{$data->balance}}</td>--}}
-                                                {{--<td>{{$data->bonus_balance}}</td>--}}
-                                            {{--</tr>--}}
-                                        {{--@endforeach--}}
+                            {{--<table class="table table-striped table-bordered table-hover dataTables-example" title="Complete transactions list">--}}
+                            {{--<thead>--}}
+                            {{--<tr>--}}
+                            {{--<th>S.No.</th>--}}
+                            {{--<th>Account</th>--}}
+                            {{--<th>Description</th>--}}
+                            {{--<th>Vendor</th>--}}
+                            {{--<th>Service Type</th>--}}
+                            {{--<th>User Id</th>--}}
+                            {{--<th>Pre Transaction Id</th>--}}
+                            {{--<th>Phone</th>--}}
+                            {{--<th>Date</th>--}}
+                            {{--<th>Balance</th>--}}
+                            {{--<th>Bonus Balance</th>--}}
+                            {{--</tr>--}}
+                            {{--</thead>--}}
+                            {{--<tbody>--}}
+                            {{--@foreach($datas as $data)--}}
+                            {{--<tr>--}}
+                            {{--<td>{{$loop->index+1}}</td>--}}
+                            {{--<td>{{$data->account}}</td>--}}
+                            {{--<td>--}}
+                            {{--@if($data->description == null)--}}
+                            {{--<span class="badge badge-danger">Empty</span>--}}
+                            {{--@else--}}
+                            {{--{{$data->description}}--}}
+                            {{--@endif--}}
+                            {{--</td>--}}
+                            {{--<td>{{$data->vendor}}</td>--}}
+                            {{--<td>{{$data->service_type}}</td>--}}
+                            {{--<td>{{$data->user_id}}</td>--}}
+                            {{--<td>{{$data->pre_transaction_id}}</td>--}}
+                            {{--<td>{{$data->number}}</td>--}}
+                            {{--<td>{{$data->created_at}}</td>--}}
+                            {{--<td>{{$data->balance}}</td>--}}
+                            {{--<td>{{$data->bonus_balance}}</td>--}}
+                            {{--</tr>--}}
+                            {{--@endforeach--}}
 
-                                    {{--</tbody>--}}
-                                {{--</table>--}}
-                                {{--{{ $datas->appends(request()->query())->links() }}--}}
+                            {{--</tbody>--}}
+                            {{--</table>--}}
+                            {{--{{ $datas->appends(request()->query())->links() }}--}}
                             {{--</div>--}}
                         </div>
 

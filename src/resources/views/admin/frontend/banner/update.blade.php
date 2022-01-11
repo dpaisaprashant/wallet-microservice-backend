@@ -49,7 +49,7 @@
                                         <div class="row" style="margin-top: 20px;">
                                             <div class="col-md-4">
                                                 <img class="d-block w-100"
-                                                     src="{{ asset('storage/uploads/frontend/' . $banner->image) }}"
+                                                     src="{{ config('dpaisa-api-url.public_document_url') . $banner->image }}"
                                                      alt="First slide">
                                             </div>
                                         </div>
@@ -70,7 +70,7 @@
                                         <div class="row" style="margin-top: 20px;">
                                             <div class="col-md-4">
                                                 <img class="d-block w-100"
-                                                     src="{{ asset('storage/uploads/frontend/' . $banner->mobile_image) }}"
+                                                     src="{{ config('dpaisa-api-url.public_document_url') . $banner->mobile_image }}"
                                                      alt="First slide">
                                             </div>
                                         </div>

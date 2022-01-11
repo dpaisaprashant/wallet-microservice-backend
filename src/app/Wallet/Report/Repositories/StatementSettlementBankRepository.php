@@ -35,7 +35,7 @@ class StatementSettlementBankRepository extends AbstractReportRepository
     public function __construct(Request $request)
     {
         parent::__construct($request);
-            $this->date = date('Y-m-d', strtotime(str_replace(',', ' ', $request->from)));
+        $this->date = date('Y-m-d', strtotime(str_replace(',', ' ', $request->from)));
     }
 
 

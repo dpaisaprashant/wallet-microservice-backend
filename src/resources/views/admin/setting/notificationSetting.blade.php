@@ -66,6 +66,33 @@
                                 </div>
                             </div>
                     </div>
+
+                    <div class="ibox-content">
+
+                        <div class="form-group  row">
+                            <label class="col-sm-2 col-form-label">Sms Service Service</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="sms_service">
+                                    <option disabled selected> -- Select SMS Service --</option>
+                                    @if(!empty($settings['sms_service']))
+                                        <option value='SPARROW SMS' @if($settings['sms_service'] == 'SPARROW SMS') selected @endif>Sparrow SMS</option>
+                                        <option value='MIRACLE SMS' @if($settings['sms_service'] == 'MIRACLE SMS') selected @endif>Miracle SMS</option>
+                                    @else
+                                        <option value='SPARROW SMS'>SPARROW SMS</option>
+                                        <option value='MIRACLE SMS'>MIRACLE SMS</option>
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-4 col-sm-offset-2">
+                                <button class="btn btn-primary btn-sm" type="submit">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

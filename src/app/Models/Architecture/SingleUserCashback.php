@@ -3,9 +3,16 @@
 namespace App\Models\Architecture;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class SingleUserCashback extends Model
 {
+    use LogsActivity;
+
+    protected static $logAttributes = ['*'];
+    //protected static $logOnlyDirty = true;
+    protected static $logName = 'Single User Cashback';
+
     protected $connection = 'dpaisa';
 
     protected $guarded = [];

@@ -26,7 +26,7 @@ class BackendUsersController extends Controller
 
     public function view()
     {
-        $users = Admin::with('roles')->paginate(10);
+        $users = Admin::with('roles')->where('status', 1)->paginate(10);
         return view('admin.backendUser.view')->with(compact('users'));
     }
 
@@ -71,14 +71,13 @@ class BackendUsersController extends Controller
         return view('admin.backendUser.roles')->with(compact('user', 'allRoles'));
     }
 
-    public function kycList(Request $request)
+   public function kycList(Request $request)
     {
         $user = Admin::whereId(auth()->user()->id)->firstOrFail();
-
         $lists = $user->kycList($user, $request);
-
         return view('admin.backendUser.kycList')->with(compact('lists'));
     }
+
 
     public function resetPassword(Request $request)
     {

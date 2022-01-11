@@ -33,12 +33,12 @@ class NPSRepository
 
     private function sortedTransactions()
     {
-        return NpsLoadTransaction::with('user', 'transactions', 'commission')->filter($this->request)->paginate($this->length);
+        return NpsLoadTransaction::with('user', 'transactions', 'commission','preTransaction')->filter($this->request)->paginate($this->length);
     }
 
     private function latestTransactions()
     {
-        return NpsLoadTransaction::with('user', 'transactions', 'commission')->filter($this->request)->latest()->paginate($this->length);
+        return NpsLoadTransaction::with('user', 'transactions', 'commission','preTransaction')->filter($this->request)->latest()->paginate($this->length);
     }
 
     private function failedSortedTransactions()

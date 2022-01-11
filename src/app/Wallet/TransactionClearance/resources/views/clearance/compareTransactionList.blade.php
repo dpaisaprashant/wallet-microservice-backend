@@ -50,11 +50,27 @@
                                             <td>{{$loop->index+1}}</td>
                                             <td>{{$comparedTransaction["wallet"]["pre_transaction_id"]}}</td>
                                             <td>{{$comparedTransaction["wallet"]["linked_id"]}}</td>
-                                            <td>{{$comparedTransaction["wallet"]["amount"]}}</td>
-                                            <td>{{$comparedTransaction["wallet"]["transaction_fee"]}}</td>
+                                            @if(!($comparedTransaction["wallet"]["amount"] == $comparedTransaction["excel"]["amount"]))
+                                                <td style="color: red">{{$comparedTransaction["wallet"]["amount"]}}</td>
+                                            @else
+                                                <td style="color: green">{{$comparedTransaction["wallet"]["amount"]}}</td>
+                                            @endif
+                                            @if(!($comparedTransaction["wallet"]["transaction_fee"] == $comparedTransaction["excel"]["transaction_fee"]))
+                                                <td style="color: red">{{$comparedTransaction["wallet"]["transaction_fee"]}}</td>
+                                            @else
+                                                <td style="color: green">{{$comparedTransaction["wallet"]["transaction_fee"]}}</td>
+                                            @endif
                                             <td>{{$comparedTransaction["excel"]["linked_id"]}}</td>
-                                            <td>{{$comparedTransaction["excel"]["amount"]}}</td>
-                                            <td>{{$comparedTransaction["excel"]["transaction_fee"]}}</td>
+                                            @if(!($comparedTransaction["wallet"]["amount"] == $comparedTransaction["excel"]["amount"]))
+                                                <td style="color: red">{{$comparedTransaction["excel"]["amount"]}}</td>
+                                            @else
+                                                <td style="color: green">{{$comparedTransaction["excel"]["amount"]}}</td>
+                                            @endif
+                                            @if(!($comparedTransaction["wallet"]["transaction_fee"] == $comparedTransaction["excel"]["transaction_fee"]))
+                                                <td style="color: red">{{$comparedTransaction["excel"]["transaction_fee"]}}</td>
+                                            @else
+                                                <td style="color: green">{{$comparedTransaction["excel"]["transaction_fee"]}}</td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -141,6 +157,89 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h4>Transactions in which amount does not match</h4>
+                    </div>
+                    <div class="ibox-content">
+                        {{--<h5><b>Total Count:</b> {{ $totalTransactionCount }}</h5>
+                        <h5><b>Total Amount Sum:</b> Rs. {{ $totalTransactionAmountSum }}</h5>
+                        <h5><b>Total Fee Sum:</b> Rs. {{ $totalTransactionFeeSum }}</h5>--}}
+                        <div class="table-responsive" id="transactionInWalletButNotInExcelId">
+                            <table class="table table-striped table-bordered table-hover dataTables-example"
+                                   title="clearance transactions">
+                                <thead>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>Pre Transaction Id</th>
+                                    <th>Wallet Linked Id</th>
+                                    <th>Wallet Amount</th>
+                                    <th>Excel Linked Id</th>
+                                    <th>Excel Amount</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($unmatchedAmounts as $unmatchedAmount)
+                                        <tr>
+                                            <td>{{$loop->index+1}}</td>
+                                            <td>{{$unmatchedAmount["wallet"]["pre_transaction_id"]}}</td>
+                                            <td>{{$unmatchedAmount["wallet"]["linked_id"]}}</td>
+                                            <td>{{$unmatchedAmount["wallet"]["amount"]}}</td>
+                                            <td>{{$unmatchedAmount["excel"]["linked_id"]}}</td>
+                                            <td>{{$unmatchedAmount["excel"]["amount"]}}</td>
+                                        </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h4>Transactions in which transaction fees donot match</h4>
+                    </div>
+                    <div class="ibox-content">
+                        {{--<h5><b>Total Count:</b> {{ $totalTransactionCount }}</h5>
+                        <h5><b>Total Amount Sum:</b> Rs. {{ $totalTransactionAmountSum }}</h5>
+                        <h5><b>Total Fee Sum:</b> Rs. {{ $totalTransactionFeeSum }}</h5>--}}
+                        <div class="table-responsive" id="transactionInWalletButNotInExcelId">
+                            <table class="table table-striped table-bordered table-hover dataTables-example"
+                                   title="clearance transactions">
+                                <thead>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>Pre Transaction Id</th>
+                                    <th>Wallet Linked Id</th>
+                                    <th>Wallet Transaction fee</th>
+                                    <th>Excel Linked Id</th>
+                                    <th>Excel Transaction fee</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($unmatchedTransactionFees as $unmatchedTransactionFee)
+                                        <tr>
+                                            <td>{{$loop->index+1}}</td>
+                                            <td>{{$unmatchedTransactionFee["wallet"]["pre_transaction_id"]}}</td>
+                                            <td>{{$unmatchedTransactionFee["wallet"]["linked_id"]}}</td>
+                                            <td>{{$unmatchedTransactionFee["wallet"]["transaction_fee"]}}</td>
+                                            <td>{{$unmatchedTransactionFee["excel"]["linked_id"]}}</td>
+                                            <td>{{$unmatchedTransactionFee["excel"]["transaction_fee"]}}</td>
+                                        </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 @endsection
 

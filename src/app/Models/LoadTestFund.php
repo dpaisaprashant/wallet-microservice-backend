@@ -40,8 +40,7 @@ class LoadTestFund extends Model
         return (new LoadTestFundFilters($request))->add($filters)->filter($builder);
     }
 
-    public function transactionEvents()
-    {
-
+    public function transactionEvent(){
+        return $this->hasOne(TransactionEvent::class,'pre_transaction_id','pre_transaction_id');
     }
 }

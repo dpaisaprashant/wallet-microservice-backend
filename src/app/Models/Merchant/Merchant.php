@@ -9,17 +9,26 @@ use App\Models\Architecture\SingleUserCommission;
 use App\Models\MerchantBankAccount;
 use App\Models\MerchantNchlBankTransfer;
 use App\Models\MerchantNchlLoadTransaction;
+use App\Models\MerchantReseller;
 use App\Models\MerchantTransaction;
 use App\Models\MerchantTransactionEvent;
+use App\Models\UserType;
+use App\Traits\BelongsToUser;
 use App\Wallet\Commission\Models\Commission;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
+use App\Models\User;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Merchant extends Model
 {
-    use Notifiable;
+    use BelongsToUser, Notifiable, LogsActivity;
+
+    protected static $logFillable = true;
+    protected static $logName = 'Merchant';
+    protected static $logOnlyDirty = true;
 
     const LOCK_MINUTES = 60;
 
@@ -37,9 +46,18 @@ class Merchant extends Model
         return $this->hasOne(MerchantWallet::class);
     }
 
+    public function merchantType()
+    {
+        return $this->belongsTo(MerchantType::class, 'merchant_type_id');
+    }
+
     public function kyc()
     {
         return $this->hasOne(MerchantKYC::class);
+    }
+
+    public function merchantReseller(){
+        return $this->hasOne(MerchantReseller::class,'merchant_id','id');
     }
 
     public function nchlBankTransfers()
@@ -165,5 +183,9 @@ class Merchant extends Model
         return $this->morphMany(SingleUserCommission::class, 'userCommissionable', 'user_type', 'user_id', 'id');
     }
 
+    public function merchantAddress()
+    {
+        return $this->belongsTo(MerchantAddress::class,'id','merchant_id');
+    }
 
 }

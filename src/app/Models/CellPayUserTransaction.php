@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Filters\CellPayUserTransactions\CellPayUserTransactionFilters;
 use App\Filters\FiltersAbstract;
 use App\Filters\Khalti\KhaltiFilters;
 use App\Models\Microservice\PreTransaction;
@@ -19,6 +20,7 @@ class CellPayUserTransaction extends Model
     use BelongsToUseThroughMicroservice, BelongsToUser, MorphOneCommission, MorphOneDispute;
 
     protected $connection = 'cellpay';
+    protected $guarded = [];
     protected $table = 'cell_pay_execute_payments';
 
     /**
@@ -43,6 +45,13 @@ class CellPayUserTransaction extends Model
     {
         return $this->belongsTo(PreTransaction::class, 'reference_no', 'pre_transaction_id');
     }
+
+    public function scopeFilter(Builder $builder, Request $request, array $filters = [])
+    {
+        return (new CellPayUserTransactionFilters($request))->add($filters)->filter($builder);
+    }
+
+
 
 
 }

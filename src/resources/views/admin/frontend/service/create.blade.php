@@ -28,6 +28,7 @@
                     <div class="ibox-content">
                         <form method="post" action="{{ route('frontend.service.create') }}" enctype="multipart/form-data">
                             @csrf
+
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Title</label>
                                 <div class="col-sm-10">
@@ -41,6 +42,17 @@
                                 <div class="col-sm-10">
                                     <input name="icon" type="text"
                                            class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Placement</label>
+                                <div class="col-sm-10">
+                                    <select name="placement" class="form-control" required>
+                                        <option value="" disabled selected>Select Placement</option>
+                                        <option value="top">Top</option>
+                                        <option value="bottom">Bottom</option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -72,9 +84,11 @@
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Description</label>
                                 <div class="col-sm-10">
-                                    <textarea name="description" class="form-control" required></textarea>
+                                    <textarea name="description" class="form-control"></textarea>
                                 </div>
                             </div>
+
+                            <input type="text" name="belongs_to" value="{{strtolower(config('app.'.'name'))}}" hidden>
 
                             <hr class="hr-line-dashed">
 

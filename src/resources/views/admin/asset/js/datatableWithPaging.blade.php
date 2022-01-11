@@ -12,6 +12,8 @@
             console.log(table.title);
 
             $(table).DataTable({
+                "order": [],
+                "pageLength": 25,
                 paging: true,
                 responsive: true,
                 dom: '<"html5buttons"B>lTfgitp',

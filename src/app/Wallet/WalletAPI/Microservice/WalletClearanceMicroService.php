@@ -19,7 +19,6 @@ class WalletClearanceMicroService
 
         $response = $microservice->processRequest();
         $statementSettlement = json_decode($response, true);
-
         return $statementSettlement;
     }
 
@@ -34,7 +33,6 @@ class WalletClearanceMicroService
             ->setRequestParam(['as_of_date' => $date]);
 
         $response = $microservice->processRequest();
-
         $activeInactive = json_decode($response, true);
         return $activeInactive;
     }

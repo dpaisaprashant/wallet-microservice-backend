@@ -56,22 +56,23 @@ class RefundController extends Controller
                 'amount' => $total * 100,
                 'description' => "refund transaction for: ". $preTransaction->pre_transaction_id,
                 'vendor' => 'WALLET',
-                'service_type' => 'WALLET',
+                'service_type' => 'REFUND',
                 'microservice_type' => 'WALLET',
-                'transaction_type' => 'credit',
+                'transaction_type' => PreTransaction::TRANSACTION_TYPE_CREDIT,
                 'url' => '/refund',
-                'status' => 'STARTED',
+                'status' => PreTransaction::STATUS_STARTED,
                 'before_balance' => $currentBalance,
                 'after_balance' => $currentBalance + ($request['amount'] * 100),
                 'before_bonus_balance' => $currentBonusBalance,
                 'after_bonus_balance' => $currentBonusBalance + ($request['bonus_amount'] * 100),
+                'special1' => $preTransaction->pre_transaction_id
             ];
 
             $data = [
                 'pre_transaction_id' => $preTransaction->pre_transaction_id,
                 'admin_id' => auth()->user()->id,
                 'user_id' => $user->id,
-                'description' => $request['description'],
+                'description' => $request['description'] ?? 'Refund for ' . $request->pre_transaction_id,
                 'before_amount' => $currentBalance,
                 'after_amount' => $currentBalance + ($request['amount'] * 100),
                 //'after_amount' => $currentBalance + ($preTransaction->getOriginal('amount')),
@@ -99,7 +100,7 @@ class RefundController extends Controller
             } catch (\Exception $e) {
                 if (! $preTransaction){
                     $pre_transaction->update([
-                        'status' => 'FAILED'
+                        'status' => PreTransaction::STATUS_FAILED
                     ]);
                     Log::info('pre_transaction Failed');
                 }

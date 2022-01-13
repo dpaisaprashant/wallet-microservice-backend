@@ -19,25 +19,27 @@ class LoadTestFundSeeder extends Seeder
     {
         $load_test_funds = LoadTestFund::with('preTransaction')->get();
         foreach($load_test_funds as $load_test_fund){
-            $pre_transaction = PreTransaction::where('pre_transaction_id','=',$load_test_fund->pre_transaction_id)->first();
-            $currentBalance = Wallet::whereUserId($load_test_fund->user_id)->first()->balance * 100;
-            $currentBonusBalance = Wallet::whereUserId($load_test_fund->user_id)->first()->bonus_balance * 100;
+//            $pre_transaction = PreTransaction::where('pre_transaction_id','=',$load_test_fund->pre_transaction_id)->first();
+//            $currentBalance = Wallet::whereUserId($load_test_fund->user_id)->first()->balance * 100;
+//            $currentBonusBalance = Wallet::whereUserId($load_test_fund->user_id)->first()->bonus_balance * 100;
             if (! $load_test_fund->preTransaction){
                 $for_pre_transaction = [
                     'pre_transaction_id' => TransactionIdGenerator::generate(20),
                     'user_id' => $load_test_fund->user_id,
-                    'amount' => $pre_transaction->amount * 100,
-                    'description' => "refund transaction for: ". $load_test_fund->pre_transaction_id,
+                    'amount' => ($load_test_fund->amount + $load_test_fund->bonus_amount)*100,
+                    'description' => $load_test_fund->description,
                     'vendor' => 'WALLET',
-                    'service_type' => 'WALLET',
+                    'service_type' => 'REFUND',
                     'microservice_type' => 'WALLET',
-                    'transaction_type' => 'credit',
+                    'transaction_type' => PreTransaction::TRANSACTION_TYPE_CREDIT,
                     'url' => '/refund',
                     'status' => PreTransaction::STATUS_STARTED,
-                    'before_balance' => $currentBalance,
+                    'before_balance' => $load_test_fund->before_amount,
                     'after_balance' => $load_test_fund->after_amount,
-                    'before_bonus_balance' => $currentBonusBalance,
+                    'before_bonus_balance' => $load_test_fund->before_bonus_balance,
                     'after_bonus_balance' => $load_test_fund->after_bonus_balance,
+                    'special1' => $load_test_fund->pre_transaction_id,
+                    'created_at' => $load_test_fund->created_at,
                 ];
                 DB::beginTransaction();
                 try {

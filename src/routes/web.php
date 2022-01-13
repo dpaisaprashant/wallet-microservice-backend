@@ -346,7 +346,8 @@ Route::group(['prefix' => 'admin'], function () {
         /**
         * Merchant Ledgers
         **/
-        Route::match(['get','post'],'/merchant-ledger','MerchantLedgerController@index')->name('admin.merchant.ledger.index')->middleware('permission:View Merchant Ledger'); //todo: add permission
+        Route::match(['get','post'],'/merchant-ledger','MerchantLedgerController@index')->name('admin.merchant.ledger.index')->middleware('permission:View Merchant Ledger');
+        Route::get('/merchant-ledger/{id}','MerchantLedgerController@detail')->name('admin.merchant.ledger.detail')->middleware('permission:View Merchant Ledger');
         /**
         /**
          * Pay Points

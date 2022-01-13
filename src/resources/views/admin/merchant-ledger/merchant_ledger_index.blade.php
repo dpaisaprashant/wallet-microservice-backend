@@ -106,6 +106,7 @@
                                     <th>Credit</th>
                                     <th>Amount</th>
                                     <th>Description(Kaifhiyat)</th>
+                                    <th>Actions</th>
                                 </tr>
                                 </thead>
                                 @isset($ledgers)
@@ -134,6 +135,12 @@
                                             @endif
                                             <td>{{$ledger->balance}}</td>
                                             <td>{{$ledger->descripiton}}</td>
+                                            <td>
+                                                <a style="margin-top: 5px;"
+                                                   href="{{route('admin.merchant.ledger.detail',$ledger->id)}}"
+                                                   class="btn btn-sm btn-icon btn-primary m-t-n-xs"
+                                                   title="user profile"><i class="fa fa-eye"></i></a>
+                                            </td>
                                         </tbody>
                                     @endforeach
                                 @endisset

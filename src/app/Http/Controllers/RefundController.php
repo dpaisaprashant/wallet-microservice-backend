@@ -7,6 +7,7 @@ use App\Models\LoadTestFund;
 use App\Models\Microservice\PreTransaction;
 use App\Models\User;
 use App\Models\Wallet;
+use App\Traits\CreateSelfPreTransactionForLoadTestFund;
 use App\Wallet\Helpers\TransactionIdGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\Log;
 
 class RefundController extends Controller
 {
+    use CreateSelfPreTransactionForLoadTestFund;
+
     public function index()
     {
         $transactions = LoadTestFund::with('user')
@@ -50,23 +53,10 @@ class RefundController extends Controller
             Log::info("before_balance: " . $currentBalance);
             Log::info("after_balance: " . ($currentBalance + ($request['amount'] * 100)));
 
-            $for_pre_transaction = [
-                'pre_transaction_id' => TransactionIdGenerator::generate(20),
-                'user_id' => $user->id,
-                'amount' => $total * 100,
-                'description' => "refund transaction for: ". $preTransaction->pre_transaction_id,
-                'vendor' => 'WALLET',
-                'service_type' => 'REFUND',
-                'microservice_type' => 'WALLET',
-                'transaction_type' => PreTransaction::TRANSACTION_TYPE_CREDIT,
-                'url' => '/refund',
-                'status' => PreTransaction::STATUS_STARTED,
-                'before_balance' => $currentBalance,
-                'after_balance' => $currentBalance + ($request['amount'] * 100),
-                'before_bonus_balance' => $currentBonusBalance,
-                'after_bonus_balance' => $currentBonusBalance + ($request['bonus_amount'] * 100),
-                'special1' => $preTransaction->pre_transaction_id
-            ];
+            $description = "Refund Transaction For: ". $preTransaction->pre_transaction_id;
+            $service_type = "REFUND";
+
+           $for_pre_transaction =  $this->createPreTransaction($request,$service_type,$description,$currentBalance,$currentBonusBalance,$preTransaction,$total,$user);
 
             $data = [
                 'pre_transaction_id' => $preTransaction->pre_transaction_id,

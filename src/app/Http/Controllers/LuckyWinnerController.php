@@ -8,6 +8,7 @@ use App\Models\Microservice\PreTransaction;
 use App\Models\TransactionEvent;
 use App\Models\User;
 use App\Models\Wallet;
+use App\Traits\CreateSelfPreTransactionForLoadTestFund;
 use App\Wallet\Helpers\TransactionIdGenerator;
 use App\Wallet\Notification\Repository\NotificationRepository;
 use Illuminate\Http\Request;
@@ -16,6 +17,9 @@ use Illuminate\Support\Facades\Log;
 
 class LuckyWinnerController extends Controller
 {
+
+    use CreateSelfPreTransactionForLoadTestFund;
+
     CONST VENDOR = "LUCKY WINNER";
     CONST SERVICE_TYPE = "LUCKY WINNER";
 
@@ -54,20 +58,24 @@ class LuckyWinnerController extends Controller
                 ? $request->vendor . " winner deposit for: " . today()
                 : "Winner deposit for: " . today();
 
-            $for_pre_transaction = [
-                'pre_transaction_id' => TransactionIdGenerator::generate(20),
-                'user_id' => $user->id,
-                'amount' => $request['amount'] * 100,
-                'description' => "LUCKY WINNER",
-                'vendor' => 'WALLET',
-                'service_type' => 'LUCKY WINNER',
-                'microservice_type' => 'WALLET',
-                'transaction_type' => PreTransaction::TRANSACTION_TYPE_CREDIT,
-                'url' => '/refund',
-                'status' => PreTransaction::STATUS_STARTED,
-                'before_balance' => $currentBalance,
-                'after_balance' => $currentBalance + ($request['amount'] * 100),
-            ];
+            $service_type = 'LUCKY WINNER';
+
+            $for_pre_transaction = $this->createPreTransaction($request,$service_type,$description,$currentBalance,$currentBonusBalance,null,null,$user);
+
+//            $for_pre_transaction = [
+//                'pre_transaction_id' => TransactionIdGenerator::generate(20),
+//                'user_id' => $user->id,
+//                'amount' => $request['amount'] * 100,
+//                'description' => "LUCKY WINNER",
+//                'vendor' => 'WALLET',
+//                'service_type' => 'LUCKY WINNER',
+//                'microservice_type' => 'WALLET',
+//                'transaction_type' => PreTransaction::TRANSACTION_TYPE_CREDIT,
+//                'url' => '/refund',
+//                'status' => PreTransaction::STATUS_STARTED,
+//                'before_balance' => $currentBalance,
+//                'after_balance' => $currentBalance + ($request['amount'] * 100),
+//            ];
 
             $data = [
                 'admin_id' => auth()->user()->id,

@@ -19,9 +19,6 @@ class LoadTestFundSeeder extends Seeder
     {
         $load_test_funds = LoadTestFund::with('preTransaction')->get();
         foreach($load_test_funds as $load_test_fund){
-//            $pre_transaction = PreTransaction::where('pre_transaction_id','=',$load_test_fund->pre_transaction_id)->first();
-//            $currentBalance = Wallet::whereUserId($load_test_fund->user_id)->first()->balance * 100;
-//            $currentBonusBalance = Wallet::whereUserId($load_test_fund->user_id)->first()->bonus_balance * 100;
             if (! $load_test_fund->preTransaction){
                 $for_pre_transaction = [
                     'pre_transaction_id' => TransactionIdGenerator::generate(20),

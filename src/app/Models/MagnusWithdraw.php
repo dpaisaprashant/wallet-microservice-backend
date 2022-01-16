@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MangusWithdraw extends Model
+class MagnusWithdraw extends Model
 {
-//    protected $connection = 'magnus';
-protected $table = 'magnus_withdraw_transaction';
+    protected $connection = 'magnus';
+    protected $table = 'magnus_withdraw_transaction';
 }

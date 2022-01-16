@@ -3,9 +3,10 @@
 namespace App\Filters\MagnusLinkedAccount;
 
 use App\Filters\FilterAbstract;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 
-class ToDateFilter extends FilterAbstract {
+class UserFilter extends FilterAbstract {
 
 
     public function mapping()
@@ -30,8 +31,8 @@ class ToDateFilter extends FilterAbstract {
             return $builder;
         }
 
-
-        return $builder->whereDate('created_at', '<=' ,date('Y-m-d', strtotime(str_replace(',', ' ', $value))));
-
+        $user = User::where('mobile_no',$value)->orWhere('email',$value)->get();
+        $user_id = $user->pluck('id');
+        return $builder->whereIn('user_id', $user_id);
     }
 }

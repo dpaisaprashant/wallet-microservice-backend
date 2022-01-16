@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filters\LoadTestFund;
+namespace App\Filters\MagnusLinkedAccount;
 
 use App\Filters\FilterAbstract;
 use Illuminate\Database\Eloquent\Builder;

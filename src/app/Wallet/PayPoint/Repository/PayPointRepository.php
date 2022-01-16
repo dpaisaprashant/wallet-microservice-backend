@@ -51,7 +51,7 @@ class PayPointRepository
 
     private function latestTransactions()
     {
-        return UserCheckPayment::with('userExecutePayment', 'userTransaction', 'user', 'preTransaction', 'requestInfo', 'preTransaction.user', 'requestInfo.user')->latest()->filter($this->request)->paginate($this->length);
+        return UserCheckPayment::with('userExecutePayment', 'userExecutePayment.preTransaction', 'userTransaction', 'user', 'preTransaction', 'requestInfo', 'preTransaction.user', 'requestInfo.user')->latest()->filter($this->request)->paginate($this->length);
     }
 
     private function failedSortedTransactions()

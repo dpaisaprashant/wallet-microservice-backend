@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Filters\FailedUserTransaction\FailedUserTransactionFilters;
 use App\Filters\Transaction\TransactionFilters;
+use App\Traits\BelongsToPreTransaction;
 use App\Traits\BelongsToUser;
 use App\Traits\BelongsToUseThroughMicroservice;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,7 +15,7 @@ use App\Models\UserCheckPayment;
 
 class UserExecutePayment extends Model
 {
-    use BelongsToUseThroughMicroservice, BelongsToUser;
+    use BelongsToUseThroughMicroservice, BelongsToUser, BelongsToPreTransaction;
     protected $connection = 'paypoint';
 
     protected $fillable = [

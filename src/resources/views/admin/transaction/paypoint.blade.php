@@ -270,6 +270,12 @@
                                             <td>
                                                 @if(!empty($transaction->user))
                                                     <a @can('User profile') href="{{route('user.profile', $transaction->user['id'])}}" @endcan>{{ $transaction->user['mobile_no']}}</a>
+                                                @elseif(!empty($transaction->requestInfo->user))
+                                                    <a @can('User profile') href="{{route('user.profile', $transaction->requestInfo->user->id)}}" @endcan>{{ $transaction->requestInfo->user->mobile_no}}</a>
+                                                @elseif(!empty($transaction->preTransaction->user))
+                                                    <a @can('User profile') href="{{route('user.profile', $transaction->preTransaction->user->id)}}" @endcan>{{ $transaction->preTransaction->user->mobile_no}}</a>
+                                                @elseif(!empty($transaction->userTransaction->preTransaction->user))
+                                                    <a @can('User profile') href="{{route('user.profile', $transaction->userTransaction->preTransaction->user->id)}}" @endcan>{{ $transaction->userTransaction->preTransaction->user->mobile_no}}</a>
                                                 @endif
                                             </td>
 

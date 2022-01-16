@@ -34,12 +34,12 @@ class PayPointRepository
 
     private function sortedTransactions()
     {
-        return UserCheckPayment::with('userExecutePayment', 'userTransaction', 'user', 'preTransaction', 'requestInfo')->filter($this->request)->paginate($this->length);
+        return UserCheckPayment::with('userExecutePayment', 'userTransaction', 'user', 'preTransaction', 'requestInfo', 'preTransaction.user', 'requestInfo.user')->filter($this->request)->paginate($this->length);
     }
 
     private function amountSortedTransactions()
     {
-        $unsortedTransactions = UserCheckPayment::with('userExecutePayment', 'userTransaction', 'user', 'preTransaction', 'requestInfo')->filter($this->request)->get();
+        $unsortedTransactions = UserCheckPayment::with('userExecutePayment', 'userTransaction', 'user', 'preTransaction', 'requestInfo', 'preTransaction.user', 'requestInfo.user')->filter($this->request)->get();
 
         $transactions = $unsortedTransactions->map(function (UserCheckPayment $value, $key) {
             $value['amount'] = $value->userTransaction['amount'] ?? null;
@@ -51,7 +51,7 @@ class PayPointRepository
 
     private function latestTransactions()
     {
-        return UserCheckPayment::with('userExecutePayment', 'userTransaction', 'user', 'preTransaction', 'requestInfo')->latest()->filter($this->request)->paginate($this->length);
+        return UserCheckPayment::with('userExecutePayment', 'userTransaction', 'user', 'preTransaction', 'requestInfo', 'preTransaction.user', 'requestInfo.user')->latest()->filter($this->request)->paginate($this->length);
     }
 
     private function failedSortedTransactions()

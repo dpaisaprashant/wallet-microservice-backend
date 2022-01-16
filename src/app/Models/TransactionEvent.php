@@ -20,6 +20,10 @@ class TransactionEvent extends Model
     protected $guarded = [];
     //protected $with = ['current_balance'];
 
+    protected $casts = [
+        "amount" => "integer"
+    ];
+
     protected $appends = ["fee", "cashback_amount"];
 
 

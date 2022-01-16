@@ -3,6 +3,7 @@
 namespace App\Wallet\Helpers;
 
 use App\Models\TransactionId;
+use Illuminate\Support\Facades\Log;
 
 class TransactionIdGenerator
 {
@@ -62,11 +63,32 @@ class TransactionIdGenerator
         $bfiNumber = $firstAlphabet.$bfiBackNumber;
 
         $transactionId = $transaction->createTransaction($bfiNumber);
-        \Log::info($bfiNumber." has been saved as transaction_id in transaction_ids table in BFI database");
+        Log::info($bfiNumber." has been saved as transaction_id in transaction_ids table in BFI database");
         if($transactionId){
             return $bfiNumber;
         }
         self::generateBFIId($digits);
     }
 
+    public static function generateReferral($firstAlphabet = "D", $digits = 6)
+    {
+        $transaction = new TransactionId();
+        $value = [];
+        $chars = explode(" ", "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z");
+        $totalChars = count($chars) - 1;
+        $alpha = $chars[floor(rand(0, $totalChars))];
+
+        $number = "";
+        for ($i = 0; $i < $digits; $i++) {
+            $min = ($i == 0) ? 1 : 0;
+            $number .= mt_rand($min, 9);
+        }
+
+        $transactionID = $firstAlphabet.$alpha.$number;
+
+        if ($transaction->createTransaction($transactionID)) {
+            return $transactionID;
+        }
+        self::generateReferral($transactionID);
+    }
 }

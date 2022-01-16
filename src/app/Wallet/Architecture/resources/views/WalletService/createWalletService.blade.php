@@ -58,13 +58,9 @@
                                         <div class="col-sm-10">
                                             <select class="chosen-select" tabindex="2" name="wallet_transaction_type_id" required>
                                             <option value="" selected disabled>Select Wallet Transaction Type</option>
-                                            @foreach($all_wallet_transaction_id as $wallet_transaction_id)
-                                            <option value="{{$wallet_transaction_id->id}}">
-                                                <p style="font-weight: bolder">Transaction Type&nbsp;&nbsp;:&nbsp;&nbsp;</p>
-                                                {{$wallet_transaction_id['transaction_type']}}&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;User Type&nbsp;&nbsp;:&nbsp;&nbsp;{{$wallet_transaction_id['user_type']}}&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;MicroService&nbsp;&nbsp;:&nbsp;&nbsp;{{$wallet_transaction_id['microservice']}}&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;Service&nbsp;&nbsp;:&nbsp;&nbsp;{{$wallet_transaction_id['service'] == null ?'Null':$wallet_transaction_id['service']}}&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;Service Type&nbsp;&nbsp;:&nbsp;&nbsp;{{$wallet_transaction_id['service_type'] == null ? 'Null' : $wallet_transaction_id['service_type']}} 
-                                            </option>
-
-                                            @endforeach
+                                                @foreach($all_wallet_transaction_id as $key=>$walletTransactionType)
+                                                    <option value="{{$walletTransactionType->id}}"><p style="font-weight: bolder">Transaction Type&nbsp;&nbsp;:&nbsp;&nbsp;</p>{{$walletTransactionType['transaction_type']}}&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;User Type&nbsp;&nbsp;:&nbsp;&nbsp;{{$walletTransactionType['user_type']}}&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;MicroService&nbsp;&nbsp;:&nbsp;&nbsp;{{$walletTransactionType['microservice']}}&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;Service&nbsp;&nbsp;:&nbsp;&nbsp;{{$walletTransactionType['service'] == null ?'Null':$walletTransactionType['service']}}&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;Service Type&nbsp;&nbsp;:&nbsp;&nbsp;{{$walletTransactionType['service_type'] == null ? 'Null' : $walletTransactionType['service_type']}}&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp; Special 1 : {{$walletTransactionType['special1'] == null ? 'Null' : $walletTransactionType['special1']}}&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp; Special 2 : {{$walletTransactionType['special2'] == null ? 'Null' : $walletTransactionType['special2']}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>

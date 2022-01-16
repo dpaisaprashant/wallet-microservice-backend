@@ -276,8 +276,9 @@
                                                     <a @can('User profile') href="{{route('user.profile', $transaction->preTransaction->user->id)}}" @endcan>{{ $transaction->preTransaction->user->mobile_no}}</a>
                                                 @elseif(!empty($transaction->userTransaction->preTransaction->user))
                                                     <a @can('User profile') href="{{route('user.profile', $transaction->userTransaction->preTransaction->user->id)}}" @endcan>{{ $transaction->userTransaction->preTransaction->user->mobile_no}}</a>
-                                                @elseif(!empty($transaction->userExecutePayment[0]->preTransaction->user))
-                                                    <a @can('User profile') href="{{route('user.profile', $transaction->userExecutePayment->preTransaction->user->id)}}" @endcan>{{ $transaction->userExecutePayment->preTransaction->user->mobile_no}}</a>
+                                                @elseif(!empty($transaction->userExecutePayment[0]->user))
+                                                    {{dd($transaction->userExecutePayment)}}
+                                                    <a @can('User profile') href="{{route('user.profile', $transaction->userExecutePayment[0]->user->id)}}" @endcan>{{ $transaction->userExecutePayment[0]->user->mobile_no}}</a>
                                                 @endif
                                             </td>
 

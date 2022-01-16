@@ -29,6 +29,14 @@
             <b>Account : </b>{{  $event->khaltiUserTransaction['account'] }}--}}
         @endif
 
+        @php
+            $json_response = $event->json_response;
+            $json_response = json_decode($json_response,true);
+            $tx_id = $json_response['trxnId'] ?? null;
+        @endphp
+        @if(!empty($tx_id))
+            <b>SFACL Txn id:</b> {{ $tx_id }}
+        @endif
     </td>
     <td>
         {{ $event->description }}

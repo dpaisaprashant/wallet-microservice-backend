@@ -149,6 +149,7 @@
 
                                 <tbody>
                                     @foreach($linked_accounts as $linked_account)
+                                        <tr>
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$linked_account->customer_alias}}</td>
                                         <td>{{$linked_account->dep_acc_holder_id}}</td>
@@ -166,6 +167,7 @@
 {{--                                               class="btn btn-sm btn-icon btn-primary m-t-n-xs"--}}
 {{--                                               title="user profile"><i class="fa fa-eye"></i></a>--}}
 {{--                                        </td>--}}
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>

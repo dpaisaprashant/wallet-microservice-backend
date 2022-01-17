@@ -349,6 +349,14 @@ Route::group(['prefix' => 'admin'], function () {
         Route::match(['get','post'],'/merchant-ledger','MerchantLedgerController@index')->name('admin.merchant.ledger.index')->middleware('permission:View Merchant Ledger');
         Route::get('/merchant-ledger/{id}','MerchantLedgerController@detail')->name('admin.merchant.ledger.detail')->middleware('permission:View Merchant Ledger');
         /**
+
+         /**
+         * Magnus Linked Accounts
+         **/
+         Route::get('/magnus/linked-accounts','MagnusLinkedAccountController@index')->name('admin.magnus.linked-account')->middleware('permission:View magnus linked accounts');
+         /**
+
+
         /**
          * Pay Points
          */

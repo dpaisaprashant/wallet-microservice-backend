@@ -113,7 +113,7 @@
                                         <td>{{$nea_information['transaction_sum']}}</td>
                                         <td>
                                             @php
-                                              $from = date("Y-m-d", strtotime($_GET['from']));
+                                                  $from = date("Y-m-d",strtotime(str_replace(',', ' ', $_GET['from'])));
                                             @endphp
                                             @if(!$nea_settlements->count())
                                                 <form action="{{route('SettleNea')}}" method="post">
@@ -132,13 +132,14 @@
                                                 </form>
                                             @else
                                                 @foreach($nea_settlements as $nea_settlement)
-                                                    @if(($from == $nea_settlement->date_from)&& $nea_settlement->nea_branch_code == $nea_information['branch_code'] && $nea_settlement->status == "SUCCESS")
+                                                    @if(($from == $nea_settlement->date_from)&& $nea_settlement->nea_branch_code == $nea_information['branch_code'] && $nea_settlement->status == \App\Models\NeaSettlement::STATUS_SUCCESS)
                                                         @php($form_needed = "no")
                                                         @break
                                                     @else
                                                         @php($form_needed = "yes")
                                                     @endif
                                                 @endforeach
+{{--                                                @php(dd($form_needed,$nea_settlement,$nea_information,$from));--}}
                                                 @if($form_needed == "no")
                                                     <p>Already Setteled</p>
                                                 @else

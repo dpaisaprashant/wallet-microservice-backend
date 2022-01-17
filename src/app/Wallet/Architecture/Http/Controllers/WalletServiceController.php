@@ -16,7 +16,7 @@ class WalletServiceController extends Controller{
     }
 
     public function create(){
-        $all_wallet_transaction_id = WalletTransactionType::select('id','transaction_type')->groupBy('transaction_type')->get();
+        $all_wallet_transaction_id = WalletTransactionType::latest()->get();
         return view('Architecture::WalletService.createWalletService')->with(compact('all_wallet_transaction_id'));
     }
 

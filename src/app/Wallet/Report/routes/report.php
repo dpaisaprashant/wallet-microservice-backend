@@ -1,6 +1,7 @@
 <?php
 
 use App\Wallet\Report\Http\Controllers\ClosingBalanceController;
+use App\Wallet\Report\Http\Controllers\MiscReportController;
 use App\Wallet\Report\Http\Controllers\NRBAnnexReportController;
 use App\Wallet\Report\Http\Controllers\NRBReportController;
 use App\Wallet\Report\Http\Controllers\SubscriberReportController;
@@ -64,4 +65,10 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web', 'auth']], func
 //    Route::get('/report/nrb-annex/agent-payments/monthly', 'ReportController@monthly')->name('report.monthly')->middleware('permission:Monthly report view');
 //    Route::get('/report/yearly', 'ReportController@yearly')->name('report.yearly')->middleware('permission:Yearly report view');
 
+    /**
+     * Lucky Winner Report
+     */
+
+    Route::get('lucky-winners', [MiscReportController::class, 'luckyWinnerReport'])->name('report.lucky.winner');
+    Route::get('ticket-sales', [MiscReportController::class, 'ticketSalesReport'])->name('report.ticket.sale');
 });

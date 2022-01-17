@@ -193,13 +193,13 @@ $url = url()->current();
                             <li><a href="{{ route('merchant.address.list') }}">Set Merchant Address</a></li>
                         @endcan
 
-                        @can('View Merchant Ledger')
+                        {{--@can('View Merchant Ledger')
                             <li><a href="{{route('admin.merchant.ledger.index')}}">Merchant Ledger</a></li>
-                        @endcan
+                        @endcan--}}
 
-                        @can('View magnus linked accounts')
+                       {{-- @can('View magnus linked accounts')
                             <li><a href="{{route('admin.magnus.linked-account')}}">Magnus Linked Accounts</a></li>
-                        @endcan
+                        @endcan--}}
                     </ul>
                 </li>
             @endcan

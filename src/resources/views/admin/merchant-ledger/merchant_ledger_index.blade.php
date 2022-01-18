@@ -77,6 +77,7 @@
                                             </select>
                                         </div>
 
+
                                         <div class="col-md-6">
                                             <div class="form-group" style="padding-top: 10px">
                                                 <select data-placeholder="Select Pre-Transaction status..."
@@ -97,6 +98,15 @@
                                                         <option value="{{\App\Models\MagnusDeposit::class}}">Magnus Deposit</option>
                                                     @endif
                                                 </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="pre_transaction_id">Enter Pre Transaction ID</label>
+                                                <input type="text" name="pre_transaction_id" placeholder="Enter Pre Transaction ID"
+                                                       class="form-control"
+                                                       value="{{ !empty($_GET['pre_transaction_id']) ? $_GET['pre_transaction_id'] : '' }}">
                                             </div>
                                         </div>
 
@@ -131,6 +141,7 @@
                                 <thead>
                                 <tr>
                                     <th>S.No.</th>
+                                    <th>Pre Transaction ID</th>
                                     <th>Date</th>
                                     <th>Transaction Code</th>
                                     <th>Merchant Name</th>
@@ -148,6 +159,7 @@
                                     @foreach($ledgers as $ledger)
                                         <tbody>
                                             <td>{{$loop->iteration}}</td>
+                                            <td>{{$ledger->pre_transaction_id}}</td>
                                             <td>{{$ledger->created_at}}</td>
                                             <td>{{$ledger->uid}}</td>
                                             <td>{{$ledger->user->name}}</td>

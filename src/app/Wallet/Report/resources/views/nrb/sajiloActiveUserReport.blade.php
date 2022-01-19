@@ -93,7 +93,7 @@
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover {{--dataTables-example--}}" title="Dpasis user's list">
+                                <table class="table table-striped table-bordered table-hover {{--dataTables-example--}}" title="Wallet user's list">
                                     <thead>
                                     <tr>
                                         <th>Type</th>

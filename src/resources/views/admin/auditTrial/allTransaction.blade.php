@@ -85,7 +85,7 @@
                     <div class="ibox-content">
 
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover dataTables-example" title="DPaisa Audit Trail - NPay and PayPoint">
+                            <table class="table table-striped table-bordered table-hover dataTables-example" title="Wallet Audit Trail - NPay and PayPoint">
                                 <thead>
                                 <tr>
                                     <th>#</th>

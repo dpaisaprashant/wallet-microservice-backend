@@ -405,6 +405,18 @@ $url = url()->current();
                 </li>
             @endif
 
+{{--            todo: add permissions--}}
+                <li @if(preg_match('/fund-withdraw/i', $url)) class="active" @endif>
+                    <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Fund Withdraw</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                            <li><a href="{{route('fund-withdraw,index')}}">View Fund Withdraws</a></li>
+                            <li><a href="{{route('fund-withdraw.create')}}">Create Fund Withdraw</a></li>
+                    </ul>
+                </li>
+{{--            todo: add permissions--}}
+
+
             @if(auth()->user()->hasPermissionTo('Lucky winner view') || auth()->user()->hasPermissionTo('Lucky winner create'))
                 <li @if(preg_match('/lucky/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Winner Deposit</span><span

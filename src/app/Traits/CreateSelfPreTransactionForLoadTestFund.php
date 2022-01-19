@@ -8,7 +8,7 @@ use App\Wallet\Helpers\TransactionIdGenerator;
 
 trait CreateSelfPreTransactionForLoadTestFund{
 
-    public function createPreTransaction($request,$service_type, $description,$currentBalance,$currentBonusBalance = null,$preTransaction = null ,$total = null, $user = null){
+    public function createPreTransaction($request,$service_type,$description,$currentBalance,$currentBonusBalance = null,$preTransaction = null ,$total = null, $user = null){
 //        $currentBalance = Wallet::whereUserId($user->id ?? $request->user_id)->first()->balance * 100;
 //        $currentBonusBalance = Wallet::whereUserId($user->id ?? $request->user_id)->first()->bonus_balance * 100;
         $for_pre_transaction = [

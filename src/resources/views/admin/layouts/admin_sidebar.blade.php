@@ -748,12 +748,12 @@ $url = url()->current();
 
                             {{--<li><a href="{{route('report.closing.balance')}}">Closing Balance</a></li>--}}
                         @endcan
-                        @can('View lucky winner report')
+                       {{-- @can('View lucky winner report')
                             <li><a href="{{route('report.lucky.winner')}}">Lucky Winners Report</a></li>
                         @endcan
                         @can('View ticket sale report')
                             <li><a href="{{route('report.ticket.sale')}}">Ticket Sales Report</a></li>
-                        @endcan
+                        @endcan--}}
 
 
                     </ul>

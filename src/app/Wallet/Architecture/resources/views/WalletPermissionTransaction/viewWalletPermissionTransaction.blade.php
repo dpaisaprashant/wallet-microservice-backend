@@ -157,7 +157,7 @@
                         <div class="table-responsive">
                             @include('admin.asset.notification.notify')
                             <table class="table table-striped table-bordered table-hover dataTables-example"
-                                   title="Dpasis user's list">
+                                   title="Wallet user's list">
                                 <thead>
                                 <tr>
                                     <th>S.No.</th>

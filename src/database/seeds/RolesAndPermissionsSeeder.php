@@ -270,6 +270,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Agent delete',
             'Agent type view',
             'Agent type create',
+            'Agent details view',
 
             //refund
             'Refund view',
@@ -501,6 +502,10 @@ class RolesAndPermissionsSeeder extends Seeder
 
             //Magnus
             'View magnus linked accounts',
+
+            //Miscellaneous Reports
+            'View lucky winner report',
+            'View ticket sale report',
 
             ];
 

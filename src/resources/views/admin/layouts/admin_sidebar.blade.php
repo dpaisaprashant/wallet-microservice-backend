@@ -749,6 +749,19 @@ $url = url()->current();
                        {{-- @can('Report commission')
                             <li><a href="{{ route('commission.report') }}">Commission report</a></li>
                         @endcan--}}
+                        @can('View mismatched user balance and bonus balance')
+                            <li><a href="{{route('report.mismatchedUserBalance')}}">Mismatched User Balance</a></li>
+
+                            {{--<li><a href="{{route('report.closing.balance')}}">Closing Balance</a></li>--}}
+                        @endcan
+                        @can('View lucky winner report')
+                            <li><a href="{{route('report.lucky.winner')}}">Lucky Winners Report</a></li>
+                        @endcan
+                        @can('View ticket sale report')
+                            <li><a href="{{route('report.ticket.sale')}}">Ticket Sales Report</a></li>
+                        @endcan
+
+>>>>>>> b88e77819d9258a9faeaa5348326ff97ebdf9197
 
                     </ul>
                 </li>
@@ -784,10 +797,17 @@ $url = url()->current();
                                     Report</a>
                             </li>
                         @endcan
+                        @can('Report nrb active and inactive user')
+                            <li><a href="{{ route('report.nrb.annex.agent.payment') }}">NRB Annex 10.1.11
+                                    Report</a>
+                            </li>
+                        @endcan
 {{--                        @can('Report nrb reconciliation')--}}
 {{--                            <li><a href="{{ route('report.nrb.annex.reconciliation') }}">NRB Reconciliation Report</a></li>--}}
 {{--                        @endcan--}}
-
+                        @can('Agent details view')
+                            <li><a href="{{route('agent.detail')}}">22 Part Three Agent Details</a></li>
+                        @endcan
                     </ul>
                 </li>
             @endif

@@ -13,8 +13,8 @@ class CreateMerchantRevenueRecordsTable extends Migration
      */
     public function up()
     {
-        if (!Schema::connection('dpaisa')->hasTable('merchant_revenue_records_table')){
-            Schema::connection('dpaisa')->create('merchant_revenue_records_tabel', function (Blueprint $table) {
+        if (!Schema::connection('dpaisa')->hasTable('merchant_revenue_records')){
+            Schema::connection('dpaisa')->create('merchant_revenue_records', function (Blueprint $table) {
                 $table->id();
                 $table->foreignId('user_id');
                 $table->foreignId('user_transaction_event_id');

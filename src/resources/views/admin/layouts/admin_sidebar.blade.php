@@ -748,6 +748,12 @@ $url = url()->current();
 
                             {{--<li><a href="{{route('report.closing.balance')}}">Closing Balance</a></li>--}}
                         @endcan
+                        @can('View lucky winner report')
+                            <li><a href="{{route('report.lucky.winner')}}">Lucky Winners Report</a></li>
+                        @endcan
+                        @can('View ticket sale report')
+                            <li><a href="{{route('report.ticket.sale')}}">Ticket Sales Report</a></li>
+                        @endcan
 
 
                     </ul>
@@ -781,6 +787,11 @@ $url = url()->current();
                         @endcan
                         @can('Report nrb active and inactive user')
                             <li><a href="{{ route('report.active.inactive.user.slab') }}">NRB Active/Inactive User Slab
+                                    Report</a>
+                            </li>
+                        @endcan
+                        @can('Report nrb active and inactive user')
+                            <li><a href="{{ route('report.nrb.annex.agent.payment') }}">NRB Annex 10.1.11
                                     Report</a>
                             </li>
                         @endcan

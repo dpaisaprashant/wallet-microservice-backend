@@ -179,6 +179,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::match(['get', 'post'], '/agent/edit/{id}', 'AgentController@edit')->name('agent.edit')->middleware('permission:Agent edit');
         Route::post('/agent/delete/{id}', 'AgentController@delete')->name('agent.delete')->middleware('permission:Agent delete');
         Route::get('/admin-altered-agents','AgentController@showAdminAlteredAgents')->name('agent.AdminAlteredAgents');
+        Route::get('/agent-details','AgentController@agentDetails')->name('agent.detail')->middleware('permission:Agent details view');
 
         //agent type
         Route::get('agent-types', 'AgentTypeController@view')->name('agent.type.view')->middleware('permission:Agent type view');

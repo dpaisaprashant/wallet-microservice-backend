@@ -270,6 +270,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Agent delete',
             'Agent type view',
             'Agent type create',
+            'Agent details view',
 
             //refund
             'Refund view',

@@ -114,7 +114,7 @@
                                     <tr>
                                         <th>S.No</th>
                                         <th>Agent Code</th>
-                                        <th>Agent Name</th>
+                                        <th>Agent Name</th>![](C:/Users/subhay/AppData/Local/Temp/agent_info.png)
                                         <th>Total SubAgent</th>
                                         <th>Previous Reporting Balance</th>
                                         <th>Current Reporting Balance</th>

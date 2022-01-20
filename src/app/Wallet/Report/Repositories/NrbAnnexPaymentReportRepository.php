@@ -67,7 +67,9 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\NeaTransaction'
                                                                                  OR
-                                                                                 t.transaction_type = 'App\\\Models\\\UserToBfiFundTransfer'
+                                                                                 t.transaction_type = 'App\\\Models\\\CellPayUserTransaction'
+                                                                                 OR
+                                                                                 t.transaction_type = 'App\\\Models\\\NtcRetailerToCustomerTransaction'
                                                                                 )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)
@@ -95,7 +97,9 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\NeaTransaction'
                                                                                  OR
-                                                                                 t.transaction_type = 'App\\\Models\\\UserToBfiFundTransfer'
+                                                                                 t.transaction_type = 'App\\\Models\\\CellPayUserTransaction'
+                                                                                 OR
+                                                                                 t.transaction_type = 'App\\\Models\\\NtcRetailerToCustomerTransaction'
                                                                                 )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)
@@ -161,13 +165,13 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 AND
                                                                                 (t.transaction_type ='App\\\Models\\\NchlLoadTransaction'
                                                                                  OR
-                                                                                 t.transaction_type = 'App\\\Models\\\PaymentNepalLoadTransaction'
+                                                                                 t.transaction_type = 'App\\\Models\\\NICAsiaCyberSourceLoadTransaction'
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\NpsLoadTransaction'
                                                                                  OR
-                                                                                 t.transaction_type = 'App\\\Models\\\UserLoadTransaction'
+                                                                                 t.transaction_type = 'App\\\Models\\\NPSAccountLinkLoad'
                                                                                      OR
-                                                                                 t.transaction_type = 'App\\\Models\\\BfiGatewayExecutePayment'
+                                                                                 t.transaction_type = 'App\\\Models\\\UserLoadTransaction'
                                                                                 )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)
@@ -189,14 +193,14 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 WHERE t.user_id = a.user_id and a.status = 'ACCEPTED'
                                                                                 AND
                                                                                 (t.transaction_type ='App\\\Models\\\NchlLoadTransaction'
-                                                                                 OR
-                                                                                 t.transaction_type = 'App\\\Models\\\PaymentNepalLoadTransaction'
+                                                                                  OR
+                                                                                 t.transaction_type = 'App\\\Models\\\NICAsiaCyberSourceLoadTransaction'
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\NpsLoadTransaction'
                                                                                  OR
-                                                                                 t.transaction_type = 'App\\\Models\\\UserLoadTransaction'
+                                                                                 t.transaction_type = 'App\\\Models\\\NPSAccountLinkLoad'
                                                                                      OR
-                                                                                 t.transaction_type = 'App\\\Models\\\BfiGatewayExecutePayment'
+                                                                                 t.transaction_type = 'App\\\Models\\\UserLoadTransaction'
                                                                                 )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)
@@ -338,10 +342,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 RIGHT JOIN agents as a ON a.user_id = t.user_id
                                                                                 WHERE t.user_id = a.user_id and a.status = 'ACCEPTED'
                                                                                 AND
-                                                                                (t.transaction_type ='App\\\Models\\\TicketSale'
-                                                                                    OR
-                                                                                t.transaction_type ='App\\\Models\\\EventTicketSale'
-                                                                                     OR
+                                                                                (
                                                                                 t.transaction_type ='App\\\Models\\\MerchantTransaction'
                                                                                  )
                                                                                 AND
@@ -362,10 +363,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 RIGHT JOIN agents as a ON a.user_id = t.user_id
                                                                                 WHERE t.user_id = a.user_id and a.status = 'ACCEPTED'
                                                                                  AND
-                                                                                (t.transaction_type ='App\\\Models\\\TicketSale'
-                                                                                    OR
-                                                                                t.transaction_type ='App\\\Models\\\EventTicketSale'
-                                                                                     OR
+                                                                                (
                                                                                 t.transaction_type ='App\\\Models\\\MerchantTransaction'
                                                                                  )
                                                                                 AND

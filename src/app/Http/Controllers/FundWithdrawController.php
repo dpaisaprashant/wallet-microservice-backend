@@ -57,31 +57,30 @@ class FundWithdrawController extends Controller
                           'description' => $description,
                     ];
                     DB::beginTransaction();
-                                try {
-                                    $pre_transaction = PreTransaction::create($for_pre_transaction);
-                                    Log::info('started PreTransaction for Fund Withdraw',$for_pre_transaction);
+                    try {
+                        $pre_transaction = PreTransaction::create($for_pre_transaction);
+                        Log::info('started PreTransaction for Fund Withdraw',$for_pre_transaction);
 
-                                    $pre_transaction->update([
-                                            'status' => PreTransaction::STATUS_SUCCESS
-                                        ]);
-                                    Log::info('pre_transaction Created Successfully');
+                        $pre_transaction->update([
+                            'status' => PreTransaction::STATUS_SUCCESS
+                        ]);
+                        Log::info('pre_transaction Created Successfully');
 
-                                    $transaction = FundWithdraw::create($data);
-                                    if (! $transaction) return redirect(route('refund.index'))->with('error', 'Transaction not created successfully');
+                        $transaction = FundWithdraw::create($data);
+                        if (! $transaction) return redirect(route('refund.index'))->with('error', 'Transaction not created successfully');
 
 //                                    event(new LoadTestFundEvent($transaction));
-                                    DB::commit();
-                                    return redirect(route('refund.index'))->with('success', 'Transaction created successfully');
-                                } catch (\Exception $e) {
-                                    $pre_transaction->update([
-                                        'status' => PreTransaction::STATUS_FAILED
-                                    ]);
-                                    Log::info('pre_transaction Failed');
-
-                                    Log::info($e);
-                                    DB::rollBack();
-                                    return redirect(route('refund.index'))->with('error', 'Transaction not created successfully');
-                                }
+                        DB::commit();
+                        return redirect(route('refund.index'))->with('success', 'Transaction created successfully');
+                    } catch (\Exception $e) {
+                        $pre_transaction->update([
+                            'status' => PreTransaction::STATUS_FAILED
+                        ]);
+                        Log::info('pre_transaction Failed');
+                        Log::info($e);
+                        DB::rollBack();
+                        return redirect(route('refund.index'))->with('error', 'Transaction not created successfully');
+                    }
                 }
             }
         }

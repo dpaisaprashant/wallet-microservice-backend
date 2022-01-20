@@ -478,6 +478,9 @@ class RolesAndPermissionsSeeder extends Seeder
             //Merchant Revenues
             'Merchant revenue view',
 
+            //Merchant Ledgers
+            'View Merchant Ledger',
+
             //Social Media Challenge
             'View social media challenge',
             'Edit social media challenge',
@@ -494,7 +497,11 @@ class RolesAndPermissionsSeeder extends Seeder
             'Accepted merchant kyc',
             'Rejected merchant kyc',
             'KYC not filled merchant',
-            'View nea settlements'
+            'View nea settlements',
+
+            //Magnus
+            'View magnus linked accounts',
+
             ];
 
         //get users having all permissions

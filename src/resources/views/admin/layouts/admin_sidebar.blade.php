@@ -193,7 +193,13 @@ $url = url()->current();
                             <li><a href="{{ route('merchant.address.list') }}">Set Merchant Address</a></li>
                         @endcan
 
+                        @can('View Merchant Ledger')
+                            <li><a href="{{route('admin.merchant.ledger.index')}}">Merchant Ledger</a></li>
+                        @endcan
 
+                        @can('View magnus linked accounts')
+                            <li><a href="{{route('admin.magnus.linked-account')}}">Magnus Linked Accounts</a></li>
+                        @endcan
                     </ul>
                 </li>
             @endcan
@@ -853,6 +859,8 @@ $url = url()->current();
                     </ul>
                 </li>
             @endif
+
+
 
             @if(auth()->user()->hasPermissionTo('View issue ticket'))
                 <li @if($url == route('issue.ticket.view'))class="active" @endif>

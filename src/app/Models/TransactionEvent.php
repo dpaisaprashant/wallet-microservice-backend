@@ -20,6 +20,10 @@ class TransactionEvent extends Model
     protected $guarded = [];
     //protected $with = ['current_balance'];
 
+    protected $casts = [
+        "amount" => "integer"
+    ];
+
     protected $appends = ["fee", "cashback_amount"];
 
 
@@ -157,6 +161,10 @@ class TransactionEvent extends Model
 
     public function preTransaction(){
         return $this->hasMany(PreTransaction::class,"pre_transaction_id",'pre_transaction_id');
+    }
+
+    public function uniquePreTransaction(){
+        return $this->hasOne(PreTransaction::class,"pre_transaction_id",'pre_transaction_id');
     }
 
     public function preTransactionMicroservice(){

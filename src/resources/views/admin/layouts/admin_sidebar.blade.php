@@ -412,14 +412,14 @@ $url = url()->current();
             @endif
 
 {{--            todo: add permissions--}}
-                <li @if(preg_match('/fund-withdraw/i', $url)) class="active" @endif>
-                    <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Fund Withdraw</span><span
-                            class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                            <li><a href="{{route('fund-withdraw,index')}}">View Fund Withdraws</a></li>
-                            <li><a href="{{route('fund-withdraw.create')}}">Create Fund Withdraw</a></li>
-                    </ul>
-                </li>
+{{--                <li @if(preg_match('/fund-withdraw/i', $url)) class="active" @endif>--}}
+{{--                    <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Fund Withdraw</span><span--}}
+{{--                            class="fa arrow"></span></a>--}}
+{{--                    <ul class="nav nav-second-level collapse">--}}
+{{--                            <li><a href="{{route('fund-withdraw,index')}}">View Fund Withdraws</a></li>--}}
+{{--                            <li><a href="{{route('fund-withdraw.create')}}">Create Fund Withdraw</a></li>--}}
+{{--                    </ul>--}}
+{{--                </li>--}}
 {{--            todo: add permissions--}}
 
 

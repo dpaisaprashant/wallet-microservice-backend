@@ -503,6 +503,10 @@ class RolesAndPermissionsSeeder extends Seeder
             //Magnus
             'View magnus linked accounts',
 
+            //Miscellaneous Reports
+            'View lucky winner report',
+            'View ticket sale report',
+
             ];
 
         //get users having all permissions

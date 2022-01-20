@@ -31,10 +31,11 @@ class AgentRepository
 
     private $user;
 
-    public function __construct(Request $request)
+    public function __construct(Request $request,$length = 10)
     {
         $this->request = $request;
         $this->user = User::whereHas('agent');
+        $this->length = $length;
     }
 
     /**
@@ -111,15 +112,15 @@ class AgentRepository
         return $this->user->with('agent', 'wallet', 'userTransactionEvents')->filter($this->request)->paginate($this->length);
     }
 
-    private function latestUsers()
+    private function latestUsers($pagination_length = null)
     {
-        return $this->user->with('agent', 'wallet', 'userTransactionEvents')->latest()->filter($this->request)->paginate($this->length);
+        return $this->user->with('agent', 'wallet', 'userTransactionEvents')->latest()->filter($this->request)->paginate($pagination_length ?? $this->length);
     }
 
-    public function paginatedUsers()
+    public function paginatedUsers($pagination_length = null)
     {
 
-            $user = $this->latestUsers();
+            $user = $this->latestUsers($pagination_length);
 
         return $this->addRoleToUser($user);
     }

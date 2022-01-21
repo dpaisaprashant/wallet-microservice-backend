@@ -367,7 +367,7 @@ $url = url()->current();
                 </li>
             @endif
 
-            {{-- <li @if(preg_match('/load-test/i', $url)) class="active" @endif>
+             <li @if(preg_match('/load-test/i', $url)) class="active" @endif>
                  <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Load Test Funds</span><span
                          class="fa arrow"></span></a>
                  <ul class="nav nav-second-level collapse">
@@ -375,9 +375,9 @@ $url = url()->current();
 
                      <li><a href="{{ route('loadTestFund.create') }}">Create Load Test Funds</a></li>
                  </ul>
-             </li>--}}
+             </li>
 
-            {{--<li @if(preg_match('/load-for-paypoint/i', $url)) class="active" @endif>
+            <li @if(preg_match('/load-for-paypoint/i', $url)) class="active" @endif>
                 <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Load For Paypoint</span><span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
@@ -385,7 +385,9 @@ $url = url()->current();
 
                     <li><a href="{{ route('paypoint.loadTestFund.create') }}">Create Load For Paypoint</a></li>
                 </ul>
-            </li>--}}
+            </li>
+
+
             @if(auth()->user()->hasPermissionTo('Refund view') || auth()->user()->hasPermissionTo('Refund create'))
                 <li @if(preg_match('/refund/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Refund</span><span
@@ -408,6 +410,18 @@ $url = url()->current();
                     </ul>
                 </li>
             @endif
+
+{{--            todo: add permissions--}}
+{{--                <li @if(preg_match('/fund-withdraw/i', $url)) class="active" @endif>--}}
+{{--                    <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Fund Withdraw</span><span--}}
+{{--                            class="fa arrow"></span></a>--}}
+{{--                    <ul class="nav nav-second-level collapse">--}}
+{{--                            <li><a href="{{route('fund-withdraw,index')}}">View Fund Withdraws</a></li>--}}
+{{--                            <li><a href="{{route('fund-withdraw.create')}}">Create Fund Withdraw</a></li>--}}
+{{--                    </ul>--}}
+{{--                </li>--}}
+{{--            todo: add permissions--}}
+
 
             @if(auth()->user()->hasPermissionTo('Lucky winner view') || auth()->user()->hasPermissionTo('Lucky winner create'))
                 <li @if(preg_match('/lucky/i', $url)) class="active" @endif>

@@ -119,10 +119,34 @@ class AgentRepository
 
     public function paginatedUsers($pagination_length = null)
     {
-
-            $user = $this->latestUsers($pagination_length);
+        if ($this->request->agent_balance == "descending"){
+            return $this->walletBalanceSortedDescending();
+        }elseif($this->request->agent_balance == "ascending"){
+            return  $this->walletBalanceSortedAscending();
+        }
+        $user = $this->latestUsers($pagination_length);
 
         return $this->addRoleToUser($user);
+    }
+
+    public function walletBalanceSortedDescending(){
+        $unsortedAgents = $this->user->with('agent','wallet','userTransactionEvents')->latest()->filter($this->request)->get();
+        $agents = $unsortedAgents->map(function ($value,$key){
+            $value['balance'] = $value->wallet->balance;
+            return $value;
+        })->sortByDesc('balance');
+
+        return $this->collectionPaginate($this->length,$agents,$this->request);
+    }
+
+    public function walletBalanceSortedAscending(){
+        $unsortedAgents = $this->user->with('agent','wallet','userTransactionEvents')->latest()->filter($this->request)->get();
+        $agents = $unsortedAgents->map(function ($value,$key){
+            $value['balance'] = $value->wallet->balance;
+            return $value;
+        })->sortBy('balance');
+
+        return $this->collectionPaginate($this->length,$agents,$this->request);
     }
 
     public function create()

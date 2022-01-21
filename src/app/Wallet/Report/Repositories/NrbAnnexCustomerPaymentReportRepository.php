@@ -40,8 +40,8 @@ class NrbAnnexCustomerPaymentReportRepository extends AbstractReportRepository
         parent::__construct($request);
         $this->fromDate = date('Y-m-d', strtotime(str_replace(',', ' ', $request->from)));
         $this->toDate = date('Y-m-d', strtotime(str_replace(',', ' ', $request->to)));
-        $this->fromAmount = $request->fromAmount;
-        $this->toAmount = $request->toAmount;
+        $this->fromAmount = $request->from_amount;
+        $this->toAmount = $request->to_amount;
     }
 
     public function customerTransactions()

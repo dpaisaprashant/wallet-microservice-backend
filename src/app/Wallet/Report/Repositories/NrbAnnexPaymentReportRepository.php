@@ -70,6 +70,8 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                  t.transaction_type = 'App\\\Models\\\CellPayUserTransaction'
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\NtcRetailerToCustomerTransaction'
+                                                                                    OR
+                                                                                 t.transaction_type = 'App\\\Models\\\UserTransaction'
                                                                                 )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)
@@ -100,6 +102,8 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                  t.transaction_type = 'App\\\Models\\\CellPayUserTransaction'
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\NtcRetailerToCustomerTransaction'
+                                                                                    OR
+                                                                                 t.transaction_type = 'App\\\Models\\\UserTransaction'
                                                                                 )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)

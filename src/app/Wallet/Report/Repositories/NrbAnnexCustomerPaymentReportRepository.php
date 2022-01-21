@@ -80,6 +80,8 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                  t.transaction_type = 'App\\\Models\\\CellPayUserTransaction'
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\NtcRetailerToCustomerTransaction'
+                                                                                    OR
+                                                                                 t.transaction_type = 'App\\\Models\\\UserTransaction'
                                                                                 )
                                                                                 AND
                     date(t.created_at) >= date(:fromDate)
@@ -108,15 +110,17 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                     LEFT JOIN temp_agents a ON a.user_id = t.user_id
                     WHERE a.user_id IS NULL
                    AND
-                                                                                (t.transaction_type ='App\\\Models\\\NchlAggregatedPayment'
+                                                                               (t.transaction_type ='App\\\Models\\\NchlAggregatedPayment'
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\KhaltiUserTransaction'
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\NeaTransaction'
-                                                                                  OR
+                                                                                 OR
                                                                                  t.transaction_type = 'App\\\Models\\\CellPayUserTransaction'
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\NtcRetailerToCustomerTransaction'
+                                                                                    OR
+                                                                                 t.transaction_type = 'App\\\Models\\\UserTransaction'
                                                                                 )
                                                                                 AND
                     date(t.created_at) >= date(:fromDate)

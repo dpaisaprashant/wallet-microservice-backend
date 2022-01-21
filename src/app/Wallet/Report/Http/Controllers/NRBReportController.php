@@ -110,9 +110,9 @@ class NRBReportController extends Controller
         if ($request->all() != NULL) {
             $amountRange = json_decode($request->amount_range);
 //            $fromAmount = $amountRange->fromAmount;
-            $fromAmount = $request->fromAmount;
+            $fromAmount = $request->from_amount;
 //            $toAmount = $amountRange->toAmount;
-            $toAmount = $request->toAmount;
+            $toAmount = $request->to_amount;
             $request->merge(['fromAmount' => $fromAmount, 'toAmount' => $toAmount]);
         }
 

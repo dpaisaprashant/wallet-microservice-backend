@@ -40,9 +40,9 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
         parent::__construct($request);
         $this->fromDate = date('Y-m-d', strtotime(str_replace(',', ' ', $request->from)));
         $this->toDate = date('Y-m-d', strtotime(str_replace(',', ' ', $request->to)));
-        $this->fromAmount = $request->fromAmount;
-        $this->toAmount = $request->toAmount;
-//        dd($request->all());
+        $this->fromAmount = $request->from_amount;
+        $this->toAmount = $request->to_amount;
+//        dd($this->toAmount);
     }
 
     public function agentTransactions()
@@ -420,6 +420,48 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
 
         $serviceRefundValue = $serviceRefundValue[0]->totalSum;
         return $serviceRefundValue;
+    }
+
+    public function getGovernmentPaymentCount()
+    {
+        $governmentPaymentCount = DB::connection('dpaisa')->select("SELECT COUNT(t.amount/100) as totalCount FROM transaction_events as t
+                                                                                RIGHT JOIN agents as a ON a.user_id = t.user_id
+                                                                                WHERE t.user_id = a.user_id and a.status = 'ACCEPTED'
+                                                                                AND
+                                                                                (
+                                                                                    t.transaction_type ='App\\\Models\\\NchlAggregatedPayment'
+                                                                                 )
+                                                                                AND
+                                                                                date(t.created_at) >= date(:fromDate)
+                                                                                AND
+                                                                                date(t.created_at) <= date(:toDate)
+                                                                                AND
+                                                                                (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+
+        $governmentPaymentCount = $governmentPaymentCount[0]->totalCount;
+        return $governmentPaymentCount;
+    }
+
+    public function getGovernmentPaymentValue()
+    {
+        $governmentPaymentValue = DB::connection('dpaisa')->select("SELECT SUM(t.amount/100) as totalSum FROM transaction_events as t
+                                                                                RIGHT JOIN agents as a ON a.user_id = t.user_id
+                                                                                WHERE t.user_id = a.user_id and a.status = 'ACCEPTED'
+                                                                                AND
+                                                                                (
+                                                                                   t.transaction_type ='App\\\Models\\\NchlAggregatedPayment'
+                                                                                 )
+                                                                                AND
+                                                                                date(t.created_at) >= date(:fromDate)
+                                                                                AND
+                                                                                date(t.created_at) <= date(:toDate)
+                                                                                AND
+                                                                                (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+
+        $governmentPaymentValue = $governmentPaymentValue[0]->totalSum;
+        return $governmentPaymentValue;
     }
 
 //    public function getServiceRefundTotalCount()

@@ -62,6 +62,7 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web', 'auth']], func
     Route::get('nrb-report/active-inactive-slab', [NRBReportController::class, 'activeInactiveUserSlabReport'])->name('report.active.inactive.user.slab');
     Route::get('nrb-report/nrb-reconciliation', [NRBReportController::class, 'reconciliationReport'])->name('report.nrb.annex.reconciliation');
     Route::get('nrb-report/agent-payment-report', [NRBAnnexReportController::class, 'agentPaymentReport'])->name('report.nrb.annex.agent.payment');
+    Route::get('nrb-report/agent-10.1.6', [NRBAnnexReportController::class, 'agentMerchantReport'])->name('report.nrb.annex.agent.10.1.6');
 //    Route::get('/report/nrb-annex/agent-payments/monthly', 'ReportController@monthly')->name('report.monthly')->middleware('permission:Monthly report view');
 //    Route::get('/report/yearly', 'ReportController@yearly')->name('report.yearly')->middleware('permission:Yearly report view');
 

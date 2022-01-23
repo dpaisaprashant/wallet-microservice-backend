@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\AgentDetailResource;
 use App\Http\Resources\AllUserAuditResource;
 use App\Http\Resources\AllUserAuditResourceCollection;
 use App\Http\Resources\BfiExecutePaymentReportResource;
@@ -109,6 +110,16 @@ class ExcelExportController extends Controller
             ->setRequest($request)
             ->setResource(UserResource::class);
 
+        return $export->exportExcel();
+    }
+
+    public function agentDetails(Request $request){
+        $request->merge(['user_type' => 'agent']);
+        $export = new ExportExcelHelper();
+        $export->setName('agent-details')
+            ->setGeneratorModel(User::class)
+            ->setRequest($request)
+            ->setResource(AgentDetailResource::class);
         return $export->exportExcel();
     }
 

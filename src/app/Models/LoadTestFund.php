@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Filters\LoadTestFund\LoadTestFundFilters;
+use App\Models\Microservice\PreTransaction;
 use App\Traits\BelongsToUser;
 use App\Traits\MorphOneTransaction;
 use Illuminate\Database\Eloquent\Builder;
@@ -20,6 +21,7 @@ class LoadTestFund extends Model
 
     protected $connection = 'dpaisa';
     protected $guarded = [];
+    protected $fillable = [];
 
     protected $appends = ['amount', 'bonus_amount'];
 
@@ -43,4 +45,9 @@ class LoadTestFund extends Model
     public function transactionEvent(){
         return $this->hasOne(TransactionEvent::class,'pre_transaction_id','pre_transaction_id');
     }
+
+    public function preTransaction(){
+        return $this->BelongsTo(PreTransaction::class,'self_pre_transaction_id','pre_transaction_id');
+    }
+
 }

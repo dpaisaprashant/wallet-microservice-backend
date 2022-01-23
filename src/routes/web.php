@@ -179,6 +179,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::match(['get', 'post'], '/agent/edit/{id}', 'AgentController@edit')->name('agent.edit')->middleware('permission:Agent edit');
         Route::post('/agent/delete/{id}', 'AgentController@delete')->name('agent.delete')->middleware('permission:Agent delete');
         Route::get('/admin-altered-agents','AgentController@showAdminAlteredAgents')->name('agent.AdminAlteredAgents');
+        Route::get('/agent-details','AgentController@agentDetails')->name('agent.detail')->middleware('permission:Agent details view');
+
+
 
         //agent type
         Route::get('agent-types', 'AgentTypeController@view')->name('agent.type.view')->middleware('permission:Agent type view');
@@ -383,6 +386,12 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/refunds', 'RefundController@index')->name('refund.index')->middleware('permission:Refund view');
         Route::match(['get', 'post'], '/refund/create', 'RefundController@create')->name('refund.create')->middleware('permission:Refund create');
 
+        /**
+        *Fund Withdraw
+        */
+//        Route::get('/fund-withdraw','FundWithdrawController@index')->name('fund-withdraw,index'); //todo: add permissions
+//        Route::match(['get', 'post'], '/fund-withdraw/create', 'FundWithdrawController@create')->name('fund-withdraw.create'); // todo: need to add permissions
+
 
         /**
          * Lucky Winner
@@ -461,6 +470,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/excel/monthly-report', 'ExcelExportController@monthlyReport')->name('report.monthly.excel');
 
         Route::get('/excel/users', 'ExcelExportController@users')->name('user.excel');
+
+        Route::get('/excel/agent-details', 'ExcelExportController@agentDetails')->name('agent.excel');
+
 
         Route::get('/excel/fund-transfer', 'ExcelExportController@fundTransfer')->name('fundTransfer.excel');
         Route::get('/excel/fund-request', 'ExcelExportController@fundREquest')->name('fundRequest.excel');

@@ -9,7 +9,7 @@
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Agent</strong>
+                    <strong>Agent Details</strong>
                 </li>
             </ol>
         </div>
@@ -103,31 +103,17 @@
                                                 @endforeach
                                             </select>
                                         </div>
-
-                                        <div class="col-md-4" style="padding-bottom: 15px; padding-top: 15px; ">
-                                            <select name="agent_balance" class="form-control">
-                                                <option value="" disabled selected>--- Filter by Wallet Balance---</option>
-
-                                                    @if(!empty($_GET['agent_balance']))
-                                                        @if($_GET['agent_balance'] == "descending")
-                                                            <option value="descending" selected>High-To-Low</option>
-                                                            <option value="ascending">Low-To-High</option>
-                                                        @else
-                                                            <option value="ascending" selected>Low-To-High</option>
-                                                            <option value="descending">High-To-Low</option>
-                                                        @endif
-                                                    @else
-                                                        <option value="descending">High-To-Low</option>
-                                                        <option value="ascending">Low-To-High</option>
-                                                    @endif
-
-                                            </select>
-                                        </div>
                                     </div>
                                     <br>
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
-                                                formaction="{{ route('agent.view') }}"><strong>Filter</strong></button>
+                                                formaction="{{ route('agent.detail') }}"><strong>Filter</strong></button>
+                                    </div>
+
+                                    <div>
+                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
+                                                type="submit" style="margin-right: 10px;"
+                                                formaction="{{ route('agent.excel') }}"><strong>Excel</strong></button>
                                     </div>
 
                                     {{--<div>
@@ -147,7 +133,7 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>List of registered users</h5>
+                        <h5>List of Agent Details</h5>
                     </div>
                     <div class="ibox-content">
                         <div class="table-responsive">
@@ -171,11 +157,16 @@
                                     <th>Reference Code</th>
                                     {{--<th>Wallet Balance</th>--}}
                                     <th>Use parent agent balance</th>
+                                    <th>Date of Birth</th>
+                                    <th>Identity Type</th>
+                                    <th>Identity Number</th>
+                                    <th>Identity Issue Date</th>
+                                    <th>Identity Issue From</th>
                                     <th>Agent Created At</th>
                                     {{--<th>Total <br>Payment Amount</th>
                                     <th>Total <br>Loaded Amount</th>--}}
                                     {{-- <th>No. of <br>Transactions</th>--}}
-                                  {{--  <th>Total <br>CashBack Amount</th>--}}
+                                    {{--  <th>Total <br>CashBack Amount</th>--}}
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -186,21 +177,16 @@
                                         <td>{{ $loop->index + ($users->perPage() * ($users->currentPage() - 1)) + 1 }}</td>
                                         <td>
                                             {{--<img alt="image"  src="img/profile_small.jpg" style="">--}}
-                                            <a @can('User profile') href="{{route('user.profile', $user->id)}}" @endcan>{{ $user->name}}
-                                                <br>
-                                                {{$user->email}}
+                                            <a @can('User profile') href="{{route('user.profile', $user->id)}}" @endcan>{{ $user->name. "-" .$user->email}}
                                             </a>
                                         </td>
                                         <td>
                                             {{ ucwords(strtolower(optional(optional($user->agent)->agentType)->name)) }}
                                         </td>
                                         <td>
-                                            <b>Name: </b> {{ optional(optional($user->agent)->codeUsed)->name ?? ""}}
-                                            <br>
-                                            <b>Email: </b> {{optional(optional($user->agent)->codeUsed)->email ?? ""}}
-                                            <br>
-                                            <b>Number: </b> {{optional(optional($user->agent)->codeUsed)->mobile_no ?? ""}}
-
+                                            <b>Name: </b> {{ optional(optional($user->agent)->codeUsed)->name ?? ""}} --
+                                            <b>Email: </b> {{optional(optional($user->agent)->codeUsed)->email ?? ""}} --
+                                            <b>Number: </b> {{optional(optional($user->agent)->codeUsed)->mobile_no ?? ""}} --
                                         </td>
                                         <td>
                                             @if(!empty($user->phone_verified_at))
@@ -246,22 +232,40 @@
                                             @endif
                                         </td>
 
-{{--
-                                        <td>Rs. {{ $user->getTotalPaymentAmount() }}</td>
+                                        {{--
+                                                                                <td>Rs. {{ $user->getTotalPaymentAmount() }}</td>
 
-                                        <td>Rs. {{ $user->getTotalLoadedAmount() }}</td>--}}
+                                                                                <td>Rs. {{ $user->getTotalLoadedAmount() }}</td>--}}
 
                                         {{--<td>{{ count($user->userTransactionEvents) }}</td>--}}
 
                                         {{--<td>Rs. {{ $user->getTotalCashBack() }}</td>--}}
+
+                                        <td>{{$user->kyc->date_of_birth ?? null}}</td>
+                                        <td>
+                                            @if($user->kyc)
+                                                @if($user->kyc->document_type == \App\Models\UserKYC::DOCUMENT_CITIZENSHIP)
+                                                    Citizenship
+                                                @elseif($user->kyc->document_type == \App\Models\UserKYC::DOCUMENT_LICENSE)
+                                                    License
+                                                @elseif($user->kyc->document_type == \App\Models\UserKYC::DOCUMENT_PASSPORT)
+                                                    Passport
+                                                @endif
+                                            @else
+                                                {{null}}
+                                            @endif
+                                        </td>
+                                        <td>{{$user->kyc->id_no ?? null}}</td>
+                                        <td>{{$user->kyc->c_issued_date ?? null}}</td>
+                                        <td>{{$user->kyc->c_issued_from ?? null}}</td>
                                         <td>{{ \Carbon\Carbon::parse($user->agent->created_at)->format('F d Y') }}</td>
 
                                         <td class="center">
                                             @if(auth()->user()->hasAnyPermission(['User profile','View agent profile']))
-                                                    <a style="margin-top: 5px;"
-                                                       href="{{route('user.profile', $user->id)}}"
-                                                       class="btn btn-sm btn-icon btn-primary m-t-n-xs"
-                                                       title="user profile"><i class="fa fa-eye"></i></a>
+                                                <a style="margin-top: 5px;"
+                                                   href="{{route('user.profile', $user->id)}}"
+                                                   class="btn btn-sm btn-icon btn-primary m-t-n-xs"
+                                                   title="user profile"><i class="fa fa-eye"></i></a>
                                             @endif
                                             @can('User transactions')
                                                 <a style="margin-top: 5px;"
@@ -287,10 +291,10 @@
                                                 </form>
                                             @endcan
 
-                                                <a style="margin-top: 5px;" target="_blank"
-                                                   href="{{route('user.download.qr',$user->id)}}"
-                                                   class="btn btn-sm btn-icon btn-secondary m-t-n-xs"
-                                                   title="download qr"><i class="fa fa-qrcode"></i></a>
+                                            <a style="margin-top: 5px;" target="_blank"
+                                               href="{{route('user.download.qr',$user->id)}}"
+                                               class="btn btn-sm btn-icon btn-secondary m-t-n-xs"
+                                               title="download qr"><i class="fa fa-qrcode"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

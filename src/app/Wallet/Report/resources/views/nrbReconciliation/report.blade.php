@@ -98,7 +98,7 @@
 
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover {{--dataTables-example--}}"
-                                       title="Dpasis user's list">
+                                       title="Wallet user's list">
                                     <tbody>
                                     <tr class="gradeX">
                                         <td style="font-size: 16px">&nbsp;&nbsp;&nbsp;&nbsp;<strong> NRB Reconciliation

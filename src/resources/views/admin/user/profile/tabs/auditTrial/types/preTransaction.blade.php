@@ -1,11 +1,18 @@
 <tr class="gradeC">
+    @php
+        $json_response = $event->json_response;
+        $json_response = json_decode($json_response,true);
+        $tx_id = $json_response['trxnId'] ?? null;
+    @endphp
 {{--    @php dd($event); @endphp--}}
     <td>{{ $loop->index + ($allAudits->perPage() * ($allAudits->currentPage() - 1)) + 1 }}</td>
     <?php $date = explode(' ', $event->created_at) ?>
     <td>{{ $date[0] }}</td>
     <td>{{ $date[1] }}</td>
-    <td>{{$event->pre_transaction_id == null ? '---' : $event->pre_transaction_id}}
-        <br>
+    <td>@if(empty($tx_id))
+            {{$event->pre_transaction_id == null ? '---' : $event->pre_transaction_id}}
+            <br>
+        @endif
         @if(isset($event->userTransaction) )
             <b>RefStan :</b> {{ $event->userTransaction['refStan']  }}
         @elseif(isset($event->userLoadTransaction))
@@ -29,17 +36,17 @@
             <b>Account : </b>{{  $event->khaltiUserTransaction['account'] }}
         @endif
 
-        @php
-            $json_response = $event->json_response;
-            $json_response = json_decode($json_response,true);
-            $tx_id = $json_response['trxnId'] ?? null;
-        @endphp
+
         @if(!empty($tx_id))
             <b>SFACL Txn id:</b> {{ $tx_id }}
         @endif
     </td>
     <td>
         {{ $event->description }}
+        @if(!empty($tx_id))
+            <br>
+            <b>Pre Transaction Id: </b> {{ $event->pre_transaction_id }}
+        @endif
 
     </td>
 

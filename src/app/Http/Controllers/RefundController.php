@@ -56,7 +56,7 @@ class RefundController extends Controller
             $description = "Refund Transaction For: ". $preTransaction->pre_transaction_id;
             $service_type = "REFUND";
 
-           $for_pre_transaction =  $this->createPreTransaction($request,$service_type,$description,$currentBalance,$currentBonusBalance,$preTransaction,$total,$user);
+//           $for_pre_transaction =  $this->createPreTransaction($request,$service_type,$description,$currentBalance,$currentBonusBalance,$preTransaction,$total,$user);
 
             $data = [
                 'pre_transaction_id' => $preTransaction->pre_transaction_id,
@@ -68,19 +68,19 @@ class RefundController extends Controller
                 //'after_amount' => $currentBalance + ($preTransaction->getOriginal('amount')),
                 'before_bonus_balance' => $currentBonusBalance,
                 'after_bonus_balance' => $currentBonusBalance + ($request['bonus_amount'] * 100),
-                'self_pre_transaction_id' => $for_pre_transaction['pre_transaction_id'],
+//                'self_pre_transaction_id' => $for_pre_transaction['pre_transaction_id'],
             ];
 
             DB::beginTransaction();
             try {
-                $pre_transaction = PreTransaction::create($for_pre_transaction);
-                Log::info('started PreTransaction for Refund Settlement',$for_pre_transaction);
-                if ($preTransaction){
-                    $pre_transaction->update([
-                        'status' => PreTransaction::STATUS_SUCCESS
-                    ]);
-                    Log::info('pre_transaction Created Successfully');
-                }
+//                $pre_transaction = PreTransaction::create($for_pre_transaction);
+//                Log::info('started PreTransaction for Refund Settlement',$for_pre_transaction);
+//                if ($preTransaction){
+//                    $pre_transaction->update([
+//                        'status' => PreTransaction::STATUS_SUCCESS
+//                    ]);
+//                    Log::info('pre_transaction Created Successfully');
+//                }
                 $transaction = LoadTestFund::create($data);
                 if (! $transaction) return redirect(route('refund.index'))->with('error', 'Transaction not created successfully');
 
@@ -88,12 +88,12 @@ class RefundController extends Controller
                 DB::commit();
                 return redirect(route('refund.index'))->with('success', 'Transaction created successfully');
             } catch (\Exception $e) {
-                if (! $preTransaction){
-                    $pre_transaction->update([
-                        'status' => PreTransaction::STATUS_FAILED
-                    ]);
-                    Log::info('pre_transaction Failed');
-                }
+//                if (! $preTransaction){
+//                    $pre_transaction->update([
+//                        'status' => PreTransaction::STATUS_FAILED
+//                    ]);
+//                    Log::info('pre_transaction Failed');
+//                }
                 Log::info($e);
                 DB::rollBack();
                 return redirect(route('refund.index'))->with('error', 'Transaction not created successfully');

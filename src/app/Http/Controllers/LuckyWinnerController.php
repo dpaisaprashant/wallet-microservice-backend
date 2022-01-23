@@ -60,7 +60,7 @@ class LuckyWinnerController extends Controller
 
             $service_type = 'LUCKY WINNER';
 
-            $for_pre_transaction = $this->createPreTransaction($request,$service_type,$description,$currentBalance,$currentBonusBalance,null,null,$user);
+//            $for_pre_transaction = $this->createPreTransaction($request,$service_type,$description,$currentBalance,$currentBonusBalance,null,null,$user);
 
 //            $for_pre_transaction = [
 //                'pre_transaction_id' => TransactionIdGenerator::generate(20),
@@ -86,20 +86,20 @@ class LuckyWinnerController extends Controller
                 //'after_amount' => $currentBalance + ($preTransaction->getOriginal('amount')),
                 'before_bonus_balance' => $currentBonusBalance,
                 'after_bonus_balance' => $currentBonusBalance + ($request['bonus_amount'] * 100),
-                'self_pre_transaction_id' => $for_pre_transaction['pre_transaction_id'],
+//                'self_pre_transaction_id' => $for_pre_transaction['pre_transaction_id'],
             ];
 
             $vendor = $request->vendor ?? self::VENDOR;
 
             DB::beginTransaction();
             try {
-                $pre_transaction = PreTransaction::create($for_pre_transaction);
-                Log::info('started PreTransaction for Refund Settlement',$for_pre_transaction);
-
-                $pre_transaction->update([
-                    'status' => PreTransaction::STATUS_SUCCESS
-                ]);
-                Log::info('pre_transaction Created Successfully');
+//                $pre_transaction = PreTransaction::create($for_pre_transaction);
+//                Log::info('started PreTransaction for Refund Settlement',$for_pre_transaction);
+//
+//                $pre_transaction->update([
+//                    'status' => PreTransaction::STATUS_SUCCESS
+//                ]);
+//                Log::info('pre_transaction Created Successfully');
 
                 $transaction = LoadTestFund::create($data);
                 if (! $transaction) return redirect(route('luckyWinner.index'))->with('error', 'Transaction not created successfully');

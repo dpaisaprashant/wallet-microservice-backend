@@ -37,7 +37,7 @@ class LoadTestFundController extends Controller
             $service_type = 'LOAD TEST FUND';
             $description = "LOAD TEST FUND";
 
-            $for_pre_transaction = $this->createPreTransaction($request,$service_type,$description,$currentBalance);
+//            $for_pre_transaction = $this->createPreTransaction($request,$service_type,$description,$currentBalance);
 
             $data = [
                 'admin_id' => auth()->user()->id,
@@ -45,18 +45,18 @@ class LoadTestFundController extends Controller
                 'description' => $request['description'],
                 'before_amount' => $currentBalance,
                 'after_amount' => $currentBalance + ($request['amount'] * 100),
-                'self_pre_transaction_id' => $for_pre_transaction['pre_transaction_id'],
+//                'self_pre_transaction_id' => $for_pre_transaction['pre_transaction_id'],
             ];
 
             DB::beginTransaction();
             try {
-                $pre_transaction = PreTransaction::create($for_pre_transaction);
-                Log::info('started PreTransaction for Load Test Fund',$for_pre_transaction);
+//                $pre_transaction = PreTransaction::create($for_pre_transaction);
+//                Log::info('started PreTransaction for Load Test Fund',$for_pre_transaction);
 
-                $pre_transaction->update([
-                    'status' => PreTransaction::STATUS_SUCCESS
-                ]);
-                Log::info('pre_transaction Created Successfully');
+//                $pre_transaction->update([
+//                    'status' => PreTransaction::STATUS_SUCCESS
+//                ]);
+//                Log::info('pre_transaction Created Successfully');
 
                 $transaction = LoadTestFund::create($data);
                 if (! $transaction) return redirect(route('refund.index'))->with('error', 'Transaction not created successfully');
@@ -65,7 +65,7 @@ class LoadTestFundController extends Controller
                 return redirect(route('loadTestFund.index'))->with('success', 'Transaction created successfully');
             } catch (\Exception $e) {
 
-                Log::info('pre_transaction Failed');
+//                Log::info('pre_transaction Failed');
 
                 Log::info($e);
                 DB::rollBack();
@@ -94,7 +94,7 @@ class LoadTestFundController extends Controller
             $description = "PAYPOINT LOAD TEST FUND";
             $service_type = "PAYPOINT";
 
-            $for_pre_transaction = $this->createPreTransaction($request,$service_type,$description,$currentBalance,null,null,null,$user);
+//            $for_pre_transaction = $this->createPreTransaction($request,$service_type,$description,$currentBalance,null,null,null,$user);
 
 
             $data = [
@@ -104,18 +104,18 @@ class LoadTestFundController extends Controller
                 'description' => 'Paypoint Load',
                 'before_amount' => $currentBalance,
                 'after_amount' => $currentBalance + ($request['amount'] * 100),
-                'self_pre_transaction_id' => $for_pre_transaction['pre_transaction_id']
+//                'self_pre_transaction_id' => $for_pre_transaction['pre_transaction_id']
             ];
 
             DB::beginTransaction();
             try {
-                $pre_transaction = PreTransaction::create($for_pre_transaction);
-                Log::info('started PreTransaction for Load Test Fund',$for_pre_transaction);
-
-                $pre_transaction->update([
-                    'status' => PreTransaction::STATUS_SUCCESS
-                ]);
-                Log::info('pre_transaction Created Successfully');
+//                $pre_transaction = PreTransaction::create($for_pre_transaction);
+//                Log::info('started PreTransaction for Load Test Fund',$for_pre_transaction);
+//
+//                $pre_transaction->update([
+//                    'status' => PreTransaction::STATUS_SUCCESS
+//                ]);
+//                Log::info('pre_transaction Created Successfully');
 
                 $transaction = LoadTestFund::create($data);
                 if (! $transaction) return redirect(route('loadTestFund.index'))->with('error', 'Transaction not created successfully');
@@ -124,7 +124,7 @@ class LoadTestFundController extends Controller
                 return redirect(route('loadTestFund.index'))->with('error', 'Transaction not created successfully');
             } catch (\Exception $e) {
 
-                Log::info('pre_transaction Failed');
+//                Log::info('pre_transaction Failed');
 
                 Log::info($e);
                 DB::rollBack();

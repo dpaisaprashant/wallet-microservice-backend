@@ -105,6 +105,7 @@ class NRBReportController extends Controller
 
     public function activeInactiveUserSlabReport(Request $request)
     {
+
         if ($request->all() == null) {
             return view('WalletReport::nrb.active-inactive-user-slab-report');
         }

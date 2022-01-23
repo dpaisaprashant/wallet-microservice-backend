@@ -14,6 +14,7 @@ use App\Wallet\Report\Repositories\ActiveInactiveTransactionRepository;
 use App\Wallet\Report\Repositories\ActiveInactiveUserReportRepository;
 use App\Wallet\Report\Repositories\AgentReportRepository;
 use App\Wallet\Report\Repositories\NonBankPaymentReportRepository;
+use App\Wallet\Report\Repositories\NrbAnnexAgentMerchantPaymentReportRepository;
 use App\Wallet\Report\Repositories\NrbAnnexAgentPaymentReportRepository;
 use App\Wallet\Report\Repositories\NrbAnnexCustomerPaymentReportRepository;
 use App\Wallet\Report\Repositories\NrbAnnexMerchantPaymentReportRepository;
@@ -31,8 +32,10 @@ class NRBAnnexReportController extends Controller
     {
         if ($request->all() != NULL) {
             $amountRange = json_decode($request->amount_range);
-            $fromAmount = $amountRange->fromAmount;
-            $toAmount = $amountRange->toAmount;
+//            $fromAmount = $amountRange->fromAmount;
+            $fromAmount = $request->fromAmount;
+//            $toAmount = $amountRange->toAmount;
+            $toAmount = $request->toAmount;
             $request->merge(['fromAmount' => $fromAmount, 'toAmount' => $toAmount]);
         }
 
@@ -79,6 +82,11 @@ class NRBAnnexReportController extends Controller
                 'value' => $repository->getServiceRefundValue() ?? 0,
             ],
 
+            'Government Payments' => [
+                'number' => $repository->getGovernmentPaymentCount(),
+                'value' => $repository->getGovernmentPaymentValue() ?? 0,
+            ],
+
             'Others' => [
                 'number' => 0,
                 'value' => 0,
@@ -92,8 +100,10 @@ class NRBAnnexReportController extends Controller
     {
         if ($request->all() != NULL) {
             $amountRange = json_decode($request->amount_range);
-            $fromAmount = $amountRange->fromAmount;
-            $toAmount = $amountRange->toAmount;
+//            $fromAmount = $amountRange->fromAmount;
+            $fromAmount = $request->fromAmount;
+//            $toAmount = $amountRange->toAmount;
+            $toAmount = $request->toAmount;
             $request->merge(['fromAmount' => $fromAmount, 'toAmount' => $toAmount]);
         }
 
@@ -265,6 +275,62 @@ class NRBAnnexReportController extends Controller
         ];
 
         return view('WalletReport::nrbAnnex.transaction-report-merchant')->with(compact('nrbAnnexMerchantPayments'));
+    }
+
+    public function agentMerchantReport(Request $request)
+    {
+//        if ($request->all() != NULL) {
+//            $amountRange = json_decode($request->amount_range);
+//            $fromAmount = $amountRange->fromAmount;
+//            $toAmount = $amountRange->toAmount;
+//            $request->merge(['fromAmount' => $fromAmount, 'toAmount' => $toAmount]);
+//        }
+
+//        if($request->all() == null){
+//            return view('WalletReport::nrbAnnex.transaction-report-merchant');
+//        }
+
+        $repository = new NrbAnnexAgentMerchantPaymentReportRepository($request);
+
+        $nrbAnnexMerchantPayments = [
+            'Merchant Payment' => [
+                'successful' => $repository->getSuccessfulMerchantPaymentCount(),
+                'failed' => ($repository->getFailedMerchantPaymentCount())
+            ],
+
+            'Transfer to wallet (P2P)' => [
+                'successful' => $repository->getSuccessfulLoadFundsCount(),
+                'failed' => ($repository->getFailedLoadFundsCount())
+            ],
+
+            'Transfer to bank A/C (P2P)' => [
+                'successful' => $repository->getSuccessfulBankTransferCount(),
+                'failed' => ($repository->getFailedBankTransferCount())
+            ],
+
+            'Government payment (P2G)' => [
+                'successful' => $repository->getSuccessfulNchlAggregatedCount(),
+                'failed' => ($repository->getFailedNchlAggregatedCount())
+            ],
+
+            'Topup' => [
+                'successful' => $repository->getSuccessfulTopUpCount(),
+                'failed' => ($repository->getFailedTopUpCount())
+            ],
+
+            'Cash in' => [
+                'successful' => $repository->getSuccessfulCashInCount(),
+                'failed' => ($repository->getFailedCashInCount())
+            ],
+
+            'Cash out' => [
+                'successful' => $repository->getSuccessfulCashOutCount(),
+                'failed' => ($repository->getFailedCashOutCount())
+            ],
+
+        ];
+
+        return view('WalletReport::nrbAnnex.transaction-report-agent-merchant')->with(compact('nrbAnnexMerchantPayments'));
     }
 
     public function statementSettlementBank(Request $request)

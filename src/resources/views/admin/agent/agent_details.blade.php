@@ -110,6 +110,12 @@
                                                 formaction="{{ route('agent.detail') }}"><strong>Filter</strong></button>
                                     </div>
 
+                                    <div>
+                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
+                                                type="submit" style="margin-right: 10px;"
+                                                formaction="{{ route('agent.excel') }}"><strong>Excel</strong></button>
+                                    </div>
+
                                     {{--<div>
                                         <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs" type="submit" style="margin-right: 10px;" formaction="{{ route('user.excel') }}"><strong>Excel</strong></button>
                                     </div>--}}

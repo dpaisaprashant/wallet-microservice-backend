@@ -4,18 +4,18 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Create Refund</h2>
+            <h2>Create Fund Withdraw</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Refund</strong>
+                    <strong>Fund-Withdraw</strong>
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Create Refund</strong>
+                    <strong>Create Fund Withdraw</strong>
                 </li>
             </ol>
         </div>
@@ -28,15 +28,15 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>Enter user Mobile Number</h5>
+                        <h5>Enter Details For Fund Withdraw </h5>
                     </div>
                     <div class="ibox-content">
-                        <form method="post" action="{{ route('loadTestFund.create') }}" enctype="multipart/form-data" id="transactionIdForm">
+                        <form method="post" action="{{ route('fund-withdraw.create') }}" enctype="multipart/form-data" id="transactionIdForm">
                             @csrf
                             <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Mobile No</label>
+                                <label class="col-sm-2 col-form-label">Withdraw Pre Transaction ID</label>
                                 <div class="col-sm-10">
-                                    <input name="mobile_no" type="text" class="form-control" required>
+                                    <input name="withdraw_pre_transaction_id" type="text" class="form-control" required>
                                 </div>
                             </div>
 
@@ -61,15 +61,15 @@
                             <div class="hr-line-dashed"></div>
 
                             <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Pre Transaction Id</label>
+                                <label class="col-sm-2 col-form-label">Description</label>
                                 <div class="col-sm-10">
-                                    <input name="pre_transaction_id" type="text" class="form-control" required>
+                                    <input name="description" type="text" class="form-control">
                                 </div>
                             </div>
 
                             <div class="hr-line-dashed"></div>
 
-                            <button id="handleBtn" class="btn btn-sm btn-primary m-t-n-xs" type="submit" formaction="{{ route('refund.create') }}"><strong>Create</strong></button>
+                            <button id="handleBtn" class="btn btn-sm btn-primary m-t-n-xs" type="submit" formaction="{{ route('fund-withdraw.create') }}"><strong>Create</strong></button>
                         </form>
                     </div>
                 </div>

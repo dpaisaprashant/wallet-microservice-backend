@@ -144,7 +144,11 @@
                                     </div>
 
                                     <div>
-                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('loadTestFund.index') }}"><strong>Filter</strong></button>
+                                        <button id="excelBtn" class="btn btn-sm btn-waing float-right m-t-n-xs" type="submit" style="margin-left: 10px;" formaction="{{ route('paypoint.loadTestFund.excel') }}"><strong>Excel</strong></button>
+                                    </div>
+
+                                    <div>
+                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('paypoint.loadTestFund.index') }}"><strong>Filter</strong></button>
                                     </div>
 
                                     @include('admin.asset.components.clearFilterButton')

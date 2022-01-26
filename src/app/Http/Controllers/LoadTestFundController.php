@@ -48,7 +48,7 @@ class LoadTestFundController extends Controller
     {
         $transactions = LoadTestFund::with('user')
             ->where('description', 'Paypoint Load')
-            ->latest()->paginate(15);
+            ->latest()->filter(\request())->paginate(15);
         return view('admin.loadTestTransaction.paypoint.index')->with(compact('transactions'));
     }
 

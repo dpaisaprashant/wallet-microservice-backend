@@ -144,6 +144,10 @@
                                     </div>
 
                                     <div>
+                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs" type="submit" style="margin-left: 10px;" formaction="{{ route('loadTestFund.excel') }}"><strong>Excel</strong></button>
+                                    </div>
+
+                                    <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('loadTestFund.index') }}"><strong>Filter</strong></button>
                                     </div>
 

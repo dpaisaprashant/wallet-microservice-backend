@@ -12,7 +12,10 @@ class LoadTestFundController extends Controller
 {
     public function index()
     {
-        $transactions = LoadTestFund::with('user')->latest()->paginate(15);
+
+        //return FundRequest::with('toUser', 'fromUser', 'commission')->latest()->filter($this->request)->paginate($this->length);
+
+        $transactions = LoadTestFund::with('user')->latest()->filter(\request())->paginate(15);
         return view('admin.loadTestTransaction.index')->with(compact('transactions'));
     }
 

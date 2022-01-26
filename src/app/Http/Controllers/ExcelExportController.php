@@ -11,6 +11,7 @@ use App\Http\Resources\DPaisaAudit\NPayResource;
 use App\Http\Resources\DPaisaAudit\PayPointResource;
 use App\Http\Resources\FundRequestResource;
 use App\Http\Resources\FundTransferResource;
+use App\Http\Resources\LoadTestFundResource;
 use App\Http\Resources\SparrowSMSResource;
 use App\Http\Resources\TransactionEventResource;
 use App\Http\Resources\UserAudit\AdminUserKYCResource;
@@ -26,6 +27,7 @@ use App\Models\Clearance;
 use App\Models\ClearanceTransaction;
 use App\Models\Dispute;
 use App\Models\FundRequest;
+use App\Models\LoadTestFund;
 use App\Models\SparrowSMS;
 use App\Models\TransactionEvent;
 use App\Models\User;
@@ -392,6 +394,15 @@ class ExcelExportController extends Controller
             ->setRequest($request);
 
         return $export->exportExcelCollection();
+    }
+
+    public function loadTestFund(Request $request){
+        $export = new ExportExcelHelper();
+        $export->setName('load-test-funds')
+            ->setGeneratorModel(LoadTestFund::class)
+            ->setRequest($request)
+            ->setResource(LoadTestFundResource::class);
+        return $export->exportExcel();
     }
 
 

@@ -405,5 +405,15 @@ class ExcelExportController extends Controller
         return $export->exportExcel();
     }
 
+    public function paypointLoadTestFund(Request $request){
+        $request->merge(['description'=>'Paypoint Load']);
+        $export = new ExportExcelHelper();
+        $export->setName('paypoint-load-test-funds')
+            ->setGeneratorModel(LoadTestFund::class)
+            ->setRequest($request)
+            ->setResource(LoadTestFundResource::class);
+        return $export->exportExcel();
+    }
+
 
 }

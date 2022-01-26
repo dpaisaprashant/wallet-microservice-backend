@@ -442,6 +442,8 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::get('/excel/load-test-fund','ExcelExportController@loadTestFund')->name('loadTestFund.excel');
 
+        Route::get('/excel/paypoint-load-test-fund','ExcelExportController@paypointLoadTestFund')->name('paypoint.loadTestFund.excel');
+
 
         /**
          * General Settings

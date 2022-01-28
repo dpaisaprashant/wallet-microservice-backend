@@ -40,7 +40,7 @@ class RefundController extends Controller
                 return redirect()->back()->with('error', "Pre transaction and user doesn't match");
             }
 
-            if ($total != (int)$preTransaction->amount){
+            if ($total > (int)$preTransaction->amount){
                 return back()->with('error','Invalid Amount Details Have Been Entered');
             }
 

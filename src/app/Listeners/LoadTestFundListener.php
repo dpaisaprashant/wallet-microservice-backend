@@ -10,6 +10,7 @@ use App\Models\Wallet;
 use App\Wallet\Helpers\TransactionIdGenerator;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class LoadTestFundListener
@@ -55,13 +56,21 @@ class LoadTestFundListener
         ]);
 
         if ($preTransactionId) {
-            TransactionEvent::where("pre_transaction_id", $preTransactionId)
+            DB::connection("dpaisa")->where("pre_transaction_id", $preTransactionId)
                 ->whereNotNull("pre_transaction_id")
                 ->where("service_type", "!=", "REFUND")
                 ->update(["refund_id" => $event->transaction->id]);
 
-            PreTransaction::where('pre_transaction_id', $preTransactionId)
+            DB::connection("dpaisa")->where('pre_transaction_id', $preTransactionId)
                 ->update(["refund_id" =>  $event->transaction->id]);
+
+           /* TransactionEvent::where("pre_transaction_id", $preTransactionId)
+                ->whereNotNull("pre_transaction_id")
+                ->where("service_type", "!=", "REFUND")
+                ->update(["refund_id" => $event->transaction->id]);*/
+
+            /*PreTransaction::where('pre_transaction_id', $preTransactionId)
+                ->update(["refund_id" =>  $event->transaction->id]);*/
         }
 
 

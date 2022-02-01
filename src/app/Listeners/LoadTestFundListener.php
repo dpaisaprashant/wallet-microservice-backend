@@ -56,12 +56,14 @@ class LoadTestFundListener
         ]);
 
         if ($preTransactionId) {
-            DB::connection("dpaisa")->where("pre_transaction_id", $preTransactionId)
+            DB::connection("dpaisa")->table("transaction_events")
+                ->where("pre_transaction_id", $preTransactionId)
                 ->whereNotNull("pre_transaction_id")
                 ->where("service_type", "!=", "REFUND")
                 ->update(["refund_id" => $event->transaction->id]);
 
-            DB::connection("dpaisa")->where('pre_transaction_id', $preTransactionId)
+            DB::connection("dpaisa")->table("pre_transactions")
+                ->where('pre_transaction_id', $preTransactionId)
                 ->update(["refund_id" =>  $event->transaction->id]);
 
            /* TransactionEvent::where("pre_transaction_id", $preTransactionId)

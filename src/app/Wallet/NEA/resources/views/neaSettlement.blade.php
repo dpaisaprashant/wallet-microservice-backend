@@ -101,6 +101,9 @@
                                         <th>Branch</th>
                                         <th>Transaction Count</th>
                                         <th>Transaction Sum</th>
+                                        <th>Settled On</th>
+                                        <th>Pre Transaction ID</th>
+                                        <th>Transaction ID</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -111,25 +114,30 @@
                                         <td>{{$nea_information['branch_name']}}</td>
                                         <td>{{$nea_information['transaction_count']}}</td>
                                         <td>{{$nea_information['transaction_sum']}}</td>
-                                        <td>
+
                                             @php
                                                   $from = date("Y-m-d",strtotime(str_replace(',', ' ', $_GET['from'])));
                                             @endphp
                                             @if(!$nea_settlements->count())
-                                                <form action="{{route('SettleNea')}}" method="post">
-                                                    @csrf
-                                                    {{-- hidden fields starts--}}
-                                                    <input type="text" name="nea_branch_code" value="{{$nea_information['branch_code']}}" class="form-control" style="display: none">
-                                                    <input type="text" name="nea_branch_name" value="{{$nea_information['branch_name']}}" class="form-control" style="display: none">
-                                                    <input type="text" name="transaction_count" value="{{$nea_information['transaction_count']}}" class="form-control" style="display: none">
-                                                    <input type="text" name="transaction_sum" value="{{$nea_information['transaction_sum']}}" class="form-control" style="display: none">
-                                                    <input id="date_load_from" type="text" class="form-control date_from"
-                                                           placeholder="From" name="date_from" autocomplete="off"
-                                                           value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}" style="display: none">
-                                                    {{-- hidden fields end--}}
-                                                    <button href="#" class="reset btn btn-sm btn-success m-t-n-xs" rel="{{ $loop->iteration }}"><strong>Settle</strong></button>
-                                                    <button id="resetBtn-{{ $loop->iteration }}" style="display: none" type="submit" href="#"  class="resetBtn btn btn-sm btn-success m-t-n-xs"><strong>Settle</strong></button>
-                                                </form>
+                                                <td>--</td>
+                                                <td>--</td>
+                                                <td>--</td>
+                                                <td>
+                                                    <form action="{{route('SettleNea')}}" method="post">
+                                                        @csrf
+                                                        {{-- hidden fields starts--}}
+                                                        <input type="text" name="nea_branch_code" value="{{$nea_information['branch_code']}}" class="form-control" style="display: none">
+                                                        <input type="text" name="nea_branch_name" value="{{$nea_information['branch_name']}}" class="form-control" style="display: none">
+                                                        <input type="text" name="transaction_count" value="{{$nea_information['transaction_count']}}" class="form-control" style="display: none">
+                                                        <input type="text" name="transaction_sum" value="{{$nea_information['transaction_sum']}}" class="form-control" style="display: none">
+                                                        <input id="date_load_from" type="text" class="form-control date_from"
+                                                               placeholder="From" name="date_from" autocomplete="off"
+                                                               value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}" style="display: none">
+                                                        {{-- hidden fields end--}}
+                                                        <button href="#" class="reset btn btn-sm btn-success m-t-n-xs" rel="{{ $loop->iteration }}"><strong>Settle</strong></button>
+                                                        <button id="resetBtn-{{ $loop->iteration }}" style="display: none" type="submit" href="#"  class="resetBtn btn btn-sm btn-success m-t-n-xs"><strong>Settle</strong></button>
+                                                    </form>
+                                                </td>
                                             @else
                                                 @foreach($nea_settlements as $nea_settlement)
                                                     @if(($from == $nea_settlement->date_from)&& $nea_settlement->nea_branch_code == $nea_information['branch_code'] && $nea_settlement->status == \App\Models\NeaSettlement::STATUS_SUCCESS)
@@ -141,7 +149,10 @@
                                                 @endforeach
 {{--                                                @php(dd($form_needed,$nea_settlement,$nea_information,$from));--}}
                                                 @if($form_needed == "no")
-                                                    <p>Already Setteled</p>
+                                                    <td>{{$nea_settlement->created_at}}</td>
+                                                    <td>{{$nea_settlement->pre_transaction_id}}</td>
+                                                    <td>{{$nea_settlement->nchl->id}}</td>
+                                                    <td><p>Already Settled</p></td>
                                                 @else
                                                         <form action="{{route('SettleNea')}}" method="post">
                                                             @csrf
@@ -159,7 +170,7 @@
                                                         </form>
                                                 @endif
                                             @endif
-                                        </td>
+
                                     </tr>
                                 @endforeach
                                 </tbody>

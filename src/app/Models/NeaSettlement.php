@@ -21,4 +21,9 @@ class NeaSettlement extends Model
 //        $this->belongsTo(NonRealTimeBankTransfer::class);
 //    }
 protected $guarded = [];
+
+    public function nchl(){
+       return $this->hasOne(NchlBankTransfer::class,'pre_transaction_id','pre_transaction_id');
+    }
+
 }

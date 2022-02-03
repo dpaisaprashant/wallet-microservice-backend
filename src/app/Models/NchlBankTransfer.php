@@ -58,4 +58,8 @@ class NchlBankTransfer extends Model
         }
         return false;
     }
+
+    public function neaSettlement(){
+        return $this->belongsTo(NeaSettlement::class,'pre_transaction_id','pre_transaction_id');
+    }
 }

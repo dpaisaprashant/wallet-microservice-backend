@@ -154,20 +154,25 @@
                                                     <td>{{$nea_settlement->nchl->id}}</td>
                                                     <td><p>Already Settled</p></td>
                                                 @else
-                                                        <form action="{{route('SettleNea')}}" method="post">
-                                                            @csrf
-                                                            {{-- hidden fields starts--}}
-                                                            <input type="text" name="nea_branch_code" value="{{$nea_information['branch_code']}}" class="form-control" style="display: none">
-                                                            <input type="text" name="nea_branch_name" value="{{$nea_information['branch_name']}}" class="form-control" style="display: none">
-                                                            <input type="text" name="transaction_count" value="{{$nea_information['transaction_count']}}" class="form-control" style="display: none">
-                                                            <input type="text" name="transaction_sum" value="{{$nea_information['transaction_sum']}}" class="form-control" style="display: none">
-                                                            <input id="date_load_from" type="text" class="form-control date_from"
-                                                                   placeholder="From" name="date_from" autocomplete="off"
-                                                                   value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}" style="display: none">
-                                                            {{-- hidden fields end--}}
-                                                            <button href="#" class="reset btn btn-sm btn-success m-t-n-xs" rel="{{ $loop->iteration }}"><strong>Settle</strong></button>
-                                                            <button id="resetBtn-{{ $loop->iteration }}" style="display: none" type="submit" href="#"  class="resetBtn btn btn-sm btn-success m-t-n-xs"><strong>Settle</strong></button>
-                                                        </form>
+                                                        <td>--</td>
+                                                        <td>--</td>
+                                                        <td>--</td>
+                                                        <td>
+                                                            <form action="{{route('SettleNea')}}" method="post">
+                                                                @csrf
+                                                                {{-- hidden fields starts--}}
+                                                                <input type="text" name="nea_branch_code" value="{{$nea_information['branch_code']}}" class="form-control" style="display: none">
+                                                                <input type="text" name="nea_branch_name" value="{{$nea_information['branch_name']}}" class="form-control" style="display: none">
+                                                                <input type="text" name="transaction_count" value="{{$nea_information['transaction_count']}}" class="form-control" style="display: none">
+                                                                <input type="text" name="transaction_sum" value="{{$nea_information['transaction_sum']}}" class="form-control" style="display: none">
+                                                                <input id="date_load_from" type="text" class="form-control date_from"
+                                                                       placeholder="From" name="date_from" autocomplete="off"
+                                                                       value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}" style="display: none">
+                                                                {{-- hidden fields end--}}
+                                                                <button href="#" class="reset btn btn-sm btn-success m-t-n-xs" rel="{{ $loop->iteration }}"><strong>Settle</strong></button>
+                                                                <button id="resetBtn-{{ $loop->iteration }}" style="display: none" type="submit" href="#"  class="resetBtn btn btn-sm btn-success m-t-n-xs"><strong>Settle</strong></button>
+                                                            </form>
+                                                        </td>
                                                 @endif
                                             @endif
 

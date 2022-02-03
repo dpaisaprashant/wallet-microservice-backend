@@ -151,7 +151,7 @@
                                                 @if($form_needed == "no")
                                                     <td>{{$nea_settlement->created_at}}</td>
                                                     <td>{{$nea_settlement->pre_transaction_id}}</td>
-                                                    <td>{{$nea_settlement->nchl->id}}</td>
+                                                    <td>{{$nea_settlement->nchl->transaction_id}}</td>
                                                     <td><p>Already Settled</p></td>
                                                 @else
                                                         <td>--</td>

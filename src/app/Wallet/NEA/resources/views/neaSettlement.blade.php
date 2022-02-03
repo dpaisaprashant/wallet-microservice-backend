@@ -94,7 +94,7 @@
                         <div class="table-responsive">
                             <h5>Transaction Count Total: {{$transaction_count_total}}</h5>
                             <h5>Transaction Sum Total: {{$transaction_sum_total}}</h5>
-                            <table class="table table-striped table-bordered table-hover dataTables-example" title="Dispute transactions list">
+                            <table class="table table-striped table-bordered table-hover dataTables-example" title="NEA Settlements">
                                 <thead>
                                     <tr>
                                         <th>S.No.</th>

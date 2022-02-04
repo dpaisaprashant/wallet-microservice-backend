@@ -51,4 +51,8 @@ class Agent extends Model
     public function adminAlteredAgent(){
         return $this->hasMany(AdminAlteredAgent::class,'agent_id');
     }
+
+    public function transactionEvent(){
+        return $this->hasMany(TransactionEvent::class,'user_id','user_id');
+    }
 }

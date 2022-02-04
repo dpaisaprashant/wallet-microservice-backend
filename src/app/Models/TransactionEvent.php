@@ -171,4 +171,8 @@ class TransactionEvent extends Model
         return $this->belongsTo(PreTransaction::class,'pre_transaction_id','pre_transaction_id');
     }
 
+    public function agent(){
+        return $this->belongsTo(Agent::class,'user_id','user_id');
+    }
+
 }

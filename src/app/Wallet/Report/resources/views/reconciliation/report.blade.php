@@ -58,6 +58,33 @@
                                                 <input id="date_load_to" type="text" class="form-control date_to" placeholder="To" name="to" autocomplete="off" value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
                                             </div>
                                         </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="user_type" style="padding-top:10px">User Type</label>
+                                                <select data-placeholder="Select CellPay User Transaction status..."
+                                                        class="chosen-select" tabindex="2" name="report_type" required>
+                                                    <option value="" selected disabled>Select Report Type: </option>
+                                                    @if(!empty($_GET['report_type']))
+                                                        <option value="agent"
+                                                                @if($_GET['report_type']  == 'agent') selected @endif >
+                                                            AGENT
+                                                        </option>
+                                                        <option value="user-only"
+                                                                @if($_GET['report_type'] == 'user-only') selected @endif>
+                                                            USER ONLY
+                                                        </option>
+                                                        <option value="all"
+                                                                @if($_GET['report_type'] == "all") selected @endif>
+                                                            ALL
+                                                        </option>
+                                                    @else
+                                                        <option value="agent">AGENT</option>
+                                                        <option value="user-only">USER ONLY</option>
+                                                        <option value="all">ALL</option>
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                     <br>
                                     <div>
@@ -89,28 +116,63 @@
                                     <thead>
                                     <tr>
                                         <th>S.No.</th>
-                                        <th>Service List</th>
+                                        <th>Particulars</th>
+                                        <th>Total</th>
                                         <th>Transaction Type</th>
-                                        <th>Total Trans. count</th>
-                                        <th>Total Trans. amount</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-
-                                    @foreach($totalAmounts as $title => $service)
+                                    @php($total = 0)
+                                    @foreach($reports as $report)
+                                        @php($total = $report->total + $total)
                                         <tr class="gradeX">
-                                            <td>{{ $loop->index +  1 }}</td>
+                                            <td>{{ $loop->iteration}}</td>
                                             <td>
-                                                {{ $title }}
+                                                @if($report->transaction_type == \App\Models\BfiGatewayExecutePayment::class)
+                                                    Bfi Gateway Execute Payment
+                                                @elseif($report->transaction_type == \App\Models\BfiToUserFundTransfer::class)
+                                                    Bfi to User Fund Transfer
+                                                @elseif($report->transaction_type == 'App\Models\EventTicketSale')
+                                                    Event Ticket Sale
+                                                @elseif($report->transaction_type == \App\Models\FundRequest::class)
+                                                    Fund Request
+                                                @elseif($report->transaction_type == \App\Models\KhaltiUserTransaction::class)
+                                                    Khalti User Transaction
+                                                @elseif($report->transaction_type == \App\Models\LoadTestFund::class)
+                                                    Load Test Fund
+                                                @elseif($report->transaction_type == \App\Models\MerchantTransaction::class)
+                                                    Merchant Transaction
+                                                @elseif($report->transaction_type == \App\Models\NchlAggregatedPayment::class)
+                                                    Nchl Aggregated Payment
+                                                @elseif($report->transaction_type == \App\Models\NchlBankTransfer::class)
+                                                    Nchl Bank Transfer
+                                                @elseif($report->transaction_type == \App\Models\NchlLoadTransaction::class)
+                                                    Nchl Load Transaction
+                                                @elseif($report->transaction_type == \App\Models\NeaTransaction::class)
+                                                    Nea Transaction
+                                                @elseif($report->transaction_type == \App\Models\NPSAccountLinkLoad::class)
+                                                    Nps Account Link Load
+                                                @elseif($report->transaction_type == \App\Models\NpsLoadTransaction::class)
+                                                    Nps Load Transaction
+                                                @elseif($report->transaction_type == \App\Models\PaymentNepalLoadTransaction::class)
+                                                    Payment Nepal Load Transaction
+                                                @elseif($report->transaction_type == \App\Models\TicketSale::class)
+                                                    Ticket Sale
+                                                @elseif($report->transaction_type == \App\Models\UserLoadTransaction::class)
+                                                    User Load Transaction
+                                                @elseif($report->transaction_type == \App\Models\UserToBfiFundTransfer::class)
+                                                    User To Bfi Fund Transfer
+                                                @elseif($report->transaction_type == \App\Models\UserToUserFundTransfer::class)
+                                                    User to User Fund Transfer
+                                                @elseif($report->transaction_type == \App\Wallet\Commission\Models\Commission::class)
+                                                    Commission
+                                                @else
+                                                    {{$report->transaction_type}}
+                                                @endif
                                             </td>
-                                            <td>{{$service['transaction_type']}}</td>
-                                            <td>{{ $service['count'] }}</td>
-
-                                            <td>Rs. {{ $service['amount'] }}</td>
-
-
+                                            <td> Rs. {{$report->total}}</td>
+                                            <td>{{$report->account_type}}</td>
                                         </tr>
-
                                     @endforeach
                                     </tbody>
                                     <tfoot>
@@ -119,31 +181,13 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td></td>
                                     </tr>
 
                                     <tr>
                                         <td></td>
+                                        <td><b>Total Amount: </b></td>
+                                        <td>Rs. {{ $total}}</td>
                                         <td></td>
-                                        <td></td>
-                                        <td><b>Total Amount Loaded to Wallet</b></td>
-                                        <td>Rs. {{ $totalLoadAmount }}</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td><b>Total Payment from Wallet</b></td>
-                                        <td>Rs. {{ $totalPaymentAmount }}</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td><b>Total Loaded - Total Payment</b></td>
-                                        <td>Rs. {{ $totalLoadAmount - $totalPaymentAmount }}</td>
                                     </tr>
                                     </tfoot>
                                 </table>

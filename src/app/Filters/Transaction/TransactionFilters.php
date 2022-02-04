@@ -39,6 +39,7 @@ class TransactionFilters extends FiltersAbstract
         'pre_transaction_id' => CompletePreTransactionFilter::class,
         'individual_user_number' => IndividualUserNumber::class,
         'user_type' => UserTypeFilter::class,
+        'report_type' => ReportTypeFilter::class,
     ];
 
 

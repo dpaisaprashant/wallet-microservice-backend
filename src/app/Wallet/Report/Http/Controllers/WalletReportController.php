@@ -5,6 +5,7 @@ namespace App\Wallet\Report\Http\Controllers;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\TransactionEvent;
 use App\Wallet\Report\Repositories\NchlLoadReportRepository;
 use App\Wallet\Report\Repositories\ReconciliationReportRepository;
 use App\Wallet\Report\Traits\ReconciliationReportGenerator;
@@ -19,12 +20,14 @@ class WalletReportController extends Controller
     {
         $repository = new ReconciliationReportRepository($request);
 
-        $totalAmounts = $this->generateReport($repository);
+        $reports = $repository->getReconReport();
 
-        $totalLoadAmount = $repository->totalLoadAmount() / 100;
-        $totalPaymentAmount = $repository->totalPaymentAmount() / 100;
+//        $totalAmounts = $this->generateReport($repository);
+//
+//        $totalLoadAmount = $repository->totalLoadAmount() / 100;
+//        $totalPaymentAmount = $repository->totalPaymentAmount() / 100;
 
-        return view('WalletReport::reconciliation.report')->with(compact('totalAmounts', 'totalLoadAmount', 'totalPaymentAmount'));
+        return view('WalletReport::reconciliation.report')->with(compact('reports'));
     }
 
     public function customerActivityReport(Request $request)

@@ -31,6 +31,11 @@ class ReconciliationReportRepository extends AbstractReportRepository
         parent::__construct($request);
     }
 
+    public function getReconReport(){
+        return TransactionEvent::filter($this->request)->get();
+    }
+
+
     public function totalPaypointTransactionAmount()
     {
         return TransactionEvent::where('transaction_type', UserTransaction::class)

@@ -1,5 +1,4 @@
-<div role="tabpanel" id="kyc" class="tab-pane @if($activeTab == 'kyc') active @endif">
-    <div class="panel-body">
+<div class="panel-body">
 
         <div class="row">
             <div class="col-md-7">
@@ -371,4 +370,3 @@
             @endif
         </div>
     </div>
-</div>

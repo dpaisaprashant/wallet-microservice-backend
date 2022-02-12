@@ -36,6 +36,8 @@
                                 </div>
                             </div>
 
+                            <input type="text" name="belongs_to" value="{{strtolower(config('app.'.'name'))}}" hidden>
+
                             <hr class="hr-line-dashed">
 
                             <div class="form-group  row">

@@ -50,8 +50,15 @@
                         </div>
 
                         <div class="col-sm-6 text-right">
-                            <h4>Transaction ID.</h4>
-                            <h4 class="text-navy">#{{ $transaction->id }}</h4>
+                            @foreach($transaction->transactions as $key=>$value)
+                                @if($transaction->transactions[$key]->vendor == "Transfer Funds")
+                                    <h4>From User Transaction ID:</h4>
+                                    <h4 class="text-navy">#{{ $transaction->transactions[$key]->pre_transaction_id }}</h4>
+                                @else
+                                    <h4>To User Transaction ID:</h4>
+                                    <h4 class="text-navy">#{{ $transaction->transactions[$key]->pre_transaction_id }}</h4>
+                                @endif
+                            @endforeach
 
                             <p style="margin-top: 20px;">
                                 <?php

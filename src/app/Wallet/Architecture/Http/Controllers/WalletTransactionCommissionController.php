@@ -29,11 +29,20 @@ class WalletTransactionCommissionController extends Controller
         $walletTransactionType = WalletTransactionType::where('id', $id)
             ->first();
 
-        $userTypes = [
-            "User Type" => UserType::class,
-            "Agent Type" => AgentType::class,
-            "Merchant Type" => MerchantType::class
-        ];
+        $user = $request->user();
+        $userTypes = [];
+
+        if($user->hasAnyPermission('Add commission to user type')){
+            $userTypes['User Type'] = UserType::class;
+        }
+
+        if($user->hasAnyPermission('Add commission to merchant type')){
+            $userTypes['Merchant Type'] = MerchantType::class;
+        }
+
+        if($user->hasAnyPermission('Add commission to agent type')){
+            $userTypes['Agent Type'] = AgentType::class;
+        }
 
         $availableTitles = WalletTransactionTypeCommission::where('wallet_transaction_type_id', $walletTransactionType->id)
             ->distinct()

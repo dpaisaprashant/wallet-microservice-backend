@@ -97,6 +97,9 @@ class RolesAndPermissionsSeeder extends Seeder
             'User KYC view',
             'KYC accept',
             'KYC reject',
+            'Edit user kyc',
+            'View admin edited kyc',
+            'Create user kyc',
 
             'Complete transaction view',
 
@@ -170,6 +173,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'Sparrow SMS view',
             'Sparrow SMS detail view',
 
+            'Miracle info SMS view',
+
             'General page setting view',
             'General page setting create',
             'General page setting update',
@@ -201,6 +206,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Frontend header view',
             'Frontend header create',
             'Frontend header update',
+            'Frontend header delete',
 
             'Frontend service view',
             'Frontend service create',
@@ -218,8 +224,32 @@ class RolesAndPermissionsSeeder extends Seeder
             'Frontend process delete',
 
             'Frontend banner view',
+            'Frontend banner create',
+            'Frontend banner update',
+            'Frontend banner delete',
 
             'Frontend contact view',
+            'Frontend contact create',
+
+            'Frontend faq view',
+            'Frontend faq create',
+            'Frontend faq update',
+            'Frontend faq delete',
+
+            'Frontend news view',
+            'Frontend news create',
+            'Frontend news update',
+            'Frontend news delete',
+
+            'Frontend solution view',
+            'Frontend solution create',
+            'Frontend solution update',
+            'Frontend solution delete',
+
+            'Frontend partner view',
+            'Frontend partner create',
+            'Frontend partner update',
+            'Frontend partner delete',
             //End frontend settings
 
             'Terms and condition view',
@@ -229,14 +259,18 @@ class RolesAndPermissionsSeeder extends Seeder
 
             'Merchant dashboard',
             'Merchant locked view',
+            'Merchant profile',
 
             'Architecture vendor transaction',
 
             //agents
             'Agent view',
             'Agent create',
+            'Agent edit',
+            'Agent delete',
             'Agent type view',
             'Agent type create',
+            'Agent details view',
 
             //refund
             'Refund view',
@@ -267,6 +301,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Report reconciliation',
             'Report nrb active and inactive user',
             'Report non bank payment',
+            'Report non bank payment count',
             'Report wallet end balance',
             'Report admin kyc',
             'Report commission',
@@ -288,7 +323,189 @@ class RolesAndPermissionsSeeder extends Seeder
             'Api log',
 
             'Merchant event list',
-            'Merchant pending event list'
+            'Merchant pending event list',
+
+            'Add cashback to user type',
+            'Add cashback to agent type',
+            'Add cashback to merchant type',
+
+            'Add commission to user type',
+            'Add commission to agent type',
+            'Add commission to merchant type',
+
+            'Add cashback to single user',
+            'Add commission to single user',
+
+            'Add wallet transaction type',
+            'View wallet transaction type',
+            'Edit wallet transaction type',
+
+            'Add merchant revenue',
+
+            'View agent profile',
+
+            'View wallet permission transaction type',
+            'Add wallet permission transaction type',
+            'Delete wallet permission transaction type',
+
+            'View BFI Merchant',
+            'Add BFI Merchant',
+            'Delete BFI Merchant',
+
+            'View BFI user',
+            'View secret key',
+            'Add ip',
+            'Edit BFI user status',
+            'Add BFI user',
+
+
+            'Add blocked ip',
+            'Delete blocked ip',
+            'Edit blocked ip',
+            'View blocked ip',
+
+            'View request info',
+
+
+            'View and update agent type hierarchy cashback',
+
+            'View bfi execute payment',
+            'View bfi to user fund transfer',
+            'View user to bfi fund transfer',
+
+            'Add wallet service',
+            'View wallet service',
+            'Edit wallet service',
+            'Delete wallet service',
+
+            'View pre-transactions',
+
+
+            'View khalti details',
+            'View khalti detail page',
+
+
+            'Add whitelisted ip',
+            'Delete whitelisted ip',
+            'Edit whitelisted ip',
+            'View whitelisted ip',
+
+
+            'View and update agent type hierarchy cashback',
+
+            'View bfi execute payment',
+            'View bfi to user fund transfer',
+            'View user to bfi fund transfer',
+
+            // NicAsia
+            'Nicasia cybersource view',
+            'Nicasia cybersource detail',
+
+            //Cellpay
+            'Cellpay user transaction view',
+            'Cellpay user transaction detail',
+
+            //Account_Link
+            'View load wallet',
+            'Generate load wallet excel',
+            'View nps linked account',
+
+            //Mismtached user balance and bonus balance
+            'View mismatched user balance and bonus balance',
+
+            //Run seeder
+            'View seeder list',
+            'Run seeder',
+
+            'View nchl aggregated payment',
+
+            //Non Real Time Bank Payment
+            'Create non real time bank payment',
+            'View non real time bank payment',
+
+
+            //Scheme
+            'View scheme',
+            'Create scheme',
+            'Edit scheme',
+            'Delete scheme',
+
+            //Merchant Products
+            'View merchant product',
+            'Add merchant product',
+            'Edit merchant product',
+            'Delete merchant product',
+
+            //For APIs
+            'View nchl api',
+            'View nchl aggregated api',
+            'View paypoint api',
+
+            //Merchant Registration
+            'Create merchant',
+
+            //Issue Ticket
+            'View issue ticket',
+            'Edit issue ticket',
+            'Delete issue ticket',
+            'Create issue ticket',
+
+
+//            Transfer Bonus balance to Main balance
+            'Transfer bonus balance to main balance',
+
+
+            //Merchant Addresses
+            'View merchant address',
+            'Add merchant address',
+            'Edit merchant address',
+            'Delete merchant address',
+
+            //Merchant Locations
+            'View location',
+            'Add location',
+            'Edit location',
+            'Delete location',
+
+            //Agent Settings
+            'Agent setting view',
+
+            //Users
+            'Rejected user kyc',
+            'Accepted user kyc',
+            'Pending user kyc',
+            'KYC not filled users',
+
+            //Merchant Revenues
+            'Merchant revenue view',
+
+            //Merchant Ledgers
+            'View Merchant Ledger',
+
+            //Social Media Challenge
+            'View social media challenge',
+            'Edit social media challenge',
+            'Add social media challenge',
+            'Delete social media challenge',
+
+            //Refund PreTransaction
+            'Refund view pretransaction',
+            'Refund create pretransaction',
+            'Refund edit pretransaction',
+
+            //Merchant KYC
+            'View unverified merchant kyc',
+            'Accepted merchant kyc',
+            'Rejected merchant kyc',
+            'KYC not filled merchant',
+            'View nea settlements',
+
+            //Magnus
+            'View magnus linked accounts',
+
+            //Miscellaneous Reports
+            'View lucky winner report',
+            'View ticket sale report',
 
             ];
 

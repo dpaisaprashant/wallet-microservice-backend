@@ -64,9 +64,9 @@
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('report.paypoint') }}"><strong>Generate Report</strong></button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
-                                   {{-- <div>
-                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs" type="submit" style="margin-right: 10px;" formaction="{{ route('user.excel') }}"><strong>Excel</strong></button>
-                                    </div>--}}
+                                    <div>
+                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs" type="submit" style="margin-right: 10px;" formaction="{{ route('paypoint.report.excel') }}"><strong>Excel</strong></button>
+                                    </div>
                                 </form>
                             </div>
 
@@ -85,7 +85,7 @@
                     </div>
                     <div class="ibox-content">
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover dataTables-example" title="Dpasis user's list">
+                            <table class="table table-striped table-bordered table-hover dataTables-example" title="Wallet user's list">
                                 <thead>
                                 <tr>
                                     <th>S.No.</th>

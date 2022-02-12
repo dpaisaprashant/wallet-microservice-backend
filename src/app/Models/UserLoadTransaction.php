@@ -22,6 +22,8 @@ class UserLoadTransaction extends Model
 
     const STATUS_COMPLETED = 'COMPLETED';
 
+
+
     public function getAmountAttribute($amount)
     {
         return ($amount/100);
@@ -98,4 +100,5 @@ class UserLoadTransaction extends Model
         }
         return $totalCommission;
     }
+
 }

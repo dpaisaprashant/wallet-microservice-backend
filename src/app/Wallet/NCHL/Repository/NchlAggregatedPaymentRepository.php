@@ -33,12 +33,12 @@ class NchlAggregatedPaymentRepository
 
     private function latestTransactions()
     {
-        return NchlAggregatedPayment::with('user', 'transactions', 'commission')->latest()->filter($this->request)->paginate($this->length);
+        return NchlAggregatedPayment::with('preTransaction', 'transactions', 'commission')->latest()->filter($this->request)->paginate($this->length);
     }
 
     private function sortedTransactions()
     {
-        return NchlAggregatedPayment::with('user', 'transactions', 'commission')->filter($this->request)->paginate($this->length);
+        return NchlAggregatedPayment::with('preTransaction', 'transactions', 'commission')->filter($this->request)->paginate($this->length);
     }
 
     public function paginatedTransactions()
@@ -56,4 +56,26 @@ class NchlAggregatedPaymentRepository
     {
         return NchlAggregatedPayment::with('user', 'transactions', 'commission')->where('id', $id)->firstOrFail();
     }
+
+    public function nchlAggregatePaymentTotalCount(){
+        return NchlAggregatedPayment::filter(request())->count();
+    }
+
+    public function nchlAggregatePaymentTotalAmount(){
+        return NchlAggregatedPayment::filter(request())->sum('amount') / 100;
+    }
+    public function nchlAggregatePaymentTotalFee(){
+        return NchlAggregatedPayment::filter(request())->sum('transaction_fee') / 100;
+    }
+
+    public function latestTransactionsUnpaginated()
+    {
+        return NchlAggregatedPayment::with('preTransaction', 'transactions', 'commission')->latest()->filter($this->request);
+    }
+
+    public function detailUsingBatchId($id)
+    {
+        return NchlAggregatedPayment::with('user', 'transactions', 'commission')->where('transaction_id', $id)->firstOrFail();
+    }
+
 }

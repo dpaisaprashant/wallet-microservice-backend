@@ -38,14 +38,12 @@
                 <form class="m-t" role="form" action="{{ route('admin.login') }}" method="post" autocomplete="off">
                     @csrf
                     <div class="form-group">
-                        <input type="email" name="email" class="form-control" placeholder="Email" required="" value="{{ old('email') }}">
+                        <input type="email" name="email" class="form-control" placeholder="Email" required="" value="{{old('email')}}">
                     </div>
                     <div class="form-group">
                         <input type="password" name="password" class="form-control" placeholder="Password" required="">
                     </div>
                     <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
-
-
                 </form>
                 <p class="m-t">
                     <small>DPaisa admin panel all rights reserved &copy; {{ Date('Y') }}</small>

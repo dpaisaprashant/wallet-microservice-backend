@@ -205,6 +205,12 @@
                                             <strong>Filter</strong></button>
                                     </div>
                                     <div>
+                                        <button id="compareBtn" class="btn btn-sm btn-primary float-right m-t-n-xs"
+                                                type="submit" style="margin-right: 10px;"
+                                                formaction="{{ route('paypointTransferApi.compare') }}">
+                                            <strong>Compare with API</strong></button>
+                                    </div>
+                                    <div>
                                         <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
                                                 type="submit" style="margin-right: 10px;"
                                                 formaction="{{ route('paypoint.excel') }}"><strong>Excel</strong>
@@ -251,7 +257,9 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+
                                     @foreach($transactions as $transaction)
+
                                         <tr class="gradeC">
                                             <td>{{ $loop->index + ($transactions->perPage() * ($transactions->currentPage() - 1)) + 1 }}</td>
                                             <td>
@@ -316,12 +324,25 @@
                                             </td>
 
                                             <td>
-                                                @can('Paypoint detail')
-                                                    <a href="{{ route('paypoint.detail', $transaction->id) }}">
-                                                        <button class="btn btn-primary btn-icon" type="button"><i
-                                                                class="fa fa-eye"></i></button>
-                                                    </a>
-                                                @endcan
+                                                @if(isset($transaction->refStan))
+                                                <form
+                                                    action="{{ route('paypointTransferApi.report', $transaction->refStan) }}"
+                                                    method="post">
+                                                    @endif
+                                                    @csrf
+                                                    @can('Paypoint detail')
+                                                        <a href="{{ route('paypoint.detail', $transaction->id) }}">
+                                                            <button class="btn btn-primary btn-icon" type="button"><i
+                                                                    class="fa fa-eye"></i></button>
+                                                            @if(isset($transaction->refStan))
+                                                            <button class="btn btn-primary btn-icon" type="submit"
+                                                                    title="API Details">
+                                                                <i class="fa fa-database"></i></button>
+                                                            @endif
+                                                        </a>
+                                                    @endcan
+                                                </form>
+
                                             </td>
                                         </tr>
                                     @endforeach

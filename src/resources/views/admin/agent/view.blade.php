@@ -18,8 +18,7 @@
         </div>
     </div>
     <div class="wrapper wrapper-content animated fadeInRight">
-
-
+        @include('admin.asset.notification.notify')
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox">
@@ -47,64 +46,37 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <input type="text" name="number" placeholder="Enter Contact Number"
+                                                <input type="text" name="agent_number_email" placeholder="Enter Agent Number or Email"
                                                        class="form-control"
-                                                       value="{{ !empty($_GET['number']) ? $_GET['number'] : '' }}">
+                                                       value="{{ !empty($_GET['agent_number_email']) ? $_GET['agent_number_email'] : '' }}">
                                             </div>
                                         </div>
 
 
                                         <div class="col-md-3">
-                                            <input type="email" name="email" placeholder="Enter Email"
+                                            <input type="text" name="parent_agent" placeholder="Enter Parent Agent Name"
                                                    class="form-control"
-                                                   value="{{ !empty($_GET['email']) ? $_GET['email'] : '' }}">
+                                                   value="{{ !empty($_GET['parent_agent']) ? $_GET['parent_agent'] : '' }}">
                                         </div>
 
                                         <div class="col-md-3">
-                                            <div class="form-group">
-                                                <select data-placeholder="Choose transaction status..."
-                                                        class="chosen-select" tabindex="2" name="sort">
-                                                    <option value="" selected disabled>Sort By...</option>
-                                                    @if(!empty($_GET['sort']))
-                                                        <option value="wallet_balance"
-                                                                @if($_GET['sort']  == 'wallet_balance') selected @endif >
-                                                            Wallet Balance
-                                                        </option>
-                                                        <option value="transaction_number"
-                                                                @if($_GET['sort'] == 'transaction_number') selected @endif>
-                                                            Transaction Number
-                                                        </option>
-                                                        <option value="transaction_payment"
-                                                                @if($_GET['sort'] == 'transaction_payment') selected @endif>
-                                                            Transaction Payment
-                                                        </option>
-                                                        <option value="transaction_loaded"
-                                                                @if($_GET['sort'] == 'transaction_loaded') selected @endif>
-                                                            Transaction Loaded
-                                                        </option>
-                                                    @else
-                                                        <option value="wallet_balance">Wallet Balance</option>
-                                                        <option value="transaction_number">Transaction Number</option>
-                                                        <option value="transaction_payment">Transaction Payment</option>
-                                                        <option value="transaction_loaded">Transaction Loaded</option>
-                                                    @endif
-                                                </select>
-                                            </div>
+                                            <input type="text" name="parent_agent_number_email" placeholder="Enter Parent-Agent Number or Email"
+                                                   class="form-control"
+                                                   value="{{ !empty($_GET['parent_agent_number_email']) ? $_GET['parent_agent_number_email'] : '' }}">
                                         </div>
 
-
-                                        <div class="col-md-6" style="padding-bottom: 15px;">
+                                        <div class="col-md-6">
                                             <div class="input-group date">
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </span>
                                                 <input id="date_load_from" type="text" class="form-control date_from"
-                                                       placeholder="From" name="from" autocomplete="off"
+                                                       placeholder="From" name="from_agent_created_at" autocomplete="off"
                                                        value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}">
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6" style="padding-bottom: 15px;">
+                                        <div class="col-md-6">
                                             <div class="input-group date">
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
@@ -114,27 +86,42 @@
                                                        value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
                                             </div>
                                         </div>
-
-
-                                        <div class="col-md-6">
-                                            <label for="transaction_number">Transaction Number</label>
-                                            <input type="text" name="transaction_number" class="ionrange_number">
+                                        <br>
+                                        <div class="col-md-4" style="padding-bottom: 15px; padding-top: 15px; ">
+                                            <select name="agent_status" class="form-control">
+                                                <option value="" disabled selected>--- Filter by Agent Status ---</option>
+                                                @foreach($agentStatus as $agent_status)
+                                                    @if(!empty($_GET['agent_status']))
+                                                        @if($_GET['agent_status'] == $agent_status->status)
+                                                            <option value="{{$agent_status->status}}" selected>{{$agent_status->status}}</option>
+                                                        @else
+                                                            <option value="{{$agent_status->status}}">{{$agent_status->status}}</option>
+                                                        @endif
+                                                    @else
+                                                        <option value="{{$agent_status->status}}">{{$agent_status->status}}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
                                         </div>
 
-                                        <div class="col-md-6">
-                                            <label for="wallet_balance">Wallet Balance</label>
-                                            <input type="text" name="wallet_balance" class="ionrange_wallet_amount">
-                                        </div>
+                                        <div class="col-md-4" style="padding-bottom: 15px; padding-top: 15px; ">
+                                            <select name="agent_balance" class="form-control">
+                                                <option value="" disabled selected>--- Filter by Wallet Balance---</option>
 
-                                        <div class="col-md-6">
-                                            <label for="transaction_amount">Transaction Payment</label>
-                                            <input type="text" name="transaction_payment"
-                                                   class="ionrange_payment_amount">
-                                        </div>
+                                                    @if(!empty($_GET['agent_balance']))
+                                                        @if($_GET['agent_balance'] == "descending")
+                                                            <option value="descending" selected>High-To-Low</option>
+                                                            <option value="ascending">Low-To-High</option>
+                                                        @else
+                                                            <option value="ascending" selected>Low-To-High</option>
+                                                            <option value="descending">High-To-Low</option>
+                                                        @endif
+                                                    @else
+                                                        <option value="descending">High-To-Low</option>
+                                                        <option value="ascending">Low-To-High</option>
+                                                    @endif
 
-                                        <div class="col-md-6">
-                                            <label for="transaction_amount">Transaction Loaded</label>
-                                            <input type="text" name="transaction_loaded" class="ionrange_loaded_amount">
+                                            </select>
                                         </div>
                                     </div>
                                     <br>
@@ -165,7 +152,7 @@
                     <div class="ibox-content">
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover dataTables-example"
-                                   title="Dpasis user's list">
+                                   title="Wallet user's list">
                                 <thead>
                                 <tr>
                                     <th>S.No.</th>
@@ -176,33 +163,44 @@
                                     <th>Institution Type</th>
                                     <th>Business Name</th>
                                     <th>Business PAN</th>
-                                   {{-- <th>Cash Out Type | Value </th>
-                                    <th>Cash In Type | Value </th>--}}
+                                    {{-- <th>Cash Out Type | Value </th>
+                                     <th>Cash In Type | Value </th>--}}
                                     {{--<th>Business Doc</th>--}}
                                     {{--<th>Email</th>--}}
                                     <th>Agent status</th>
                                     <th>Reference Code</th>
-                                    <th>Wallet Balance</th>
-                                    <th>Total <br>Payment Amount</th>
-                                    <th>Total <br>Loaded Amount</th>
+                                    {{--<th>Wallet Balance</th>--}}
+                                    <th>Use parent agent balance</th>
+                                    <th>Agent Created At</th>
+                                    {{--<th>Total <br>Payment Amount</th>
+                                    <th>Total <br>Loaded Amount</th>--}}
                                     {{-- <th>No. of <br>Transactions</th>--}}
-                                    <th>Total <br>CashBack Amount</th>
+                                  {{--  <th>Total <br>CashBack Amount</th>--}}
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($users as $user)
+
                                     <tr class="gradeX">
                                         <td>{{ $loop->index + ($users->perPage() * ($users->currentPage() - 1)) + 1 }}</td>
                                         <td>
                                             {{--<img alt="image"  src="img/profile_small.jpg" style="">--}}
-                                            <a @can('User profile') href="{{route('user.profile', $user->id)}}" @endcan>{{ $user->name }}</a>
+                                            <a @can('User profile') href="{{route('user.profile', $user->id)}}" @endcan>{{ $user->name}}
+                                                <br>
+                                                {{$user->email}}
+                                            </a>
                                         </td>
                                         <td>
                                             {{ ucwords(strtolower(optional(optional($user->agent)->agentType)->name)) }}
                                         </td>
                                         <td>
-                                            {{ optional(optional($user->agent)->codeUsed)->name ?? ""}}
+                                            <b>Name: </b> {{ optional(optional($user->agent)->codeUsed)->name ?? ""}}
+                                            <br>
+                                            <b>Email: </b> {{optional(optional($user->agent)->codeUsed)->email ?? ""}}
+                                            <br>
+                                            <b>Number: </b> {{optional(optional($user->agent)->codeUsed)->mobile_no ?? ""}}
+
                                         </td>
                                         <td>
                                             @if(!empty($user->phone_verified_at))
@@ -239,24 +237,32 @@
                                         <td>
                                             {{ $user->agent->reference_code }}
                                         </td>
-                                        <td>Rs. {{ $user->wallet->balance }}</td>
+                                        {{--<td>Rs. {{ $user->wallet->balance }}</td>--}}
+                                        <td>
+                                            @if($user->agent->use_parent_balance == 1)
+                                                <span class="badge badge-danger">Use parent <br>agent's balance</span>
+                                            @else
+                                                <span class="badge badge-warning">Use own balance</span>
+                                            @endif
+                                        </td>
 
-
+{{--
                                         <td>Rs. {{ $user->getTotalPaymentAmount() }}</td>
 
-                                        <td>Rs. {{ $user->getTotalLoadedAmount() }}</td>
+                                        <td>Rs. {{ $user->getTotalLoadedAmount() }}</td>--}}
 
                                         {{--<td>{{ count($user->userTransactionEvents) }}</td>--}}
 
-                                        <td>Rs. {{ $user->getTotalCashBack() }}</td>
+                                        {{--<td>Rs. {{ $user->getTotalCashBack() }}</td>--}}
+                                        <td>{{ \Carbon\Carbon::parse($user->agent->created_at)->format('F d Y') }}</td>
 
                                         <td class="center">
-                                            @can('User profile')
-                                                <a style="margin-top: 5px;" href="{{route('user.profile', $user->id)}}"
-                                                   class="btn btn-sm btn-icon btn-primary m-t-n-xs"
-                                                   title="user profile"><i class="fa fa-eye"></i></a>
-                                            @endcan
-
+                                            @if(auth()->user()->hasAnyPermission(['User profile','View agent profile']))
+                                                    <a style="margin-top: 5px;"
+                                                       href="{{route('user.profile', $user->id)}}"
+                                                       class="btn btn-sm btn-icon btn-primary m-t-n-xs"
+                                                       title="user profile"><i class="fa fa-eye"></i></a>
+                                            @endif
                                             @can('User transactions')
                                                 <a style="margin-top: 5px;"
                                                    href="{{route('user.transaction', $user->id)}}"
@@ -264,18 +270,27 @@
                                                    title="user transactions"><i class="fa fa-credit-card"></i></a>
                                             @endcan
 
-                                            <a style="margin-top: 5px;" href="{{route('agent.edit', $user->agent->id)}}"
-                                               class="btn btn-sm btn-icon btn-success m-t-n-xs" title="Edit Agent"><i
-                                                    class="fa fa-edit"></i></a>
+                                            @can('Agent edit')
+                                                <a style="margin-top: 5px;" href="{{route('agent.edit', $user->agent->id)}}"
+                                                   class="btn btn-sm btn-icon btn-success m-t-n-xs" title="Edit Agent"><i
+                                                        class="fa fa-edit"></i></a>
+                                            @endcan
 
-                                            <form action="{{ route('agent.delete', $user->id) }}" method="post">
-                                                @csrf
-                                                <button style="margin-top: 5px;"
-                                                        class="reset btn btn-sm btn-icon btn-danger m-t-n-xs"
-                                                        rel="{{ $user->id }}"><i class="fa fa-trash"></i></button>
-                                                <button id="resetBtn-{{ $user->id }}" style="display: none"
-                                                        type="submit"><strong>Reset Password</strong></button>
-                                            </form>
+                                            @can('Agent delete')
+                                                <form action="{{ route('agent.delete', $user->id) }}" method="post">
+                                                    @csrf
+                                                    <button style="margin-top: 5px;"
+                                                            class="reset btn btn-sm btn-icon btn-danger m-t-n-xs"
+                                                            rel="{{ $user->id }}"><i class="fa fa-trash"></i></button>
+                                                    <button id="resetBtn-{{ $user->id }}" style="display: none"
+                                                            type="submit"><strong>Reset Password</strong></button>
+                                                </form>
+                                            @endcan
+
+                                                <a style="margin-top: 5px;" target="_blank"
+                                                   href="{{route('user.download.qr',$user->id)}}"
+                                                   class="btn btn-sm btn-icon btn-secondary m-t-n-xs"
+                                                   title="download qr"><i class="fa fa-qrcode"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

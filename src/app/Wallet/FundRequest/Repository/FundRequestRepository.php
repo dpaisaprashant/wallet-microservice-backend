@@ -51,6 +51,6 @@ class FundRequestRepository
 
     public function detail($id)
     {
-        return FundRequest::with('fromUser', 'toUser', 'commission')->where('id', $id)->firstOrFail();
+        return FundRequest::with('fromUser', 'toUser', 'commission','transactions')->where('id', $id)->firstOrFail();
     }
 }

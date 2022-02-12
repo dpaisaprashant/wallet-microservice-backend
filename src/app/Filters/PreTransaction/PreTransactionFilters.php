@@ -1,6 +1,5 @@
 <?php
 namespace App\Filters\PreTransaction;
-
 use App\Filters\FiltersAbstract;
 
 class PreTransactionFilters extends FiltersAbstract
@@ -11,8 +10,19 @@ class PreTransactionFilters extends FiltersAbstract
      * @var array
      */
     protected $filters = [
-        'from' => FromDateFilter::class,
-        'to' => ToDateFilter::class
+        'user_number' => UsersFilter::class,
+        'pre_transaction_id' => PreTransactionIdFilter::class,
+        'vendor'=>PreTransactionVendorFilter::class,
+        'status'=>PreTransactionStatusFilter::class,
+        'service_type' => PreTransactionServiceTypeFilter::class,
+        'microservice_type' => PreTransactionMicroServiceTypeFilter::class,
+        'transaction_type' => PreTransactionTypeFilter::class,
+        'transaction_event_transaction_type' => TransactionTypeFilter::class,
+        'from_preTransaction_amount' => FromPreTransactionAmountFilter::class,
+        'to_preTransaction_amount' => ToPreTransactionAmountFilter::class,
+        'from' => PreTransactionDateFrom::class,
+        'to' => PreTransactionDateTo::class,
+        'sort'=>SortPreTransaction::class,
     ];
 
 
@@ -23,10 +33,7 @@ class PreTransactionFilters extends FiltersAbstract
      */
     public static function mapping() {
         $map = [
-            'sort' => [
-                'date' => 'created_at',
-                'amount' => 'amount'
-            ]
+
         ];
 
         return  $map;

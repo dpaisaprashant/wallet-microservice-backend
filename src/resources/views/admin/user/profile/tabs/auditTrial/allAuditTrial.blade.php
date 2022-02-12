@@ -74,9 +74,9 @@
                 </thead>
                 <tbody>
                 @foreach($allAudits as $event)
-                    @if($event instanceof  \App\Models\UserLoginHistory)
-                        @include('admin.user.profile.tabs.auditTrial.types.userLoginHistory')
-                    @elseif($event instanceof \App\Models\Microservice\PreTransaction)
+                    {{--@if($event instanceof  \App\Models\UserLoginHistory)
+                        @include('admin.user.profile.tabs.auditTrial.types.userLoginHistory')--}}
+                    @if($event instanceof \App\Models\Microservice\PreTransaction)
                         @include('admin.user.profile.tabs.auditTrial.types.preTransaction')
                     {{--@elseif($event instanceof \App\Models\Microservice\RequestInfo)
                         @include('admin.user.profile.tabs.auditTrial.types.requestInfo')--}}

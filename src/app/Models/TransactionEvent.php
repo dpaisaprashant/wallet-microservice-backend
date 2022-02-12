@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use App\Models\Microservice\PreTransaction;
 
 class TransactionEvent extends Model
 {
@@ -24,7 +25,7 @@ class TransactionEvent extends Model
         "amount" => "integer"
     ];
 
-    protected $appends = ["fee"];
+    protected $appends = ["fee", "cashback_amount"];
 
     /**
      * @param $amount
@@ -51,6 +52,11 @@ class TransactionEvent extends Model
     public function getBonusBalanceAttribute($balance)
     {
         return ($balance/100);
+    }
+
+    public function getCashbackAmountAttribute(){
+
+        return optional($this->commission)->transactions->amount ?? 0;
     }
 
 
@@ -187,6 +193,11 @@ class TransactionEvent extends Model
         return $user;
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
+
 
     public function selectedMonthTransactions($year, $month, $transactionType)
     {
@@ -200,6 +211,18 @@ class TransactionEvent extends Model
     public function refundTransaction()
     {
         return $this->hasOne(LoadTestFund::class, 'pre_transaction_id', 'pre_transaction_id');
+    }
+
+    public function preTransaction(){
+        return $this->hasMany(PreTransaction::class,"pre_transaction_id",'pre_transaction_id');
+    }
+
+    public function uniquePreTransaction(){
+        return $this->hasOne(PreTransaction::class,"pre_transaction_id",'pre_transaction_id');
+    }
+
+    public function preTransactionMicroservice(){
+        return $this->belongsTo(PreTransaction::class,'pre_transaction_id','pre_transaction_id');
     }
 
 }

@@ -24,6 +24,8 @@ abstract class AbstractClearanceCompareStrategy implements CompareTransactionFor
         $comparedTransactions = [];
         $excelTransactionsNotFoundInWallet = [];
         $walletTransactionsNotFoundInExcel = [];
+        $unmatchedAmounts = [];
+        $unmatchedTransactionFees=[];
 
 
         foreach ($excelTransactions as $excelTransaction) {
@@ -68,6 +70,34 @@ abstract class AbstractClearanceCompareStrategy implements CompareTransactionFor
                     "pre_transaction_id" => $microserviceTransaction->pre_transaction_id
                 ]
             ];
+//            for unmatched Transaction fees
+            if (!($excelTransaction[2] == $microserviceTransaction->fee ?? 0)) {
+                $unmatchedTransactionFees[$microserviceTransaction->linked_id] = [
+                    "excel" => [
+                        "linked_id" => $excelTransaction[0],
+                        "transaction_fee" => $excelTransaction[2]
+                    ],
+                    "wallet" => [
+                        "linked_id" => $microserviceTransaction->linked_id,
+                        "transaction_fee" => $microserviceTransaction->fee ?? 0,
+                        "pre_transaction_id" => $microserviceTransaction->pre_transaction_id
+                    ]
+                ];
+            }
+// for unmatched Amounts
+            if (!($excelTransaction[1] == $microserviceTransaction->getOriginal("amount"))) {
+                $unmatchedAmounts[$microserviceTransaction->linked_id] = [
+                    "excel" => [
+                        "linked_id" => $excelTransaction[0],
+                        "amount" => $excelTransaction[1],
+                    ],
+                    "wallet" => [
+                        "linked_id" => $microserviceTransaction->linked_id,
+                        "amount" => $microserviceTransaction->getOriginal("amount"),
+                        "pre_transaction_id" => $microserviceTransaction->pre_transaction_id
+                    ]
+                ];
+            }
         }
 
         foreach ($walletTransactions as $transaction) {
@@ -84,7 +114,9 @@ abstract class AbstractClearanceCompareStrategy implements CompareTransactionFor
         return [
             "comparedTransactions" => $comparedTransactions,
             "excelTransactionsNotFoundInWallet" => $excelTransactionsNotFoundInWallet,
-            "walletTransactionsNotFoundInExcel" => $walletTransactionsNotFoundInExcel
+            "walletTransactionsNotFoundInExcel" => $walletTransactionsNotFoundInExcel,
+            "unmatchedAmounts" => $unmatchedAmounts,
+            "unmatchedTransactionFees" => $unmatchedTransactionFees,
         ];
     }
 }

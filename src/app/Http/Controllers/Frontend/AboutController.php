@@ -12,6 +12,7 @@ class AboutController extends Controller
 {
 
     use UploadImage;
+    private $disk = "public";
 
     public function __construct()
     {
@@ -24,7 +25,7 @@ class AboutController extends Controller
 
     public function index()
     {
-        $abouts = FrontendAbout::latest()->get();
+        $abouts = FrontendAbout::where('belongs_to',strtolower(config('app.'.'name')))->latest()->get();
         return view('admin.frontend.about.index')->with(compact('abouts'));
     }
 
@@ -32,13 +33,13 @@ class AboutController extends Controller
     {
         if ($request->isMethod('post')) {
             $data = Arr::except($request->all(), '_token');
+            $responseData = $this->uploadImageToCoreBase64($this->disk, $data, $request);
+//            if ($request->hasFile('image')) {
+//                $data['image'] = $this->uploadImage(['image' => $request->file('image')], 'image', 'app/public/uploads/frontend/');
+//                $data['base64_image'] = $this->uploadImageBase64($data['image']);
+//            }
 
-            if ($request->hasFile('image')) {
-                $data['image'] = $this->uploadImage(['image' => $request->file('image')], 'image', 'app/public/uploads/frontend/');
-                $data['base64_image'] = $this->uploadImageBase64($data['image']);
-            }
-
-            $about = FrontendAbout::create($data);
+            $about = FrontendAbout::create($responseData);
 
             return redirect()->route('frontend.about.index')->with('success', $about->title . ' successfully created');
         }
@@ -50,12 +51,12 @@ class AboutController extends Controller
         $about = FrontendAbout::whereId($id)->firstOrFail();
         if ($request->isMethod('post')) {
             $data = Arr::except($request->all(), '_token');
+            $responseData = $this->uploadImageToCoreBase64($this->disk, $data, $request);
+//            if ($request->hasFile('image')) {
+//                $data['image'] = $this->uploadImage(['image' => $request->file('image')], 'image', 'app/public/uploads/frontend/');
+//            }
 
-            if ($request->hasFile('image')) {
-                $data['image'] = $this->uploadImage(['image' => $request->file('image')], 'image', 'app/public/uploads/frontend/');
-            }
-
-            FrontendAbout::whereId($id)->update($data);
+            FrontendAbout::whereId($id)->update($responseData);
 
             return redirect()->back()->with('success', 'Update Successful');
         }

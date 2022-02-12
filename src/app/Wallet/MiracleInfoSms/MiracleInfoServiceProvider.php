@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\Wallet\MiracleInfoSms;
+namespace App\Wallet\MiracleInfoSMS;
 
 
-use Carbon\Laravel\ServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
 class MiracleInfoServiceProvider extends ServiceProvider
 {

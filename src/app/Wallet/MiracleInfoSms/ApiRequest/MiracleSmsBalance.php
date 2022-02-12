@@ -1,12 +1,12 @@
 <?php
 
 
-namespace App\Wallet\MiracleInfoSms\ApiRequest;
+namespace App\Wallet\MiracleInfoSMS\ApiRequest;
 
 
 use Illuminate\Support\Facades\Log;
 
-class MiracleSmsBalance extends MiracleSmsBalanceJsonAbstract
+class MiracleSmsBalance extends MiracleSmsBalanceAbstract
 {
     private $tag;
     private $ac;

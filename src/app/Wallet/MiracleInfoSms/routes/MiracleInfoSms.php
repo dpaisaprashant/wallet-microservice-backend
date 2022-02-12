@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Wallet\MiracleInfoSms\routes;
+namespace App\Wallet\MiracleInfoSMS\routes;
 use Illuminate\Support\Facades\Route;
-use App\Wallet\MiracleInfoSms\Http\Controllers\MiracleInfoSmsController;
+use App\Wallet\MiracleInfoSMS\Http\Controllers\MiracleInfoSmsController;
 
 Route::group(['prefix' => 'admin'], function () {
     Route::group(['middleware' => 'web','auth'], function() {

@@ -47,28 +47,66 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
 
     public function getSuccessfulMerchantPaymentCount()
     {
-        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
+        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM `pre_transactions` WHERE status='SUCCESS' AND id NOT IN (SELECT id FROM  `pre_transactions`
                                                                             WHERE
-                                                                            service_type='MERCHANT'  AND status = 'SUCCESS'
+                                                                              vendor LIKE 'PAYPOINT' AND
+                                                                             ((company_code=78 AND service_code=0)
+                                                                                OR
+                                                                             (company_code=585 AND service_code=0)
+                                                                                OR
+                                                                             (company_code=585 AND service_code=1)
+                                                                                OR
+                                                                             (company_code=585 AND service_code=5)
+                                                                                OR
+                                                                             (company_code=709)
+                                                                                OR
+                                                                             (company_code=582)
+                                                                                OR
+                                                                             ( company_code=588)
+                                                                                OR
+                                                                             (company_code=587))
                                                                             AND
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
-                                                                            date(created_at) <= date(:toDate)
-                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
+                                                                            date(created_at) <= date(:toDate))
+                                                                            AND
+                                                                            date(created_at) >= date(:from)
+                                                                            AND
+                                                                            date(created_at) <= date(:to)
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate,'from' => $this->fromDate, 'to' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
 
     public function getFailedMerchantPaymentCount()
     {
-        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
+        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM `pre_transactions` WHERE status!='SUCCESS' AND id NOT IN (SELECT id FROM  `pre_transactions`
                                                                             WHERE
-                                                                            service_type='MERCHANT'  AND status != 'SUCCESS'
+                                                                              vendor LIKE 'PAYPOINT' AND
+                                                                             ((company_code=78 AND service_code=0)
+                                                                                OR
+                                                                             (company_code=585 AND service_code=0)
+                                                                                OR
+                                                                             (company_code=585 AND service_code=1)
+                                                                                OR
+                                                                             (company_code=585 AND service_code=5)
+                                                                                OR
+                                                                             (company_code=709)
+                                                                                OR
+                                                                             (company_code=582)
+                                                                                OR
+                                                                             ( company_code=588)
+                                                                                OR
+                                                                             (company_code=587))
+                                                                            AND
+                                                                            date(created_at) >= date(:fromDate)
+                                                                            AND
+                                                                            date(created_at) <= date(:toDate))
                                                                             AND
                                                                             date(created_at) >= date(:from)
                                                                             AND
                                                                             date(created_at) <= date(:to)
-                                                                               ", ['from' => $this->fromDate, 'to' => $this->toDate]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate,'from' => $this->fromDate, 'to' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -164,38 +202,53 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
 
     public function getSuccessfulPaypointCount()
     {
-//        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
+//        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `transaction_events`
 //                                                                            WHERE
-//                                                                            ((service_type='' AND status = 'SUCCESS')
-//                                                                            OR
-//                                                                            (service_type='internet' AND status = 'SUCCESS')
-//                                                                            OR
-//                                                                            (service_type='tv' AND status = 'SUCCESS'))
+//                                                                            ((vendor='NCELL' and service_type='PAYMENT')
+//                                                                                OR
+//                                                                             (vendor='NCELL' and service_type='DATA-PACK')
+//                                                                                OR
+//                                                                             (vendor='NTC' and service_type='TOPUP')
+//                                                                                OR
+//                                                                             (vendor='NTC' and service_type='PREPAID')
+//                                                                                OR
+//                                                                             (vendor='NTC' and service_type='POSTPAID')
+//                                                                                OR
+//                                                                             (vendor='UTL' and service_type='PAYMENT')
+//                                                                                OR
+//                                                                             (vendor='SMARTCELL' and service_type='TOPUP'))
 //                                                                            AND
 //                                                                            date(created_at) >= date(:fromDate)
 //                                                                            AND
 //                                                                            date(created_at) <= date(:toDate)
-////                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
-        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `transaction_events`
+//                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
+
+
+        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
                                                                             WHERE
-                                                                            ((vendor='NCELL' and service_type='PAYMENT')
+                                                                              vendor LIKE 'PAYPOINT' AND status='SUCCESS' AND
+                                                                             ((company_code=78 AND service_code=0)
                                                                                 OR
-                                                                             (vendor='NCELL' and service_type='DATA-PACK')
+                                                                             (company_code=585 AND service_code=0)
                                                                                 OR
-                                                                             (vendor='NTC' and service_type='TOPUP')
+                                                                             (company_code=585 AND service_code=1)
                                                                                 OR
-                                                                             (vendor='NTC' and service_type='PREPAID')
+                                                                             (company_code=585 AND service_code=5)
                                                                                 OR
-                                                                             (vendor='NTC' and service_type='POSTPAID')
+                                                                             (company_code=709)
                                                                                 OR
-                                                                             (vendor='UTL' and service_type='PAYMENT')
+                                                                             (company_code=582)
                                                                                 OR
-                                                                             (vendor='SMARTCELL' and service_type='TOPUP'))
+                                                                             ( company_code=588)
+                                                                                OR
+                                                                             (company_code=587))
                                                                             AND
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
                                                                             date(created_at) <= date(:toDate)
                                                                                ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
+
+
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -204,11 +257,22 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
     {
         $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
                                                                             WHERE
-                                                                            ((service_type='' AND status != 'SUCCESS')
-                                                                            OR
-                                                                            (service_type='internet' AND status != 'SUCCESS')
-                                                                            OR
-                                                                            (service_type='tv' AND status != 'SUCCESS'))
+                                                                              vendor LIKE 'PAYPOINT' AND status!='SUCCESS' AND
+                                                                             ((company_code=78 AND service_code=0)
+                                                                                OR
+                                                                             (company_code=585 AND service_code=0)
+                                                                                OR
+                                                                             (company_code=585 AND service_code=1)
+                                                                                OR
+                                                                             (company_code=585 AND service_code=5)
+                                                                                OR
+                                                                             (company_code=709)
+                                                                                OR
+                                                                             (company_code=582)
+                                                                                OR
+                                                                             ( company_code=588)
+                                                                                OR
+                                                                             (company_code=587))
                                                                             AND
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
@@ -218,28 +282,78 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
         return $count;
     }
 
-    public function getSuccessfulAgentReceivedFundsCount()
+    public function getSuccessfulCashInCount()
     {
-        return 0;
+        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
+                                                                            WHERE
+                                                                            ((service_type='NPS_LOAD'  AND status = 'SUCCESS')
+                                                                            OR
+                                                                            (service_type='NCHL_LOAD'  AND status = 'SUCCESS')
+                                                                            OR
+                                                                            (service_type='NIC_ASIA_LOAD'  AND status = 'SUCCESS')
+                                                                            OR
+                                                                            (service_type='NPAY_LOAD'  AND status = 'SUCCESS')
+                                                                            OR
+                                                                            (service_type='NPS_ACCOUNT_LINK_LOAD'  AND status = 'SUCCESS')
+                                                                            OR
+                                                                            (service_type='PAYMENT_NEPAL_LOAD'  AND status = 'SUCCESS')
+                                                                            OR
+                                                                            (service_type='BFI_LOAD'  AND status = 'SUCCESS'))
+                                                                            AND
+                                                                            date(created_at) >= date(:fromDate)
+                                                                            AND
+                                                                            date(created_at) <= date(:toDate)
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
+        $count = $count[0]->totalCount;
+        return $count;
 
     }
 
-    public function getFailedAgentReceivedFundsCount()
+    public function getFailedCashInCount()
     {
-        return 0;
+        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
+                                                                            WHERE
+                                                                            ((service_type='NPS_LOAD'  AND status != 'SUCCESS')
+                                                                            OR
+                                                                            (service_type='NCHL_LOAD'  AND status != 'SUCCESS')
+                                                                            OR
+                                                                            (service_type='NIC_ASIA_LOAD'  AND status != 'SUCCESS')
+                                                                            OR
+                                                                            (service_type='NPAY_LOAD'  AND status != 'SUCCESS')
+                                                                            OR
+                                                                            (service_type='NPS_ACCOUNT_LINK_LOAD'  AND status != 'SUCCESS')
+                                                                            OR
+                                                                            (service_type='PAYMENT_NEPAL_LOAD'  AND status != 'SUCCESS')
+                                                                            OR
+                                                                            (service_type='BFI_LOAD'  AND status != 'SUCCESS'))
+                                                                            AND
+                                                                            date(created_at) >= date(:fromDate)
+                                                                            AND
+                                                                            date(created_at) <= date(:toDate)
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
+        $count = $count[0]->totalCount;
+        return $count;
 
     }
 
-    public function getSuccessfulAgentTransferFundsCount()
+    public function getSuccessfulCashOutCount()
     {
-        return 0;
+        $count = DB::connection('dpaisa')->select("SELECT COUNT(DISTINCT(to_user)) as totalCount FROM user_to_user_fund_transfers
+                                                                WHERE to_user IN (SELECT user_id FROM `agents` where status='ACCEPTED')
+                                                                            AND
+                                                                            date(created_at) >= date(:fromDate)
+                                                                            AND
+                                                                            date(created_at) <= date(:toDate)
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
+        $count = $count[0]->totalCount;
+        return $count;
 
     }
 
-    public function getFailedAgentTransferFundsCount()
+    public function getFailedCashOutCount()
     {
         return 0;
-
+//user to agent
     }
 
 }

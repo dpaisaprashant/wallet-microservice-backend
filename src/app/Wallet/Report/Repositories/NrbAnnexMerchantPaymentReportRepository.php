@@ -53,7 +53,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
                                                                             date(created_at) <= date(:toDate)
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -67,7 +67,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
                                                                             date(created_at) <= date(:toDate)
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -83,7 +83,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             date(created_at) >= date(:from)
                                                                             AND
                                                                             date(created_at) <= date(:to)",
-            ['from'=>$this->fromDate,'to'=>$this->toDate]);
+            ['from' => $this->fromDate, 'to' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -99,7 +99,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             date(created_at) >= date(:from)
                                                                             AND
                                                                             date(created_at) <= date(:to)"
-            ,['from'=>$this->fromDate,'to'=>$this->toDate]);
+            , ['from' => $this->fromDate, 'to' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -113,7 +113,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
                                                                             date(created_at) <= date(:toDate)
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
 
@@ -128,7 +128,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
                                                                             date(created_at) <= date(:toDate)
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -142,7 +142,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
                                                                             date(created_at) <= date(:toDate)
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -156,25 +156,46 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
                                                                             date(created_at) <= date(:toDate)
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
 
     public function getSuccessfulTopUpCount()
     {
-        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
+//        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
+//                                                                            WHERE
+//                                                                            ((vendor='KHALTI' AND status = 'SUCCESS')
+//                                                                            OR
+//                                                                            (vendor='NEA' AND status = 'SUCCESS')
+//                                                                            OR
+//                                                                            (vendor='Samsara Remittance' AND status = 'SUCCESS'))
+//                                                                            AND
+//                                                                            date(created_at) >= date(:fromDate)
+//                                                                            AND
+//                                                                            date(created_at) <= date(:toDate)
+//                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
+
+        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `transaction_events`
                                                                             WHERE
-                                                                            ((vendor='KHALTI' AND status = 'SUCCESS')
-                                                                            OR
-                                                                            (vendor='NEA' AND status = 'SUCCESS')
-                                                                            OR
-                                                                            (vendor='Samsara Remittance' AND status = 'SUCCESS'))
+                                                                            ((vendor='NCELL' and service_type='PAYMENT')
+                                                                                OR
+                                                                             (vendor='NCELL' and service_type='DATA-PACK')
+                                                                                OR
+                                                                             (vendor='NTC' and service_type='TOPUP')
+                                                                                OR
+                                                                             (vendor='NTC' and service_type='PREPAID')
+                                                                                OR
+                                                                             (vendor='NTC' and service_type='POSTPAID')
+                                                                                OR
+                                                                             (vendor='UTL' and service_type='PAYMENT')
+                                                                                OR
+                                                                             (vendor='SMARTCELL' and service_type='TOPUP'))
                                                                             AND
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
                                                                             date(created_at) <= date(:toDate)
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -192,7 +213,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
                                                                             date(created_at) <= date(:toDate)
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -216,7 +237,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
                                                                             date(created_at) <= date(:toDate)
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
 
@@ -241,7 +262,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
                                                                             date(created_at) <= date(:toDate)
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
 
@@ -256,13 +277,14 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
                                                                             date(created_at) <= date(:toDate)
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
 
     }
 
-    public function getFailedCashOutCount(){
+    public function getFailedCashOutCount()
+    {
         $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
                                                                             WHERE
                                                                             service_type='BANK_TRANSFER'  AND status != 'SUCCESS'
@@ -270,7 +292,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
                                                                             date(created_at) <= date(:toDate)
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
 

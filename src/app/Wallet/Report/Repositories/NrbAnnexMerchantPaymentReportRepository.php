@@ -163,18 +163,38 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
 
     public function getSuccessfulPaypointCount()
     {
-        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
+//        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
+//                                                                            WHERE
+//                                                                            ((service_type='' AND status = 'SUCCESS')
+//                                                                            OR
+//                                                                            (service_type='internet' AND status = 'SUCCESS')
+//                                                                            OR
+//                                                                            (service_type='tv' AND status = 'SUCCESS'))
+//                                                                            AND
+//                                                                            date(created_at) >= date(:fromDate)
+//                                                                            AND
+//                                                                            date(created_at) <= date(:toDate)
+//                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
+        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `transaction_events`
                                                                             WHERE
-                                                                            ((service_type='' AND status = 'SUCCESS')
-                                                                            OR
-                                                                            (service_type='internet' AND status = 'SUCCESS')
-                                                                            OR
-                                                                            (service_type='tv' AND status = 'SUCCESS'))
+                                                                            ((vendor='NCELL' and service_type='PAYMENT')
+                                                                                OR
+                                                                             (vendor='NCELL' and service_type='DATA-PACK')
+                                                                                OR
+                                                                             (vendor='NTC' and service_type='TOPUP')
+                                                                                OR
+                                                                             (vendor='NTC' and service_type='PREPAID')
+                                                                                OR
+                                                                             (vendor='NTC' and service_type='POSTPAID')
+                                                                                OR
+                                                                             (vendor='UTL' and service_type='PAYMENT')
+                                                                                OR
+                                                                             (vendor='SMARTCELL' and service_type='TOPUP'))
                                                                             AND
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
                                                                             date(created_at) <= date(:toDate)
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }

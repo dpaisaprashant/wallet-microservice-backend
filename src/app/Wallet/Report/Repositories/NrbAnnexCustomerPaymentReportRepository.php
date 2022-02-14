@@ -236,7 +236,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\UserReferralBonusTransaction'
                                                                                  OR
-                                                                                 (t.transaction_type = 'App\\\Wallet\\Commission\\\Models\\\Commission' AND t.service_type='CASHBACK')
+                                                                                 (t.transaction_type = 'App\\\Wallet\\\Commission\\\Models\\\Commission' AND t.service_type='CASHBACK')
                                                                                      OR
                                                                                  (t.transaction_type = 'App\\\Models\\\LoadTestFund' AND t.service_type='LUCKY WINNER')
                                                                                 )
@@ -263,7 +263,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\UserReferralBonusTransaction'
                                                                                  OR
-                                                                                 (t.transaction_type = 'App\\\Wallet\\Commission\\\Models\\\Commission' AND t.service_type='CASHBACK')
+                                                                                 (t.transaction_type = 'App\\\Wallet\\\Commission\\\Models\\\Commission' AND t.service_type='CASHBACK')
                                                                                      OR
                                                                                  (t.transaction_type = 'App\\\Models\\\LoadTestFund' AND t.service_type='LUCKY WINNER')
                                                                                 )
@@ -286,9 +286,8 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 LEFT JOIN temp_agents a ON a.user_id = t.user_id
                                                                                 WHERE a.user_id IS NULL
                                                                                 AND
-                                                                                (t.transaction_type ='App\\\Wallet\\\Commission\\\Models\\\Commission'
-                                                                                 OR
-                                                                                 (t.transaction_type = 'App\\\Wallet\\Commission\\\Models\\\Commission' AND t.service_type='COMMISSION')
+                                                                                (
+                                                                                 (t.transaction_type = 'App\\\Wallet\\\Commission\\\Models\\\Commission' AND t.service_type='COMMISSION')
                                                                                 )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)
@@ -298,7 +297,9 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
                                                                                ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
 
+
         $commissionTotalNumber = $commissionTotalNumber[0]->totalCount;
+
         return $commissionTotalNumber;
     }
 
@@ -309,8 +310,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 LEFT JOIN temp_agents a ON a.user_id = t.user_id
                                                                                 WHERE a.user_id IS NULL
                                                                                 AND
-                                                                                (t.transaction_type ='App\\\Wallet\\\Commission\\\Models\\\Commission'
-                                                                                 OR
+                                                                                (
                                                                                  (t.transaction_type = 'App\\\Wallet\\Commission\\\Models\\\Commission' AND t.service_type='COMMISSION')
                                                                                 )
                                                                                 AND

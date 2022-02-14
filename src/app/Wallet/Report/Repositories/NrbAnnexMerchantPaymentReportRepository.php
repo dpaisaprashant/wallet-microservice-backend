@@ -26,6 +26,7 @@ use App\Models\UserTransaction;
 use App\Wallet\Commission\Models\Commission;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
@@ -53,7 +54,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
                                                                             date(created_at) <= date(:toDate)
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -67,7 +68,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             date(created_at) >= date(:from)
                                                                             AND
                                                                             date(created_at) <= date(:to)
-                                                                               ",['from'=>$this->fromDate,'to'=>$this->toDate]);
+                                                                               ", ['from' => $this->fromDate, 'to' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -83,7 +84,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             date(created_at) >= date(:from)
                                                                             AND
                                                                             date(created_at) <= date(:to)",
-            ['from'=>$this->fromDate,'to'=>$this->toDate]);
+            ['from' => $this->fromDate, 'to' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -99,7 +100,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             date(created_at) >= date(:from)
                                                                             AND
                                                                             date(created_at) <= date(:to)"
-            ,['from'=>$this->fromDate,'to'=>$this->toDate]);
+            , ['from' => $this->fromDate, 'to' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -113,7 +114,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
                                                                             date(created_at) <= date(:toDate)
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
 
@@ -128,7 +129,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
                                                                             date(created_at) <= date(:toDate)
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -142,7 +143,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
                                                                             date(created_at) <= date(:toDate)
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -156,7 +157,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
                                                                             date(created_at) <= date(:toDate)
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -174,7 +175,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
 //                                                                            date(created_at) >= date(:fromDate)
 //                                                                            AND
 //                                                                            date(created_at) <= date(:toDate)
-//                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
+////                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
         $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `transaction_events`
                                                                             WHERE
                                                                             ((vendor='NCELL' and service_type='PAYMENT')
@@ -212,7 +213,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
                                                                             date(created_at) <= date(:toDate)
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }

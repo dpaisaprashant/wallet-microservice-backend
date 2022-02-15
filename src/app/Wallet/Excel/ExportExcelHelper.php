@@ -88,7 +88,7 @@ class ExportExcelHelper implements IExportExcel
     private function generatorCollection()
     {
         if ($this->generatorModel == TransactionEvent::class) {
-            foreach ($this->generatorModel::latest()->doesntHave('refundTransaction')->filter($this->request)->cursor() as $model) {
+            foreach ($this->generatorModel::latest()->whereNull("refund_id")->filter($this->request)->cursor() as $model) {
                 yield $model;
             }
         } else {

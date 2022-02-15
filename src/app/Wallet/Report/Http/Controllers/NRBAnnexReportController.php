@@ -5,15 +5,7 @@ namespace App\Wallet\Report\Http\Controllers;
 
 
 use App\Http\Controllers\Controller;
-use App\Models\Agent;
-use App\Models\User;
 use App\Traits\CollectionPaginate;
-use App\Wallet\Report\Repositories\AbstractReportRepository;
-use App\Wallet\Report\Repositories\ActiveInactiveCustomerReportRepository;
-use App\Wallet\Report\Repositories\ActiveInactiveTransactionRepository;
-use App\Wallet\Report\Repositories\ActiveInactiveUserReportRepository;
-use App\Wallet\Report\Repositories\AgentReportRepository;
-use App\Wallet\Report\Repositories\NonBankPaymentReportRepository;
 use App\Wallet\Report\Repositories\NrbAnnexAgentMerchantPaymentReportRepository;
 use App\Wallet\Report\Repositories\NrbAnnexAgentPaymentReportRepository;
 use App\Wallet\Report\Repositories\NrbAnnexCustomerPaymentReportRepository;
@@ -32,9 +24,7 @@ class NRBAnnexReportController extends Controller
     {
         if ($request->all() != NULL) {
             $amountRange = json_decode($request->amount_range);
-//            $fromAmount = $amountRange->fromAmount;
             $fromAmount = $request->fromAmount;
-//            $toAmount = $amountRange->toAmount;
             $toAmount = $request->toAmount;
             $request->merge(['fromAmount' => $fromAmount, 'toAmount' => $toAmount]);
         }
@@ -100,9 +90,7 @@ class NRBAnnexReportController extends Controller
     {
         if ($request->all() != NULL) {
             $amountRange = json_decode($request->amount_range);
-//            $fromAmount = $amountRange->fromAmount;
             $fromAmount = $request->fromAmount;
-//            $toAmount = $amountRange->toAmount;
             $toAmount = $request->toAmount;
             $request->merge(['fromAmount' => $fromAmount, 'toAmount' => $toAmount]);
         }

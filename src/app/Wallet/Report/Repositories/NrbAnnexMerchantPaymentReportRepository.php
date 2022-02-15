@@ -4,26 +4,6 @@
 namespace App\Wallet\Report\Repositories;
 
 
-use App\Models\CellPayUserTransaction;
-use App\Models\FundRequest;
-use App\Models\KhaltiUserTransaction;
-use App\Models\MerchantTransaction;
-use App\Models\Microservice\PreTransaction;
-use App\Models\NchlAggregatedPayment;
-use App\Models\NchlBankTransfer;
-use App\Models\NchlLoadTransaction;
-use App\Models\NICAsiaCyberSourceLoadTransaction;
-use App\Models\NPSAccountLinkLoad;
-use App\Models\NtcRetailerToCustomerTransaction;
-use App\Models\PaymentNepalLoadTransaction;
-use App\Models\TransactionEvent;
-use App\Models\UsedUserReferral;
-use App\Models\UserLoadTransaction;
-use App\Models\UserMerchantEventTicketPayment;
-use App\Models\UserReferralBonusTransaction;
-use App\Models\UserToUserFundTransfer;
-use App\Models\UserTransaction;
-use App\Wallet\Commission\Models\Commission;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -40,34 +20,72 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
         parent::__construct($request);
         $this->fromDate = date('Y-m-d', strtotime(str_replace(',', ' ', $request->from)));
         $this->toDate = date('Y-m-d', strtotime(str_replace(',', ' ', $request->to)));
-//        $this->fromAmount = $request->from_amount;
-//        $this->toAmount = $request->to_amount;
     }
 
     public function getSuccessfulMerchantPaymentCount()
     {
-        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
-                                                                            WHERE
-                                                                            service_type='MERCHANT'  AND status = 'SUCCESS'
+        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM `pre_transactions` WHERE status='SUCCESS' AND id NOT IN (SELECT id FROM  `pre_transactions`
+                                                                               WHERE microservice_type='KHALTI' AND
+                                                                            ((service_type='NTC_PREPAID')
+                                                                                OR
+                                                                             (service_type='NTC_POSTPAID')
+                                                                                OR
+                                                                             (service_type='NTC_DATA')
+                                                                                OR
+                                                                             (service_type='NTC_EPIN')
+                                                                                OR
+                                                                             (service_type='NCELL')
+                                                                                OR
+                                                                             (service_type='NCELL_DATA_PACK')
+                                                                                OR
+                                                                             (service_type='NCELL_EPIN')
+                                                                                OR
+                                                                             (service_type='SMARTCELL_TOPUP')
+                                                                                OR
+                                                                             (service_type='SMARTCELL_EPIN'))
                                                                             AND
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
-                                                                            date(created_at) <= date(:toDate)
-                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
+                                                                            date(created_at) <= date(:toDate))
+                                                                            AND
+                                                                            date(created_at) >= date(:from)
+                                                                            AND
+                                                                            date(created_at) <= date(:to)
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate,'from' => $this->fromDate, 'to' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
 
     public function getFailedMerchantPaymentCount()
     {
-        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
-                                                                            WHERE
-                                                                            service_type='MERCHANT'  AND status != 'SUCCESS'
+        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM `pre_transactions` WHERE status!='SUCCESS' AND id NOT IN (SELECT id FROM  `pre_transactions`
+                                                                               WHERE microservice_type='KHALTI' AND
+                                                                            ((service_type='NTC_PREPAID')
+                                                                                OR
+                                                                             (service_type='NTC_POSTPAID')
+                                                                                OR
+                                                                             (service_type='NTC_DATA')
+                                                                                OR
+                                                                             (service_type='NTC_EPIN')
+                                                                                OR
+                                                                             (service_type='NCELL')
+                                                                                OR
+                                                                             (service_type='NCELL_DATA_PACK')
+                                                                                OR
+                                                                             (service_type='NCELL_EPIN')
+                                                                                OR
+                                                                             (service_type='SMARTCELL_TOPUP')
+                                                                                OR
+                                                                             (service_type='SMARTCELL_EPIN'))
                                                                             AND
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
-                                                                            date(created_at) <= date(:toDate)
-                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
+                                                                            date(created_at) <= date(:toDate))
+                                                                            AND
+                                                                            date(created_at) >= date(:from)
+                                                                            AND
+                                                                            date(created_at) <= date(:to)
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate,'from' => $this->fromDate, 'to' => $this->toDate]);
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -163,34 +181,25 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
 
     public function getSuccessfulTopUpCount()
     {
-//        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
-//                                                                            WHERE
-//                                                                            ((vendor='KHALTI' AND status = 'SUCCESS')
-//                                                                            OR
-//                                                                            (vendor='NEA' AND status = 'SUCCESS')
-//                                                                            OR
-//                                                                            (vendor='Samsara Remittance' AND status = 'SUCCESS'))
-//                                                                            AND
-//                                                                            date(created_at) >= date(:fromDate)
-//                                                                            AND
-//                                                                            date(created_at) <= date(:toDate)
-//                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate]);
-
-        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `transaction_events`
-                                                                            WHERE
-                                                                            ((vendor='NCELL' and service_type='PAYMENT')
+        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
+                                                                            WHERE microservice_type='KHALTI' AND status='SUCCESS' AND
+                                                                            ((service_type='NTC_PREPAID')
                                                                                 OR
-                                                                             (vendor='NCELL' and service_type='DATA-PACK')
+                                                                             (service_type='NTC_POSTPAID')
                                                                                 OR
-                                                                             (vendor='NTC' and service_type='TOPUP')
+                                                                             (service_type='NTC_DATA')
                                                                                 OR
-                                                                             (vendor='NTC' and service_type='PREPAID')
+                                                                             (service_type='NTC_EPIN')
                                                                                 OR
-                                                                             (vendor='NTC' and service_type='POSTPAID')
+                                                                             (service_type='NCELL')
                                                                                 OR
-                                                                             (vendor='UTL' and service_type='PAYMENT')
+                                                                             (service_type='NCELL_DATA_PACK')
                                                                                 OR
-                                                                             (vendor='SMARTCELL' and service_type='TOPUP'))
+                                                                             (service_type='NCELL_EPIN')
+                                                                                OR
+                                                                             (service_type='SMARTCELL_TOPUP')
+                                                                                OR
+                                                                             (service_type='SMARTCELL_EPIN'))
                                                                             AND
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
@@ -203,12 +212,24 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
     public function getFailedTopUpCount()
     {
         $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
-                                                                            WHERE
-                                                                           ((vendor='KHALTI' AND status != 'SUCCESS')
-                                                                            OR
-                                                                            (vendor='NEA' AND status != 'SUCCESS')
-                                                                            OR
-                                                                            (vendor='Samsara Remittance' AND status != 'SUCCESS'))
+                                                                            WHERE microservice_type='KHALTI' AND status!='SUCCESS' AND
+                                                                            ((service_type='NTC_PREPAID')
+                                                                                OR
+                                                                             (service_type='NTC_POSTPAID')
+                                                                                OR
+                                                                             (service_type='NTC_DATA')
+                                                                                OR
+                                                                             (service_type='NTC_EPIN')
+                                                                                OR
+                                                                             (service_type='NCELL')
+                                                                                OR
+                                                                             (service_type='NCELL_DATA_PACK')
+                                                                                OR
+                                                                             (service_type='NCELL_EPIN')
+                                                                                OR
+                                                                             (service_type='SMARTCELL_TOPUP')
+                                                                                OR
+                                                                             (service_type='SMARTCELL_EPIN'))
                                                                             AND
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
@@ -222,17 +243,19 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
     {
         $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
                                                                             WHERE
-                                                                           ((vendor='NPS' AND status = 'SUCCESS')
+                                                                           ((service_type='NPS_LOAD'  AND status = 'SUCCESS')
                                                                             OR
-                                                                            (vendor='NCHL_LOAD' AND status = 'SUCCESS')
+                                                                            (service_type='NCHL_LOAD'  AND status = 'SUCCESS')
                                                                             OR
-                                                                            (vendor='NIC_ASIA_LOAD' AND status = 'SUCCESS')
-                                                                                OR
-                                                                            (vendor='NPAY' AND status = 'SUCCESS')
-                                                                                OR
-                                                                            (vendor='PAYMENT_NEPAL' AND status = 'SUCCESS')
-                                                                                OR
-                                                                            (vendor='Kumari Bank' AND status = 'SUCCESS'))
+                                                                            (service_type='NIC_ASIA_LOAD'  AND status = 'SUCCESS')
+                                                                            OR
+                                                                            (service_type='NPAY_LOAD'  AND status = 'SUCCESS')
+                                                                            OR
+                                                                            (service_type='NPS_ACCOUNT_LINK_LOAD'  AND status = 'SUCCESS')
+                                                                            OR
+                                                                            (service_type='PAYMENT_NEPAL_LOAD'  AND status = 'SUCCESS')
+                                                                            OR
+                                                                            (service_type='BFI_LOAD'  AND status = 'SUCCESS'))
                                                                             AND
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
@@ -247,17 +270,19 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
     {
         $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
                                                                             WHERE
-                                                                           ((vendor='NPS' AND status != 'SUCCESS')
+                                                                           ((service_type='NPS_LOAD'  AND status != 'SUCCESS')
                                                                             OR
-                                                                            (vendor='NCHL_LOAD' AND status != 'SUCCESS')
+                                                                            (service_type='NCHL_LOAD'  AND status != 'SUCCESS')
                                                                             OR
-                                                                            (vendor='NIC_ASIA_LOAD' AND status != 'SUCCESS')
-                                                                                OR
-                                                                            (vendor='NPAY' AND status != 'SUCCESS')
-                                                                                OR
-                                                                            (vendor='PAYMENT_NEPAL' AND status != 'SUCCESS')
-                                                                                OR
-                                                                            (vendor='Kumari Bank' AND status != 'SUCCESS'))
+                                                                            (service_type='NIC_ASIA_LOAD'  AND status != 'SUCCESS')
+                                                                            OR
+                                                                            (service_type='NPAY_LOAD'  AND status != 'SUCCESS')
+                                                                            OR
+                                                                            (service_type='NPS_ACCOUNT_LINK_LOAD'  AND status != 'SUCCESS')
+                                                                            OR
+                                                                            (service_type='PAYMENT_NEPAL_LOAD'  AND status != 'SUCCESS')
+                                                                            OR
+                                                                            (service_type='BFI_LOAD'  AND status != 'SUCCESS'))
                                                                             AND
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
@@ -270,9 +295,8 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
 
     public function getSuccessfulCashOutCount()
     {
-        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
-                                                                            WHERE
-                                                                            service_type='BANK_TRANSFER'  AND status = 'SUCCESS'
+        $count = DB::connection('dpaisa')->select("SELECT COUNT(DISTINCT(to_user)) as totalCount FROM user_to_user_fund_transfers
+                                                                WHERE to_user IN (SELECT user_id FROM `agents` where status='ACCEPTED')
                                                                             AND
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
@@ -285,16 +309,16 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
 
     public function getFailedCashOutCount()
     {
-        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
-                                                                            WHERE
-                                                                            service_type='BANK_TRANSFER'  AND status != 'SUCCESS'
-                                                                            AND
-                                                                            date(created_at) >= date(:fromDate)
-                                                                            AND
-                                                                            date(created_at) <= date(:toDate)
-                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
-        $count = $count[0]->totalCount;
-        return $count;
+//        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
+//                                                                            WHERE
+//                                                                            service_type='BANK_TRANSFER'  AND status != 'SUCCESS'
+//                                                                            AND
+//                                                                            date(created_at) >= date(:fromDate)
+//                                                                            AND
+//                                                                            date(created_at) <= date(:toDate)
+//                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
+//        $count = $count[0]->totalCount;
+        return 0;
 
     }
 

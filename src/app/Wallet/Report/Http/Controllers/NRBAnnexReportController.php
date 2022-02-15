@@ -253,13 +253,13 @@ class NRBAnnexReportController extends Controller
             ],
 
             'Cash in' => [
-                'successful' => $repository->getSuccessfulAgentReceivedFundsCount(),
-                'failed' => ($repository->getFailedAgentReceivedFundsCount())
+                'successful' => $repository->getSuccessfulCashInCount(),
+                'failed' => ($repository->getFailedCashInCount())
             ],
 
             'Cash out' => [
-                'successful' => $repository->getSuccessfulAgentTransferFundsCount(),
-                'failed' => ($repository->getFailedAgentTransferFundsCount())
+                'successful' => $repository->getSuccessfulCashOutCount(),
+                'failed' => ($repository->getFailedCashOutCount())
             ],
 
         ];

@@ -18,14 +18,14 @@ class WalletReportController extends Controller
 
     public function dailyDashboard(Request $request)
     {
-         $repository = new ReconciliationReportRepository($request);
+        $repository = new ReconciliationReportRepository($request);
 
-         $totalAmounts = $this->generateReport($repository);
+        $totalAmounts = $this->generateReport($repository);
 
-         $totalLoadAmount = $repository->totalLoadAmount() / 100;
-         $totalPaymentAmount = $repository->totalPaymentAmount() / 100;
+        $totalLoadAmount = $repository->totalLoadAmount() / 100;
+        $totalPaymentAmount = $repository->totalPaymentAmount() / 100;
 
-         return view('WalletReport::reconciliation.report-old')->with(compact('totalAmounts', 'totalLoadAmount', 'totalPaymentAmount'));
+        return view('WalletReport::reconciliation.report-old')->with(compact('totalAmounts', 'totalLoadAmount', 'totalPaymentAmount'));
     }
 
     public function reconciliationReport(Request $request)
@@ -145,26 +145,26 @@ class WalletReportController extends Controller
         $date_to = $_GET['to'];
         $date_to = date('Y-m-d', strtotime(str_replace(',', ' ', $date_to)));
 
-        $next_day =  date('Y-m-d',(strtotime ( '+1 day' , strtotime ( $date) ) ));
+        $next_day =  date('Y-m-d',(strtotime ( '+1 day' , strtotime ( $date_to) ) ));
 
 
 
-        $ledger = DB::connection('dpaisa')->select(DB::connection('dpaisa')->raw("SELECT sum(amount/ 100) as total, transaction_type from transaction_events where date(created_at) >= Date(:date) AND date(created_at) < Date(:date_to) group by transaction_type"),
+        $ledger = DB::connection('dpaisa')->select(DB::connection('dpaisa')->raw("SELECT sum(amount/ 100) as total, transaction_type from transaction_events where date(created_at) >= Date(:date) AND date(created_at) <= Date(:date_to) group by transaction_type"),
             array('date' => $date, 'date_to' => $date_to)
         );
 
-        $paypoint_clearance_load = DB::connection('dpaisa')->select(DB::connection('dpaisa')->raw("SELECT SUM(after_amount/100-before_amount/100) as pp_load_total FROM `load_test_funds` WHERE `description` LIKE 'Paypoint Load' AND date(created_at) >= Date(:date) AND date(created_at) < Date(:date_to)"),
+        $paypoint_clearance_load = DB::connection('dpaisa')->select(DB::connection('dpaisa')->raw("SELECT SUM(after_amount/100-before_amount/100) as pp_load_total FROM `load_test_funds` WHERE `description` LIKE 'Paypoint Load' AND date(created_at) >= Date(:date) AND date(created_at) <= Date(:date_to)"),
             array('date' => $date, 'date_to' => $date_to)
         );
 
-        $cashback = DB::connection('dpaisa')->select(DB::connection('dpaisa')->raw("SELECT SUM(amount/100) as cashback_total  FROM `transaction_events` WHERE `service_type` LIKE 'CASHBACK' AND date(created_at) >= Date(:date) AND date(created_at) < Date(:date_to)"),
+        $cashback = DB::connection('dpaisa')->select(DB::connection('dpaisa')->raw("SELECT SUM(amount/100) as cashback_total  FROM `transaction_events` WHERE `service_type` LIKE 'CASHBACK' AND date(created_at) >= Date(:date) AND date(created_at) <= Date(:date_to)"),
             array('date' => $date, 'date_to' => $date_to)
         );
-        $commission = DB::connection('dpaisa')->select(DB::connection('dpaisa')->raw("SELECT SUM(amount/100) as commission_total  FROM `transaction_events` WHERE `service_type` LIKE 'COMMISSION' AND date(created_at) >= Date(:date) AND date(created_at) < Date(:date_to)"),
+        $commission = DB::connection('dpaisa')->select(DB::connection('dpaisa')->raw("SELECT SUM(amount/100) as commission_total  FROM `transaction_events` WHERE `service_type` LIKE 'COMMISSION' AND date(created_at) >= Date(:date) AND date(created_at) <= Date(:date_to)"),
             array('date' => $date, 'date_to' => $date_to)
         );
 
-        $lucky_winner = DB::connection('dpaisa')->select(DB::connection('dpaisa')->raw("SELECT SUM(amount/100) as lucky_winner_total  FROM `transaction_events` WHERE `service_type` LIKE 'LUCKY WINNER' AND date(created_at) >= Date(:date) AND date(created_at) < Date(:date_to)"),
+        $lucky_winner = DB::connection('dpaisa')->select(DB::connection('dpaisa')->raw("SELECT SUM(amount/100) as lucky_winner_total  FROM `transaction_events` WHERE `service_type` LIKE 'LUCKY WINNER' AND date(created_at) >= Date(:date) AND date(created_at) <= Date(:date_to)"),
             array('date' => $date, 'date_to' => $date_to)
         );
         if($lucky_winner[0]->lucky_winner_total == null){
@@ -204,7 +204,7 @@ class WalletReportController extends Controller
 
 
         $closing_balance = DB::connection('dpaisa')->select(DB::connection('dpaisa')->raw("SELECT SUM(transaction_events.bonus_balance/100+transaction_events.balance/100) as closing_balance FROM ( SELECT user_id, MAX(created_at) as max_created_at, MAX(id) as max_id FROM transaction_events WHERE Date(created_at) < Date(:date) GROUP BY user_id ) AS latest_transactions JOIN transaction_events ON transaction_events.id = latest_transactions.max_id JOIN users ON users.id = latest_transactions.user_id;"),
-            array('date' => $date_to)
+            array('date' => $next_day)
         );
         //dd($closing_balance[0]);
 

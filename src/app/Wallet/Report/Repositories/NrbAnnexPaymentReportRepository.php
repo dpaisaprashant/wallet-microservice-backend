@@ -260,9 +260,8 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 RIGHT JOIN agents as a ON a.user_id = t.user_id
                                                                                 WHERE t.user_id = a.user_id and a.status = 'ACCEPTED'
                                                                                 AND
-                                                                                (t.transaction_type ='App\\\Wallet\\\Commission\\\Models\\\Commission'
-                                                                                 OR
-                                                                                 (t.transaction_type = 'App\\\Wallet\\Commission\\\Models\\\Commission' AND t.service_type='COMMISSION')
+                                                                                (
+                                                                                 (t.transaction_type = 'App\\\Wallet\\\Commission\\\Models\\\Commission' AND t.service_type='COMMISSION')
                                                                                 )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)
@@ -282,9 +281,8 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 RIGHT JOIN agents as a ON a.user_id = t.user_id
                                                                                 WHERE t.user_id = a.user_id and a.status = 'ACCEPTED'
                                                                                 AND
-                                                                                (t.transaction_type ='App\\\Wallet\\\Commission\\\Models\\\Commission'
-                                                                                 OR
-                                                                                 (t.transaction_type = 'App\\\Wallet\\Commission\\\Models\\\Commission' AND t.service_type='COMMISSION')
+                                                                                (
+                                                                                 (t.transaction_type = 'App\\\Wallet\\\Commission\\\Models\\\Commission' AND t.service_type='COMMISSION')
                                                                                 )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)

@@ -38,8 +38,7 @@ services:
       - php
       - mysql
       - phpmyadmin
-      - mongo
-      - mongo-express
+
     networks:
       - laravel
       - wallet-microservice-core_laravel
@@ -114,6 +113,8 @@ services:
     user: laravel
     networks:
       - laravel
+      - wallet-microservice-core_laravel
+      - wallet_clearance_laravel
     entrypoint: ['composer', '--ignore-platform-reqs']
 
   artisan:
@@ -130,6 +131,8 @@ services:
     entrypoint: ['php', '/var/www/html/artisan']
     networks:
       - laravel
+      - wallet-microservice-core_laravel
+      - wallet_clearance_laravel
 
   phpmyadmin:
     depends_on:
@@ -144,30 +147,5 @@ services:
       MYSQL_ROOT_PASSWORD: secret
     networks:
       - laravel
-
-  mongo:
-    container_name: mongo-backend
-    image: mongo
-    #    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
-    ports:
-      - "27019:27017"
-    restart: always
-    volumes:
-      - ./mongo:/data/db
-    networks:
-      - laravel
-
-  mongo-express:
-    container_name: mongo-express-backend
-    image: mongo-express
-    restart: always
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: password
-    ports:
-      - "5069:8081"
-    networks:
-      - laravel
+      - wallet-microservice-core_laravel
+      - wallet_clearance_laravel

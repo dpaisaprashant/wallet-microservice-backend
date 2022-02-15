@@ -61,20 +61,21 @@
                                 <thead>
                                     <tr>
                                     <th>S.N</th>
-                                    <th>pre_transaction_id</th>
-                                    <th>vendor</th>
-                                    <th>service_type</th>
-                                    <th>commissionable_id</th>
-                                    <th>debit</th>
-                                    <th>credit</th>
-                                    <th>amount</th>
-                                    <th>balance</th>
-                                    <th>bonus_balance</th>
-                                    <th>created_at</th>
-                                    <th>status</th>
-                                    <th>total_balance</th>
-                                    <th>check</th>
-                                    <th>difference</th>
+                                    <th>Pre transaction id</th>
+                                    <th>Vendor</th>
+                                    <th>Service type</th>
+                                    <th>Commission Id</th>
+                                    <th>Debit</th>
+                                    <th>Credit</th>
+                                    <th>Amount</th>
+                                    <th>Balance</th>
+                                    <th>Bonus balance</th>
+                                    <th>Created_at</th>
+                                    <th>Status</th>
+                                    <th>Total balance</th>
+                                    <th>Check</th>
+                                    <th>Difference</th>
+                                    <th>Description</th>
                                 </tr>
                                 </thead>
                                 <?php
@@ -83,6 +84,10 @@
                                 ?>
                                 @foreach($data['audit'] as $audit)
                                     <?php
+
+                                    $description = \App\Models\Microservice\PreTransaction::where('pre_transaction_id','=',$audit->pre_transaction_id)->pluck('description');
+
+//                                    dd($description);
 
                                     $actual_balance = round($audit->balance, 2) + round($audit->bonus_balance, 2);
                                     if ($audit->status == 'SUCCESS') {
@@ -156,6 +161,7 @@
                                         <td>{{$actual_balance}}</td>
                                         <td>{{$expected_balance}}</td>
                                         <td>{{$differece}}</td>
+                                        <td>{{$description[0] ?? "---"}}</td>
                                     </tr>
                                     <?php $i++ ?>
                                 @endforeach

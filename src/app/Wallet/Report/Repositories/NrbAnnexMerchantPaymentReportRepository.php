@@ -260,7 +260,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
     public function getFailedTopUpCount()
     {
         $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
-                                                                               WHERE (microservice_type='KHALTI' OR microservice_type='NTC' OR vendor='PAYPOINT') AND status='SUCCESS' AND
+                                                                               WHERE (microservice_type='KHALTI' OR microservice_type='NTC' OR vendor='PAYPOINT') AND status!='SUCCESS' AND
                                                                             ((service_type='NTC_PREPAID')
                                                                                 OR
                                                                              (service_type='NTC_POSTPAID')

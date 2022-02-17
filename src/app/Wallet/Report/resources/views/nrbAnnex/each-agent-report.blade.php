@@ -134,7 +134,7 @@
                                                 <hr>
                                                 {{$nrbAgentReport['totalTransferToWalletCount']}}<br>
                                                 <hr>
-                                                {{$nrbAgentReport['totalTransferToBankCount']}}<BR>
+                                                {{$nrbAgentReport['totalTransferToBankCount']}}<br>
                                                 <hr>
                                                 {{$nrbAgentReport['totalCashInCount']}}<br>
                                                 <hr>
@@ -145,7 +145,7 @@
                                                 <hr>
                                                 {{$nrbAgentReport['totalTransferToWalletAmount']}}<br>
                                                 <hr>
-                                                {{$nrbAgentReport['totalTransferToBankAmount']}}<BR>
+                                                {{$nrbAgentReport['totalTransferToBankAmount']}}<br>
                                                 <hr>
                                                 {{$nrbAgentReport['totalCashInAmount']}}<br>
                                                 <hr>

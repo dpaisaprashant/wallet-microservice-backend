@@ -11,6 +11,7 @@ use App\Wallet\Report\Repositories\NrbAnnexAgentPaymentReportRepository;
 use App\Wallet\Report\Repositories\NrbAnnexCustomerPaymentReportRepository;
 use App\Wallet\Report\Repositories\NrbAnnexMerchantPaymentReportRepository;
 use App\Wallet\Report\Repositories\NrbAnnexPaymentReportRepository;
+use App\Wallet\Report\Repositories\NrbEachAgentReportRepository;
 use App\Wallet\Report\Repositories\StatementSettlementBankRepository;
 use App\Wallet\WalletAPI\Microservice\WalletClearanceMicroService;
 use Illuminate\Http\Request;
@@ -412,7 +413,7 @@ class NRBAnnexReportController extends Controller
         $fromDate = date('Y-m-d', strtotime(str_replace(',', ' ', $request->from)));
         $toDate = date('Y-m-d', strtotime(str_replace(',', ' ', $request->to)));
         $walletClearanceResponses = DB::connection('clearance')->table('agent_reports')->where('from_date', $fromDate)->where('to_date', $toDate)->get();
-        $agentPaymentReports=[];
+        $agentPaymentReports = [];
         foreach ($walletClearanceResponses as $response) {
             $agentPaymentReports[] = [
                 'agent_name' => $response->agent_name,
@@ -428,5 +429,57 @@ class NRBAnnexReportController extends Controller
         }
 
         return view('WalletReport::nrbAnnex.agent-payment-report')->with(compact('agentPaymentReports'));
+    }
+
+    public function eachAgentReport(Request $request)
+    {
+        if ($request->all() == null) {
+            return view('WalletReport::nrbAnnex.each-agent-report');
+        }
+
+        $repository = new NrbEachAgentReportRepository($request);
+
+        $check = $repository->checkForReport();
+
+        if ($check == null) {
+            $walletClearance = new WalletClearanceMicroService();
+
+            $walletClearanceResponse = $walletClearance->dispatchNrbAgentReportJobs(request());
+            $agentPaymentReports = 'The report is being generated. Please check in at another time. Current Status: Starting Report Generation ....';
+
+            return view('WalletReport::nrbAnnex.each-agent-report', compact('agentPaymentReports'));
+        }
+        if ($check) {
+            if ($check->status == "PROCESSING") {
+                $agentPaymentReports = 'The report is being generated. Please check in at another time. Current Status: Processing Report Generation ....';
+                return view('WalletReport::nrbAnnex.each-agent-report', compact('agentPaymentReports'));
+            }
+        }
+
+        $fromDate = date('Y-m-d', strtotime(str_replace(',', ' ', $request->from_date)));
+        $toDate = date('Y-m-d', strtotime(str_replace(',', ' ', $request->to_date)));
+        $walletClearanceResponses = DB::connection('clearance')->table('nrb_agent_reports')->where('from_date', $fromDate)->where('to_date', $toDate)->get();
+        $nrbAgentReports = [];
+        foreach ($walletClearanceResponses as $response) {
+            $nrbAgentReports[] = [
+                'agent_name' => $response->name,
+                'agent_code' => $response->reference_code,
+                'user_id' => $response->user_id,
+                'totalTopUpCount' => $response->totalTopUpCount,
+                'totalTopUpAmount' => $response->totalTopUpAmount,
+                'totalTransferToWalletCount' => $response->totalTransferToWalletCount,
+                'totalTransferToWalletAmount' => $response->totalTransferToWalletAmount,
+                'totalTransferToBankCount' => $response->totalTransferToBankCount,
+                'totalTransferToBankAmount' => $response->totalTransferToBankAmount,
+                'totalCashInCount' => $response->totalCashInCount,
+                'totalCashInAmount' => $response->totalCashInAmount,
+                'totalCashOutCount' => $response->totalCashOutCount,
+                'totalCashOutAmount' => $response->totalCashOutAmount,
+                'totalMerchantPaymentCount' => $response->totalMerchantPaymentCount,
+                'totalMerchantPaymentAmount' => $response->totalMerchantPaymentAmount,
+            ];
+        }
+
+        return view('WalletReport::nrbAnnex.each-agent-report', compact('nrbAgentReports'));
     }
 }

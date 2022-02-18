@@ -206,7 +206,7 @@ Route::group(['prefix' => 'admin'], function () {
          * Transactions
          */
         Route::get('transaction/complete', 'TransactionController@complete')->name('transaction.complete')->middleware('permission:Complete transaction view');
-            Route::get('transaction/complete-user-list', 'TransactionController@completeUserList')->name('transaction.complete.user')->middleware('permission:Complete transaction view');
+        Route::get('transaction/complete-user-list', 'TransactionController@completeUserList')->name('transaction.complete.user')->middleware('permission:Complete transaction view');
 
         //Fund Request
         Route::get('/transaction/fund-request' , 'TransactionController@fundRequest')->name('fundRequest')->middleware('permission:Fund request view');
@@ -270,6 +270,13 @@ Route::group(['prefix' => 'admin'], function () {
         //MerchantTransactions
         Route::get('/transaction/merchant-transaction','MerchantTransactionController@index')->name('merchant-transaction.index')->middleware('permission:Merchant revenue view');
         Route::get('/transaction/merchant-transaction/detail/{id}','MerchantTransactionController@detail')->name('merchant-transaction.detail')->middleware('permission:Merchant revenue view');
+
+        //Ticket Sales Report
+        Route::get('/transactions/ticketSalesReport','TransactionController@ticketSalesReport')->name('transactions.ticketSalesReport');
+
+        //Load Test Fund Report
+        Route::get('/transactions/loadTestFundReport','TransactionController@loadTestFundReport')->name('transactions.loadTestFundReport');
+
         /**
          * Clearance
          */
@@ -522,6 +529,11 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/excel/dpaisa-npay-audit-trial', 'ExcelExportController@dpaisaNPayAuditTrail')->name('npayAuditTrail.excel');
         Route::get('/excel/dpaisa-paypoint-audit-trial', 'ExcelExportController@dpaisaPPAuditTrail')->name('ppAuditTrail.excel');
 
+        // ticket Sales Report
+        Route::get('/excel/ticket_sales_report','ExcelExportController@ticketSalesReport')->name('ticket_sales_report.excel')->middleware('permission:View ticket sale report');
+
+        //load test fund report
+        Route::get('/excel/load_test_fund_report','ExcelExportController@loadTestFundReport')->name('load_test_fund_report.excel')->middleware('permission:View load test fund report');
 
         /**
          * General Settings

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\KhaltiUserTransaction;
+use App\Models\LoadTestFund;
+use App\Models\TicketSale;
+use App\Models\TransactionEvent;
 use App\Models\User;
 use App\Wallet\FundRequest\Repository\FundRequestRepository;
 use App\Wallet\FundTransfer\Repository\FundTransferRepository;
@@ -19,6 +22,7 @@ use App\Wallet\User\Repositories\UserRepository;
 use App\Wallet\User\Repositories\UserTotalTransactionRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 
 class TransactionController extends Controller
@@ -243,4 +247,50 @@ class TransactionController extends Controller
             ->with(compact('users'));
 
     }
+
+    public function ticketSalesReport(Request $request){
+//      $ticket_sales_report =  DB::connection('dpaisa')->select(DB::raw('
+//            SELECT t.pre_transaction_id, u.name, u.mobile_no, u.email, (t.amount/100) AS "amount(Rs.)", t.created_at
+//            FROM transaction_events AS t
+//            JOIN users as u
+//            ON t.user_id = u.id
+//            WHERE refund_id IS NOT NULL
+//            AND t.transaction_type LIKE 'App\\\\Models\\\\TicketSale'
+//            AND date(t.created_at) <= date('2022-02-15');
+//      '));
+
+        //orWhere('name', 'like', '%' . Input::get('name') . '%')
+
+//         ->with(['user' => function ($query) {
+//        $query->select('id', 'username');
+        //select('pre_transaction_id','amount','created_at')
+//        'user:id,name,email,mobile_no'
+//    }])
+      $request->merge(['transaction_type'=>TicketSale::class]);
+      $ticket_sales_reports = TransactionEvent::with('user')
+          ->whereNull('refund_id')
+          ->filter($request)
+          ->get();
+      return view('admin.transaction.ticketSalesReport.ticketSalesReport')->with(compact('ticket_sales_reports'));
+    }
+
+    public function loadTestFundReport(Request $request){
+        //SELECT t.pre_transaction_id, u.name, u.mobile_no, u.email, (t.amount/100) AS "amount(Rs.)", t.created_at
+        //FROM transaction_events AS t
+        //JOIN users as u
+        //ON t.user_id = u.id
+        //WHERE t.transaction_type LIKE 'App\\\\Models\\\\LoadTestFund'
+        //AND t.service_type LIKE 'LUCKY WINNER'
+        //AND date(t.created_at) <= date('2022-02-15');
+
+        $request->merge(['transaction_type'=>LoadTestFund::class,'service'=>'LUCKY WINNER']);
+        $load_test_fund_reports = TransactionEvent::with('user')
+            ->filter($request)
+            ->get();
+
+        return view('admin.transaction.loadTestFundReport.loadTestFundReport')->with(compact('load_test_fund_reports'));
+    }
+
+
+
 }

@@ -23,6 +23,7 @@ class NRBAnnexReportController extends Controller
 
     public function agentReport(Request $request)
     {
+        //10.1.5 agent report
         if ($request->all() != NULL) {
             $amountRange = json_decode($request->amount_range);
             $fromAmount = $request->fromAmount;
@@ -89,6 +90,7 @@ class NRBAnnexReportController extends Controller
 
     public function customerReport(Request $request)
     {
+        //10.1.5 initiated customer report
         if ($request->all() != NULL) {
             $amountRange = json_decode($request->amount_range);
             $fromAmount = $request->fromAmount;
@@ -139,65 +141,9 @@ class NRBAnnexReportController extends Controller
                 'value' => $repository->getServiceRefundValue() ?? 0,
             ],
 
-            'Others' => [
-                'number' => 0,
-                'value' => 0,
-            ]
-        ];
-
-        return view('WalletReport::nrbAnnex.transaction-report-customer')->with(compact('nrbAnnexCustomerPayments'));
-    }
-
-    public function customerReportDetails(Request $request)
-    {
-        if ($request->all() != NULL) {
-            $amountRange = json_decode($request->amount_range);
-            $fromAmount = $amountRange->fromAmount;
-            $toAmount = $amountRange->toAmount;
-            $request->merge(['fromAmount' => $fromAmount, 'toAmount' => $toAmount]);
-        }
-
-        $repository = new NrbAnnexCustomerPaymentReportRepository($request);
-
-        $nrbAnnexCustomerPayments = [
-            'Range of Transactions' => [
-                'number' => $repository->getBillPaymentCount(),
-                'value' => ($repository->getBillPaymentValue()) ?? 0
-            ],
-
-            'Form of Transaction' => [
-                'number' => $repository->getTransferCount(),
-                'value' => ($repository->getTransferValue()) ?? 0,
-            ],
-
-            'Cash In (wallet load)' => [
-                'number' => $repository->getCashInCount(),
-                'value' => ($repository->getCashInValue()) ?? 0
-            ],
-
-            'Offer/Cashback/Coupon' => [
-                'number' => $repository->getOfferNumber(),
-                'value' => ($repository->getOfferValue()) ?? 0
-            ],
-
-            'Fees and Charges' => [
-                'number' => $repository->getFeesChargesNumber(),
-                'value' => ($repository->getFeesChargesValue()) ?? 0
-            ],
-
-            'Cash Out' => [
-                'number' => $repository->getCashOutNumber(),
-                'value' => ($repository->getCashOutValue()) ?? 0,
-            ],
-
-            'QR Payment' => [
-                'number' => $repository->getQRPaymentCount(),
-                'value' => $repository->getQRPaymentValue() ?? 0,
-            ],
-
-            'Service Refund' => [
-                'number' => $repository->getServiceRefundCount(),
-                'value' => $repository->getServiceRefundValue() ?? 0,
+            'Government Payments' => [
+                'number' => $repository->getGovernmentPaymentCount(),
+                'value' => $repository->getGovernmentPaymentValue() ?? 0,
             ],
 
             'Others' => [
@@ -208,10 +154,73 @@ class NRBAnnexReportController extends Controller
 
         return view('WalletReport::nrbAnnex.transaction-report-customer')->with(compact('nrbAnnexCustomerPayments'));
     }
+
+//    public function customerReportDetails(Request $request)
+//    {
+//        if ($request->all() != NULL) {
+//            $amountRange = json_decode($request->amount_range);
+//            $fromAmount = $amountRange->fromAmount;
+//            $toAmount = $amountRange->toAmount;
+//            $request->merge(['fromAmount' => $fromAmount, 'toAmount' => $toAmount]);
+//        }
+//
+//        $repository = new NrbAnnexCustomerPaymentReportRepository($request);
+//
+//        $nrbAnnexCustomerPayments = [
+//            'Range of Transactions' => [
+//                'number' => $repository->getBillPaymentCount(),
+//                'value' => ($repository->getBillPaymentValue()) ?? 0
+//            ],
+//
+//            'Form of Transaction' => [
+//                'number' => $repository->getTransferCount(),
+//                'value' => ($repository->getTransferValue()) ?? 0,
+//            ],
+//
+//            'Cash In (wallet load)' => [
+//                'number' => $repository->getCashInCount(),
+//                'value' => ($repository->getCashInValue()) ?? 0
+//            ],
+//
+//            'Offer/Cashback/Coupon' => [
+//                'number' => $repository->getOfferNumber(),
+//                'value' => ($repository->getOfferValue()) ?? 0
+//            ],
+//
+//            'Fees and Charges' => [
+//                'number' => $repository->getFeesChargesNumber(),
+//                'value' => ($repository->getFeesChargesValue()) ?? 0
+//            ],
+//
+//            'Cash Out' => [
+//                'number' => $repository->getCashOutNumber(),
+//                'value' => ($repository->getCashOutValue()) ?? 0,
+//            ],
+//
+//            'QR Payment' => [
+//                'number' => $repository->getQRPaymentCount(),
+//                'value' => $repository->getQRPaymentValue() ?? 0,
+//            ],
+//
+//            'Service Refund' => [
+//                'number' => $repository->getServiceRefundCount(),
+//                'value' => $repository->getServiceRefundValue() ?? 0,
+//            ],
+//
+//            'Others' => [
+//                'number' => 0,
+//                'value' => 0,
+//            ]
+//        ];
+//
+//        return view('WalletReport::nrbAnnex.transaction-report-customer')->with(compact('nrbAnnexCustomerPayments'));
+//    }
 
 
     public function merchantReport(Request $request)
     {
+        //NRB Annex 10.1.6 Report
+
 //        if ($request->all() != NULL) {
 //            $amountRange = json_decode($request->amount_range);
 //            $fromAmount = $amountRange->fromAmount;

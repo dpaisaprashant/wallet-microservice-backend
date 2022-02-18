@@ -459,5 +459,49 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
         return $serviceRefundValue;
     }
 
+    public function getGovernmentPaymentCount()
+    {
+        $govPaymentCount = DB::connection('dpaisa')->select("SELECT COUNT(t.amount/100) as totalCount
+                                                                                FROM transaction_events t
+                                                                                LEFT JOIN temp_agents a ON a.user_id = t.user_id
+                                                                                WHERE a.user_id IS NULL
+                                                                                AND
+                                                                                (
+                                                                                    t.transaction_type ='App\\\Models\\\NchlAggregatedPayment'
+                                                                                 )
+                                                                                AND
+                                                                                date(t.created_at) >= date(:fromDate)
+                                                                                AND
+                                                                                date(t.created_at) <= date(:toDate)
+                                                                                AND
+                                                                                (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+
+        $govPaymentCount = $govPaymentCount[0]->totalCount;
+        return $govPaymentCount;
+    }
+
+    public function getGovernmentPaymentValue()
+    {
+        $serviceRefundValue = DB::connection('dpaisa')->select("SELECT SUM(t.amount/100) as totalSum
+                                                                                FROM transaction_events t
+                                                                                LEFT JOIN temp_agents a ON a.user_id = t.user_id
+                                                                                WHERE a.user_id IS NULL
+                                                                                AND
+                                                                                (
+                                                                                    t.transaction_type ='App\\\Models\\\NchlAggregatedPayment'
+                                                                                 )
+                                                                                AND
+                                                                                date(t.created_at) >= date(:fromDate)
+                                                                                AND
+                                                                                date(t.created_at) <= date(:toDate)
+                                                                                AND
+                                                                                (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+
+        $serviceRefundValue = $serviceRefundValue[0]->totalSum;
+        return $serviceRefundValue;
+    }
+
 
 }

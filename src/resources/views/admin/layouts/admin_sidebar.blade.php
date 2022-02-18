@@ -367,7 +367,7 @@ $url = url()->current();
                 </li>
             @endif
 
-            {{-- <li @if(preg_match('/load-test/i', $url)) class="active" @endif>
+             <li @if(preg_match('/load-test/i', $url)) class="active" @endif>
                  <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Load Test Funds</span><span
                          class="fa arrow"></span></a>
                  <ul class="nav nav-second-level collapse">
@@ -375,9 +375,9 @@ $url = url()->current();
 
                      <li><a href="{{ route('loadTestFund.create') }}">Create Load Test Funds</a></li>
                  </ul>
-             </li>--}}
+             </li>
 
-            {{--<li @if(preg_match('/load-for-paypoint/i', $url)) class="active" @endif>
+            <li @if(preg_match('/load-for-paypoint/i', $url)) class="active" @endif>
                 <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Load For Paypoint</span><span
                         class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
@@ -385,7 +385,9 @@ $url = url()->current();
 
                     <li><a href="{{ route('paypoint.loadTestFund.create') }}">Create Load For Paypoint</a></li>
                 </ul>
-            </li>--}}
+            </li>
+
+
             @if(auth()->user()->hasPermissionTo('Refund view') || auth()->user()->hasPermissionTo('Refund create'))
                 <li @if(preg_match('/refund/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Refund</span><span
@@ -408,6 +410,18 @@ $url = url()->current();
                     </ul>
                 </li>
             @endif
+
+{{--            todo: add permissions--}}
+{{--                <li @if(preg_match('/fund-withdraw/i', $url)) class="active" @endif>--}}
+{{--                    <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Fund Withdraw</span><span--}}
+{{--                            class="fa arrow"></span></a>--}}
+{{--                    <ul class="nav nav-second-level collapse">--}}
+{{--                            <li><a href="{{route('fund-withdraw,index')}}">View Fund Withdraws</a></li>--}}
+{{--                            <li><a href="{{route('fund-withdraw.create')}}">Create Fund Withdraw</a></li>--}}
+{{--                    </ul>--}}
+{{--                </li>--}}
+{{--            todo: add permissions--}}
+
 
             @if(auth()->user()->hasPermissionTo('Lucky winner view') || auth()->user()->hasPermissionTo('Lucky winner create'))
                 <li @if(preg_match('/lucky/i', $url)) class="active" @endif>
@@ -480,6 +494,14 @@ $url = url()->current();
                     <a href="#"><i class="fa fa-credit-card"></i> <span class="nav-label">Transactions</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
+
+                        @can('View ticket sale report')
+                            <li><a href="{{route('transactions.ticketSalesReport')}}">Ticket Sales Report</a></li>
+                        @endcan
+
+                        @can('View load test fund report')
+                            <li><a href="{{route('transactions.loadTestFundReport')}}">Load Test Fund Report</a></li>
+                        @endcan
 
                         @can('Complete transaction view')
                             <li><a href="{{ route('transaction.complete') }}">Complete Transactions</a></li>
@@ -805,6 +827,10 @@ $url = url()->current();
 {{--                        @endcan--}}
                         @can('Agent details view')
                             <li><a href="{{route('agent.detail')}}">22 Part Three Agent Details</a></li>
+                        @endcan
+
+                        @can('Nrb each agent report view')
+                            <li><a href="{{route('report.nrb.annex.agent.each')}}">22 Part Four Agents Details</a></li>
                         @endcan
                     </ul>
                 </li>

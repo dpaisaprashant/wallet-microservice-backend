@@ -20,7 +20,6 @@ class MiscReportController extends Controller
 
         $luckyWinners = $repository->luckyWinner();
 
-//        dd($luckyWinners);
         return view('WalletReport::luckyWinner.lucky-winner-report')->with(compact('luckyWinners'));
     }
 

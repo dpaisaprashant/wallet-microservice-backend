@@ -27,9 +27,26 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
     public function getSuccessfulMerchantPaymentCount()
     {
         $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM `pre_transactions` WHERE status='SUCCESS' AND id NOT IN (SELECT id FROM  `pre_transactions`
-                                                                            WHERE
-                                                                              vendor LIKE 'PAYPOINT' AND
-                                                                             ((company_code=78 AND service_code=0)
+                                                                               WHERE (microservice_type='KHALTI' OR microservice_type='NTC' OR vendor='PAYPOINT') AND
+                                                                            ((service_type='NTC_PREPAID')
+                                                                                OR
+                                                                             (service_type='NTC_POSTPAID')
+                                                                                OR
+                                                                             (service_type='NTC_DATA')
+                                                                                OR
+                                                                             (service_type='NTC_EPIN')
+                                                                                OR
+                                                                             (service_type='NCELL')
+                                                                                OR
+                                                                             (service_type='NCELL_DATA_PACK')
+                                                                                OR
+                                                                             (service_type='NCELL_EPIN')
+                                                                                OR
+                                                                             (service_type='SMARTCELL_TOPUP')
+                                                                                OR
+                                                                             (service_type='SMARTCELL_EPIN')
+                                                                                OR
+                                                                             (company_code=78 AND service_code=0)
                                                                                 OR
                                                                              (company_code=585 AND service_code=0)
                                                                                 OR
@@ -60,9 +77,26 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
     public function getFailedMerchantPaymentCount()
     {
         $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM `pre_transactions` WHERE status!='SUCCESS' AND id NOT IN (SELECT id FROM  `pre_transactions`
-                                                                            WHERE
-                                                                              vendor LIKE 'PAYPOINT' AND
-                                                                             ((company_code=78 AND service_code=0)
+                                                                               WHERE (microservice_type='KHALTI' OR microservice_type='NTC' OR vendor='PAYPOINT') AND
+                                                                            ((service_type='NTC_PREPAID')
+                                                                                OR
+                                                                             (service_type='NTC_POSTPAID')
+                                                                                OR
+                                                                             (service_type='NTC_DATA')
+                                                                                OR
+                                                                             (service_type='NTC_EPIN')
+                                                                                OR
+                                                                             (service_type='NCELL')
+                                                                                OR
+                                                                             (service_type='NCELL_DATA_PACK')
+                                                                                OR
+                                                                             (service_type='NCELL_EPIN')
+                                                                                OR
+                                                                             (service_type='SMARTCELL_TOPUP')
+                                                                                OR
+                                                                             (service_type='SMARTCELL_EPIN')
+                                                                                OR
+                                                                             (company_code=78 AND service_code=0)
                                                                                 OR
                                                                              (company_code=585 AND service_code=0)
                                                                                 OR
@@ -204,9 +238,26 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
 
 
         $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
-                                                                            WHERE
-                                                                              vendor LIKE 'PAYPOINT' AND status='SUCCESS' AND
-                                                                             ((company_code=78 AND service_code=0)
+                                                                               WHERE (microservice_type='KHALTI' OR microservice_type='NTC' OR vendor='PAYPOINT') AND status='SUCCESS' AND
+                                                                            ((service_type='NTC_PREPAID')
+                                                                                OR
+                                                                             (service_type='NTC_POSTPAID')
+                                                                                OR
+                                                                             (service_type='NTC_DATA')
+                                                                                OR
+                                                                             (service_type='NTC_EPIN')
+                                                                                OR
+                                                                             (service_type='NCELL')
+                                                                                OR
+                                                                             (service_type='NCELL_DATA_PACK')
+                                                                                OR
+                                                                             (service_type='NCELL_EPIN')
+                                                                                OR
+                                                                             (service_type='SMARTCELL_TOPUP')
+                                                                                OR
+                                                                             (service_type='SMARTCELL_EPIN')
+                                                                                OR
+                                                                             (company_code=78 AND service_code=0)
                                                                                 OR
                                                                              (company_code=585 AND service_code=0)
                                                                                 OR
@@ -226,8 +277,6 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
                                                                             AND
                                                                             date(created_at) <= date(:toDate)
                                                                                ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
-
-
         $count = $count[0]->totalCount;
         return $count;
     }
@@ -235,9 +284,26 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
     public function getFailedPaypointCount()
     {
         $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
-                                                                            WHERE
-                                                                              vendor LIKE 'PAYPOINT' AND status!='SUCCESS' AND
-                                                                             ((company_code=78 AND service_code=0)
+                                                                               WHERE (microservice_type='KHALTI' OR microservice_type='NTC' OR vendor='PAYPOINT') AND status!='SUCCESS' AND
+                                                                            ((service_type='NTC_PREPAID')
+                                                                                OR
+                                                                             (service_type='NTC_POSTPAID')
+                                                                                OR
+                                                                             (service_type='NTC_DATA')
+                                                                                OR
+                                                                             (service_type='NTC_EPIN')
+                                                                                OR
+                                                                             (service_type='NCELL')
+                                                                                OR
+                                                                             (service_type='NCELL_DATA_PACK')
+                                                                                OR
+                                                                             (service_type='NCELL_EPIN')
+                                                                                OR
+                                                                             (service_type='SMARTCELL_TOPUP')
+                                                                                OR
+                                                                             (service_type='SMARTCELL_EPIN')
+                                                                                OR
+                                                                             (company_code=78 AND service_code=0)
                                                                                 OR
                                                                              (company_code=585 AND service_code=0)
                                                                                 OR
@@ -265,7 +331,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
     {
         $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
                                                                             WHERE
-                                                                            ((service_type='NPS_LOAD'  AND status = 'SUCCESS')
+                                                                           ((service_type='NPS_LOAD'  AND status = 'SUCCESS')
                                                                             OR
                                                                             (service_type='NCHL_LOAD'  AND status = 'SUCCESS')
                                                                             OR
@@ -331,8 +397,18 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
 
     public function getFailedCashOutCount()
     {
-        return 0;
 //user to agent
+//        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
+//                                                                            WHERE
+//                                                                            service_type='BANK_TRANSFER'  AND status != 'SUCCESS'
+//                                                                            AND
+//                                                                            date(created_at) >= date(:fromDate)
+//                                                                            AND
+//                                                                            date(created_at) <= date(:toDate)
+//                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
+//        $count = $count[0]->totalCount;
+        return 0;
+
     }
 
 }

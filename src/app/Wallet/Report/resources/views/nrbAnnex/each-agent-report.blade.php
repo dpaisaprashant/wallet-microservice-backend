@@ -100,61 +100,68 @@
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover dataTables-example"
-                                       title="Non bank payment report">
-                                    <thead>
-                                    <tr>
-                                        <th>S.No.</th>
-                                        <th>Agent Code</th>
-                                        <th>Agent Name</th>
-                                        <th>Over the counter transaction type</th>
-                                        <th>Number of Transactions</th>
-                                        <th>Amount</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($nrbAgentReports as $nrbAgentReport)
+                                @if(!is_array($nrbAgentReports))
+                                    <div class="alert alert-warning">
+                                        <i class="fa fa-info-circle"></i>
+                                        {{$nrbAgentReports}}
+                                    </div>
+                                @else
+                                    <table class="table table-striped table-bordered table-hover dataTables-example"
+                                           title="Non bank payment report">
+                                        <thead>
                                         <tr>
-                                            <td>{{$loop->index+1}}</td>
-                                            <td>{{$nrbAgentReport['agent_code']}}</td>
-                                            <td>{{$nrbAgentReport['agent_name']}}</td>
-                                            <td>
-                                                TOPUP <br>
-                                                <hr>
-                                                TRANSFER TO WALLET <br>
-                                                <hr>
-                                                TRANSFER TO BANK<br>
-                                                <hr>
-                                                CASH IN<br>
-                                                <hr>
-                                                CASH OUT
-                                            </td>
-                                            <td>
-                                                {{$nrbAgentReport['totalTopUpCount']}}<br>
-                                                <hr>
-                                                {{$nrbAgentReport['totalTransferToWalletCount']}}<br>
-                                                <hr>
-                                                {{$nrbAgentReport['totalTransferToBankCount']}}<br>
-                                                <hr>
-                                                {{$nrbAgentReport['totalCashInCount']}}<br>
-                                                <hr>
-                                                {{$nrbAgentReport['totalCashOutCount']}}
-                                            </td>
-                                            <td>
-                                                {{$nrbAgentReport['totalTopUpAmount']}}<br>
-                                                <hr>
-                                                {{$nrbAgentReport['totalTransferToWalletAmount']}}<br>
-                                                <hr>
-                                                {{$nrbAgentReport['totalTransferToBankAmount']}}<br>
-                                                <hr>
-                                                {{$nrbAgentReport['totalCashInAmount']}}<br>
-                                                <hr>
-                                                {{$nrbAgentReport['totalCashOutAmount'] ?? 0}}
-                                            </td>
+                                            <th>S.No.</th>
+                                            <th>Agent Code</th>
+                                            <th>Agent Name</th>
+                                            <th>Over the counter transaction type</th>
+                                            <th>Number of Transactions</th>
+                                            <th>Amount (Rs.)</th>
                                         </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($nrbAgentReports as $nrbAgentReport)
+                                            <tr>
+                                                <td>{{$loop->index+1}}</td>
+                                                <td>{{$nrbAgentReport['agent_code']}}</td>
+                                                <td>{{$nrbAgentReport['agent_name']}}</td>
+                                                <td>
+                                                    TOPUP <br>
+                                                    <hr>
+                                                    TRANSFER TO WALLET <br>
+                                                    <hr>
+                                                    TRANSFER TO BANK<br>
+                                                    <hr>
+                                                    CASH IN<br>
+                                                    <hr>
+                                                    CASH OUT
+                                                </td>
+                                                <td>
+                                                    {{$nrbAgentReport['totalTopUpCount']}}<br>
+                                                    <hr>
+                                                    {{$nrbAgentReport['totalTransferToWalletCount']}}<br>
+                                                    <hr>
+                                                    {{$nrbAgentReport['totalTransferToBankCount']}}<br>
+                                                    <hr>
+                                                    {{$nrbAgentReport['totalCashInCount']}}<br>
+                                                    <hr>
+                                                    {{$nrbAgentReport['totalCashOutCount']}}
+                                                </td>
+                                                <td>
+                                                    {{$nrbAgentReport['totalTopUpAmount']}}<br>
+                                                    <hr>
+                                                    {{$nrbAgentReport['totalTransferToWalletAmount']}}<br>
+                                                    <hr>
+                                                    {{$nrbAgentReport['totalTransferToBankAmount']}}<br>
+                                                    <hr>
+                                                    {{$nrbAgentReport['totalCashInAmount']}}<br>
+                                                    <hr>
+                                                    {{$nrbAgentReport['totalCashOutAmount'] ?? 0}}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                @endif
                             </div>
                         </div>
                     </div>

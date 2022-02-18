@@ -815,6 +815,10 @@ $url = url()->current();
                         @can('Agent details view')
                             <li><a href="{{route('agent.detail')}}">22 Part Three Agent Details</a></li>
                         @endcan
+
+                        @can('Nrb each agent report view')
+                            <li><a href="{{route('report.nrb.annex.agent.each')}}">22 Part Four Agents Details</a></li>
+                        @endcan
                     </ul>
                 </li>
             @endif

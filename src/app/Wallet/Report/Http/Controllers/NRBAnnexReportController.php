@@ -445,14 +445,14 @@ class NRBAnnexReportController extends Controller
             $walletClearance = new WalletClearanceMicroService();
 
             $walletClearanceResponse = $walletClearance->dispatchNrbAgentReportJobs(request());
-            $agentPaymentReports = 'The report is being generated. Please check in at another time. Current Status: Starting Report Generation ....';
+            $nrbAgentReports = 'The report is being generated. Please check in at another time. Current Status: Starting Report Generation ....';
 
-            return view('WalletReport::nrbAnnex.each-agent-report', compact('agentPaymentReports'));
+            return view('WalletReport::nrbAnnex.each-agent-report', compact('nrbAgentReports'));
         }
         if ($check) {
             if ($check->status == "PROCESSING") {
-                $agentPaymentReports = 'The report is being generated. Please check in at another time. Current Status: Processing Report Generation ....';
-                return view('WalletReport::nrbAnnex.each-agent-report', compact('agentPaymentReports'));
+                $nrbAgentReports = 'The report is being generated. Please check in at another time. Current Status: Processing Report Generation ....';
+                return view('WalletReport::nrbAnnex.each-agent-report', compact('nrbAgentReports'));
             }
         }
 
@@ -466,17 +466,17 @@ class NRBAnnexReportController extends Controller
                 'agent_code' => $response->reference_code,
                 'user_id' => $response->user_id,
                 'totalTopUpCount' => $response->totalTopUpCount,
-                'totalTopUpAmount' => $response->totalTopUpAmount,
+                'totalTopUpAmount' => ($response->totalTopUpAmount)/100,
                 'totalTransferToWalletCount' => $response->totalTransferToWalletCount,
-                'totalTransferToWalletAmount' => $response->totalTransferToWalletAmount,
+                'totalTransferToWalletAmount' => ($response->totalTransferToWalletAmount)/100,
                 'totalTransferToBankCount' => $response->totalTransferToBankCount,
-                'totalTransferToBankAmount' => $response->totalTransferToBankAmount,
+                'totalTransferToBankAmount' => ($response->totalTransferToBankAmount)/100,
                 'totalCashInCount' => $response->totalCashInCount,
-                'totalCashInAmount' => $response->totalCashInAmount,
+                'totalCashInAmount' =>( $response->totalCashInAmount)/100,
                 'totalCashOutCount' => $response->totalCashOutCount,
-                'totalCashOutAmount' => $response->totalCashOutAmount,
+                'totalCashOutAmount' => ($response->totalCashOutAmount)/100,
                 'totalMerchantPaymentCount' => $response->totalMerchantPaymentCount,
-                'totalMerchantPaymentAmount' => $response->totalMerchantPaymentAmount,
+                'totalMerchantPaymentAmount' => ($response->totalMerchantPaymentAmount)/100,
             ];
         }
 

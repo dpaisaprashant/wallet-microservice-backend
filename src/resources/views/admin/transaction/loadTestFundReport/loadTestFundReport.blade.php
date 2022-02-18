@@ -3,14 +3,14 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Load Test Fund Reports</h2>
+            <h2>Lucky Winner Reports</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Load Test Fund</strong>
+                    <strong>Lucky Winner</strong>
                 </li>
 
                 <li class="breadcrumb-item active">
@@ -138,7 +138,7 @@
                             {{--                            <h5><b>Total Fee Sum:</b> Rs. {{ $totalTransactionFeeSum }}</h5>--}}
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover dataTables-example"
-                                       title="Complete transactions list">
+                                       title="Lucky Winner Reports">
                                     <thead>
                                     <tr>
                                         <th>S.No.</th>

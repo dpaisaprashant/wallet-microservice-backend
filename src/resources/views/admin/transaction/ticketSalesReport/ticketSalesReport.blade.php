@@ -138,7 +138,7 @@
 {{--                            <h5><b>Total Fee Sum:</b> Rs. {{ $totalTransactionFeeSum }}</h5>--}}
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover dataTables-example"
-                                       title="Complete transactions list">
+                                       title="Ticket Sales Report">
                                     <thead>
                                     <tr>
                                         <th>S.No.</th>

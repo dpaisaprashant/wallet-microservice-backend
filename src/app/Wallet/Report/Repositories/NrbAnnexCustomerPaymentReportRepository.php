@@ -71,8 +71,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                     LEFT JOIN temp_agents a ON a.user_id = t.user_id
                     WHERE a.user_id IS NULL
                   AND
-                                                                                (t.transaction_type ='App\\\Models\\\NchlAggregatedPayment'
-                                                                                 OR
+                                                                                (
                                                                                  t.transaction_type = 'App\\\Models\\\KhaltiUserTransaction'
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\NeaTransaction'
@@ -106,8 +105,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                     LEFT JOIN temp_agents a ON a.user_id = t.user_id
                     WHERE a.user_id IS NULL
                    AND
-                                                                                (t.transaction_type ='App\\\Models\\\NchlAggregatedPayment'
-                                                                                 OR
+                                                                                (
                                                                                  t.transaction_type = 'App\\\Models\\\KhaltiUserTransaction'
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\NeaTransaction'

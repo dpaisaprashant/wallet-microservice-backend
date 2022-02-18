@@ -27,12 +27,21 @@ class WalletTransactionCashbackController extends Controller
     {
         $walletTransactionType = WalletTransactionType::where('id', $id)
             ->first();
+        $user = $request->user(); //currently logged in user
 
-        $userTypes = [
-            "User Type" => UserType::class,
-            "Agent Type" => AgentType::class,
-            "Merchant Type" => MerchantType::class
-        ];
+        $userTypes = [];
+        if ($user->hasAnyPermission('Add cashback to user type')) {
+            $userTypes["User Type"] = UserType::class;
+        }
+
+        if ($user->hasAnyPermission('Add cashback to merchant type')) {
+            $userTypes["Merchant Type"] = MerchantType::class;
+        }
+
+        if($user->hasAnyPermission('Add cashback to agent type')){
+            $userTypes['Agent Type'] = AgentType::class;
+        }
+
 
         $availableTitles = WalletTransactionTypeCashback::where('wallet_transaction_type_id', $walletTransactionType->id)
             ->distinct()

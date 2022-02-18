@@ -6,18 +6,18 @@ networks:
     external: true
   wallet_clearance_laravel:
     external: true
-#  walletmicroservicepaypoint_laravel:
-#    external: true
-#  walletmicroservicenchl_laravel:
-#    external: true
-#  walletmicroservicecybersource_laravel:
-#    external: true
-#  walletmicroservicenpay_laravel:
-#    external: true
-#  walletmicroservicemerchant_laravel:
-#    external: true
-#  walletmicroservicenps_laravel:
-#    external: true
+  walletmicroservicepaypoint_laravel:
+    external: true
+  walletmicroservicenchl_laravel:
+    external: true
+  walletmicroservicecybersource_laravel:
+    external: true
+  walletmicroservicenpay_laravel:
+    external: true
+  walletmicroservicemerchant_laravel:
+    external: true
+  walletmicroservicenps_laravel:
+    external: true
 
 
 services:
@@ -38,17 +38,18 @@ services:
       - php
       - mysql
       - phpmyadmin
-
+      - mongo
+      - mongo-express
     networks:
       - laravel
-      - wallet-microservice-core_laravel
+      - walletmicroservicecore_laravel
       - wallet_clearance_laravel
-  #      - walletmicroservicepaypoint_laravel
-  #      - walletmicroservicenchl_laravel
-  #      - walletmicroservicecybersource_laravel
-  #      - walletmicroservicenpay_laravel
-  #      - walletmicroservicemerchant_laravel
-  #      - walletmicroservicenps_laravel
+      - walletmicroservicepaypoint_laravel
+      - walletmicroservicenchl_laravel
+      - walletmicroservicecybersource_laravel
+      - walletmicroservicenpay_laravel
+      - walletmicroservicemerchant_laravel
+      - walletmicroservicenps_laravel
 
   mysql:
     image: mysql:5.7.29
@@ -69,14 +70,14 @@ services:
       SERVICE_NAME: mysql
     networks:
       - laravel
-      - wallet-microservice-core_laravel
+      - walletmicroservicecore_laravel
       - wallet_clearance_laravel
-  #      - walletmicroservicepaypoint_laravel
-  #      - walletmicroservicenchl_laravel
-  #      - walletmicroservicecybersource_laravel
-  #      - walletmicroservicenpay_laravel
-  #      - walletmicroservicemerchant_laravel
-  #      - walletmicroservicenps_laravel
+      - walletmicroservicepaypoint_laravel
+      - walletmicroservicenchl_laravel
+      - walletmicroservicecybersource_laravel
+      - walletmicroservicenpay_laravel
+      - walletmicroservicemerchant_laravel
+      - walletmicroservicenps_laravel
 
   php:
     build:
@@ -91,14 +92,14 @@ services:
       - "9033:9000"
     networks:
       - laravel
-      - wallet-microservice-core_laravel
+      - walletmicroservicecore_laravel
       - wallet_clearance_laravel
-  #      - walletmicroservicepaypoint_laravel
-  #      - walletmicroservicenchl_laravel
-  #      - walletmicroservicecybersource_laravel
-  #      - walletmicroservicenpay_laravel
-  #      - walletmicroservicemerchant_laravel
-  #      - walletmicroservicenps_laravel
+      - walletmicroservicepaypoint_laravel
+      - walletmicroservicenchl_laravel
+      - walletmicroservicecybersource_laravel
+      - walletmicroservicenpay_laravel
+      - walletmicroservicemerchant_laravel
+      - walletmicroservicenps_laravel
 
   composer:
     build:
@@ -113,8 +114,6 @@ services:
     user: laravel
     networks:
       - laravel
-      - wallet-microservice-core_laravel
-      - wallet_clearance_laravel
     entrypoint: ['composer', '--ignore-platform-reqs']
 
   artisan:
@@ -131,8 +130,6 @@ services:
     entrypoint: ['php', '/var/www/html/artisan']
     networks:
       - laravel
-      - wallet-microservice-core_laravel
-      - wallet_clearance_laravel
 
   phpmyadmin:
     depends_on:
@@ -147,5 +144,30 @@ services:
       MYSQL_ROOT_PASSWORD: secret
     networks:
       - laravel
-      - wallet-microservice-core_laravel
-      - wallet_clearance_laravel
+
+  mongo:
+    container_name: mongo-backend
+    image: mongo
+    #    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - "27019:27017"
+    restart: always
+    volumes:
+      - ./mongo:/data/db
+    networks:
+      - laravel
+
+  mongo-express:
+    container_name: mongo-express-backend
+    image: mongo-express
+    restart: always
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password
+    ports:
+      - "5069:8081"
+    networks:
+      - laravel

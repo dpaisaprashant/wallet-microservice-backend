@@ -1,0 +1,45 @@
+<?php
+
+namespace App\Filters\SocialMediaChallengeUsers;
+
+use App\Filters\FilterAbstract;
+use Illuminate\Database\Eloquent\Builder;
+use App\Models\NPSAccountLinkLoad;
+use App\Models\Microservice\PreTransaction;
+use Illuminate\Http\Request;
+use App\Traits\BelongsToUser;
+use Illuminate\Support\Facades\DB;
+use App\Models\User;
+
+class MobileFilter extends FilterAbstract {
+
+    use BelongsToUser;
+
+
+    public function mapping()
+    {
+        return [
+
+        ];
+    }
+
+    /**
+     * Apply filter.
+     *
+     * @param Builder $builder
+     * @param mixed $value
+     *
+     * @return Builder
+     */
+    public function filter(Builder $builder, $value)
+    {
+
+        if ($value === null) {
+            return $builder;
+        }
+
+        $userId = User::where('mobile_no', $value)->pluck('id');
+        return $builder->whereIn('user_id', $userId);
+        }
+
+    }

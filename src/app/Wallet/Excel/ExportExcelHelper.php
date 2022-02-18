@@ -4,6 +4,7 @@
 namespace App\Wallet\Excel;
 
 
+use App\Models\TransactionEvent;
 use App\Wallet\Excel\Interfaces\IExportExcel;
 use Box\Spout\Writer\Style\StyleBuilder;
 use Rap2hpoutre\FastExcel\FastExcel;
@@ -86,8 +87,14 @@ class ExportExcelHelper implements IExportExcel
 
     private function generatorCollection()
     {
-        foreach ($this->generatorModel::latest()->filter($this->request)->cursor() as $model) {
-            yield $model;
+        if ($this->generatorModel == TransactionEvent::class) {
+            foreach ($this->generatorModel::latest()->doesntHave('refundTransaction')->filter($this->request)->cursor() as $model) {
+                yield $model;
+            }
+        } else {
+            foreach ($this->generatorModel::latest()->filter($this->request)->cursor() as $model) {
+                yield $model;
+            }
         }
     }
 

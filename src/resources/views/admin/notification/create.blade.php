@@ -42,7 +42,7 @@
                         </div>
                     </div>
                     <div class="ibox-content">
-                        <form method="post" enctype="multipart/form-data" >
+                        <form method="post" enctype="multipart/form-data" action="{{route('notification.create')}}" >
                             @csrf
                             <div class="form-group  row"><label class="col-sm-2 col-form-label">Title</label>
 
@@ -68,6 +68,18 @@
 
                             <div class="hr-line-dashed"></div>
 
+                                    <div class="form-group row"> <label class="col-sm-2 col-form-label">Select Districts</label>
+                                        <div class="col-lg-10 col-sm-10">
+                                        <select class="select2_demo_2 form-control" multiple="multiple" name="district_topics[]">
+                                            @foreach($allDistrictTopics as $districtTopic)
+                                                <option value="{{ $districtTopic }}">{{ $districtTopic }}</option>
+                                            @endforeach
+                                        </select>
+                                        </div>
+                                    </div>
+
+                            <div class="hr-line-dashed"></div>
+
                             <div class="form-group  row"><label class="col-sm-2 col-form-label">Message</label>
                                 <div class="col-lg-10 col-sm-10">
                                     <div class="ibox ">
@@ -87,12 +99,12 @@
 
                             <div class="hr-line-dashed"></div>
 
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Side Image</label>
+                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Image</label>
 
                                 <div class="col-sm-10">
 
                                     <div class="custom-file">
-                                        <input name="side_img" id="logo1" type="file" class="custom-file-input">
+                                        <input name="image" id="logo1" type="file" class="custom-file-input">
                                         <label for="logo1" class="custom-file-label">Choose file...</label>
                                     </div>
 
@@ -101,17 +113,17 @@
 
                             <div class="hr-line-dashed"></div>
 
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Main Image</label>
+{{--                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Main Image</label>--}}
 
-                                <div class="col-sm-10">
+{{--                                <div class="col-sm-10">--}}
 
-                                    <div class="custom-file">
-                                        <input name="main_img" id="logo2" type="file" class="custom-file-input">
-                                        <label for="logo2" class="custom-file-label">Choose file...</label>
-                                    </div>
+{{--                                    <div class="custom-file">--}}
+{{--                                        <input name="main_img" id="logo2" type="file" class="custom-file-input">--}}
+{{--                                        <label for="logo2" class="custom-file-label">Choose file...</label>--}}
+{{--                                    </div>--}}
 
-                                </div>
-                            </div>
+{{--                                </div>--}}
+{{--                            </div>--}}
 
                             <div class="form-group row">
                                 <div class="col-sm-4 col-sm-offset-2">
@@ -131,12 +143,13 @@
 
 @section('styles')
     @include('admin.asset.css.summernote')
+    @include('admin.asset.css.select2')
     <link href="{{ asset('admin/css/plugins/iCheck/custom.css') }}" rel="stylesheet">
 @endsection
 
 @section('scripts')
    @include('admin.asset.js.summernote')
-
+   @include('admin.asset.js.select2')
    <script src="{{ asset('admin/js/plugins/iCheck/icheck.min.js') }}"></script>
    <script>
        $(document).ready(function () {

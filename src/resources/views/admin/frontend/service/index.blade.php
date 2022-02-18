@@ -31,9 +31,11 @@
                 <div class="ibox ">
                     <div class="ibox-title">
                         <h5>List of all services</h5>
-                        <div class="ibox-tools" style="top: 8px;">
-                            <a class="btn btn-primary" href="{{ route('frontend.service.create') }}"> <i class="fa fa-plus-circle"></i> Add New Service</a>
-                        </div>
+                        @can('Frontend service create')
+                            <div class="ibox-tools" style="top: 8px;">
+                                <a class="btn btn-primary" href="{{ route('frontend.service.create') }}"> <i class="fa fa-plus-circle"></i> Add New Service</a>
+                            </div>
+                        @endcan
                     </div>
                     <div class="ibox-content">
                         <div class="table-responsive">
@@ -43,6 +45,7 @@
                                     <th>S.No.</th>
                                     <th>Title</th>
                                     <th>Icon</th>
+                                    <th>Placement</th>
                                     <th>Image</th>
                                     <th>Description</th>
                                     <th>Action</th>
@@ -54,9 +57,12 @@
                                         <td>{{ $loop->index + 1}}</td>
                                         <td>{{ $service->title}}</td>
                                         <td>{{ $service->icon }}</td>
+                                        <td>{{$service->placement}}</td>
                                         <td>
                                             @if(!empty($service->image))
-                                                <img src="{{ asset('storage/uploads/frontend/'. $service->image) }}" alt="" style="height: 120px;">
+                                                <img
+                                                     src="{{ config('dpaisa-api-url.public_document_url') . $service->image }}"
+                                                     alt="First slide" style="height: 120px;">
                                             @endif
                                         </td>
                                         <td>
@@ -64,13 +70,17 @@
                                         </td>
 
                                         <td>
-                                            <a href="{{ route('frontend.service.update', $service->id) }}"><button class="btn btn-info btn-icon" type="button"><i class="fa fa-edit"></i></button></a>
-                                            <form action="{{ route('frontend.service.delete') }}" method="post" id="deactivateForm" style="display: inline">
+                                            @can('Frontend service update')
+                                                <a href="{{ route('frontend.service.update', $service->id) }}"><button class="btn btn-info btn-icon" type="button"><i class="fa fa-edit"></i></button></a>
+                                            @endcan
+                                            @can('Frontend service delete')
+                                                <form action="{{ route('frontend.service.delete') }}" method="post" id="deactivateForm" style="display: inline">
                                                 @csrf
-                                                <input type="hidden" name="id" value="{{ $service->id }}">
-                                                <button class="btn btn-danger btn-icon deactivate" rel="{{ $service->id }}"><i class="fa fa-trash"></i></button>
-                                                <button id="deactivateBtn-{{ $service->id  }}" type="submit" style=" display:none;"  rel="{{ route('frontend.service.delete') }}"></button>
-                                            </form>
+                                                    <input type="hidden" name="id" value="{{ $service->id }}">
+                                                    <button class="btn btn-danger btn-icon deactivate" rel="{{ $service->id }}"><i class="fa fa-trash"></i></button>
+                                                    <button id="deactivateBtn-{{ $service->id  }}" type="submit" style=" display:none;"  rel="{{ route('frontend.service.delete') }}"></button>
+                                                </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach
@@ -98,6 +108,7 @@
     @include('admin.asset.js.chosen')
     @include('admin.asset.js.datepicker')
     @include('admin.asset.js.datatable')
+
 
     <!-- Sweet alert -->
     <script src="{{ asset('admin/js/plugins/sweetalert/sweetalert.min.js') }}"></script>

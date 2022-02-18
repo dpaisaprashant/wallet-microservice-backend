@@ -25,6 +25,10 @@ class NRBReportController extends Controller
 
     public function activeInactiveUserReport(Request $request)
     {
+        if ($request->all() == null) {
+            return view('WalletReport::nrb.active-inactive-user-report');
+        }
+
         $repository = new ActiveInactiveUserReportRepository($request);
 
         $check = $repository->checkForReport();
@@ -99,6 +103,10 @@ class NRBReportController extends Controller
 
     public function activeInactiveUserSlabReport(Request $request)
     {
+        if ($request->all() == null) {
+            return view('WalletReport::nrb.active-inactive-user-slab-report');
+        }
+
         if ($request->all() != NULL) {
             $amountRange = json_decode($request->amount_range);
             $fromAmount = $amountRange->fromAmount;

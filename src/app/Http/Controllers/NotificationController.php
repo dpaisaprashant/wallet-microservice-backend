@@ -9,11 +9,14 @@ use App\Models\FCMNotification;
 use App\Models\User;
 use App\Wallet\Notification\Repository\NotificationRepository;
 use Illuminate\Http\Request;
+use App\Traits\UploadImage;
 
 class NotificationController extends Controller
 {
 
     private $repository;
+    private $disk = "public";
+    use UploadImage;
 
     public function __construct(NotificationRepository $repository)
     {
@@ -31,36 +34,41 @@ class NotificationController extends Controller
     {
         if ($this->repository->notificationService() == NotificationRepository::SERVICE_ONE_SIGNAL) {
             $allTopics = array_map(function ($arr) {return $arr["title"];}, config('onesignal.tags'));
+            $allDistrictTopics = config('fcm.districts');
         } else {
             $allTopics = config('fcm.topics');
+            $allDistrictTopics = config('fcm.districts');
         }
         if ($request->isMethod('post')) {
-
             if (empty($request->topics)) {
                 return redirect()->back()->with('error', 'Topic not selected');
             }
+            $data = $request->all();
+            $responseData = $this->uploadImageToCoreBase64($this->disk, $data, $request);
+            $this->repository->sendTopicNotification($responseData);
 
-            $this->repository->sendTopicNotification();
-
-            if (!$this->repository->createTopicNotifications()) {
+            if (!$this->repository->createTopicNotifications($responseData)) {
                 return redirect()->route('notification.view')->with('error', 'notification not sent successfully');
             }
 
             return redirect()->route('notification.view')->with('success', 'notification sent successfully');
         }
 
-        return view('admin.notification.create')->with(compact('allTopics'));
+        return view('admin.notification.create')->with(compact('allTopics', 'allDistrictTopics'));
     }
 
-    public function userNotification(User $user)
+    public function userNotification(User $user, Request $request)
     {
         if (!$this->repository->checkUserTokens($user)) {
             return redirect()->back()->with('error', 'Notification token not found');
         }
 
-        $this->repository->sendUserNotification($user);
+        $data = $request->all();
+        $responseData = $this->uploadImageToCoreBase64($this->disk, $data, $request);
 
-        if (!$this->repository->createUserNotification($user)) {
+        $this->repository->sendUserNotification($user,$responseData);
+
+        if (!$this->repository->createUserNotification($user,$responseData)) {
             return redirect(route('user.profile', $user->id))->with('error', 'Notification not sent successfully');
         }
 

@@ -8,6 +8,7 @@ use App\Models\Merchant\Merchant;
 use App\Models\MerchantTransactionEvent;
 use App\Traits\CollectionPaginate;
 use Illuminate\Http\Request;
+use App\Models\User;
 class MerchantRepository
 {
     use CollectionPaginate;
@@ -33,7 +34,7 @@ class MerchantRepository
 
     private function wallerBalanceSorted()
     {
-        $unsortedUsers = Merchant::with('wallet')->filter($this->request)->get();
+        $unsortedUsers = User::with('wallet','merchant')->whereHas('merchant')->filter($this->request)->get();
 
         $users = $unsortedUsers->map(function ($value, $key) {
             $value['balance'] = $value->wallet->balance;
@@ -44,12 +45,12 @@ class MerchantRepository
     }
     private function sortedUsers()
     {
-        return Merchant::with('wallet')->filter($this->request)->paginate($this->length);
+        return User::with('wallet','merchant')->whereHas('merchant')->filter($this->request)->paginate($this->length);
     }
 
     private function latestUsers()
     {
-        return Merchant::with('wallet')->latest()->filter($this->request)->paginate($this->length);
+        return User::with('wallet','merchant')->whereHas('merchant')->latest()->filter($this->request)->paginate($this->length);
     }
 
 
@@ -65,6 +66,10 @@ class MerchantRepository
         }else{
             return $this->sortedUsers();
         }
+    }
+
+    public function insertIntoMerchantReseller(){
+        return 'ok';
     }
 
     private function merchantSortedTransactions($id)
@@ -102,5 +107,31 @@ class MerchantRepository
             'successfulMerchantTransactionCount' => $repository->successfulMerchantTransactionCount(),
             'successfulMerchantTransactionSum' => $repository->successfulMerchantTransactionSum()
         ];
+    }
+
+    public function rejectedKycUsers(){
+        $rejectedKycUsers = User::with('wallet', 'userType','merchant','agent','kyc')->whereHas('merchant')->whereHas('kyc',function($query){
+            return $query->where('accept',0);
+        })->filter(request())->get();
+        return $this->collectionPaginate($this->length,$rejectedKycUsers,$this->request);
+    }
+
+    public function acceptedKycUsers(){
+        $acceptedKycUsers = User::with('wallet', 'userType','merchant','agent','kyc')->whereHas('merchant')->whereHas('kyc',function($query){
+            return $query->where('accept',1);
+        })->filter(request())->get();
+        return $this->collectionPaginate($this->length,$acceptedKycUsers,$this->request);
+    }
+
+    public function pendingKycUsers(){
+        $pendingKycUsers = User::with('wallet', 'userType','merchant','agent','kyc')->whereHas('merchant')->whereHas('kyc',function($query){
+            return $query->where('accept',null);
+        })->filter(request())->get();
+        return $this->collectionPaginate($this->length,$pendingKycUsers,$this->request);
+    }
+
+    public function kycNotFilledUsers(){
+        $kycNotFilledUsers = User::with('wallet', 'userType','merchant','agent','kyc')->whereHas('merchant')->doesntHave('kyc')->filter(request())->get();
+        return $this->collectionPaginate($this->length,$kycNotFilledUsers,$this->request);
     }
 }

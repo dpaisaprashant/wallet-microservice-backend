@@ -11,7 +11,7 @@ class MerchantKYC extends Model
 
     protected $connection = 'dpaisa';
 
-    protected $table = 'merchant_k_y_c_s';
+    protected $table = 'user_k_y_c_s';
 
     const STATUS_VERIFIED = 1;
 

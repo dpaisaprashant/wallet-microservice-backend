@@ -19,7 +19,6 @@ class WalletClearanceMicroService
 
         $response = $microservice->processRequest();
         $statementSettlement = json_decode($response, true);
-
         return $statementSettlement;
     }
 
@@ -34,7 +33,6 @@ class WalletClearanceMicroService
             ->setRequestParam(['as_of_date' => $date]);
 
         $response = $microservice->processRequest();
-
         $activeInactive = json_decode($response, true);
         return $activeInactive;
     }
@@ -90,5 +88,26 @@ class WalletClearanceMicroService
         $response = $microservice->processRequest();
         $activeInactive = json_decode($response, true);
         return $activeInactive;
+    }
+
+    public function dispatchAgentPaymentJobs(Request $request)
+    {
+        $from = $request->from;
+        $to = $request->to;
+
+        $microservice = new BackendWalletAPIMicroservice($request);
+        $microservice->setServiceType("WALLET_CLEARANCE")
+            ->setDescription("WALLET CLEARANCE")
+            ->setVendor("WALLET_CLEARANCE")
+            ->setMicroservice("WALLET_CLEARANCE")
+            ->setUrl("dispatch_agent_report_generate")
+            ->setRequestParam([
+                'fromDate' => $from,
+                'toDate' => $to,
+            ]);
+
+        $response = $microservice->processRequest();
+        $agentPaymentReport = json_decode($response, true);
+        return $agentPaymentReport;
     }
 }

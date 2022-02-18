@@ -17,11 +17,7 @@
                             <div class="ibox-content no-padding">
 
                                             <textarea name="message" style="height: 100px; width: 100%" required>
-
-
                                             </textarea>
-
-
                             </div>
                         </div>
                     </div>
@@ -29,31 +25,18 @@
 
                 <div class="hr-line-dashed"></div>
 
-                <div class="form-group  row"><label class="col-sm-2 col-form-label">Side Image</label>
-
+                <div class="form-group  row">
+                    <label class="col-sm-2 col-form-label">Image</label>
                     <div class="col-sm-10">
-
                         <div class="custom-file">
-                            <input name="side_img" id="logo1" type="file" class="custom-file-input">
+                            <input name="image" id="logo1" type="file" class="custom-file-input">
                             <label for="logo1" class="custom-file-label">Choose file...</label>
                         </div>
 
                     </div>
                 </div>
 
-                <div class="hr-line-dashed"></div>
 
-                <div class="form-group  row"><label class="col-sm-2 col-form-label">Main Image</label>
-
-                    <div class="col-sm-10">
-
-                        <div class="custom-file">
-                            <input name="main_img" id="logo2" type="file" class="custom-file-input">
-                            <label for="logo2" class="custom-file-label">Choose file...</label>
-                        </div>
-
-                    </div>
-                </div>
 
                 <div class="form-group row">
                     <div class="col-sm-4 col-sm-offset-2">

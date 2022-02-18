@@ -37,6 +37,7 @@ class FCMTopicNotifier
 
             $notificationBuilder = new PayloadNotificationBuilder($this->title);
             $notificationBuilder->setBody($this->description)
+                ->setImage($this->body["image"] ?? null)
                 ->setSound('default')
                 ->setChannelId('12345');
 

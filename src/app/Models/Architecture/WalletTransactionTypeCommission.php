@@ -3,9 +3,16 @@
 namespace App\Models\Architecture;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class WalletTransactionTypeCommission extends Model
 {
+    use LogsActivity;
+
+    protected static $logAttributes = ['*'];
+    //protected static $logOnlyDirty = true;
+    protected static $logName = 'Wallet Transaction Type Commission';
+
     protected $connection = 'dpaisa';
 
     protected $guarded = [];

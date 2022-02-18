@@ -36,21 +36,23 @@ class SortFilter extends FilterAbstract {
 
             return $builder->withCount('userTransactionEvents')->orderBy('user_transaction_events_count', 'DESC');
 
-        }else if ($value === 'wallet_balance') {
+        }elseif ($value === 'wallet_balance') {
 
           /*  return $builder->join('wallets', 'wallets.user_id', '=', 'users.id')
                 ->orderBy('wallets.balance', 'DESC');*/
 
           return $builder;
 
-        }else if ($value === 'transaction_payment') {
+        }elseif ($value === 'transaction_payment') {
 
-            return $builder->get()->map(function ($value,$key){
+       /*     return $builder->get()->map(function ($value,$key){
                 $value["totalAmount"] = $value->totalTransactionAmount();
                 return $value;
-            })->sortByDesc("totalAmount");
-
+            })->sortByDesc("totalAmount");*/
+            return $builder;
         //return $builder->userTransactionEvents->totalTransactionAmountByUser();
+        }elseif($value === "transaction_loaded"){
+            return $builder;
         }
 
 

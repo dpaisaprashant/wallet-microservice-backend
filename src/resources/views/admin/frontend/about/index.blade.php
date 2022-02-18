@@ -31,9 +31,11 @@
                 <div class="ibox ">
                     <div class="ibox-title">
                         <h5>List of all abouts</h5>
-                        <div class="ibox-tools" style="top: 8px;">
-                            <a class="btn btn-primary" href="{{ route('frontend.about.create') }}"> <i class="fa fa-plus-circle"></i> Add New About</a>
-                        </div>
+                        @can('Frontend about create')
+                            <div class="ibox-tools" style="top: 8px;">
+                                <a class="btn btn-primary" href="{{ route('frontend.about.create') }}"> <i class="fa fa-plus-circle"></i> Add New About</a>
+                            </div>
+                        @endcan
                     </div>
                     <div class="ibox-content">
                         <div class="table-responsive">
@@ -54,7 +56,9 @@
                                         <td>{{ $about->title}}</td>
                                         <td>
                                             @if(!empty($about->image))
-                                                <img src="{{ asset('storage/uploads/frontend/'. $about->image) }}" alt="" style="height: 120px;">
+                                                <img
+                                                     src="{{ config('dpaisa-api-url.public_document_url') . $about->image }}"
+                                                     alt="About Image" style="height: 120px;">
                                             @endif
                                         </td>
                                         <td>
@@ -62,13 +66,17 @@
                                         </td>
 
                                         <td>
-                                            <a href="{{ route('frontend.about.update', $about->id) }}"><button class="btn btn-info btn-icon" type="button"><i class="fa fa-edit"></i></button></a>
-                                            <form action="{{ route('frontend.about.delete') }}" method="post" id="deactivateForm" style="display: inline">
-                                                @csrf
-                                                <input type="hidden" name="id" value="{{ $about->id }}">
-                                                <button id="deactivate" class="btn btn-danger btn-icon deactivate" rel="{{ $about->id  }}"><i class="fa fa-trash"></i></button>
-                                                <button id="deactivateBtn-{{ $about->id  }}" type="submit" style=" display:none;" rel="{{ route('frontend.about.delete') }}"></button>
-                                            </form>
+                                            @can('Frontend about update')
+                                                <a href="{{ route('frontend.about.update', $about->id) }}"><button class="btn btn-info btn-icon" type="button"><i class="fa fa-edit"></i></button></a>
+                                            @endcan
+                                            @can('Frontend about delete')
+                                                <form action="{{ route('frontend.about.delete') }}" method="post" id="deactivateForm" style="display: inline">
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="{{ $about->id }}">
+                                                    <button id="deactivate" class="btn btn-danger btn-icon deactivate" rel="{{ $about->id  }}"><i class="fa fa-trash"></i></button>
+                                                    <button id="deactivateBtn-{{ $about->id  }}" type="submit" style=" display:none;" rel="{{ route('frontend.about.delete') }}"></button>
+                                                </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

@@ -506,6 +506,7 @@ class RolesAndPermissionsSeeder extends Seeder
             //Miscellaneous Reports
             'View lucky winner report',
             'View ticket sale report',
+            'View load test fund report',
 
             ];
 

@@ -17,11 +17,13 @@ use App\Http\Resources\FundRequestResource;
 use App\Http\Resources\FundTransferResource;
 use App\Http\Resources\KhaltiResource;
 use App\Http\Resources\LinkedAccountsResource;
+use App\Http\Resources\LoadTestFundReportResource;
 use App\Http\Resources\NchlAggregatedTransactionResource;
 use App\Http\Resources\NchlBankTransferResource;
 use App\Http\Resources\NICAsiaCyberSourceLoadTransactionResource;
 use App\Http\Resources\PayPointReportResource;
 use App\Http\Resources\SparrowSMSResource;
+use App\Http\Resources\TicketSalesReportResource;
 use App\Http\Resources\TransactionEventResource;
 use App\Http\Resources\UserAudit\AdminUserKYCResource;
 use App\Http\Resources\UserAudit\CashBackResource;
@@ -42,11 +44,13 @@ use App\Models\Dispute;
 use App\Models\FundRequest;
 use App\Models\KhaltiUserTransaction;
 use App\Models\LinkedAccounts;
+use App\Models\LoadTestFund;
 use App\Models\NchlAggregatedPayment;
 use App\Models\NchlBankTransfer;
 use App\Models\NICAsiaCyberSourceLoadTransaction;
 use App\Models\NpsLoadTransaction;
 use App\Models\SparrowSMS;
+use App\Models\TicketSale;
 use App\Models\TransactionEvent;
 use App\Models\User;
 use App\Models\UserActivity;
@@ -527,6 +531,27 @@ class ExcelExportController extends Controller
             ->setGeneratorModel(BfiExecutePayment::class)
             ->setRequest($request)
             ->setResource(BfiExecutePaymentReportResource::class);
+        return $export->exportExcel();
+    }
+
+    public function ticketSalesReport(Request $request)
+    {
+        $request->merge(['transaction_type'=>TicketSale::class]);
+        $export = new ExportExcelHelper();
+        $export->setName('Ticket Sales Report')
+            ->setGeneratorModel(TransactionEvent::class)
+            ->setRequest($request)
+            ->setResource(TicketSalesReportResource::class);
+        return $export->exportExcel();
+    }
+
+    public function loadTestFundReport(Request $request){
+        $request->merge(['transaction_type'=>LoadTestFund::class,'service'=>'LUCKY WINNER']);
+        $export = new ExportExcelHelper();
+        $export->setName('Load Test Fund Report')
+            ->setGeneratorModel(TransactionEvent::class)
+            ->setRequest($request)
+            ->setResource(LoadTestFundReportResource::class);
         return $export->exportExcel();
     }
 

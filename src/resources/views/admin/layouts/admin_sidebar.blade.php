@@ -495,6 +495,14 @@ $url = url()->current();
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
 
+                        @can('View ticket sale report')
+                            <li><a href="{{route('transactions.ticketSalesReport')}}">Ticket Sales Report</a></li>
+                        @endcan
+
+                        @can('View load test fund report')
+                            <li><a href="{{route('transactions.loadTestFundReport')}}">Load Test Fund Report</a></li>
+                        @endcan
+
                         @can('Complete transaction view')
                             <li><a href="{{ route('transaction.complete') }}">Complete Transactions</a></li>
                         @endcan

@@ -311,7 +311,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 WHERE a.user_id IS NULL
                                                                                 AND
                                                                                 (
-                                                                                 (t.transaction_type = 'App\\\Wallet\\Commission\\\Models\\\Commission' AND t.service_type='COMMISSION')
+                                                                                 (t.transaction_type = 'App\\\Wallet\\\Commission\\\Models\\\Commission' AND t.service_type='COMMISSION')
                                                                                 )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)

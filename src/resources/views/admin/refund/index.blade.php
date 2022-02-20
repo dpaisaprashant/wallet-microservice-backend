@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="wrapper wrapper-content animated fadeInRight">
-
+        @include('admin.asset.notification.notify')
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox ">
@@ -218,10 +218,11 @@
     @include('admin.asset.css.datepicker')
     @include('admin.asset.css.datatable')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/css/ion.rangeSlider.min.css"/>
+    @include('admin.asset.css.sweetalert')
 @endsection
 
 @section('scripts')
-
+    @include('admin.asset.js.sweetalert')
     @include('admin.asset.js.chosen')
     @include('admin.asset.js.datepicker')
     @include('admin.asset.js.datatable')

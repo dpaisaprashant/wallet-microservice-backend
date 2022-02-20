@@ -21,8 +21,10 @@ class NRBAnnexReportController extends Controller
 {
     use CollectionPaginate;
 
+    //10.1.5 Agent report
     public function agentReport(Request $request)
     {
+
         if ($request->all() != NULL) {
             $amountRange = json_decode($request->amount_range);
             $fromAmount = $request->fromAmount;
@@ -87,8 +89,10 @@ class NRBAnnexReportController extends Controller
         return view('WalletReport::nrbAnnex.transaction-report-agent')->with(compact('nrbAnnexAgentPayments'));
     }
 
+    //10.1.5 Customer Report
     public function customerReport(Request $request)
     {
+        //10.1.5 Initiated Customer report
         if ($request->all() != NULL) {
             $amountRange = json_decode($request->amount_range);
             $fromAmount = $request->fromAmount;
@@ -209,7 +213,7 @@ class NRBAnnexReportController extends Controller
         return view('WalletReport::nrbAnnex.transaction-report-customer')->with(compact('nrbAnnexCustomerPayments'));
     }
 
-
+    //10.1.6 Report
     public function merchantReport(Request $request)
     {
 //        if ($request->all() != NULL) {
@@ -322,6 +326,7 @@ class NRBAnnexReportController extends Controller
         return view('WalletReport::nrbAnnex.transaction-report-agent-merchant')->with(compact('nrbAnnexMerchantPayments'));
     }
 
+    //Statement Settlement Bank Report
     public function statementSettlementBank(Request $request)
     {
         if ($request->all() == null) {
@@ -389,6 +394,7 @@ class NRBAnnexReportController extends Controller
         return view('WalletReport::nrbAnnex.statement-settlement-bank')->with(compact('statementSettlementBanks'));
     }
 
+    //10.1.11 Report
     public function agentPaymentReport(Request $request)
     {
         if ($request->all() == null) {
@@ -435,6 +441,7 @@ class NRBAnnexReportController extends Controller
         return view('WalletReport::nrbAnnex.agent-payment-report')->with(compact('agentPaymentReports'));
     }
 
+    //22 part four report
     public function eachAgentReport(Request $request)
     {
         if ($request->all() == null) {
@@ -470,17 +477,17 @@ class NRBAnnexReportController extends Controller
                 'agent_code' => $response->reference_code,
                 'user_id' => $response->user_id,
                 'totalTopUpCount' => $response->totalTopUpCount,
-                'totalTopUpAmount' => ($response->totalTopUpAmount)/100,
+                'totalTopUpAmount' => ($response->totalTopUpAmount) / 100,
                 'totalTransferToWalletCount' => $response->totalTransferToWalletCount,
-                'totalTransferToWalletAmount' => ($response->totalTransferToWalletAmount)/100,
+                'totalTransferToWalletAmount' => ($response->totalTransferToWalletAmount) / 100,
                 'totalTransferToBankCount' => $response->totalTransferToBankCount,
-                'totalTransferToBankAmount' => ($response->totalTransferToBankAmount)/100,
+                'totalTransferToBankAmount' => ($response->totalTransferToBankAmount) / 100,
                 'totalCashInCount' => $response->totalCashInCount,
-                'totalCashInAmount' =>( $response->totalCashInAmount)/100,
+                'totalCashInAmount' => ($response->totalCashInAmount) / 100,
                 'totalCashOutCount' => $response->totalCashOutCount,
-                'totalCashOutAmount' => ($response->totalCashOutAmount)/100,
+                'totalCashOutAmount' => ($response->totalCashOutAmount) / 100,
                 'totalMerchantPaymentCount' => $response->totalMerchantPaymentCount,
-                'totalMerchantPaymentAmount' => ($response->totalMerchantPaymentAmount)/100,
+                'totalMerchantPaymentAmount' => ($response->totalMerchantPaymentAmount) / 100,
             ];
         }
 

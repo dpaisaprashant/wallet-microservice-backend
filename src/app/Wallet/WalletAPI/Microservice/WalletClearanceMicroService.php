@@ -92,8 +92,9 @@ class WalletClearanceMicroService
 
     public function dispatchAgentPaymentJobs(Request $request)
     {
-        $from = $request->from_date;
-        $to = $request->to_date;
+        $from = date('Y-m-d', strtotime(str_replace(',', ' ', $request->from)));
+        $to = date('Y-m-d', strtotime(str_replace(',', ' ', $request->to)));
+
 
         $microservice = new BackendWalletAPIMicroservice($request);
         $microservice->setServiceType("WALLET_CLEARANCE")

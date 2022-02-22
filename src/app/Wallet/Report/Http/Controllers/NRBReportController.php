@@ -53,6 +53,8 @@ class NRBReportController extends Controller
         $walletClearanceResponse = $walletClearance->dispatchActiveInactiveUserJobs(request(), request()->from);
 
         $totalUsers = $walletClearanceResponse['active']['total_number'] + $walletClearanceResponse['inactive']['total_number'];
+
+
         $totalBalance = $walletClearanceResponse['active']['total_amount'] / 100 + $walletClearanceResponse['inactive']['total_amount'] / 100;
         $openingBalance = $walletClearanceResponse['wallet_balance'][0]['sum'];
         $shouldBeZero = $totalBalance - $openingBalance;
@@ -103,14 +105,17 @@ class NRBReportController extends Controller
 
     public function activeInactiveUserSlabReport(Request $request)
     {
+
         if ($request->all() == null) {
             return view('WalletReport::nrb.active-inactive-user-slab-report');
         }
 
         if ($request->all() != NULL) {
             $amountRange = json_decode($request->amount_range);
-            $fromAmount = $amountRange->fromAmount;
-            $toAmount = $amountRange->toAmount;
+//            $fromAmount = $amountRange->fromAmount;
+            $fromAmount = $request->from_amount;
+//            $toAmount = $amountRange->toAmount;
+            $toAmount = $request->to_amount;
             $request->merge(['fromAmount' => $fromAmount, 'toAmount' => $toAmount]);
         }
 

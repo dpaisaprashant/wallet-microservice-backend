@@ -16,7 +16,7 @@ class AlterPreTransactionsTableAddCompanyCodeColumn extends Migration
         //
         if (Schema::connection('dpaisa')->hasTable("pre_transactions")) {
 
-            if (! Schema::hasColumn("pre_transactions", "company_code")) {
+            if (! Schema::connection('dpaisa')->hasColumn("pre_transactions", "company_code")) {
                 Schema::connection('dpaisa')->table('pre_transactions', function (Blueprint $table) {
                     $table->integer('company_code')->nullable();
                 });

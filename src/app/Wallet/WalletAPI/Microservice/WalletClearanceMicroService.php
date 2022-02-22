@@ -92,8 +92,8 @@ class WalletClearanceMicroService
 
     public function dispatchAgentPaymentJobs(Request $request)
     {
-        $from = $request->from;
-        $to = $request->to;
+        $from = date('Y-m-d', strtotime(str_replace(',', ' ', $request->from)));
+        $to = date('Y-m-d', strtotime(str_replace(',', ' ', $request->to)));
 
         $microservice = new BackendWalletAPIMicroservice($request);
         $microservice->setServiceType("WALLET_CLEARANCE")
@@ -109,5 +109,26 @@ class WalletClearanceMicroService
         $response = $microservice->processRequest();
         $agentPaymentReport = json_decode($response, true);
         return $agentPaymentReport;
+    }
+
+    public function dispatchNrbAgentReportJobs(Request $request)
+    {
+        $from = date('Y-m-d', strtotime(str_replace(',', ' ', $request->from_date)));
+        $to = date('Y-m-d', strtotime(str_replace(',', ' ', $request->to_date)));
+
+        $microservice = new BackendWalletAPIMicroservice($request);
+        $microservice->setServiceType("WALLET_CLEARANCE")
+            ->setDescription("WALLET CLEARANCE")
+            ->setVendor("WALLET_CLEARANCE")
+            ->setMicroservice("WALLET_CLEARANCE")
+            ->setUrl("nrb_agent_report_generate")
+            ->setRequestParam([
+                'from' => $from,
+                'to' => $to,
+            ]);
+
+        $response = $microservice->processRequest();
+        $nrbAgentReports = json_decode($response, true);
+        return $nrbAgentReports;
     }
 }

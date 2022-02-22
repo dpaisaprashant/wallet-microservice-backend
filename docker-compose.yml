@@ -2,9 +2,9 @@ version: '3'
 
 networks:
   laravel:
-  wallet-microservice-core_laravel:
+  walletmicroservicecore_laravel:
     external: true
-  wallet_clearance_laravel:
+  walletclearance_laravel:
     external: true
   walletmicroservicepaypoint_laravel:
     external: true
@@ -17,6 +17,8 @@ networks:
   walletmicroservicemerchant_laravel:
     external: true
   walletmicroservicenps_laravel:
+    external: true
+  magnusloanmicroservice_spring-boot-mysql-network:
     external: true
 
 
@@ -43,13 +45,14 @@ services:
     networks:
       - laravel
       - walletmicroservicecore_laravel
-      - wallet_clearance_laravel
+      - walletclearance_laravel
       - walletmicroservicepaypoint_laravel
       - walletmicroservicenchl_laravel
       - walletmicroservicecybersource_laravel
       - walletmicroservicenpay_laravel
       - walletmicroservicemerchant_laravel
       - walletmicroservicenps_laravel
+      - magnusloanmicroservice_spring-boot-mysql-network
 
   mysql:
     image: mysql:5.7.29
@@ -71,13 +74,14 @@ services:
     networks:
       - laravel
       - walletmicroservicecore_laravel
-      - wallet_clearance_laravel
+      - walletclearance_laravel
       - walletmicroservicepaypoint_laravel
       - walletmicroservicenchl_laravel
       - walletmicroservicecybersource_laravel
       - walletmicroservicenpay_laravel
       - walletmicroservicemerchant_laravel
       - walletmicroservicenps_laravel
+      - magnusloanmicroservice_spring-boot-mysql-network
 
   php:
     build:
@@ -93,13 +97,14 @@ services:
     networks:
       - laravel
       - walletmicroservicecore_laravel
-      - wallet_clearance_laravel
+      - walletclearance_laravel
       - walletmicroservicepaypoint_laravel
       - walletmicroservicenchl_laravel
       - walletmicroservicecybersource_laravel
       - walletmicroservicenpay_laravel
       - walletmicroservicemerchant_laravel
       - walletmicroservicenps_laravel
+      - magnusloanmicroservice_spring-boot-mysql-network
 
   composer:
     build:
@@ -130,6 +135,15 @@ services:
     entrypoint: ['php', '/var/www/html/artisan']
     networks:
       - laravel
+      - walletmicroservicecore_laravel
+      - walletclearance_laravel
+      - walletmicroservicepaypoint_laravel
+      - walletmicroservicenchl_laravel
+      - walletmicroservicecybersource_laravel
+      - walletmicroservicenpay_laravel
+      - walletmicroservicemerchant_laravel
+      - walletmicroservicenps_laravel
+      - magnusloanmicroservice_spring-boot-mysql-network
 
   phpmyadmin:
     depends_on:

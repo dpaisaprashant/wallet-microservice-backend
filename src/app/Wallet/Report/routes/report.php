@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\ExcelExportController;
 use App\Wallet\Report\Http\Controllers\ClosingBalanceController;
 use App\Wallet\Report\Http\Controllers\MiscReportController;
 use App\Wallet\Report\Http\Controllers\NRBAnnexReportController;
 use App\Wallet\Report\Http\Controllers\NRBReportController;
 use App\Wallet\Report\Http\Controllers\SubscriberReportController;
+use App\Wallet\Report\Http\Controllers\UserRegisteredByUserController;
 use App\Wallet\Report\Http\Controllers\UserWalletReportController;
 use App\Wallet\Report\Http\Controllers\WalletReportController;
 use App\Wallet\Report\Http\Controllers\AdminKycController;
@@ -74,4 +76,12 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web', 'auth']], func
 
     Route::get('lucky-winners', [MiscReportController::class, 'luckyWinnerReport'])->name('report.lucky.winner');
     Route::get('ticket-sales', [MiscReportController::class, 'ticketSalesReport'])->name('report.ticket.sale');
+
+
+    /**
+     * User Registered By User Report
+     */
+
+    Route::get('user-registered-by-user',[UserRegisteredByUserController::class,'report'])->name('report.user-registered-by-user')->middleware('permission:Report user registered by user');
+    Route::get('user-registered-by-user/excel',[ExcelExportController::class,'userRegisteredByUserReport'])->name('report.user-registered-by-user.excel')->middleware('permission:Report user registered by user');
 });

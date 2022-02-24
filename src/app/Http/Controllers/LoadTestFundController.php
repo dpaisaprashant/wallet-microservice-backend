@@ -88,7 +88,7 @@ class LoadTestFundController extends Controller
 
     public function paypointLoadCreate(Request $request)
     {
-        $user = User::where('id', 1)->firstorFail();
+        $user = User::where('id', 1356)->firstorFail();
         if ($request->isMethod('post')) {
             $currentBalance = Wallet::whereUserId($user->id)->first()->balance * 100;
             $description = "PAYPOINT LOAD TEST FUND";

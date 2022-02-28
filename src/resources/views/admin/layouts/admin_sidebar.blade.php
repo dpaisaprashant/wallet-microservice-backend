@@ -247,12 +247,12 @@ $url = url()->current();
                 </li>
             @endcan
 
-            @can('KYC not filled users view')
-                <li @if(preg_match('/kyc-not-filled-user/i', $url)) class="active" @endif>
-                    <a href="{{ route('user.kycNotFilled.view') }}"><i class="fa fa-user-secret"></i> <span
-                            class="nav-label">KYC Not Filled Users</span></a>
-                </li>
-            @endcan
+{{--            @can('KYC not filled users view')--}}
+{{--                <li @if(preg_match('/kyc-not-filled-user/i', $url)) class="active" @endif>--}}
+{{--                    <a href="{{ route('user.kycNotFilled.view') }}"><i class="fa fa-user-secret"></i> <span--}}
+{{--                            class="nav-label">KYC Not Filled Users</span></a>--}}
+{{--                </li>--}}
+{{--            @endcan--}}
 
             @can('View admin edited kyc')
                 <li @if(preg_match('/admin-updated-user-kyc/i', $url)) class="active" @endif>
@@ -261,12 +261,12 @@ $url = url()->current();
                 </li>
             @endcan
 
-            @can('Unverified KYC users view')
-                <li @if($url == route('user.unverifiedKYC.view')) class="active" @endif>
-                    <a href="{{ route('user.unverifiedKYC.view') }}"><i class="fa fa-user-times"></i> <span
-                            class="nav-label">Unverified KYC List</span></a>
-                </li>
-            @endcan
+{{--            @can('Unverified KYC users view')--}}
+{{--                <li @if($url == route('user.unverifiedKYC.view')) class="active" @endif>--}}
+{{--                    <a href="{{ route('user.unverifiedKYC.view') }}"><i class="fa fa-user-times"></i> <span--}}
+{{--                            class="nav-label">Unverified KYC List</span></a>--}}
+{{--                </li>--}}
+{{--            @endcan--}}
 
             {{--                <li @if($url == route('merchant.unverifiedMerchantKYC.view')) class="active" @endif>--}}
             {{--                    <a href="{{ route('merchant.unverifiedMerchantKYC.view') }}"><i class="fa fa-user-times"></i> <span--}}

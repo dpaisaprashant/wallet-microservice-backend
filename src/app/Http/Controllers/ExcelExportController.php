@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\AdminUpdateKycResource;
 use App\Http\Resources\AgentDetailResource;
 use App\Http\Resources\AllUserAuditResource;
 use App\Http\Resources\AllUserAuditResourceCollection;
@@ -18,6 +19,7 @@ use App\Http\Resources\FundTransferResource;
 use App\Http\Resources\KhaltiResource;
 use App\Http\Resources\LinkedAccountsResource;
 use App\Http\Resources\LoadTestFundReportResource;
+use App\Http\Resources\MerchantResource;
 use App\Http\Resources\NchlAggregatedTransactionResource;
 use App\Http\Resources\NchlBankTransferResource;
 use App\Http\Resources\NICAsiaCyberSourceLoadTransactionResource;
@@ -35,6 +37,7 @@ use App\Http\Resources\UserLoadTransactionResource;
 use App\Http\Resources\UserRegisteredByUserResource;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\UserToBfiReportResource;
+use App\Models\AdminUpdateKyc;
 use App\Models\AdminUserKYC;
 use App\Models\BfiExecutePayment;
 use App\Models\BfiToUserFundTransfer;
@@ -107,9 +110,10 @@ class ExcelExportController extends Controller
 
         return $export->exportExcel();
     }
-
+//user Excels start
     public function users(Request $request)
     {
+        $request->merge(['user_only'=>true]);
         $export = new ExportExcelHelper();
         $export->setName('users')
             ->setGeneratorModel(User::class)
@@ -118,6 +122,125 @@ class ExcelExportController extends Controller
 
         return $export->exportExcel();
     }
+
+    public function kycRejectedUsers(Request $request){
+        $request->merge(['kyc_status'=>"unverified",'user_only'=>true]);
+        $export = new ExportExcelHelper();
+        $export->setName('kyc Rejected Users')
+            ->setGeneratorModel(User::class)
+            ->setRequest($request)
+            ->setResource(UserResource::class);
+
+        return $export->exportExcel();
+    }
+
+    public function kycAcceptedUsers(Request $request){
+        $request->merge(['kyc_status'=>"verified",'user_only'=>true]);
+        $export = new ExportExcelHelper();
+        $export->setName('kyc Accepted Users')
+            ->setGeneratorModel(User::class)
+            ->setRequest($request)
+            ->setResource(UserResource::class);
+
+        return $export->exportExcel();
+    }
+    public function kycPendingUsers(Request $request){
+        $request->merge(['kyc_status'=>"pending",'user_only'=>true]);
+        $export = new ExportExcelHelper();
+        $export->setName('kyc Pending Users')
+            ->setGeneratorModel(User::class)
+            ->setRequest($request)
+            ->setResource(UserResource::class);
+
+        return $export->exportExcel();
+    }
+
+    public function kycNotFilledUsers(Request $request){
+        $request->merge(['kyc_status'=>"notfilled",'user_only'=>true]);
+        $export = new ExportExcelHelper();
+        $export->setName('kyc Not Filled Users')
+            ->setGeneratorModel(User::class)
+            ->setRequest($request)
+            ->setResource(UserResource::class);
+
+        return $export->exportExcel();
+    }
+
+    public function deactivatedUsers(Request $request){
+        $request->merge(['user_only'=>true,'user_status'=>"deactivated"]);
+        $export = new ExportExcelHelper();
+        $export->setName('Deactivated Users')
+            ->setGeneratorModel(User::class)
+            ->setRequest($request)
+            ->setResource(UserResource::class);
+
+        return $export->exportExcel();
+    }
+    //user Excels ends
+
+//    merchants Excel
+    public function merchants(Request $request)
+    {
+        $request->merge(['merchant_only'=>true]);
+        $export = new ExportExcelHelper();
+        $export->setName('Merchants')
+            ->setGeneratorModel(User::class)
+            ->setRequest($request)
+            ->setResource(MerchantResource::class);
+
+        return $export->exportExcel();
+    }
+
+    public function kycUnverifiedMerchants(Request $request)
+    {
+        $request->merge(['kyc_status'=>"unverified",'merchant_only'=>true]);
+        $export = new ExportExcelHelper();
+        $export->setName('Kyc Unverified Merchants')
+            ->setGeneratorModel(User::class)
+            ->setRequest($request)
+            ->setResource(MerchantResource::class);
+
+        return $export->exportExcel();
+    }
+
+    public function kycAcceptedMerchants(Request $request)
+    {
+        $request->merge(['kyc_status'=>"verified",'merchant_only'=>true]);
+        $export = new ExportExcelHelper();
+        $export->setName('Kyc Accepted Merchants')
+            ->setGeneratorModel(User::class)
+            ->setRequest($request)
+            ->setResource(MerchantResource::class);
+
+        return $export->exportExcel();
+    }
+
+    public function kycNotFilledMerchants(Request $request)
+    {
+        $request->merge(['kyc_status'=>"notfilled",'merchant_only'=>true]);
+        $export = new ExportExcelHelper();
+        $export->setName('Kyc Not Filled Merchants')
+            ->setGeneratorModel(User::class)
+            ->setRequest($request)
+            ->setResource(MerchantResource::class);
+
+        return $export->exportExcel();
+    }
+
+    //merchant Excels ends
+
+    //admin updated Kyc
+
+    public function adminUpdatedKyc(Request $request){
+        $export = new ExportExcelHelper();
+        $export->setName('Admin Updated KYC')
+            ->setGeneratorModel(AdminUpdateKyc::class)
+            ->setRequest($request)
+            ->setResource(AdminUpdateKycResource::class);
+
+        return $export->exportExcel();
+    }
+
 
     public function agentDetails(Request $request){
         $request->merge(['user_type' => 'agent']);
@@ -342,6 +465,16 @@ class ExcelExportController extends Controller
     {
         $export = new ExportExcelHelper();
         $export->setName('sparrow_sms')
+            ->setGeneratorModel(SparrowSMS::class)
+            ->setRequest($request)
+            ->setResource(SparrowSMSResource::class);
+
+        return $export->exportExcel();
+    }
+
+    public function allMerchantEvents(Request $request){
+        $export = new ExportExcelHelper();
+        $export->setName('All Merchant Events')
             ->setGeneratorModel(SparrowSMS::class)
             ->setRequest($request)
             ->setResource(SparrowSMSResource::class);

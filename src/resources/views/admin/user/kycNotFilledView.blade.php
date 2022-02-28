@@ -145,7 +145,7 @@
                                     </div>
 
                                     <div>
-                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs" type="submit" style="margin-right: 10px;" formaction="{{ route('user.excel') }}"><strong>Excel</strong></button>
+                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs" type="submit" style="margin-right: 10px;" formaction="{{ route('kyc.notfilled.user.excel') }}"><strong>Excel</strong></button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
                                 </form>

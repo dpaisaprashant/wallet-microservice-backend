@@ -475,8 +475,28 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/excel/complete-transaction', 'ExcelExportController@completeTransactions')->name('transaction.complete.excel');
         Route::get('/excel/yearly-report', 'ExcelExportController@yearlyReport')->name('report.yearly.excel');
         Route::get('/excel/monthly-report', 'ExcelExportController@monthlyReport')->name('report.monthly.excel');
-
+        /**
+        *Users
+         */
         Route::get('/excel/users', 'ExcelExportController@users')->name('user.excel');
+        Route::get('/excel/kyc-rejected/users', 'ExcelExportController@kycRejectedUsers')->name('kyc.rejected.user.excel');
+        Route::get('/excel/kyc-accepted/users', 'ExcelExportController@kycAcceptedUsers')->name('kyc.accepted.user.excel');
+        Route::get('/excel/kyc-pending/users', 'ExcelExportController@kycPendingUsers')->name('kyc.pending.user.excel');
+        Route::get('/excel/kyc-not-filled/users', 'ExcelExportController@kycNotFilledUsers')->name('kyc.notfilled.user.excel');
+        Route::get('/excel/deactivated/users','ExcelExportController@deactivatedUsers')->name('deactivated.user.excel');
+
+        /**
+         *Merchants
+         */
+        Route::get('/excel/merchants','ExcelExportController@merchants')->name('merchant.excel');
+        Route::get('/excel/kyc-unverified/merchants','ExcelExportController@kycUnverifiedMerchants')->name('kyc.unverified.merchant.excel');
+        Route::get('/excel/kyc-accepted/merchants','ExcelExportController@kycAcceptedMerchants')->name('kyc.accepted.merchant.excel');
+        Route::get('/excel/kyc-not-filled/merchants','ExcelExportController@kycNotFilledMerchants')->name('kyc.notfilled.merchant.excel');
+
+        /**
+        *Admin Updated Kyc
+         */
+        Route::get('excel/admin-updated-kyc/excel','ExcelExportController@adminUpdatedKyc')->name('admin-updated-kyc.excel');
 
         Route::get('/excel/agent-details', 'ExcelExportController@agentDetails')->name('agent.excel');
 

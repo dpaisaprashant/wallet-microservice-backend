@@ -108,7 +108,7 @@
                                     <div>
                                         <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
                                                 type="submit" style="margin-right: 10px;"
-                                                formaction="#"><strong>Excel</strong></button>
+                                                formaction="{{route('admin-altered.agent.excel')}}"><strong>Excel</strong></button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
                                 </form>

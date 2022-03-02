@@ -494,6 +494,12 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/excel/kyc-not-filled/merchants','ExcelExportController@kycNotFilledMerchants')->name('kyc.notfilled.merchant.excel');
 
         /**
+         *Agents
+         */
+        Route::get('/excel/agents','ExcelExportController@agent')->name('agent-page.excel');
+        Route::get('/excel/admin-altered/agents','ExcelExportController@adminAlteredAgents')->name('admin-altered.agent.excel');
+
+        /**
         *Admin Updated Kyc
          */
         Route::get('excel/admin-updated-kyc/excel','ExcelExportController@adminUpdatedKyc')->name('admin-updated-kyc.excel');

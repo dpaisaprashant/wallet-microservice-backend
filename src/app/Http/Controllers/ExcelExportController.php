@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\AdminAlteredAgentResource;
 use App\Http\Resources\AdminUpdateKycResource;
 use App\Http\Resources\AgentDetailResource;
+use App\Http\Resources\AgentResource;
 use App\Http\Resources\AllUserAuditResource;
 use App\Http\Resources\AllUserAuditResourceCollection;
 use App\Http\Resources\BfiExecutePaymentReportResource;
@@ -37,8 +39,11 @@ use App\Http\Resources\UserLoadTransactionResource;
 use App\Http\Resources\UserRegisteredByUserResource;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\UserToBfiReportResource;
+use App\Http\Resources\WalletTransactionTypeResource;
+use App\Models\AdminAlteredAgent;
 use App\Models\AdminUpdateKyc;
 use App\Models\AdminUserKYC;
+use App\Models\Architecture\WalletTransactionType;
 use App\Models\BfiExecutePayment;
 use App\Models\BfiToUserFundTransfer;
 use App\Models\CellPayUserTransaction;
@@ -230,7 +235,6 @@ class ExcelExportController extends Controller
     //merchant Excels ends
 
     //admin updated Kyc
-
     public function adminUpdatedKyc(Request $request){
         $export = new ExportExcelHelper();
         $export->setName('Admin Updated KYC')
@@ -241,6 +245,30 @@ class ExcelExportController extends Controller
         return $export->exportExcel();
     }
 
+    // wallet Transaction Types Excel
+
+    public function walletTransactionTypes(Request $request, $vendorName){
+        $request->merge(['vendorName'=>$vendorName]);
+        $export = new ExportExcelHelper();
+        $export->setName('Wallet Transaction type '.$vendorName)
+            ->setGeneratorModel(WalletTransactionType::class)
+            ->setRequest($request)
+            ->setResource(WalletTransactionTypeResource::class);
+
+        return $export->exportExcel();
+    }
+
+    //agents
+
+    public function agent(Request $request){
+        $request->merge(['user_type' => 'agent']);
+        $export = new ExportExcelHelper();
+        $export->setName('agents')
+            ->setGeneratorModel(User::class)
+            ->setRequest($request)
+            ->setResource(AgentResource::class);
+        return $export->exportExcel();
+    }
 
     public function agentDetails(Request $request){
         $request->merge(['user_type' => 'agent']);
@@ -249,6 +277,15 @@ class ExcelExportController extends Controller
             ->setGeneratorModel(User::class)
             ->setRequest($request)
             ->setResource(AgentDetailResource::class);
+        return $export->exportExcel();
+    }
+
+    public function adminAlteredAgents(Request $request){
+        $export = new ExportExcelHelper();
+        $export->setName('Admin Altered Agents')
+            ->setGeneratorModel(AdminAlteredAgent::class)
+            ->setRequest($request)
+            ->setResource(AdminAlteredAgentResource::class);
         return $export->exportExcel();
     }
 

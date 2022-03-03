@@ -6,6 +6,7 @@ use App\Http\Resources\AdminAlteredAgentResource;
 use App\Http\Resources\AdminUpdateKycResource;
 use App\Http\Resources\AgentDetailResource;
 use App\Http\Resources\AgentResource;
+use App\Http\Resources\AgentTypeHierarchyCashbackResource;
 use App\Http\Resources\AllUserAuditResource;
 use App\Http\Resources\AllUserAuditResourceCollection;
 use App\Http\Resources\BfiExecutePaymentReportResource;
@@ -43,6 +44,7 @@ use App\Http\Resources\WalletTransactionTypeResource;
 use App\Models\AdminAlteredAgent;
 use App\Models\AdminUpdateKyc;
 use App\Models\AdminUserKYC;
+use App\Models\Architecture\AgentTypeHierarchyCashback;
 use App\Models\Architecture\WalletTransactionType;
 use App\Models\BfiExecutePayment;
 use App\Models\BfiToUserFundTransfer;
@@ -286,6 +288,16 @@ class ExcelExportController extends Controller
             ->setGeneratorModel(AdminAlteredAgent::class)
             ->setRequest($request)
             ->setResource(AdminAlteredAgentResource::class);
+        return $export->exportExcel();
+    }
+
+    //agent type hierarchy Cashback
+    public function agentTypeHierarchyCashback(Request $request){
+        $export = new ExportExcelHelper();
+        $export->setName('Agent Type Hierarchy Cashback')
+            ->setGeneratorModel(AgentTypeHierarchyCashback::class)
+            ->setRequest($request)
+            ->setResource(AgentTypeHierarchyCashbackResource::class);
         return $export->exportExcel();
     }
 

@@ -22,6 +22,7 @@ Route::group(['prefix' => 'admin/architecture', 'middleware' => ['web','auth']],
     // Export to Excel
 //            Route::get('/excel/complete-transaction', 'ExcelExportController@completeTransactions')->name('transaction.complete.excel');
     Route::get('/excel/walletTransactionType/{vendorName}',[ExcelExportController::class,'walletTransactionTypes'])->name('architecture.excel.vendor.transaction');
+    Route::get('/excel/agentTypeHierarchyCashback',[ExcelExportController::class,'agentTypeHierarchyCashback'])->name('architecture.agentTypeHierarchyCashback.excel');
 
     //GET USER TYPE LISTS
     Route::post('/get-user-type-lists', [WalletTransactionTypeController::class, 'getUserTransactionTypeList'])->name('architecture.userType.list');

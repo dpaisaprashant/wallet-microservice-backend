@@ -122,6 +122,95 @@ class NRBReportController extends Controller
         return redirect()->back();
     }
 
+    public function reconciliationReport(Request $request)
+    {
+//        if ($request->all() != NULL) {
+//            $amountRange = json_decode($request->amount_range);
+//            $npsAmount = $amountRange->fromAmount;
+//            $npsAmount = $amountRange->fromAmount;
+//            $toAmount = $amountRange->toAmount;
+//            $request->merge(['fromAmount' => $fromAmount, 'toAmount' => $toAmount]);
+//        }
+
+        $repository = new nrbReconciliationReportRepository($request);
+
+        $check = $repository->checkForReport();
+
+        if ($check == null) {
+            $walletClearance = new WalletClearanceMicroService();
+
+            if (!empty($_GET)) {
+                $walletClearanceResponse = $walletClearance->dispatchReconciliationJobs(request());
+            }
+
+            $nrbReconciliationReport = 'The report is being generated. Please check in at another time. Current Status: Starting Report Generation ....';
+//            $nrbReconciliationReport = $walletClearanceResponse['message'];
+
+            return view('WalletReport::nrbAnnex.nrb-recon-report', compact('nrbReconciliationReport'));
+        }
+        if ($check) {
+            if ($check->status == "PROCESSING") {
+                $nrbReconciliationReport = 'The report is being generated. Please check in at another time. Current Status: Processing Report Generation ....';
+                return view('WalletReport::nrbAnnex.nrb-recon-report', compact('nrbReconciliationReport'));
+            }
+        }
+
+        $walletClearance = new WalletClearanceMicroService();
+        $walletClearanceResponse = $walletClearance->dispatchReconciliationJobs(request());
+
+        $nrbReconciliationReport = [
+            'NRB Reconciliation Report' => [
+                'E-Money Balance as per Wallet (1) :' => round($walletClearanceResponse['recon_data']['opening_balance'] / 100, 2),
+
+                'Add (2) :' => [
+                    'Debited in Wallet but not Debited in Settlement Bank' => [
+                        'Paypoint' => round($walletClearanceResponse['generated_sums_title'][1]['amount'] / 100, 2),
+                        'Wallet User Commission' => round($walletClearanceResponse['generated_sums_title'][2]['amount'] / 100, 2)],
+                    'Credited in Settlement Bank but not Credited in Wallet' => [
+                        'Success in NCHL not in Wallet' => $request->nchlAmount,
+                        'Success in NPS not in Wallet' => $request->npsAmount,
+                    ],
+                ],
+                'Less (6) :' => [
+                    'Credited in Wallet but not Credited in Settlement Bank' => [
+                        'NPAY' => round($walletClearanceResponse['generated_sums_title'][3]['amount'] / 100, 2),
+                        'CARD' => round($walletClearanceResponse['generated_sums_title'][4]['amount'] / 100, 2),
+                        'NPS Load Commission to Dpaisa' => round($walletClearanceResponse['generated_sums_title'][5]['amount'] / 100, 2),
+                        'NCHL Load Commission to Dpaisa' => round($walletClearanceResponse['generated_sums_title'][6]['amount'] / 100, 2),
+                        'Wallet User Cashback, Lucky Winner and Referral' => round($walletClearanceResponse['generated_sums_title'][8]['amount'] / 100, 2)],
+                    'Debited in Settlement Bank but not Debited in Wallet' => [
+                        'NCHL Bank Transfer' => round($walletClearanceResponse['generated_sums_title'][7]['amount'] / 100, 2),
+                        'NCHL Agg Commission to Dpaisa' => round($walletClearanceResponse['generated_sums_title'][9]['amount'] / 100, 2),
+                        'NPS FT Commission to Dpaisa' => 0,
+                        'Paypoint Advance' => round($walletClearanceResponse['generated_sums_title'][10]['amount'] / 100, 2),
+                    ],
+                ],
+
+                'Balance (1+2-6)' => round($walletClearanceResponse['recon_data']['opening_balance'] / 100 + $walletClearanceResponse['recon_data']['add'] / 100 - $walletClearanceResponse['recon_data']['less'] / 100, 2),
+                'Balance as per Settlement Bank (Statement)' => round($walletClearanceResponse['recon_data']['balance_per_statement'], 2),
+                'Difference (10-11)' => round($walletClearanceResponse['recon_data']['opening_balance'] / 100 + $walletClearanceResponse['recon_data']['add'] / 100 - $walletClearanceResponse['recon_data']['less'] / 100 - $walletClearanceResponse['recon_data']['balance_per_statement'], 2),
+
+            ],
+
+
+        ];
+
+        return view('WalletReport::nrbAnnex.nrb-recon-report')->with(compact('nrbReconciliationReport'));
+    }
+
+//    public function reconciliationReportGenerated(Request $request)
+//    {
+//        $generatedReports = DB::connection('clearance')->table('nrb_recon')->where('status', 'COMPLETED')->get();
+//
+//        return view('WalletReport::nrbAnnex.nrb-recon-report', compact('generatedReports'));
+//    }
+
+//    public function reconciliationReportDelete($id)
+//    {
+//        DB::connection('clearance')->table('active_inactive_slab')->where('id',$id)->delete();
+//        return redirect()->back();
+//    }
+
     public function agentReport(Request $request)
     {
 
@@ -246,108 +335,4 @@ class NRBReportController extends Controller
         return view('WalletReport::nrb.nonBankPaymentCountReport', compact('nonBankPayments'));
     }
 
-    public function activeInactiveTransaction(Request $request)
-    {
-        $reports = [];
-        if (!empty($_GET)) {
-            $repository = new ActiveInactiveTransactionRepository($request);
-            $reports = [
-                "Male" => [
-                    "count" => $repository->getUserCount("m"),
-                    "transaction_count" => $repository->getUserTransactionCount("m"),
-                    "transaction_value" => $repository->getUserTransactionValue("m") / 100
-                ],
-
-                "Female" => [
-                    "count" => $repository->getUserCount("f"),
-                    "transaction_count" => $repository->getUserTransactionCount("f"),
-                    "transaction_value" => $repository->getUserTransactionValue("f") / 100
-                ],
-
-                "Others" => [
-                    "count" => $repository->getUserCount("o"),
-                    "transaction_count" => $repository->getUserTransactionCount("o"),
-                    "transaction_value" => $repository->getUserTransactionValue("o") / 100
-                ],
-            ];
-        }
-        return view('WalletReport::nrb.activeInactiveTransactionReport')->with(compact('reports'));
-
-    }
-
-    public function reconciliationReport(Request $request)
-    {
-//        if ($request->all() != NULL) {
-//            $amountRange = json_decode($request->amount_range);
-//            $npsAmount = $amountRange->fromAmount;
-//            $npsAmount = $amountRange->fromAmount;
-//            $toAmount = $amountRange->toAmount;
-//            $request->merge(['fromAmount' => $fromAmount, 'toAmount' => $toAmount]);
-//        }
-
-        $repository = new nrbReconciliationReportRepository($request);
-
-        $check = $repository->checkForReport();
-
-        if ($check == null) {
-            $walletClearance = new WalletClearanceMicroService();
-
-            if (!empty($_GET)) {
-                $walletClearanceResponse = $walletClearance->dispatchReconciliationJobs(request());
-            }
-
-            $nrbReconciliationReport = 'The report is being generated. Please check in at another time. Current Status: Starting Report Generation ....';
-//            $nrbReconciliationReport = $walletClearanceResponse['message'];
-
-            return view('WalletReport::nrbAnnex.nrb-recon-report', compact('nrbReconciliationReport'));
-        }
-        if ($check) {
-            if ($check->status == "PROCESSING") {
-                $nrbReconciliationReport = 'The report is being generated. Please check in at another time. Current Status: Processing Report Generation ....';
-                return view('WalletReport::nrbAnnex.nrb-recon-report', compact('nrbReconciliationReport'));
-            }
-        }
-
-        $walletClearance = new WalletClearanceMicroService();
-        $walletClearanceResponse = $walletClearance->dispatchReconciliationJobs(request());
-
-        $nrbReconciliationReport = [
-            'NRB Reconciliation Report' => [
-                'E-Money Balance as per Wallet (1) :' => round($walletClearanceResponse['recon_data']['opening_balance'] / 100, 2),
-
-                'Add (2) :' => [
-                    'Debited in Wallet but not Debited in Settlement Bank' => [
-                        'Paypoint' => round($walletClearanceResponse['generated_sums_title'][1]['amount'] / 100, 2),
-                        'Wallet User Commission' => round($walletClearanceResponse['generated_sums_title'][2]['amount'] / 100, 2)],
-                    'Credited in Settlement Bank but not Credited in Wallet' => [
-                        'Success in NCHL not in Wallet' => $request->nchlAmount,
-                        'Success in NPS not in Wallet' => $request->npsAmount,
-                    ],
-                ],
-                'Less (6) :' => [
-                    'Credited in Wallet but not Credited in Settlement Bank' => [
-                        'NPAY' => round($walletClearanceResponse['generated_sums_title'][3]['amount'] / 100, 2),
-                        'CARD' => round($walletClearanceResponse['generated_sums_title'][4]['amount'] / 100, 2),
-                        'NPS Load Commission to Dpaisa' => round($walletClearanceResponse['generated_sums_title'][5]['amount'] / 100, 2),
-                        'NCHL Load Commission to Dpaisa' => round($walletClearanceResponse['generated_sums_title'][6]['amount'] / 100, 2),
-                        'Wallet User Cashback, Lucky Winner and Referral' => round($walletClearanceResponse['generated_sums_title'][8]['amount'] / 100, 2)],
-                    'Debited in Settlement Bank but not Debited in Wallet' => [
-                        'NCHL Bank Transfer' => round($walletClearanceResponse['generated_sums_title'][7]['amount'] / 100, 2),
-                        'NCHL Agg Commission to Dpaisa' => round($walletClearanceResponse['generated_sums_title'][9]['amount'] / 100, 2),
-                        'NPS FT Commission to Dpaisa' => 0,
-                        'Paypoint Advance' => round($walletClearanceResponse['generated_sums_title'][10]['amount'] / 100, 2),
-                    ],
-                ],
-
-                'Balance (1+2-6)' => round($walletClearanceResponse['recon_data']['opening_balance'] / 100 + $walletClearanceResponse['recon_data']['add'] / 100 - $walletClearanceResponse['recon_data']['less'] / 100, 2),
-                'Balance as per Settlement Bank (Statement)' => round($walletClearanceResponse['recon_data']['balance_per_statement'], 2),
-                'Difference (10-11)' => round($walletClearanceResponse['recon_data']['opening_balance'] / 100 + $walletClearanceResponse['recon_data']['add'] / 100 - $walletClearanceResponse['recon_data']['less'] / 100 - $walletClearanceResponse['recon_data']['balance_per_statement'], 2),
-
-            ],
-
-
-        ];
-
-        return view('WalletReport::nrbAnnex.nrb-recon-report')->with(compact('nrbReconciliationReport'));
-    }
 }

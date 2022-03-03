@@ -77,6 +77,8 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web', 'auth']], func
 
     //NRB Recon Report
     Route::get('nrb-report/nrb-reconciliation', [NRBReportController::class, 'reconciliationReport'])->name('report.nrb.annex.reconciliation')->middleware('permission:Nrb annex report view');
+//    Route::get('nrb-report/nrb-reconciliation/delete/{id}', [NRBReportController::class, 'reconciliationReportDelete'])->name('report.nrb.annex.reconciliation.delete')->middleware('permission:Nrb annex report view');
+//    Route::get('nrb-report/nrb-reconciliation/generated', [NRBReportController::class, 'reconciliationReportGenerated'])->name('report.nrb.annex.reconciliation.generated')->middleware('permission:Nrb annex report view');
 
     //10.1.11 Report
     Route::get('nrb-report/agent-payment-report', [NRBAnnexReportController::class, 'agentPaymentReport'])->name('report.nrb.annex.agent.payment')->middleware('permission:Nrb annex report view');;

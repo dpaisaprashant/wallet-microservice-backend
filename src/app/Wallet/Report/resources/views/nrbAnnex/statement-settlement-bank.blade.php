@@ -46,13 +46,13 @@
                                     <br>
                                     <div class="row">
                                         <label class="col-sm-2 col-form-label">Select Date</label>
-                                        <div class="col-5">
+                                        <div class="col-4">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </span>
                                                 <input id="date_load_from" type="text"
-                                                       class="form-control date_from" placeholder="From"
+                                                       class="form-control date_from" placeholder="Select Date ..."
                                                        name="from" autocomplete="off"
                                                        value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}"
                                                        required>
@@ -69,12 +69,14 @@
                                         </button>
                                     </div>
 
-                                    {{--                                    <div>--}}
-                                    {{--                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"--}}
-                                    {{--                                                type="submit" style="margin-right: 10px;"--}}
-                                    {{--                                                formaction="{{ route('transaction.complete.excel') }}">--}}
-                                    {{--                                            <strong>Excel</strong></button>--}}
-                                    {{--                                    </div>--}}
+                                    <div>
+                                        <a class="btn btn-sm btn-warning float-right m-t-n-xs"
+                                           style="margin-right: 10px;"
+                                           href="{{ route('report.statement.settlement.bank.generated') }}">
+                                            <strong><i class="fa fa-bar-chart"></i>&nbsp; View Generated
+                                                Reports</strong></a>
+                                    </div>
+
                                     @include('admin.asset.components.clearFilterButton')
                                 </form>
                             </div>
@@ -94,7 +96,7 @@
                         <div class="ibox-content">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover dataTables-example"
-                                       title="Non bank payment report">
+                                       title="Statement Settlement Bank Report">
                                     <thead>
                                     <tr>
                                         <th>S.No.</th>
@@ -157,13 +159,6 @@
     @include('admin.asset.js.chosen')
     @include('admin.asset.js.datepicker')
     @include('admin.asset.js.datatable')
-    {{--    <script>--}}
-    {{--        $(document).ready(function (e) {--}}
-    {{--            let a = "Showing {{ $transactions->firstItem() }} to {{ $transactions->lastItem() }} of {{ $transactions->total() }} entries";--}}
-    {{--            $('.dataTables_info').text(a);--}}
-    {{--        });--}}
-    {{--    </script>--}}
-
 
     <script>
         $('#excel').submit(function (e) {

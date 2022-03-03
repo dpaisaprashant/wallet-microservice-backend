@@ -90,7 +90,7 @@
                                     <br>
                                     <div class="row">
                                         <label class="col-sm-2 col-form-label">Select Date</label>
-                                        <div class="col-5">
+                                        <div class="col-4">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
@@ -102,7 +102,7 @@
                                             </div>
                                             <br>
                                         </div>
-                                        <div class="col-5">
+                                        <div class="col-4">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>

@@ -46,13 +46,13 @@
                                     <br>
                                     <div class="row">
                                         <label class="col-sm-2 col-form-label">Select Date</label>
-                                        <div class="col-5">
+                                        <div class="col-sm-4">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </span>
                                                 <input id="date_load_from" type="text"
-                                                       class="form-control date_from" placeholder="From"
+                                                       class="form-control date_from" placeholder="As of Date"
                                                        name="from" autocomplete="off"
                                                        value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}"
                                                        required>
@@ -61,7 +61,6 @@
                                         </div>
                                     </div>
                                     <br>
-
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
                                                 formaction="{{ route('report.active.inactive.user') }}">
@@ -69,12 +68,13 @@
                                         </button>
                                     </div>
 
-                                    {{--                                    <div>--}}
-                                    {{--                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"--}}
-                                    {{--                                                type="submit" style="margin-right: 10px;"--}}
-                                    {{--                                                formaction="{{ route('transaction.complete.excel') }}">--}}
-                                    {{--                                            <strong>Excel</strong></button>--}}
-                                    {{--                                    </div>--}}
+                                    <div>
+                                        <a class="btn btn-sm btn-warning float-right m-t-n-xs"
+                                           style="margin-right: 10px;"
+                                           href="{{ route('report.active.inactive.user.generated') }}">
+                                            <strong><i class="fa fa-bar-chart"></i>&nbsp; View Generated
+                                                Reports</strong></a>
+                                    </div>
                                     @include('admin.asset.components.clearFilterButton')
                                 </form>
                             </div>

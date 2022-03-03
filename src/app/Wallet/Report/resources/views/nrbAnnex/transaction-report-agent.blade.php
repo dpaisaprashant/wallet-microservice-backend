@@ -56,6 +56,7 @@
                                     {{--                                            </select>--}}
                                     {{--                                        </div>--}}
                                     {{--                                    </div>--}}
+
                                     <div class="row">
                                         <label class="col-sm-2 col-form-label">Select Amount Range</label>
                                         <div class="col-3">
@@ -64,9 +65,9 @@
                                                     <i class="fa fa-dollar"></i>
                                                 </span>
                                                 <input type="number" class="form-control"
-                                                       placeholder="From Amount" name="from_amount"
+                                                       placeholder="To Amount" name="from_amount"
                                                        autocomplete="off"
-                                                       value="{{ !empty($_GET['from_amount']) ? $_GET['from_amount'] : '' }} "
+                                                       value="{{ isset($_GET['from_amount']) ? $_GET['from_amount'] : '' }}"
                                                        required>
                                             </div>
                                         </div>
@@ -78,7 +79,7 @@
                                                 <input type="number" class="form-control"
                                                        placeholder="To Amount" name="to_amount"
                                                        autocomplete="off"
-                                                       value="{{ !empty($_GET['to_amount']) ? $_GET['to_amount'] : '' }}"
+                                                       value="{{ isset($_GET['to_amount']) ? $_GET['to_amount'] : '' }}"
                                                        required>
                                             </div>
                                         </div>
@@ -174,7 +175,7 @@
                         <div class="ibox-content">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover dataTables-example"
-                                       title="Non bank payment report">
+                                       title="NRB Annex 10.1.5 Report from Date : {{$_GET['from']}} to {{$_GET['to']}}, Amount Range : {{$_GET['from_amount']}} to {{$_GET['to_amount']}}">
                                     <thead>
                                     <tr>
                                         <th>S.No.</th>
@@ -219,13 +220,6 @@
     @include('admin.asset.js.chosen')
     @include('admin.asset.js.datepicker')
     @include('admin.asset.js.datatable')
-    {{--    <script>--}}
-    {{--        $(document).ready(function (e) {--}}
-    {{--            let a = "Showing {{ $transactions->firstItem() }} to {{ $transactions->lastItem() }} of {{ $transactions->total() }} entries";--}}
-    {{--            $('.dataTables_info').text(a);--}}
-    {{--        });--}}
-    {{--    </script>--}}
-
 
     <script>
         $('#excel').submit(function (e) {

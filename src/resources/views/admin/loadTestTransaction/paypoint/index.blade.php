@@ -40,7 +40,7 @@
                     <div class="ibox-content" @if( empty($_GET) || (!empty($_GET['page']) && count($_GET) === 1)  ) style="display: none"  @endif>
                         <div class="row">
                             <div class="col-sm-12">
-                                <form role="form" method="get" action="{{ route('transaction.complete') }}" id="filter">
+                                <form role="form" method="get" action="{{ route('paypoint.loadTestFund.index') }}" id="filter">
                                     <div class="row">
 
                                         <div class="col-md-4">
@@ -144,7 +144,7 @@
                                     </div>
 
                                     <div>
-                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('loadTestFund.index') }}"><strong>Filter</strong></button>
+                                        <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('paypoint.loadTestFund.index') }}"><strong>Filter</strong></button>
                                     </div>
 
                                     @include('admin.asset.components.clearFilterButton')

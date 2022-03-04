@@ -25,8 +25,10 @@ use App\Http\Resources\LoadTestFundReportResource;
 use App\Http\Resources\MerchantResource;
 use App\Http\Resources\NchlAggregatedTransactionResource;
 use App\Http\Resources\NchlBankTransferResource;
+use App\Http\Resources\NchlLoadTransactionResource;
 use App\Http\Resources\NICAsiaCyberSourceLoadTransactionResource;
 use App\Http\Resources\PayPointReportResource;
+use App\Http\Resources\PreTransactionResource;
 use App\Http\Resources\SparrowSMSResource;
 use App\Http\Resources\TicketSalesReportResource;
 use App\Http\Resources\TransactionEventResource;
@@ -56,8 +58,11 @@ use App\Models\FundRequest;
 use App\Models\KhaltiUserTransaction;
 use App\Models\LinkedAccounts;
 use App\Models\LoadTestFund;
+use App\Models\MerchantTransaction;
+use App\Models\Microservice\PreTransaction;
 use App\Models\NchlAggregatedPayment;
 use App\Models\NchlBankTransfer;
+use App\Models\NchlLoadTransaction;
 use App\Models\NICAsiaCyberSourceLoadTransaction;
 use App\Models\NpsLoadTransaction;
 use App\Models\SparrowSMS;
@@ -296,6 +301,17 @@ class ExcelExportController extends Controller
         $export = new ExportExcelHelper();
         $export->setName('Agent Type Hierarchy Cashback')
             ->setGeneratorModel(AgentTypeHierarchyCashback::class)
+            ->setRequest($request)
+            ->setResource(AgentTypeHierarchyCashbackResource::class);
+        return $export->exportExcel();
+    }
+
+//    loadTestFunds
+
+    public function loadTestFund(Request $request){
+        $export = new ExportExcelHelper();
+        $export->setName('Load Test Fund')
+            ->setGeneratorModel(LoadTestFund::class)
             ->setRequest($request)
             ->setResource(AgentTypeHierarchyCashbackResource::class);
         return $export->exportExcel();
@@ -745,6 +761,36 @@ class ExcelExportController extends Controller
             ->setGeneratorModel(UserRegisteredByUser::class)
             ->setRequest($request)
             ->setResource(UserRegisteredByUserResource::class);
+        return $export->exportExcel();
+    }
+
+    //pre Transaction Excel
+    public function preTransaction(Request $request){
+        $export = new ExportExcelHelper();
+        $export->setName('Pre Transactions')
+            ->setGeneratorModel(PreTransaction::class)
+            ->setRequest($request)
+            ->setResource(PreTransactionResource::class);
+        return $export->exportExcel();
+    }
+
+    // nchl load transaction
+    public function nchlLoadTransaction(Request $request){
+        $export = new ExportExcelHelper();
+        $export->setName('Nchl Load Transactions')
+            ->setGeneratorModel(NchlLoadTransaction::class)
+            ->setRequest($request)
+            ->setResource(NchlLoadTransactionResource::class);
+        return $export->exportExcel();
+    }
+
+    // merchant Transactions
+    public function merchantTransaction(Request $request){
+        $export = new ExportExcelHelper();
+        $export->setName('Merchant Transactions')
+            ->setGeneratorModel(MerchantTransaction::class)
+            ->setRequest($request)
+            ->setResource(NchlLoadTransactionResource::class);
         return $export->exportExcel();
     }
 

@@ -504,6 +504,16 @@ Route::group(['prefix' => 'admin'], function () {
          */
         Route::get('excel/admin-updated-kyc/excel','ExcelExportController@adminUpdatedKyc')->name('admin-updated-kyc.excel');
 
+        /**
+         *Nchl Load Transaction
+         */
+        Route::get('excel/nchlLoadTransaction','ExcelExportController@nchlLoadTransaction')->name('nchlLoadTransaction.excel');
+
+        /**
+         *Merchant Transaction Transaction
+         */
+        Route::get('excel/merchantTransaction','ExcelExportController@merchantTransaction')->name('merchantTransaction.excel');
+
         Route::get('/excel/agent-details', 'ExcelExportController@agentDetails')->name('agent.excel');
 
 

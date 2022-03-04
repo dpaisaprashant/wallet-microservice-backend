@@ -169,25 +169,25 @@ class UserProfileController extends Controller
             'text' => $text
         ));
 
-        // DB::connection($db_name)->select(DB::raw("
-        //     INSERT INTO temp_audit
-        //     SELECT
-        //     pre_transaction_id,
-        //     vendor,
-        //     service_type,
-        //     transaction_type as account_type,
-        //     '0' as commissionable_id,
-        //     amount/100 as amount,
-        //     after_balance/100 as balance,
-        //     after_bonus_balance/100 as bonus_balance,
-        //     (updated_at) as created_at,
-        //     status,
-        //     json_response,
-        //     IFNULL(refund_id, 0) as refund_id
-        //     FROM `pre_transactions` where user_id = :user_id and status != 'SUCCESS'
-        // "), array(
-        //     'user_id' => $id,
-        // ));
+         DB::connection($db_name)->select(DB::raw("
+             INSERT INTO temp_audit
+             SELECT
+             pre_transaction_id,
+             vendor,
+             service_type,
+             transaction_type as account_type,
+             '0' as commissionable_id,
+             amount/100 as amount,
+             after_balance/100 as balance,
+             after_bonus_balance/100 as bonus_balance,
+             (updated_at) as created_at,
+             status,
+             json_response,
+             IFNULL(refund_id, 0) as refund_id
+             FROM `pre_transactions` where user_id = :user_id and status != 'SUCCESS'
+         "), array(
+             'user_id' => $id,
+         ));
         $user_details = DB::connection($db_name)
             ->select(DB::raw(
                 "select * from users as u join wallets as w on u.id = w.user_id where u.id = :user_id"

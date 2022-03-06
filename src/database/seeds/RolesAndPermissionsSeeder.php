@@ -308,6 +308,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Report nrb agent',
             'Report nrb reconciliation',
             'Nrb each agent report view',
+            'Report user registered by user',
 
             //setting
             'Nps setting view',

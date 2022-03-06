@@ -35,14 +35,16 @@ class TransactionEventRepository
     public function sortedTransactions()
     {
         return TransactionEvent::with('transactionable', 'user', 'commission', 'commission.transactions')
-            ->doesntHave('refundTransaction')
+            //->doesntHave('refundTransaction')
+            ->whereNull("refund_id")
             ->filter($this->request)->paginate($this->length);
     }
 
     public function latestTransactions()
     {
         return TransactionEvent::with('transactionable', 'user', 'commission', 'commission.transactions')
-            ->doesntHave('refundTransaction')
+            //->doesntHave('refundTransaction')
+            ->whereNull("refund_id")
             ->latest()->filter($this->request)->paginate($this->length);
         //->filter($this->request)->paginate($this->length);
     }
@@ -85,19 +87,19 @@ class TransactionEventRepository
 
     public function transactionsCount()
     {
-        return TransactionEvent::doesntHave('refundTransaction')
+        return TransactionEvent::whereNull("refund_id")
             ->filter($this->request)->count();
     }
 
     public function transactionAmountSum()
     {
-        return TransactionEvent::doesntHave('refundTransaction')
-            ->filter($this->request)->sum('amount') / 100;
+        return TransactionEvent::whereNull("refund_id")
+                ->filter($this->request)->sum('amount') / 100;
     }
 
     public function transactionFeeSum()
     {
-        return TransactionEvent::doesntHave('refundTransaction')
+        return TransactionEvent::whereNull("refund_id")
                 ->filter($this->request)
                 ->get()
                 ->sum('fee');
@@ -133,7 +135,7 @@ class TransactionEventRepository
     //For Individual User
     public function totalLoadedAmountUser()
     {
-        return TransactionEvent::doesntHave('refundTransaction')
+        return TransactionEvent::whereNull("refund_id")
             ->filter($this->request)->count();
     }
 

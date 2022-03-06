@@ -270,6 +270,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Agent delete',
             'Agent type view',
             'Agent type create',
+            'Agent details view',
 
             //refund
             'Refund view',
@@ -306,6 +307,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'Report commission',
             'Report nrb agent',
             'Report nrb reconciliation',
+            'Nrb each agent report view',
+            'Report user registered by user',
 
             //setting
             'Nps setting view',
@@ -497,7 +500,16 @@ class RolesAndPermissionsSeeder extends Seeder
             'Accepted merchant kyc',
             'Rejected merchant kyc',
             'KYC not filled merchant',
-            'View nea settlements'
+            'View nea settlements',
+
+            //Magnus
+            'View magnus linked accounts',
+
+            //Miscellaneous Reports
+            'View lucky winner report',
+            'View ticket sale report',
+            'View load test fund report',
+
             ];
 
         //get users having all permissions

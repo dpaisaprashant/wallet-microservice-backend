@@ -63,10 +63,53 @@
                                             <select name="merchant" class="form-control form-control-sm" required>
                                                 <option value="" selected disabled>-- Select Merchant --</option>
                                                 @foreach($merchants as $merchant)
-                                                    <option value="{{$merchant->id}}">{{$merchant->mobile_no . "-" .$merchant->name}}</option>
+                                                    @if(!empty($_GET['merchant']))
+                                                        @if($merchant->id == $_GET['merchant'])
+                                                            <option value="{{$merchant->id}}" selected>{{$merchant->mobile_no . "-" .$merchant->name}}</option>
+                                                        @else
+                                                            <option value="{{$merchant->id}}">{{$merchant->moble_no . "-" .$merchant->name}}</option>
+                                                        @endif
+                                                    @else
+                                                        <option value="{{$merchant->id}}">{{$merchant->moble_no . "-" .$merchant->name}}</option>
+                                                    @endif
+
                                                 @endforeach
                                             </select>
                                         </div>
+
+
+                                        <div class="col-md-6">
+                                            <div class="form-group" style="padding-top: 10px">
+                                                <select data-placeholder="Select Pre-Transaction status..."
+                                                        class="chosen-select" tabindex="2" name="transaction_type">
+                                                    <option value="" selected disabled>-- Select Transaction Type -- </option>
+                                                    <option value="">All</option>
+                                                    @if(!empty($_GET['transaction_type']))
+                                                        <option value="{{\App\Models\MagnusWithdraw::class}}"
+                                                                @if($_GET['transaction_type']  == \App\Models\MagnusWithdraw::class) selected @endif >
+                                                            Magnus Withdraw
+                                                        </option>
+                                                        <option value="{{\App\Models\MagnusDeposit::class}}"
+                                                                @if($_GET['transaction_type'] == \App\Models\MagnusDeposit::class) selected @endif>
+                                                            Magnus Deposit
+                                                        </option>
+                                                    @else
+                                                        <option value="{{\App\Models\MagnusWithdraw::class}}">Magnus Withdraw</option>
+                                                        <option value="{{\App\Models\MagnusDeposit::class}}">Magnus Deposit</option>
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="pre_transaction_id">Enter Pre Transaction ID</label>
+                                                <input type="text" name="pre_transaction_id" placeholder="Enter Pre Transaction ID"
+                                                       class="form-control"
+                                                       value="{{ !empty($_GET['pre_transaction_id']) ? $_GET['pre_transaction_id'] : '' }}">
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <br>
                                     <div>
@@ -98,14 +141,17 @@
                                 <thead>
                                 <tr>
                                     <th>S.No.</th>
+                                    <th>Pre Transaction ID</th>
                                     <th>Date</th>
                                     <th>Transaction Code</th>
                                     <th>Merchant Name</th>
                                     <th>Account Name</th>
+                                    <th>SFACL Transaction ID</th>
                                     <th>Debit</th>
                                     <th>Credit</th>
                                     <th>Amount</th>
                                     <th>Description(Kaifhiyat)</th>
+                                    <th>Actions</th>
                                 </tr>
                                 </thead>
                                 @isset($ledgers)
@@ -113,10 +159,12 @@
                                     @foreach($ledgers as $ledger)
                                         <tbody>
                                             <td>{{$loop->iteration}}</td>
+                                            <td>{{$ledger->pre_transaction_id}}</td>
                                             <td>{{$ledger->created_at}}</td>
                                             <td>{{$ledger->uid}}</td>
                                             <td>{{$ledger->user->name}}</td>
                                             <td>{{$ledger->account_mobile_no}}</td>
+                                            <td>{{$ledger->tx_id}}</td>
                                             @if($ledger->uniquePreTransaction->transaction_type == \App\Models\Microservice\PreTransaction::TRANSACTION_TYPE_DEBIT)
                                                 <td style="color: red">{{$ledger->amount}}</td>
                                                 <td>--</td>
@@ -134,6 +182,12 @@
                                             @endif
                                             <td>{{$ledger->balance}}</td>
                                             <td>{{$ledger->descripiton}}</td>
+                                            <td>
+                                                <a style="margin-top: 5px;"
+                                                   href="{{route('admin.merchant.ledger.detail',$ledger->id)}}"
+                                                   class="btn btn-sm btn-icon btn-primary m-t-n-xs"
+                                                   title="user profile"><i class="fa fa-eye"></i></a>
+                                            </td>
                                         </tbody>
                                     @endforeach
                                 @endisset

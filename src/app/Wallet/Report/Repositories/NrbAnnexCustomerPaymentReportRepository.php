@@ -40,8 +40,8 @@ class NrbAnnexCustomerPaymentReportRepository extends AbstractReportRepository
         parent::__construct($request);
         $this->fromDate = date('Y-m-d', strtotime(str_replace(',', ' ', $request->from)));
         $this->toDate = date('Y-m-d', strtotime(str_replace(',', ' ', $request->to)));
-        $this->fromAmount = $request->fromAmount;
-        $this->toAmount = $request->toAmount;
+        $this->fromAmount = $request->from_amount;
+        $this->toAmount = $request->to_amount;
     }
 
     public function customerTransactions()
@@ -71,8 +71,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                     LEFT JOIN temp_agents a ON a.user_id = t.user_id
                     WHERE a.user_id IS NULL
                   AND
-                                                                                (t.transaction_type ='App\\\Models\\\NchlAggregatedPayment'
-                                                                                 OR
+                                                                                (
                                                                                  t.transaction_type = 'App\\\Models\\\KhaltiUserTransaction'
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\NeaTransaction'
@@ -106,8 +105,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                     LEFT JOIN temp_agents a ON a.user_id = t.user_id
                     WHERE a.user_id IS NULL
                    AND
-                                                                                (t.transaction_type ='App\\\Models\\\NchlAggregatedPayment'
-                                                                                 OR
+                                                                                (
                                                                                  t.transaction_type = 'App\\\Models\\\KhaltiUserTransaction'
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\NeaTransaction'
@@ -286,9 +284,8 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 LEFT JOIN temp_agents a ON a.user_id = t.user_id
                                                                                 WHERE a.user_id IS NULL
                                                                                 AND
-                                                                                (t.transaction_type ='App\\\Wallet\\\Commission\\\Models\\\Commission'
-                                                                                 OR
-                                                                                 (t.transaction_type = 'App\\\Wallet\\Commission\\\Models\\\Commission' AND t.service_type='COMMISSION')
+                                                                                (
+                                                                                 (t.transaction_type = 'App\\\Wallet\\\Commission\\\Models\\\Commission' AND t.service_type='COMMISSION')
                                                                                 )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)
@@ -309,9 +306,8 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 LEFT JOIN temp_agents a ON a.user_id = t.user_id
                                                                                 WHERE a.user_id IS NULL
                                                                                 AND
-                                                                                (t.transaction_type ='App\\\Wallet\\\Commission\\\Models\\\Commission'
-                                                                                 OR
-                                                                                 (t.transaction_type = 'App\\\Wallet\\Commission\\\Models\\\Commission' AND t.service_type='COMMISSION')
+                                                                                (
+                                                                                 (t.transaction_type = 'App\\\Wallet\\\Commission\\\Models\\\Commission' AND t.service_type='COMMISSION')
                                                                                 )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)
@@ -461,143 +457,49 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
         return $serviceRefundValue;
     }
 
-//    public function getServiceRefundTotalCount()
-//    {
-//        $serviceRefundTotal = DB::connection('dpaisa')->select("SELECT COUNT(t.amount/100) as totalCount FROM transaction_events as t
-//                                                                                RIGHT JOIN agents as a ON a.user_id = t.user_id
-//                                                                                WHERE t.user_id = a.user_id and a.status = 'ACCEPTED'
-//                                                                                AND
-//                                                                                (
-//                                                                                    t.transaction_type ='App\\\Models\\\LoadTestFund' AND t.service_type='REFUND' AND t.pre_transaction_id=NULL
-//                                                                                 )
-//                                                                                AND
-//                                                                                date(t.created_at) >= date('$this->fromDate')
-//                                                                                AND
-//                                                                                date(t.created_at) <= date('$this->toDate')
-//                                                                               ");
-//
-//        $serviceRefundTotal = $serviceRefundTotal[0]->totalCount;
-//        return $serviceRefundTotal;
-//    }
-//
-//    public function getServiceRefundTotalValue()
-//    {
-//        $serviceRefundTotal = DB::connection('dpaisa')->select("SELECT SUM(t.amount/100) as totalSum FROM transaction_events as t
-//                                                                                RIGHT JOIN agents as a ON a.user_id = t.user_id
-//                                                                                WHERE t.user_id = a.user_id and a.status = 'ACCEPTED'
-//                                                                                AND
-//                                                                                (
-//                                                                                    t.transaction_type ='App\\\Models\\\LoadTestFund' AND t.service_type='REFUND' AND t.pre_transaction_id=NULL
-//                                                                                 )
-//                                                                                AND
-//                                                                                date(t.created_at) >= date('$this->fromDate')
-//                                                                                AND
-//                                                                                date(t.created_at) <= date('$this->toDate')
-//                                                                               ");
-//
-//        $serviceRefundTotal = $serviceRefundTotal[0]->totalSum;
-//        return $serviceRefundTotal;
-//    }
-
-
-    public function checkCountMerchantTransactions()
+    public function getGovernmentPaymentCount()
     {
+        $govPaymentCount = DB::connection('dpaisa')->select("SELECT COUNT(t.amount/100) as totalCount
+                                                                                FROM transaction_events t
+                                                                                LEFT JOIN temp_agents a ON a.user_id = t.user_id
+                                                                                WHERE a.user_id IS NULL
+                                                                                AND
+                                                                                (
+                                                                                    t.transaction_type ='App\\\Models\\\NchlAggregatedPayment'
+                                                                                 )
+                                                                                AND
+                                                                                date(t.created_at) >= date(:fromDate)
+                                                                                AND
+                                                                                date(t.created_at) <= date(:toDate)
+                                                                                AND
+                                                                                (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
 
-        $successfulCountMerchantTransactions = MerchantTransaction::where('status', 'COMPLETE')->filter($this->request)->count();
-        $merchantTransactions = MerchantTransaction::filter($this->request)->count();
-
-        $failedCountMerchantTransactions = $merchantTransactions - $successfulCountMerchantTransactions;
-
-        $merchantTransactionsCount = ['successfulCountMerchantTransactions' => $successfulCountMerchantTransactions,
-            'failedCountMerchantTransactions' => $failedCountMerchantTransactions,
-        ];
-        return $merchantTransactionsCount;
+        $govPaymentCount = $govPaymentCount[0]->totalCount;
+        return $govPaymentCount;
     }
 
-    public function checkCountUserToUserFundTransfer()
+    public function getGovernmentPaymentValue()
     {
-        $userToUserFundTransferCount = UserToUserFundTransfer::filter($this->request)->count();
-        $fundRequestsCount = FundRequest::where('status', 1)->filter($this->request)->count();
-        $successfulCountUserToUserFundTransfer = $userToUserFundTransferCount + $fundRequestsCount;
+        $serviceRefundValue = DB::connection('dpaisa')->select("SELECT SUM(t.amount/100) as totalSum
+                                                                                FROM transaction_events t
+                                                                                LEFT JOIN temp_agents a ON a.user_id = t.user_id
+                                                                                WHERE a.user_id IS NULL
+                                                                                AND
+                                                                                (
+                                                                                    t.transaction_type ='App\\\Models\\\NchlAggregatedPayment'
+                                                                                 )
+                                                                                AND
+                                                                                date(t.created_at) >= date(:fromDate)
+                                                                                AND
+                                                                                date(t.created_at) <= date(:toDate)
+                                                                                AND
+                                                                                (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
+                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
 
-        $failedCountUserToUserFundTransfer = 0;
-
-        $userToUserFundTransferCount = ['successfulCountUserToUserFundTransfer' => $successfulCountUserToUserFundTransfer,
-            'failedCountUserToUserFundTransfer' => $failedCountUserToUserFundTransfer,
-        ];
-        return $userToUserFundTransferCount;
+        $serviceRefundValue = $serviceRefundValue[0]->totalSum;
+        return $serviceRefundValue;
     }
 
-    public function checkCountKhaltiPayment()
-    {
-
-        $khaltiPayment = KhaltiUserTransaction::where('vendor', 'NCELL')->orWhere('vendor', 'NTC')->orWhere('vendor', 'SMARTCELL')->filter($this->request);
-        $successfulCountKhaltiPayment = $khaltiPayment->where('state', 'success')->filter($this->request)->count();
-        $failedCountKhaltiPayment = ($khaltiPayment->count()) - $successfulCountKhaltiPayment;
-
-        $khaltiPaymentCount = ['successfulKhaltiPaymentCount' => $successfulCountKhaltiPayment,
-            'failedKhaltiPaymentCount' => $failedCountKhaltiPayment,
-        ];
-
-        return $khaltiPaymentCount;
-    }
-
-    public function checkCountNchlAggregated()
-    {
-
-        $successfulCountNchlAggregated = TransactionEvent::where('transaction_type', NchlAggregatedPayment::class)->filter($this->request)->count();
-        $nchlAggregated = NchlAggregatedPayment::filter($this->request)->count();
-
-        $failedCountNchlAggregated = $nchlAggregated - $successfulCountNchlAggregated;
-
-        $nchlAggregatedCount = ['successfulNchlAggregatedCount' => $successfulCountNchlAggregated,
-            'failedNchlAggregatedCount' => $failedCountNchlAggregated,
-        ];
-        return $nchlAggregatedCount;
-    }
-
-    public function checkCountNchlBankTransfer()
-    {
-
-        $successfulCountNchlBankTransfer = TransactionEvent::where('transaction_type', NchlAggregatedPayment::class)->filter($this->request)->count();
-        $nchlBankTransfer = NchlBankTransfer::filter($this->request)->count();
-
-        $failedCountNchlBankTransfer = $nchlBankTransfer - $successfulCountNchlBankTransfer;
-
-        $nchlBankTransferCount = ['successfulNchlBankTransferCount' => $successfulCountNchlBankTransfer,
-            'failedNchlBankTransferCount' => $failedCountNchlBankTransfer,
-        ];
-        return $nchlBankTransferCount;
-    }
-
-    public function checkCountCashIn()
-    {
-
-        $successfulCountCashIn = $this->getCashInNumber();
-        $totalCashInCount = UserLoadTransaction::filter($this->request)->count() +
-            NchlLoadTransaction::filter($this->request)->count() +
-            NICAsiaCyberSourceLoadTransaction::filter($this->request)->count() +
-            NPSAccountLinkLoad::filter($this->request)->count();
-//            PaymentNepalLoadTransaction::filter($this->request)->count();
-        $failedCountCashIn = $totalCashInCount - $successfulCountCashIn;
-
-        $cashInCount = ['successfulCashInCount' => $successfulCountCashIn,
-            'failedCashInCount' => $failedCountCashIn,
-        ];
-        return $cashInCount;
-    }
-
-    public function checkCountCashOut()
-    {
-
-        $successfulCountCashOut = $this->getCashOutNumber();
-        $totalCashOutCount = NchlBankTransfer::filter($this->request)->count();
-        $failedCountCashOut = $totalCashOutCount - $successfulCountCashOut;
-
-        $cashInCount = ['successfulCashOutCount' => $successfulCountCashOut,
-            'failedCashOutCount' => $failedCountCashOut,
-        ];
-        return $cashInCount;
-    }
 
 }

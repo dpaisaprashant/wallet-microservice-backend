@@ -103,6 +103,26 @@
                                                 @endforeach
                                             </select>
                                         </div>
+
+                                        <div class="col-md-4" style="padding-bottom: 15px; padding-top: 15px; ">
+                                            <select name="agent_balance" class="form-control">
+                                                <option value="" disabled selected>--- Filter by Wallet Balance---</option>
+
+                                                    @if(!empty($_GET['agent_balance']))
+                                                        @if($_GET['agent_balance'] == "descending")
+                                                            <option value="descending" selected>High-To-Low</option>
+                                                            <option value="ascending">Low-To-High</option>
+                                                        @else
+                                                            <option value="ascending" selected>Low-To-High</option>
+                                                            <option value="descending">High-To-Low</option>
+                                                        @endif
+                                                    @else
+                                                        <option value="descending">High-To-Low</option>
+                                                        <option value="ascending">Low-To-High</option>
+                                                    @endif
+
+                                            </select>
+                                        </div>
                                     </div>
                                     <br>
                                     <div>
@@ -132,7 +152,7 @@
                     <div class="ibox-content">
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover dataTables-example"
-                                   title="Dpasis user's list">
+                                   title="Wallet user's list">
                                 <thead>
                                 <tr>
                                     <th>S.No.</th>

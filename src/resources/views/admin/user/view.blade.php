@@ -31,7 +31,7 @@
                     <div class="ibox-content">
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover dataTables-example"
-                                   title="Dpasis user's list">
+                                   title="Wallet user's list">
                                 <thead>
                                 <tr>
                                     <th>S.No.</th>
@@ -132,6 +132,13 @@
                                                        href="{{route('user.download.qr',$user->id)}}"
                                                        class="btn btn-sm btn-icon btn-secondary m-t-n-xs"
                                                        title="download qr"><i class="fa fa-qrcode"></i></a>
+
+                                                @can('View all audit trial','User profile')
+                                                    <a style="margin-top: 5px;"
+                                                       href="{{route('user.new.audit_trail',['wallet' => "wallet",'id' => $user->id])}}"
+                                                       class="btn btn-sm btn-icon btn-primary m-t-n-xs"
+                                                       title="user audit trail"><i class="fa fa-book"></i></a>
+                                                @endcan
 
                                             </td>
                                         </tr>

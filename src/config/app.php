@@ -206,6 +206,7 @@ return [
         App\Wallet\RefundPreTransaction\RefundPreTransactionServiceProvider::class,
         App\Wallet\NEA\NEASettlementServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        App\Wallet\UserProfile\UserProfileServiceProvider::class,
     ],
 
     /*

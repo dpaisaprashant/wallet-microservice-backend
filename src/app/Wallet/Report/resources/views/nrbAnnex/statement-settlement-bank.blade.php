@@ -37,7 +37,7 @@
                         </div>
                     </div>
 
-{{--                                        <div class="ibox-content" @if( empty($_GET)) style="display: none"  @endif>--}}
+                    {{--                                        <div class="ibox-content" @if( empty($_GET)) style="display: none"  @endif>--}}
                     <div class="ibox-content">
                         <div class="row">
                             <div class="col-sm-12">
@@ -70,6 +70,15 @@
                                     </div>
 
                                     <div>
+                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
+                                                type="submit" style="margin-right: 10px;"
+                                                formaction="{{ route('report.statement.settlement.bank.excel') }}">
+                                            <i class="fa fa-table" aria-hidden="true"></i>
+                                            <strong>Export to Excel</strong>
+                                        </button>
+                                    </div>
+
+                                    <div>
                                         <a class="btn btn-sm btn-warning float-right m-t-n-xs"
                                            style="margin-right: 10px;"
                                            href="{{ route('report.statement.settlement.bank.generated') }}">
@@ -93,6 +102,7 @@
                         <div class="ibox-title">
                             <h5>List Generated for Statement Settlement Bank Report for {{request()->from}}</h5>
                         </div>
+
                         <div class="ibox-content">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover dataTables-example"

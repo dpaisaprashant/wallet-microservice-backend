@@ -113,35 +113,7 @@
                                                        value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}" required>
                                             </div>
                                         </div>
-{{--                                        <div class="col-md-4">--}}
-{{--                                            <div class="form-group">--}}
-{{--                                                <select data-placeholder="User Type..." class="chosen-select"--}}
-{{--                                                        tabindex="2"--}}
-{{--                                                        name="user_type">--}}
-{{--                                                    <option value="" selected disabled>User Type...</option>--}}
-{{--                                                    @if(!empty($_GET['user_type']))--}}
-{{--                                                        <option value="all"--}}
-{{--                                                                @if($_GET['user_type'] == 'all') selected @endif>All--}}
-{{--                                                        </option>--}}
-{{--                                                        <option value="user"--}}
-{{--                                                                @if($_GET['user_type'] == 'user') selected @endif>User--}}
-{{--                                                        </option>--}}
-{{--                                                        <option value="merchant"--}}
-{{--                                                                @if($_GET['user_type'] == 'merchant') selected @endif>--}}
-{{--                                                            Merchant--}}
-{{--                                                        </option>--}}
-{{--                                                        <option value="agent"--}}
-{{--                                                                @if($_GET['user_type'] == 'agent') selected @endif>Agent--}}
-{{--                                                        </option>--}}
-{{--                                                    @else--}}
-{{--                                                        <option value="all">All</option>--}}
-{{--                                                        <option value="user">User</option>--}}
-{{--                                                        <option value="merchant">Merchant</option>--}}
-{{--                                                        <option value="agent">Agent</option>--}}
-{{--                                                    @endif--}}
-{{--                                                </select>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
+
                                     </div>
                                     <br>
 
@@ -177,7 +149,7 @@
                         <div class="ibox-content">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover dataTables-example"
-                                       title="Non bank payment report">
+                                       title="NRB Annex 10.1.6 Report from Date : {{$_GET['from']}} to {{$_GET['to']}}">
                                     <thead>
                                     <tr>
                                         <th rowspan="2">S.No.</th>

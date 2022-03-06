@@ -39,7 +39,6 @@ class ActiveInactiveUserSlabReportRepository extends AbstractReportRepository
 
         $walletClearance = new WalletClearanceMicroService();
         $walletClearanceResponse = $walletClearance->dispatchActiveInactiveUserSlabJobs(request());
-
         $activeInactiveUserReports = [
             'Active Customer Wallet' => [
                 'Male' => [

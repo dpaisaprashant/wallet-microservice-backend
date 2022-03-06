@@ -69,6 +69,15 @@
                                     </div>
 
                                     <div>
+                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
+                                                type="submit" style="margin-right: 10px;"
+                                                formaction="{{ route('report.active.inactive.user.excel') }}">
+                                            <i class="fa fa-table" aria-hidden="true"></i>
+                                            <strong>Export to Excel</strong>
+                                        </button>
+                                    </div>
+
+                                    <div>
                                         <a class="btn btn-sm btn-warning float-right m-t-n-xs"
                                            style="margin-right: 10px;"
                                            href="{{ route('report.active.inactive.user.generated') }}">

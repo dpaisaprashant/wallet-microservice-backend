@@ -6,6 +6,7 @@ namespace App\Wallet\Report\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Traits\CollectionPaginate;
+use App\Wallet\Report\Repositories\ActiveInactiveUserReportRepository;
 use App\Wallet\Report\Repositories\NrbAnnexAgentMerchantPaymentReportRepository;
 use App\Wallet\Report\Repositories\NrbAnnexAgentPaymentReportRepository;
 use App\Wallet\Report\Repositories\NrbAnnexCustomerPaymentReportRepository;
@@ -395,6 +396,10 @@ class NRBAnnexReportController extends Controller
             ],
         ];
 
+        if($request->has('forExcel')){
+            return $statementSettlementBanks;
+        }
+
         return view('WalletReport::nrbAnnex.statement-settlement-bank')->with(compact('statementSettlementBanks'));
     }
 
@@ -455,6 +460,9 @@ class NRBAnnexReportController extends Controller
             ];
         }
 
+        if($request->has('forExcel')){
+            return $agentPaymentReports;
+        }
         return view('WalletReport::nrbAnnex.agent-payment-report')->with(compact('agentPaymentReports'));
     }
 

@@ -43,49 +43,46 @@
                             <div class="col-sm-12">
                                 <form role="form" method="get" action="{{ route('report.nrb.annex.agent.payments') }}"
                                       id="filter">
-                                    <div class="form-group  row"><label class="col-sm-2 col-form-label">Amount</label>
-                                        <div class="col-sm-6">
-                                            <select data-placeholder="Choose Amount Range..." class="chosen-select"  tabindex="2" name="amount_range" required>
-                                                <option value="" selected disabled>-- Select Amount Range --</option>
-                                                <option value='{"fromAmount":"0","toAmount":"1000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"0","toAmount":"1000"}') selected @endif>0 - 1,000</option>
-                                                <option value='{"fromAmount":"1001","toAmount":"5000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"1001","toAmount":"5000"}') selected @endif>1,000 - 5,000</option>
-                                                <option value='{"fromAmount":"5001","toAmount":"10000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"5001","toAmount":"10000"}') selected @endif >5,000 - 10,000</option>
-                                                <option value='{"fromAmount":"10001","toAmount":"25000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"10001","toAmount":"25000"}') selected @endif>10,000 - 25,000</option>
-{{--                                                <option value='{"fromAmount":"20001","toAmount":"25000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"20001","toAmount":"25000"}') selected @endif>20,000 - 25,000</option>--}}
-                                                <option value='{"fromAmount":"25001","toAmount":"1000000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"25001","toAmount":"1000000"}') selected @endif >> 25,000</option>
-                                            </select>
+                                    {{--                                    <div class="form-group  row"><label class="col-sm-2 col-form-label">Amount</label>--}}
+                                    {{--                                        <div class="col-sm-6">--}}
+                                    {{--                                            <select data-placeholder="Choose Amount Range..." class="chosen-select"  tabindex="2" name="amount_range" required>--}}
+                                    {{--                                                <option value="" selected disabled>-- Select Amount Range --</option>--}}
+                                    {{--                                                <option value='{"fromAmount":"0","toAmount":"1000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"0","toAmount":"1000"}') selected @endif>0 - 1,000</option>--}}
+                                    {{--                                                <option value='{"fromAmount":"1001","toAmount":"5000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"1001","toAmount":"5000"}') selected @endif>1,000 - 5,000</option>--}}
+                                    {{--                                                <option value='{"fromAmount":"5001","toAmount":"10000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"5001","toAmount":"10000"}') selected @endif >5,000 - 10,000</option>--}}
+                                    {{--                                                <option value='{"fromAmount":"10001","toAmount":"25000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"10001","toAmount":"25000"}') selected @endif>10,000 - 25,000</option>--}}
+                                    {{--                                                <option value='{"fromAmount":"20001","toAmount":"25000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"20001","toAmount":"25000"}') selected @endif>20,000 - 25,000</option>--}}
+                                    {{--                                                <option value='{"fromAmount":"25001","toAmount":"1000000"}' @if(isset($_GET['amount_range']) && $_GET['amount_range']=='{"fromAmount":"25001","toAmount":"1000000"}') selected @endif >> 25,000</option>--}}
+                                    {{--                                            </select>--}}
+                                    {{--                                        </div>--}}
+                                    {{--                                    </div>--}}
+                                    <div class="row">
+                                        <label class="col-sm-2 col-form-label">Select Amount Range</label>
+                                        <div class="col-3">
+                                            <div class="input-group date">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-dollar"></i>
+                                                </span>
+                                                <input type="number" class="form-control"
+                                                       placeholder="From Amount" name="from_amount"
+                                                       autocomplete="off"
+                                                       value="{{ !empty($_GET['from_amount']) ? $_GET['from_amount'] : '' }} "
+                                                       required>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="input-group date">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-dollar"></i>
+                                                </span>
+                                                <input type="number" class="form-control"
+                                                       placeholder="To Amount" name="to_amount"
+                                                       autocomplete="off"
+                                                       value="{{ !empty($_GET['to_amount']) ? $_GET['to_amount'] : '' }}"
+                                                       required>
+                                            </div>
                                         </div>
                                     </div>
-{{--                                    <div class="row">--}}
-{{--                                        <div class="col-12 mt-3">--}}
-{{--                                            <label for="ionrange_amount">Amount</label><br>--}}
-{{--                                            --}}{{--                                            <input type="text" name="amount" class="ionrange_amount">--}}
-{{--                                            <div class="row">--}}
-{{--                                                <div class="col-5">--}}
-{{--                                                    <div class="input-group date">--}}
-{{--                                                <span class="input-group-addon">--}}
-{{--                                                    <i class="fa fa-dollar"></i>--}}
-{{--                                                </span>--}}
-{{--                                                        <input type="number" class="form-control"--}}
-{{--                                                               placeholder="From Amount" name="from_amount"--}}
-{{--                                                               autocomplete="off"--}}
-{{--                                                               value="{{ !empty($_GET['from_amount']) ? $_GET['from_amount'] : '' }} " required>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                                <div class="col-5">--}}
-{{--                                                    <div class="input-group date">--}}
-{{--                                                <span class="input-group-addon">--}}
-{{--                                                    <i class="fa fa-dollar"></i>--}}
-{{--                                                </span>--}}
-{{--                                                        <input type="number" class="form-control"--}}
-{{--                                                               placeholder="To Amount" name="to_amount"--}}
-{{--                                                               autocomplete="off"--}}
-{{--                                                               value="{{ !empty($_GET['to_amount']) ? $_GET['to_amount'] : '' }}" required>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
                                     <br>
                                     <div class="row">
                                         <label class="col-sm-2 col-form-label">Select Date</label>
@@ -97,7 +94,8 @@
                                                 <input id="date_load_from" type="text"
                                                        class="form-control date_from" placeholder="From"
                                                        name="from" autocomplete="off"
-                                                       value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}" required>
+                                                       value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}"
+                                                       required>
                                             </div>
                                         </div>
 
@@ -112,35 +110,35 @@
                                                        value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}" required>
                                             </div>
                                         </div>
-{{--                                        <div class="col-md-4">--}}
-{{--                                            <div class="form-group">--}}
-{{--                                                <select data-placeholder="User Type..." class="chosen-select"--}}
-{{--                                                        tabindex="2"--}}
-{{--                                                        name="user_type">--}}
-{{--                                                    <option value="" selected disabled>User Type...</option>--}}
-{{--                                                    @if(!empty($_GET['user_type']))--}}
-{{--                                                        <option value="all"--}}
-{{--                                                                @if($_GET['user_type'] == 'all') selected @endif>All--}}
-{{--                                                        </option>--}}
-{{--                                                        <option value="user"--}}
-{{--                                                                @if($_GET['user_type'] == 'user') selected @endif>User--}}
-{{--                                                        </option>--}}
-{{--                                                        <option value="merchant"--}}
-{{--                                                                @if($_GET['user_type'] == 'merchant') selected @endif>--}}
-{{--                                                            Merchant--}}
-{{--                                                        </option>--}}
-{{--                                                        <option value="agent"--}}
-{{--                                                                @if($_GET['user_type'] == 'agent') selected @endif>Agent--}}
-{{--                                                        </option>--}}
-{{--                                                    @else--}}
-{{--                                                        <option value="all">All</option>--}}
-{{--                                                        <option value="user">User</option>--}}
-{{--                                                        <option value="merchant">Merchant</option>--}}
-{{--                                                        <option value="agent">Agent</option>--}}
-{{--                                                    @endif--}}
-{{--                                                </select>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
+                                        {{--                                        <div class="col-md-4">--}}
+                                        {{--                                            <div class="form-group">--}}
+                                        {{--                                                <select data-placeholder="User Type..." class="chosen-select"--}}
+                                        {{--                                                        tabindex="2"--}}
+                                        {{--                                                        name="user_type">--}}
+                                        {{--                                                    <option value="" selected disabled>User Type...</option>--}}
+                                        {{--                                                    @if(!empty($_GET['user_type']))--}}
+                                        {{--                                                        <option value="all"--}}
+                                        {{--                                                                @if($_GET['user_type'] == 'all') selected @endif>All--}}
+                                        {{--                                                        </option>--}}
+                                        {{--                                                        <option value="user"--}}
+                                        {{--                                                                @if($_GET['user_type'] == 'user') selected @endif>User--}}
+                                        {{--                                                        </option>--}}
+                                        {{--                                                        <option value="merchant"--}}
+                                        {{--                                                                @if($_GET['user_type'] == 'merchant') selected @endif>--}}
+                                        {{--                                                            Merchant--}}
+                                        {{--                                                        </option>--}}
+                                        {{--                                                        <option value="agent"--}}
+                                        {{--                                                                @if($_GET['user_type'] == 'agent') selected @endif>Agent--}}
+                                        {{--                                                        </option>--}}
+                                        {{--                                                    @else--}}
+                                        {{--                                                        <option value="all">All</option>--}}
+                                        {{--                                                        <option value="user">User</option>--}}
+                                        {{--                                                        <option value="merchant">Merchant</option>--}}
+                                        {{--                                                        <option value="agent">Agent</option>--}}
+                                        {{--                                                    @endif--}}
+                                        {{--                                                </select>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </div>--}}
                                     </div>
                                     <br>
 

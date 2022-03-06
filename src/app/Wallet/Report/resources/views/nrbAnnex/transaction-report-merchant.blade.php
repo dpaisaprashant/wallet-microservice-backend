@@ -124,12 +124,14 @@
                                         </button>
                                     </div>
 
-                                    {{--                                    <div>--}}
-                                    {{--                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"--}}
-                                    {{--                                                type="submit" style="margin-right: 10px;"--}}
-                                    {{--                                                formaction="{{ route('transaction.complete.excel') }}">--}}
-                                    {{--                                            <strong>Excel</strong></button>--}}
-                                    {{--                                    </div>--}}
+                                    <div>
+                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
+                                                type="submit" style="margin-right: 10px;"
+                                                formaction="{{ route('report.nrb.annex.merchant.payments.excel') }}">
+                                            <i class="fa fa-table" aria-hidden="true"></i>
+                                            <strong>Export to Excel</strong>
+                                        </button>
+                                    </div>
                                     @include('admin.asset.components.clearFilterButton')
                                 </form>
                             </div>

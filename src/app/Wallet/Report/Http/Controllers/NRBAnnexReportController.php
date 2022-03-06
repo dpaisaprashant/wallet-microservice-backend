@@ -6,6 +6,7 @@ namespace App\Wallet\Report\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Traits\CollectionPaginate;
+use App\Wallet\Report\Repositories\ActiveInactiveUserReportRepository;
 use App\Wallet\Report\Repositories\NrbAnnexAgentMerchantPaymentReportRepository;
 use App\Wallet\Report\Repositories\NrbAnnexAgentPaymentReportRepository;
 use App\Wallet\Report\Repositories\NrbAnnexCustomerPaymentReportRepository;
@@ -21,6 +22,7 @@ class NRBAnnexReportController extends Controller
 {
     use CollectionPaginate;
 
+    //10.1.5 agent report
     public function agentReport(Request $request)
     {
         //10.1.5 agent report
@@ -88,6 +90,7 @@ class NRBAnnexReportController extends Controller
         return view('WalletReport::nrbAnnex.transaction-report-agent')->with(compact('nrbAnnexAgentPayments'));
     }
 
+    //10.1.5 initiated customer report
     public function customerReport(Request $request)
     {
         //10.1.5 initiated customer report
@@ -216,7 +219,7 @@ class NRBAnnexReportController extends Controller
 //        return view('WalletReport::nrbAnnex.transaction-report-customer')->with(compact('nrbAnnexCustomerPayments'));
 //    }
 
-
+    //10.1.6 report
     public function merchantReport(Request $request)
     {
         //NRB Annex 10.1.6 Report
@@ -275,6 +278,7 @@ class NRBAnnexReportController extends Controller
         return view('WalletReport::nrbAnnex.transaction-report-merchant')->with(compact('nrbAnnexMerchantPayments'));
     }
 
+    //10.1.6 for agents only
     public function agentMerchantReport(Request $request)
     {
 //        if ($request->all() != NULL) {
@@ -331,6 +335,7 @@ class NRBAnnexReportController extends Controller
         return view('WalletReport::nrbAnnex.transaction-report-agent-merchant')->with(compact('nrbAnnexMerchantPayments'));
     }
 
+    //Statement Settlement Bank Report
     public function statementSettlementBank(Request $request)
     {
         if ($request->all() == null) {
@@ -395,9 +400,27 @@ class NRBAnnexReportController extends Controller
             ]
         ];
 
+        if($request->has('forExcel')){
+            return $statementSettlementBanks;
+        }
+
         return view('WalletReport::nrbAnnex.statement-settlement-bank')->with(compact('statementSettlementBanks'));
     }
 
+    public function statementSettlementBankReportGenerated(Request $request)
+    {
+        $generatedReports = DB::connection('clearance')->table('statement_settlement_banks')->where('status', 'COMPLETED')->get();
+
+        return view('WalletReport::nrbAnnex.statement-settlement-bank-generated', compact('generatedReports'));
+    }
+
+    public function statementSettlementBankReportDelete($id)
+    {
+        DB::connection('clearance')->table('statement_settlement_banks')->where('id',$id)->delete();
+        return redirect()->back();
+    }
+
+    //10.1.11 Report
     public function agentPaymentReport(Request $request)
     {
         if ($request->all() == null) {
@@ -441,9 +464,26 @@ class NRBAnnexReportController extends Controller
             ];
         }
 
+        if($request->has('forExcel')){
+            return $agentPaymentReports;
+        }
         return view('WalletReport::nrbAnnex.agent-payment-report')->with(compact('agentPaymentReports'));
     }
 
+    public function agentPaymentReportGenerated(Request $request)
+    {
+        $generatedReports = DB::connection('clearance')->table('agent_reports')->where('status', 'COMPLETED')->groupBy(['from_date','to_date'])->get();
+
+        return view('WalletReport::nrbAnnex.agent-payment-report-generated', compact('generatedReports'));
+    }
+
+    public function agentPaymentReportDelete($fromDate,$toDate)
+    {
+        DB::connection('clearance')->table('agent_reports')->where('from_date',$fromDate)->where('to_date',$toDate)->delete();
+        return redirect()->back();
+    }
+
+    //22 part four agents report
     public function eachAgentReport(Request $request)
     {
         if ($request->all() == null) {
@@ -479,20 +519,36 @@ class NRBAnnexReportController extends Controller
                 'agent_code' => $response->reference_code,
                 'user_id' => $response->user_id,
                 'totalTopUpCount' => $response->totalTopUpCount,
-                'totalTopUpAmount' => ($response->totalTopUpAmount)/100,
+                'totalTopUpAmount' => ($response->totalTopUpAmount) / 100,
                 'totalTransferToWalletCount' => $response->totalTransferToWalletCount,
-                'totalTransferToWalletAmount' => ($response->totalTransferToWalletAmount)/100,
+                'totalTransferToWalletAmount' => ($response->totalTransferToWalletAmount) / 100,
                 'totalTransferToBankCount' => $response->totalTransferToBankCount,
-                'totalTransferToBankAmount' => ($response->totalTransferToBankAmount)/100,
+                'totalTransferToBankAmount' => ($response->totalTransferToBankAmount) / 100,
                 'totalCashInCount' => $response->totalCashInCount,
-                'totalCashInAmount' =>( $response->totalCashInAmount)/100,
+                'totalCashInAmount' => ($response->totalCashInAmount) / 100,
                 'totalCashOutCount' => $response->totalCashOutCount,
-                'totalCashOutAmount' => ($response->totalCashOutAmount)/100,
+                'totalCashOutAmount' => ($response->totalCashOutAmount) / 100,
                 'totalMerchantPaymentCount' => $response->totalMerchantPaymentCount,
-                'totalMerchantPaymentAmount' => ($response->totalMerchantPaymentAmount)/100,
+                'totalMerchantPaymentAmount' => ($response->totalMerchantPaymentAmount) / 100,
             ];
         }
 
         return view('WalletReport::nrbAnnex.each-agent-report', compact('nrbAgentReports'));
+    }
+
+    public function eachAgentReportGenerated(Request $request)
+    {
+        $generatedReports = DB::connection('clearance')->table('nrb_agent_report_statuses')->where('status', 'COMPLETED')->get();
+
+        return view('WalletReport::nrbAnnex.each-agent-report-generated', compact('generatedReports'));
+    }
+
+    public function eachAgentReportDelete($id)
+    {
+        $report=DB::connection('clearance')->table('nrb_agent_report_statuses')->where('id',$id)->first();
+
+        DB::connection('clearance')->table('nrb_agent_reports')->where('from_date',$report->from_date)->where('to_date',$report->to_date)->delete();
+        DB::connection('clearance')->table('nrb_agent_report_statuses')->where('id',$id)->delete();
+        return redirect()->back();
     }
 }

@@ -14,7 +14,7 @@ class TransactionEventRepository
 
     private $request;
 
-    private $length = 15;
+    private $length = 50;
 
     public function __construct(Request $request)
     {

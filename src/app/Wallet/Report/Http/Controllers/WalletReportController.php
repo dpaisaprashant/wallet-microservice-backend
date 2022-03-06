@@ -270,4 +270,43 @@ class WalletReportController extends Controller
 
         return view('WalletReport::nrbReconciliation.report')->with(compact('totalAmounts', 'totalLoadAmount', 'totalPaymentAmount'));
     }
+
+    public function walletLedger(Request $request){
+
+        if (!isset($_GET['from_date']) || !isset($_GET['to_date'])) {
+            return view('WalletReport::walletLedger.report');
+        }
+
+        $from_date = date('Y-m-d', strtotime(str_replace(',', ' ', $_GET['from_date'])));
+        $to_date = date('Y-m-d', strtotime(str_replace(',', ' ', $_GET['to_date'])));
+
+        $next_day =  date('Y-m-d',(strtotime ( '+1 day' , strtotime ( $from_date) ) ));
+
+        //$ledger = DB::connection('dpaisa')->select(DB::connection('dpaisa')->raw("SELECT sum(amount/ 100) as total, transaction_type from transaction_events where date(created_at) >= Date(:date) AND date(created_at) <= Date(:date_to) group by transaction_type"),
+
+        $opening_balance = DB::connection('dpaisa')->select(DB::connection('dpaisa')->raw("SELECT SUM(transaction_events.bonus_balance/100+transaction_events.balance/100) as opening_balance FROM ( SELECT user_id, MAX(created_at) as max_created_at, MAX(id) as max_id FROM transaction_events WHERE Date(created_at) < Date(:date) GROUP BY user_id ) AS latest_transactions JOIN transaction_events ON transaction_events.id = latest_transactions.max_id JOIN users ON users.id = latest_transactions.user_id;"),
+            array('date' => $from_date)
+        );
+
+        $closing_balance = DB::connection('dpaisa')->select(DB::connection('dpaisa')->raw("SELECT SUM(transaction_events.bonus_balance/100+transaction_events.balance/100) as closing_balance FROM ( SELECT user_id, MAX(created_at) as max_created_at, MAX(id) as max_id FROM transaction_events WHERE Date(created_at) < Date(:date) GROUP BY user_id ) AS latest_transactions JOIN transaction_events ON transaction_events.id = latest_transactions.max_id JOIN users ON users.id = latest_transactions.user_id;"),
+            array('date' => $next_day)
+        );
+
+        $transactions = DB::connection('dpaisa')->select(DB::connection('dpaisa')->raw("SELECT * FROM `transaction_events` where date(created_at) >= date(:from_date) AND date(created_at) <= date(:to_date)"),
+            array('from_date' => $from_date, 'to_date' => $to_date)
+        );
+
+        $data = [
+            'opening_balance' => $opening_balance[0]->opening_balance,
+            //'opening_balance' => "688966.03419999",
+            'closing_balance' => $closing_balance[0]->closing_balance,
+            //'closing_balance' => "683021.12419999",
+            'transactions' => $transactions,
+            'from_date' => $from_date,
+            'to_date' => $to_date
+        ];
+
+        //dd($data);
+        return view('WalletReport::walletLedger.report')->with(['data' => $data]);
+    }
 }

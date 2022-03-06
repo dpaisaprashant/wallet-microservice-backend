@@ -82,6 +82,14 @@
                                         </button>
                                     </div>
 
+                                    <div>
+                                        <a class="btn btn-sm btn-warning float-right m-t-n-xs"
+                                           style="margin-right: 10px;"
+                                           href="{{ route('report.nrb.annex.agent.each.generated') }}">
+                                            <strong><i class="fa fa-bar-chart"></i>&nbsp; View Generated
+                                                Reports</strong></a>
+                                    </div>
+
                                     @include('admin.asset.components.clearFilterButton')
                                 </form>
                             </div>

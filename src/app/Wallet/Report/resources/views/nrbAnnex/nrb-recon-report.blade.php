@@ -199,6 +199,7 @@
                 </div>
             </div>
         </div>
+
         @if(!empty($_GET))
             <div class="row">
                 <div class="col-lg-12">

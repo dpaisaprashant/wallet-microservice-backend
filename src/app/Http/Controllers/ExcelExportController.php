@@ -15,6 +15,7 @@ use App\Http\Resources\CellPayTransactionResource;
 use App\Http\Resources\ClearanceResource;
 use App\Http\Resources\ClearanceTransactionResource;
 use App\Http\Resources\DisputeResource;
+use App\Http\Resources\DPaisaAudit\NCHLBankTransferAuditTrailResource;
 use App\Http\Resources\DPaisaAudit\NPayResource;
 use App\Http\Resources\DPaisaAudit\PayPointResource;
 use App\Http\Resources\FundRequestResource;
@@ -79,10 +80,12 @@ use App\Models\UserLoginHistory;
 use App\Models\UserRegisteredByUser;
 use App\Models\UserToBfiFundTransfer;
 use App\Models\UserToUserFundTransfer;
+use App\Traits\CollectionPaginate;
 use App\Wallet\AuditTrail\AuditTrial;
 use App\Wallet\AuditTrail\Behaviors\BAll;
 use App\Wallet\Commission\Models\Commission;
 use App\Wallet\DPaisaAuditTrail\AllAuditTrail;
+use App\Wallet\DPaisaAuditTrail\NchlBankTransferAuditTrail;
 use App\Wallet\DPaisaAuditTrail\NPayAuditTrail;
 use App\Wallet\DPaisaAuditTrail\PPAuditTrail;
 use App\Wallet\Excel\ExportExcelHelper;
@@ -633,6 +636,23 @@ class ExcelExportController extends Controller
 
         $export = new ExportExcelHelper();
         $export->setName('DPaisa_all_audit_trail')
+            ->setMixGeneratorModels($collection->filter())
+            ->setRequest($request);
+
+        return $export->exportExcelCollection();
+    }
+
+    public function nchlBankTransferAuditTrail(Request $request)
+    {
+        $nchlBankTransfer = new NchlBankTransferAuditTrail();
+        $collection = $nchlBankTransfer->createTrail();
+
+        $collection->transform(function ($value) {
+            return new NCHLBankTransferAuditTrailResource($value);
+        });
+
+        $export = new ExportExcelHelper();
+        $export->setName('NCHL Bank Transfer Audit Trail')
             ->setMixGeneratorModels($collection->filter())
             ->setRequest($request);
 

@@ -571,6 +571,9 @@ Route::group(['prefix' => 'admin'], function () {
         //load test fund report
         Route::get('/excel/load_test_fund_report','ExcelExportController@loadTestFundReport')->name('load_test_fund_report.excel')->middleware('permission:View load test fund report');
 
+        // Nchl bank transfer audit trail
+        Route::get('/excel/nchl-bank-transfer-audit-trail','ExcelExportController@nchlBankTransferAuditTrail')->name('nchl-bank-transfer-audit-trail');
+
         /**
          * General Settings
          */

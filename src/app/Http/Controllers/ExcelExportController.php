@@ -31,6 +31,7 @@ use App\Http\Resources\UserAudit\UserKYCResource;
 use App\Http\Resources\UserAudit\UserLoginHistoryResource;
 use App\Http\Resources\UserCheckPaymentResource;
 use App\Http\Resources\UserLoadTransactionResource;
+use App\Http\Resources\UserRegisteredByUserResource;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\UserToBfiReportResource;
 use App\Models\AdminUserKYC;
@@ -57,6 +58,7 @@ use App\Models\UserCheckPayment;
 use App\Models\UserKYC;
 use App\Models\UserLoadTransaction;
 use App\Models\UserLoginHistory;
+use App\Models\UserRegisteredByUser;
 use App\Models\UserToBfiFundTransfer;
 use App\Models\UserToUserFundTransfer;
 use App\Wallet\AuditTrail\AuditTrial;
@@ -551,6 +553,15 @@ class ExcelExportController extends Controller
             ->setGeneratorModel(TransactionEvent::class)
             ->setRequest($request)
             ->setResource(LoadTestFundReportResource::class);
+        return $export->exportExcel();
+    }
+
+    public function userRegisteredByUserReport(Request $request){
+        $export = new ExportExcelHelper();
+        $export->setName('Users Registered By Agents')
+            ->setGeneratorModel(UserRegisteredByUser::class)
+            ->setRequest($request)
+            ->setResource(UserRegisteredByUserResource::class);
         return $export->exportExcel();
     }
 

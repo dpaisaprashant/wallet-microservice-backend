@@ -193,10 +193,13 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 RIGHT JOIN agents as a ON a.user_id = t.user_id
                                                                                 WHERE t.user_id = a.user_id and a.status = 'ACCEPTED'
                                                                                 AND
-                                                                                 ((t.transaction_type = 'App\\\Wallet\\\Commission\\\Models\\\Commission' AND (t.service_type='CASHBACK' OR t.service_type='AGENT_CASHBACK'))
-                                                                                     OR
+                                                                                (t.transaction_type ='App\\\Models\\\UsedUserReferral'
+                                                                                 OR
+                                                                                 t.transaction_type = 'App\\\Models\\\UserReferralBonusTransaction'
+                                                                                 OR
+                                                                                 (t.transaction_type = 'App\\\Wallet\\\Commission\\\Models\\\Commission' AND (t.service_type='CASHBACK' OR t.service_type='AGENT_CASHBACK'))
+                                                                                 OR
                                                                                  (t.transaction_type = 'App\\\Models\\\LoadTestFund' AND t.service_type='LUCKY WINNER'))
-
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)
                                                                                 AND
@@ -215,8 +218,12 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 RIGHT JOIN agents as a ON a.user_id = t.user_id
                                                                                 WHERE t.user_id = a.user_id and a.status = 'ACCEPTED'
                                                                                 AND
-                                                                                 ((t.transaction_type = 'App\\\Wallet\\\Commission\\\Models\\\Commission' AND (t.service_type='CASHBACK' OR t.service_type='AGENT_CASHBACK'))
-                                                                                     OR
+                                                                                (t.transaction_type ='App\\\Models\\\UsedUserReferral'
+                                                                                 OR
+                                                                                 t.transaction_type = 'App\\\Models\\\UserReferralBonusTransaction'
+                                                                                 OR
+                                                                                 (t.transaction_type = 'App\\\Wallet\\\Commission\\\Models\\\Commission' AND (t.service_type='CASHBACK' OR t.service_type='AGENT_CASHBACK'))
+                                                                                 OR
                                                                                  (t.transaction_type = 'App\\\Models\\\LoadTestFund' AND t.service_type='LUCKY WINNER'))
 
                                                                                 AND

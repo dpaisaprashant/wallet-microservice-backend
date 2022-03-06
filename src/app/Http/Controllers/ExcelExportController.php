@@ -27,6 +27,7 @@ use App\Http\Resources\NchlAggregatedTransactionResource;
 use App\Http\Resources\NchlBankTransferResource;
 use App\Http\Resources\NchlLoadTransactionResource;
 use App\Http\Resources\NICAsiaCyberSourceLoadTransactionResource;
+use App\Http\Resources\NonRealTimeBankTransferResource;
 use App\Http\Resources\PayPointReportResource;
 use App\Http\Resources\PreTransactionResource;
 use App\Http\Resources\SparrowSMSResource;
@@ -64,6 +65,7 @@ use App\Models\NchlAggregatedPayment;
 use App\Models\NchlBankTransfer;
 use App\Models\NchlLoadTransaction;
 use App\Models\NICAsiaCyberSourceLoadTransaction;
+use App\Models\NonRealTimeBankTransfer;
 use App\Models\NpsLoadTransaction;
 use App\Models\SparrowSMS;
 use App\Models\TicketSale;
@@ -791,6 +793,17 @@ class ExcelExportController extends Controller
             ->setGeneratorModel(MerchantTransaction::class)
             ->setRequest($request)
             ->setResource(NchlLoadTransactionResource::class);
+        return $export->exportExcel();
+    }
+
+    // non real time bank transfer
+
+    public function nonRealTimeBankTransfer(Request $request){
+        $export = new ExportExcelHelper();
+        $export->setName('Non Real Time Bank Transfer')
+            ->setGeneratorModel(NonRealTimeBankTransfer::class)
+            ->setRequest($request)
+            ->setResource(NonRealTimeBankTransferResource::class);
         return $export->exportExcel();
     }
 

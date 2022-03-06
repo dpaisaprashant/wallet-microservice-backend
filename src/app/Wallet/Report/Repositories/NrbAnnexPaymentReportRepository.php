@@ -197,10 +197,9 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\UserReferralBonusTransaction'
                                                                                  OR
-                                                                                 ((t.transaction_type = 'App\\\Wallet\\\Commission\\\Models\\\Commission' AND (t.service_type='CASHBACK' OR t.service_type='AGENT_CASHBACK'))
-                                                                                     OR
+                                                                                 (t.transaction_type = 'App\\\Wallet\\\Commission\\\Models\\\Commission' AND (t.service_type='CASHBACK' OR t.service_type='AGENT_CASHBACK'))
+                                                                                 OR
                                                                                  (t.transaction_type = 'App\\\Models\\\LoadTestFund' AND t.service_type='LUCKY WINNER'))
-
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)
                                                                                 AND
@@ -223,8 +222,8 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\UserReferralBonusTransaction'
                                                                                  OR
-                                                                                ((t.transaction_type = 'App\\\Wallet\\\Commission\\\Models\\\Commission' AND (t.service_type='CASHBACK' OR t.service_type='AGENT_CASHBACK'))
-                                                                                     OR
+                                                                                 (t.transaction_type = 'App\\\Wallet\\\Commission\\\Models\\\Commission' AND (t.service_type='CASHBACK' OR t.service_type='AGENT_CASHBACK'))
+                                                                                 OR
                                                                                  (t.transaction_type = 'App\\\Models\\\LoadTestFund' AND t.service_type='LUCKY WINNER'))
 
                                                                                 AND

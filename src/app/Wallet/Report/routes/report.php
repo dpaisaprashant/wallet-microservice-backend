@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuditTrailController;
+use App\Http\Controllers\AuditTrailMismatchController;
 use App\Http\Controllers\ExcelExportController;
 use App\Http\Controllers\PhpSpreadSheetController;
 use App\Wallet\Report\Http\Controllers\ClosingBalanceController;
@@ -105,6 +107,13 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web', 'auth']], func
 
     //    Route::get('/report/nrb-annex/agent-payments/monthly', 'ReportController@monthly')->name('report.monthly')->middleware('permission:Monthly report view');
 //    Route::get('/report/yearly', 'ReportController@yearly')->name('report.yearly')->middleware('permission:Yearly report view');
+
+    /**
+     * Audit Trail Mismatch Report
+     */
+
+    Route::get('audit-trail/mismatch', [AuditTrailMismatchController::class, 'auditTrailMismatch'])->name('report.audit.mismatch')->middleware('permission:Nrb annex report view');
+
 
     /**
      * Lucky Winner Report

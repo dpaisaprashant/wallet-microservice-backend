@@ -708,6 +708,9 @@ $url = url()->current();
                     <a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">Report</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
+{{--                        @can('Report reconciliation')--}}
+                            <li><a href="{{ route('report.audit.mismatch') }}">Audit Trail Mismatch Report</a></li>
+{{--                        @endcan--}}
                         @can('Monthly report view')
                             <li><a href="{{ route('report.monthly') }}">Monthly Report</a></li>
                         @endcan

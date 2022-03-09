@@ -16,6 +16,7 @@ use App\Http\Resources\ClearanceResource;
 use App\Http\Resources\ClearanceTransactionResource;
 use App\Http\Resources\DisputeResource;
 use App\Http\Resources\DPaisaAudit\NCHLBankTransferAuditTrailResource;
+use App\Http\Resources\DPaisaAudit\NchlLoadTransactionAuditTrailResource;
 use App\Http\Resources\DPaisaAudit\NPayResource;
 use App\Http\Resources\DPaisaAudit\PayPointResource;
 use App\Http\Resources\FundRequestResource;
@@ -31,6 +32,7 @@ use App\Http\Resources\NICAsiaCyberSourceLoadTransactionResource;
 use App\Http\Resources\NonRealTimeBankTransferResource;
 use App\Http\Resources\PayPointReportResource;
 use App\Http\Resources\PreTransactionResource;
+use App\Http\Resources\RegisterUsingReferralResource;
 use App\Http\Resources\SparrowSMSResource;
 use App\Http\Resources\TicketSalesReportResource;
 use App\Http\Resources\TransactionEventResource;
@@ -86,6 +88,7 @@ use App\Wallet\AuditTrail\Behaviors\BAll;
 use App\Wallet\Commission\Models\Commission;
 use App\Wallet\DPaisaAuditTrail\AllAuditTrail;
 use App\Wallet\DPaisaAuditTrail\NchlBankTransferAuditTrail;
+use App\Wallet\DPaisaAuditTrail\NchlLoadTransactionAuditTrail;
 use App\Wallet\DPaisaAuditTrail\NPayAuditTrail;
 use App\Wallet\DPaisaAuditTrail\PPAuditTrail;
 use App\Wallet\Excel\ExportExcelHelper;
@@ -659,6 +662,23 @@ class ExcelExportController extends Controller
         return $export->exportExcelCollection();
     }
 
+    public function nchlLoadTransactionAuditTrail(Request $request)
+    {
+        $nchlLoad = new NchlLoadTransactionAuditTrail();
+        $collection = $nchlLoad->createTrail();
+
+        $collection->transform(function ($value) {
+            return new NchlLoadTransactionAuditTrailResource($value);
+        });
+
+        $export = new ExportExcelHelper();
+        $export->setName('NCHL Load Transaction Audit Trail')
+            ->setMixGeneratorModels($collection->filter())
+            ->setRequest($request);
+
+        return $export->exportExcelCollection();
+    }
+
     public function dpaisaNPayAuditTrail(Request $request)
     {
         $auditTrail = new NPayAuditTrail();
@@ -817,13 +837,24 @@ class ExcelExportController extends Controller
     }
 
     // non real time bank transfer
-
     public function nonRealTimeBankTransfer(Request $request){
         $export = new ExportExcelHelper();
         $export->setName('Non Real Time Bank Transfer')
             ->setGeneratorModel(NonRealTimeBankTransfer::class)
             ->setRequest($request)
             ->setResource(NonRealTimeBankTransferResource::class);
+        return $export->exportExcel();
+    }
+
+    //registerUsingReferralUserReport
+
+    public function registerUsingReferral(Request $request){
+        $request->merge(['registered_using_referral'=>true]);
+        $export = new ExportExcelHelper();
+        $export->setName('Register Using Referral')
+            ->setGeneratorModel(User::class)
+            ->setRequest($request)
+            ->setResource(RegisterUsingReferralResource::class);
         return $export->exportExcel();
     }
 

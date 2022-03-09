@@ -708,12 +708,12 @@ $url = url()->current();
                     <a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">Report</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        @can('Monthly report view')
-                            <li><a href="{{ route('report.monthly') }}">Monthly Report</a></li>
-                        @endcan
-                        @can('Yearly report view')
-                            <li><a href="{{ route('report.yearly') }}">Yearly Report</a></li>
-                        @endcan
+{{--                        @can('Monthly report view')--}}
+{{--                            <li><a href="{{ route('report.monthly') }}">Monthly Report</a></li>--}}
+{{--                        @endcan--}}
+{{--                        @can('Yearly report view')--}}
+{{--                            <li><a href="{{ route('report.yearly') }}">Yearly Report</a></li>--}}
+{{--                        @endcan--}}
                         @can('Report paypoint')
                             <li><a href="{{ route('report.paypoint') }}">PayPoint Report</a></li>
                         @endcan

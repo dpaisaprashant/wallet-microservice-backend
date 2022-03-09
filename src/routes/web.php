@@ -574,6 +574,9 @@ Route::group(['prefix' => 'admin'], function () {
         // Nchl bank transfer audit trail
         Route::get('/excel/nchl-bank-transfer-audit-trail','ExcelExportController@nchlBankTransferAuditTrail')->name('nchl-bank-transfer-audit-trail');
 
+        // Nchl Load Transaction audit trail
+        Route::get('excel/nchl-load-transaction-audit-trail','ExcelExportController@nchlLoadTransactionAuditTrail')->name('nchl-load-transaction-audit-trail');
+
         /**
          * General Settings
          */

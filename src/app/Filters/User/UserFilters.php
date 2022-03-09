@@ -46,6 +46,7 @@ class UserFilters extends FiltersAbstract
         'merchant_only'=>MerchantOnlyFilter::class,
         'user_status' => UserStatusFilter::class,
         'locked_users' => LockedUsersFilter::class,
+        'registered_using_referral' => RegisterUsingReferralFilter::class,
     ];
 
 

@@ -87,6 +87,10 @@ class NRBAnnexReportController extends Controller
             ]
         ];
 
+        if ($request->has('forExcel')) {
+            return $nrbAnnexAgentPayments;
+        }
+
         return view('WalletReport::nrbAnnex.transaction-report-agent')->with(compact('nrbAnnexAgentPayments'));
     }
 
@@ -154,6 +158,10 @@ class NRBAnnexReportController extends Controller
                 'value' => 0,
             ]
         ];
+
+        if ($request->has('forExcel')) {
+            return $nrbAnnexCustomerPayments;
+        }
 
         return view('WalletReport::nrbAnnex.transaction-report-customer')->with(compact('nrbAnnexCustomerPayments'));
     }
@@ -274,6 +282,10 @@ class NRBAnnexReportController extends Controller
             ],
 
         ];
+
+        if ($request->has('forExcel')) {
+            return $nrbAnnexMerchantPayments;
+        }
 
         return view('WalletReport::nrbAnnex.transaction-report-merchant')->with(compact('nrbAnnexMerchantPayments'));
     }
@@ -396,7 +408,7 @@ class NRBAnnexReportController extends Controller
             ],
         ];
 
-        if($request->has('forExcel')){
+        if ($request->has('forExcel')) {
             return $statementSettlementBanks;
         }
 
@@ -412,7 +424,7 @@ class NRBAnnexReportController extends Controller
 
     public function statementSettlementBankReportDelete($id)
     {
-        DB::connection('clearance')->table('statement_settlement_banks')->where('id',$id)->delete();
+        DB::connection('clearance')->table('statement_settlement_banks')->where('id', $id)->delete();
         return redirect()->back();
     }
 
@@ -460,7 +472,7 @@ class NRBAnnexReportController extends Controller
             ];
         }
 
-        if($request->has('forExcel')){
+        if ($request->has('forExcel')) {
             return $agentPaymentReports;
         }
         return view('WalletReport::nrbAnnex.agent-payment-report')->with(compact('agentPaymentReports'));
@@ -468,14 +480,14 @@ class NRBAnnexReportController extends Controller
 
     public function agentPaymentReportGenerated(Request $request)
     {
-        $generatedReports = DB::connection('clearance')->table('agent_reports')->where('status', 'COMPLETED')->groupBy(['from_date','to_date'])->get();
+        $generatedReports = DB::connection('clearance')->table('agent_reports')->where('status', 'COMPLETED')->groupBy(['from_date', 'to_date'])->get();
 
         return view('WalletReport::nrbAnnex.agent-payment-report-generated', compact('generatedReports'));
     }
 
-    public function agentPaymentReportDelete($fromDate,$toDate)
+    public function agentPaymentReportDelete($fromDate, $toDate)
     {
-        DB::connection('clearance')->table('agent_reports')->where('from_date',$fromDate)->where('to_date',$toDate)->delete();
+        DB::connection('clearance')->table('agent_reports')->where('from_date', $fromDate)->where('to_date', $toDate)->delete();
         return redirect()->back();
     }
 
@@ -529,6 +541,10 @@ class NRBAnnexReportController extends Controller
             ];
         }
 
+        if ($request->has('forExcel')) {
+            return $nrbAgentReports;
+        }
+
         return view('WalletReport::nrbAnnex.each-agent-report', compact('nrbAgentReports'));
     }
 
@@ -541,10 +557,10 @@ class NRBAnnexReportController extends Controller
 
     public function eachAgentReportDelete($id)
     {
-        $report=DB::connection('clearance')->table('nrb_agent_report_statuses')->where('id',$id)->first();
+        $report = DB::connection('clearance')->table('nrb_agent_report_statuses')->where('id', $id)->first();
 
-        DB::connection('clearance')->table('nrb_agent_reports')->where('from_date',$report->from_date)->where('to_date',$report->to_date)->delete();
-        DB::connection('clearance')->table('nrb_agent_report_statuses')->where('id',$id)->delete();
+        DB::connection('clearance')->table('nrb_agent_reports')->where('from_date', $report->from_date)->where('to_date', $report->to_date)->delete();
+        DB::connection('clearance')->table('nrb_agent_report_statuses')->where('id', $id)->delete();
         return redirect()->back();
     }
 }

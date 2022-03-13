@@ -18,6 +18,7 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web', 'auth']], func
 
     Route::match(['get', 'post'], 'reconciliation-report', [WalletReportController::class, 'reconciliationReport'])->name('report.reconciliation')->middleware('permission:Report reconciliation');
 
+    Route::get('wallet-payables-report',[WalletReportController::class,'walletPayablesReports'])->name('report.walletPayablesReport')->middleware('permission:View wallet payables');
 
     Route::match(['get', 'post'], 'users-reconciliation-report', [UserWalletReportController::class, 'userReconciliationReport'])->name('report.user.reconciliation');
 

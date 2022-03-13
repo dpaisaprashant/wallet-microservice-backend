@@ -5,6 +5,7 @@ namespace App\Wallet\Report\Http\Controllers;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\Microservice\PreTransaction;
 use App\Wallet\Report\Repositories\NchlLoadReportRepository;
 use App\Wallet\Report\Repositories\ReconciliationReportRepository;
 use App\Wallet\Report\Traits\ReconciliationReportGenerator;
@@ -51,4 +52,12 @@ class WalletReportController extends Controller
 
         return view('WalletReport::nrbReconciliation.report')->with(compact('totalAmounts', 'totalLoadAmount', 'totalPaymentAmount'));
     }
+
+    public function walletPayablesReports(Request $request){
+//        $request->merge(['wallet_payables'=>"success and not deducted",]);
+        $preTransactions = PreTransaction::filter($request)->paginate(10);
+        return view('WalletReport::walletPayables.walletPayablesView')->with(compact('preTransactions'));
+//        dd($wallet_payables);
+    }
+
 }

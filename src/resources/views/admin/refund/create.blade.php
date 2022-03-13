@@ -69,6 +69,15 @@
 
                             <div class="hr-line-dashed"></div>
 
+                            <div class="i-checks">
+                                <label>
+                                    <input type="checkbox" name="pull_cashback">
+                                    <i></i> Pull Cashback
+                                </label>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+
                             <button id="handleBtn" class="btn btn-sm btn-primary m-t-n-xs" type="submit" formaction="{{ route('refund.create') }}"><strong>Create</strong></button>
                         </form>
                     </div>
@@ -83,6 +92,7 @@
 
 @section('styles')
     @include('admin.asset.css.chosen')
+    @include('admin.asset.css.icheck')
 
     <!-- Sweet Alert -->
     <link href="{{ asset('admin/css/plugins/sweetalert/sweetalert.css') }}" rel="stylesheet">
@@ -91,6 +101,7 @@
 
 @section('scripts')
     @include('admin.asset.js.chosen')
+    @include('admin.asset.js.icheck')
 
 
     <!-- Sweet alert -->

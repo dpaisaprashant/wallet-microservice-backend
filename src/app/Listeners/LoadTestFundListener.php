@@ -91,5 +91,11 @@ class LoadTestFundListener
             event(new UserBonusWalletUpdateEvent($event->transaction->user_id, $bonusAmount));
         }
 
+
+        //Refund
+        if ($preTransactionId && $serviceType == "REFUND") {
+
+
+        }
     }
 }

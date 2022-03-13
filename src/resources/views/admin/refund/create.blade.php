@@ -74,7 +74,7 @@
                                 <div class="col-sm-10 i-checks">
                                     <label style="">
                                         <input type="checkbox" name="pull_cashback">
-                                        <i></i> <span style="margin-top: 5px;">&nbsp;Check to pull cashback after refund</span>
+                                        <i></i> <span>&nbsp;Check to pull cashback after refund</span>
                                     </label>
                                 </div>
                             </div>

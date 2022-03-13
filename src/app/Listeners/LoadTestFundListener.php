@@ -2,10 +2,14 @@
 
 namespace App\Listeners;
 
+use App\Events\UserBonusWalletPaymentEvent;
 use App\Events\UserBonusWalletUpdateEvent;
+use App\Events\UserWalletPaymentEvent;
 use App\Events\UserWalletUpdateEvent;
+use App\Models\CashbackPull;
 use App\Models\Microservice\PreTransaction;
 use App\Models\TransactionEvent;
+use App\Models\User;
 use App\Models\Wallet;
 use App\Wallet\Helpers\TransactionIdGenerator;
 use Illuminate\Queue\InteractsWithQueue;
@@ -92,10 +96,88 @@ class LoadTestFundListener
         }
 
 
-        //Refund
+        //pull cashback
         if ($preTransactionId && $serviceType == "REFUND") {
+            if (isset(request()->pull_cashback) && request()->pull_cashback == "on") {
+                //PULL CASHBACK
+                $refundedTransaction = TransactionEvent::where('pre_transaction_id', $preTransactionId)
+                    ->with('commission', 'commission.commissionable')
+                    ->first();
+
+                Log::info("Refunded Transaction", [$refundedTransaction]);
+                if ($commissionTransaction = optional($refundedTransaction->commission)->commissionable) {
+                    if ($commissionTransaction->service_type = "CASHBACK") {
+
+                        $amountInPaisa = $commissionTransaction->amount * 100;
+                        $user = User::with('wallet')
+                            ->where('id', $event->transaction->user_id)
+                            ->first();
 
 
+                        $userBonusBalance = $user->wallet->bonus_balance * 100;
+                        $userMainBalance = $user->wallet->balance * 100;
+
+                        if ($userBonusBalance >= $amountInPaisa) {
+                            $amountToDeductFromBonusBalance = $amountInPaisa;
+                            $amountToDeductFromMainBalance = 0;
+                        } else {
+                            $amountToDeductFromBonusBalance = $userBonusBalance;
+                            $amountToDeductFromMainBalance = $amountInPaisa - $userBonusBalance;
+                        }
+
+                        if ($amountToDeductFromMainBalance > $userMainBalance) {
+                            Log::error("Error while pulling cashback from user main balance");
+                            Log::info("amountToDeductFromMainBalance: " . $amountToDeductFromMainBalance);
+                            Log::info("userMainBalance: " . $userMainBalance);
+                            return;
+                        }
+
+                        if ($amountToDeductFromBonusBalance > $userBonusBalance) {
+                            Log::error("Error while pulling cashback from user main bonus balance");
+                            Log::info("amountToDeductFromBonusBalance: " . $amountToDeductFromBonusBalance);
+                            Log::info("userBonusBalance: " . $userBonusBalance);
+                            return;
+                        }
+
+                        $cashbackPull = CashbackPull::create([
+                            "user_id" => $user->id,
+                            "admin_id" => optional(auth()->user())->id,
+                            "refunded_pre_transaction_id" => $preTransactionId,
+                            "refunded_transaction_event_id" => $refundedTransaction->id,
+                            "pulled_cashback_transaction_event_id" => $commissionTransaction->id,
+                            "pulled_cashback_commission_id" => $refundedTransaction->commission->id,
+                            "amount" => $amountInPaisa,
+                            "before_balance" => $userMainBalance,
+                            "after_balance" => $userMainBalance - $amountToDeductFromMainBalance,
+                            "before_bonus_balance" => $userBonusBalance,
+                            "after_bonus_balance" => $userBonusBalance - $amountToDeductFromBonusBalance
+                        ]);
+
+                        $cashbackPull->transactions()->create([
+                            "account" => $event->transaction->user->mobile_no,
+                            "amount" => $amountInPaisa,
+                            "vendor" => "COMMISSION",
+                            "user_id" => $user->id,
+                            "description" => "Cashback pull for transaction: {$preTransactionId}",
+                            "service_type" => "CASHBACK_PULL",
+                            "balance" => $cashbackPull['after_balance'] ,
+                            "bonus_balance" => $cashbackPull['after_bonus_balance'],
+                            "uid" =>  'CASHBACK_PULL-' . TransactionIdGenerator::generateAlphaNumeric(7),
+                            "account_type" => "debit",
+                            "refund_pre_transaction_id" => $preTransactionId
+                        ]);
+
+                        if ($amountToDeductFromBonusBalance) {
+                            event(new UserBonusWalletPaymentEvent($event->transaction->user_id, $amountToDeductFromBonusBalance));
+                        }
+
+                        if ($amountToDeductFromMainBalance > 0) {
+                            event(new UserWalletPaymentEvent($event->transaction->user_id, $amountToDeductFromMainBalance));
+                        }
+
+                    }
+                }
+            }
         }
     }
 }

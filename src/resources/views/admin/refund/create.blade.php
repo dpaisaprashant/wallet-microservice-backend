@@ -69,11 +69,9 @@
 
                             <div class="hr-line-dashed"></div>
 
-                            <div class="i-checks">
-                                <label class="col-sm-2 col-form-label">
-                                    <i></i> Pull Cashback
-                                </label>
-                                <div class="col-sm-10">
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Pull Cashback</label>
+                                <div class="col-sm-10 i-checks">
                                     <label>
                                         <input type="checkbox" name="pull_cashback">
                                     </label>

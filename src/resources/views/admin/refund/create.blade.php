@@ -74,7 +74,9 @@
                                     <i></i> Pull Cashback
                                 </label>
                                 <div class="col-sm-10">
-                                    <input type="checkbox" name="pull_cashback">
+                                    <label>
+                                        <input type="checkbox" name="pull_cashback">
+                                    </label>
                                 </div>
                             </div>
 

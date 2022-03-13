@@ -70,10 +70,12 @@
                             <div class="hr-line-dashed"></div>
 
                             <div class="i-checks">
-                                <label>
-                                    <input type="checkbox" name="pull_cashback">
+                                <label class="col-sm-2 col-form-label">
                                     <i></i> Pull Cashback
                                 </label>
+                                <div class="col-sm-10">
+                                    <input type="checkbox" name="pull_cashback">
+                                </div>
                             </div>
 
                             <div class="hr-line-dashed"></div>

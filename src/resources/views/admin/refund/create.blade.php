@@ -72,8 +72,9 @@
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Pull Cashback</label>
                                 <div class="col-sm-10 i-checks">
-                                    <label>
+                                    <label style="">
                                         <input type="checkbox" name="pull_cashback">
+                                        <i></i> Check to pull cashback after refund
                                     </label>
                                 </div>
                             </div>
@@ -95,6 +96,12 @@
 @section('styles')
     @include('admin.asset.css.chosen')
     @include('admin.asset.css.icheck')
+
+    <style>
+        .icheckbox_square-green {
+            margin-top: 5px;
+        }
+    </style>
 
     <!-- Sweet Alert -->
     <link href="{{ asset('admin/css/plugins/sweetalert/sweetalert.css') }}" rel="stylesheet">

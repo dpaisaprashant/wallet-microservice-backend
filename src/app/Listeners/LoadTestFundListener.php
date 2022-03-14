@@ -185,6 +185,14 @@ class LoadTestFundListener
                             "refund_pre_transaction_id" => $preTransactionId
                         ]);
 
+                        $user->load('wallet');
+                        Log::info("Wallet info before cashback pull main balance", ["main_balance" => $user->wallet->balance]);
+                        Log::info("Wallet info before cashback pull bonus balance", ["bonus_balance" => $user->wallet->balance]);
+                        Log::info("==========================================================================");
+                        Log::info("amountToDeductFromMainBalance: " . $amountToDeductFromMainBalance);
+                        Log::info("amountToDeductFromBonusBalance: " . $amountToDeductFromBonusBalance);
+
+
                         if ($amountToDeductFromBonusBalance > 0) {
                             DB::commit();
                             event(new UserBonusWalletPaymentEvent($event->transaction->user_id, $amountToDeductFromBonusBalance));

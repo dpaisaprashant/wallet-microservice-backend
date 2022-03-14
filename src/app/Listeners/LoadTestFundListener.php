@@ -186,10 +186,12 @@ class LoadTestFundListener
                         ]);
 
                         if ($amountToDeductFromBonusBalance > 0) {
+                            DB::commit();
                             event(new UserBonusWalletPaymentEvent($event->transaction->user_id, $amountToDeductFromBonusBalance));
                         }
 
                         if ($amountToDeductFromMainBalance > 0) {
+                            DB::commit();
                             event(new UserWalletPaymentEvent($event->transaction->user_id, $amountToDeductFromMainBalance));
                         }
 

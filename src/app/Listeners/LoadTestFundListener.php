@@ -160,6 +160,7 @@ class LoadTestFundListener
                         $cashbackPull = CashbackPull::create([
                             "user_id" => $user->id,
                             "admin_id" => optional(auth()->user())->id,
+                            "pre_transaction_id" => $cashbackPullPreTransaction->pre_transaction_id,
                             "refunded_pre_transaction_id" => $preTransactionId,
                             "refunded_transaction_event_id" => $refundedTransaction->id,
                             "pulled_cashback_transaction_event_id" => $commissionTransaction->id,
@@ -183,7 +184,9 @@ class LoadTestFundListener
                             "bonus_balance" => $cashbackPull['after_bonus_balance'],
                             "uid" =>  'CASHBACK_PULL-' . TransactionIdGenerator::generateAlphaNumeric(7),
                             "account_type" => "debit",
-                            "refund_pre_transaction_id" => $preTransactionId
+                            "refund_pre_transaction_id" => $cashbackPullPreTransaction->pre_transaction_id,
+                            "pre_transaction_id" => $cashbackPullPreTransaction->pre_transaction_id,
+
                         ]);
 
                         $user->load('wallet');

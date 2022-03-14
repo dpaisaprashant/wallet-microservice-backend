@@ -101,11 +101,11 @@ class LoadTestFundListener
             if (isset(request()->pull_cashback) && request()->pull_cashback == "on") {
                 //PULL CASHBACK
                 $refundedTransaction = TransactionEvent::where('pre_transaction_id', $preTransactionId)
-                    ->with('commission', 'commission.commissionable')
+                    ->with('commission', 'commission.transactions')
                     ->first();
 
                 Log::info("Refunded Transaction", [$refundedTransaction]);
-                if ($commissionTransaction = optional($refundedTransaction->commission)->commissionable) {
+                if ($commissionTransaction = optional($refundedTransaction->commission)->transactions) {
                     if ($commissionTransaction->service_type = "CASHBACK") {
 
                         $amountInPaisa = $commissionTransaction->amount * 100;
@@ -194,12 +194,12 @@ class LoadTestFundListener
 
 
                         if ($amountToDeductFromBonusBalance > 0) {
-                            DB::commit();
+                            //DB::commit();
                             event(new UserBonusWalletPaymentEvent($event->transaction->user_id, $amountToDeductFromBonusBalance));
                         }
 
                         if ($amountToDeductFromMainBalance > 0) {
-                            DB::commit();
+                            //DB::commit();
                             event(new UserWalletPaymentEvent($event->transaction->user_id, $amountToDeductFromMainBalance));
                         }
 

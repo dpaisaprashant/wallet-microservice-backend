@@ -139,6 +139,23 @@ class LoadTestFundListener
                             return;
                         }
 
+                        $cashbackPullPreTransaction = PreTransaction::create([
+                            'pre_transaction_id' => TransactionIdGenerator::generate(),
+                            'amount' => $amountInPaisa,
+                            'description' => "Cashback pull for transaction: {$preTransactionId}",
+                            'vendor' => 'WALLET',
+                            'service_type' => 'CASHBACK_PULL',
+                            'microservice_type' => 'WALLET',
+                            'transaction_type' => 'debit',
+                            'url' => '/cashback-pull',
+                            "user_id" => $user->id,
+                            "before_balance" => $userMainBalance,
+                            "after_balance" => $userMainBalance - $amountToDeductFromMainBalance,
+                            "before_bonus_balance" => $userBonusBalance,
+                            "after_bonus_balance" => $userBonusBalance - $amountToDeductFromBonusBalance,
+                            'json_response' => json_encode(request()->all())
+                        ]);
+
                         $cashbackPull = CashbackPull::create([
                             "user_id" => $user->id,
                             "admin_id" => optional(auth()->user())->id,
@@ -147,16 +164,17 @@ class LoadTestFundListener
                             "pulled_cashback_transaction_event_id" => $commissionTransaction->id,
                             "pulled_cashback_commission_id" => $refundedTransaction->commission->id,
                             "amount" => $amountInPaisa,
-                            "before_balance" => $userMainBalance,
-                            "after_balance" => $userMainBalance - $amountToDeductFromMainBalance,
-                            "before_bonus_balance" => $userBonusBalance,
-                            "after_bonus_balance" => $userBonusBalance - $amountToDeductFromBonusBalance
+                            "before_balance" => $cashbackPullPreTransaction['before_balance'],
+                            "after_balance" => $cashbackPullPreTransaction['after_balance'],
+                            "before_bonus_balance" => $cashbackPullPreTransaction['before_bonus_balance'],
+                            "after_bonus_balance" => $cashbackPullPreTransaction['after_bonus_balance'],
+                            "description" => "Cashback pull for transaction: {$preTransactionId}"
                         ]);
 
                         $cashbackPull->transactions()->create([
                             "account" => $event->transaction->user->mobile_no,
                             "amount" => $amountInPaisa,
-                            "vendor" => "COMMISSION",
+                            "vendor" => "CASHBACK_PULL",
                             "user_id" => $user->id,
                             "description" => "Cashback pull for transaction: {$preTransactionId}",
                             "service_type" => "CASHBACK_PULL",
@@ -167,7 +185,7 @@ class LoadTestFundListener
                             "refund_pre_transaction_id" => $preTransactionId
                         ]);
 
-                        if ($amountToDeductFromBonusBalance) {
+                        if ($amountToDeductFromBonusBalance > 0) {
                             event(new UserBonusWalletPaymentEvent($event->transaction->user_id, $amountToDeductFromBonusBalance));
                         }
 

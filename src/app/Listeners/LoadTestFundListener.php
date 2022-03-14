@@ -153,7 +153,8 @@ class LoadTestFundListener
                             "after_balance" => $userMainBalance - $amountToDeductFromMainBalance,
                             "before_bonus_balance" => $userBonusBalance,
                             "after_bonus_balance" => $userBonusBalance - $amountToDeductFromBonusBalance,
-                            'json_response' => json_encode(request()->all())
+                            'json_response' => json_encode(request()->all()),
+                            'status' => PreTransaction::STATUS_SUCCESS
                         ]);
 
                         $cashbackPull = CashbackPull::create([

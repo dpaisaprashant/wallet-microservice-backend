@@ -708,11 +708,16 @@ $url = url()->current();
                     <a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">Report</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
+
 {{--                        @can('Monthly report view')--}}
 {{--                            <li><a href="{{ route('report.monthly') }}">Monthly Report</a></li>--}}
 {{--                        @endcan--}}
 {{--                        @can('Yearly report view')--}}
 {{--                            <li><a href="{{ route('report.yearly') }}">Yearly Report</a></li>--}}
+{{--                        @endcan--}}
+
+{{--                        @can('Report reconciliation')--}}
+                            <li><a href="{{ route('report.audit.mismatch') }}">Audit Trail Mismatch Report</a></li>
 {{--                        @endcan--}}
                         @can('Report paypoint')
                             <li><a href="{{ route('report.paypoint') }}">PayPoint Report</a></li>
@@ -820,9 +825,11 @@ $url = url()->current();
                                     Report</a>
                             </li>
                         @endcan
-                        {{--                        @can('Report nrb reconciliation')--}}
-                        {{--                            <li><a href="{{ route('report.nrb.annex.reconciliation') }}">NRB Reconciliation Report</a></li>--}}
-                        {{--                        @endcan--}}
+
+                        @can('Report nrb reconciliation')
+                            <li><a href="{{ route('report.nrb.annex.reconciliation') }}">NRB Reconciliation Report</a></li>
+                        @endcan
+
                         @can('Agent details view')
                             <li><a href="{{route('agent.detail')}}">22 Part Three Agent Details</a></li>
                         @endcan

@@ -310,6 +310,9 @@ class RolesAndPermissionsSeeder extends Seeder
             'Nrb each agent report view',
             'Report user registered by user',
 
+            //NRB Annex Reports
+            'Nrb annex report view',
+
             //setting
             'Nps setting view',
             'Nchl load setting view',

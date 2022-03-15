@@ -13,18 +13,20 @@ class CreateTableFundWithdraws extends Migration
      */
     public function up()
     {
-        Schema::connection('dpaisa')->create('fund_withdraws', function (Blueprint $table) {
-            $table->id();
-            $table->string('pre_transaction_id');
-            $table->string('withdraw_pre_transaction_id');
-            $table->foreignId('transaction_event_id')->nullable();
-            $table->integer('before_balance');
-            $table->integer('after_balance');
-            $table->integer('before_bonus_balance');
-            $table->integer('after_bonus_balance');
-            $table->string('description');
-            $table->timestamps();
-        });
+        if(!Schema::connection('dpaisa')->hasTable('load_test_funds')) {
+            Schema::connection('dpaisa')->create('fund_withdraws', function (Blueprint $table) {
+                $table->id();
+                $table->string('pre_transaction_id');
+                $table->string('withdraw_pre_transaction_id');
+                $table->foreignId('transaction_event_id')->nullable();
+                $table->integer('before_balance');
+                $table->integer('after_balance');
+                $table->integer('before_bonus_balance');
+                $table->integer('after_bonus_balance');
+                $table->string('description');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

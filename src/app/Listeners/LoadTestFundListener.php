@@ -174,8 +174,8 @@ class LoadTestFundListener
                             "before_bonus_balance" => $cashbackPullPreTransaction['before_bonus_balance'],
                             "after_bonus_balance" => $cashbackPullPreTransaction['after_bonus_balance'],
                             "description" => "Cashback pull for transaction: {$preTransactionId}",
-                            'created_at' => Carbon::now()->addSecond()->format("yyyy-MM-dd H:i:s.u"),
-                            'updated_at' => Carbon::now()->addSecond()->format("yyyy-MM-dd H:i:s.u")
+                            'created_at' => Carbon::now()->addSecond()->format("Y-m-d H:i:s.u"),
+                            'updated_at' => Carbon::now()->addSecond()->format("yY-m-d H:i:s.u")
                         ]);
 
                         $cashbackPull->transactions()->create([

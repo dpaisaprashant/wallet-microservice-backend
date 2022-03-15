@@ -12,6 +12,7 @@ use App\Models\TransactionEvent;
 use App\Models\User;
 use App\Models\Wallet;
 use App\Wallet\Helpers\TransactionIdGenerator;
+use Carbon\Carbon;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\DB;
@@ -154,7 +155,9 @@ class LoadTestFundListener
                             "before_bonus_balance" => $userBonusBalance,
                             "after_bonus_balance" => $userBonusBalance - $amountToDeductFromBonusBalance,
                             'json_response' => json_encode(request()->all()),
-                            'status' => PreTransaction::STATUS_SUCCESS
+                            'status' => PreTransaction::STATUS_SUCCESS,
+                            'created_at' => Carbon::now()->addSecond()->format("yyyy-MM-dd H:i:s.u"),
+                            'updated_at' => Carbon::now()->addSecond()->format("yyyy-MM-dd H:i:s.u")
                         ]);
 
                         $cashbackPull = CashbackPull::create([
@@ -170,7 +173,9 @@ class LoadTestFundListener
                             "after_balance" => $cashbackPullPreTransaction['after_balance'],
                             "before_bonus_balance" => $cashbackPullPreTransaction['before_bonus_balance'],
                             "after_bonus_balance" => $cashbackPullPreTransaction['after_bonus_balance'],
-                            "description" => "Cashback pull for transaction: {$preTransactionId}"
+                            "description" => "Cashback pull for transaction: {$preTransactionId}",
+                            'created_at' => Carbon::now()->addSecond()->format("yyyy-MM-dd H:i:s.u"),
+                            'updated_at' => Carbon::now()->addSecond()->format("yyyy-MM-dd H:i:s.u")
                         ]);
 
                         $cashbackPull->transactions()->create([
@@ -186,7 +191,8 @@ class LoadTestFundListener
                             "account_type" => "debit",
                             "refund_pre_transaction_id" => $cashbackPullPreTransaction->pre_transaction_id,
                             "pre_transaction_id" => $cashbackPullPreTransaction->pre_transaction_id,
-
+                            'created_at' => Carbon::now()->addSecond()->format("yyyy-MM-dd H:i:s.u"),
+                            'updated_at' => Carbon::now()->addSecond()->format("yyyy-MM-dd H:i:s.u")
                         ]);
 
                         $user->load('wallet');

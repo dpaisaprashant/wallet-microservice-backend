@@ -16,4 +16,9 @@ class CashbackPull extends Model
 
     use BelongsToUser, BelongsToUseThroughMicroservice, MorphOneTransaction;
 
+
+    public function pulledCashbackTransactionEvent()
+    {
+        return $this->belongsTo(TransactionEvent::class, "pulled_cashback_transaction_event_id");
+    }
 }

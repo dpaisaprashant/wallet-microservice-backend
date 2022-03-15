@@ -156,8 +156,8 @@ class LoadTestFundListener
                             "after_bonus_balance" => $userBonusBalance - $amountToDeductFromBonusBalance,
                             'json_response' => json_encode(request()->all()),
                             'status' => PreTransaction::STATUS_SUCCESS,
-                            'created_at' => Carbon::now()->addSecond()->format("yyyy-MM-dd H:i:s.u"),
-                            'updated_at' => Carbon::now()->addSecond()->format("yyyy-MM-dd H:i:s.u")
+                            'created_at' => Carbon::now()->addSecond()->format("Y-m-d H:i:s.u"),
+                            'updated_at' => Carbon::now()->addSecond()->format("Y-m-d H:i:s.u")
                         ]);
 
                         $cashbackPull = CashbackPull::create([
@@ -191,8 +191,8 @@ class LoadTestFundListener
                             "account_type" => "debit",
                             "refund_pre_transaction_id" => $cashbackPullPreTransaction->pre_transaction_id,
                             "pre_transaction_id" => $cashbackPullPreTransaction->pre_transaction_id,
-                            'created_at' => Carbon::now()->addSecond()->format("yyyy-MM-dd H:i:s.u"),
-                            'updated_at' => Carbon::now()->addSecond()->format("yyyy-MM-dd H:i:s.u")
+                            'created_at' => Carbon::now()->addSecond()->format("Y-m-d H:i:s.u"),
+                            'updated_at' => Carbon::now()->addSecond()->format("Y-m-d H:i:s.u")
                         ]);
 
                         $user->load('wallet');

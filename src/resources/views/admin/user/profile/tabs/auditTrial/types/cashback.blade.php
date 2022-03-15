@@ -14,7 +14,7 @@
     <td>{{ $event->transactions['vendor'] }}</td>
     <td>
         @if(optional($event->transactions)->cashbackPull)
-            <span class="badge badge-dark">CASHBACK PULLED</span>
+            <span class="badge badge-inverse">CASHBACK PULLED</span>
         @else
             ---
         @endif

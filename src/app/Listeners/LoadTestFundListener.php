@@ -143,7 +143,7 @@ class LoadTestFundListener
                         $cashbackPullPreTransaction = PreTransaction::create([
                             'pre_transaction_id' => TransactionIdGenerator::generate(),
                             'amount' => $amountInPaisa,
-                            'description' => "Cashback pull for transaction: {$preTransactionId}",
+                            'description' => "Cashback pull for transaction: {$preTransactionId}, cashback transaction id: {$commissionTransaction->id}",
                             'vendor' => 'WALLET',
                             'service_type' => 'CASHBACK_PULL',
                             'microservice_type' => 'WALLET',

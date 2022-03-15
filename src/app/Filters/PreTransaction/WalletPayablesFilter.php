@@ -31,17 +31,14 @@ class WalletPayablesFilter extends FilterAbstract {
         if ($value === null) {
             return $builder;
         }
-        if ($value == "success_and_not_deducted"){
-            return $builder->where('transaction_type','=',PreTransaction::TRANSACTION_TYPE_DEBIT)
-                ->where('status','=',PreTransaction::STATUS_SUCCESS)
-                ->where('balance_status','!=',PreTransaction::BALANCE_STATUS_DEDUCTED);
-        }elseif($value == "failed_and_not_refunded"){
-            return $builder->where('transaction_type','=',PreTransaction::TRANSACTION_TYPE_DEBIT)
-                ->where('status','=',PreTransaction::STATUS_FAILED)
-                ->where('balance_status','!=',PreTransaction::BALANCE_STATUS_REFUNDED);
-        }elseif($value == "NULL"){
-            return $builder->where('transaction_type','=',PreTransaction::TRANSACTION_TYPE_DEBIT)
-                ->where('balance_status','=',null);
+        if ($value == PreTransaction::BALANCE_STATUS_DEDUCTED){
+            return $builder->where('balance_status','=',PreTransaction::BALANCE_STATUS_DEDUCTED);
+        }elseif($value == PreTransaction::BALANCE_STATUS_REFUNDED){
+            return $builder->where('balance_status','=',PreTransaction::BALANCE_STATUS_REFUNDED);
+        }elseif($value == PreTransaction::BALANCE_STATUS_ADDED){
+            return $builder->where('balance_status','=',PreTransaction::BALANCE_STATUS_ADDED);
+        } elseif($value == "NULL"){
+            return $builder->where('balance_status','=',null);
         }
     }
 }

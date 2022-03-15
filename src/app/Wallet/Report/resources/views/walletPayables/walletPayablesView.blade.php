@@ -53,114 +53,7 @@
                                         </div>
 
 
-
-
-{{--                                        <div class="col-md-3">--}}
-{{--                                            <input type="email" name="email" placeholder="Enter Email"--}}
-{{--                                                   class="form-control"--}}
-{{--                                                   value="{{ !empty($_GET['email']) ? $_GET['email'] : '' }}">--}}
-{{--                                        </div>--}}
-
-
-
-{{--                                        <div class="col-md-3">--}}
-{{--                                            <div class="form-group">--}}
-{{--                                                <label for="service_type">Service Type</label>--}}
-{{--                                                <select data-placeholder="Select Service Type" class="chosen-select"--}}
-{{--                                                        tabindex="2" name="service_type">--}}
-{{--                                                    <option value="" selected disabled>Select Service Type...</option>--}}
-{{--                                                    <option value="">All</option>--}}
-{{--                                                    @if(!empty($_GET['service_type']))--}}
-
-{{--                                                        @foreach($service_types as $service_type)--}}
-{{--                                                            <option value="{{$service_type}}"--}}
-{{--                                                                    @if($_GET['service_type']  == $service_type) selected @endif >{{$service_type}}</option>--}}
-{{--                                                        @endforeach--}}
-{{--                                                    @else--}}
-{{--                                                        @foreach($service_types as $service_type)--}}
-{{--                                                            <option--}}
-{{--                                                                value="{{$service_type}}">{{$service_type}}</option>--}}
-{{--                                                        @endforeach--}}
-{{--                                                    @endif--}}
-{{--                                                </select>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-
-{{--                                        <div class="col-md-3">--}}
-{{--                                            <div class="form-group">--}}
-{{--                                                <label for="microservice_type">Micro Service Type</label>--}}
-{{--                                                <select data-placeholder="Select MicroService Type" class="chosen-select"--}}
-{{--                                                        tabindex="2" name="microservice_type">--}}
-{{--                                                    <option value="" selected disabled>Select Micro-Service Type...</option>--}}
-{{--                                                    <option value="">All</option>--}}
-{{--                                                    @if(!empty($_GET['microservice_type']))--}}
-
-{{--                                                        @foreach($microservice_types as $microservice_type)--}}
-{{--                                                            <option value="{{$microservice_type}}"--}}
-{{--                                                                    @if($_GET['microservice_type']  == $microservice_type) selected @endif >{{$microservice_type}}</option>--}}
-{{--                                                        @endforeach--}}
-
-{{--                                                    @else--}}
-{{--                                                        @foreach($microservice_types as $microservice_type)--}}
-{{--                                                            <option--}}
-{{--                                                                value="{{$microservice_type}}">{{$microservice_type}}</option>--}}
-{{--                                                        @endforeach--}}
-{{--                                                    @endif--}}
-{{--                                                </select>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-
-
-{{--                                        <div class="col-md-3">--}}
-{{--                                            <div class="form-group">--}}
-{{--                                                <label for="transaction_type">Transaction Type</label>--}}
-{{--                                                <select data-placeholder="Select Transaction Type" class="chosen-select"--}}
-{{--                                                        tabindex="2" name="transaction_type">--}}
-{{--                                                    <option value="" selected disabled>Select Transaction Type...</option>--}}
-{{--                                                    <option value="">All</option>--}}
-{{--                                                    @if(!empty($_GET['transaction_type']))--}}
-
-{{--                                                        @foreach($transaction_types as $transaction_type)--}}
-{{--                                                            <option value="{{$transaction_type}}"--}}
-{{--                                                                    @if($_GET['transaction_type']  == $transaction_type) selected @endif >{{$transaction_type}}</option>--}}
-{{--                                                        @endforeach--}}
-
-{{--                                                    @else--}}
-{{--                                                        @foreach($transaction_types as $transaction_type)--}}
-{{--                                                            <option--}}
-{{--                                                                value="{{$transaction_type}}">{{$transaction_type}}</option>--}}
-{{--                                                        @endforeach--}}
-{{--                                                    @endif--}}
-{{--                                                </select>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-
-{{--                                        <div class="col-md-3">--}}
-{{--                                            <div class="form-group">--}}
-{{--                                                <label for="vendor">Vendor</label>--}}
-{{--                                                <select data-placeholder="Select Vendor...." class="chosen-select"--}}
-{{--                                                        tabindex="2" name="vendor">--}}
-{{--                                                    <option value="" selected disabled>Select Vendor...</option>--}}
-{{--                                                    <option value="">All</option>--}}
-{{--                                                    @if(!empty($_GET['vendor']))--}}
-
-{{--                                                        @foreach($vendors as $vendor)--}}
-{{--                                                            <option value="{{$vendor}}"--}}
-{{--                                                                    @if($_GET['vendor']  == $vendor) selected @endif >{{$vendor}}</option>--}}
-{{--                                                        @endforeach--}}
-
-{{--                                                    @else--}}
-{{--                                                        @foreach($vendors as $vendor)--}}
-{{--                                                            <option--}}
-{{--                                                                value="{{$vendor}}">{{$vendor}}</option>--}}
-{{--                                                        @endforeach--}}
-{{--                                                    @endif--}}
-{{--                                                </select>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-
-
-                                        <div class="col-md-4" style="padding-bottom: 15px;">
+                                        <div class="col-md-6" style="padding-bottom: 15px;">
                                             <div class="input-group date">
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
@@ -171,7 +64,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4" style="padding-bottom: 15px;">
+                                        <div class="col-md-6" style="padding-bottom: 15px;">
                                             <div class="input-group date">
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
@@ -182,29 +75,56 @@
                                             </div>
                                         </div>
 
-{{--                                        <div class="col-md-3">--}}
-{{--                                            <div class="form-group">--}}
-{{--                                                <select data-placeholder="Sort By..." class="chosen-select" tabindex="2"--}}
-{{--                                                        name="sort">--}}
-{{--                                                    <option value="">All</option>--}}
-{{--                                                    <option value="" selected disabled>Sort By...</option>--}}
-{{--                                                    @if(!empty($_GET['sort']))--}}
-{{--                                                        <option value="date"--}}
-{{--                                                                @if($_GET['sort'] == 'date') selected @endif>Latest Date--}}
-{{--                                                        </option>--}}
-{{--                                                        <option value="amount"--}}
-{{--                                                                @if($_GET['sort'] == 'amount') selected @endif>Highest--}}
-{{--                                                            amount--}}
-{{--                                                        </option>--}}
-{{--                                                    @else--}}
-{{--                                                        <option value="date">Latest Date</option>--}}
-{{--                                                        <option value="amount">Amount</option>--}}
-{{--                                                    @endif--}}
-{{--                                                </select>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
 
 
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <select data-placeholder="Select Pre-Transaction status..."
+                                                        class="chosen-select" tabindex="2" name="status">
+                                                    <option value="" selected disabled>Select Status: </option>
+                                                    <option value="">All</option>
+                                                    @if(!empty($_GET['status']))
+                                                        <option value="SUCCESS"
+                                                                @if($_GET['status']  == 'SUCCESS') selected @endif >
+                                                            SUCCESS
+                                                        </option>
+                                                        <option value="FAILED"
+                                                                @if($_GET['status'] == 'FAILED') selected @endif>
+                                                            FAILED
+                                                        </option>
+                                                        <option value=""
+                                                                @if($_GET['status'] == "NULL") selected @endif>
+                                                            NULL
+                                                        </option>
+                                                    @else
+                                                        <option value="SUCCESS">SUCCESS</option>
+                                                        <option value="FAILED">FAILED</option>
+                                                        <option value="NULL">NULL</option>
+
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <select data-placeholder="Select Transaction Type" class="chosen-select"
+                                                        tabindex="2" name="transaction_type">
+                                                    <option value="" selected disabled>Select Transaction Type...</option>
+                                                    <option value="">All</option>
+                                                    @if(!empty($_GET['transaction_type']))
+                                                            <option value="credit"
+                                                                    @if($_GET['transaction_type']  == "credit") selected @endif >credit</option>
+                                                            <option value="debit"
+                                                                @if($_GET['transaction_type']  == "debit") selected @endif >debit</option>
+                                                    @else
+                                                            <option value="credit">credit</option>
+                                                            <option value="debit">debit</option>
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
 
                                         <div class="col-md-4">
                                             <div class="form-group">
@@ -212,22 +132,31 @@
                                                         class="chosen-select" tabindex="2" name="wallet_payables">
                                                     <option value="" selected disabled>Select Wallet Payable: </option>
                                                     @if(!empty($_GET['wallet_payables']))
-                                                        <option value="success_and_not_deducted"
-                                                                @if($_GET['wallet_payables']  == 'success_and_not_deducted') selected @endif >
-                                                            Success but not deducted
+                                                        <option value="{{\App\Models\Microservice\PreTransaction::BALANCE_STATUS_DEDUCTED}}"
+                                                                @if($_GET['wallet_payables']  == \App\Models\Microservice\PreTransaction::BALANCE_STATUS_DEDUCTED) selected @endif >
+                                                            Deducted
                                                         </option>
-                                                        <option value="failed_and_not_refunded"
-                                                                @if($_GET['wallet_payables'] == 'failed_and_not_refunded') selected @endif>
-                                                            Failed but not refunded
+                                                        <option value="{{\App\Models\Microservice\PreTransaction::BALANCE_STATUS_REFUNDED}}"
+                                                                @if($_GET['wallet_payables'] == \App\Models\Microservice\PreTransaction::BALANCE_STATUS_REFUNDED) selected @endif>
+                                                            Refunded
                                                         </option>
-                                                        <option value=""
+                                                        <option value="{{\App\Models\Microservice\PreTransaction::BALANCE_STATUS_ADDED}}"
+                                                                @if($_GET['wallet_payables'] == \App\Models\Microservice\PreTransaction::BALANCE_STATUS_ADDED) selected @endif>
+                                                            Added
+                                                        </option>
+                                                        <option value="NULL"
                                                                 @if($_GET['wallet_payables'] == "NULL") selected @endif>
                                                             NULL
                                                         </option>
+                                                        <option value="" @if($_GET['wallet_payables'] == "") selected @endif>
+                                                            ALL
+                                                        </option>
                                                     @else
-                                                        <option value="success_and_not_deducted">Success but not deducted</option>
-                                                        <option value="failed_and_not_refunded">Failed but not refunded</option>
+                                                        <option value="{{\App\Models\Microservice\PreTransaction::BALANCE_STATUS_DEDUCTED}}">Deducted</option>
+                                                        <option value="{{\App\Models\Microservice\PreTransaction::BALANCE_STATUS_REFUNDED}}">Refunded</option>
+                                                        <option value="{{\App\Models\Microservice\PreTransaction::BALANCE_STATUS_ADDED}}">Added</option>
                                                         <option value="NULL">NULL</option>
+                                                        <option value="">ALL</option>
 
                                                     @endif
                                                 </select>
@@ -287,7 +216,8 @@
                 </div>
             </div>
         </div>
-        @if(!empty($_GET['wallet_payables']))
+
+        @if(count($_GET) > 0)
             <div class="row">
             <div class="col-lg-12">
                 <div class="ibox ">
@@ -404,12 +334,14 @@
     @include('admin.asset.js.datatable')
 
 
-    <script>
-        $(document).ready(function (e) {
-            let a = "Showing {{ $preTransactions->firstItem() }} to {{ $preTransactions->lastItem() }} of {{ $preTransactions->total() }} entries";
-            $('.dataTables_info').text(a);
-        });
-    </script>
+    @if(count($_GET) > 0)
+        <script>
+            $(document).ready(function (e) {
+                let a = "Showing {{ $preTransactions->firstItem() }} to {{ $preTransactions->lastItem() }} of {{ $preTransactions->total() }} entries";
+                $('.dataTables_info').text(a);
+            });
+        </script>
+    @endif
 
 {{--    <!-- IonRangeSlider -->--}}
 {{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js"></script>--}}

@@ -54,10 +54,13 @@ class WalletReportController extends Controller
     }
 
     public function walletPayablesReports(Request $request){
-//        $request->merge(['wallet_payables'=>"success and not deducted",]);
-        $preTransactions = PreTransaction::filter($request)->paginate(10);
+
+        $preTransactions = [];
+        if (count($_GET) > 0){
+            $preTransactions = PreTransaction::filter($request)->paginate(10);
+        }
         return view('WalletReport::walletPayables.walletPayablesView')->with(compact('preTransactions'));
-//        dd($wallet_payables);
+
     }
 
 }

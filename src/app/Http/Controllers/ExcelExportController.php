@@ -93,12 +93,18 @@ use App\Wallet\DPaisaAuditTrail\NPayAuditTrail;
 use App\Wallet\DPaisaAuditTrail\PPAuditTrail;
 use App\Wallet\Excel\ExportExcelHelper;
 use App\Wallet\Report\Repositories\NchlLoadReportRepository;
+use App\Wallet\Report\Repositories\SubscriberReportRepository;
+use App\Wallet\Report\Traits\SubscriberReportGenerator;
 use App\Wallet\TransactionEvent\Repository\NPayReportRepository;
 use App\Wallet\TransactionEvent\Repository\PayPointReportRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ExcelExportController extends Controller
 {
+
+    use SubscriberReportGenerator;
+
     public function completeTransactions(Request $request)
     {
         $export = new ExportExcelHelper();
@@ -733,6 +739,7 @@ class ExcelExportController extends Controller
 
         return $export->exportExcelCollection();
     }
+
 
     public function nPayReport(Request $request, NPayReportRepository $repo)
     {

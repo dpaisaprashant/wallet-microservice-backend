@@ -171,4 +171,11 @@ class TransactionEvent extends Model
         return $this->belongsTo(PreTransaction::class,'pre_transaction_id','pre_transaction_id');
     }
 
+
+    //cashback pull
+    public function cashbackPull()
+    {
+        return $this->hasOne(CashbackPull::class, "pulled_cashback_transaction_event_id");
+    }
+
 }

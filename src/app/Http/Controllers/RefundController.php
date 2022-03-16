@@ -31,6 +31,7 @@ class RefundController extends Controller
     {
         $users = User::latest()->get();
         if ($request->isMethod('post')) {
+            Log::info("Refund Info request", $request->all());
             $user = User::where('mobile_no', $request->mobile_no)->firstOrFail();
             $preTransaction = PreTransaction::where('pre_transaction_id', $request->pre_transaction_id)->firstOrfail();
             $total = $request->amount + $request->bonus_amount;
@@ -84,6 +85,7 @@ class RefundController extends Controller
                 $transaction = LoadTestFund::create($data);
                 if (! $transaction) return redirect(route('refund.index'))->with('error', 'Transaction not created successfully');
 
+                //TODO: pull cashback event
                 event(new LoadTestFundEvent($transaction));
                 DB::commit();
                 return redirect(route('refund.index'))->with('success', 'Transaction created successfully');

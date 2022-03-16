@@ -296,7 +296,7 @@ class User extends Authenticatable
     public function userCashBack()
     {
         $cashBackIds = $this->userTransactionEvents()->whereServiceType('CASHBACK')->pluck('transaction_id');
-        return Commission::with('transactions')->whereIn('id', $cashBackIds);
+        return Commission::with('transactions', 'transactions.cashbackPull')->whereIn('id', $cashBackIds);
     }
 
     public function userCommission()

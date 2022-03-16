@@ -710,7 +710,11 @@ $url = url()->current();
                     <a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">Report</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                       {{-- @can('Monthly report view')
+
+{{--                        @can('Report reconciliation')--}}
+                            <li><a href="{{ route('report.audit.mismatch') }}">Audit Trail Mismatch Report</a></li>
+{{--                        @endcan--}}
+                        @can('Monthly report view')
                             <li><a href="{{ route('report.monthly') }}">Monthly Report</a></li>
                         @endcan
                         @can('Yearly report view')
@@ -787,8 +791,14 @@ $url = url()->current();
 
 
                         @can('Report user registered by user')
-                            <li><a href="{{route('report.user-registered-by-user')}}">Users Registered By Agents</a></li>
+                            <li><a href="{{route('report.user-registered-by-user')}}">Users Registered By Agents</a>
+                            </li>
                         @endcan
+
+                        @can('View wallet payables')
+                            <li><a href="{{route('report.walletPayablesReport')}}">Wallet Payables Report</a></li>
+                        @endcan
+
                     </ul>
                 </li>
             @endif
@@ -830,7 +840,8 @@ $url = url()->current();
                         @endcan
 
                         @can('Report nrb reconciliation')
-                            <li><a href="{{ route('report.nrb.annex.reconciliation') }}">NRB Reconciliation Report</a></li>
+                            <li><a href="{{ route('report.nrb.annex.reconciliation') }}">NRB Reconciliation Report</a>
+                            </li>
                         @endcan
 
                         @can('Agent details view')

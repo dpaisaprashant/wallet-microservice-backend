@@ -43,6 +43,7 @@ class MiscReportRepository extends AbstractReportRepository
                                                                             JOIN users as u
                                                                             ON t.user_id = u.id
                                                                             WHERE t.transaction_type = 'App\\\\Models\\\\TicketSale'
+                                                                            AND refund_id IS NULL
                                                                             AND date(t.created_at) >= date(:fromDate)
                                                                             AND date(t.created_at) <= date(:toDate);
                                                       ",['fromDate'=>$this->fromDate, 'toDate'=> $this->toDate]);

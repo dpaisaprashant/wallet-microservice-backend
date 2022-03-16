@@ -5,6 +5,7 @@ namespace App\Wallet\Report\Http\Controllers;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\Microservice\PreTransaction;
 use App\Wallet\Report\Repositories\NchlLoadReportRepository;
 use App\Wallet\Report\Repositories\ReconciliationReportRepository;
 use App\Wallet\Report\Traits\ReconciliationReportGenerator;
@@ -309,4 +310,15 @@ class WalletReportController extends Controller
         //dd($data);
         return view('WalletReport::walletLedger.report')->with(['data' => $data]);
     }
+
+    public function walletPayablesReports(Request $request){
+
+        $preTransactions = [];
+        if (count($_GET) > 0){
+            $preTransactions = PreTransaction::filter($request)->paginate(10);
+        }
+        return view('WalletReport::walletPayables.walletPayablesView')->with(compact('preTransactions'));
+
+    }
+
 }

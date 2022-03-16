@@ -299,9 +299,22 @@ class PhpSpreadSheetController extends Controller
             $activeSheet->setCellValueExplicit('C' . $index, $totalCredit, DataType::TYPE_STRING);
             $activeSheet->setCellValueExplicit('D' . $index, $totalDebit, DataType::TYPE_STRING);
             $index++;
+            $index++;
             $activeSheet->mergeCells("A" . $index . ":" . "D" . $index);
             $activeSheet->setCellValue('A' . $index, 'Report Generated for Date : ' . $request->from);
         }
+
+        $activeSheet->getStyle('A9:D'.($index-2))
+            ->getBorders()
+            ->getAllBorders()
+            ->setBorderStyle(Border::BORDER_THIN)
+            ->setColor(new Color('090a0a'));
+
+        $activeSheet->getStyle('A9:D'.($index-2))
+            ->getBorders()
+            ->getOutline()
+            ->setBorderStyle(Border::BORDER_MEDIUM)
+            ->setColor(new Color('090a0a'));
 
         foreach ($activeSheet->getColumnIterator() as $column) {
             $activeSheet->getColumnDimension($column->getColumnIndex())->setAutoSize(true);
@@ -405,6 +418,18 @@ class PhpSpreadSheetController extends Controller
             $activeSheet->getStyle('A' . $index)->getAlignment()->setHorizontal('center')->setVertical('center');
         }
 
+        $activeSheet->getStyle('A9:D'.($index-2))
+            ->getBorders()
+            ->getAllBorders()
+            ->setBorderStyle(Border::BORDER_THIN)
+            ->setColor(new Color('090a0a'));
+
+        $activeSheet->getStyle('A9:D'.($index-2))
+            ->getBorders()
+            ->getOutline()
+            ->setBorderStyle(Border::BORDER_MEDIUM)
+            ->setColor(new Color('090a0a'));
+
         foreach ($activeSheet->getColumnIterator() as $column) {
             $activeSheet->getColumnDimension($column->getColumnIndex())->setAutoSize(true);
         }
@@ -417,7 +442,7 @@ class PhpSpreadSheetController extends Controller
     public function activeInactiveUserSlabReport(Request $request)
     {
         $activeInactiveReports = new ActiveInactiveUserSlabReportRepository($request);
-        $activeInactiveReports = $activeInactiveReports->dispatchWalletClearance();
+        $activeInactiveReports = $activeInactiveReports->dispatchWalletClearance($request);
 
         $spreadsheet = new Spreadsheet();
         $reportTitle = 'Active Inactive User Report w/ Amount Range';
@@ -501,6 +526,18 @@ class PhpSpreadSheetController extends Controller
             $activeSheet->getStyle('A' . $index.':B'.($index+1))->getAlignment()->setHorizontal('center')->setVertical('center');
             $activeSheet->getStyle('A' . $index.':B'.($index+1))->getFont()->setSize(12);
         }
+
+        $activeSheet->getStyle('A9:D'.($index-2))
+            ->getBorders()
+            ->getAllBorders()
+            ->setBorderStyle(Border::BORDER_THIN)
+            ->setColor(new Color('090a0a'));
+
+        $activeSheet->getStyle('A9:D'.($index-2))
+            ->getBorders()
+            ->getOutline()
+            ->setBorderStyle(Border::BORDER_MEDIUM)
+            ->setColor(new Color('090a0a'));
 
         foreach ($activeSheet->getColumnIterator() as $column) {
             $activeSheet->getColumnDimension($column->getColumnIndex())->setAutoSize(true);
@@ -600,6 +637,317 @@ class PhpSpreadSheetController extends Controller
         }
 
         $filename = "NRB Annex 10.1.11 Report for Date Range : " . $request->from ." to ".$request->to. ".xlsx";
+
+        $helper->exportToExcel($spreadsheet, $filename);
+    }
+
+    //NRB 22 part 4 Agent Report
+    public function nrbEachAgentReport(Request $request)
+    {
+        $nrbAnnex = new NRBAnnexReportController();
+        $request = $request->merge(['forExcel' => 'TRUE']);
+        $agentReports = $nrbAnnex->eachAgentReport($request);
+
+        $spreadsheet = new Spreadsheet();
+        $reportTitle = 'Transaction Report of Agents';
+
+        $spreadsheet->setActiveSheetIndex(0);
+        $activeSheet = $spreadsheet->getActiveSheet();
+
+        $helper = new PhpSpreadSheetExportHelper();
+        $index = 0;
+        $activeSheet = $helper->setLogo($activeSheet, $index);
+        $activeSheet = $helper->setTitle($activeSheet, $reportTitle, $index);
+//        $activeSheet = $helper->setFilteredOptions($activeSheet, $request);
+
+        $activeSheet->setCellValue('A9', 'S.N.')
+            ->setCellValue('B9', 'Agent Code')
+            ->setCellValue('C9', 'Agent Name')
+            ->setCellValue('D9', 'Over the Counter Transaction Type')
+            ->setCellValue('E9', 'Number of Transactions')
+            ->setCellValue('F9', 'Amount (Rs.)');
+
+        $activeSheet->getStyle('A9:F9')->getFont()->setBold(1)->setSize(12);
+        $totalCredit = 0;
+        $totalDebit = 0;
+        if ($agentReports) {
+            $index = 10;
+            $sn = 1;
+            foreach ($agentReports as $agentReport) {
+
+                $activeSheet->mergeCells('A'.$index.":A".($index+5))
+                            ->mergeCells('B'.$index.":B".($index+5))
+                            ->mergeCells('C'.$index.":C".($index+5));
+
+                $activeSheet->setCellValue('A' . $index, $sn++);
+                $activeSheet->setCellValueExplicit('B' . $index, $agentReport['agent_code'], DataType::TYPE_STRING);
+                $activeSheet->setCellValue('C' . $index, $agentReport['agent_name']);
+
+                $activeSheet->setCellValue('D' . $index, 'TOP-UP')
+                            ->setCellValue('D' . ($index+1), 'TRANSFER TO WALLET')
+                            ->setCellValue('D' . ($index+2), 'TRANSFER TO BANK')
+                            ->setCellValue('D' . ($index+3), 'CASH IN')
+                            ->setCellValue('D' . ($index+4), 'CASH OUT')
+                            ->setCellValue('D' . ($index+5), 'MERCHANT PAYMENT');
+
+                $activeSheet->setCellValue('E' . $index, $agentReport['totalTopUpCount'])
+                            ->setCellValue('E' . ($index+1), $agentReport['totalTransferToWalletCount'])
+                            ->setCellValue('E' . ($index+2), $agentReport['totalTransferToBankCount'])
+                            ->setCellValue('E' . ($index+3), $agentReport['totalCashInCount'])
+                            ->setCellValue('E' . ($index+4), $agentReport['totalCashOutCount'])
+                            ->setCellValue('E' . ($index+5), $agentReport['totalMerchantPaymentCount']);
+
+                $activeSheet->setCellValue('F' . $index, $agentReport['totalTopUpAmount'])
+                            ->setCellValue('F' . ($index+1), $agentReport['totalTransferToWalletAmount'])
+                            ->setCellValue('F' . ($index+2), $agentReport['totalTransferToBankAmount'])
+                            ->setCellValue('F' . ($index+3), $agentReport['totalCashInAmount'])
+                            ->setCellValue('F' . ($index+4), $agentReport['totalCashOutAmount'])
+                            ->setCellValue('F' . ($index+5), $agentReport['totalMerchantPaymentAmount']);
+
+                $index=$index+5;
+                $index++;
+            }
+//            $activeSheet->mergeCells("A" . $index . ":" . "B" . $index);
+//            $activeSheet->setCellValue("A" . $index, 'Grand Total');
+//            $activeSheet->setCellValueExplicit('C' . $index, $totalCredit, DataType::TYPE_STRING);
+//            $activeSheet->setCellValueExplicit('D' . $index, $totalDebit, DataType::TYPE_STRING);
+            $index++;
+            $activeSheet->mergeCells("A" . $index . ":" . "D" . $index);
+            $activeSheet->setCellValue('A' . $index, 'Report Generated for Date Range: ' . $request->from_date.' to '.$request->to_date);
+        }
+
+        $activeSheet->getStyle('A9:F'.($index-2))
+        ->getBorders()
+        ->getAllBorders()
+        ->setBorderStyle(Border::BORDER_THIN)
+        ->setColor(new Color('090a0a'));
+
+        $activeSheet->getStyle('A9:F'.($index-2))
+            ->getBorders()
+            ->getOutline()
+            ->setBorderStyle(Border::BORDER_MEDIUM)
+            ->setColor(new Color('090a0a'));
+
+        foreach ($activeSheet->getColumnIterator() as $column) {
+            $activeSheet->getColumnDimension($column->getColumnIndex())->setAutoSize(true);
+        }
+
+        $filename = "NRB 22 Part 4 Report for Date Range : " . $request->from ." to ".$request->to. ".xlsx";
+
+        $helper->exportToExcel($spreadsheet, $filename);
+    }
+
+    //10.1.5 Agent Report
+    public function nrbAnnexAgentReport(Request $request)
+    {
+        $nrbAnnex = new NRBAnnexReportController();
+        $request = $request->merge(['forExcel' => 'TRUE']);
+        $agentReports = $nrbAnnex->agentReport($request);
+
+        $spreadsheet = new Spreadsheet();
+        $reportTitle = 'NRB Annex 10.1.5 Agent Report';
+
+        $spreadsheet->setActiveSheetIndex(0);
+        $activeSheet = $spreadsheet->getActiveSheet();
+
+        $helper = new PhpSpreadSheetExportHelper();
+        $index = 0;
+        $activeSheet = $helper->setLogo($activeSheet, $index);
+        $activeSheet = $helper->setTitle($activeSheet, $reportTitle, $index);
+//        $activeSheet = $helper->setFilteredOptions($activeSheet, $request);
+
+        $activeSheet->setCellValue('A9', 'S.N.')
+            ->setCellValue('B9', 'Transaction Channel')
+            ->setCellValue('C9', 'Form of Transaction')
+            ->setCellValue('D9', 'Count')
+            ->setCellValue('E9', 'Total Amount')
+        ;
+
+        $activeSheet->getStyle('A9:E9')->getFont()->setBold(1)->setSize(12);
+
+        if ($agentReports) {
+            $index = 10;
+            $sn = 1;
+            foreach ($agentReports as $title=>$agentReport) {
+                $activeSheet->setCellValue('A' . $index, $sn++);
+                $activeSheet->setCellValue('B' . $index, 'Agent/Sub-Agent');
+                $activeSheet->setCellValue('C' . $index, $title);
+                $activeSheet->setCellValue('D' . $index, $agentReport['number']);
+                $activeSheet->setCellValue('E' . $index, $agentReport['value']);
+                $index++;
+            }
+
+            $index++;
+            $activeSheet->mergeCells("A" . $index . ":" . "D" . $index);
+            $activeSheet->mergeCells("A" . ($index+1) . ":" . "D" . ($index+1));
+
+            $activeSheet->setCellValue('A' . $index, 'Report Generated for Amount Range : ' . $request->from_amount.'-'.$request->to_amount);
+            $activeSheet->setCellValue('A' . ($index+1), 'Report Generated as of date : ' . $request->from. ' to '.$request->to);
+            $activeSheet->getStyle('A' . $index.':B'.($index+1))->getAlignment()->setHorizontal('center')->setVertical('center');
+            $activeSheet->getStyle('A' . $index.':B'.($index+1))->getFont()->setSize(12);
+        }
+
+        $activeSheet->getStyle('A9:E'.($index-2))
+            ->getBorders()
+            ->getAllBorders()
+            ->setBorderStyle(Border::BORDER_THIN)
+            ->setColor(new Color('090a0a'));
+
+        $activeSheet->getStyle('A9:E'.($index-2))
+            ->getBorders()
+            ->getOutline()
+            ->setBorderStyle(Border::BORDER_MEDIUM)
+            ->setColor(new Color('090a0a'));
+
+        foreach ($activeSheet->getColumnIterator() as $column) {
+            $activeSheet->getColumnDimension($column->getColumnIndex())->setAutoSize(true);
+        }
+
+        $filename = "NRB Annex 10.1.5 Agent Report for Date Range : " . $request->from ." to ".$request->to. ".xlsx";
+
+        $helper->exportToExcel($spreadsheet, $filename);
+    }
+
+    //10.1.5 Customer Report
+    public function nrbAnnexCustomerReport(Request $request)
+    {
+        $nrbAnnex = new NRBAnnexReportController();
+        $request = $request->merge(['forExcel' => 'TRUE']);
+        $customerReports = $nrbAnnex->customerReport($request);
+
+        $spreadsheet = new Spreadsheet();
+        $reportTitle = 'NRB Annex 10.1.5 Customer Report';
+
+        $spreadsheet->setActiveSheetIndex(0);
+        $activeSheet = $spreadsheet->getActiveSheet();
+
+        $helper = new PhpSpreadSheetExportHelper();
+        $index = 0;
+        $activeSheet = $helper->setLogo($activeSheet, $index);
+        $activeSheet = $helper->setTitle($activeSheet, $reportTitle, $index);
+//        $activeSheet = $helper->setFilteredOptions($activeSheet, $request);
+
+        $activeSheet->setCellValue('A9', 'S.N.')
+            ->setCellValue('B9', 'Transaction Channel')
+            ->setCellValue('C9', 'Form of Transaction')
+            ->setCellValue('D9', 'Count')
+            ->setCellValue('E9', 'Total Amount')
+        ;
+
+        $activeSheet->getStyle('A9:E9')->getFont()->setBold(1)->setSize(12);
+
+        if ($customerReports) {
+            $index = 10;
+            $sn = 1;
+            foreach ($customerReports as $title=>$customerReport) {
+                $activeSheet->setCellValue('A' . $index, $sn++);
+                $activeSheet->setCellValue('B' . $index, 'Initiated Customer');
+                $activeSheet->setCellValue('C' . $index, $title);
+                $activeSheet->setCellValue('D' . $index, $customerReport['number']);
+                $activeSheet->setCellValue('E' . $index, $customerReport['value']);
+                $index++;
+            }
+
+            $index++;
+            $activeSheet->mergeCells("A" . $index . ":" . "D" . $index);
+            $activeSheet->mergeCells("A" . ($index+1) . ":" . "D" . ($index+1));
+
+            $activeSheet->setCellValue('A' . $index, 'Report Generated for Amount Range : ' . $request->from_amount.'-'.$request->to_amount);
+            $activeSheet->setCellValue('A' . ($index+1), 'Report Generated as of date : ' . $request->from. ' to '.$request->to);
+            $activeSheet->getStyle('A' . $index.':B'.($index+1))->getAlignment()->setHorizontal('center')->setVertical('center');
+            $activeSheet->getStyle('A' . $index.':B'.($index+1))->getFont()->setSize(12);
+        }
+
+        $activeSheet->getStyle('A9:E'.($index-2))
+            ->getBorders()
+            ->getAllBorders()
+            ->setBorderStyle(Border::BORDER_THIN)
+            ->setColor(new Color('090a0a'));
+
+        $activeSheet->getStyle('A9:E'.($index-2))
+            ->getBorders()
+            ->getOutline()
+            ->setBorderStyle(Border::BORDER_MEDIUM)
+            ->setColor(new Color('090a0a'));
+
+        foreach ($activeSheet->getColumnIterator() as $column) {
+            $activeSheet->getColumnDimension($column->getColumnIndex())->setAutoSize(true);
+        }
+
+        $filename = "NRB Annex 10.1.5 Customer Report for Date Range : " . $request->from ." to ".$request->to. ".xlsx";
+
+        $helper->exportToExcel($spreadsheet, $filename);
+    }
+
+    //10.1.6 Report
+    public function nrbAnnexPaymentReport(Request $request)
+    {
+        $nrbAnnex = new NRBAnnexReportController();
+        $request = $request->merge(['forExcel' => 'TRUE']);
+        $annexReports = $nrbAnnex->merchantReport($request);
+
+        $spreadsheet = new Spreadsheet();
+        $reportTitle = 'NRB Annex 10.1.6 Report';
+
+        $spreadsheet->setActiveSheetIndex(0);
+        $activeSheet = $spreadsheet->getActiveSheet();
+
+        $helper = new PhpSpreadSheetExportHelper();
+        $index = 0;
+        $activeSheet = $helper->setLogo($activeSheet, $index);
+        $activeSheet = $helper->setTitle($activeSheet, $reportTitle, $index);
+//        $activeSheet = $helper->setFilteredOptions($activeSheet, $request);
+
+        $activeSheet->mergeCells("D9:E9")
+                    ->mergeCells("A9:A10")
+                    ->mergeCells("C9:C10")
+                    ->mergeCells("B9:B10");
+
+        $activeSheet->setCellValue('A9', 'S.N.')
+            ->setCellValue('B9', 'Particulars')
+            ->setCellValue('C9', 'Form of Transaction')
+            ->setCellValue('D9', 'Count')
+            ->setCellValue('D10', 'Successful')
+            ->setCellValue('E10', 'Failed')
+        ;
+
+        $activeSheet->getStyle('A9:E10')->getFont()->setBold(1)->setSize(12);
+        if ($annexReports) {
+            $index = 11;
+            $sn = 1;
+            foreach ($annexReports as $title=>$report) {
+                $activeSheet->setCellValue('A' . $index, $sn++);
+                $activeSheet->setCellValue('C' . $index, $title);
+                $activeSheet->setCellValue('D' . $index, $report['successful']);
+                $activeSheet->setCellValue('E' . $index, $report['failed']);
+                $index++;
+            }
+
+            $index++;
+            $activeSheet->mergeCells("A" . $index . ":" . "D" . $index);
+
+            $activeSheet->setCellValue('A' . $index, 'Report Generated as of date : ' . $request->from. ' to '.$request->to);
+            $activeSheet->getStyle('A' . $index.':B'.$index)->getAlignment()->setHorizontal('center')->setVertical('center');
+            $activeSheet->getStyle('A' . $index.':B'.$index)->getFont()->setSize(12);
+        }
+
+        $activeSheet->getStyle('A9:E'.($index-2))
+            ->getBorders()
+            ->getAllBorders()
+            ->setBorderStyle(Border::BORDER_THIN)
+            ->setColor(new Color('090a0a'));
+
+        $activeSheet->getStyle('A9:E'.($index-2))
+            ->getBorders()
+            ->getOutline()
+            ->setBorderStyle(Border::BORDER_MEDIUM)
+            ->setColor(new Color('090a0a'));
+
+        foreach ($activeSheet->getColumnIterator() as $column) {
+            $activeSheet->getColumnDimension($column->getColumnIndex())->setAutoSize(true);
+        }
+
+        $filename = "NRB Annex 10.1.6 Report for Date Range : " . $request->from ." to ".$request->to. ".xlsx";
 
         $helper->exportToExcel($spreadsheet, $filename);
     }

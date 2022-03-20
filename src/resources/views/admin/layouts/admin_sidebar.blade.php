@@ -783,9 +783,13 @@ $url = url()->current();
                         @endcan
 
                         @can('Report user registered by user')
-                            <li><a href="{{route('report.user-registered-by-user')}}">Users Registered By Agents</a></li>
+                            <li><a href="{{route('report.user-registered-by-user')}}">Users Registered By Agents</a>
+                            </li>
                         @endcan
 
+                        @can('View wallet payables')
+                            <li><a href="{{route('report.walletPayablesReport')}}">Wallet Payables Report</a></li>
+                        @endcan
                     </ul>
                 </li>
             @endif
@@ -827,7 +831,8 @@ $url = url()->current();
                         @endcan
 
                         @can('Report nrb reconciliation')
-                            <li><a href="{{ route('report.nrb.annex.reconciliation') }}">NRB Reconciliation Report</a></li>
+                            <li><a href="{{ route('report.nrb.annex.reconciliation') }}">NRB Reconciliation Report</a>
+                            </li>
                         @endcan
 
                         @can('Agent details view')

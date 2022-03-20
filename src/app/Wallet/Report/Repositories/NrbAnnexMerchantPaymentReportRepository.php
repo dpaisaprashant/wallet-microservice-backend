@@ -24,8 +24,8 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
 
     public function getSuccessfulMerchantPaymentCount()
     {
-        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM `pre_transactions` WHERE status='SUCCESS' AND id NOT IN (SELECT id FROM  `pre_transactions`
-                                                                               WHERE (microservice_type='KHALTI' OR microservice_type='NTC' OR vendor='PAYPOINT') AND
+        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM `pre_transactions` WHERE status='SUCCESS' AND (microservice_type='KHALTI' OR microservice_type='NTC' OR vendor='PAYPOINT' OR vendor='CELLPAY' OR vendor='NEA') AND id NOT IN (SELECT id FROM  `pre_transactions`
+                                                                               WHERE (microservice_type='KHALTI' OR microservice_type='NTC' OR vendor='PAYPOINT' OR vendor='CELLPAY' OR vendor='NEA') AND
                                                                             ((service_type='NTC_PREPAID')
                                                                                 OR
                                                                              (service_type='NTC_POSTPAID')
@@ -74,8 +74,8 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
 
     public function getFailedMerchantPaymentCount()
     {
-        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM `pre_transactions` WHERE status!='SUCCESS' AND id NOT IN (SELECT id FROM  `pre_transactions`
-                                                                               WHERE (microservice_type='KHALTI' OR microservice_type='NTC' OR vendor='PAYPOINT') AND
+        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM `pre_transactions` WHERE status!='SUCCESS' AND (microservice_type='KHALTI' OR microservice_type='NTC' OR vendor='PAYPOINT' OR vendor='CELLPAY' OR vendor='NEA') AND id NOT IN (SELECT id FROM  `pre_transactions`
+                                                                               WHERE (microservice_type='KHALTI' OR microservice_type='NTC' OR vendor='PAYPOINT' OR vendor='CELLPAY' OR vendor='NEA') AND
                                                                             ((service_type='NTC_PREPAID')
                                                                                 OR
                                                                              (service_type='NTC_POSTPAID')

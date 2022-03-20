@@ -513,6 +513,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'View ticket sale report',
             'View load test fund report',
 
+            'View wallet payables',
+
             ];
 
         //get users having all permissions

@@ -22,7 +22,8 @@ class PreTransactionFilters extends FiltersAbstract
         'to_preTransaction_amount' => ToPreTransactionAmountFilter::class,
         'from' => PreTransactionDateFrom::class,
         'to' => PreTransactionDateTo::class,
-        'sort'=>SortPreTransaction::class,
+//        'sort'=>SortPreTransaction::class,
+        'wallet_payables' => WalletPayablesFilter::class,
     ];
 
 

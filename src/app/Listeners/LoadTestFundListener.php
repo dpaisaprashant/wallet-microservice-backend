@@ -175,7 +175,7 @@ class LoadTestFundListener
                             "after_bonus_balance" => $cashbackPullPreTransaction['after_bonus_balance'],
                             "description" => "Cashback pull for transaction: {$preTransactionId}",
                             'created_at' => Carbon::now()->addSecond()->format("Y-m-d H:i:s.u"),
-                            'updated_at' => Carbon::now()->addSecond()->format("yY-m-d H:i:s.u")
+                            'updated_at' => Carbon::now()->addSecond()->format("Y-m-d H:i:s.u")
                         ]);
 
                         $cashbackPull->transactions()->create([
@@ -211,6 +211,12 @@ class LoadTestFundListener
                         if ($amountToDeductFromMainBalance > 0) {
                             //DB::commit();
                             event(new UserWalletPaymentEvent($event->transaction->user_id, $amountToDeductFromMainBalance));
+                        }
+
+                        if ($amountToDeductFromMainBalance > 0 || $amountToDeductFromBonusBalance > 0) {
+                            $cashbackPullPreTransaction->update([
+                                "balance_status" => PreTransaction::BALANCE_STATUS_DEDUCTED
+                            ]);
                         }
 
                     }

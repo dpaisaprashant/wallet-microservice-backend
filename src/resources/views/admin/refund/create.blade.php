@@ -69,7 +69,7 @@
 
                             <div class="hr-line-dashed"></div>
 
-                            <div class="form-group row">
+                            {{--<div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Pull Cashback</label>
                                 <div class="col-sm-10 i-checks">
                                     <label style="">
@@ -77,7 +77,7 @@
                                         <i></i> <span>&nbsp;Check to pull cashback after refund</span>
                                     </label>
                                 </div>
-                            </div>
+                            </div>--}}
 
                             <div class="hr-line-dashed"></div>
 

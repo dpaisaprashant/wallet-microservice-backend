@@ -6,7 +6,7 @@ use App\Models\TransactionEvent;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Log;
 
-class TransactionEventResource extends JsonResource
+class NonRealTimeBankTransferResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -34,19 +34,17 @@ class TransactionEventResource extends JsonResource
         }
 
         return [
-            'USER TRANSACTION ID' => $this->uid ?? '---',
-            'USER' => optional($this->user)->name,
-            'USER CONTACT NO.' => optional($this->user)->mobile_no,
-            'USER EMAIL' => optional($this->user)->email,
-            'ACCOUNT' => $this->account,
-            'AMOUNT' => (double) $this->amount,
-            'FEE' => (double) $this->fee ?? 0,
-            'VENDOR' => $this->vendor,
-            'SERVICE TYPE' => $this->service_type,
-            'TRANSACTION ID' => $transactionId,
-            'DESCRIPTION' => $this->description,
-            'CASHBACK AMOUNT' => $this->cashback_amount,
-            'CREATED AT' => (string) $this->created_at
+            'Admin' => $this->backendNonRealTime->admin->name ?? "---",
+            'Transaction ID' => $this->transaction_id,
+            'Amount' => $this->amount,
+            'Transaction Fee' => $this->transaction_fee,
+            'Debit Response ID' => $this->debit_response_id,
+            'Credit Response ID' => $this->credit_response_id,
+            'Debit Status' => $this->debit_status,
+            'Credit Status' => $this->credit_status,
+            'Debit Response Message' => $this->debit_response_message,
+            'Credit Response Message' => $this->credit_response_message,
+            'Vendor' => $this->vendor,
         ];
     }
 }

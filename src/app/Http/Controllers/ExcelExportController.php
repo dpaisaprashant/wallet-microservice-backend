@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\AdminAlteredAgentResource;
+use App\Http\Resources\AdminUpdateKycResource;
 use App\Http\Resources\AgentDetailResource;
+use App\Http\Resources\AgentResource;
+use App\Http\Resources\AgentTypeHierarchyCashbackResource;
 use App\Http\Resources\AllUserAuditResource;
 use App\Http\Resources\AllUserAuditResourceCollection;
 use App\Http\Resources\BfiExecutePaymentReportResource;
@@ -11,6 +15,8 @@ use App\Http\Resources\CellPayTransactionResource;
 use App\Http\Resources\ClearanceResource;
 use App\Http\Resources\ClearanceTransactionResource;
 use App\Http\Resources\DisputeResource;
+use App\Http\Resources\DPaisaAudit\NCHLBankTransferAuditTrailResource;
+use App\Http\Resources\DPaisaAudit\NchlLoadTransactionAuditTrailResource;
 use App\Http\Resources\DPaisaAudit\NPayResource;
 use App\Http\Resources\DPaisaAudit\PayPointResource;
 use App\Http\Resources\FundRequestResource;
@@ -18,10 +24,15 @@ use App\Http\Resources\FundTransferResource;
 use App\Http\Resources\KhaltiResource;
 use App\Http\Resources\LinkedAccountsResource;
 use App\Http\Resources\LoadTestFundReportResource;
+use App\Http\Resources\MerchantResource;
 use App\Http\Resources\NchlAggregatedTransactionResource;
 use App\Http\Resources\NchlBankTransferResource;
+use App\Http\Resources\NchlLoadTransactionResource;
 use App\Http\Resources\NICAsiaCyberSourceLoadTransactionResource;
+use App\Http\Resources\NonRealTimeBankTransferResource;
 use App\Http\Resources\PayPointReportResource;
+use App\Http\Resources\PreTransactionResource;
+use App\Http\Resources\RegisterUsingReferralResource;
 use App\Http\Resources\SparrowSMSResource;
 use App\Http\Resources\TicketSalesReportResource;
 use App\Http\Resources\TransactionEventResource;
@@ -35,7 +46,12 @@ use App\Http\Resources\UserLoadTransactionResource;
 use App\Http\Resources\UserRegisteredByUserResource;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\UserToBfiReportResource;
+use App\Http\Resources\WalletTransactionTypeResource;
+use App\Models\AdminAlteredAgent;
+use App\Models\AdminUpdateKyc;
 use App\Models\AdminUserKYC;
+use App\Models\Architecture\AgentTypeHierarchyCashback;
+use App\Models\Architecture\WalletTransactionType;
 use App\Models\BfiExecutePayment;
 use App\Models\BfiToUserFundTransfer;
 use App\Models\CellPayUserTransaction;
@@ -46,9 +62,13 @@ use App\Models\FundRequest;
 use App\Models\KhaltiUserTransaction;
 use App\Models\LinkedAccounts;
 use App\Models\LoadTestFund;
+use App\Models\MerchantTransaction;
+use App\Models\Microservice\PreTransaction;
 use App\Models\NchlAggregatedPayment;
 use App\Models\NchlBankTransfer;
+use App\Models\NchlLoadTransaction;
 use App\Models\NICAsiaCyberSourceLoadTransaction;
+use App\Models\NonRealTimeBankTransfer;
 use App\Models\NpsLoadTransaction;
 use App\Models\SparrowSMS;
 use App\Models\TicketSale;
@@ -62,20 +82,29 @@ use App\Models\UserLoginHistory;
 use App\Models\UserRegisteredByUser;
 use App\Models\UserToBfiFundTransfer;
 use App\Models\UserToUserFundTransfer;
+use App\Traits\CollectionPaginate;
 use App\Wallet\AuditTrail\AuditTrial;
 use App\Wallet\AuditTrail\Behaviors\BAll;
 use App\Wallet\Commission\Models\Commission;
 use App\Wallet\DPaisaAuditTrail\AllAuditTrail;
+use App\Wallet\DPaisaAuditTrail\NchlBankTransferAuditTrail;
+use App\Wallet\DPaisaAuditTrail\NchlLoadTransactionAuditTrail;
 use App\Wallet\DPaisaAuditTrail\NPayAuditTrail;
 use App\Wallet\DPaisaAuditTrail\PPAuditTrail;
 use App\Wallet\Excel\ExportExcelHelper;
 use App\Wallet\Report\Repositories\NchlLoadReportRepository;
+use App\Wallet\Report\Repositories\SubscriberReportRepository;
+use App\Wallet\Report\Traits\SubscriberReportGenerator;
 use App\Wallet\TransactionEvent\Repository\NPayReportRepository;
 use App\Wallet\TransactionEvent\Repository\PayPointReportRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ExcelExportController extends Controller
 {
+
+    use SubscriberReportGenerator;
+
     public function completeTransactions(Request $request)
     {
         $export = new ExportExcelHelper();
@@ -107,15 +136,158 @@ class ExcelExportController extends Controller
 
         return $export->exportExcel();
     }
-
+//user Excels start
     public function users(Request $request)
     {
+        $request->merge(['user_only'=>true]);
         $export = new ExportExcelHelper();
         $export->setName('users')
             ->setGeneratorModel(User::class)
             ->setRequest($request)
             ->setResource(UserResource::class);
 
+        return $export->exportExcel();
+    }
+
+    public function kycRejectedUsers(Request $request){
+        $request->merge(['kyc_status'=>"unverified",'user_only'=>true]);
+        $export = new ExportExcelHelper();
+        $export->setName('kyc Rejected Users')
+            ->setGeneratorModel(User::class)
+            ->setRequest($request)
+            ->setResource(UserResource::class);
+
+        return $export->exportExcel();
+    }
+
+    public function kycAcceptedUsers(Request $request){
+        $request->merge(['kyc_status'=>"verified",'user_only'=>true]);
+        $export = new ExportExcelHelper();
+        $export->setName('kyc Accepted Users')
+            ->setGeneratorModel(User::class)
+            ->setRequest($request)
+            ->setResource(UserResource::class);
+
+        return $export->exportExcel();
+    }
+    public function kycPendingUsers(Request $request){
+        $request->merge(['kyc_status'=>"pending",'user_only'=>true]);
+        $export = new ExportExcelHelper();
+        $export->setName('kyc Pending Users')
+            ->setGeneratorModel(User::class)
+            ->setRequest($request)
+            ->setResource(UserResource::class);
+
+        return $export->exportExcel();
+    }
+
+    public function kycNotFilledUsers(Request $request){
+        $request->merge(['kyc_status'=>"notfilled",'user_only'=>true]);
+        $export = new ExportExcelHelper();
+        $export->setName('kyc Not Filled Users')
+            ->setGeneratorModel(User::class)
+            ->setRequest($request)
+            ->setResource(UserResource::class);
+
+        return $export->exportExcel();
+    }
+
+    public function deactivatedUsers(Request $request){
+        $request->merge(['user_only'=>true,'user_status'=>"deactivated"]);
+        $export = new ExportExcelHelper();
+        $export->setName('Deactivated Users')
+            ->setGeneratorModel(User::class)
+            ->setRequest($request)
+            ->setResource(UserResource::class);
+
+        return $export->exportExcel();
+    }
+    //user Excels ends
+
+//    merchants Excel
+    public function merchants(Request $request)
+    {
+        $request->merge(['merchant_only'=>true]);
+        $export = new ExportExcelHelper();
+        $export->setName('Merchants')
+            ->setGeneratorModel(User::class)
+            ->setRequest($request)
+            ->setResource(MerchantResource::class);
+
+        return $export->exportExcel();
+    }
+
+    public function kycUnverifiedMerchants(Request $request)
+    {
+        $request->merge(['kyc_status'=>"unverified",'merchant_only'=>true]);
+        $export = new ExportExcelHelper();
+        $export->setName('Kyc Unverified Merchants')
+            ->setGeneratorModel(User::class)
+            ->setRequest($request)
+            ->setResource(MerchantResource::class);
+
+        return $export->exportExcel();
+    }
+
+    public function kycAcceptedMerchants(Request $request)
+    {
+        $request->merge(['kyc_status'=>"verified",'merchant_only'=>true]);
+        $export = new ExportExcelHelper();
+        $export->setName('Kyc Accepted Merchants')
+            ->setGeneratorModel(User::class)
+            ->setRequest($request)
+            ->setResource(MerchantResource::class);
+
+        return $export->exportExcel();
+    }
+
+    public function kycNotFilledMerchants(Request $request)
+    {
+        $request->merge(['kyc_status'=>"notfilled",'merchant_only'=>true]);
+        $export = new ExportExcelHelper();
+        $export->setName('Kyc Not Filled Merchants')
+            ->setGeneratorModel(User::class)
+            ->setRequest($request)
+            ->setResource(MerchantResource::class);
+
+        return $export->exportExcel();
+    }
+
+    //merchant Excels ends
+
+    //admin updated Kyc
+    public function adminUpdatedKyc(Request $request){
+        $export = new ExportExcelHelper();
+        $export->setName('Admin Updated KYC')
+            ->setGeneratorModel(AdminUpdateKyc::class)
+            ->setRequest($request)
+            ->setResource(AdminUpdateKycResource::class);
+
+        return $export->exportExcel();
+    }
+
+    // wallet Transaction Types Excel
+
+    public function walletTransactionTypes(Request $request, $vendorName){
+        $request->merge(['vendorName'=>$vendorName]);
+        $export = new ExportExcelHelper();
+        $export->setName('Wallet Transaction type '.$vendorName)
+            ->setGeneratorModel(WalletTransactionType::class)
+            ->setRequest($request)
+            ->setResource(WalletTransactionTypeResource::class);
+
+        return $export->exportExcel();
+    }
+
+    //agents
+
+    public function agent(Request $request){
+        $request->merge(['user_type' => 'agent']);
+        $export = new ExportExcelHelper();
+        $export->setName('agents')
+            ->setGeneratorModel(User::class)
+            ->setRequest($request)
+            ->setResource(AgentResource::class);
         return $export->exportExcel();
     }
 
@@ -126,6 +298,36 @@ class ExcelExportController extends Controller
             ->setGeneratorModel(User::class)
             ->setRequest($request)
             ->setResource(AgentDetailResource::class);
+        return $export->exportExcel();
+    }
+
+    public function adminAlteredAgents(Request $request){
+        $export = new ExportExcelHelper();
+        $export->setName('Admin Altered Agents')
+            ->setGeneratorModel(AdminAlteredAgent::class)
+            ->setRequest($request)
+            ->setResource(AdminAlteredAgentResource::class);
+        return $export->exportExcel();
+    }
+
+    //agent type hierarchy Cashback
+    public function agentTypeHierarchyCashback(Request $request){
+        $export = new ExportExcelHelper();
+        $export->setName('Agent Type Hierarchy Cashback')
+            ->setGeneratorModel(AgentTypeHierarchyCashback::class)
+            ->setRequest($request)
+            ->setResource(AgentTypeHierarchyCashbackResource::class);
+        return $export->exportExcel();
+    }
+
+//    loadTestFunds
+
+    public function loadTestFund(Request $request){
+        $export = new ExportExcelHelper();
+        $export->setName('Load Test Fund')
+            ->setGeneratorModel(LoadTestFund::class)
+            ->setRequest($request)
+            ->setResource(AgentTypeHierarchyCashbackResource::class);
         return $export->exportExcel();
     }
 
@@ -349,6 +551,16 @@ class ExcelExportController extends Controller
         return $export->exportExcel();
     }
 
+    public function allMerchantEvents(Request $request){
+        $export = new ExportExcelHelper();
+        $export->setName('All Merchant Events')
+            ->setGeneratorModel(SparrowSMS::class)
+            ->setRequest($request)
+            ->setResource(SparrowSMSResource::class);
+
+        return $export->exportExcel();
+    }
+
     private function transformAuditData($collection, $userId)
     {
         return $collection->transform(function ($value, $key) use ($userId) {
@@ -439,6 +651,40 @@ class ExcelExportController extends Controller
         return $export->exportExcelCollection();
     }
 
+    public function nchlBankTransferAuditTrail(Request $request)
+    {
+        $nchlBankTransfer = new NchlBankTransferAuditTrail();
+        $collection = $nchlBankTransfer->createTrail();
+
+        $collection->transform(function ($value) {
+            return new NCHLBankTransferAuditTrailResource($value);
+        });
+
+        $export = new ExportExcelHelper();
+        $export->setName('NCHL Bank Transfer Audit Trail')
+            ->setMixGeneratorModels($collection->filter())
+            ->setRequest($request);
+
+        return $export->exportExcelCollection();
+    }
+
+    public function nchlLoadTransactionAuditTrail(Request $request)
+    {
+        $nchlLoad = new NchlLoadTransactionAuditTrail();
+        $collection = $nchlLoad->createTrail();
+
+        $collection->transform(function ($value) {
+            return new NchlLoadTransactionAuditTrailResource($value);
+        });
+
+        $export = new ExportExcelHelper();
+        $export->setName('NCHL Load Transaction Audit Trail')
+            ->setMixGeneratorModels($collection->filter())
+            ->setRequest($request);
+
+        return $export->exportExcelCollection();
+    }
+
     public function dpaisaNPayAuditTrail(Request $request)
     {
         $auditTrail = new NPayAuditTrail();
@@ -493,6 +739,7 @@ class ExcelExportController extends Controller
 
         return $export->exportExcelCollection();
     }
+
 
     public function nPayReport(Request $request, NPayReportRepository $repo)
     {
@@ -563,6 +810,58 @@ class ExcelExportController extends Controller
             ->setGeneratorModel(UserRegisteredByUser::class)
             ->setRequest($request)
             ->setResource(UserRegisteredByUserResource::class);
+        return $export->exportExcel();
+    }
+
+    //pre Transaction Excel
+    public function preTransaction(Request $request){
+        $export = new ExportExcelHelper();
+        $export->setName('Pre Transactions')
+            ->setGeneratorModel(PreTransaction::class)
+            ->setRequest($request)
+            ->setResource(PreTransactionResource::class);
+        return $export->exportExcel();
+    }
+
+    // nchl load transaction
+    public function nchlLoadTransaction(Request $request){
+        $export = new ExportExcelHelper();
+        $export->setName('Nchl Load Transactions')
+            ->setGeneratorModel(NchlLoadTransaction::class)
+            ->setRequest($request)
+            ->setResource(NchlLoadTransactionResource::class);
+        return $export->exportExcel();
+    }
+
+    // merchant Transactions
+    public function merchantTransaction(Request $request){
+        $export = new ExportExcelHelper();
+        $export->setName('Merchant Transactions')
+            ->setGeneratorModel(MerchantTransaction::class)
+            ->setRequest($request)
+            ->setResource(NchlLoadTransactionResource::class);
+        return $export->exportExcel();
+    }
+
+    // non real time bank transfer
+    public function nonRealTimeBankTransfer(Request $request){
+        $export = new ExportExcelHelper();
+        $export->setName('Non Real Time Bank Transfer')
+            ->setGeneratorModel(NonRealTimeBankTransfer::class)
+            ->setRequest($request)
+            ->setResource(NonRealTimeBankTransferResource::class);
+        return $export->exportExcel();
+    }
+
+    //registerUsingReferralUserReport
+
+    public function registerUsingReferral(Request $request){
+        $request->merge(['registered_using_referral'=>true]);
+        $export = new ExportExcelHelper();
+        $export->setName('Register Using Referral')
+            ->setGeneratorModel(User::class)
+            ->setRequest($request)
+            ->setResource(RegisterUsingReferralResource::class);
         return $export->exportExcel();
     }
 

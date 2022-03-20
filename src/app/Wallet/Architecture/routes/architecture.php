@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExcelExportController;
 use App\Wallet\Architecture\Http\Controllers\WalletTransactionCashbackController;
 use App\Wallet\Architecture\Http\Controllers\WalletTransactionCommissionController;
 use App\Wallet\Architecture\Http\Controllers\WalletTransactionTypeController;
@@ -17,6 +18,11 @@ use App\Wallet\Architecture\Http\Controllers\WalletBonusController;
 
 Route::group(['prefix' => 'admin/architecture', 'middleware' => ['web','auth']], function () {
     Route::get('/vendor-transactions/{vendorName}', [WalletTransactionTypeController::class, 'vendorTransactions'])->name('architecture.vendor.transaction')->middleware('permission:Architecture vendor transaction');
+
+    // Export to Excel
+//            Route::get('/excel/complete-transaction', 'ExcelExportController@completeTransactions')->name('transaction.complete.excel');
+    Route::get('/excel/walletTransactionType/{vendorName}',[ExcelExportController::class,'walletTransactionTypes'])->name('architecture.excel.vendor.transaction');
+    Route::get('/excel/agentTypeHierarchyCashback',[ExcelExportController::class,'agentTypeHierarchyCashback'])->name('architecture.agentTypeHierarchyCashback.excel');
 
     //GET USER TYPE LISTS
     Route::post('/get-user-type-lists', [WalletTransactionTypeController::class, 'getUserTransactionTypeList'])->name('architecture.userType.list');

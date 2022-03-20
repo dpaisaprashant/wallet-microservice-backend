@@ -42,6 +42,11 @@ class UserFilters extends FiltersAbstract
         'from_kyc_date' => FromKYCDateFilter::class,
         'to_kyc_date' => ToKYCDateFilter::class,
         'district'=> DistrictFilter::class,
+        'user_only'=>UserOnlyFilter::class,
+        'merchant_only'=>MerchantOnlyFilter::class,
+        'user_status' => UserStatusFilter::class,
+        'locked_users' => LockedUsersFilter::class,
+        'registered_using_referral' => RegisterUsingReferralFilter::class,
     ];
 
 

@@ -20,7 +20,7 @@
     </div>
     <div class="wrapper wrapper-content animated fadeInRight">
 
-        @include('admin.userFilter.user-filter',['title' => "User"])
+        @include('admin.userFilter.user-filter',['title' => "User" ,'excelRoute' => "kyc.rejected.user.excel"])
 
         <div class="row">
             <div class="col-lg-12">

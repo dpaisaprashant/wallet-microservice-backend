@@ -100,6 +100,12 @@
                                     </div>
 
                                     <div>
+                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
+                                                type="submit" style="margin-right: 10px;"
+                                                formaction="{{route('architecture.excel.vendor.transaction',$vendorName)}}"><strong>Excel</strong></button>
+                                    </div>
+
+                                    <div>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
                                 </form>
@@ -157,7 +163,7 @@
                                                 @else
                                                     <span class="badge badge-success"> {{ $transactionType->special1 }}</span>
                                                 @endif
-                                                @endif
+                                            @endif
                                         </td>
                                         @if($vendorName == "BFI")
                                             @if($transactionType->special2 == null)

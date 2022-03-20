@@ -29,6 +29,7 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web', 'auth']], func
     Route::match(['get', 'post'], 'customer-activity-report', [WalletReportController::class, 'customerActivityReport'])->name('report.clientActivity');
 
     Route::match(['get', 'post'], 'nchl-load-report', [WalletReportController::class, 'nchlLoadReport'])->name('report.nchl.load')->middleware('permission:Report nchl load');
+    Route::get('nchl-load-report/excel',[ExcelExportController::class,'nchlLoadReport'])->name('excel.nchl-load-report')->middleware('permission:Report nchl load');
 
     Route::get('subscriber-daily-report', [SubscriberReportController::class, 'subscriberDailyReport'])->name('report.subscriber')->middleware('permission:Report subscriber daily');
 

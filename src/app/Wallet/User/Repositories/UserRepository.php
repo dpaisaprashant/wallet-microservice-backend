@@ -125,7 +125,7 @@ class UserRepository
 
     public function paginatedDeactivateUsers()
     {
-        return User::with('wallet')->whereStatus(0)->latest()->filter($this->request)->paginate($this->length);
+        return User::with('wallet')->whereHas('userType')->whereStatus(0)->latest()->filter($this->request)->paginate($this->length);
     }
 
     public function bankAccounts($id)

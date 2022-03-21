@@ -265,7 +265,7 @@
                                         <td>{{$user->kyc->ward_no ?? null}}</td>
                                         <td>
                                             @if($user->wallet)
-                                                Rs. {{ optional($user->walllet)->balance + optional($user->wallet)->bonus_balance }}
+                                                Rs. {{ optional($user->wallet)->balance + optional($user->wallet)->bonus_balance }}
                                             @else
                                                 Rs. 00
                                             @endif

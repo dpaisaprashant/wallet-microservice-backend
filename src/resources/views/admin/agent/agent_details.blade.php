@@ -162,6 +162,8 @@
                                     <th>Identity Number</th>
                                     <th>Identity Issue Date</th>
                                     <th>Identity Issue From</th>
+                                    <th>Ward No</th>
+                                    <th>Current Balance</th>
                                     <th>Agent Created At</th>
                                     {{--<th>Total <br>Payment Amount</th>
                                     <th>Total <br>Loaded Amount</th>--}}
@@ -258,6 +260,10 @@
                                         <td>{{$user->kyc->id_no ?? null}}</td>
                                         <td>{{$user->kyc->c_issued_date ?? null}}</td>
                                         <td>{{$user->kyc->c_issued_from ?? null}}</td>
+                                        <td>{{$user->kyc->ward_no ?? null}}</td>
+                                        <td>
+                                            Rs. {{ $user->walllet->balance + $user->wallet->bonus_balance }}
+                                        </td>
                                         <td>{{ \Carbon\Carbon::parse($user->agent->created_at)->format('F d Y') }}</td>
 
                                         <td class="center">

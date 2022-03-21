@@ -13,7 +13,7 @@ class AgentCodeSeeder extends Seeder
         $agentTypes = AgentType::with('agents')->get();
         foreach ($agentTypes as $agentType) {
             foreach ($agentType->agents as $agent) {
-                $maxCodeForeAgentForAgentType = $agent->map(function ($value) {
+                $maxCodeForeAgentForAgentType = $agentType->agents->map(function ($value) {
                     $value['agent_code_num'] = 0;
                     if ($value['agent_code']) {
                         $value['agent_code_num'] = substr($value['agent_code'], -5);
@@ -27,7 +27,7 @@ class AgentCodeSeeder extends Seeder
                 $codeNum = sprintf('%05d',$maxCodeForeAgentForAgentType);
                 $code = $walletCode . $agentType->type_code . $codeNum;
 
-                $agentType->agents->update(["agent_code" => $code]);
+                $agent->update(["agent_code" => $code]);
             }
 
         }

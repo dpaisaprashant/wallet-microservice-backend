@@ -264,7 +264,11 @@
                                         <td>{{$user->kyc->municipality ?? null}}</td>
                                         <td>{{$user->kyc->ward_no ?? null}}</td>
                                         <td>
-                                            Rs. {{ $user->walllet->balance + $user->wallet->bonus_balance }}
+                                            @if($user->wallet)
+                                                Rs. {{ $user->walllet->balance + $user->wallet->bonus_balance }}
+                                            @else
+                                                Rs. 00
+                                            @endif
                                         </td>
                                         <td>{{ \Carbon\Carbon::parse($user->agent->created_at)->format('F d Y') }}</td>
 

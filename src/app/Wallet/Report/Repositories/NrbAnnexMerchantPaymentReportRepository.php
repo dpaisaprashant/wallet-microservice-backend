@@ -22,6 +22,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
         $this->toDate = date('Y-m-d', strtotime(str_replace(',', ' ', $request->to)));
     }
 
+
     public function getSuccessfulMerchantPaymentCount()
     {
         $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM `pre_transactions` WHERE status='SUCCESS' AND (microservice_type='KHALTI' OR microservice_type='NTC' OR vendor='PAYPOINT' OR vendor='CELLPAY' OR vendor='NEA') AND id NOT IN (SELECT id FROM  `pre_transactions`

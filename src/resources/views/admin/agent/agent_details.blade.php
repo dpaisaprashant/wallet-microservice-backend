@@ -154,7 +154,7 @@
                                     {{--<th>Business Doc</th>--}}
                                     {{--<th>Email</th>--}}
                                     <th>Agent status</th>
-                                    <th>Reference Code</th>
+                                    <th>Agent Code</th>
                                     {{--<th>Wallet Balance</th>--}}
                                     <th>Use parent agent balance</th>
                                     <th>Date of Birth</th>
@@ -224,7 +224,7 @@
                                             @include('admin.agent.status', ['agent' => $user->agent])
                                         </td>
                                         <td>
-                                            {{ $user->agent->reference_code }}
+                                            {{ $user->agent->agent_code }}
                                         </td>
                                         {{--<td>Rs. {{ $user->wallet->balance }}</td>--}}
                                         <td>

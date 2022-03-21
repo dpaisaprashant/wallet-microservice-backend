@@ -162,6 +162,7 @@
                                     <th>Identity Number</th>
                                     <th>Identity Issue Date</th>
                                     <th>Identity Issue From</th>
+                                    <th>Municipality</th>
                                     <th>Ward No</th>
                                     <th>Current Balance</th>
                                     <th>Agent Created At</th>
@@ -260,6 +261,7 @@
                                         <td>{{$user->kyc->id_no ?? null}}</td>
                                         <td>{{$user->kyc->c_issued_date ?? null}}</td>
                                         <td>{{$user->kyc->c_issued_from ?? null}}</td>
+                                        <td>{{$user->kyc->municipality ?? null}}</td>
                                         <td>{{$user->kyc->ward_no ?? null}}</td>
                                         <td>
                                             Rs. {{ $user->walllet->balance + $user->wallet->bonus_balance }}

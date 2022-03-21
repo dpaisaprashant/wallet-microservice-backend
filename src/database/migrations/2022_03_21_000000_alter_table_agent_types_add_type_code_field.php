@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 
-class AlterTableAgentTypeAddTypeCodeField extends Migration
+class AlterTableAgentTypesAddTypeCodeField extends Migration
 {
     /**
      * Run the migrations.

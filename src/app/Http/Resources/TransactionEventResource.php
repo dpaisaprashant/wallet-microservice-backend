@@ -36,9 +36,9 @@ class TransactionEventResource extends JsonResource
         return [
             'USER TRANSACTION ID' => $this->uid ?? '---',
             'PRE TRANSACTION ID' =>(string) $this->pre_transaction_id ?? '---',
-            'USER' => $this->user->name,
-            'USER CONTACT NO.' => $this->user->mobile_no,
-            'USER EMAIL' => $this->user->email,
+            'USER' => optional($this->user)->name,
+            'USER CONTACT NO.' => optional($this->user)->mobile_no,
+            'USER EMAIL' => optional($this->user)->email,
             'ACCOUNT' => $this->account,
             'AMOUNT' => (double) $this->amount,
             'FEE' => (double) $this->fee ?? 0,

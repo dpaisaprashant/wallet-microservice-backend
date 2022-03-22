@@ -151,6 +151,10 @@
                                                     CASH IN<br>
                                                     <hr>
                                                     CASH OUT
+                                                    <hr>
+                                                    Merchant Payment<br>
+                                                    <hr>
+                                                    Government Payment<br>
                                                 </td>
                                                 <td>
                                                     {{$nrbAgentReport['totalTopUpCount']}}<br>
@@ -162,6 +166,10 @@
                                                     {{$nrbAgentReport['totalCashInCount']}}<br>
                                                     <hr>
                                                     {{$nrbAgentReport['totalCashOutCount']}}
+                                                    <hr>
+                                                    {{$nrbAgentReport['totalMerchantPaymentCount']}}
+                                                    <hr>
+                                                    {{$nrbAgentReport['totalGovernmentPaymentCount'] ?? 0}}
                                                 </td>
                                                 <td>
                                                     {{$nrbAgentReport['totalTopUpAmount']}}<br>
@@ -172,7 +180,11 @@
                                                     <hr>
                                                     {{$nrbAgentReport['totalCashInAmount']}}<br>
                                                     <hr>
-                                                    {{$nrbAgentReport['totalCashOutAmount'] ?? 0}}
+                                                    {{$nrbAgentReport['totalCashOutAmount'] ?? 0}} <br>
+                                                    <hr>
+                                                    {{$nrbAgentReport['totalMerchantPaymentAmount'] ?? 0}} <br>
+                                                    <hr>
+                                                    {{$nrbAgentReport['totalGovernmentPaymentAmount'] ?? 0}}<br>
                                                 </td>
                                             </tr>
                                         @endforeach

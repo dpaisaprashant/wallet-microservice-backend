@@ -72,7 +72,7 @@ class AgentRepository
 
     private function wallerBalanceSorted()
     {
-        $unsortedUsers = $this->user->with('agent', 'wallet', 'userTransactionEvents')->filter($this->request)->get();
+        $unsortedUsers = $this->user->with('agent', 'wallet', 'userTransactionEvents', 'kyc')->filter($this->request)->get();
 
         $users = $unsortedUsers->map(function ($value, $key) {
             $value['balance'] = $value->wallet->balance;
@@ -84,7 +84,7 @@ class AgentRepository
 
     private function transactionPaymentSorted()
     {
-        $unsortedUsers = $this->user->with('agent', 'wallet', 'userTransactionEvents')->filter($this->request)->get();
+        $unsortedUsers = $this->user->with('agent', 'wallet', 'userTransactionEvents', 'kyc')->filter($this->request)->get();
 
         $users = $unsortedUsers->map(function (User $value, $key) {
             $value['amount_sum'] = $value->totalTransactionPaymentAmount();
@@ -96,7 +96,7 @@ class AgentRepository
 
     private function transactionLoadSorted()
     {
-        $unsortedUsers = $this->user->with('agent', 'wallet', 'userTransactionEvents')->filter($this->request)->get();
+        $unsortedUsers = $this->user->with('agent', 'wallet', 'userTransactionEvents', 'kyc')->filter($this->request)->get();
 
         $users = $unsortedUsers->map(function (User $value, $key) {
             $value['amount_sum'] = (float)$value->totalLoadFundAmount();
@@ -109,12 +109,12 @@ class AgentRepository
 
     private function sortedUsers()
     {
-        return $this->user->with('agent', 'wallet', 'userTransactionEvents')->filter($this->request)->paginate($this->length);
+        return $this->user->with('agent', 'wallet', 'userTransactionEvents', 'kyc')->filter($this->request)->paginate($this->length);
     }
 
     private function latestUsers($pagination_length = null)
     {
-        return $this->user->with('agent', 'wallet', 'userTransactionEvents')->latest()->filter($this->request)->paginate($pagination_length ?? $this->length);
+        return $this->user->with('agent', 'wallet', 'userTransactionEvents', 'kyc')->latest()->filter($this->request)->paginate($pagination_length ?? $this->length);
     }
 
     public function paginatedUsers($pagination_length = null)
@@ -130,7 +130,7 @@ class AgentRepository
     }
 
     public function walletBalanceSortedDescending(){
-        $unsortedAgents = $this->user->with('agent','wallet','userTransactionEvents')->latest()->filter($this->request)->get();
+        $unsortedAgents = $this->user->with('agent','wallet','userTransactionEvents', 'kyc')->latest()->filter($this->request)->get();
         $agents = $unsortedAgents->map(function ($value,$key){
             $value['balance'] = $value->wallet->balance;
             return $value;
@@ -140,7 +140,7 @@ class AgentRepository
     }
 
     public function walletBalanceSortedAscending(){
-        $unsortedAgents = $this->user->with('agent','wallet','userTransactionEvents')->latest()->filter($this->request)->get();
+        $unsortedAgents = $this->user->with('agent','wallet','userTransactionEvents', 'kyc')->latest()->filter($this->request)->get();
         $agents = $unsortedAgents->map(function ($value,$key){
             $value['balance'] = $value->wallet->balance;
             return $value;

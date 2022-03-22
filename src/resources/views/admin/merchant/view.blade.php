@@ -430,7 +430,7 @@
 {{--                </div>--}}
 {{--            </div>--}}
 {{--        </div>--}}
-        @include('admin.userFilter.user-filter',['title' => "Merchant"])
+        @include('admin.userFilter.user-filter',['title' => "Merchant",'excelRoute'=>"merchant.excel"])
 
         @include('admin.asset.notification.notify')
         <div class="row">

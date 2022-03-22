@@ -688,21 +688,24 @@ class PhpSpreadSheetController extends Controller
                             ->setCellValue('D' . ($index+2), 'TRANSFER TO BANK')
                             ->setCellValue('D' . ($index+3), 'CASH IN')
                             ->setCellValue('D' . ($index+4), 'CASH OUT')
-                            ->setCellValue('D' . ($index+5), 'MERCHANT PAYMENT');
+                            ->setCellValue('D' . ($index+5), 'MERCHANT PAYMENT')
+                            ->setCellValue('D' . ($index+6), 'GOVERNMENT PAYMENT');
 
                 $activeSheet->setCellValue('E' . $index, $agentReport['totalTopUpCount'])
                             ->setCellValue('E' . ($index+1), $agentReport['totalTransferToWalletCount'])
                             ->setCellValue('E' . ($index+2), $agentReport['totalTransferToBankCount'])
                             ->setCellValue('E' . ($index+3), $agentReport['totalCashInCount'])
                             ->setCellValue('E' . ($index+4), $agentReport['totalCashOutCount'])
-                            ->setCellValue('E' . ($index+5), $agentReport['totalMerchantPaymentCount']);
+                            ->setCellValue('E' . ($index+5), $agentReport['totalMerchantPaymentCount'])
+                            ->setCellValue('E' . ($index+6), $agentReport['totalGovernmentPaymentCount']);
 
                 $activeSheet->setCellValue('F' . $index, $agentReport['totalTopUpAmount'])
                             ->setCellValue('F' . ($index+1), $agentReport['totalTransferToWalletAmount'])
                             ->setCellValue('F' . ($index+2), $agentReport['totalTransferToBankAmount'])
                             ->setCellValue('F' . ($index+3), $agentReport['totalCashInAmount'])
                             ->setCellValue('F' . ($index+4), $agentReport['totalCashOutAmount'])
-                            ->setCellValue('F' . ($index+5), $agentReport['totalMerchantPaymentAmount']);
+                            ->setCellValue('F' . ($index+5), $agentReport['totalMerchantPaymentAmount'])
+                            ->setCellValue('F' . ($index+6), $agentReport['totalGovernmentPaymentAmount']);
 
                 $index=$index+5;
                 $index++;

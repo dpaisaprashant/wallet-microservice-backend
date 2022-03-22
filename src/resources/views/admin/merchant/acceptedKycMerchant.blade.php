@@ -20,7 +20,7 @@
     </div>
     <div class="wrapper wrapper-content animated fadeInRight">
 
-        @include('admin.userFilter.user-filter',['title' => "Merchant"])
+        @include('admin.userFilter.user-filter',['title' => "Merchant",'excelRoute' => "kyc.accepted.merchant.excel"])
 
         <div class="row">
             <div class="col-lg-12">

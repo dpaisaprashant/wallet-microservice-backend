@@ -367,9 +367,15 @@
                             </div>
 
                             <div>
-                                <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
-                                        type="submit" style="margin-right: 10px;"
-                                        formaction="{{ route('user.excel') }}"><strong>Excel</strong></button>
+                                @isset($excelRoute)
+                                    <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
+                                            type="submit" style="margin-right: 10px;"
+                                            formaction="{{ route($excelRoute) }}"><strong>Excel</strong></button>
+                                @else
+                                    <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
+                                            type="submit" style="margin-right: 10px;"
+                                            formaction="{{ route('user.excel') }}"><strong>Excel</strong></button>
+                                @endisset
                             </div>
                             @include('admin.asset.components.clearFilterButton')
                         </form>

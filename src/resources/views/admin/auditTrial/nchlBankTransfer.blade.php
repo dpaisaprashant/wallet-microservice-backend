@@ -63,9 +63,9 @@
                                         <br>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit" formaction="{{ route('auditTrail.nchl.bankTransfer') }}"><strong>Filter</strong></button>
                                     </div>
-                                    {{--<div>
-                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs" type="submit" style="margin-right: 10px;" formaction="{{ route('npayAuditTrail.excel') }}"><strong>Excel</strong></button>
-                                    </div>--}}
+                                    <div>
+                                        <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs" type="submit" style="margin-right: 10px;" formaction="{{ route('nchl-bank-transfer-audit-trail') }}"><strong>Excel</strong></button>
+                                    </div>
                                 </form>
                             </div>
                         </div>

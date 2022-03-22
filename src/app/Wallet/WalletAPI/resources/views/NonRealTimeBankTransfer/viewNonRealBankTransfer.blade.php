@@ -80,18 +80,22 @@
                                                         <option value="all">All</option>
                                                         @foreach($admins as $key=>$admin)
                                                             @foreach($nonRealTimeBankTransferDetails as $key=>$nonRealTimeBankTransferDetail)
-                                                                @if($admin->id == $nonRealTimeBankTransferDetail->backendNonRealTime->user_id)
-                                                                    <?php
-                                                                        $adminName[] = $admin->name;
-                                                                        $result = array_unique($adminName);
-                                                                    ?>
-                                                                @endif
+                                                                @isset($nonRealTimeBankTransferDetail->backendNonRealTime->user_id)
+                                                                    @if($admin->id == $nonRealTimeBankTransferDetail->backendNonRealTime->user_id)
+                                                                        <?php
+                                                                            $adminName[] = $admin->name;
+                                                                            $result = array_unique($adminName);
+                                                                        ?>
+                                                                    @endif
+                                                                @endisset
                                                             @endforeach
                                                         @endforeach
 
-                                                        @foreach($result as $key=>$value)
-                                                            <option value="{{ $value }}">{{ $value }}</option>
-                                                        @endforeach
+                                                        @isset($result)
+                                                            @foreach($result as $key=>$value)
+                                                                <option value="{{ $value }}">{{ $value }}</option>
+                                                            @endforeach
+                                                        @endisset
                                                     @endif
                                                 </select>
                                             </div>
@@ -222,7 +226,7 @@
                                     <div>
                                         <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
                                                 type="submit" style="margin-right: 10px;"
-                                                formaction="{{ route('transaction.complete.excel') }}">
+                                                formaction="{{ route('nonRealTime.excel') }}">
                                             <strong>Excel</strong></button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
@@ -289,7 +293,7 @@
 
                                         <tr>
                                             <td>{{ $loop->index + ($nonRealTimeBankTransferDetails->perPage() * ($nonRealTimeBankTransferDetails->currentPage() - 1)) + 1 }}</td>
-                                            <td>{{ $nonRealTimeBankTransferDetail->backendNonRealTime->admin->name }}</td>
+                                            <td>{{ $nonRealTimeBankTransferDetail->backendNonRealTime->admin->name ?? "---" }}</td>
                                             <td>{{ $nonRealTimeBankTransferDetail->transaction_id }}</td>
                                             <td>{{ $nonRealTimeBankTransferDetail->amount }}</td>
                                             <td>{{ $nonRealTimeBankTransferDetail->transaction_fee }}</td>

@@ -4,6 +4,7 @@
 namespace App\Wallet\Report\Repositories;
 
 
+use App\Models\PaymentNepalLoadTransaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +22,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
         $this->fromDate = date('Y-m-d', strtotime(str_replace(',', ' ', $request->from)));
         $this->toDate = date('Y-m-d', strtotime(str_replace(',', ' ', $request->to)));
     }
+
 
     public function getSuccessfulMerchantPaymentCount()
     {
@@ -187,7 +189,8 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
     {
         $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
                                                                             WHERE
-                                                                            service_type='NCHL_AGGREGATED_PAYMENTS'  AND status = 'SUCCESS'
+                                                                            (microservice_type='NCHL' AND (service_type='' OR service_type='NCHL_AGGREGATED_PAYMENTS'))  AND status = 'SUCCESS'
+
                                                                             AND
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
@@ -201,7 +204,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
     {
         $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
                                                                             WHERE
-                                                                            service_type='NCHL_AGGREGATED_PAYMENTS'  AND status != 'SUCCESS'
+                                                                            (microservice_type='NCHL' AND (service_type='' OR service_type='NCHL_AGGREGATED_PAYMENTS'))  AND status != 'SUCCESS'
                                                                             AND
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
@@ -334,7 +337,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
     {
         $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
                                                                             WHERE
-                                                                           ((service_type='NPS_LOAD'  AND status != 'SUCCESS')
+                                                                            ((service_type='NPS_LOAD'  AND status != 'SUCCESS')
                                                                             OR
                                                                             (service_type='NCHL_LOAD'  AND status != 'SUCCESS')
                                                                             OR
@@ -373,6 +376,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
 
     public function getFailedCashOutCount()
     {
+//user to agent
 //        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
 //                                                                            WHERE
 //                                                                            service_type='BANK_TRANSFER'  AND status != 'SUCCESS'

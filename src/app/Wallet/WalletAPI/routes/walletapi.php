@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExcelExportController;
 use Illuminate\Support\Facades\Route;
 use App\Wallet\WalletAPI\Http\Controllers\NchlControllers\NCHLController;
 use App\Wallet\WalletAPI\Http\Controllers\PaypointController\PaypointController;
@@ -29,6 +30,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web','auth']], function () 
     Route::post('/process-non-real-time-bank-transfer',[NonRealTimeBankTransferController::class,'processBankRequest'])->name('nonRealTime.process');
     Route::get('/view-non-real-time-bank-transfer',[NonRealTimeBankTransferController::class,'viewNonBankTransferRequest'])->name('nonRealTime.view');
     Route::post('/check-non-real-time-bank-transfer-status/{transactionId}',[NonRealTimeBankTransferController::class,'checkStatus'])->name('nonRealTime.check');
+
+    //Excel
+    Route::get('/non-real-time-bank-transfer/excel',[ExcelExportController::class,'nonRealTimeBankTransfer'])->name('nonRealTime.excel');
 
 
 });

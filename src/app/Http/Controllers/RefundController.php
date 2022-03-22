@@ -7,6 +7,7 @@ use App\Models\LoadTestFund;
 use App\Models\Microservice\PreTransaction;
 use App\Models\User;
 use App\Models\Wallet;
+use App\Traits\CollectionPaginate;
 use App\Traits\CreateSelfPreTransactionForLoadTestFund;
 use App\Wallet\Helpers\TransactionIdGenerator;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Log;
 
 class RefundController extends Controller
 {
-    use CreateSelfPreTransactionForLoadTestFund;
+    use CreateSelfPreTransactionForLoadTestFund, CollectionPaginate;
 
     public function index()
     {

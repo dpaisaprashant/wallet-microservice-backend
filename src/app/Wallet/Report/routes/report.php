@@ -32,6 +32,7 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web', 'auth']], func
     Route::match(['get', 'post'], 'customer-activity-report', [WalletReportController::class, 'customerActivityReport'])->name('report.clientActivity');
 
     Route::match(['get', 'post'], 'nchl-load-report', [WalletReportController::class, 'nchlLoadReport'])->name('report.nchl.load')->middleware('permission:Report nchl load');
+    Route::get('nchl-load-report/excel',[ExcelExportController::class,'nchlLoadReport'])->name('excel.nchl-load-report')->middleware('permission:Report nchl load');
 
     Route::get('subscriber-daily-report', [SubscriberReportController::class, 'subscriberDailyReport'])->name('report.subscriber')->middleware('permission:Report subscriber daily');
 
@@ -111,6 +112,14 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web', 'auth']], func
     Route::post('nrb-report/agent-report-each/delete/{id}', [NRBAnnexReportController::class, 'eachAgentReportDelete'])->name('report.nrb.annex.agent.each.delete')->middleware('permission:Nrb annex report view');
     Route::get('nrb-report/agent-report-each/generated', [NRBAnnexReportController::class, 'eachAgentReportGenerated'])->name('report.nrb.annex.agent.each.generated')->middleware('permission:Nrb annex report view');
     Route::get('nrb-report/agent-report-each/excel', [PhpSpreadSheetController::class, 'nrbEachAgentReport'])->name('report.nrb.annex.agent.each.excel')->middleware('permission:Nrb annex report view');
+
+    //    Route::get('/report/nrb-annex/agent-payments/monthly', 'ReportController@monthly')->name('report.monthly')->middleware('permission:Monthly report view');
+
+
+    Route::get('nrb-report/active-inactive/new', [NRBReportController::class, 'activeInactiveUserReportNew'])->name('report.active.inactive.user.new');
+    Route::post('nrb-report/active-inactive/new/delete/{id}', [NRBReportController::class, 'activeInactiveUserNewReportDelete'])->name('report.active.inactive.user.delete.new')->middleware('permission:Nrb annex report view');
+    Route::get('nrb-report/active-inactive/new/generated', [NRBReportController::class, 'activeInactiveUserNewReportGenerated'])->name('report.active.inactive.user.generated.new')->middleware('permission:Nrb annex report view');
+    Route::get('nrb-report/active-inactive/new/excel', [PhpSpreadSheetController::class, 'activeInactiveUserReport'])->name('report.active.inactive.user.excel.new')->middleware('permission:Nrb annex report view');
 
     //    Route::get('/report/nrb-annex/agent-payments/monthly', 'ReportController@monthly')->name('report.monthly')->middleware('permission:Monthly report view');
 //    Route::get('/report/yearly', 'ReportController@yearly')->name('report.yearly')->middleware('permission:Yearly report view');

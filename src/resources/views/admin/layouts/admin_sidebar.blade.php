@@ -247,12 +247,12 @@ $url = url()->current();
                 </li>
             @endcan
 
-            @can('KYC not filled users view')
-                <li @if(preg_match('/kyc-not-filled-user/i', $url)) class="active" @endif>
-                    <a href="{{ route('user.kycNotFilled.view') }}"><i class="fa fa-user-secret"></i> <span
-                            class="nav-label">KYC Not Filled Users</span></a>
-                </li>
-            @endcan
+{{--            @can('KYC not filled users view')--}}
+{{--                <li @if(preg_match('/kyc-not-filled-user/i', $url)) class="active" @endif>--}}
+{{--                    <a href="{{ route('user.kycNotFilled.view') }}"><i class="fa fa-user-secret"></i> <span--}}
+{{--                            class="nav-label">KYC Not Filled Users</span></a>--}}
+{{--                </li>--}}
+{{--            @endcan--}}
 
             @can('View admin edited kyc')
                 <li @if(preg_match('/admin-updated-user-kyc/i', $url)) class="active" @endif>
@@ -261,12 +261,12 @@ $url = url()->current();
                 </li>
             @endcan
 
-            @can('Unverified KYC users view')
-                <li @if($url == route('user.unverifiedKYC.view')) class="active" @endif>
-                    <a href="{{ route('user.unverifiedKYC.view') }}"><i class="fa fa-user-times"></i> <span
-                            class="nav-label">Unverified KYC List</span></a>
-                </li>
-            @endcan
+{{--            @can('Unverified KYC users view')--}}
+{{--                <li @if($url == route('user.unverifiedKYC.view')) class="active" @endif>--}}
+{{--                    <a href="{{ route('user.unverifiedKYC.view') }}"><i class="fa fa-user-times"></i> <span--}}
+{{--                            class="nav-label">Unverified KYC List</span></a>--}}
+{{--                </li>--}}
+{{--            @endcan--}}
 
             {{--                <li @if($url == route('merchant.unverifiedMerchantKYC.view')) class="active" @endif>--}}
             {{--                    <a href="{{ route('merchant.unverifiedMerchantKYC.view') }}"><i class="fa fa-user-times"></i> <span--}}
@@ -710,16 +710,16 @@ $url = url()->current();
                     <a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">Report</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
+{{--                        @can('Monthly report view')--}}
+{{--                            <li><a href="{{ route('report.monthly') }}">Monthly Report</a></li>--}}
+{{--                        @endcan--}}
+{{--                        @can('Yearly report view')--}}
+{{--                            <li><a href="{{ route('report.yearly') }}">Yearly Report</a></li>--}}
+{{--                        @endcan--}}
 
 {{--                        @can('Report reconciliation')--}}
                             <li><a href="{{ route('report.audit.mismatch') }}">Audit Trail Mismatch Report</a></li>
 {{--                        @endcan--}}
-                        @can('Monthly report view')
-                            <li><a href="{{ route('report.monthly') }}">Monthly Report</a></li>
-                        @endcan
-                        @can('Yearly report view')
-                            <li><a href="{{ route('report.yearly') }}">Yearly Report</a></li>
-                        @endcan--}}
                         @can('Report paypoint')
                             <li><a href="{{ route('report.paypoint') }}">PayPoint Report</a></li>
                         @endcan
@@ -757,20 +757,16 @@ $url = url()->current();
                           @endcan--}}
 
                         {{--<li><a href="{{ route('report.user.reconciliation') }}">User Reconciliation Report</a></li>--}}
-
-
-{{--                        @can('Report nrb agent')--}}
-{{--                            <li><a href="{{ route('report.agent') }}">NRB Agent Report</a></li>--}}
-{{--                        @endcan--}}
-
-{{--                        @can('Report non bank payment count')--}}
-{{--                            <li><a href="{{ route('report.nonBankPaymentCountReport') }}">Non Bank Payment Count--}}
-{{--                                    Report</a></li>--}}
-{{--                        @endcan--}}
-{{--                        @can('Report non bank payment')--}}
-{{--                            <li><a href="{{ route('report.nonBankPaymentReport') }}">Non bank payment report</a></li>--}}
-{{--                        @endcan--}}
-
+                        {{--                        @can('Report nrb agent')--}}
+                        {{--                            <li><a href="{{ route('report.agent') }}">NRB Agent Report</a></li>--}}
+                        {{--                        @endcan--}}
+                        {{--                        @can('Report non bank payment count')--}}
+                        {{--                            <li><a href="{{ route('report.nonBankPaymentCountReport') }}">Non Bank Payment Count--}}
+                        {{--                                    Report</a></li>--}}
+                        {{--                        @endcan--}}
+                        {{--                        @can('Report non bank payment')--}}
+                        {{--                            <li><a href="{{ route('report.nonBankPaymentReport') }}">Non bank payment report</a></li>--}}
+                        {{--                        @endcan--}}
                         @can('Report wallet end balance')
                             <li><a href="{{ route('wallet.endbalance') }}">Wallet end balance report</a></li>
                         @endcan
@@ -785,13 +781,12 @@ $url = url()->current();
 
                             {{--<li><a href="{{route('report.closing.balance')}}">Closing Balance</a></li>--}}
                         @endcan
-                       {{-- @can('View lucky winner report')
+                       @can('View lucky winner report')
                             <li><a href="{{route('report.lucky.winner')}}">Lucky Winners Report</a></li>
                         @endcan
                         @can('View ticket sale report')
                             <li><a href="{{route('report.ticket.sale')}}">Ticket Sales Report</a></li>
-                        @endcan--}}
-
+                        @endcan
 
                         @can('Report user registered by user')
                             <li><a href="{{route('report.user-registered-by-user')}}">Users Registered By Agents</a>
@@ -829,6 +824,10 @@ $url = url()->current();
                         @endcan
                         @can('Report nrb active and inactive user')
                             <li><a href="{{ route('report.active.inactive.user') }}">NRB Active/Inactive User Report</a>
+                            </li>
+                        @endcan
+                        @can('Report nrb active and inactive user')
+                            <li><a href="{{ route('report.active.inactive.user.new') }}">NRB Active/Inactive User Report (New Changes)</a>
                             </li>
                         @endcan
                         @can('Report nrb active and inactive user')

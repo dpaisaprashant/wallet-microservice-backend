@@ -25,7 +25,6 @@ class NRBAnnexReportController extends Controller
     //10.1.5 agent report
     public function agentReport(Request $request)
     {
-        //10.1.5 agent report
         if ($request->all() != NULL) {
             $amountRange = json_decode($request->amount_range);
             $fromAmount = $request->fromAmount;
@@ -97,7 +96,6 @@ class NRBAnnexReportController extends Controller
     //10.1.5 initiated customer report
     public function customerReport(Request $request)
     {
-        //10.1.5 initiated customer report
         if ($request->all() != NULL) {
             $amountRange = json_decode($request->amount_range);
             $fromAmount = $request->fromAmount;
@@ -267,8 +265,8 @@ class NRBAnnexReportController extends Controller
             ],
 
             'Topup' => [
-                'successful' => $repository->getSuccessfulTopUpCount(),
-                'failed' => ($repository->getFailedTopUpCount())
+                'successful' => $repository->getSuccessfulPaypointCount(),
+                'failed' => ($repository->getFailedPaypointCount())
             ],
 
             'Cash in' => [
@@ -328,8 +326,8 @@ class NRBAnnexReportController extends Controller
             ],
 
             'Topup' => [
-                'successful' => $repository->getSuccessfulPaypointCount(),
-                'failed' => ($repository->getFailedPaypointCount())
+                'successful' => $repository->getSuccessfulTopUpCount(),
+                'failed' => ($repository->getFailedTopUpCount())
             ],
 
             'Cash in' => [
@@ -542,6 +540,8 @@ class NRBAnnexReportController extends Controller
                 'totalCashOutAmount' => ($response->totalCashOutAmount) / 100,
                 'totalMerchantPaymentCount' => $response->totalMerchantPaymentCount,
                 'totalMerchantPaymentAmount' => ($response->totalMerchantPaymentAmount) / 100,
+                'totalGovernmentPaymentCount' => ($response->totalGovernmentPaymentAmount),
+                'totalGovernmentPaymentAmount' => ($response->totalGovernmentPaymentAmount) / 100,
             ];
         }
 

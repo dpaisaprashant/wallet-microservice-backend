@@ -823,7 +823,7 @@ $url = url()->current();
                             </li>
                         @endcan
                         @can('Report nrb active and inactive user')
-                            <li><a href="{{ route('report.active.inactive.user.new') }}">NRB Active/Inactive User Report (Corrected)</a>
+                            <li><a href="{{ route('report.active.inactive.user.new') }}">NRB Active/Inactive User Report (Updated)</a>
                             </li>
                         @endcan
                         @can('Report nrb active and inactive user')

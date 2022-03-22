@@ -190,7 +190,8 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
     {
         $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
                                                                             WHERE
-                                                                            service_type='NCHL_AGGREGATED_PAYMENTS'  AND status = 'SUCCESS'
+                                                                            (microservice_type='NCHL' AND (service_type='' OR service_type='NCHL_AGGREGATED_PAYMENTS'))  AND status = 'SUCCESS'
+
                                                                             AND
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND
@@ -204,7 +205,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
     {
         $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
                                                                             WHERE
-                                                                            service_type='NCHL_AGGREGATED_PAYMENTS'  AND status != 'SUCCESS'
+                                                                            (microservice_type='NCHL' AND (service_type='' OR service_type='NCHL_AGGREGATED_PAYMENTS'))  AND status != 'SUCCESS'
                                                                             AND
                                                                             date(created_at) >= date(:fromDate)
                                                                             AND

@@ -53,7 +53,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $billPaymentTotalCount = $billPaymentTotalCount[0]->totalCount;
 
@@ -80,7 +80,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
         $billPaymentTotalValue = $billPaymentTotalValue[0]->totalSum;
 
         return $billPaymentTotalValue;
@@ -102,7 +102,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $transferTotalCount = $transferTotalCount[0]->totalCount;
         return $transferTotalCount;
@@ -124,7 +124,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $transferTotalValue = $transferTotalValue[0]->totalSum;
         return $transferTotalValue;
@@ -145,6 +145,8 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                  t.transaction_type = 'App\\\Models\\\UserLoadTransaction'
                                                                                      OR
                                                                                  t.transaction_type = 'App\\\Models\\\BfiGatewayExecutePayment'
+                                                                                     OR
+                                                                                 t.transaction_type = 'App\\\Models\\\NPSAccountLinkLoad'
                                                                                 )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)
@@ -152,7 +154,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $cashInTotalCount = $cashInTotalCount[0]->totalCount;
 
@@ -174,6 +176,8 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                  t.transaction_type = 'App\\\Models\\\UserLoadTransaction'
                                                                                      OR
                                                                                  t.transaction_type = 'App\\\Models\\\BfiGatewayExecutePayment'
+                                                                                     OR
+                                                                                 t.transaction_type = 'App\\\Models\\\NPSAccountLinkLoad'
                                                                                 )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)
@@ -181,7 +185,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $cashInTotalValue = $cashInTotalValue[0]->totalSum;
         return $cashInTotalValue;
@@ -203,7 +207,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $cashBackOfferTotalNumber = $cashBackOfferTotalNumber[0]->totalCount;
         return $cashBackOfferTotalNumber;
@@ -225,7 +229,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $cashBackOfferTotalValue = $cashBackOfferTotalValue[0]->totalSum;
         return $cashBackOfferTotalValue;
@@ -244,7 +248,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $commissionTotalNumber = $commissionTotalNumber[0]->totalCount;
         return $commissionTotalNumber;
@@ -263,7 +267,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $commissionTotalValue = $commissionTotalValue[0]->totalSum;
         return $commissionTotalValue;
@@ -283,7 +287,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $cashOutTotalNumber = $cashOutTotalNumber[0]->totalCount;
         return $cashOutTotalNumber;
@@ -303,7 +307,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $cashOutTotalValue = $cashOutTotalValue[0]->totalSum;
         return $cashOutTotalValue;
@@ -327,7 +331,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $qrPaymentCount = $qrPaymentCount[0]->totalCount;
         return $qrPaymentCount;
@@ -351,7 +355,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $qrPaymentValue = $qrPaymentValue[0]->totalSum;
         return $qrPaymentValue;
@@ -372,7 +376,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $serviceRefundCount = $serviceRefundCount[0]->totalCount;
         return $serviceRefundCount;
@@ -393,7 +397,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $serviceRefundValue = $serviceRefundValue[0]->totalSum;
         return $serviceRefundValue;
@@ -414,7 +418,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $governmentPaymentCount = $governmentPaymentCount[0]->totalCount;
         return $governmentPaymentCount;
@@ -435,7 +439,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $governmentPaymentValue = $governmentPaymentValue[0]->totalSum;
         return $governmentPaymentValue;

@@ -42,8 +42,16 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 AND
                                                                                 (
                                                                                  t.transaction_type = 'App\\\Models\\\KhaltiUserTransaction'
-                                                                                 OR
+                                                                                    OR
                                                                                  t.transaction_type = 'App\\\Models\\\UserTransaction'
+                                                                                     OR
+                                                                                 t.transaction_type = 'App\\\Models\\\NeaTransaction'
+                                                                                     OR
+                                                                                 t.transaction_type = 'App\\\Models\\\UserToBfiFundTransfer'
+                                                                                     OR
+                                                                                 t.transaction_type = 'App\\\Models\\\CellPayUserTransaction'
+                                                                                     OR
+                                                                                 t.transaction_type = 'App\\\Models\\\NtcRetailerToCustomerTransaction'
                                                                                 )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)
@@ -67,10 +75,16 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 AND
                                                                                 (
                                                                                  t.transaction_type = 'App\\\Models\\\KhaltiUserTransaction'
-                                                                                 OR
-                                                                                 t.transaction_type = 'App\\\Models\\\NeaTransaction'
-                                                                                 OR
+                                                                                    OR
                                                                                  t.transaction_type = 'App\\\Models\\\UserTransaction'
+                                                                                     OR
+                                                                                 t.transaction_type = 'App\\\Models\\\NeaTransaction'
+                                                                                     OR
+                                                                                 t.transaction_type = 'App\\\Models\\\UserToBfiFundTransfer'
+                                                                                     OR
+                                                                                 t.transaction_type = 'App\\\Models\\\CellPayUserTransaction'
+                                                                                     OR
+                                                                                 t.transaction_type = 'App\\\Models\\\NtcRetailerToCustomerTransaction'
                                                                                 )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)

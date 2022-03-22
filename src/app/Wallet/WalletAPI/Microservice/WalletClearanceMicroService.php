@@ -36,6 +36,20 @@ class WalletClearanceMicroService
         $activeInactive = json_decode($response, true);
         return $activeInactive;
     }
+    public function dispatchActiveInactiveUserNewJobs(Request $request, $date)
+    {
+        $microservice = new BackendWalletAPIMicroservice($request);
+        $microservice->setServiceType("WALLET_CLEARANCE")
+            ->setDescription("WALLET CLEARANCE")
+            ->setVendor("WALLET_CLEARANCE")
+            ->setMicroservice("WALLET_CLEARANCE")
+            ->setUrl("dispatch_active_inactive_new")
+            ->setRequestParam(['as_of_date' => $date,'new_report'=>'TRUE']);
+
+        $response = $microservice->processRequest();
+        $activeInactive = json_decode($response, true);
+        return $activeInactive;
+    }
 
     public function dispatchActiveInactiveUserSlabJobs(Request $request)
     {

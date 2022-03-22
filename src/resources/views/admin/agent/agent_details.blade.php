@@ -154,7 +154,7 @@
                                     {{--<th>Business Doc</th>--}}
                                     {{--<th>Email</th>--}}
                                     <th>Agent status</th>
-                                    <th>Reference Code</th>
+                                    <th>Agent Code</th>
                                     {{--<th>Wallet Balance</th>--}}
                                     <th>Use parent agent balance</th>
                                     <th>Date of Birth</th>
@@ -162,6 +162,9 @@
                                     <th>Identity Number</th>
                                     <th>Identity Issue Date</th>
                                     <th>Identity Issue From</th>
+                                    <th>Municipality</th>
+                                    <th>Ward No</th>
+                                    <th>Current Balance</th>
                                     <th>Agent Created At</th>
                                     {{--<th>Total <br>Payment Amount</th>
                                     <th>Total <br>Loaded Amount</th>--}}
@@ -221,7 +224,7 @@
                                             @include('admin.agent.status', ['agent' => $user->agent])
                                         </td>
                                         <td>
-                                            {{ $user->agent->reference_code }}
+                                            {{ $user->agent->agent_code }}
                                         </td>
                                         {{--<td>Rs. {{ $user->wallet->balance }}</td>--}}
                                         <td>
@@ -258,6 +261,15 @@
                                         <td>{{$user->kyc->id_no ?? null}}</td>
                                         <td>{{$user->kyc->c_issued_date ?? null}}</td>
                                         <td>{{$user->kyc->c_issued_from ?? null}}</td>
+                                        <td>{{$user->kyc->municipality ?? null}}</td>
+                                        <td>{{$user->kyc->ward_no ?? null}}</td>
+                                        <td>
+                                            @if($user->wallet)
+                                                Rs. {{ optional($user->wallet)->balance + optional($user->wallet)->bonus_balance }}
+                                            @else
+                                                Rs. 00
+                                            @endif
+                                        </td>
                                         <td>{{ \Carbon\Carbon::parse($user->agent->created_at)->format('F d Y') }}</td>
 
                                         <td class="center">

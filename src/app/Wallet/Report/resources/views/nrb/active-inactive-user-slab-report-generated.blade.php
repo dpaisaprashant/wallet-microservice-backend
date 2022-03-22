@@ -52,7 +52,7 @@
                                     <tr>
                                         <td>{{$loop->index+1}}</td>
                                         <td>{{$report->as_of_date}}</td>
-                                        <td>{{$report->slab_from/100}}</td>
+                                        <td>@if(($report->slab_from/100) == -1000000) 0 @else {{$report->slab_from/100}} @endif</td>
                                         <td>{{$report->slab_to/100}}</td>
                                         <td>
                                             <a class="btn btn-sm btn-warning m-t-n-xs"

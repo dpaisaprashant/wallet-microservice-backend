@@ -142,7 +142,7 @@
                 <div class="col-lg-12">
                     <div class="ibox ">
                         <div class="ibox-title">
-                            <h5>List Generated for Active/Inactive User Report for Date {{request()->from}} and Amount Range of (Rs. {{request()->fromAmount}} to Rs. {{request()->toAmount}})</h5>
+                            <h5>List Generated for Active/Inactive User Report for Date {{request()->from}} and Amount Range of (Rs. @if(request()->fromAmount == -1000000) 0 @else {{request()->fromAmount}} @endif to Rs. {{request()->toAmount}})</h5>
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">

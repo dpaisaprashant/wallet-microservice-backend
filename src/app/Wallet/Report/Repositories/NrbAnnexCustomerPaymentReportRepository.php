@@ -188,6 +188,9 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                  t.transaction_type = 'App\\\Models\\\UserLoadTransaction'
                                                                                      OR
                                                                                  t.transaction_type = 'App\\\Models\\\BfiGatewayExecutePayment'
+                                                                                     OR
+                                                                                 t.transaction_type = 'App\\\Models\\\NPSAccountLinkLoad'
+
                                                                                 )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)
@@ -218,6 +221,8 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                  t.transaction_type = 'App\\\Models\\\UserLoadTransaction'
                                                                                      OR
                                                                                  t.transaction_type = 'App\\\Models\\\BfiGatewayExecutePayment'
+                                                                                     OR
+                                                                                 t.transaction_type = 'App\\\Models\\\NPSAccountLinkLoad'
                                                                                 )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)

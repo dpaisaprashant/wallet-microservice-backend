@@ -44,7 +44,7 @@ class ClearanceController extends Controller
         }
 
         return view("Clearance::clearance.transactionList")->with(compact('transactions', 'totalTransactionCount',
-                                                                        'totalTransactionAmountSum', 'totalTransactionFeeSum', 'info'));
+            'totalTransactionAmountSum', 'totalTransactionFeeSum', 'info'));
     }
 
     public function clearanceGenerate(Request $request)

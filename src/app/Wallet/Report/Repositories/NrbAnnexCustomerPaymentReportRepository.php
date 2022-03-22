@@ -4,26 +4,7 @@
 namespace App\Wallet\Report\Repositories;
 
 
-use App\Models\CellPayUserTransaction;
-use App\Models\FundRequest;
-use App\Models\KhaltiUserTransaction;
-use App\Models\MerchantTransaction;
-use App\Models\Microservice\PreTransaction;
-use App\Models\NchlAggregatedPayment;
-use App\Models\NchlBankTransfer;
-use App\Models\NchlLoadTransaction;
-use App\Models\NICAsiaCyberSourceLoadTransaction;
-use App\Models\NPSAccountLinkLoad;
-use App\Models\NtcRetailerToCustomerTransaction;
-use App\Models\PaymentNepalLoadTransaction;
-use App\Models\TransactionEvent;
-use App\Models\UsedUserReferral;
-use App\Models\UserLoadTransaction;
-use App\Models\UserMerchantEventTicketPayment;
-use App\Models\UserReferralBonusTransaction;
-use App\Models\UserToUserFundTransfer;
-use App\Models\UserTransaction;
-use App\Wallet\Commission\Models\Commission;
+//use App\Models\PaymentNepalLoadTransaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -70,15 +51,21 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                     FROM transaction_events t
                     LEFT JOIN temp_agents a ON a.user_id = t.user_id
                     WHERE a.user_id IS NULL
-                  AND
-                                                                                (
-                                                                                 t.transaction_type = 'App\\\Models\\\KhaltiUserTransaction'
-                                                                                 OR
-                                                                                 t.transaction_type = 'App\\\Models\\\NeaTransaction'
-                                                                                 OR
-                                                                                 t.transaction_type = 'App\\\Models\\\UserToBfiFundTransfer'
-                                                                                )
-                                                                                AND
+                    AND
+                    (
+                        t.transaction_type = 'App\\\Models\\\KhaltiUserTransaction'
+                        OR
+                        t.transaction_type = 'App\\\Models\\\NeaTransaction'
+                        OR
+                        t.transaction_type = 'App\\\Models\\\UserToBfiFundTransfer'
+                        OR
+                        t.transaction_type ='App\\\Models\\\NchlAggregatedPayment'
+                        OR
+                        t.transaction_type = 'App\\\Models\\\UserMerchantEventTicketPayment'
+                        OR
+                         t.transaction_type = 'App\\\Models\\\UserTransaction'
+                    )
+                    AND
                     date(t.created_at) >= date(:fromDate)
                     AND
                     date(t.created_at) <= date(:toDate)
@@ -104,15 +91,21 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                     FROM transaction_events t
                     LEFT JOIN temp_agents a ON a.user_id = t.user_id
                     WHERE a.user_id IS NULL
-                   AND
-                                                                                (
-                                                                                 t.transaction_type = 'App\\\Models\\\KhaltiUserTransaction'
-                                                                                 OR
-                                                                                 t.transaction_type = 'App\\\Models\\\NeaTransaction'
-                                                                                 OR
-                                                                                 t.transaction_type = 'App\\\Models\\\UserToBfiFundTransfer'
-                                                                                )
-                                                                                AND
+                    AND
+                    (
+                        t.transaction_type = 'App\\\Models\\\KhaltiUserTransaction'
+                        OR
+                        t.transaction_type = 'App\\\Models\\\NeaTransaction'
+                        OR
+                        t.transaction_type = 'App\\\Models\\\UserToBfiFundTransfer'
+                        OR
+                        t.transaction_type ='App\\\Models\\\NchlAggregatedPayment'
+                        OR
+                        t.transaction_type = 'App\\\Models\\\UserMerchantEventTicketPayment'
+                        OR
+                         t.transaction_type = 'App\\\Models\\\UserTransaction'
+                    )
+                    AND
                     date(t.created_at) >= date(:fromDate)
                     AND
                     date(t.created_at) <= date(:toDate)
@@ -178,10 +171,10 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 FROM transaction_events t
                                                                                 LEFT JOIN temp_agents a ON a.user_id = t.user_id
                                                                                 WHERE a.user_id IS NULL
-                                                                               AND
+                                                                                AND
                                                                                 (t.transaction_type ='App\\\Models\\\NchlLoadTransaction'
                                                                                  OR
-                                                                                 t.transaction_type = 'App\\\Models\\\PaymentNepalLoadTransaction'
+                                                                                 t.transaction_type = 'App\\\Models\\\NICAsiaCyberSourceLoadTransaction'
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\NpsLoadTransaction'
                                                                                  OR
@@ -214,7 +207,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 AND
                                                                                 (t.transaction_type ='App\\\Models\\\NchlLoadTransaction'
                                                                                  OR
-                                                                                 t.transaction_type = 'App\\\Models\\\PaymentNepalLoadTransaction'
+                                                                                 t.transaction_type = 'App\\\Models\\\NICAsiaCyberSourceLoadTransaction'
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\NpsLoadTransaction'
                                                                                  OR
@@ -243,10 +236,14 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 LEFT JOIN temp_agents a ON a.user_id = t.user_id
                                                                                 WHERE a.user_id IS NULL
                                                                                 AND
-                                                                                 (t.transaction_type = 'App\\\Wallet\\Commission\\\Models\\\Commission' AND (t.service_type='CASHBACK' OR t.service_type='AGENT_CASHBACK'))
+                                                                                (t.transaction_type ='App\\\Models\\\UsedUserReferral'
+                                                                                 OR
+                                                                                 t.transaction_type = 'App\\\Models\\\UserReferralBonusTransaction'
+                                                                                 OR
+                                                                                 (t.transaction_type = 'App\\\Wallet\\\Commission\\\Models\\\Commission' AND t.service_type='CASHBACK')
                                                                                      OR
                                                                                  (t.transaction_type = 'App\\\Models\\\LoadTestFund' AND t.service_type='LUCKY WINNER')
-
+                                                                                )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)
                                                                                 AND
@@ -266,10 +263,14 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 LEFT JOIN temp_agents a ON a.user_id = t.user_id
                                                                                 WHERE a.user_id IS NULL
                                                                                 AND
-                                                                                 (t.transaction_type = 'App\\\Wallet\\Commission\\\Models\\\Commission' AND (t.service_type='CASHBACK' OR t.service_type='AGENT_CASHBACK'))
+                                                                                (t.transaction_type ='App\\\Models\\\UsedUserReferral'
+                                                                                 OR
+                                                                                 t.transaction_type = 'App\\\Models\\\UserReferralBonusTransaction'
+                                                                                 OR
+                                                                                 (t.transaction_type = 'App\\\Wallet\\\Commission\\\Models\\\Commission' AND t.service_type='CASHBACK')
                                                                                      OR
                                                                                  (t.transaction_type = 'App\\\Models\\\LoadTestFund' AND t.service_type='LUCKY WINNER')
-
+                                                                                )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)
                                                                                 AND
@@ -300,7 +301,9 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
                                                                                ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
 
+
         $commissionTotalNumber = $commissionTotalNumber[0]->totalCount;
+
         return $commissionTotalNumber;
     }
 
@@ -375,11 +378,9 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 LEFT JOIN temp_agents a ON a.user_id = t.user_id
                                                                                 WHERE a.user_id IS NULL
                                                                                 AND
-                                                                                (t.transaction_type ='App\\\Models\\\TicketSale'
+                                                                                (t.transaction_type ='App\\\Models\\\MerchantTransaction'
                                                                                     OR
-                                                                                t.transaction_type ='App\\\Models\\\EventTicketSale'
-                                                                                     OR
-                                                                                t.transaction_type ='App\\\Models\\\MerchantTransaction'
+                                                                                t.transaction_type ='App\\\Models\\\UserMerchantEventTicketPayment'
                                                                                  )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)
@@ -400,11 +401,9 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 LEFT JOIN temp_agents a ON a.user_id = t.user_id
                                                                                 WHERE a.user_id IS NULL
                                                                                 AND
-                                                                                (t.transaction_type ='App\\\Models\\\TicketSale'
+                                                                                (t.transaction_type ='App\\\Models\\\MerchantTransaction'
                                                                                     OR
-                                                                                t.transaction_type ='App\\\Models\\\EventTicketSale'
-                                                                                     OR
-                                                                                t.transaction_type ='App\\\Models\\\MerchantTransaction'
+                                                                                t.transaction_type ='App\\\Models\\\UserMerchantEventTicketPayment'
                                                                                  )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)

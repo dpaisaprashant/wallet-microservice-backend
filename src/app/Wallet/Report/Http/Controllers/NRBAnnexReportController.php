@@ -25,7 +25,6 @@ class NRBAnnexReportController extends Controller
     //10.1.5 agent report
     public function agentReport(Request $request)
     {
-        //10.1.5 agent report
         if ($request->all() != NULL) {
             $amountRange = json_decode($request->amount_range);
             $fromAmount = $request->fromAmount;
@@ -97,7 +96,6 @@ class NRBAnnexReportController extends Controller
     //10.1.5 initiated customer report
     public function customerReport(Request $request)
     {
-        //10.1.5 initiated customer report
         if ($request->all() != NULL) {
             $amountRange = json_decode($request->amount_range);
             $fromAmount = $request->fromAmount;
@@ -267,8 +265,8 @@ class NRBAnnexReportController extends Controller
             ],
 
             'Topup' => [
-                'successful' => $repository->getSuccessfulTopUpCount(),
-                'failed' => ($repository->getFailedTopUpCount())
+                'successful' => $repository->getSuccessfulPaypointCount(),
+                'failed' => ($repository->getFailedPaypointCount())
             ],
 
             'Cash in' => [
@@ -356,7 +354,6 @@ class NRBAnnexReportController extends Controller
         $repository = new StatementSettlementBankRepository($request);
 
         $check = $repository->checkForReport();
-
         if ($check == null) {
             $walletClearance = new WalletClearanceMicroService();
             $walletClearanceResponse['message'] = '';
@@ -406,6 +403,11 @@ class NRBAnnexReportController extends Controller
                 'debit' => $repository->getCreditByTitle($check->id, "PP_ADVANCE"),
                 'credit' => 0
             ],
+
+            'Bank Transfer' => [
+                'debit' => $repository->getCreditByTitle($check->id, "BANK_TRANSFER"),
+                'credit' => 0
+            ]
         ];
 
         if ($request->has('forExcel')) {

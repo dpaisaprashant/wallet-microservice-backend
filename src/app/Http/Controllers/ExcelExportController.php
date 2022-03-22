@@ -30,7 +30,6 @@ use App\Http\Resources\NchlBankTransferResource;
 use App\Http\Resources\NchlLoadTransactionResource;
 use App\Http\Resources\NICAsiaCyberSourceLoadTransactionResource;
 use App\Http\Resources\NonRealTimeBankTransferResource;
-use App\Http\Resources\PayPointReportResource;
 use App\Http\Resources\PreTransactionResource;
 use App\Http\Resources\RegisterUsingReferralResource;
 use App\Http\Resources\SparrowSMSResource;
@@ -367,7 +366,7 @@ class ExcelExportController extends Controller
     public function nps(Request $request)
     {
         $export = new ExportExcelHelper();
-        $export->setName('NPS')
+        $export->setName('EBankingNPS')
             ->setGeneratorModel(NpsLoadTransaction::class)
             ->setRequest($request)
             ->setResource(UserLoadTransactionResource::class);

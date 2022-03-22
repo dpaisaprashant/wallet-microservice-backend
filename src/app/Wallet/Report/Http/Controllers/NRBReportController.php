@@ -70,6 +70,41 @@ class NRBReportController extends Controller
         return redirect()->back();
     }
 
+    public function activeInactiveUserReportNew(Request $request)
+    {
+        if ($request->all() == null) {
+            return view('WalletReport::nrb.active-inactive-user-report-new');
+        }
+
+        $repository = new ActiveInactiveUserReportRepository($request);
+
+        $check = $repository->checkForNewReport();
+
+        if ($check == null) {
+            $walletClearance = new WalletClearanceMicroService();
+            $walletClearanceResponse = $walletClearance->dispatchActiveInactiveUserNewJobs(request(), request()->from);
+
+            $activeInactiveUserReports = 'Report is being generated. Please be patient and check in at another time. Current Status: Started Report Generation ....';
+            return view('WalletReport::nrb.active-inactive-user-report-new', compact('activeInactiveUserReports'));
+        }
+
+        if ($check) {
+            if ($check->status == "PROCESSING") {
+                $activeInactiveUserReports = 'Report is being generated. Please be patient and reload the page at another time. Current Status: Processing Report ....';
+                return view('WalletReport::nrb.active-inactive-user-report-new', compact('activeInactiveUserReports'));
+            }
+        }
+
+        $walletClearanceResponse = $repository->dispatchWalletClearance();
+        $activeInactiveUserReports = $walletClearanceResponse['activeInactiveUserReports'];
+        $totalUsers = $walletClearanceResponse['totalUsers'];
+        $totalBalance = $walletClearanceResponse['totalBalance'];
+        $shouldBeZero = $walletClearanceResponse['shouldBeZero'];
+        $openingBalance = $walletClearanceResponse['openingBalance'];
+
+        return view('WalletReport::nrb.active-inactive-user-report-new')->with(compact('activeInactiveUserReports', 'totalUsers', 'totalBalance', 'openingBalance', 'shouldBeZero'));
+    }
+
     public function activeInactiveUserSlabReport(Request $request)
     {
         if ($request->all() == null) {

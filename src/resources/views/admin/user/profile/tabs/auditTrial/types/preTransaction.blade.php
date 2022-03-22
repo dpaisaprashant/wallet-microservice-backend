@@ -32,8 +32,8 @@
             @elseif(isset($event->nchlAggregatePayment))
             <b>Transaction Id:</b>{{ $event->nchlAggregatePayment['transaction_id'] }}<br>
             <b>Ref Id:</b>{{  $event->nchlAggregatePayment['ref_id']  }}<br>
-        @elseif(isset($event->khaltiUserTransaction))
-            <b>Account : </b>{{  $event->khaltiUserTransaction['account'] }}
+        {{--@elseif(isset($event->khaltiUserTransaction))
+            <b>Account : </b>{{  $event->khaltiUserTransaction['account'] }}--}}
         @endif
 
 
@@ -116,14 +116,14 @@
                                   <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button>
                               </a>
                           @endif--}}
-        @elseif($event->microservice_type == 'KHALTI')
+       {{-- @elseif($event->microservice_type == 'KHALTI')
             @if(!empty($event->khaltiUserTransaction))
-                {{--                    {{ dd($event->khaltiUserTransaction) }}--}}
+                --}}{{--                    {{ dd($event->khaltiUserTransaction) }}--}}{{--
                 <a href="{{ route('khalti.payment.detail', $event->khaltiUserTransaction->id) }}">
                     <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button>
 
                 </a>
-            @endif
+            @endif--}}
         @elseif(!empty($event->transactionEvent))
             @if($event->transactionEvent instanceof \App\Models\UserToUserFundTransfer)
                 @include('admin.transaction.fundTransfer.detail', [$event->transactionEvent->transactionable])
@@ -162,16 +162,16 @@
             <a href="{{ route('eBanking.detail', $event->userLoadTransaction->id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         @elseif($event->userTransaction)
             <a href="{{ route('paypoint.detail', $event->userTransaction->id) }}">    <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
-        @elseif($event->khaltiUserTransaction)
-            <a href="{{ route('khalti.payment.detail', $event->khaltiUserTransaction->id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+        {{--@elseif($event->khaltiUserTransaction)
+            <a href="{{ route('khalti.payment.detail', $event->khaltiUserTransaction->id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>--}}
         @elseif($event->nchlBankTransfer)
             <a href="{{ route('nchl.bankTransfer.detail', $event->nchlBankTransfer->id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         @elseif($event->nchlLoadTransaction)
             <a href="{{ route('nchl.loadTransaction.detail', $event->nchlLoadTransaction->id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         @elseif($event->nchlAggregatePayment)
             <a href="{{route('nchl.aggregatedPayment.detail',$event->nchlAggregatePayment->id)}}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
-        @elseif($event->cellPayUserTransaction)
-            <a href="{{route('cellPayUserTransaction.detail',$event->cellPayUserTransaction->id)}}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+        {{--@elseif($event->cellPayUserTransaction)
+            <a href="{{route('cellPayUserTransaction.detail',$event->cellPayUserTransaction->id)}}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>--}}
         @elseif(optional($event->transactionEvent)->transaction_type == \App\Models\UserToUserFundTransfer::class)
             <a href="{{ route('userToUserFundTransfer.detail', $event->transactionEvent->transaction_id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         @elseif(optional($event->transactionEvent)->transaction_type == \App\Models\FundRequest::class)

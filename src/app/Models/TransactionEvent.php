@@ -111,9 +111,9 @@ class TransactionEvent extends Model
         }
     }
 
-   /* public function getCurrentBalanceAttribute(){
-        return $this->attributes['balance'] / 100;
-    }*/
+    /* public function getCurrentBalanceAttribute(){
+         return $this->attributes['balance'] / 100;
+     }*/
 
     public function scopeFilter(Builder $builder, Request $request, array $filters = [])
     {

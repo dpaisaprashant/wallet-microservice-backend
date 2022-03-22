@@ -4,8 +4,10 @@
 namespace App\Wallet\Report\Repositories;
 
 
+use App\Models\PaymentNepalLoadTransaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
@@ -212,8 +214,30 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
         return $count;
     }
 
-    public function getSuccessfulTopUpCount()
+    public function getSuccessfulPaypointCount()
     {
+//        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `transaction_events`
+//                                                                            WHERE
+//                                                                            ((vendor='NCELL' and service_type='PAYMENT')
+//                                                                                OR
+//                                                                             (vendor='NCELL' and service_type='DATA-PACK')
+//                                                                                OR
+//                                                                             (vendor='NTC' and service_type='TOPUP')
+//                                                                                OR
+//                                                                             (vendor='NTC' and service_type='PREPAID')
+//                                                                                OR
+//                                                                             (vendor='NTC' and service_type='POSTPAID')
+//                                                                                OR
+//                                                                             (vendor='UTL' and service_type='PAYMENT')
+//                                                                                OR
+//                                                                             (vendor='SMARTCELL' and service_type='TOPUP'))
+//                                                                            AND
+//                                                                            date(created_at) >= date(:fromDate)
+//                                                                            AND
+//                                                                            date(created_at) <= date(:toDate)
+//                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
+
+
         $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
                                                                                WHERE (microservice_type='KHALTI' OR microservice_type='NTC' OR vendor='PAYPOINT') AND status='SUCCESS' AND
                                                                             ((service_type='NTC_PREPAID')
@@ -258,7 +282,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
         return $count;
     }
 
-    public function getFailedTopUpCount()
+    public function getFailedPaypointCount()
     {
         $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
                                                                                WHERE (microservice_type='KHALTI' OR microservice_type='NTC' OR vendor='PAYPOINT') AND status!='SUCCESS' AND
@@ -335,7 +359,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
     {
         $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
                                                                             WHERE
-                                                                           ((service_type='NPS_LOAD'  AND status != 'SUCCESS')
+                                                                            ((service_type='NPS_LOAD'  AND status != 'SUCCESS')
                                                                             OR
                                                                             (service_type='NCHL_LOAD'  AND status != 'SUCCESS')
                                                                             OR
@@ -374,6 +398,7 @@ class NrbAnnexMerchantPaymentReportRepository extends AbstractReportRepository
 
     public function getFailedCashOutCount()
     {
+//user to agent
 //        $count = DB::connection('dpaisa')->select("SELECT COUNT(*) as totalCount FROM  `pre_transactions`
 //                                                                            WHERE
 //                                                                            service_type='BANK_TRANSFER'  AND status != 'SUCCESS'

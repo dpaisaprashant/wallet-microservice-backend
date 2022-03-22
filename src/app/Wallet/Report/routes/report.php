@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'admin/report', 'middleware' => ['web', 'auth']], function () {
 
     Route::match(['get', 'post'], 'reconciliation-report', [WalletReportController::class, 'reconciliationReport'])->name('report.reconciliation')->middleware('permission:Report reconciliation');
+    Route::match(['get', 'post'], 'reconciliation-range-report', [WalletReportController::class, 'reconciliationRangeReport'])->name('report.range.reconciliation')->middleware('permission:Report reconciliation');
+    Route::match(['get', 'post'], 'daily-dashboard', [WalletReportController::class, 'dailyDashboard'])->name('report.dailyDashboard')->middleware('permission:Report reconciliation');
 
     Route::get('wallet-payables-report',[WalletReportController::class,'walletPayablesReports'])->name('report.walletPayablesReport')->middleware('permission:View wallet payables');
 
@@ -109,6 +111,10 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web', 'auth']], func
     Route::get('nrb-report/agent-report-each/excel', [PhpSpreadSheetController::class, 'nrbEachAgentReport'])->name('report.nrb.annex.agent.each.excel')->middleware('permission:Nrb annex report view');
 
     //    Route::get('/report/nrb-annex/agent-payments/monthly', 'ReportController@monthly')->name('report.monthly')->middleware('permission:Monthly report view');
+
+
+    Route::get('nrb-report/active-inactive/new', [NRBReportController::class, 'activeInactiveUserReportNew'])->name('report.active.inactive.user.new');
+//    Route::get('/report/nrb-annex/agent-payments/monthly', 'ReportController@monthly')->name('report.monthly')->middleware('permission:Monthly report view');
 //    Route::get('/report/yearly', 'ReportController@yearly')->name('report.yearly')->middleware('permission:Yearly report view');
 
     /**

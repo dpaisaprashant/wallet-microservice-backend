@@ -16,6 +16,15 @@ class SubscriberReportController extends Controller
 
     public function subscriberDailyReport(Request $request)
     {
+
+        if (empty($_GET)) {
+            $report = [
+                'Total' => 0,
+                'Daily' => 0
+            ];
+            return view('WalletReport::subscriber.report')->with(compact('report'));
+        }
+
         $totalReportRepository = new SubscriberReportRepository($request);
         $totalReport = $this->generateReport($totalReportRepository);
 

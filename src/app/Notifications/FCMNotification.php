@@ -107,7 +107,7 @@ class FCMNotification extends Notification
 
     public function toSparrow($notifiable){
         if($this->type == "KYCAccepted" || $this->type == "KYCRejected"){
-            (new SendSMS())->send($this->user->mobile_no,$this->description);
+            //(new SendSMS())->send($this->user->mobile_no,$this->description);
         }
     }
 }

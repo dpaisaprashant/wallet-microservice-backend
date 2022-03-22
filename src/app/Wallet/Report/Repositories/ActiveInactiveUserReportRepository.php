@@ -35,10 +35,16 @@ class ActiveInactiveUserReportRepository extends AbstractReportRepository
         return DB::connection('clearance')->table('nrb_active_inactive')->where('as_of_date', $this->date)->first();
     }
 
+
+    public function checkForNewReport()
+    {
+        return DB::connection('clearance')->table('nrb_active_inactive_new')->where('as_of_date', $this->date)->first();
+    }
+
     public function dispatchWalletClearance()
     {
         $walletClearance = new WalletClearanceMicroService();
-        $walletClearanceResponse = $walletClearance->dispatchActiveInactiveUserJobs(request(), request()->from);
+        $walletClearanceResponse = $walletClearance->dispatchActiveInactiveUserNewJobs(request(), request()->from);
 
         $totalUsers = $walletClearanceResponse['active']['total_number'] + $walletClearanceResponse['inactive']['total_number'];
         $totalBalance = ($walletClearanceResponse['active']['total_amount'] / 100) + ($walletClearanceResponse['inactive']['total_amount'] / 100);

@@ -43,9 +43,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 (
                                                                                  t.transaction_type = 'App\\\Models\\\KhaltiUserTransaction'
                                                                                  OR
-                                                                                 t.transaction_type = 'App\\\Models\\\NeaTransaction'
-                                                                                 OR
-                                                                                 t.transaction_type = 'App\\\Models\\\UserToBfiFundTransfer'
+                                                                                 t.transaction_type = 'App\\\Models\\\UserTransaction'
                                                                                 )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)
@@ -72,7 +70,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\NeaTransaction'
                                                                                  OR
-                                                                                 t.transaction_type = 'App\\\Models\\\UserToBfiFundTransfer'
+                                                                                 t.transaction_type = 'App\\\Models\\\UserTransaction'
                                                                                 )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)
@@ -138,7 +136,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 AND
                                                                                 (t.transaction_type ='App\\\Models\\\NchlLoadTransaction'
                                                                                  OR
-                                                                                 t.transaction_type = 'App\\\Models\\\PaymentNepalLoadTransaction'
+                                                                                 t.transaction_type = 'App\\\Models\\\NICAsiaCyberSourceLoadTransaction'
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\NpsLoadTransaction'
                                                                                  OR
@@ -169,7 +167,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 AND
                                                                                 (t.transaction_type ='App\\\Models\\\NchlLoadTransaction'
                                                                                  OR
-                                                                                 t.transaction_type = 'App\\\Models\\\PaymentNepalLoadTransaction'
+                                                                                 t.transaction_type = 'App\\\Models\\\NICAsiaCyberSourceLoadTransaction'
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\NpsLoadTransaction'
                                                                                  OR
@@ -197,10 +195,14 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 RIGHT JOIN agents as a ON a.user_id = t.user_id
                                                                                 WHERE t.user_id = a.user_id and a.status = 'ACCEPTED'
                                                                                 AND
-                                                                                 ((t.transaction_type = 'App\\\Wallet\\\Commission\\\Models\\\Commission' AND (t.service_type='CASHBACK' OR t.service_type='AGENT_CASHBACK'))
+                                                                                (t.transaction_type ='App\\\Models\\\UsedUserReferral'
+                                                                                 OR
+                                                                                 t.transaction_type = 'App\\\Models\\\UserReferralBonusTransaction'
+                                                                                 OR
+                                                                                 (t.transaction_type = 'App\\\Wallet\\\Commission\\\Models\\\Commission' AND (t.service_type='CASHBACK' OR t.service_type='AGENT_CASHBACK'))
                                                                                      OR
-                                                                                 (t.transaction_type = 'App\\\Models\\\LoadTestFund' AND t.service_type='LUCKY WINNER'))
-
+                                                                                 (t.transaction_type = 'App\\\Models\\\LoadTestFund' AND t.service_type='LUCKY WINNER')
+                                                                                )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)
                                                                                 AND
@@ -219,10 +221,14 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 RIGHT JOIN agents as a ON a.user_id = t.user_id
                                                                                 WHERE t.user_id = a.user_id and a.status = 'ACCEPTED'
                                                                                 AND
-                                                                                 ((t.transaction_type = 'App\\\Wallet\\\Commission\\\Models\\\Commission' AND (t.service_type='CASHBACK' OR t.service_type='AGENT_CASHBACK'))
+                                                                                (t.transaction_type ='App\\\Models\\\UsedUserReferral'
+                                                                                 OR
+                                                                                 t.transaction_type = 'App\\\Models\\\UserReferralBonusTransaction'
+                                                                                 OR
+                                                                                 (t.transaction_type = 'App\\\Wallet\\\Commission\\\Models\\\Commission' AND (t.service_type='CASHBACK' OR t.service_type='AGENT_CASHBACK'))
                                                                                      OR
-                                                                                 (t.transaction_type = 'App\\\Models\\\LoadTestFund' AND t.service_type='LUCKY WINNER'))
-
+                                                                                 (t.transaction_type = 'App\\\Models\\\LoadTestFund' AND t.service_type='LUCKY WINNER')
+                                                                                )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)
                                                                                 AND
@@ -319,11 +325,9 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 RIGHT JOIN agents as a ON a.user_id = t.user_id
                                                                                 WHERE t.user_id = a.user_id and a.status = 'ACCEPTED'
                                                                                 AND
-                                                                                (t.transaction_type ='App\\\Models\\\TicketSale'
+                                                                                (t.transaction_type ='App\\\Models\\\MerchantTransaction'
                                                                                     OR
-                                                                                t.transaction_type ='App\\\Models\\\EventTicketSale'
-                                                                                     OR
-                                                                                t.transaction_type ='App\\\Models\\\MerchantTransaction'
+                                                                                t.transaction_type ='App\\\Models\\\UserMerchantEventTicketPayment'
                                                                                  )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)
@@ -342,12 +346,10 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
         $qrPaymentValue = DB::connection('dpaisa')->select("SELECT SUM(t.amount/100) as totalSum FROM transaction_events as t
                                                                                 RIGHT JOIN agents as a ON a.user_id = t.user_id
                                                                                 WHERE t.user_id = a.user_id and a.status = 'ACCEPTED'
-                                                                                 AND
-                                                                                (t.transaction_type ='App\\\Models\\\TicketSale'
+                                                                                AND
+                                                                                (t.transaction_type ='App\\\Models\\\MerchantTransaction'
                                                                                     OR
-                                                                                t.transaction_type ='App\\\Models\\\EventTicketSale'
-                                                                                     OR
-                                                                                t.transaction_type ='App\\\Models\\\MerchantTransaction'
+                                                                                t.transaction_type ='App\\\Models\\\UserMerchantEventTicketPayment'
                                                                                  )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)
@@ -402,6 +404,45 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
         $serviceRefundValue = $serviceRefundValue[0]->totalSum;
         return $serviceRefundValue;
     }
+
+//    public function getServiceRefundTotalCount()
+//    {
+//        $serviceRefundTotal = DB::connection('dpaisa')->select("SELECT COUNT(t.amount/100) as totalCount FROM transaction_events as t
+//                                                                                RIGHT JOIN agents as a ON a.user_id = t.user_id
+//                                                                                WHERE t.user_id = a.user_id and a.status = 'ACCEPTED'
+//                                                                                AND
+//                                                                                (
+//                                                                                    t.transaction_type ='App\\\Models\\\LoadTestFund' AND t.service_type='REFUND' AND t.pre_transaction_id=NULL
+//                                                                                 )
+//                                                                                AND
+//                                                                                date(t.created_at) >= date(:fromDate)
+//                                                                                AND
+//                                                                                date(t.created_at) <= date(:toDate)
+//                                                                               ");
+//
+//        $serviceRefundTotal = $serviceRefundTotal[0]->totalCount;
+//        return $serviceRefundTotal;
+//    }
+//
+//    public function getServiceRefundTotalValue()
+//    {
+//        $serviceRefundTotal = DB::connection('dpaisa')->select("SELECT SUM(t.amount/100) as totalSum FROM transaction_events as t
+//                                                                                RIGHT JOIN agents as a ON a.user_id = t.user_id
+//                                                                                WHERE t.user_id = a.user_id and a.status = 'ACCEPTED'
+//                                                                                AND
+//                                                                                (
+//                                                                                    t.transaction_type ='App\\\Models\\\LoadTestFund' AND t.service_type='REFUND' AND t.pre_transaction_id=NULL
+//                                                                                 )
+//                                                                                AND
+//                                                                                date(t.created_at) >= date('$this->fromDate')
+//                                                                                AND
+//                                                                                date(t.created_at) <= date('$this->toDate')
+//                                                                               ");
+//
+//        $serviceRefundTotal = $serviceRefundTotal[0]->totalSum;
+//        return $serviceRefundTotal;
+//    }
+
 
     public function getGovernmentPaymentCount()
     {

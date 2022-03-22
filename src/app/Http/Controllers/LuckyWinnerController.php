@@ -90,7 +90,6 @@ class LuckyWinnerController extends Controller
             ];
 
             $vendor = $request->vendor ?? self::VENDOR;
-
             DB::beginTransaction();
             try {
 //                $pre_transaction = PreTransaction::create($for_pre_transaction);

@@ -400,11 +400,15 @@ Route::group(['prefix' => 'admin'], function () {
 //        Route::match(['get', 'post'], '/fund-withdraw/create', 'FundWithdrawController@create')->name('fund-withdraw.create'); // todo: need to add permissions
 
 
+        Route::get('/server-error/refund/to-refund', 'RefundController@serverErrorToRefund')->name('refund.serverError.toRefund')->middleware('permission:Refund view');
+        Route::match(['get', 'post'], '/server-error/refund/create', 'RefundController@serverErrorCreate')->name('refund.serverError.create')->middleware('permission:Refund create');
+
         /**
          * Lucky Winner
          */
         Route::get('/lucky-winners', 'LuckyWinnerController@index')->name('luckyWinner.index')->middleware('permission:Lucky winner view');
         Route::match(['get', 'post'], '/lucky-winners/create', 'LuckyWinnerController@create')->name('luckyWinner.create')->middleware('permission:Lucky winner create');
+
 
         /**
          * Repost transaction
@@ -422,7 +426,7 @@ Route::group(['prefix' => 'admin'], function () {
         //report (npay, paypoint)
         Route::get('/report/paypoint', 'ReportController@paypoint')->name('report.paypoint')->middleware('permission:Report paypoint');
         Route::get('/report/npay', 'ReportController@npay')->name('report.npay')->middleware('permission:Report npay');
-        /*
+        /**
  * wallet end balance Report
  * */
 
@@ -521,6 +525,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/excel/fund-request', 'ExcelExportController@fundREquest')->name('fundRequest.excel');
 
         Route::get('/excel/npay', 'ExcelExportController@nPay')->name('npay.excel');
+        Route::get('/excel/nps', 'ExcelExportController@nps')->name('nps.excel');
         Route::get('/excel/paypoint', 'ExcelExportController@payPoint')->name('paypoint.excel');
         Route::get('/excel/nps', 'ExcelExportController@nps')->name('nps.excel');
         Route::get('/excel/nchl-aggregated', 'ExcelExportController@nchlAggregated')->name('nchlAggregated.excel');

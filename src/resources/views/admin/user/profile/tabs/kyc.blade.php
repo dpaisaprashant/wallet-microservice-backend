@@ -294,7 +294,7 @@
                         <dt class="col-md-3 text-right">Tmp Municipality</dt>
                         <dd class="col-md-8">{{ $user->kyc->tmp_municipality }}
                             @if(isset($user->kyc->kycValidation))
-                            @if($user->kyc->kycValidation->tmp_municipality==0)
+                                @if($user->kyc->kycValidation->tmp_municipality==0)
                                     <i class="fa fa-exclamation-circle" style="color: #ec4758" aria-hidden="true"></i>
                                 @endif
                             @endif

@@ -114,7 +114,11 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web', 'auth']], func
 
 
     Route::get('nrb-report/active-inactive/new', [NRBReportController::class, 'activeInactiveUserReportNew'])->name('report.active.inactive.user.new');
-//    Route::get('/report/nrb-annex/agent-payments/monthly', 'ReportController@monthly')->name('report.monthly')->middleware('permission:Monthly report view');
+    Route::post('nrb-report/active-inactive/new/delete/{id}', [NRBReportController::class, 'activeInactiveUserNewReportDelete'])->name('report.active.inactive.user.delete.new')->middleware('permission:Nrb annex report view');
+    Route::get('nrb-report/active-inactive/new/generated', [NRBReportController::class, 'activeInactiveUserNewReportGenerated'])->name('report.active.inactive.user.generated.new')->middleware('permission:Nrb annex report view');
+    Route::get('nrb-report/active-inactive/new/excel', [PhpSpreadSheetController::class, 'activeInactiveUserReport'])->name('report.active.inactive.user.excel.new')->middleware('permission:Nrb annex report view');
+
+    //    Route::get('/report/nrb-annex/agent-payments/monthly', 'ReportController@monthly')->name('report.monthly')->middleware('permission:Monthly report view');
 //    Route::get('/report/yearly', 'ReportController@yearly')->name('report.yearly')->middleware('permission:Yearly report view');
 
     /**

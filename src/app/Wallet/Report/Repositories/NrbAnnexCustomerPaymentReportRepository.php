@@ -59,11 +59,13 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                         OR
                         t.transaction_type = 'App\\\Models\\\UserToBfiFundTransfer'
                         OR
-                        t.transaction_type ='App\\\Models\\\NchlAggregatedPayment'
-                        OR
                         t.transaction_type = 'App\\\Models\\\UserMerchantEventTicketPayment'
                         OR
-                         t.transaction_type = 'App\\\Models\\\UserTransaction'
+                        t.transaction_type = 'App\\\Models\\\UserTransaction'
+                        OR
+                        t.transaction_type = 'App\\\Models\\\CellPayUserTransaction'
+                        OR
+                        t.transaction_type = 'App\\\Models\\\NtcRetailerToCustomerTransaction'
                     )
                     AND
                     date(t.created_at) >= date(:fromDate)
@@ -72,7 +74,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                     AND
                     (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount;";
 
-        $billPaymentTotalCount = DB::connection('dpaisa')->select($sql2,['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+        $billPaymentTotalCount = DB::connection('dpaisa')->select($sql2, ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $billPaymentTotalCount = $billPaymentTotalCount[0]->totalCount;
 
@@ -99,11 +101,13 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                         OR
                         t.transaction_type = 'App\\\Models\\\UserToBfiFundTransfer'
                         OR
-                        t.transaction_type ='App\\\Models\\\NchlAggregatedPayment'
-                        OR
                         t.transaction_type = 'App\\\Models\\\UserMerchantEventTicketPayment'
                         OR
-                         t.transaction_type = 'App\\\Models\\\UserTransaction'
+                        t.transaction_type = 'App\\\Models\\\UserTransaction'
+                        OR
+                        t.transaction_type = 'App\\\Models\\\CellPayUserTransaction'
+                        OR
+                        t.transaction_type = 'App\\\Models\\\NtcRetailerToCustomerTransaction'
                     )
                     AND
                     date(t.created_at) >= date(:fromDate)
@@ -112,7 +116,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                     AND
                     (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount;";
 
-        $billPaymentTotalValue = DB::connection('dpaisa')->select($sql2,['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+        $billPaymentTotalValue = DB::connection('dpaisa')->select($sql2, ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $billPaymentTotalValue = $billPaymentTotalValue[0]->totalSum;
 
@@ -136,7 +140,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $transferTotalCount = $transferTotalCount[0]->totalCount;
         return $transferTotalCount;
@@ -159,7 +163,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $transferTotalValue = $transferTotalValue[0]->totalSum;
         return $transferTotalValue;
@@ -191,7 +195,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $cashInTotalCount = $cashInTotalCount[0]->totalCount;
 
@@ -223,7 +227,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $cashInTotalValue = $cashInTotalValue[0]->totalSum;
         return $cashInTotalValue;
@@ -250,7 +254,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $cashBackOfferTotalNumber = $cashBackOfferTotalNumber[0]->totalCount;
         return $cashBackOfferTotalNumber;
@@ -277,7 +281,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $cashBackOfferTotalValue = $cashBackOfferTotalValue[0]->totalSum;
         return $cashBackOfferTotalValue;
@@ -299,7 +303,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
 
         $commissionTotalNumber = $commissionTotalNumber[0]->totalCount;
@@ -323,7 +327,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $commissionTotalValue = $commissionTotalValue[0]->totalSum;
         return $commissionTotalValue;
@@ -344,7 +348,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $cashOutTotalNumber = $cashOutTotalNumber[0]->totalCount;
         return $cashOutTotalNumber;
@@ -365,7 +369,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $cashOutTotalValue = $cashOutTotalValue[0]->totalSum;
         return $cashOutTotalValue;
@@ -388,7 +392,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $qrPaymentCount = $qrPaymentCount[0]->totalCount;
         return $qrPaymentCount;
@@ -411,7 +415,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $qrPaymentValue = $qrPaymentValue[0]->totalSum;
         return $qrPaymentValue;
@@ -433,7 +437,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $serviceRefundCount = $serviceRefundCount[0]->totalCount;
         return $serviceRefundCount;
@@ -455,7 +459,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $serviceRefundValue = $serviceRefundValue[0]->totalSum;
         return $serviceRefundValue;
@@ -477,7 +481,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $govPaymentCount = $govPaymentCount[0]->totalCount;
         return $govPaymentCount;
@@ -499,7 +503,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 date(t.created_at) <= date(:toDate)
                                                                                 AND
                                                                                 (t.amount/100) > :fromAmount and (t.amount/100) <= :toAmount
-                                                                               ",['fromDate'=>$this->fromDate,'toDate'=>$this->toDate,'fromAmount'=>$this->fromAmount,'toAmount'=>$this->toAmount]);
+                                                                               ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate, 'fromAmount' => $this->fromAmount, 'toAmount' => $this->toAmount]);
 
         $serviceRefundValue = $serviceRefundValue[0]->totalSum;
         return $serviceRefundValue;

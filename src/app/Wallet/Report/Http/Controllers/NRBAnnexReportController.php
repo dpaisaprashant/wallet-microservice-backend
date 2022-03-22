@@ -540,6 +540,8 @@ class NRBAnnexReportController extends Controller
                 'totalCashOutAmount' => ($response->totalCashOutAmount) / 100,
                 'totalMerchantPaymentCount' => $response->totalMerchantPaymentCount,
                 'totalMerchantPaymentAmount' => ($response->totalMerchantPaymentAmount) / 100,
+                'totalGovernmentPaymentCount' => ($response->totalGovernmentPaymentAmount),
+                'totalGovernmentPaymentAmount' => ($response->totalGovernmentPaymentAmount) / 100,
             ];
         }
 

@@ -18,6 +18,7 @@ use App\Wallet\Report\Repositories\NonBankPaymentReportRepository;
 use App\Wallet\Report\Repositories\NrbReconciliationReportRepository;
 use App\Wallet\WalletAPI\Microservice\WalletClearanceMicroService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NRBReportController extends Controller
 {
@@ -136,6 +137,32 @@ class NRBReportController extends Controller
         $openingBalance = $walletClearanceResponse['openingBalance'];
 
         return view('WalletReport::nrb.active-inactive-user-report-new')->with(compact('activeInactiveUserReports', 'totalUsers', 'totalBalance', 'openingBalance', 'shouldBeZero'));
+    }
+
+    public function activeInactiveUserReportGenerated(Request $request)
+    {
+        $generatedReports = DB::connection('clearance')->table('nrb_active_inactive')->where('status', 'COMPLETED')->get();
+
+        return view('WalletReport::nrb.active-inactive-user-report-generated', compact('generatedReports'));
+    }
+
+    public function activeInactiveUserReportDelete($id)
+    {
+        DB::connection('clearance')->table('nrb_active_inactive')->where('id',$id)->delete();
+        return redirect()->back();
+    }
+
+    public function activeInactiveUserNewReportGenerated(Request $request)
+    {
+        $generatedReports = DB::connection('clearance')->table('nrb_active_inactive_new')->where('status', 'COMPLETED')->get();
+
+        return view('WalletReport::nrb.active-inactive-user-report-generated', compact('generatedReports'));
+    }
+
+    public function activeInactiveUserNewReportDelete($id)
+    {
+        DB::connection('clearance')->table('nrb_active_inactive_new')->where('id',$id)->delete();
+        return redirect()->back();
     }
 
     public function activeInactiveUserSlabReport(Request $request)
@@ -270,6 +297,19 @@ class NRBReportController extends Controller
         ];
 
         return view('WalletReport::nrb.active-inactive-user-slab-report')->with(compact('activeInactiveUserReports'));
+    }
+
+    public function activeInactiveUserSlabReportGenerated(Request $request)
+    {
+        $generatedReports = DB::connection('clearance')->table('active_inactive_slab')->where('status', 'COMPLETED')->get();
+
+        return view('WalletReport::nrb.active-inactive-user-slab-report-generated', compact('generatedReports'));
+    }
+
+    public function activeInactiveUserSlabReportDelete($id)
+    {
+        DB::connection('clearance')->table('active_inactive_slab')->where('id',$id)->delete();
+        return redirect()->back();
     }
 
     public function agentReport(Request $request)

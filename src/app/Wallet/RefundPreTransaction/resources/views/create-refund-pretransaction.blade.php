@@ -38,9 +38,10 @@
                                 </div>
                             </div>
                             <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Amount</label>
+                                <label class="col-sm-2 col-form-label">Amount (in Rs.)</label>
                                 <div class="col-sm-10">
                                     <input name="amount" type="text" class="form-control" required>
+                                    <small>**Amount should be in Rs.</small>
                                 </div>
                             </div>
 

@@ -56,7 +56,7 @@ class RefundPreTransactionController extends Controller
             $preTransaction = \App\Models\Microservice\PreTransaction::create([
                 'pre_transaction_id' => TransactionIdGenerator::generate(19),
                 'user_id' => $userId,
-                'amount' => $request->get('amount'),
+                'amount' => $request->get('amount') * 100,
                 'description' => $request->get('description'),
                 'vendor' => 'WALLET',
                 'service_type' => 'REFUND',
@@ -65,6 +65,7 @@ class RefundPreTransactionController extends Controller
                 'Url' => '/refund',
                 'Status' => 'FAILED',
                 'created_at' => \Carbon\Carbon::createFromFormat('m/d/Y h:i A', $request->get('created_at')),
+                'updated_at' => \Carbon\Carbon::createFromFormat('m/d/Y h:i A', $request->get('created_at')),
             ]);
 
 

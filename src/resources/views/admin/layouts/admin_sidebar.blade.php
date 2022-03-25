@@ -1074,6 +1074,10 @@ $url = url()->current();
                         @can('Agent setting view')
                             <li><a href="{{ route('settings.agent') }}">Agent Setting</a></li>
                         @endcan
+
+                        @can('General setting view')
+                                <li><a href="{{ route('settings.userActivityBonus') }}">User Activity Bonus Setting</a></li>
+                        @endcan
                     </ul>
                 </li>
             @endif

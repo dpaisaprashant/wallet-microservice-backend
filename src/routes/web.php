@@ -104,6 +104,9 @@ Route::group(['prefix' => 'admin'], function () {
         //Agent Bonus Balance
         Route::match(['get', 'post'], '/settings/agent', 'Setting\SettingController@agentBonusBalanceSetting')->name('settings.agent');
 
+        //User Activity Bonus
+        Route::match(['get', 'post'], '/settings/user-activity-bonus', 'Setting\SettingController@userActivityBonusSetting')->name('settings.userActivityBonus');
+
         /**
          * Users
          */

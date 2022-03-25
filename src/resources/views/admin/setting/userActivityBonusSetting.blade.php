@@ -61,6 +61,7 @@
                                 <label class="col-sm-2 col-form-label">On registration Bonus Amount</label>
                                 <div class="col-sm-10">
                                     <input value="{{ $settings['user_activity_bonus_register_amount'] ?? ''}}" name="user_activity_bonus_register_amount" type="text" class="form-control">
+                                    <small>**Amount should be in paisa</small>
                                 </div>
                             </div>
 

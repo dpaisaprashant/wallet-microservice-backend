@@ -156,7 +156,7 @@ class NRBReportController extends Controller
     {
         $generatedReports = DB::connection('clearance')->table('nrb_active_inactive_new')->where('status', 'COMPLETED')->get();
 
-        return view('WalletReport::nrb.active-inactive-user-report-generated', compact('generatedReports'));
+        return view('WalletReport::nrb.active-inactive-user-report-generated-new', compact('generatedReports'));
     }
 
     public function activeInactiveUserNewReportDelete($id)

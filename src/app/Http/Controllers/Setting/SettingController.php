@@ -172,4 +172,11 @@ class SettingController extends Controller
         $settings = $this->updatedSettingsCollection($request, AgentSetting::class);
         return view('admin.setting.agentSetting')->with(compact('settings'));
     }
+
+    public function userActivityBonusSetting(Request $request)
+    {
+        $settings = $this->updatedSettingsCollection($request);
+        $settings = $this->updatedSettingsCollection($request, NpaySetting::class);
+        return view('admin.setting.userActivityBonusSetting')->with(compact('settings'));
+    }
 }

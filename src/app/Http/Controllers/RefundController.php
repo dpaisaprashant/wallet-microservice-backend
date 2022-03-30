@@ -58,7 +58,7 @@ class RefundController extends Controller
                 return  redirect()->back()->with("error", "Amount cannot be less than 0");
             }
 
-            if($preTransaction->amount != ($request['amount'] + $request['bonus_amount'])) {
+            if($preTransaction->amount < ($request['amount'] + $request['bonus_amount'])) {
                 return  redirect()->back()->with("error", "Refunded amount and pre transaction amount do not match");
             }
 

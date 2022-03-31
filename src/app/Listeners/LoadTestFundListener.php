@@ -98,7 +98,7 @@ class LoadTestFundListener
 
 
         //pull cashback
-        /*if ($preTransactionId && $serviceType == "REFUND") {
+        if ($preTransactionId && $serviceType == "REFUND") {
             if (isset(request()->pull_cashback) && request()->pull_cashback == "on") {
                 //PULL CASHBACK
                 $refundedTransaction = TransactionEvent::where('pre_transaction_id', $preTransactionId)
@@ -222,6 +222,6 @@ class LoadTestFundListener
                     }
                 }
             }
-        }*/
+        }
     }
 }

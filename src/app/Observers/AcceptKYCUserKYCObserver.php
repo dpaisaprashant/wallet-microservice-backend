@@ -31,7 +31,7 @@ class AcceptKYCUserKYCObserver
         try {
             $username = 'BackendProduction';
             $password = 'Pr0ducT10n8@ck3nd';
-            $basicAuth = base64_decode($username . ':' . $password);
+            $basicAuth = base64_encode($username . ':' . $password);
 
             $microservice = new MicroserviceJSONAbstract();
             $microservice->setBaseUrl(config('microservices.CORE'))

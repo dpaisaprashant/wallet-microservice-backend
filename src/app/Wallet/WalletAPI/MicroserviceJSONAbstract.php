@@ -19,6 +19,8 @@ class MicroserviceJSONAbstract
 {
     protected $apiParams = [];
 
+    protected $headers = [];
+
     protected $baseUrl;
 
     protected $url;
@@ -57,6 +59,12 @@ class MicroserviceJSONAbstract
         return $this;
     }
 
+    public function addHeader($key, $value)
+    {
+        $this->headers[$key]  = $value;
+        return $this;
+    }
+
 
     public function makeRequest($endpoint = "")
     {
@@ -68,6 +76,7 @@ class MicroserviceJSONAbstract
 
             $client = new Client();
             $response = $client->request($this->httpMethod, $this->baseUrl . $this->url, [
+                'headers' => $this->headers,
                 'json' => $requestJson
             ]);
 

@@ -67,6 +67,32 @@
 
                             <div class="hr-line-dashed"></div>
 
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">On Kyc Accept Bonus Enabled</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="user_activity_bonus_register_enabled">
+                                        @if(!empty($settings['user_activity_bonus_kyc_accept_enabled']))
+                                            <option value=0 @if($settings['user_activity_bonus_kyc_accept_enabled'] == 0) selected @endif>FALSE</option>
+                                            <option value=1 @if($settings['user_activity_bonus_kyc_accept_enabled'] == 1) selected @endif>TRUE</option>
+                                        @else
+                                            <option value=0>FALSE</option>
+                                            <option value=1>TRUE</option>
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">On registration Bonus Amount</label>
+                                <div class="col-sm-10">
+                                    <input value="{{ $settings['user_activity_bonus_kyc_accept_amount'] ?? ''}}" name="user_activity_bonus_kyc_accept_amount" type="text" class="form-control">
+                                    <small>**Amount should be in paisa</small>
+                                </div>
+                            </div>
+
+
+                            <div class="hr-line-dashed"></div>
+
                             <div class="form-group row">
                                 <div class="col-sm-4 col-sm-offset-2">
                                     @can('General setting update')

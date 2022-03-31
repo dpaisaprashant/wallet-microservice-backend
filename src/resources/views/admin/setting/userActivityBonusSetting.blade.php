@@ -70,7 +70,7 @@
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">On Kyc Accept Bonus Enabled</label>
                                 <div class="col-sm-10">
-                                    <select class="form-control" name="user_activity_bonus_register_enabled">
+                                    <select class="form-control" name="user_activity_bonus_kyc_accept_enabled">
                                         @if(!empty($settings['user_activity_bonus_kyc_accept_enabled']))
                                             <option value=0 @if($settings['user_activity_bonus_kyc_accept_enabled'] == 0) selected @endif>FALSE</option>
                                             <option value=1 @if($settings['user_activity_bonus_kyc_accept_enabled'] == 1) selected @endif>TRUE</option>

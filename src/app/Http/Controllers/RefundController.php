@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\LoadTestFundEvent;
 use App\Models\LoadTestFund;
 use App\Models\Microservice\PreTransaction;
+use App\Models\TransactionEvent;
 use App\Models\User;
 use App\Models\Wallet;
 use App\Traits\CollectionPaginate;
@@ -61,6 +62,22 @@ class RefundController extends Controller
             if($preTransaction->amount < ($request['amount'] + $request['bonus_amount'])) {
                 return  redirect()->back()->with("error", "Refunded amount and pre transaction amount do not match");
             }
+
+            $transactionEvent = TransactionEvent::with('commission')
+                ->where('pre_transaction_id', $preTransaction->pre_transaction_id)
+                ->first();
+
+            if (empty($transactionEvent)) return  redirect()->back()->with("error", "Transaction of this pre transaction does not exists");
+
+            $commissionTransaction = optional($transactionEvent->commission)->transactions;
+            if (optional($commissionTransaction)->service_type = "CASHBACK") {
+                if($preTransaction->amount - $commissionTransaction->amount != ($request['amount'] + $request['bonus_amount'])) {
+                    return  redirect()->back()->with("error", "Refund amount minus cashback amount should be equal to the total refunded amount.");
+                }
+            }
+
+
+
 
             Log::info("before_balance: " . $currentBalance);
             Log::info("after_balance: " . ($currentBalance + ($request['amount'] * 100)));

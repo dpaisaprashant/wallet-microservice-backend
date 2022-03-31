@@ -28,26 +28,27 @@ class AcceptKYCUserKYCObserver
     {
         DB::commit();
         //user activity kyc accept
-        try {
-            $username = 'BackendProduction';
-            $password = 'Pr0ducT10n8@ck3nd';
-            $basicAuth = base64_encode($username . ':' . $password);
+        if ($kyc->accept == 1) {
+            try {
+                $username = 'BackendProduction';
+                $password = 'Pr0ducT10n8@ck3nd';
+                $basicAuth = base64_encode($username . ':' . $password);
 
-            $microservice = new MicroserviceJSONAbstract();
-            $microservice->setBaseUrl(config('microservices.CORE'))
-                ->setUrl('/api/user-activity/kyc-accept')
-                ->addParam('user_id', $kyc->user_id)
-                ->addHeader('App-Authorizer', '647061697361')
-                ->addHeader('Authorization', 'Basic ' . $basicAuth);
+                $microservice = new MicroserviceJSONAbstract();
+                $microservice->setBaseUrl(config('microservices.CORE'))
+                    ->setUrl('/api/user-activity/kyc-accept')
+                    ->addParam('user_id', $kyc->user_id)
+                    ->addHeader('App-Authorizer', '647061697361')
+                    ->addHeader('Authorization', 'Basic ' . $basicAuth);
 
-            $response = $microservice->makeRequest();
-            Log::info("user activity kyc accept response", [$response]);
+                $response = $microservice->makeRequest();
+                Log::info("user activity kyc accept response", [$response]);
 
-        } catch (\Exception $e) {
-            Log::error("User Activity kyc accept request to core error");
-            Log::error($e);
+            } catch (\Exception $e) {
+                Log::error("User Activity kyc accept request to core error");
+                Log::error($e);
+            }
         }
-
         //old referral
         try {
             $referralService = Setting::where('option', 'referral_service_enable')->first()->value ?? 0;

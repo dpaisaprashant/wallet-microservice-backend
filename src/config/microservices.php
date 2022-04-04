@@ -1,6 +1,8 @@
 <?php
 
     return [
+        "CORE" => env('CORE_MICROSERVICE_URL', ''),
+
         "PAYPOINT" => env('PAYPOINT_MICROSERVICE_URL', ''),
 
         "NCHL" => env('NCHL_MICROSERVICE_URL', ''),

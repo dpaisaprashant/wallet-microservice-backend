@@ -6,7 +6,7 @@ return [
     268 =>['bank_id'=>'3001','bank_name'=>'Civil Bank Limited','branch_id'=>'1','branch_name'=>'Head Office','account_number'=>'01810032637111','account_name'=>'NEA-Anarmani'],
     248 =>['bank_id'=>'0801','bank_name'=>'Nepal SBI Bank Limited','branch_id'=>'177','branch_name'=>'Durbar Marg','account_number'=>'22825240200072','account_name'=>'Nepal Electricity Authority, ARGHAKHACHI'],
     384 =>['bank_id'=>'3001','bank_name'=>'Civil Bank Limited','branch_id'=>'1','branch_name'=>'Head Office','account_number'=>'01210032637025','account_name'=>'NEA-Arughat'],
-    345 =>['bank_id'=>'2101','bank_name'=>'Prime Commercial Bank Limited','branch_id'=>'1','branch_name'=>'Kamalpokhari Central Office','account_number'=>'20500094CA','account_name'=>'NEA-Ataria'],
+    345 =>['bank_id'=>'2101','bank_name'=>'Prime Commercial Bank Limited','branch_id'=>'1','branch_name'=>'Kamalpokhari Central Office','account_number'=>'20500094CA','account_name'=>'NEA ATTRIYA'],
     237 =>['bank_id'=>'2601','bank_name'=>'Prabhu Bank Limited','branch_id'=>'999','branch_name'=>'Head Office Anamnagar','account_number'=>'0650003006000013','account_name'=>'NEA TAUKHEL'],
     299 =>['bank_id'=>'1501','bank_name'=>'Machhapuchhare Bank Limited','branch_id'=>'1','branch_name'=>'Corporate Office','account_number'=>'0340014503500018','account_name'=>'NEA Baglung'],
     381 =>['bank_id'=>'1201','bank_name'=>'NEPAL CREDIT AND COMMERCE BANK LIMITED','branch_id'=>'3','branch_name'=>'Main Branch Baghbazar','account_number'=>'00200000057701','account_name'=>'NEPAL ELECTRICITY AUTHORITY BAITADI (GOTHALEPANI)'],

@@ -167,7 +167,7 @@ return [
     244 =>['bank_id'=>'2301','bank_name'=>'NIC Asia Bank Limited','branch_id'=>'32','branch_name'=>'Head Office','account_number'=>'1714150062844034','account_name'=>'NEPAL ELECTRICITY AUTHORITY-PURANO THIMI'],
     342 =>['bank_id'=>'1101','bank_name'=>'Bank of Katmandu Limited','branch_id'=>'1000','branch_name'=>'Head Office','account_number'=>'012800000974524','account_name'=>'NEA-Tikapur'],
     328 =>['bank_id'=>'2601','bank_name'=>'Pravu BANK LIMITED','branch_id'=>'999','branch_name'=>'Head Office Anamnagar','account_number'=>'0490003006000013','account_name'=>'NEPAL BIDHUT PRADHIKARAN TRIBENI'],
-    252 =>['bank_id'=>'1101','bank_name'=>'Bank of Kathmandu Limited','branch_id'=>'1000','branch_name'=>'Head Office','account_number'=>'0119000000391524','account_name'=>'N.E.A TULSIPUR'],
+    252 =>['bank_id'=>'1101','bank_name'=>'Bank of Kathmandu Limited','branch_id'=>'1000','branch_name'=>'Head Office','account_number'=>'011900000391524','account_name'=>'N.E.A TULSIPUR'],
     363 =>['bank_id'=>'0201','bank_name'=>'Rastriya Banijaya Bank Limited','branch_id'=>'143','branch_name'=>'Thapathali Branch','account_number'=>'2080100001063001','account_name'=>'NEA (TUMLINGTAR)'],
     295 =>['bank_id'=>'1501','bank_name'=>'Machhapuchare Bank Limited','branch_id'=>'1','branch_name'=>'Corporate Office','account_number'=>'1460014503500018','account_name'=>'NEA Urlabari'],
     372 =>['bank_id'=>'2301','bank_name'=>'NIC ASIA BANK LTD','branch_id'=>'32','branch_name'=>'Head Office','account_number'=>'1614150062844010','account_name'=>'NEPAL ELECTRICITY AUTHORITY-BHURIGAUN'],

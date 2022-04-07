@@ -69,7 +69,7 @@
                                                                                            class="form-control date_from" placeholder="From"
                                                                                            name="from" autocomplete="off"
                                                                                            value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}"
-                                                                                           required>
+                                                                                           >
                                                                                 </div>
                                                                                 <br>
                                                                             </div>
@@ -81,7 +81,7 @@
                                                                                     <input id="date_load_to" type="text"
                                                                                            class="form-control date_to" placeholder="To" name="to"
                                                                                            autocomplete="off"
-                                                                                           value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}" required>
+                                                                                           value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}" >
                                                                                 </div>
                                                                             </div>
 

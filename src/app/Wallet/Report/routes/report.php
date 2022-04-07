@@ -145,5 +145,6 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web', 'auth']], func
 
 
     Route::get('voting', [MiscReportController::class, 'votingReport'])->name('report.voting')->middleware('permission:Report campaign voting');
+    Route::get('device-info', [MiscReportController::class, 'deviceInfo'])->name('report.device.info')->middleware('permission:Report device info');
     Route::post('disqualify/{id}', [MiscReportController::class, 'disqualifyParticipant'])->name('participant.disqualify')->middleware('permission:Report campaign voting');
 });

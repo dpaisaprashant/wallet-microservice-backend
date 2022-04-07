@@ -513,6 +513,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'View ticket sale report',
             'View load test fund report',
             'Report campaign voting',
+            'Report device info',
 
             'View wallet payables',
             ];

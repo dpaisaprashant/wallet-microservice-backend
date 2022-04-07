@@ -5,6 +5,7 @@ namespace App\Wallet\Report\Http\Controllers;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\DeviceInfo;
 use App\Models\SwipeVotingParticipant;
 use App\Models\SwipeVotingParticipants;
 use App\Traits\CollectionPaginate;
@@ -72,4 +73,11 @@ class MiscReportController extends Controller
 //        return view('WalletReport::voting.voting-report');
     }
 
+    public function deviceInfo(Request $request)
+    {
+        $deviceInfos = DeviceInfo::filter($request)->get();
+        View::share('deviceInfos', $deviceInfos);
+
+        return view('WalletReport::deviceInfo.device-info-view');
+    }
 }

@@ -48,8 +48,9 @@ class MiscReportController extends Controller
         $events = DB::connection('swipe_voting')->select("SELECT * from events");
         View::share('events', $events);
 
-        $baseUrl = env('SWIPE_VOTING_URL');
+        $baseUrl = config('dpaisa-api-url.swipe-voting-participant-image-url');
         View::share('baseUrl', $baseUrl);
+
         return view('WalletReport::voting.voting-report');
     }
 

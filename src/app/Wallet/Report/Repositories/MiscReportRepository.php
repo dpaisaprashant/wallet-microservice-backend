@@ -4,7 +4,9 @@
 namespace App\Wallet\Report\Repositories;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 
 class MiscReportRepository extends AbstractReportRepository
 {
@@ -31,7 +33,7 @@ class MiscReportRepository extends AbstractReportRepository
                                                                         AND t.service_type LIKE 'LUCKY WINNER'
                                                                         AND date(t.created_at) >= date(:fromDate)
                                                                         AND date(t.created_at) <= date(:toDate);
-                                                      ",['fromDate'=>$this->fromDate, 'toDate'=> $this->toDate]);
+                                                      ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
 
         return $luckyWinners;
     }
@@ -46,9 +48,20 @@ class MiscReportRepository extends AbstractReportRepository
                                                                             AND refund_id IS NULL
                                                                             AND date(t.created_at) >= date(:fromDate)
                                                                             AND date(t.created_at) <= date(:toDate);
-                                                      ",['fromDate'=>$this->fromDate, 'toDate'=> $this->toDate]);
+                                                      ", ['fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
 
         return $ticketSales;
+    }
+
+    public function campaignVoting($eventCode)
+    {
+        $participants = DB::connection('swipe_voting')->select("SELECT * from participants as p
+                                                                            WHERE p.event_code = :event_code
+                                                                            AND date(p.created_at) >= date(:fromDate)
+                                                                            AND date(p.created_at) <= date(:toDate);
+                                                                            ;
+                                                      ", ['event_code' => $eventCode,'fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
+        return $participants;
     }
 
 }

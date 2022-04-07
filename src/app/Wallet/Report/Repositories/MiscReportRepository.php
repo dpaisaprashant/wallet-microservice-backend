@@ -3,6 +3,7 @@
 
 namespace App\Wallet\Report\Repositories;
 
+use App\Models\SwipeVotingParticipant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -18,9 +19,10 @@ class MiscReportRepository extends AbstractReportRepository
     public function __construct(Request $request)
     {
         parent::__construct($request);
-        $this->fromDate = date('Y-m-d', strtotime(str_replace(',', ' ', $request->from)));
-        $this->toDate = date('Y-m-d', strtotime(str_replace(',', ' ', $request->to)));
-
+        if (isset($request->from) && isset($request->to)) {
+            $this->fromDate = date('Y-m-d', strtotime(str_replace(',', ' ', $request->from)));
+            $this->toDate = date('Y-m-d', strtotime(str_replace(',', ' ', $request->to)));
+        }
     }
 
     public function luckyWinner()
@@ -55,12 +57,14 @@ class MiscReportRepository extends AbstractReportRepository
 
     public function campaignVoting($eventCode)
     {
-        $participants = DB::connection('swipe_voting')->select("SELECT * from participants as p
-                                                                            WHERE p.event_code = :event_code
-                                                                            AND date(p.created_at) >= date(:fromDate)
-                                                                            AND date(p.created_at) <= date(:toDate);
-                                                                            ;
-                                                      ", ['event_code' => $eventCode,'fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
+//        $participants = DB::connection('swipe_voting')->select("SELECT * from participants as p
+//                                                                            WHERE p.event_code = :event_code
+//                                                                            AND date(p.created_at) >= date(:fromDate)
+//                                                                            AND date(p.created_at) <= date(:toDate);
+//                                                                            ;
+//                                                      ", ['event_code' => $eventCode,'fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
+
+        $participants = SwipeVotingParticipant::where('event_code', $eventCode)->filter(request())->get();
         return $participants;
     }
 

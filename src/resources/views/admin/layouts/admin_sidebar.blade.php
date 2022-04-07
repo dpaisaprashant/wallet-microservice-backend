@@ -853,6 +853,19 @@ $url = url()->current();
                 </li>
             @endif
 
+            @if(auth()->user()->hasAnyPermission(['Report campaign voting']))
+                <li @if(preg_match('/report/i', $url)) class="active" @endif>
+                    <a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">Campaign Voting Reports</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+
+                        @can('Report campaign voting')
+                            <li><a href="{{ route('report.voting') }}">Participants Report</a></li>
+                        @endcan
+
+                    </ul>
+                </li>
+            @endif
 
             @if(auth()->user()->hasAnyPermission(['View blocked ip', 'View whitelisted ip']))
                 <li @if(preg_match('/ip/i', $url)) class="active" @endif>

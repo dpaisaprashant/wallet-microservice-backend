@@ -221,10 +221,9 @@
         });
     </script>
     <script>
+        // if (typeof participants == 'undefined')
         $(document).ready(function (e) {
-
-            let a = "Showing {{ $participants->firstItem() }} to {{ $participants->lastItem() }} of {{ $participants->total() }} entries";
-
+                let a = "Showing @if(isset($participants)) {{ $participants->firstItem() }} to {{ $participants->lastItem() }} of {{ $participants->total() }} @endif entries";
             $('.dataTables_info').text(a);
         });
     </script>

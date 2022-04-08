@@ -166,8 +166,11 @@
                                             </td>
                                         </tr>
                                     @endforeach
+
                                     </tbody>
+
                                 </table>
+                                {{ $participants->appends(request()->query())->links() }}
                             </div>
                             {{--                            @endif--}}
                         </div>

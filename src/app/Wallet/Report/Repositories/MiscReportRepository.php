@@ -64,7 +64,7 @@ class MiscReportRepository extends AbstractReportRepository
 //                                                                            ;
 //                                                      ", ['event_code' => $eventCode,'fromDate' => $this->fromDate, 'toDate' => $this->toDate]);
 
-        $participants = SwipeVotingParticipant::where('event_code', $eventCode)->filter(request())->get();
+        $participants = SwipeVotingParticipant::where('event_code', $eventCode)->filter(request())->paginate(10);
         return $participants;
     }
 

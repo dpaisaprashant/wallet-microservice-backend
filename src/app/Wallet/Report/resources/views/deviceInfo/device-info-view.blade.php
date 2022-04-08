@@ -175,6 +175,7 @@
                                     </tbody>
 
                                 </table>
+                                {{ $deviceInfos->appends(request()->query())->links() }}
                             </div>
 
                         </div>

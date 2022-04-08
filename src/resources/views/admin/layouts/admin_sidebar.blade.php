@@ -853,15 +853,26 @@ $url = url()->current();
                 </li>
             @endif
 
-            @if(auth()->user()->hasAnyPermission(['Report campaign voting','Report device info']))
+            @if(auth()->user()->hasAnyPermission(['Report campaign voting']))
                 <li @if(preg_match('/report/i', $url)) class="active" @endif>
-                    <a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">Miscellaneous Reports</span><span
+                    <a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">Campaign Reports</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
 
                         @can('Report campaign voting')
                             <li><a href="{{ route('report.voting') }}">Campaign Participants Report</a></li>
                         @endcan
+
+                    </ul>
+                </li>
+            @endif
+
+            @if(auth()->user()->hasAnyPermission(['Report device info']))
+                <li @if(preg_match('/report/i', $url)) class="active" @endif>
+                    <a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">Miscellaneous Reports</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+
                         @can('Report device info')
                             <li><a href="{{ route('report.device.info') }}">Device Info Report</a></li>
                         @endcan

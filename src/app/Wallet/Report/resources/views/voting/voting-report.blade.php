@@ -44,7 +44,7 @@
                                     <br>
                                     <div class="row">
                                         <label class="col-sm-2 col-form-label">Select Campaign</label>
-                                        <div class="col-4">
+                                        <div class="col-4" style="text-align: center !important;">
                                             <select class="chosen-select" tabindex="2"
                                                     name="event_code" required>
                                                 <option value="" selected disabled>-- Select Campaign --</option>
@@ -56,36 +56,50 @@
                                             </select>
                                             <br>
                                         </div>
-                                    </div>
-                                    <br>
-                                                                        <div class="row">
-                                                                            <label class="col-sm-2 col-form-label">Select Date</label>
-                                                                            <div class="col-4">
-                                                                                <div class="input-group date">
-                                                                                    <span class="input-group-addon">
-                                                                                        <i class="fa fa-calendar"></i>
-                                                                                    </span>
-                                                                                    <input id="date_load_from" type="text"
-                                                                                           class="form-control date_from" placeholder="From"
-                                                                                           name="from" autocomplete="off"
-                                                                                           value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}"
-                                                                                           >
-                                                                                </div>
-                                                                                <br>
-                                                                            </div>
-                                                                            <div class="col-4">
-                                                                                <div class="input-group date">
-                                                                                    <span class="input-group-addon">
-                                                                                        <i class="fa fa-calendar"></i>
-                                                                                    </span>
-                                                                                    <input id="date_load_to" type="text"
-                                                                                           class="form-control date_to" placeholder="To" name="to"
-                                                                                           autocomplete="off"
-                                                                                           value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}" >
-                                                                                </div>
-                                                                            </div>
 
-                                                                        </div>
+                                        <div class="col-4" style="text-align: center !important;">
+                                            <select class="chosen-select" tabindex="2"
+                                                    name="status" >
+                                                <option value="" selected  disabled> -- Select Status --</option>
+                                                <option value="1"
+                                                        @if(!empty($_GET['status']) && $_GET['status'] == 1) selected @endif > Qualified </option>
+                                                <option value="-1"
+                                                        @if(!empty($_GET['status']) && $_GET['status'] == -1) selected @endif> Disqualified </option>
+
+                                            </select>
+                                            <br>
+                                        </div>
+                                    </div>
+<br>
+                                    <div class="row">
+                                        <label class="col-sm-2 col-form-label">Select Date</label>
+                                        <div class="col-4">
+                                            <div class="input-group date">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                                <input id="date_load_from" type="text"
+                                                       class="form-control date_from" placeholder="From"
+                                                       name="from" autocomplete="off"
+                                                       value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}"
+                                                >
+                                            </div>
+                                            <br>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="input-group date">
+                                                 <span class="input-group-addon">
+                                                     <i class="fa fa-calendar"></i>
+                                                 </span>
+                                                <input id="date_load_to" type="text"
+                                                       class="form-control date_to" placeholder="To" name="to"
+                                                       autocomplete="off"
+                                                       value="{{ !empty($_GET['to']) ? $_GET['to'] : '' }}">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
                                                 formaction="{{ route('report.voting') }}">
@@ -133,7 +147,8 @@
                                             <td>{{$participant->mobile_no}}</td>
                                             <td>
                                                 <a href="{{asset($baseUrl.$participant->image)}}" target="_blank">
-                                                    <img src="{{asset($baseUrl.$participant->image)}}" style="max-width: 200px !important;">
+                                                    <img src="{{asset($baseUrl.$participant->image)}}"
+                                                         style="max-width: 200px !important;">
                                                 </a>
                                             </td>
 
@@ -153,14 +168,16 @@
                                                     @csrf
                                                     <button
                                                         class="reset btn btn-sm btn-warning m-t-n-xs"
-                                                        rel="{{ $participant->id }}"><i class="fa fa-lock"></i> &nbsp; <i class="fa fa-unlock"></i>
+                                                        rel="{{ $participant->id }}"><i class="fa fa-lock"></i> &nbsp;
+                                                        <i class="fa fa-unlock"></i>
                                                     </button>
 
                                                     <button id="resetBtn-{{ $participant->id }}"
                                                             style="display: none" type="submit"
                                                             href="{{ route('participant.disqualify',$participant->id) }}"
                                                             class="resetBtn btn btn-sm btn-warning m-t-n-xs">
-                                                        <i class="fa fa-lock"></i> &nbsp; <i class="fa fa-unlock"></i></button>
+                                                        <i class="fa fa-lock"></i> &nbsp; <i class="fa fa-unlock"></i>
+                                                    </button>
                                                 </form>
 
                                                 {{--                                                @endcan--}}
@@ -223,7 +240,7 @@
     <script>
         // if (typeof participants == 'undefined')
         $(document).ready(function (e) {
-                let a = "Showing @if(isset($participants)) {{ $participants->firstItem() }} to {{ $participants->lastItem() }} of {{ $participants->total() }} @endif entries";
+            let a = "Showing @if(isset($participants)) {{ $participants->firstItem() }} to {{ $participants->lastItem() }} of {{ $participants->total() }} @endif entries";
             $('.dataTables_info').text(a);
         });
     </script>

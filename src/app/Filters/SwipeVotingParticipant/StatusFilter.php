@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filters\BFI;
+namespace App\Filters\SwipeVotingParticipant;
 
 use App\Filters\FilterAbstract;
 use App\Models\BfiExecutePayment;
 use Illuminate\Database\Eloquent\Builder;
 
-class UserFilter extends FilterAbstract
+class StatusFilter extends FilterAbstract
 {
 
 
@@ -33,9 +33,11 @@ class UserFilter extends FilterAbstract
             return $builder;
         }
 
-        return $builder->with('bfiUser')->whereHas('bfiUser', function ($query) use ($value) {
-            return $query->where('bfi_name', 'LIKE', "%{$value}%");
-        });
+        if ($value == -1) {
+            $value = 0;
+        }
+
+        return $builder->where('status', $value);
     }
 
 

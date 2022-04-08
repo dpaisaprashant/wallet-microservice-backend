@@ -14,6 +14,7 @@ class SwipeVotingParticipantFilters extends FiltersAbstract
     protected $filters = [
         'from' => FromDateFilter::class,
         'to' => ToDateFilter::class,
+        'status' => StatusFilter::class,
     ];
 
 

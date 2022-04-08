@@ -75,7 +75,7 @@ class MiscReportController extends Controller
 
     public function deviceInfo(Request $request)
     {
-        $deviceInfos = DeviceInfo::filter($request)->get();
+        $deviceInfos = DeviceInfo::filter($request)->paginate(10);
         View::share('deviceInfos', $deviceInfos);
 
         return view('WalletReport::deviceInfo.device-info-view');

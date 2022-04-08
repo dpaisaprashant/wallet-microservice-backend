@@ -205,6 +205,15 @@
 
     @include('admin.asset.js.datatable')
 
+    <script>
+        $(document).ready(function (e) {
+
+            let a = "Showing {{ $deviceInfos->firstItem() }} to {{ $deviceInfos->lastItem() }} of {{ $deviceInfos->total() }} entries";
+
+            $('.dataTables_info').text(a);
+        });
+    </script>
+
 @endsection
 
 

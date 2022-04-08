@@ -68,6 +68,10 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="input-group date">
+                                                 <span
+                                                     class="input-group-addon">
+                                                    <i class="fa fa-mobile"></i>
+                                                </span>
                                                 <input id="mobile_no" type="text" class="form-control"
                                                        placeholder="User Mobile No" name="mobile_no" autocomplete="off"
                                                        value="{{ !empty($_GET['mobile_no']) ? $_GET['mobile_no'] : '' }}">
@@ -163,7 +167,9 @@
                                             <td>{{$deviceInfo->total_memory}}</td>
                                             <td>{{$deviceInfo->unique_id}}</td>
                                             <td>{{$deviceInfo->version}}</td>
-                                            <td>{{$deviceInfo->device_info_json}}</td>
+                                            <td>
+                                                @include('WalletReport::deviceInfo.device-info-json', ['deviceInfo' => $deviceInfo])
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>

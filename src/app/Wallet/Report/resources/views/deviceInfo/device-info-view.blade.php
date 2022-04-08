@@ -163,7 +163,9 @@
                                             <td>{{$deviceInfo->total_memory}}</td>
                                             <td>{{$deviceInfo->unique_id}}</td>
                                             <td>{{$deviceInfo->version}}</td>
-                                            <td>{{$deviceInfo->device_info_json}}</td>
+                                            <td>
+                                                @include('WalletReport::deviceInfo.device-info-json', ['deviceInfo' => $deviceInfo])
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>

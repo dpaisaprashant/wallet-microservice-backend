@@ -132,7 +132,9 @@
                                             <td>{{$participant->name}}</td>
                                             <td>{{$participant->mobile_no}}</td>
                                             <td>
-                                                <img src="{{asset($baseUrl.$participant->image)}}">
+                                                <a href="{{asset($baseUrl.$participant->image)}}" target="_blank">
+                                                    <img src="{{asset($baseUrl.$participant->image)}}" style="max-width: 200px !important;">
+                                                </a>
                                             </td>
 
                                             <td>
@@ -218,7 +220,14 @@
             })
         });
     </script>
+    <script>
+        $(document).ready(function (e) {
 
+            let a = "Showing {{ $participants->firstItem() }} to {{ $participants->lastItem() }} of {{ $participants->total() }} entries";
+
+            $('.dataTables_info').text(a);
+        });
+    </script>
 
 @endsection
 

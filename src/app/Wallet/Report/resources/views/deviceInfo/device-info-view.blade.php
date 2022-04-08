@@ -68,6 +68,10 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="input-group date">
+                                                 <span
+                                                     class="input-group-addon">
+                                                    <i class="fa fa-mobile"></i>
+                                                </span>
                                                 <input id="mobile_no" type="text" class="form-control"
                                                        placeholder="User Mobile No" name="mobile_no" autocomplete="off"
                                                        value="{{ !empty($_GET['mobile_no']) ? $_GET['mobile_no'] : '' }}">

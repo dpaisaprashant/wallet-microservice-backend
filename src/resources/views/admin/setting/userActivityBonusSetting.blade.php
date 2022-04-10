@@ -125,6 +125,16 @@
                                 </div>
                             </div>
 
+
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">On First Load Transaction Start From Date</label>
+                                <div class="col-sm-10">
+                                    <input value="{{ $settings['user_activity_bonus_first_load_transaction_start_from_date'] ?? ''}}" name="user_activity_bonus_first_load_transaction_start_from_date" type="text" class="form-control">
+                                    <small>**English Date should be in format (YYYY-MM-DD)</small>
+                                    <small>**Only users with phone verified at after this date will be eligible for bonus</small>
+                                </div>
+                            </div>
+
                             <div class="hr-line-dashed"></div>
 
                             <div class="form-group row">

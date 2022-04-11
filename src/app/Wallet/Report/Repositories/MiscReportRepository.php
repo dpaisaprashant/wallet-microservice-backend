@@ -4,6 +4,7 @@
 namespace App\Wallet\Report\Repositories;
 
 use App\Models\SwipeVotingParticipant;
+use App\Models\SwipeVotingVote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -66,6 +67,14 @@ class MiscReportRepository extends AbstractReportRepository
 
         $participants = SwipeVotingParticipant::where('event_code', $eventCode)->filter(request())->paginate(10);
         return $participants;
+    }
+
+    public function campaignVotes($eventCode)
+    {
+        $votes = SwipeVotingVote::whereHas('participant', function ($query) use ($eventCode) {
+            return $query->where("event_code", $eventCode);
+        })->filter(request())->paginate(10);
+        return $votes;
     }
 
 }

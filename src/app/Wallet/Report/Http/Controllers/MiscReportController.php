@@ -73,6 +73,27 @@ class MiscReportController extends Controller
 //        return view('WalletReport::voting.voting-report');
     }
 
+    public function voterReport(Request $request)
+    {
+        if (!empty($request->all())) {
+            $repository = new MiscReportRepository($request);
+            $eventCode = $request->event_code;
+            $votes = $repository->campaignVotes($eventCode);
+            View::share('votes', $votes);
+        }
+
+        $repository = new MiscReportRepository($request);
+        $eventCode = $request->event_code;
+
+        $events = DB::connection('swipe_voting')->select("SELECT * from events");
+        View::share('events', $events);
+
+//        $baseUrl = config('dpaisa-api-url.swipe-voting-participant-image-url');
+//        View::share('baseUrl', $baseUrl);
+
+        return view('WalletReport::voting.voter-report');
+    }
+
     public function deviceInfo(Request $request)
     {
         $deviceInfos = DeviceInfo::filter($request)->paginate(10);

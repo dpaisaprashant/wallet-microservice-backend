@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Filters\SwipeVotingParticipant;
+namespace App\Filters\SwipeVotingVote;
 
 use App\Filters\FiltersAbstract;
 
-class SwipeVotingParticipantFilters extends FiltersAbstract
+class SwipeVotingVoteFilters extends FiltersAbstract
 {
     /**
      * Default course filters.
@@ -14,7 +14,8 @@ class SwipeVotingParticipantFilters extends FiltersAbstract
     protected $filters = [
         'from' => FromDateFilter::class,
         'to' => ToDateFilter::class,
-        'status' => StatusFilter::class,
+        'participant_name' => ParticipantNameFilter::class,
+        'participant_mobile_no' => ParticipantMobileNoFilter::class,
     ];
 
 

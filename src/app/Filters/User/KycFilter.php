@@ -47,8 +47,11 @@ class KycFilter extends FilterAbstract {
             })->pluck('user_id');
             return $builder->whereIn('id' ,$userIds);
         }else if($value == 'notfilled'){
-            $data = $builder->doesntHave('kyc');
-            return $data;
+            /*$data = $builder->doesntHave('kyc');
+            return $data;*/
+            return $builder->leftJoin("user_k_y_c_s", "user_k_y_c_s.user_id", "=", "users.id")
+                ->whereNull("user_k_y_c_s.id");
+
         }
         else if($value == 'all'){
             $userIds = UserKYC::pluck('user_id');

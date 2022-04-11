@@ -862,6 +862,9 @@ $url = url()->current();
                         @can('Report campaign voting')
                             <li><a href="{{ route('report.voting') }}">Campaign Participants Report</a></li>
                         @endcan
+                        @can('Report campaign voting')
+                            <li><a href="{{ route('report.voter') }}">Campaign Voters Report</a></li>
+                        @endcan
 
                     </ul>
                 </li>

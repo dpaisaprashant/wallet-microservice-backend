@@ -33,6 +33,8 @@ use App\Http\Resources\NonRealTimeBankTransferResource;
 use App\Http\Resources\PreTransactionResource;
 use App\Http\Resources\RegisterUsingReferralResource;
 use App\Http\Resources\SparrowSMSResource;
+use App\Http\Resources\SwipeVotingParticipantResource;
+use App\Http\Resources\SwipeVotingVoteResource;
 use App\Http\Resources\TicketSalesReportResource;
 use App\Http\Resources\TransactionEventResource;
 use App\Http\Resources\UserAudit\AdminUserKYCResource;
@@ -70,6 +72,8 @@ use App\Models\NICAsiaCyberSourceLoadTransaction;
 use App\Models\NonRealTimeBankTransfer;
 use App\Models\NpsLoadTransaction;
 use App\Models\SparrowSMS;
+use App\Models\SwipeVotingParticipant;
+use App\Models\SwipeVotingVote;
 use App\Models\TicketSale;
 use App\Models\TransactionEvent;
 use App\Models\User;
@@ -861,6 +865,28 @@ class ExcelExportController extends Controller
             ->setGeneratorModel(User::class)
             ->setRequest($request)
             ->setResource(RegisterUsingReferralResource::class);
+        return $export->exportExcel();
+    }
+
+    //SwipeVotingParticipantReport
+    public function swipeVotingParticipant(Request $request){
+        $export = new ExportExcelHelper();
+        $export->setName('Swipe Voting Participants')
+            ->setGeneratorModel(SwipeVotingParticipant::class)
+            ->setRequest($request)
+            ->setResource(SwipeVotingParticipantResource::class);
+
+        return $export->exportExcel();
+    }
+
+    //SwipeVotingVoterReport
+    public function swipeVotingVoter(Request $request){
+        $export = new ExportExcelHelper();
+        $export->setName('Swipe Voting Voters')
+            ->setGeneratorModel(SwipeVotingVote::class)
+            ->setRequest($request)
+            ->setResource(SwipeVotingVoteResource::class);
+
         return $export->exportExcel();
     }
 

@@ -585,6 +585,12 @@ Route::group(['prefix' => 'admin'], function () {
         // Nchl Load Transaction audit trail
         Route::get('excel/nchl-load-transaction-audit-trail','ExcelExportController@nchlLoadTransactionAuditTrail')->name('nchl-load-transaction-audit-trail');
 
+        // swipeVotingParticipant
+        Route::get('excel/swipe-voting-participant','ExcelExportController@swipeVotingParticipant')->name('swipe-voting.participant.excel');
+
+        // swipeVotingParticipant
+        Route::get('excel/swipe-voting-voter','ExcelExportController@swipeVotingVoter')->name('swipe-voting.voter.excel');
+
         /**
          * General Settings
          */

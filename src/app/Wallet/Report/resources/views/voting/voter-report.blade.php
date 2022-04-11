@@ -108,6 +108,9 @@
                                             <strong>Generate Report</strong>
                                         </button>
                                     </div>
+
+                                    <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs" type="submit" style="margin-right: 10px;" formaction="{{ route('swipe-voting.voter.excel') }}"><strong>Excel</strong></button>
+
                                     @include('admin.asset.components.clearFilterButton')
                                 </form>
                             </div>
@@ -147,9 +150,17 @@
                                     @foreach($votes as $vote)
                                         <tr>
                                             <td>{{$loop->index+1}}</td>
-                                            <td>{{$vote->participant->name}}</td>
+                                            <td>
+                                                <a href="{{route('user.profile', $vote->participant->user->id)}}" target="_blank">
+                                                {{$vote->participant->name}}
+                                                </a>
+                                            </td>
                                             <td>{{$vote->participant->mobile_no}}</td>
-                                            <td>{{$vote->user->name}}</td>
+                                            <td>
+                                                <a href="{{route('user.profile', $vote->user->id)}}" target="_blank">
+                                                {{$vote->user->name}}
+                                                </a>
+                                            </td>
                                             <td>{{$vote->user->mobile_no}}</td>
                                             <td>{{$vote->participant->created_at}}</td>
                                             <td>{{$vote->user->phone_verified_at}}</td>

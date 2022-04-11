@@ -793,6 +793,8 @@ $url = url()->current();
                         @can('View wallet payables')
                             <li><a href="{{route('report.walletPayablesReport')}}">Wallet Payables Report</a></li>
                         @endcan
+                        {{--                        todo: add permissions--}}
+                        <li><a href="{{route('report.daily_info_report')}}">Daily Information Report</a></li>
                     </ul>
                 </li>
             @endif

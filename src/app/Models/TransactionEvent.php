@@ -144,6 +144,10 @@ class TransactionEvent extends Model
         return $this->belongsTo(User::class,'user_id');
     }
 
+    public function agent(){
+        return $this->belongsTo(Agent::class, 'user_id','user_id');
+    }
+
 
     public function selectedMonthTransactions($year, $month, $transactionType)
     {

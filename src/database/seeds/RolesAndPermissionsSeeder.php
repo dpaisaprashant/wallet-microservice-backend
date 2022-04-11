@@ -516,6 +516,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Report device info',
 
             'View wallet payables',
+            'View daily info report',
             ];
 
         //get users having all permissions

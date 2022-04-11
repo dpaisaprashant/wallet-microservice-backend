@@ -48,6 +48,11 @@ class Agent extends Model
         return $this->belongsTo(User::class, 'code_used_id');
     }
 
+    public function agentTransactionEvents()
+    {
+        return $this->hasMany(TransactionEvent::class, 'user_id','user_id');
+    }
+
     public function adminAlteredAgent(){
         return $this->hasMany(AdminAlteredAgent::class,'agent_id');
     }

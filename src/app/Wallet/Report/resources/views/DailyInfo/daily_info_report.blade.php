@@ -78,7 +78,7 @@
                         <div class="ibox-content">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover dataTables-example"
-                                       title="Wallet user's list">
+                                       title="Daily Information Report">
                                     <thead>
                                     <tr>
                                         <th>S.N</th>
@@ -169,8 +169,6 @@
 
     @include('admin.asset.css.datepicker')
 
-    @include('admin.asset.css.chosen')
-
     @include('admin.asset.css.datatable')
 
 @endsection
@@ -179,9 +177,9 @@
 
     @include('admin.asset.js.datepicker')
 
-    @include('admin.asset.js.chosen')
-
     @include('admin.asset.js.datatable')
+
+
 
 @endsection
 

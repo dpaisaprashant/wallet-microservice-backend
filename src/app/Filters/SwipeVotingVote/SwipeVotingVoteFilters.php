@@ -16,6 +16,7 @@ class SwipeVotingVoteFilters extends FiltersAbstract
         'to' => ToDateFilter::class,
         'participant_name' => ParticipantNameFilter::class,
         'participant_mobile_no' => ParticipantMobileNoFilter::class,
+        'event_code' => EventCodeFilter::class,
     ];
 
 

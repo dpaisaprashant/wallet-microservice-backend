@@ -100,12 +100,16 @@
 
                                     </div>
 
+
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
                                                 formaction="{{ route('report.voting') }}">
                                             <strong>Generate Report</strong>
                                         </button>
                                     </div>
+
+                                    <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs" type="submit" style="margin-right: 10px;" formaction="{{ route('swipe-voting.participant.excel') }}"><strong>Excel</strong></button>
+
                                     @include('admin.asset.components.clearFilterButton')
                                 </form>
                             </div>

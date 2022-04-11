@@ -46,7 +46,7 @@ class MiscReportController extends Controller
             View::share('participants', $participants);
         }
 
-        $events = DB::connection('swipe_voting')->select("SELECT * from events");
+        $events = DB::connection('swipe_voting')->select("SELECT * from events WHERE event_code != 'ITOLYMPIAD2022PERSON' AND event_code != 'ITOLYMPIAD2022SCHOOL'");
         View::share('events', $events);
 
         $baseUrl = config('dpaisa-api-url.swipe-voting-participant-image-url');
@@ -85,11 +85,8 @@ class MiscReportController extends Controller
         $repository = new MiscReportRepository($request);
         $eventCode = $request->event_code;
 
-        $events = DB::connection('swipe_voting')->select("SELECT * from events");
-        View::share('events', $events);
-
-//        $baseUrl = config('dpaisa-api-url.swipe-voting-participant-image-url');
-//        View::share('baseUrl', $baseUrl);
+        $events = DB::connection('swipe_voting')->select("SELECT * from events WHERE event_code != 'ITOLYMPIAD2022PERSON' AND event_code != 'ITOLYMPIAD2022SCHOOL'");
+       View::share('events', $events);
 
         return view('WalletReport::voting.voter-report');
     }

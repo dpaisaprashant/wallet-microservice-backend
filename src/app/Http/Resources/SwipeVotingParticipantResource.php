@@ -15,7 +15,6 @@ class SwipeVotingParticipantResource extends JsonResource
      */
     public function toArray($request)
     {
-//        Log::info('SwipeVotingParticipantResource',['REQUEST'=>$this->name]);
         if ($this->status == 1) {
             $status = 'QUALIFIED';
         }else{

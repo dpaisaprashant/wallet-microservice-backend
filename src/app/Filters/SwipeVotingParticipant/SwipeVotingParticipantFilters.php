@@ -15,6 +15,7 @@ class SwipeVotingParticipantFilters extends FiltersAbstract
         'from' => FromDateFilter::class,
         'to' => ToDateFilter::class,
         'status' => StatusFilter::class,
+        'event_code' => EventCodeFilter::class,
     ];
 
 

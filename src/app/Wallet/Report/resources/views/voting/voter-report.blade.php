@@ -2,7 +2,7 @@
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Campaign Voting Report</h2>
+            <h2>Campaign Voter Report</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -13,7 +13,7 @@
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Campaign Voting Report</strong>
+                    <strong>Campaign Voters Report</strong>
                 </li>
             </ol>
         </div>
@@ -56,23 +56,25 @@
                                             </select>
                                             <br>
                                         </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <label class="col-sm-2 col-form-label">Participant</label>
+                                        <div class="col-4" style="text-align: center !important;">
+                                            <input type="text" name="participant_name"
+                                                   placeholder="Participant Name" class="form-control"
+                                                   value="{{ !empty($_GET['participant_name']) ? $_GET['participant_name'] : '' }}">
+                                        </div>
 
                                         <div class="col-4" style="text-align: center !important;">
-                                            <select class="chosen-select" tabindex="2"
-                                                    name="status" >
-                                                <option value="" selected  disabled> -- Select Status --</option>
-                                                <option value="1"
-                                                        @if(!empty($_GET['status']) && $_GET['status'] == 1) selected @endif > Qualified </option>
-                                                <option value="-1"
-                                                        @if(!empty($_GET['status']) && $_GET['status'] == -1) selected @endif> Disqualified </option>
-
-                                            </select>
-                                            <br>
+                                            <input type="number" name="participant_mobile_no"
+                                                   placeholder="Participant Mobile Number" class="form-control"
+                                                   value="{{ !empty($_GET['participant_mobile_no']) ? $_GET['participant_mobile_no'] : '' }}">
                                         </div>
                                     </div>
-<br>
+                                <br>
                                     <div class="row">
-                                        <label class="col-sm-2 col-form-label">Select Date</label>
+                                        <label class="col-sm-2 col-form-label">Select Voted At Date</label>
                                         <div class="col-4">
                                             <div class="input-group date">
                                                 <span class="input-group-addon">
@@ -102,7 +104,7 @@
 
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
-                                                formaction="{{ route('report.voting') }}">
+                                                formaction="{{ route('report.voter') }}">
                                             <strong>Generate Report</strong>
                                         </button>
                                     </div>
@@ -121,7 +123,7 @@
                 <div class="col-lg-12">
                     <div class="ibox ">
                         <div class="ibox-title">
-                            <h5>List Generated for Campaign Participants Report</h5>
+                            <h5>List Generated for Campaign Voters Report</h5>
                         </div>
 
                         <div class="ibox-content">
@@ -131,67 +133,36 @@
                                     <thead>
                                     <tr>
                                         <th>S.N.</th>
-                                        <th>Name</th>
-                                        <th>Mobile</th>
-                                        <th>Image</th>
-                                        <th>Status</th>
-                                        <th>Created At</th>
-                                        <th>Action</th>
+                                        <th>Participant Name</th>
+                                        <th>Participant Mobile</th>
+                                        <th>Voter Name</th>
+                                        <th>Voter Mobile</th>
+                                        <th>Participant Registered Date</th>
+                                        <th>Voter Registered Date</th>
+                                        <th>Voted At</th>
+                                        <th>Event Code</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($participants as $participant)
+                                    @foreach($votes as $vote)
                                         <tr>
                                             <td>{{$loop->index+1}}</td>
-                                            <td>{{$participant->name}}</td>
-                                            <td>{{$participant->mobile_no}}</td>
-                                            <td>
-                                                <a href="{{asset($baseUrl.$participant->image)}}" target="_blank">
-                                                    <img src="{{asset($baseUrl.$participant->image)}}"
-                                                         style="max-width: 200px !important;">
-                                                </a>
-                                            </td>
-
-                                            <td>
-                                                @if($participant->status == 1)
-                                                    <span class="badge badge-primary">Qualified</span>
-                                                @else
-                                                    <span class="badge badge-danger">Disqualified</span>
-                                                @endif
-                                            </td>
-                                            <td>{{$participant->created_at}}</td>
-                                            <td>
-
-                                                {{--                                                @can('Delete whitelisted ip')--}}
-                                                <form action="{{ route('participant.disqualify',$participant->id) }}"
-                                                      method="POST">
-                                                    @csrf
-                                                    <button
-                                                        class="reset btn btn-sm btn-warning m-t-n-xs"
-                                                        rel="{{ $participant->id }}"><i class="fa fa-lock"></i> &nbsp;
-                                                        <i class="fa fa-unlock"></i>
-                                                    </button>
-
-                                                    <button id="resetBtn-{{ $participant->id }}"
-                                                            style="display: none" type="submit"
-                                                            href="{{ route('participant.disqualify',$participant->id) }}"
-                                                            class="resetBtn btn btn-sm btn-warning m-t-n-xs">
-                                                        <i class="fa fa-lock"></i> &nbsp; <i class="fa fa-unlock"></i>
-                                                    </button>
-                                                </form>
-
-                                                {{--                                                @endcan--}}
-
-                                            </td>
+                                            <td>{{$vote->participant->name}}</td>
+                                            <td>{{$vote->participant->mobile_no}}</td>
+                                            <td>{{$vote->user->name}}</td>
+                                            <td>{{$vote->user->mobile_no}}</td>
+                                            <td>{{$vote->participant->created_at}}</td>
+                                            <td>{{$vote->user->phone_verified_at}}</td>
+                                            <td>{{$vote->created_at}}</td>
+                                            <td>{{$vote->participant->event_code}}</td>
                                         </tr>
                                     @endforeach
 
                                     </tbody>
 
                                 </table>
-                                {{ $participants->appends(request()->query())->links() }}
+                                {{ $votes->appends(request()->query())->links() }}
                             </div>
-                            {{--                            @endif--}}
                         </div>
                     </div>
                 </div>
@@ -218,29 +189,11 @@
     @include('admin.asset.js.datatable')
     @include('admin.asset.js.sweetalert')
 
-    <script>
-        $('.reset').on('click', function (e) {
-            e.preventDefault();
-            let participant_Id = $(this).attr('rel');
-            swal({
-                title: "Are you sure?",
-                text: "Participant's status will be changed",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes",
-                closeOnConfirm: false
-            }, function () {
-                $('#resetBtn-' + participant_Id).trigger('click');
-                swal.close();
 
-            })
-        });
-    </script>
     <script>
         // if (typeof participants == 'undefined')
         $(document).ready(function (e) {
-            let a = "Showing @if(isset($participants)) {{ $participants->firstItem() }} to {{ $participants->lastItem() }} of {{ $participants->total() }} @endif entries";
+            let a = "Showing @if(isset($votes)) {{ $votes->firstItem() }} to {{ $votes->lastItem() }} of {{ $votes->total() }} @endif entries";
             $('.dataTables_info').text(a);
         });
     </script>

@@ -2,6 +2,7 @@
 
 namespace App\Wallet\Report\Http\Controllers;
 
+use App\Models\Architecture\WalletTransactionType;
 use App\Models\FundRequest;
 use App\Models\NchlBankTransfer;
 use App\Models\NchlLoadTransaction;
@@ -15,9 +16,11 @@ use Illuminate\Support\Facades\DB;
 
 class DailyInfoReportController extends \App\Http\Controllers\Controller
 {
-
     public function dailyInfoReport(Request $request)
     {
+        $walletTransactionTypes = new WalletTransactionType();
+        $bankTransferDetails = $walletTransactionTypes->getBankTransferTransactionModels();
+        $bankLoadDetails = $walletTransactionTypes->getLoadTransactionModels();
 
         if (!$request->date) {
             return view('WalletReport::DailyInfo.daily_info_report');
@@ -187,11 +190,11 @@ class DailyInfoReportController extends \App\Http\Controllers\Controller
 
 //        Bank Load Details Calculation
 
-            $bankLoadDetails = $this->getBankLoadDetails($date->toDateString());
+            $bankLoadDetails = $this->getBankLoadDetails($date->toDateString(),$bankLoadDetails);
             $bankLoadAmount = $bankLoadDetails['amount'] / 100;
             $bankLoadCount = $bankLoadDetails['count'];
 
-            $previousDayBankLoadDetails = $this->getBankLoadDetails($previous_day);
+            $previousDayBankLoadDetails = $this->getBankLoadDetails($previous_day,$bankLoadDetails);
             $previousDayBankLoadAmount = $previousDayBankLoadDetails['amount'] / 100;
             $previousDayBankLoadCount = $previousDayBankLoadDetails['count'];
 
@@ -212,12 +215,12 @@ class DailyInfoReportController extends \App\Http\Controllers\Controller
 
 //        Bank Transfer Details Section Starts
 
-            $bankTransferDetails = $this->getBankTransferDetails($date->toDateString());
+            $bankTransferDetails = $this->getBankTransferDetails($date->toDateString(),$bankTransferDetails);
             $bankTransferAmount = $bankTransferDetails['amount'] / 100;
             $bankTransferCount = $bankTransferDetails['count'];
 
 //        previous day bank Transfer Details
-            $previousBankTransferDetails = $this->getBankTransferDetails($previous_day);
+            $previousBankTransferDetails = $this->getBankTransferDetails($previous_day,$bankTransferDetails);
             $previousBankTransferAmount = $previousBankTransferDetails['amount'] / 100;
             $previousBankTransferCount = $previousBankTransferDetails['count'];
 
@@ -305,7 +308,7 @@ class DailyInfoReportController extends \App\Http\Controllers\Controller
                 ],
                 [
                     'heading' => "User's Transaction",
-                    'particulars' => ["Total Transaction", "Total Count"],
+                    'particulars' => ["Total Transaction (Rs.)", "Total Count"],
                     'total_number' => "",
                     'data' => [$user_total_transaction, $user_total_transaction_count],
                     'previous_day_report' => [$user_previous_total_transaction, $user_previous_total_transaction_count],
@@ -316,7 +319,7 @@ class DailyInfoReportController extends \App\Http\Controllers\Controller
                 ],
                 [
                     'heading' => "Agent's Transaction",
-                    'particulars' => ["Total Transaction", "Total Count"],
+                    'particulars' => ["Total Transaction (Rs.)", "Total Count"],
                     'total_number' => "",
                     'data' => [$agent_total_transaction, $agent_total_transaction_count],
                     'previous_day_report' => [$agent_previous_total_transaction, $agent_previous_total_transaction_count],
@@ -327,7 +330,7 @@ class DailyInfoReportController extends \App\Http\Controllers\Controller
                 ],
                 [
                     'heading' => "Total Transaction",
-                    'particulars' => ["Total Transaction", "Total Count"],
+                    'particulars' => ["Total Transaction (Rs.)", "Total Count"],
                     'total_number' => "",
                     'data' => [$total_total_transaction, $total_total_transaction_count],
                     'previous_day_report' => [$total_previous_total_transaction, $total_previous_total_transaction_count],
@@ -338,7 +341,7 @@ class DailyInfoReportController extends \App\Http\Controllers\Controller
                 ],
                 [
                     'heading' => "Bank Load",
-                    'particulars' => ["Total Load", "Total Count"],
+                    'particulars' => ["Total Load (Rs.)", "Total Count"],
                     'total_number' => "",
                     'data' => [$bankLoadAmount, $bankLoadCount],
                     'previous_day_report' => [$previousDayBankLoadAmount, $previousDayBankLoadCount],
@@ -349,7 +352,7 @@ class DailyInfoReportController extends \App\Http\Controllers\Controller
                 ],
                 [
                     'heading' => "Bank Transfer",
-                    'particulars' => ["Amount", "Count"],
+                    'particulars' => ["Amount (Rs.)", "Count"],
                     'total_number' => "",
                     'data' => [$bankTransferAmount, $bankTransferCount],
                     'previous_day_report' => [$previousBankTransferAmount, $previousBankTransferAmount],
@@ -360,7 +363,7 @@ class DailyInfoReportController extends \App\Http\Controllers\Controller
                 ],
                 [
                     'heading' => "P2P",
-                    'particulars' => ["Total Amount", "Total Count"],
+                    'particulars' => ["Total Amount (Rs.)", "Total Count"],
                     'total_number' => "",
                     'data' => [$userToUserFundTransferAmount, $userToUserFundTransferCount],
                     'previous_day_report' => [$userToUserPreviousFundTransferAmount, $userToUserPreviousFundTransferCount],
@@ -467,19 +470,19 @@ class DailyInfoReportController extends \App\Http\Controllers\Controller
         return ['total_transaction' => $total_transactions[0]->total_amount, 'total_count' => $total_transactions[0]->count];
     }
 
-    public function getBankLoadDetails($date)
+    public function getBankLoadDetails($date,$bankLoadDetails)
     {
         $total_transactions = TransactionEvent::select(DB::raw('count(*) as count, sum(amount) as total_amount'))
-            ->where('transaction_type', '=', NchlLoadTransaction::class)
+            ->whereIn('transaction_type', $bankLoadDetails)
             ->whereDate('created_at', '=', $date)
             ->get();
         return ['amount' => $total_transactions[0]->total_amount, 'count' => $total_transactions[0]->count];
     }
 
-    public function getBankTransferDetails($date)
+    public function getBankTransferDetails($date,$bankTransferDetails)
     {
         $total_transactions = TransactionEvent::select(DB::raw('count(*) as count, sum(amount) as total_amount'))
-            ->where('transaction_type', '=', NchlBankTransfer::class)
+            ->whereIn('transaction_type', $bankTransferDetails)
             ->whereDate('created_at', '=', $date)
             ->get();
         return ['amount' => $total_transactions[0]->total_amount, 'count' => $total_transactions[0]->count];

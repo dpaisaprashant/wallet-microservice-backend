@@ -140,6 +140,7 @@
                                         <th>Image</th>
                                         <th>Status</th>
                                         <th>Created At</th>
+                                        <th>Json Data</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -164,6 +165,9 @@
                                                 @endif
                                             </td>
                                             <td>{{$participant->created_at}}</td>
+
+                                            <td>@include('WalletReport::voting.voting-json', ['participant' => $participant])</td>
+
                                             <td>
 
                                                 {{--                                                @can('Delete whitelisted ip')--}}

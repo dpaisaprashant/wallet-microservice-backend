@@ -150,7 +150,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 AND
                                                                                 (t.transaction_type ='App\\\Models\\\NchlLoadTransaction'
                                                                                  OR
-                                                                                 t.transaction_type = 'App\\\Models\\\PaymentNepalLoadTransaction'
+                                                                                 t.transaction_type = 'App\\\Models\\\NICAsiaCyberSourceLoadTransaction'
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\NpsLoadTransaction'
                                                                                  OR
@@ -181,7 +181,7 @@ class NrbAnnexPaymentReportRepository extends AbstractReportRepository
                                                                                 AND
                                                                                 (t.transaction_type ='App\\\Models\\\NchlLoadTransaction'
                                                                                  OR
-                                                                                 t.transaction_type = 'App\\\Models\\\PaymentNepalLoadTransaction'
+                                                                                 t.transaction_type = 'App\\\Models\\\NICAsiaCyberSourceLoadTransaction'
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\NpsLoadTransaction'
                                                                                  OR

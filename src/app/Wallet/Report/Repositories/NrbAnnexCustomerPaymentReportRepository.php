@@ -175,10 +175,10 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 FROM transaction_events t
                                                                                 LEFT JOIN temp_agents a ON a.user_id = t.user_id
                                                                                 WHERE a.user_id IS NULL
-                                                                               AND
+                                                                                AND
                                                                                 (t.transaction_type ='App\\\Models\\\NchlLoadTransaction'
                                                                                  OR
-                                                                                 t.transaction_type = 'App\\\Models\\\PaymentNepalLoadTransaction'
+                                                                                 t.transaction_type = 'App\\\Models\\\NICAsiaCyberSourceLoadTransaction'
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\NpsLoadTransaction'
                                                                                  OR
@@ -187,6 +187,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                  t.transaction_type = 'App\\\Models\\\BfiGatewayExecutePayment'
                                                                                      OR
                                                                                  t.transaction_type = 'App\\\Models\\\NPSAccountLinkLoad'
+
                                                                                 )
                                                                                 AND
                                                                                 date(t.created_at) >= date(:fromDate)
@@ -210,7 +211,7 @@ SELECT user_id FROM agents WHERE STATUS = 'ACCEPTED';";
                                                                                 AND
                                                                                 (t.transaction_type ='App\\\Models\\\NchlLoadTransaction'
                                                                                  OR
-                                                                                 t.transaction_type = 'App\\\Models\\\PaymentNepalLoadTransaction'
+                                                                                 t.transaction_type = 'App\\\Models\\\NICAsiaCyberSourceLoadTransaction'
                                                                                  OR
                                                                                  t.transaction_type = 'App\\\Models\\\NpsLoadTransaction'
                                                                                  OR

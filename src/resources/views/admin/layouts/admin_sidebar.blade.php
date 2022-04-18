@@ -406,6 +406,8 @@ $url = url()->current();
                             <li><a href="{{ route('refund.pretransaction.view') }}">View Refunded Pretransactions</a>
                             </li>
                         @endcan
+{{--                        todo: add permissions--}}
+                        <li><a href="{{route('view.system.repost')}}">Manual Refund</a></li>
 
                     </ul>
                 </li>

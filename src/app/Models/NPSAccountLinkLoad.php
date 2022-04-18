@@ -16,6 +16,9 @@ class NPSAccountLinkLoad extends Model
     protected $connection = 'nps-accountlink';
     protected $table = "load_wallet";
 
+    const LOAD_STATUS_SUCCESS = "Transaction Success";
+    const LOAD_STATUS_ERROR = "Error";
+
     // protected $casts = [
     //     "amount" => "integer",
     //     "load_time_stamp" => "datetime"

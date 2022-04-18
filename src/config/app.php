@@ -208,7 +208,7 @@ return [
         App\Wallet\NEA\NEASettlementServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         App\Wallet\UserProfile\UserProfileServiceProvider::class,
-        \App\Wallet\ManualRefund\ManualRefundServiceProvider::class,
+        \App\Wallet\SystemRepost\SystemRepostServiceProvider::class,
     ],
 
     /*

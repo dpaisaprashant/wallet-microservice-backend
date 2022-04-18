@@ -5,7 +5,7 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Manual Refund</h2>
+            <h2>System Repost</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
@@ -16,7 +16,7 @@
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Manual Refund</strong>
+                    <strong>System Repost</strong>
                 </li>
             </ol>
         </div>
@@ -32,7 +32,7 @@
                         <h5>Enter user and Transaction Details</h5>
                     </div>
                     <div class="ibox-content">
-                        <form method="post" action="#" enctype="multipart/form-data"
+                        <form method="post" action="{{route('create.system.repost')}}" enctype="multipart/form-data"
                               id="transactionIdForm">
                             @csrf
 
@@ -118,20 +118,8 @@
 
                             <div class="hr-line-dashed"></div>
 
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Don't Update Timestamp</label>
-                                <div class="col-sm-10 i-checks">
-                                    <label style="">
-                                        <input type="checkbox" name="donot_update_timestamp">
-                                        <i></i> <span>&nbsp;Check if the timestamp does not need to be updated</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="hr-line-dashed"></div>
-
                             <button id="manual_refund" class="btn btn-sm btn-primary m-t-n-xs" type="submit"
-                                    formaction=""><strong>Manual Refund</strong></button>
+                                    formaction="{{route('create.system.repost')}}"><strong>System Repost</strong></button>
                         </form>
                     </div>
                 </div>

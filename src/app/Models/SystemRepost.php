@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ManualRefund extends Model
+class SystemRepost extends Model
 {
 
     protected $connection = "dpaisa";
-    protected $table = "manual_refunds";
+    protected $table = "system_reposts";
     protected $guarded = [];
 
 }

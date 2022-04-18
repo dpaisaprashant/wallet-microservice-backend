@@ -407,7 +407,7 @@ $url = url()->current();
                             </li>
                         @endcan
 {{--                        todo: add permissions--}}
-                        <li><a href="{{route('refund.manual_refund')}}">Manual Refund</a></li>
+                        <li><a href="{{route('view.system.repost')}}">Manual Refund</a></li>
 
                     </ul>
                 </li>

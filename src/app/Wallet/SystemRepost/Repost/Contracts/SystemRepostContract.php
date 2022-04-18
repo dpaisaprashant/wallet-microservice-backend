@@ -2,11 +2,9 @@
 
 namespace App\Wallet\SystemRepost\Repost\Contracts;
 
+use App\Models\Microservice\PreTransaction;
+
 interface SystemRepostContract
 {
-    public function performRepost(
-        $preTransaction,
-        $systemRepost,
-        $dbCheckResponse
-    );
+    public function performRepost(PreTransaction $preTransaction);
 }

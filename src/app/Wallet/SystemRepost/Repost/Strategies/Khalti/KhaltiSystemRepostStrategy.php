@@ -24,9 +24,7 @@ class KhaltiSystemRepostStrategy implements CheckByDatabaseContract, CheckByApiC
         // TODO: Implement checkMicroserviceDatabaseStatus() method.
     }
 
-    public function performRepost($preTransaction,
-                                  $systemRepost,
-                                  $dbCheckResponse)
+    public function performRepost($preTransaction)
     {
         Log::info("6. perform repost of khalti");
 

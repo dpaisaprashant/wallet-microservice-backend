@@ -43,5 +43,10 @@ class NPSAccountLinkLoad extends Model
         return $this->morphOne(TransactionEvent::class, 'transactionable','transaction_type', 'transaction_id');
     }
 
+    public function linkedAccount()
+    {
+        return $this->belongsTo(LinkedAccounts::class, "linked_accounts_id");
+    }
+
 
 }

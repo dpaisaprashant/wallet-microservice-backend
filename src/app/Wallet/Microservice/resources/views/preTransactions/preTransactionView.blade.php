@@ -46,21 +46,19 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="pre_transaction_id">Enter Pre-Transaction ID</label>
-                                                <input type="text" name="pre_transaction_id" placeholder="Enter Pre Transaction ID"
+                                                <input type="text" name="pre_transaction_id"
+                                                       placeholder="Enter Pre Transaction ID"
                                                        class="form-control"
                                                        value="{{ !empty($_GET['pre_transaction_id']) ? $_GET['pre_transaction_id'] : '' }}">
                                             </div>
                                         </div>
 
 
-
-
-{{--                                        <div class="col-md-3">--}}
-{{--                                            <input type="email" name="email" placeholder="Enter Email"--}}
-{{--                                                   class="form-control"--}}
-{{--                                                   value="{{ !empty($_GET['email']) ? $_GET['email'] : '' }}">--}}
-{{--                                        </div>--}}
-
+                                        {{--                                        <div class="col-md-3">--}}
+                                        {{--                                            <input type="email" name="email" placeholder="Enter Email"--}}
+                                        {{--                                                   class="form-control"--}}
+                                        {{--                                                   value="{{ !empty($_GET['email']) ? $_GET['email'] : '' }}">--}}
+                                        {{--                                        </div>--}}
 
 
                                         <div class="col-md-3">
@@ -89,9 +87,11 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="microservice_type">Micro Service Type</label>
-                                                <select data-placeholder="Select MicroService Type" class="chosen-select"
+                                                <select data-placeholder="Select MicroService Type"
+                                                        class="chosen-select"
                                                         tabindex="2" name="microservice_type">
-                                                    <option value="" selected disabled>Select Micro-Service Type...</option>
+                                                    <option value="" selected disabled>Select Micro-Service Type...
+                                                    </option>
                                                     <option value="">All</option>
                                                     @if(!empty($_GET['microservice_type']))
 
@@ -116,7 +116,8 @@
                                                 <label for="transaction_type">Transaction Type</label>
                                                 <select data-placeholder="Select Transaction Type" class="chosen-select"
                                                         tabindex="2" name="transaction_type">
-                                                    <option value="" selected disabled>Select Transaction Type...</option>
+                                                    <option value="" selected disabled>Select Transaction Type...
+                                                    </option>
                                                     <option value="">All</option>
                                                     @if(!empty($_GET['transaction_type']))
 
@@ -182,35 +183,34 @@
                                             </div>
                                         </div>
 
-{{--                                        <div class="col-md-3">--}}
-{{--                                            <div class="form-group">--}}
-{{--                                                <select data-placeholder="Sort By..." class="chosen-select" tabindex="2"--}}
-{{--                                                        name="sort">--}}
-{{--                                                    <option value="">All</option>--}}
-{{--                                                    <option value="" selected disabled>Sort By...</option>--}}
-{{--                                                    @if(!empty($_GET['sort']))--}}
-{{--                                                        <option value="date"--}}
-{{--                                                                @if($_GET['sort'] == 'date') selected @endif>Latest Date--}}
-{{--                                                        </option>--}}
-{{--                                                        <option value="amount"--}}
-{{--                                                                @if($_GET['sort'] == 'amount') selected @endif>Highest--}}
-{{--                                                            amount--}}
-{{--                                                        </option>--}}
-{{--                                                    @else--}}
-{{--                                                        <option value="date">Latest Date</option>--}}
-{{--                                                        <option value="amount">Amount</option>--}}
-{{--                                                    @endif--}}
-{{--                                                </select>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-
+                                        {{--                                        <div class="col-md-3">--}}
+                                        {{--                                            <div class="form-group">--}}
+                                        {{--                                                <select data-placeholder="Sort By..." class="chosen-select" tabindex="2"--}}
+                                        {{--                                                        name="sort">--}}
+                                        {{--                                                    <option value="">All</option>--}}
+                                        {{--                                                    <option value="" selected disabled>Sort By...</option>--}}
+                                        {{--                                                    @if(!empty($_GET['sort']))--}}
+                                        {{--                                                        <option value="date"--}}
+                                        {{--                                                                @if($_GET['sort'] == 'date') selected @endif>Latest Date--}}
+                                        {{--                                                        </option>--}}
+                                        {{--                                                        <option value="amount"--}}
+                                        {{--                                                                @if($_GET['sort'] == 'amount') selected @endif>Highest--}}
+                                        {{--                                                            amount--}}
+                                        {{--                                                        </option>--}}
+                                        {{--                                                    @else--}}
+                                        {{--                                                        <option value="date">Latest Date</option>--}}
+                                        {{--                                                        <option value="amount">Amount</option>--}}
+                                        {{--                                                    @endif--}}
+                                        {{--                                                </select>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </div>--}}
 
 
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <select data-placeholder="Select Pre-Transaction status..."
                                                         class="chosen-select" tabindex="2" name="status">
-                                                    <option value="" selected disabled>Select Status: </option>
+                                                    <option value="" selected disabled>Select Status:</option>
                                                     <option value="">All</option>
                                                     @if(!empty($_GET['status']))
                                                         <option value="SUCCESS"
@@ -271,13 +271,15 @@
                                     <br>
                                     <div>
                                         <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"
-                                                formaction="{{ route('preTransaction.view') }}"><strong>Filter</strong></button>
+                                                formaction="{{ route('preTransaction.view') }}"><strong>Filter</strong>
+                                        </button>
                                     </div>
 
                                     <div>
                                         <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
                                                 type="submit" style="margin-right: 10px;"
-                                                formaction="{{ route('preTransaction.excel') }}"><strong>Excel</strong></button>
+                                                formaction="{{ route('preTransaction.excel') }}"><strong>Excel</strong>
+                                        </button>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
                                 </form>
@@ -316,6 +318,7 @@
                                     <th>Date</th>
                                     <th>Status</th>
                                     <th>Actions</th>
+                                    <th>Device Info</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -363,6 +366,9 @@
                                             @include('Microservice::preTransactions.preTransactionSpecials', ['preTransaction' => $preTransaction])
 
                                         </td>
+                                        <td>
+                                            @include('Microservice::preTransactions.preTransactionDeviceInfo', ['preTransaction' => $preTransaction])
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -409,22 +415,22 @@
         });
     </script>
 
-{{--    <!-- IonRangeSlider -->--}}
-{{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js"></script>--}}
-{{--    <script>--}}
-{{--        let amount = @if(!empty($_GET['amount'])) `{{ $_GET['amount'] }}`;--}}
-{{--        @else '0;100000'; @endif--}}
-{{--        let split = amount.split(';');--}}
-{{--        $(".ionrange_amount").ionRangeSlider({--}}
-{{--            type: "double",--}}
-{{--            grid: true,--}}
-{{--            min: 0,--}}
-{{--            max: 100000,--}}
-{{--            from: split[0],--}}
-{{--            to: split[1],--}}
-{{--            prefix: "Rs."--}}
-{{--        });--}}
-{{--    </script>--}}
+    {{--    <!-- IonRangeSlider -->--}}
+    {{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/js/ion.rangeSlider.min.js"></script>--}}
+    {{--    <script>--}}
+    {{--        let amount = @if(!empty($_GET['amount'])) `{{ $_GET['amount'] }}`;--}}
+    {{--        @else '0;100000'; @endif--}}
+    {{--        let split = amount.split(';');--}}
+    {{--        $(".ionrange_amount").ionRangeSlider({--}}
+    {{--            type: "double",--}}
+    {{--            grid: true,--}}
+    {{--            min: 0,--}}
+    {{--            max: 100000,--}}
+    {{--            from: split[0],--}}
+    {{--            to: split[1],--}}
+    {{--            prefix: "Rs."--}}
+    {{--        });--}}
+    {{--    </script>--}}
 
 @endsection
 

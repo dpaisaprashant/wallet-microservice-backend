@@ -512,9 +512,11 @@ class RolesAndPermissionsSeeder extends Seeder
             'View lucky winner report',
             'View ticket sale report',
             'View load test fund report',
+            'Report campaign voting',
+            'Report device info',
 
             'View wallet payables',
-
+            'View daily info report',
             ];
 
         //get users having all permissions

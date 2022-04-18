@@ -5,6 +5,7 @@ use App\Http\Controllers\AuditTrailMismatchController;
 use App\Http\Controllers\ExcelExportController;
 use App\Http\Controllers\PhpSpreadSheetController;
 use App\Wallet\Report\Http\Controllers\ClosingBalanceController;
+use App\Wallet\Report\Http\Controllers\DailyInfoReportController;
 use App\Wallet\Report\Http\Controllers\MiscReportController;
 use App\Wallet\Report\Http\Controllers\NRBAnnexReportController;
 use App\Wallet\Report\Http\Controllers\NRBReportController;
@@ -142,4 +143,14 @@ Route::group(['prefix' => 'admin/report', 'middleware' => ['web', 'auth']], func
 
     Route::get('user-registered-by-user',[UserRegisteredByUserController::class,'report'])->name('report.user-registered-by-user')->middleware('permission:Report user registered by user');
     Route::get('user-registered-by-user/excel',[ExcelExportController::class,'userRegisteredByUserReport'])->name('report.user-registered-by-user.excel')->middleware('permission:Report user registered by user');
+
+    Route::get('voting', [MiscReportController::class, 'votingReport'])->name('report.voting')->middleware('permission:Report campaign voting');
+    Route::get('voters', [MiscReportController::class, 'voterReport'])->name('report.voter')->middleware('permission:Report campaign voting');
+    Route::get('device-info', [MiscReportController::class, 'deviceInfo'])->name('report.device.info')->middleware('permission:Report device info');
+    Route::post('disqualify/{id}', [MiscReportController::class, 'disqualifyParticipant'])->name('participant.disqualify')->middleware('permission:Report campaign voting');
+
+    /**
+     * Daily Information Report
+     */
+    Route::get('daily-report',[DailyInfoReportController::class,'dailyInfoReport'])->name('report.daily_info_report')->middleware('permission:View daily info report');
 });

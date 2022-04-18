@@ -28,7 +28,7 @@ class AcceptKYCUserKYCObserver
     {
         DB::commit();
         //user activity kyc accept
-        /*if ($kyc->accept == 1) {
+        if ($kyc->accept == 1) {
             try {
                 $username = 'BackendProduction';
                 $password = 'Pr0ducT10n8@ck3nd';
@@ -48,7 +48,7 @@ class AcceptKYCUserKYCObserver
                 Log::error("User Activity kyc accept request to core error");
                 Log::error($e);
             }
-        }*/
+        }
         //old referral
         try {
             $referralService = Setting::where('option', 'referral_service_enable')->first()->value ?? 0;

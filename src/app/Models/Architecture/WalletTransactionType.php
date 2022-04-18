@@ -12,6 +12,9 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class WalletTransactionType extends Model
 {
+    CONST LIMIT_TYPE_LOAD = 'LOAD';
+    CONST LIMIT_TYPE_BANK_TRANSFER = 'BANK_TRANSFER';
+
     use LogsActivity;
 
     protected static $logAttributes = ['*'];
@@ -99,4 +102,21 @@ class WalletTransactionType extends Model
     public function walletTransactionTypeMerchantRevenue(){
         return $this->hasMany(WalletTransactionTypeMerchantRevenue::class);
     }
+
+    public function getLoadTransactionModels()
+    {
+        return $this->where("limit_type", self::LIMIT_TYPE_LOAD)
+            ->groupBy("transaction_type")
+            ->pluck("transaction_type")
+            ->toArray();
+    }
+
+    public function getBankTransferTransactionModels()
+    {
+        return $this->where("limit_type", self::LIMIT_TYPE_BANK_TRANSFER)
+            ->groupBy("transaction_type")
+            ->pluck("transaction_type")
+            ->toArray();
+    }
+
 }

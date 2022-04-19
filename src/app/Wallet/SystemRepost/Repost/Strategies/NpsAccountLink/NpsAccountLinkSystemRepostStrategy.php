@@ -19,6 +19,12 @@ class NpsAccountLinkSystemRepostStrategy implements SystemRepostContract
             ->where("reference_id", $preTransaction->pre_transaction_id)
             ->first();
 
+        //1. microservice database updae
+        //2. pre transdaction status update
+        //3. create transaction event
+        //4. update wallet balance
+
+
 
         Log::info("6. perform repost of nps load");
 

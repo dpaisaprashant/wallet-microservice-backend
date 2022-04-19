@@ -44,6 +44,8 @@ class NpsAccountLinkDBCheckStrategy implements CheckByDatabaseContract
                 'status' => "ERROR"
             ];
         }
+
+        //TODO: update pre_transaction status
         // TODO: Implement checkMicroserviceDatabaseStatus() method.
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Wallet\SystemRepost\Repost;
 
+use App\Events\UserBonusWalletPaymentEvent;
 use App\Events\UserBonusWalletUpdateEvent;
 use App\Events\UserWalletPaymentEvent;
 use App\Events\UserWalletUpdateEvent;
@@ -43,8 +44,8 @@ class PerformSystemRepost
         $this->updateBalance = request()->update_balance ? 1 : 0;
         $this->updateTimeStamp = request()->update_timestamp ? 1 :0;
         //TODO: get from_bonus and from_main from frontend
-        $this->fromBonus = request()->from_bonus;
-        $this->fromMain = request()->from_main;
+        $this->fromBonus = request()->from_bonus * 100;
+        $this->fromMain = request()->from_main * 100;
     }
 
     private function createSystemRepost() : SystemRepost {
@@ -125,7 +126,12 @@ class PerformSystemRepost
                 }
             } elseif ($transactionEvent->account_type == PreTransaction::TRANSACTION_TYPE_DEBIT) {
                 //TODO: deduct from bonus or main
-                event(new UserWalletPaymentEvent($userId, $amount));
+                if ($this->fromMain > 0){
+                    event(new UserWalletPaymentEvent($userId, $amount));
+                }
+                if ($this->fromBonus > 0){
+                    event(new UserBonusWalletPaymentEvent($userId,$amount));
+                }
             }
         }
 
@@ -137,11 +143,19 @@ class PerformSystemRepost
         ]);
 
         //TODO: update system repost
+        Log::info("7. Update system_repost table");
+        $systemRepost->update([
+            "after_balance" => $userWallet->balance * 100,
+            "after_bonus_balance" => $userWallet->bonusBalance * 100,
+            "after_transaction_status" => "SUCCESS"
+        ]);
         //7. update system repost
 
-
-        //update table
-        Log::info("7. Update system_repost table");
+        //TODO: update pre_transaction status
+        Log::info("7. Update pre transaction status");
+        $this->preTransaction->update([
+            "status" => PreTransaction::STATUS_SUCCESS
+        ]);
 
     }
 

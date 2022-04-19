@@ -7,12 +7,16 @@ use App\Models\Microservice\PreTransaction;
 use App\Models\NPSAccountLinkLoad;
 use App\Models\NpsLoadTransaction;
 use App\Models\User;
+use App\Models\UserTransaction;
 use App\Wallet\SystemRepost\Repost\PerformSystemRepost;
 use App\Wallet\SystemRepost\Repost\Strategies\Khalti\KhaltiSystemRepostStrategy;
 use App\Wallet\SystemRepost\Repost\Strategies\NpsAccountLink\NpsAccountLinkApiCheckStrategy;
 use App\Wallet\SystemRepost\Repost\Strategies\NpsAccountLink\NpsAccountLinkDBCheckStrategy;
 use App\Wallet\SystemRepost\Repost\Strategies\NpsAccountLink\NpsAccountLinkSystemRepostStrategy;
 
+use App\Wallet\SystemRepost\Repost\Strategies\PayPoint\PayPointApiCheckStrategy;
+use App\Wallet\SystemRepost\Repost\Strategies\PayPoint\PayPointDBCheckStrategy;
+use App\Wallet\SystemRepost\Repost\Strategies\PayPoint\PayPointSystemRepostStrategy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -46,6 +50,15 @@ class BackendSystemRepostResolver
                     $strategy,
                     $strategy,
                     $strategy,
+                    $this->preTransaction,
+                );
+            case UserTransaction::class:
+                Log::info("3. Resolve for PAYPOINT");
+
+                return new PerformSystemRepost(
+                    new PayPointDBCheckStrategy($this->preTransaction),
+                    new PayPointApiCheckStrategy(),
+                    new PayPointSystemRepostStrategy(),
                     $this->preTransaction,
                 );
         }

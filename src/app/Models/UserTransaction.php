@@ -20,9 +20,18 @@ class UserTransaction extends Model
     protected $connection = 'paypoint';
 
     protected $fillable = [
-        'refStan',
+//        'refStan',
+//        'vendor',
+//        'amount',
+
+        'pre_transaction_id',
+        'request_id',
+        'amount',
         'vendor',
-        'amount'
+        'refStan',
+        'account',
+        'before_amount',
+        'after_amount',
     ];
 
     /**
@@ -31,7 +40,7 @@ class UserTransaction extends Model
      */
     public function getAmountAttribute($amount)
     {
-        return ($amount/100);
+        return ($amount / 100);
     }
 
     protected $casts = [
@@ -40,10 +49,11 @@ class UserTransaction extends Model
 
     public function transactions()
     {
-        return $this->morphOne(TransactionEvent::class, 'transactionable','transaction_type', 'transaction_id');
+        return $this->morphOne(TransactionEvent::class, 'transactionable', 'transaction_type', 'transaction_id');
     }
 
-    public function clearanceTransactions() {
+    public function clearanceTransactions()
+    {
         return $this->morphOne(ClearanceTransaction::class, 'clearanceable', 'transaction_type', 'transaction_id');
     }
 
@@ -88,7 +98,7 @@ class UserTransaction extends Model
     {
         if ($this->checkTransaction->transaction_fee_type == 'FLAT') {
             return round($this->checkTransaction->transaction_fee_amount / 100, 3);
-        }elseif ($this->checkTransaction->transaction_fee_type == 'PERCENTAGE') {
+        } elseif ($this->checkTransaction->transaction_fee_type == 'PERCENTAGE') {
             return round(($this->checkTransaction->transaction_fee_amount / 100) * $this->amount, 3);
         }
         return 0;

@@ -2,6 +2,7 @@
 
 namespace App\Wallet\SystemRepost\Repost\Strategies\NpsAccountLink;
 
+use App\Events\UserWalletUpdateEvent;
 use App\Models\Microservice\PreTransaction;
 use App\Models\NPSAccountLinkLoad;
 use App\Models\TransactionEvent;
@@ -15,53 +16,58 @@ class NpsAccountLinkSystemRepostStrategy implements SystemRepostContract
     public function performRepost(PreTransaction $preTransaction)
     {
 
+        //1. microservice database update
+        //2. pre-transaction status update
+        //3. create transaction event
+        //4. update wallet balance
+
         $npsLoadTransaction = NPSAccountLinkLoad::with('linkedAccount')
             ->where("reference_id", $preTransaction->pre_transaction_id)
             ->first();
 
-        //1. microservice database updae
-        //2. pre transdaction status update
-        //3. create transaction event
-        //4. update wallet balance
+        $npsLoadTransaction->update(['load_status' => NPSAccountLinkLoad::LOAD_STATUS_SUCCESS]);
 
-
+        $preTransaction->update(['status' => PreTransaction::STATUS_SUCCESS]);
 
         Log::info("6. perform repost of nps load");
 
         $updateBalance = request()->update_balance ? 1 : 0;
-        $updateTimeStamp = request()->update_timestamp ? 1 :0;
+        $updateTimeStamp = request()->update_timestamp ? 1 : 0;
 
 
-            Log::info("CREATE TRANSACTION EVENTS");
+        Log::info("CREATE TRANSACTION EVENTS");
 
-
-            if ($updateBalance == 1){
-                if ($preTransaction->transaction_type == "credit"){
-                    $transaction_event_balance = $preTransaction->amount + $preTransaction->user->wallet->balance;
-                }elseif($preTransaction->transaction_type == "debit"){
-                    $transaction_event_balance = $preTransaction->user->wallet->balance - $preTransaction->amount;
-                }
-            }elseif($updateBalance == 0){
-                $transaction_event_balance = $preTransaction->user->wallet->balance;
+        if ($updateBalance == 1) {
+            if ($preTransaction->transaction_type == "credit") {
+                $transaction_event_balance = $preTransaction->amount + $preTransaction->user->wallet->balance;
+            } elseif ($preTransaction->transaction_type == "debit") {
+                $transaction_event_balance = $preTransaction->user->wallet->balance - $preTransaction->amount;
             }
+        } elseif ($updateBalance == 0) {
+            $transaction_event_balance = $preTransaction->user->wallet->balance;
+        }
 
-            $create_transaction_event = [
-                'pre_transaction_id' => $preTransaction->pre_transaction_id,
-                'amount' => $preTransaction->amount,
-                'account' => $npsLoadTransaction->linkedAccount->account_number,
-                'description' => "Nps Account Link Load system repost",
-                'vendor' => $npsLoadTransaction->linkedAccount->bank_code,
-                'service_type' => 'LOAD',
-                'user_id'  => $preTransaction->user_id,
-                'transaction_id'  => $npsLoadTransaction->id,
-                'transaction_type'  => request()->transaction_type,
-                'uid'  => TransactionIdGenerator::generateAlphaNumeric(7),
-                'balance'  => $transaction_event_balance,
-                'bonus_balance'  => $preTransaction->user->wallet->bonus_balance,
-                'account_type'  => $preTransaction->transaction_type,
-            ];
+        $create_transaction_event = [
+            'pre_transaction_id' => $preTransaction->pre_transaction_id,
+            'amount' => $preTransaction->amount,
+            'account' => $npsLoadTransaction->linkedAccount->account_number,
+            'description' => "Nps Account Link Load system repost",
+            'vendor' => $npsLoadTransaction->linkedAccount->bank_code,
+            'service_type' => 'LOAD',
+            'user_id' => $preTransaction->user_id,
+            'transaction_id' => $npsLoadTransaction->id,
+            'transaction_type' => request()->transaction_type,
+            'uid' => TransactionIdGenerator::generateAlphaNumeric(7),
+            'balance' => $transaction_event_balance,
+            'bonus_balance' => $preTransaction->user->wallet->bonus_balance,
+            'account_type' => $preTransaction->transaction_type,
+        ];
 
-            $transactionEvent = TransactionEvent::create($create_transaction_event);
+        $transactionEvent = TransactionEvent::create($create_transaction_event);
+
+        //event(new UserWalletUpdateEvent($preTransaction->user_id, $preTransaction->amount));
+
+        return $transactionEvent;
 
         // TODO: Implement performRepost() method.
     }

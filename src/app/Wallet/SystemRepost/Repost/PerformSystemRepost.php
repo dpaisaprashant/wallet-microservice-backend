@@ -2,9 +2,14 @@
 
 namespace App\Wallet\SystemRepost\Repost;
 
+use App\Events\UserBonusWalletUpdateEvent;
+use App\Events\UserWalletPaymentEvent;
+use App\Events\UserWalletUpdateEvent;
 use App\Models\Microservice\PreTransaction;
 use App\Models\SystemRepost;
+use App\Models\TransactionEvent;
 use App\Models\User;
+use App\Models\Wallet;
 use App\Wallet\SystemRepost\Repost\Contracts\CheckByApiContract;
 use App\Wallet\SystemRepost\Repost\Contracts\CheckByDatabaseContract;
 use App\Wallet\SystemRepost\Repost\Contracts\SystemRepostContract;
@@ -20,6 +25,8 @@ class PerformSystemRepost
     private string $transactionType;
     private int $updateBalance;
     private int $updateTimeStamp;
+    private int $fromMain;
+    private int $fromBonus;
 
     public function __construct(CheckByDatabaseContract $checkByDatabaseStrategy,
                                 CheckByApiContract      $checkByApiStrategy,
@@ -35,6 +42,9 @@ class PerformSystemRepost
         $this->transactionType = request()->transaction_type;
         $this->updateBalance = request()->update_balance ? 1 : 0;
         $this->updateTimeStamp = request()->update_timestamp ? 1 :0;
+        //TODO: get from_bonus and from_main from frontend
+        $this->fromBonus = request()->from_bonus;
+        $this->fromMain = request()->from_main;
     }
 
     private function createSystemRepost() : SystemRepost {
@@ -89,11 +99,46 @@ class PerformSystemRepost
         $this->checkByApiStrategy->checkMicroserviceApiStatus();
 
 
+        //TODO: refactor performRepost class
         //4. repost the transaction
-        /**
-         *
-         */
-        $this->systemRepostStrategy->performRepost($this->preTransaction);
+        $transactionEvent = $this->systemRepostStrategy->performRepost($this->preTransaction);
+
+        if (!$transactionEvent instanceof TransactionEvent) {
+            Log::info("7. Creating transaction event failed", [$this->preTransaction]);
+            return false;
+        }
+
+
+        //5.update balance check
+        if ($this->updateBalance) {
+            $userId = $this->preTransaction->user_id;
+            $amount = $this->preTransaction->amount * 100;
+            //5.1. update balance enabled
+            if ($transactionEvent->account_type == PreTransaction::TRANSACTION_TYPE_CREDIT) {
+
+                if ($this->fromMain > 0) {
+                    event(new UserWalletUpdateEvent($userId, $this->fromMain));
+                }
+
+                if ($this->fromBonus > 0) {
+                    event(new UserBonusWalletUpdateEvent($userId, $this->fromBonus));
+                }
+            } elseif ($transactionEvent->account_type == PreTransaction::TRANSACTION_TYPE_DEBIT) {
+                //TODO: deduct from bonus or main
+                event(new UserWalletPaymentEvent($userId, $amount));
+            }
+        }
+
+        //6. update balance and bonus balance in transaction event
+        $userWallet = Wallet::where("user_id", $userId)->first();
+        $transactionEvent->update([
+            "balance" => $userWallet->balance * 100,
+            "bonus_balance" => $userWallet->bonusBalance * 100
+        ]);
+
+        //TODO: update system repost
+        //7. update system repost
+
 
         //update table
         Log::info("7. Update system_repost table");

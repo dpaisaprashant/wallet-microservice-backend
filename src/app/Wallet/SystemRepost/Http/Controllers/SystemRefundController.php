@@ -36,6 +36,8 @@ class SystemRefundController extends \App\Http\Controllers\Controller
         $transaction_event = TransactionEvent::where('pre_transaction_id','=',$request->pre_transaction_id)->first();
         if ($transaction_event) return back()->with("error","Transaction Event for the given pre-transaction id already exists");
 
+        //TODO: Main balance + bonus balance == pre transaction amount validation
+
         $transactionType = $request->transaction_type;
 
         Log::info("1. request from frontend for {$transactionType}");

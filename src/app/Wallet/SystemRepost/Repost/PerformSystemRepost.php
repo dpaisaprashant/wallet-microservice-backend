@@ -43,8 +43,8 @@ class PerformSystemRepost
         $this->updateBalance = request()->update_balance ? 1 : 0;
         $this->updateTimeStamp = request()->update_timestamp ? 1 :0;
         //TODO: get from_bonus and from_main from frontend
-        $this->fromBonus = 100;
-        $this->fromMain = 100;
+        $this->fromBonus = request()->fromBonus;
+        $this->fromMain = request()->fromMain;
     }
 
     private function createSystemRepost() : SystemRepost {

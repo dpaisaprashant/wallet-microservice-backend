@@ -93,7 +93,8 @@ class PerformSystemRepost
         /**
          *
          */
-        $this->systemRepostStrategy->performRepost($this->preTransaction);
+
+        $transaction_event = $this->systemRepostStrategy->performRepost($this->preTransaction);
 
         //update table
         Log::info("7. Update system_repost table");

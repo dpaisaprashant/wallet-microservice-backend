@@ -16,11 +16,9 @@ class PayPointSystemRepostStrategy implements SystemRepostContract
 {
     use ResolvePPVendor, ResolvePPTransactionEventsServiceTypeVendor;
 
-    public function performRepost(PreTransaction $preTransaction)
+    public function performRepost(PreTransaction $preTransaction) : TransactionEvent
     {
         Log::info("6. perform repost of PAYPOINT");
-
-        $updateBalance = request()->update_balance ? 1 : 0;
 
         //************************ CREATING PAYPOINT MICROSERVICE user_transactions ROW ****************************************//
 
@@ -55,23 +53,13 @@ class PayPointSystemRepostStrategy implements SystemRepostContract
         $payPointUserTransaction = UserTransaction::where("pre_transaction_id", $preTransaction->pre_transaction_id)
             ->first();
 
-        if ($updateBalance == 1) {
-            if ($preTransaction->transaction_type == "credit") {
-                $transaction_event_balance = $preTransaction->amount + $preTransaction->user->wallet->balance;
-            } elseif ($preTransaction->transaction_type == "debit") {
-                $transaction_event_balance = $preTransaction->user->wallet->balance - $preTransaction->amount;
-            }
-        } elseif ($updateBalance == 0) {
-            $transaction_event_balance = $preTransaction->user->wallet->balance;
-        }
-
         $resolvedData = $this->resolveVendorServiceType($payPointUserTransaction);
         $transactionEventVendor = $resolvedData['vendor'];
         $transactionEventServiceType = $resolvedData['serviceType'];
 
         $create_transaction_event = [
             'pre_transaction_id' => $preTransaction->pre_transaction_id,
-            'amount' => $preTransaction->amount,
+            'amount' => $preTransaction->amount*100,
             'account' => $account,
             'description' => "PayPoint System Repost",
             'vendor' => $transactionEventVendor,
@@ -80,14 +68,11 @@ class PayPointSystemRepostStrategy implements SystemRepostContract
             'transaction_id' => $payPointUserTransaction->id,
             'transaction_type' => request()->transaction_type,
             'uid' => TransactionIdGenerator::generateAlphaNumeric(7),
-            'balance' => $transaction_event_balance,
-            'bonus_balance' => $preTransaction->user->wallet->bonus_balance,
+            'balance' => 0,
+            'bonus_balance' => 0,
             'account_type' => $preTransaction->transaction_type,
         ];
 
-        $transactionEvent = TransactionEvent::create($create_transaction_event);
-
-        dd($transactionEvent);
-
+        return TransactionEvent::create($create_transaction_event);
     }
 }

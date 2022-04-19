@@ -43,8 +43,8 @@ class PerformSystemRepost
         $this->updateBalance = request()->update_balance ? 1 : 0;
         $this->updateTimeStamp = request()->update_timestamp ? 1 :0;
         //TODO: get from_bonus and from_main from frontend
-        $this->fromBonus = request()->from_bonus;
-        $this->fromMain = request()->from_main;
+        $this->fromBonus = 100;
+        $this->fromMain = 100;
     }
 
     private function createSystemRepost() : SystemRepost {
@@ -82,7 +82,6 @@ class PerformSystemRepost
          *       ]
          */
         $dbCheckResponse = $this->checkByDatabaseStrategy->checkMicroserviceDatabaseStatus($this->preTransaction);
-
         //2.1 update db status check
         $systemRepost->update([
             "before_transaction_status" => $dbCheckResponse["before_transaction_status"] ?? null,

@@ -17,5 +17,5 @@ interface SystemRepostContract
      * @param PreTransaction $preTransaction
      * @return TransactionEvent
      */
-    public function performRepost(PreTransaction $preTransaction);
+    public function performRepost(PreTransaction $preTransaction) : TransactionEvent;
 }

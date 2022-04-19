@@ -65,7 +65,7 @@ class NpsAccountLinkSystemRepostStrategy implements SystemRepostContract
 
         $transactionEvent = TransactionEvent::create($create_transaction_event);
 
-        event(new UserWalletUpdateEvent($preTransaction->user_id, $preTransaction->amount));
+        //event(new UserWalletUpdateEvent($preTransaction->user_id, $preTransaction->amount));
 
         return $transactionEvent;
 

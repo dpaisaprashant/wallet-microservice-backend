@@ -19,15 +19,32 @@ class PayPointDBCheckStrategy implements CheckByDatabaseContract
         $payPointUserTransaction = UserTransaction::where("pre_transaction_id", $preTransaction->pre_transaction_id)
             ->first();
 
-        if ($payPointUserTransaction) dd('user_transaction exists');
+        if ($payPointUserTransaction) return [
+            'before_transaction_status' => 'SUCCESS',
+            'error_description' => "The Transaction is Success in the Microservice",
+            'status' => "ERROR"
+        ];
 
         $payPointExecutePayment = UserExecutePayment::where("pre_transaction_id", $preTransaction->pre_transaction_id)
             ->first();
 
-        if ($payPointExecutePayment && ($payPointExecutePayment->code == "000" || $payPointExecutePayment->code == "111" || $payPointExecutePayment->code == "099")) {
-            return $preTransaction;
+        if ($payPointExecutePayment && ($payPointExecutePayment->code != "000" && $payPointExecutePayment->code != "111" && $payPointExecutePayment->code != "099")) {
+            return [
+                'before_transaction_status' => 'FAILED',
+                'error_description' => "The Transaction Failed in the Microservice",
+                'status' => "PROCESSING"
+            ];
         } else {
-            return ['status' => "Payment was not executed successfully."];
+            return [
+                'before_transaction_status' => NULL,
+                'error_description' => "The Transaction doesn't exist in the Microservice",
+                'status' => "ERROR"
+            ];
         }
+
+
+
+
+
     }
 }

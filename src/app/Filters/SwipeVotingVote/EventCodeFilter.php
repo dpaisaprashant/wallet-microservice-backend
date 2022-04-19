@@ -33,10 +33,6 @@ class EventCodeFilter extends FilterAbstract
             return $builder;
         }
 
-        if ($value == -1) {
-            $value = 0;
-        }
-
         return $builder->whereHas('participant', function ($query) use ($value){
             return $query->where('event_code',$value);
         });

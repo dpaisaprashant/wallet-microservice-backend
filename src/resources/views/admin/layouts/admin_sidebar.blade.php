@@ -406,8 +406,6 @@ $url = url()->current();
                             <li><a href="{{ route('refund.pretransaction.view') }}">View Refunded Pretransactions</a>
                             </li>
                         @endcan
-{{--                        todo: add permissions--}}
-                        <li><a href="{{route('view.system.repost')}}">Manual Refund</a></li>
 
                     </ul>
                 </li>
@@ -470,6 +468,8 @@ $url = url()->current();
                         @can('Repost transaction connectips')
                             <li><a href="{{ route('repost.connectIPS') }}">Connect IPS Repost</a></li>
                         @endcan
+                            {{--                        todo: add permissions--}}
+                            <li><a href="{{route('view.system.repost')}}">System Repost</a></li>
                     </ul>
                 </li>
             @endif

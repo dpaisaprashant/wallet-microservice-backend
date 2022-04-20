@@ -12,7 +12,7 @@
                 </li>
 
                 <li class="breadcrumb-item active">
-                    <strong>Refund</strong>
+                    <strong>Repost Transaction</strong>
                 </li>
 
                 <li class="breadcrumb-item active">
@@ -111,15 +111,15 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Update Timestamp</label>
-                                <div class="col-sm-10 i-checks">
-                                    <label style="">
-                                        <input type="checkbox" name="update_timestamp">
-                                        <i></i> <span>&nbsp;Check if the timestamp needs to be updated to now</span>
-                                    </label>
-                                </div>
-                            </div>
+{{--                            <div class="form-group row">--}}
+{{--                                <label class="col-sm-2 col-form-label">Update Timestamp</label>--}}
+{{--                                <div class="col-sm-10 i-checks">--}}
+{{--                                    <label style="">--}}
+{{--                                        <input type="checkbox" name="update_timestamp">--}}
+{{--                                        <i></i> <span>&nbsp;Check if the timestamp needs to be updated to now</span>--}}
+{{--                                    </label>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
                             <div class="hr-line-dashed"></div>
 

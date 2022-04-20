@@ -85,8 +85,15 @@
                                     <select name="transaction_type" class="chosen-select" id="" required>
                                         <option value="" disabled selected>Select Transaction Type</option>
                                         @foreach($transaction_types as $transaction_type)
-                                            <option
-                                                value="{{$transaction_type->transaction_type}}">{{$transaction_type->transaction_type}}</option>
+                                            @if($transaction_type->transaction_type == \App\Models\NPSAccountLinkLoad::class)
+                                                <option
+                                                    value="{{$transaction_type->transaction_type}}">NPS Account Link Load</option>
+                                            @elseif($transaction_type->transaction_type == \App\Models\UserTransaction::class)
+                                                <option
+                                                    value="{{$transaction_type->transaction_type}}">Paypoint</option>
+                                            @endif
+{{--                                            <option--}}
+{{--                                                value="{{$transaction_type->transaction_type}}">{{$transaction_type->transaction_type}}</option>--}}
                                         @endforeach
                                     </select>
                                 </div>
@@ -133,6 +140,17 @@
                             </div>
 
                             <div class="hr-line-dashed"></div>
+
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Microservice Transaction ID 1</label>
+                                <div class="col-sm-10">
+                                    <input name="transaction_id_1" type="text" class="form-control"
+                                           @isset($_GET["transaction_id_1"]) value="{{ $_GET["transaction_id_1"] }}" @endisset>
+                                </div>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+
 
 
                             <button id="manual_refund" class="btn btn-sm btn-primary m-t-n-xs" type="submit"

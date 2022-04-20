@@ -138,7 +138,9 @@ class PerformSystemRepost
         $userWallet = Wallet::where("user_id", $userId)->first();
         $transactionEvent->update([
             "balance" => $userWallet->balance * 100,
-            "bonus_balance" => $userWallet->bonusBalance * 100
+            "bonus_balance" => $userWallet->bonusBalance * 100,
+            "from_main" => $this->fromMain,
+            "from_bonus" => $this->fromBonus
         ]);
 
         //TODO: update system repost
@@ -151,6 +153,8 @@ class PerformSystemRepost
         //7. update system repost
 
         //TODO: update pre_transaction status
+        //TODO: update pre_transaction before_after_balance fields
+        //TODO: update pre_transaction balance_status
         Log::info("7. Update pre transaction status");
         $this->preTransaction->update([
             "status" => PreTransaction::STATUS_SUCCESS

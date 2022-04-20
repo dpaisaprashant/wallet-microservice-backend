@@ -38,6 +38,8 @@ class SystemRefundController extends \App\Http\Controllers\Controller
 
         //TODO: Main balance + bonus balance == pre transaction amount validation
 
+        if (! ($request->from_main ?? 0 + $request->from_bonus ?? 0) == $preTransaction->amount) return back()->with("error","Main Balance and Bonus Balance Sum does not match pre transaction amount");
+
         $transactionType = $request->transaction_type;
 
         Log::info("1. request from frontend for {$transactionType}");

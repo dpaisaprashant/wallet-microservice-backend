@@ -104,8 +104,6 @@
                                 </div>
                             </div>
 
-                            <div class="hr-line-dashed"></div>
-
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Update Timestamp</label>
                                 <div class="col-sm-10 i-checks">
@@ -117,6 +115,25 @@
                             </div>
 
                             <div class="hr-line-dashed"></div>
+
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Main Balance Amount(Rs.) </label>
+                                <div class="col-sm-10">
+                                    <input name="from_main" type="text" class="form-control"
+                                           @isset($_GET["from_main"]) value="{{ $_GET["from_main"] }}" @endisset>
+                                </div>
+                            </div>
+
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Bonus Balance Amount(Rs.)</label>
+                                <div class="col-sm-10">
+                                    <input name="from_bonus" type="text" class="form-control"
+                                           @isset($_GET["from_bonus"]) value="{{ $_GET["from_bonus"] }}" @endisset>
+                                </div>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+
 
                             <button id="manual_refund" class="btn btn-sm btn-primary m-t-n-xs" type="submit"
                                     formaction="{{route('create.system.repost')}}"><strong>System Repost</strong></button>

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Log;
 class NpsAccountLinkSystemRepostStrategy implements SystemRepostContract
 {
 
-    public function performRepost(PreTransaction $preTransaction) : TransactionEvent
+    public function performRepost(PreTransaction $preTransaction): TransactionEvent
     {
 
         //1. microservice database update
@@ -23,7 +23,10 @@ class NpsAccountLinkSystemRepostStrategy implements SystemRepostContract
             ->where("reference_id", $preTransaction->pre_transaction_id)
             ->first();
 
-        $npsLoadTransaction->update(['load_status' => NPSAccountLinkLoad::LOAD_STATUS_SUCCESS]);
+        $npsLoadTransaction->update([
+            'load_status' => NPSAccountLinkLoad::LOAD_STATUS_SUCCESS,
+            'gateway_transaction_id' => request()->transaction_id_1
+        ]);
 
         Log::info("6. perform repost of nps load");
 

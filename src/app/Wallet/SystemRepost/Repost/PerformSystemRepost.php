@@ -97,16 +97,17 @@ class PerformSystemRepost
             throw new SystemRepostValidationException($systemRepost);
         }
 
-        //3. check api
-        $apiCheckStatus = $this->checkByApiStrategy->checkMicroserviceApiStatus($this->preTransaction);
-        if (!$apiCheckStatus) {
-            $description = "Transaction Api status check failed";
-            $systemRepost->update([
-                "error_description" => $description,
-                "status" => "ERROR"
-            ]);
-            return redirect()->back()->with("error", $description);
-        }
+//        //3. check api
+//        $apiCheckStatus = $this->checkByApiStrategy->checkMicroserviceApiStatus($this->preTransaction);
+//        if (!$apiCheckStatus) {
+//            $description = "Transaction Api status check failed";
+//            $systemRepost->update([
+//                "error_description" => $description,
+//                "status" => "ERROR"
+//            ]);
+//            throw new SystemRepostValidationException($systemRepost);
+//
+//        }
 
 
         //4. repost the transaction
@@ -174,7 +175,7 @@ class PerformSystemRepost
 
             DB::commit();
 
-            return redirect()->back()->with('success', 'Created System Repost Successfully');
+            return true;
 
         } catch (\Exception $e) {
             DB::rollBack();

@@ -47,7 +47,10 @@ class SystemRefundController extends \App\Http\Controllers\Controller
         $resolver = new BackendSystemRepostResolver($preTransaction, $transactionType);
         $systemRepost = $resolver->resolve();
         if ($systemRepost instanceof PerformSystemRepost ) {
-            $systemRepost->repost();
+            $repost = $systemRepost->repost();
+            if ($repost){
+                return back()->with('success','System Repost created Successfully');
+            }
         }
     }
 

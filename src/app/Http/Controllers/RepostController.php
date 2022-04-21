@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Wallet\WalletAPI\Microservice\BfiMicroservice;
 use Illuminate\Http\Request;
 
 class RepostController extends Controller
@@ -22,5 +23,17 @@ class RepostController extends Controller
     {
         $url = config('app.core_url') . '/api/connect-ips-success';
         return view('admin.repost.connectIPS')->with(compact('url'));
+    }
+
+    public function BFI(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $microservice = new BfiMicroservice();
+            $response=$microservice->dispatchBfiRepost($request);
+            return redirect()->back()->with('success', 'BFI Repost Successful');
+        }
+
+        $bfiUsers = config('bfi-users');
+        return view('admin.repost.bfi')->with(compact('bfiUsers'));
     }
 }

@@ -470,6 +470,9 @@ $url = url()->current();
                         @can('Repost transaction connectips')
                             <li><a href="{{ route('repost.connectIPS') }}">Connect IPS Repost</a></li>
                         @endcan
+                        @can('Repost transaction bfi')
+                            <li><a href="{{ route('repost.bfi') }}">BFI Repost</a></li>
+                        @endcan
                     </ul>
                 </li>
             @endif

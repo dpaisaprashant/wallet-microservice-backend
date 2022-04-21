@@ -284,6 +284,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Repost transaction npay',
             'Repost transaction nps',
             'Repost transaction connectips',
+            'Repost transaction bfi',
 
             'Transaction nps view',
             'Transaction nchl load',

@@ -97,7 +97,15 @@ class PerformSystemRepost
         }
 
         //3. check api
-        $this->checkByApiStrategy->checkMicroserviceApiStatus();
+        $apiCheckStatus = $this->checkByApiStrategy->checkMicroserviceApiStatus($this->preTransaction);
+        if (!$apiCheckStatus) {
+            $description = "Transaction Api status check failed";
+            $systemRepost->update([
+                "error_description" => $description,
+                "status" => "ERROR"
+            ]);
+            return back()->with("error", $description);
+        }
 
 
         //TODO: refactor performRepost class

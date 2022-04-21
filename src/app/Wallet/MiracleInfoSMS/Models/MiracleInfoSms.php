@@ -8,6 +8,7 @@ class MiracleInfoSms extends Model
 {
     protected $guarded = [];
 
+    protected $connection='dpaisa';
     protected $table  = "miracle_info_sms";
 
 }

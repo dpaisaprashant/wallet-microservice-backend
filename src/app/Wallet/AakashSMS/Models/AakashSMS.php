@@ -8,6 +8,7 @@ class AakashSMS extends Model
 {
     protected $guarded = [];
 
+    protected $connection='dpaisa';
     protected $table  = "aakash_smses";
 
 }

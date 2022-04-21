@@ -49,7 +49,7 @@ class NotificationRepository
 
     public function smsService()
     {
-        return Setting::where('option', 'notification_service')->first()->value;
+        return Setting::where('option', 'sms_service')->first()->value;
     }
 
     public function smsChannel()

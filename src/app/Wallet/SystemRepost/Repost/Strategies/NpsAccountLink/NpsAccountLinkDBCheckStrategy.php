@@ -22,22 +22,31 @@ class NpsAccountLinkDBCheckStrategy implements CheckByDatabaseContract
          *          "status" => "ERROR" / "PROCESSING"
          *       ]
          */
-        $microServiceStatus = NPSAccountLinkLoad::where('reference_id','=',$preTransaction->pre_transaction_id)->first('load_status');
-        if ($microServiceStatus){
-            if ($microServiceStatus['load_status'] == "Transaction Success"){
+        $microServiceStatus = NPSAccountLinkLoad::where('reference_id', '=', $preTransaction->pre_transaction_id)->first();
+        if ($microServiceStatus) {
+            $gateway_id = request()->transaction_id_1 ?: 0;
+            if (! $gateway_id) {
+                return [
+                    'before_transaction_status' => $microServiceStatus['load_status'],
+                    'error_description' => "gateway transaction id not present in the request, enter gateway transaction id in Microservice Transaction ID 1 input field",
+                    'status' => "ERROR"
+                ];
+            }
+
+            if ($microServiceStatus['load_status'] == "Transaction Success") {
                 return [
                     'before_transaction_status' => $microServiceStatus['load_status'],
                     'error_description' => "The Transaction is Success in the Microservice",
                     'status' => "ERROR"
                 ];
-            }else{
+            } else {
                 return [
                     'before_transaction_status' => $microServiceStatus['load_status'],
                     'error_description' => "",
                     'status' => "PROCESSING"
                 ];
             }
-        }else{
+        } else {
             return [
                 'before_transaction_status' => null,
                 'error_description' => "Transaction Does not Exist in the Microservice for the Given Pre-Transaction",

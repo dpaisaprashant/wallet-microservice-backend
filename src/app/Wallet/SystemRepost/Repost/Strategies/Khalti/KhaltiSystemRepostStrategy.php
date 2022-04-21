@@ -2,6 +2,7 @@
 
 namespace App\Wallet\SystemRepost\Repost\Strategies\Khalti;
 
+use App\Models\Microservice\PreTransaction;
 use App\Wallet\SystemRepost\Repost\Contracts\CheckByApiContract;
 use App\Wallet\SystemRepost\Repost\Contracts\CheckByDatabaseContract;
 use App\Wallet\SystemRepost\Repost\Contracts\SystemRepostContract;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 class KhaltiSystemRepostStrategy implements CheckByDatabaseContract, CheckByApiContract, SystemRepostContract
 {
 
-    public function checkMicroserviceApiStatus()
+    public function checkMicroserviceApiStatus(PreTransaction $preTransaction)
     {
         Log::info("5. check api of khalti");
 

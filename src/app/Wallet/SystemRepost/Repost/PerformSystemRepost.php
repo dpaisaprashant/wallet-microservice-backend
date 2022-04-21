@@ -42,29 +42,30 @@ class PerformSystemRepost
         $this->preTransaction->load("user", "user.wallet");
         $this->transactionType = request()->transaction_type;
         $this->updateBalance = request()->update_balance ? 1 : 0;
-        $this->updateTimeStamp = request()->update_timestamp ? 1 :0;
+        $this->updateTimeStamp = request()->update_timestamp ? 1 : 0;
         //TODO: get from_bonus and from_main from frontend
         $this->fromBonus = request()->from_bonus * 100;
         $this->fromMain = request()->from_main * 100;
     }
 
-    private function createSystemRepost() : SystemRepost {
+    private function createSystemRepost(): SystemRepost
+    {
         Log::info("3. Save to system_repost table");
         $system_repost_data = [
             'admin_id' => auth()->user()->id,
             'user_id' => $this->preTransaction->user_id,
             'pre_transaction_id' => $this->preTransaction->pre_transaction_id,
-            'amount' => $this->preTransaction->amount,
+            'amount' => $this->preTransaction->amount * 100,
             'type' => $this->preTransaction->transaction_type,
             'status' => "PENDING",
             'update_balance' => $this->updateBalance,
             'latest_date' => $this->updateTimeStamp,
             'transaction_type' => $this->transactionType,
-            'before_balance' => $this->preTransaction->user->wallet->balance,
-            'before_bonus_balance' => $this->preTransaction->user->wallet->bonus_balance,
+            'before_balance' => $this->preTransaction->user->wallet->balance * 100,
+            'before_bonus_balance' => $this->preTransaction->user->wallet->bonus_balance * 100,
         ];
 
-        return  SystemRepost::create($system_repost_data);
+        return SystemRepost::create($system_repost_data);
     }
 
 
@@ -92,7 +93,7 @@ class PerformSystemRepost
 
         //2.2 return if repost condition is not met
         if ($dbCheckResponse["status"] == "ERROR") {
-            return back()->with("error", $dbCheckResponse["error_description"]);
+            return redirect()->back()->with("error", $dbCheckResponse["error_description"]);
         }
 
         //3. check api
@@ -112,7 +113,6 @@ class PerformSystemRepost
         //5.update balance check
         if ($this->updateBalance) {
             $userId = $this->preTransaction->user_id;
-            $amount = $this->preTransaction->amount * 100;
             //5.1. update balance enabled
             if ($transactionEvent->account_type == PreTransaction::TRANSACTION_TYPE_CREDIT) {
 
@@ -125,11 +125,11 @@ class PerformSystemRepost
                 }
             } elseif ($transactionEvent->account_type == PreTransaction::TRANSACTION_TYPE_DEBIT) {
                 //TODO: deduct from bonus or main
-                if ($this->fromMain > 0){
-                    event(new UserWalletPaymentEvent($userId, $amount));
+                if ($this->fromMain > 0) {
+                    event(new UserWalletPaymentEvent($userId, $this->fromMain));
                 }
-                if ($this->fromBonus > 0){
-                    event(new UserBonusWalletPaymentEvent($userId,$amount));
+                if ($this->fromBonus > 0) {
+                    event(new UserBonusWalletPaymentEvent($userId, $this->fromBonus));
                 }
             }
         }
@@ -140,7 +140,7 @@ class PerformSystemRepost
             "balance" => $userWallet->balance * 100,
             "bonus_balance" => $userWallet->bonusBalance * 100,
             "from_main" => $this->fromMain,
-            "from_bonus" => $this->fromBonus
+            "from_bonus" => $this->fromBonus,
         ]);
 
         //TODO: update system repost
@@ -148,7 +148,8 @@ class PerformSystemRepost
         $systemRepost->update([
             "after_balance" => $userWallet->balance * 100,
             "after_bonus_balance" => $userWallet->bonusBalance * 100,
-            "after_transaction_status" => "SUCCESS"
+            "after_transaction_status" => "SUCCESS",
+            "status" => "SUCCESS"
         ]);
         //7. update system repost
 

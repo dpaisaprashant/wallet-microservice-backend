@@ -32,7 +32,7 @@ class NpsAccountLinkSystemRepostStrategy implements SystemRepostContract
 
         $create_transaction_event = [
             'pre_transaction_id' => $preTransaction->pre_transaction_id,
-            'amount' => $preTransaction->amount,
+            'amount' => $preTransaction->amount * 100,
             'account' => $npsLoadTransaction->linkedAccount->account_number,
             'description' => "Nps Account Link Load system repost",
             'vendor' => $npsLoadTransaction->linkedAccount->bank_code,

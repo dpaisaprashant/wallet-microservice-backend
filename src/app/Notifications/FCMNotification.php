@@ -6,7 +6,9 @@ use App\Broadcasting\FCMChannel;
 use App\Broadcasting\OneSignalChannel;
 use App\Broadcasting\SparrowChannel;
 use App\Models\User;
+use App\Wallet\AakashSMS\AakashSendSMS;
 use App\Wallet\FCMNotifier;
+use App\Wallet\MiracleInfoSMS\MiracleInfoSendSMS;
 use App\Wallet\Notification\Repository\NotificationRepository;
 use App\Wallet\OneSignalNotifier;
 use App\Wallet\SparrowSMS\Models\Sparrow;
@@ -48,7 +50,7 @@ class FCMNotification extends Notification
         $this->image = $image;
         $repository = new NotificationRepository(request());
         $this->channel = $repository->notificationChannel();
-
+        $this->smsChannel = $repository->smsChannel();
     }
 
     /**
@@ -59,7 +61,7 @@ class FCMNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database', $this->channel, SparrowChannel::class];
+        return ['database', $this->channel, $this->smsChannel];
     }
 
     public function toDatabase($notifiable)
@@ -108,6 +110,18 @@ class FCMNotification extends Notification
     public function toSparrow($notifiable){
         if($this->type == "KYCAccepted" || $this->type == "KYCRejected"){
             //(new SendSMS())->send($this->user->mobile_no,$this->description);
+        }
+    }
+
+    public function toAakashSMS($notifiable){
+        if($this->type == "KYCAccepted" || $this->type == "KYCRejected"){
+//            (new AakashSendSMS())->send($this->user->mobile_no,$this->description);
+        }
+    }
+
+    public function toMiracleInfo($notifiable){
+        if($this->type == "KYCAccepted" || $this->type == "KYCRejected"){
+//            (new MiracleInfoSendSMS())->send($this->user->mobile_no,$this->description);
         }
     }
 }

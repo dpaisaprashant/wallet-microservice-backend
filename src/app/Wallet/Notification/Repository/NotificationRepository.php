@@ -4,8 +4,11 @@
 namespace App\Wallet\Notification\Repository;
 
 
+use App\Broadcasting\AakashSMSChannel;
 use App\Broadcasting\FCMChannel;
+use App\Broadcasting\MiracleInfoChannel;
 use App\Broadcasting\OneSignalChannel;
+use App\Broadcasting\SparrowChannel;
 use App\Events\SendFcmNotification;
 use App\Events\SendFcmTopicNotification;
 use App\Models\FCMNotification;
@@ -25,6 +28,10 @@ class NotificationRepository
     CONST SERVICE_FIREBASE = 'FIREBASE';
     CONST SERVICE_ONE_SIGNAL = 'ONE SIGNAL';
 
+    CONST SMS_SPARROW = 'SPARROW SMS';
+    CONST SMS_MIRACLE = 'MIRACLE SMS';
+    CONST SMS_AAKASH = 'AAKASH SMS';
+
     public function __construct(Request $request)
     {
         $this->request = $request;
@@ -38,6 +45,29 @@ class NotificationRepository
     {
         $this->length = $length;
         return $this;
+    }
+
+    public function smsService()
+    {
+        return Setting::where('option', 'notification_service')->first()->value;
+    }
+
+    public function smsChannel()
+    {
+        if ($this->smsService() == self::SMS_SPARROW) {
+            return SparrowChannel::class;
+        }
+
+        elseif ($this->smsService() == self::SMS_MIRACLE) {
+            return MiracleInfoChannel::class;
+        }
+
+        elseif ($this->smsService() == self::SMS_AAKASH) {
+            return AakashSMSChannel::class;
+
+        }else{
+            return SparrowChannel::class;
+        }
     }
 
     public function notificationService()

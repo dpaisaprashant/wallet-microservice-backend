@@ -14,6 +14,7 @@ use App\Models\Wallet;
 use App\Wallet\SystemRepost\Repost\Contracts\CheckByApiContract;
 use App\Wallet\SystemRepost\Repost\Contracts\CheckByDatabaseContract;
 use App\Wallet\SystemRepost\Repost\Contracts\SystemRepostContract;
+use App\Wallet\SystemRepost\Repost\Exception\SystemRepostValidationException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -93,7 +94,7 @@ class PerformSystemRepost
 
         //2.2 return if repost condition is not met
         if ($dbCheckResponse["status"] == "ERROR") {
-            return redirect()->back()->with("error", $dbCheckResponse["error_description"]);
+            throw new SystemRepostValidationException($systemRepost);
         }
 
         //3. check api
@@ -181,7 +182,7 @@ class PerformSystemRepost
                 "error_description" => "Something Went Wrong",
                 "status" => "ERROR"
             ]);
-            return redirect()->back()->with('error', 'Something Went Wrong Please Try Again Later');
+            throw new SystemRepostValidationException($systemRepost);
         }
 
     }

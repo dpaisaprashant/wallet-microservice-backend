@@ -5,7 +5,6 @@ namespace App\Wallet\WalletAPI;
 
 
 use App\Wallet\Architecture\Exceptions\AddBalanceToUserException;
-//use App\Wallet\Microservice\Exceptions\MicroserviceClientException;
 use App\Wallet\Microservice\Exceptions\MicroserviceException;
 use App\Wallet\WalletAPI\Exceptions\MicroserviceClientException;
 use GuzzleHttp\Client;

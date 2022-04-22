@@ -45,8 +45,8 @@ class PerformSystemRepost
         $this->transactionType = request()->transaction_type;
         $this->updateBalance = request()->update_balance ? 1 : 0;
         $this->updateTimeStamp = request()->update_timestamp ? 1 : 0;
-        $this->fromBonus = request()->from_bonus * 100;
-        $this->fromMain = request()->from_main * 100;
+        $this->fromBonus = request()->from_bonus * 100 ? : 0;
+        $this->fromMain = request()->from_main * 100 ? : 0;
     }
 
     private function createSystemRepost(): SystemRepost
@@ -151,7 +151,7 @@ class PerformSystemRepost
             //updating the balance in the transaction Event
             $transactionEvent->update([
                 "balance" => $userWallet->balance * 100,
-                "bonus_balance" => $userWallet->bonusBalance * 100,
+                "bonus_balance" => $userWallet->bonus_balance * 100,
                 "from_main" => $this->fromMain,
                 "from_bonus" => $this->fromBonus,
             ]);
@@ -160,7 +160,7 @@ class PerformSystemRepost
             Log::info("7. Update system_repost table");
             $systemRepost->update([
                 "after_balance" => $userWallet->balance * 100,
-                "after_bonus_balance" => $userWallet->bonusBalance * 100,
+                "after_bonus_balance" => $userWallet->bonus_balance * 100,
                 "after_transaction_status" => "SUCCESS",
                 "status" => "SUCCESS"
             ]);

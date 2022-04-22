@@ -25,7 +25,8 @@ class NpsAccountLinkSystemRepostStrategy implements SystemRepostContract
 
         $npsLoadTransaction->update([
             'load_status' => NPSAccountLinkLoad::LOAD_STATUS_SUCCESS,
-            'gateway_transaction_id' => request()->transaction_id_1
+            'gateway_transaction_id' => request()->transaction_id_1,
+            'merchant_txn_id' => $npsLoadTransaction['reference_id']
         ]);
 
         Log::info("6. perform repost of nps load");
@@ -45,6 +46,7 @@ class NpsAccountLinkSystemRepostStrategy implements SystemRepostContract
             'transaction_type' => request()->transaction_type,
             'uid' => TransactionIdGenerator::generateAlphaNumeric(7),
             'account_type' => $preTransaction->transaction_type,
+            'refund_pre_transaction_id' => $preTransaction->pre_transaction_id
         ];
 
         $transactionEvent = TransactionEvent::create($create_transaction_event);

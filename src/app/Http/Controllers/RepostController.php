@@ -34,7 +34,7 @@ class RepostController extends Controller
                 $response=$microservice->dispatchBfiRepost($request);
                 return redirect()->back()->with('success', 'BFI Repost Successful');
             }catch (\Exception $e){
-                return redirect()->back()->with('error', 'BFI Repost Failed. Error Details = '.$e);
+                return redirect()->back()->with('error', 'BFI Repost Failed. Error Details = '.$e->getMessage());
             }
         }
 
@@ -50,7 +50,7 @@ class RepostController extends Controller
                 $response=$microservice->dispatchKhaltiRepost($request);
                 return redirect()->back()->with('success', 'Khalti Repost Successful');
             }catch (\Exception $e){
-                return redirect()->back()->with('error', 'BFI Repost Failed. Error Details = '.$e);
+                return redirect()->back()->with('error', 'BFI Repost Failed. Error Details = '.$e->getMessage());
             }
 
         }

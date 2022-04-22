@@ -60,6 +60,8 @@
             @endif
             @if(is_array($transaction) && isset($transaction['transaction']) && isset($transaction['transaction']['vendor']))
                 {{ $transaction['transaction']['vendor'] }}
+            @elseif($event->transactionEvent)
+                {{ $event->transactionEvent->vendor }}
             @else
                 {{ $event->vendor }}
             @endif

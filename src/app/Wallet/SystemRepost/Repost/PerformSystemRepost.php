@@ -170,7 +170,8 @@ class PerformSystemRepost
             Log::info("7. Update pre transaction status");
             //updating the pre_transaction status
             $this->preTransaction->update([
-                "status" => PreTransaction::STATUS_SUCCESS
+                "status" => PreTransaction::STATUS_SUCCESS,
+                "refund_pre_transaction_id" => $this->preTransaction->pre_transaction_id
             ]);
 
             DB::commit();

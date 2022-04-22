@@ -473,6 +473,9 @@ $url = url()->current();
                         @can('Repost transaction bfi')
                             <li><a href="{{ route('repost.bfi') }}">BFI Repost</a></li>
                         @endcan
+                        @can('Repost transaction khalti')
+                            <li><a href="{{ route('repost.khalti') }}">Khalti Repost</a></li>
+                        @endcan
                     </ul>
                 </li>
             @endif

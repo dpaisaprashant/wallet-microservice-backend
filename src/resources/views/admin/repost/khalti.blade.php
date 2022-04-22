@@ -21,7 +21,7 @@
         <div class="row">
             @include('admin.asset.notification.notify')
             <div class="col-lg-12">
-                <form target="_blank" method="POST" enctype="multipart/form-data" action="{{ route("repost.bfi") }}">
+                <form target="_blank" method="POST" enctype="multipart/form-data" action="{{ route("repost.khalti") }}">
                     @csrf
                     <div class="ibox ">
                         <div class="ibox-title">
@@ -29,20 +29,37 @@
                         </div>
                         <div class="ibox-content">
                             <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Process Id</label>
+                                <label class="col-sm-2 col-form-label">Reference Id</label>
                                 <div class="col-sm-10">
-                                    <input name="process_id" type="text" class="form-control" required>
+                                    <input name="reference" type="text" class="form-control" required>
                                 </div>
                             </div>
-
                             <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Select BFI User</label>
+                                <label class="col-sm-2 col-form-label">Amount</label>
                                 <div class="col-sm-10">
-                                    <select class="form-control" name="bfi_user" required>
-                                        @foreach($bfiUsers as $key=>$value)
-                                            <option>{{$key}}</option>
-                                        @endforeach
-                                    </select>
+                                    <input name="amount" type="number" step="0.1" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Status</label>
+                                <div class="col-sm-10">
+{{--                                    <select>--}}
+{{--                                        <option>Success</option>--}}
+{{--                                        <option>Failed</option>--}}
+{{--                                    </select>--}}
+                                    <input name="status" type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Detail</label>
+                                <div class="col-sm-10">
+                                    <input name="detail" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Response Id</label>
+                                <div class="col-sm-10">
+                                    <input name="response_id" type="text" class="form-control">
                                 </div>
                             </div>
 

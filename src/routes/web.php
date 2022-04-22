@@ -410,6 +410,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::match(['get', 'post'], '/repost/nps', 'RepostController@nps')->name('repost.nps')->middleware('permission:Repost transaction nps');
         Route::match(['get', 'post'], '/repost/connectIPS', 'RepostController@connectIPS')->name('repost.connectIPS')->middleware('permission:Repost transaction connectips');
         Route::match(['get', 'post'], '/repost/bfi', 'RepostController@bfi')->name('repost.bfi')->middleware('permission:Repost transaction bfi');
+        Route::match(['get', 'post'], '/repost/khalti', 'RepostController@khalti')->name('repost.khalti')->middleware('permission:Repost transaction khalti');
 
 
         /**

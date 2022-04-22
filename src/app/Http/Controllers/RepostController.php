@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Wallet\WalletAPI\Microservice\BfiMicroservice;
+use App\Wallet\WalletAPI\Microservice\CoreMicroservice;
 use Illuminate\Http\Request;
 
 class RepostController extends Controller
@@ -28,12 +29,33 @@ class RepostController extends Controller
     public function BFI(Request $request)
     {
         if ($request->isMethod('post')) {
-            $microservice = new BfiMicroservice();
-            $response=$microservice->dispatchBfiRepost($request);
-            return redirect()->back()->with('success', 'BFI Repost Successful');
+            try{
+                $microservice = new BfiMicroservice();
+                $response=$microservice->dispatchBfiRepost($request);
+                return redirect()->back()->with('success', 'BFI Repost Successful');
+            }catch (\Exception $e){
+                return redirect()->back()->with('error', 'BFI Repost Failed. Error Details = '.$e);
+            }
         }
 
         $bfiUsers = config('bfi-users');
         return view('admin.repost.bfi')->with(compact('bfiUsers'));
+    }
+
+    public function khalti(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            try{
+                $microservice = new CoreMicroservice();
+                $response=$microservice->dispatchKhaltiRepost($request);
+                return redirect()->back()->with('success', 'Khalti Repost Successful');
+            }catch (\Exception $e){
+                return redirect()->back()->with('error', 'BFI Repost Failed. Error Details = '.$e);
+            }
+
+        }
+
+//        $khaltiUsers = config('khalti-users');
+        return view('admin.repost.khalti');
     }
 }

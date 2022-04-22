@@ -13,7 +13,7 @@ class CoreMicroservice
 
         $microservice = new MicroserviceJSONAbstract();
         $microservice->setBaseUrl(config('microservices.CORE'))
-            ->setUrl('/khaltidlr-manual')
+            ->setUrl('/api/khaltidlr-manual')
             ->addParam('reference', $request->reference)
             ->addParam('amount', $request->amount)
             ->addParam('status', $request->status)

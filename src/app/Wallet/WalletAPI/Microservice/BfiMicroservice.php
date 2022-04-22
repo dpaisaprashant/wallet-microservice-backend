@@ -16,7 +16,7 @@ class BfiMicroservice
 
         $microservice = new MicroserviceJSONAbstract();
         $microservice->setBaseUrl(config('microservices.BFI'))
-            ->setUrl('/bfi/repost-execute-payment')
+            ->setUrl('/api/bfi/repost-execute-payment')
             ->addParam('process_id', $request->process_id)
             ->addHeader('Authorization', 'Basic ' . $basicAuth);
 

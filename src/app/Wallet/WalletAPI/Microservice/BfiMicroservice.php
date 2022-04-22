@@ -11,8 +11,8 @@ class BfiMicroservice
 {
     public function dispatchBfiRepost(Request $request)
     {
-        $username = config('bfi-users.'.$request->bfi_user.'username');
-        $password = config('bfi-users.'.$request->bfi_user.'password');
+        $username = config('bfi-users.'.$request->bfi_user.'.username');
+        $password = config('bfi-users.'.$request->bfi_user.'.password');
 
         Log::info("Bfi username: " . $username);
         Log::info("Bfi password: " . $password);

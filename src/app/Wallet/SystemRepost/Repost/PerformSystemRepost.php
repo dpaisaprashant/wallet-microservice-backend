@@ -180,6 +180,7 @@ class PerformSystemRepost
 
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::info($e);
             $systemRepost->update([
                 "error_description" => "Something Went Wrong",
                 "status" => "ERROR"

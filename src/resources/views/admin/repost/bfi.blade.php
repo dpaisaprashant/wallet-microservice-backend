@@ -21,7 +21,7 @@
         <div class="row">
             @include('admin.asset.notification.notify')
             <div class="col-lg-12">
-                <form target="_blank" method="POST" enctype="multipart/form-data" action="{{ route("repost.bfi") }}">
+                <form method="POST" enctype="multipart/form-data" action="{{ route("repost.bfi") }}">
                     @csrf
                     <div class="ibox ">
                         <div class="ibox-title">
@@ -49,7 +49,7 @@
                             <div class="hr-line-dashed"></div>
                             <div class="form-group row">
                                 <div class="col-sm-4 col-sm-offset-2">
-                                    <button class="btn btn-primary btn-sm" type="submit">Repost Transaction</button>
+                                    <button id="repost" class="btn btn-primary btn-sm" type="submit">Repost Transaction</button>
                                 </div>
                             </div>
                         </div>
@@ -69,10 +69,21 @@
             height: 35.6px !important;
         }
     </style>
+
+    <link href="{{ asset('admin/css/plugins/sweetalert/sweetalert.css') }}" rel="stylesheet">
+
 @endsection
 
 @section('scripts')
     @include('admin.asset.js.summernote')
 
+    <script src="{{ asset('admin/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
+
+    <script>
+        $('#repost').on("click",function (e){
+            $('#overlay').fadeIn(300);
+            $('overlay').fadeOut(300);
+        })
+    </script>
 @endsection
 

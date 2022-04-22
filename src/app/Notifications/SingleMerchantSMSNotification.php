@@ -3,6 +3,9 @@
 namespace App\Notifications;
 
 use App\Broadcasting\SparrowChannel;
+use App\Wallet\AakashSMS\AakashSendSMS;
+use App\Wallet\MiracleInfoSMS\MiracleInfoSendSMS;
+use App\Wallet\Notification\Repository\NotificationRepository;
 use App\Wallet\SparrowSMS\SendSMS;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
@@ -24,6 +27,9 @@ class SingleMerchantSMSNotification extends Notification
     {
         $this->description = $description;
         $this->merchant = $merchant;
+
+        $repository = new NotificationRepository(request());
+        $this->smsChannel = $repository->smsChannel();
     }
 
     /**
@@ -34,12 +40,23 @@ class SingleMerchantSMSNotification extends Notification
      */
     public function via($notifiable)
     {
-        return [SparrowChannel::class];
+        return [$this->smsChannel];
+//        return [SparrowChannel::class];
     }
 
     public function toSparrow()
     {
         return (new SendSMS)->send($this->merchant->mobile_no, $this->description);
+    }
+
+    public function toAakashSMS()
+    {
+        return (new AakashSendSMS())->send($this->merchant->mobile_no, $this->description);
+    }
+
+    public function toMiracleInfo()
+    {
+        return (new MiracleInfoSendSMS())->send($this->merchant->mobile_no, $this->description);
     }
 
     /**

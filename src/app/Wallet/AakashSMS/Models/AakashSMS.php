@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Wallet\SparrowSMS\Models;
+namespace App\Wallet\AakashSMS\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Sparrow extends Model
+class AakashSMS extends Model
 {
     protected $guarded = [];
 
     protected $connection='dpaisa';
-
-    protected $table  = "sparrow_sms";
+    protected $table  = "aakash_smses";
 
 }

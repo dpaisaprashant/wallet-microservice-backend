@@ -468,8 +468,14 @@ $url = url()->current();
                         @can('Repost transaction connectips')
                             <li><a href="{{ route('repost.connectIPS') }}">Connect IPS Repost</a></li>
                         @endcan
-                            {{--                        todo: add permissions--}}
+                            {{--todo: add permissions--}}
                             <li><a href="{{route('view.system.repost')}}">System Repost</a></li>
+                        @can('Repost transaction bfi')
+                            <li><a href="{{ route('repost.bfi') }}">BFI Repost</a></li>
+                        @endcan
+                        @can('Repost transaction khalti')
+                            <li><a href="{{ route('repost.khalti') }}">Khalti Repost</a></li>
+                        @endcan
                     </ul>
                 </li>
             @endif

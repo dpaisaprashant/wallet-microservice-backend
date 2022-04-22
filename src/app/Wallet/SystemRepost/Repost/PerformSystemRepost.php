@@ -97,17 +97,17 @@ class PerformSystemRepost
             throw new SystemRepostValidationException($systemRepost);
         }
 
-//        //3. check api
-//        $apiCheckStatus = $this->checkByApiStrategy->checkMicroserviceApiStatus($this->preTransaction);
-//        if (!$apiCheckStatus) {
-//            $description = "Transaction Api status check failed";
-//            $systemRepost->update([
-//                "error_description" => $description,
-//                "status" => "ERROR"
-//            ]);
-//            throw new SystemRepostValidationException($systemRepost);
-//
-//        }
+        //3. check api
+        $apiCheckStatus = $this->checkByApiStrategy->checkMicroserviceApiStatus($this->preTransaction);
+        if (!$apiCheckStatus) {
+            $description = "Transaction Api status check failed";
+            $systemRepost->update([
+                "error_description" => $description,
+                "status" => "ERROR"
+            ]);
+            throw new SystemRepostValidationException($systemRepost);
+
+        }
 
 
         //4. repost the transaction
@@ -170,7 +170,8 @@ class PerformSystemRepost
             Log::info("7. Update pre transaction status");
             //updating the pre_transaction status
             $this->preTransaction->update([
-                "status" => PreTransaction::STATUS_SUCCESS
+                "status" => PreTransaction::STATUS_SUCCESS,
+                //"refund_pre_transaction_id" => $this->preTransaction->pre_transaction_id
             ]);
 
             DB::commit();
@@ -179,6 +180,7 @@ class PerformSystemRepost
 
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::info($e);
             $systemRepost->update([
                 "error_description" => "Something Went Wrong",
                 "status" => "ERROR"

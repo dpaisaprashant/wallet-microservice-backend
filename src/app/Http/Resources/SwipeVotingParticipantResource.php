@@ -18,10 +18,16 @@ class SwipeVotingParticipantResource extends JsonResource
         if ($this->status == 1) {
             $status = 'QUALIFIED';
         }else{
-            $status = 'QUALIFIED';
+            $status = 'DISQUALIFIED';
         }
 
-        return [
+        if  ($this->json_form_data != null){
+            $json_data = json_decode($this->json_form_data,true);
+        }else{
+            $json_data = [];
+        }
+
+        $excel_data = [
             'NAME' => $this->name,
             'MOBILE' => $this->mobile_no,
             'IMAGE' => config('dpaisa-api-url.swipe-voting-participant-image-url') . $this->image,
@@ -29,5 +35,11 @@ class SwipeVotingParticipantResource extends JsonResource
             'EVENT CODE' => $this->event_code,
             'CREATED AT' => $this->created_at,
         ];
+
+        if (!empty($json_data)){
+            $excel_data = array_merge($excel_data,$json_data);
+        }
+        return $excel_data;
+
     }
 }

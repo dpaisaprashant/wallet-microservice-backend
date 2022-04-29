@@ -26,7 +26,7 @@ class AgentDetailResource extends JsonResource
                 'BUSINESS PAN' =>  $this->agent->business_pan ?? "",
                 'AGENT STATUS' => $this->agent->status ?? "",
                 'AGENT CODE' =>  $this->agent->agent_code ?? "",
-                'USE PARENT AGENT BALANCE' => $this->agent->use_parent_balance ?? "",
+                //'USE PARENT AGENT BALANCE' => $this->agent->use_parent_balance ?? "",
                 'DATE OF BIRTH' => $this->kyc->date_of_birth ?? null,
                 'IDENTITY TYPE' => $this->kyc->document_type ?? null,
                 'IDENTITY NUMBER' => $this->kyc->id_no ?? "" ,
@@ -34,7 +34,7 @@ class AgentDetailResource extends JsonResource
                 'IDENTITY ISSUE FROM' => $this->kyc->c_issued_from ?? null,
                 'MUNICIPALITY' => $this->kyc->municipality ?? null,
                 'WARD NO' => $this->kyc->ward_no ?? null,
-                'BALANCE' => optional($this->wallet)->balance + optional($this->wallet)->bonus_balanceo ?? null,
+                'BALANCE' => optional($this->wallet)->balance + optional($this->wallet)->bonus_balance ?? null,
                 'AGENT CREATED AT' => Carbon::parse($this->agent->created_at)->format('F d Y'),
             ];
 //        }

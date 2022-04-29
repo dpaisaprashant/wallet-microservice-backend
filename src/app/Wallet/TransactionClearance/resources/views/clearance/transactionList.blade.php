@@ -38,7 +38,7 @@
                                     <div class="row">
 
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="input-group date">
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
@@ -49,7 +49,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="input-group date">
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
@@ -60,7 +60,30 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <select data-placeholder="Select Vendor...." class="chosen-select"
+                                                        tabindex="2" name="vendor">
+                                                    <option value="" selected disabled>Select Vendor...</option>
+                                                    <option value="">All</option>
+                                                    @if(!empty($_GET['vendor']))
+
+                                                        @foreach($getAllUniqueVendors as $getAllUniqueVendor)
+                                                            <option value="{{$getAllUniqueVendor}}"
+                                                                    @if($_GET['vendor']  == $getAllUniqueVendor) selected @endif >{{$getAllUniqueVendor}}</option>
+                                                        @endforeach
+
+                                                    @else
+                                                        @foreach($getAllUniqueVendors as $getAllUniqueVendor)
+                                                            <option
+                                                                value="{{$getAllUniqueVendor}}">{{$getAllUniqueVendor}}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <select data-placeholder="Choose transaction type..."
                                                         class="chosen-select" tabindex="2" name="transaction_event_transaction_type" required>

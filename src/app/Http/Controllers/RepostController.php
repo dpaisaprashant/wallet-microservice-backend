@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Wallet\WalletAPI\Microservice\BfiMicroservice;
 use App\Wallet\WalletAPI\Microservice\CoreMicroservice;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Request;
 
 class RepostController extends Controller
@@ -49,7 +50,10 @@ class RepostController extends Controller
                 $microservice = new CoreMicroservice();
                 $response = $microservice->dispatchKhaltiRepost($request);
                 return redirect()->back()->with('success', 'Khalti Repost Successful');
-            }catch (\Exception $e){
+            } catch (ClientException $e){
+                return redirect()->back()->with('error', $e->getResponse()->getBody()->getContents());
+            }
+            catch (\Exception $e){
                 return redirect()->back()->with('error', $e->getMessage());
             }
 

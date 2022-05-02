@@ -46,10 +46,10 @@ class MicroserviceClientException extends Exception
             $error["message"] = $this->message;
         }
 
-        if ($this->transaction && $this->transaction->status != "FAILED") $this->transaction->update([
+        /*if ($this->transaction && $this->transaction->status != "FAILED") $this->transaction->update([
             "status" => "FAILED",
             "json_response" => json_encode($error)
-        ]);
+        ]);*/
 
         if (isset($error['transaction'])) {
             unset($error['transaction']);
@@ -69,6 +69,7 @@ class MicroserviceClientException extends Exception
             $error["message"] = "Transaction could not be completed";
         }
 
-        return $this->errorResponse($error, $this->responseCode);
+        //return $this->errorResponse($error, $this->responseCode);
+        return redirect()->back()->with("error", $error["message"]);
     }
 }

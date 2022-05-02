@@ -33,12 +33,14 @@
                                 <div class="col-sm-10">
                                     <input name="reference" type="text" class="form-control" required>
                                 </div>
+                                <small>*Required</small>
                             </div>
                             <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Amount</label>
+                                <label class="col-sm-2 col-form-label">Amount(Rs.)</label>
                                 <div class="col-sm-10">
                                     <input name="amount" type="number" step="0.1" class="form-control" required>
                                 </div>
+                                <small>*Required</small>
                             </div>
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Status</label>
@@ -47,7 +49,7 @@
 {{--                                        <option>Success</option>--}}
 {{--                                        <option>Failed</option>--}}
 {{--                                    </select>--}}
-                                    <input name="status" type="text" class="form-control" required>
+                                    <input name="status" type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group  row">

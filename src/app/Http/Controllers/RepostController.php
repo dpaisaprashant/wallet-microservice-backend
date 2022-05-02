@@ -46,16 +46,9 @@ class RepostController extends Controller
     public function khalti(Request $request)
     {
         if ($request->isMethod('post')) {
-            //try{
                 $microservice = new CoreMicroservice();
                 $response = $microservice->dispatchKhaltiRepost($request);
                 return redirect()->back()->with('success', 'Khalti Repost Successful');
-            //} catch (ClientException $e){
-                //return redirect()->back()->with('error', $e->getResponse()->getBody()->getContents());
-            //}
-            //catch (\Exception $e){
-                //return redirect()->back()->with('error', $e->getMessage());
-            //}
         }
 
 //        $khaltiUsers = config('khalti-users');

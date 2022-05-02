@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Models\Microservice\PreTransaction;
+use Illuminate\Support\Facades\Cache;
 
 class TransactionEvent extends Model
 {
@@ -180,6 +181,13 @@ class TransactionEvent extends Model
     public function cashbackPull()
     {
         return $this->hasOne(CashbackPull::class, "pulled_cashback_transaction_event_id");
+    }
+
+    public function getCachedWalletServiceTypes()
+    {
+        return Cache::remember('walletServiceTypes', 86400, function () {
+            return $this->groupBy('service_type')->pluck('service_type')->toArray();
+        });
     }
 
 }

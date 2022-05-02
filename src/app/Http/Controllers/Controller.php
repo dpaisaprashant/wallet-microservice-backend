@@ -71,6 +71,7 @@ class Controller extends BaseController
             //'NCHL_LOAD_FUND',
             'BANK-TRANSFER',
             'CASHBACK',
+            'AGENT_CASHBACK',
             'COMMISSION',
             'REFERRAL',
         ];
@@ -89,8 +90,15 @@ class Controller extends BaseController
         View::share('paypointVendors', $paypointVendors);
 
         //$walletVendors = WalletTransactionType::groupBy('vendor')->pluck('vendor')->toArray();
-        $walletVendors = (new WalletTransactionType())->getCachedWalletVendors();
+
+        $walletTransactionType = new WalletTransactionType();
+
+        $walletVendors = $walletTransactionType->getCachedWalletVendors();
         View::share('walletVendors', $walletVendors);
+
+        $walletServiceTypes = $walletTransactionType->getCachedWalletServiceTypes();
+        View::share('walletServiceTypes', $walletServiceTypes);
+
 
         $transactionTypes = [
             UserTransaction::class => "PAYPOINT",

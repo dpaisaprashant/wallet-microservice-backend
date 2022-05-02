@@ -57,6 +57,13 @@ class WalletTransactionType extends Model
         });
     }
 
+    public function getCachedWalletServiceTypes()
+    {
+        return Cache::remember('walletServiceTypes', 86400, function () {
+            return $this->groupBy('service_type')->pluck('service_type')->toArray();
+        });
+    }
+
     public function resolveWalletTransactionType($vendor, $transactionCategory = null, $serviceType = null, $service = null)
     {
         return $this->where('vendor', $vendor)

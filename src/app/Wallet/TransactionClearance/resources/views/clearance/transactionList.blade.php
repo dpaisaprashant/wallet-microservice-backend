@@ -68,13 +68,13 @@
                                                     <option value="">All</option>
                                                     @if(!empty($_GET['vendor']))
 
-                                                        @foreach($getAllUniqueVendors as $getAllUniqueVendor)
+                                                        @foreach($walletVendors as $getAllUniqueVendor)
                                                             <option value="{{$getAllUniqueVendor}}"
                                                                     @if($_GET['vendor']  == $getAllUniqueVendor) selected @endif >{{$getAllUniqueVendor}}</option>
                                                         @endforeach
 
                                                     @else
-                                                        @foreach($getAllUniqueVendors as $getAllUniqueVendor)
+                                                        @foreach($walletVendors as $getAllUniqueVendor)
                                                             <option
                                                                 value="{{$getAllUniqueVendor}}">{{$getAllUniqueVendor}}</option>
                                                         @endforeach

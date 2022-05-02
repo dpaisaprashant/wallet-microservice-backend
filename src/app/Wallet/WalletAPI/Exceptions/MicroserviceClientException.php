@@ -62,11 +62,11 @@ class MicroserviceClientException extends Exception
         }
 
         if (! isset($error['message'])) {
-            $error["message"] = "Transaction could not be completed";
+            $error["message"] = "Unknown error occurred from microservice";
         }
 
         if (empty($error['message']) || $error['message'] == "") {
-            $error["message"] = "Transaction could not be completed";
+            $error["message"] = "Unknown error occurred from microservice";
         }
 
         //return $this->errorResponse($error, $this->responseCode);

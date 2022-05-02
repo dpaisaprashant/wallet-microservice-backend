@@ -32,15 +32,15 @@
                                 <label class="col-sm-2 col-form-label">Reference Id</label>
                                 <div class="col-sm-10">
                                     <input name="reference" type="text" class="form-control" required>
+                                    <small>*Required</small>
                                 </div>
-                                <small>*Required</small>
                             </div>
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Amount(Rs.)</label>
                                 <div class="col-sm-10">
                                     <input name="amount" type="number" step="0.1" class="form-control" required>
+                                    <small>*Required</small>
                                 </div>
-                                <small>*Required</small>
                             </div>
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Status</label>

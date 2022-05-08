@@ -8,6 +8,8 @@ class Sparrow extends Model
 {
     protected $guarded = [];
 
+    protected $connection='dpaisa';
+
     protected $table  = "sparrow_sms";
 
 }

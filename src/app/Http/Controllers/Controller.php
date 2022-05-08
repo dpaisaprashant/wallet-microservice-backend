@@ -18,6 +18,7 @@ use App\Models\NICAsiaCyberSourceLoadTransaction;
 use App\Models\NPSAccountLinkLoad;
 use App\Models\NpsLoadTransaction;
 use App\Models\TicketSale;
+use App\Models\TransactionEvent;
 use App\Models\User;
 use App\Models\UserLoadTransaction;
 use App\Models\UserMerchantEventTicketPayment;
@@ -71,6 +72,7 @@ class Controller extends BaseController
             //'NCHL_LOAD_FUND',
             'BANK-TRANSFER',
             'CASHBACK',
+            'AGENT_CASHBACK',
             'COMMISSION',
             'REFERRAL',
         ];
@@ -89,8 +91,12 @@ class Controller extends BaseController
         View::share('paypointVendors', $paypointVendors);
 
         //$walletVendors = WalletTransactionType::groupBy('vendor')->pluck('vendor')->toArray();
+
         $walletVendors = (new WalletTransactionType())->getCachedWalletVendors();
         View::share('walletVendors', $walletVendors);
+
+        $walletServiceTypes = (new TransactionEvent())->getCachedWalletServiceTypes();
+        View::share('walletServiceTypes', $walletServiceTypes);
 
         $transactionTypes = [
             UserTransaction::class => "PAYPOINT",

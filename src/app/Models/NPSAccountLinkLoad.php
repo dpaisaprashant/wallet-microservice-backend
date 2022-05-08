@@ -16,6 +16,11 @@ class NPSAccountLinkLoad extends Model
     protected $connection = 'nps-accountlink';
     protected $table = "load_wallet";
 
+    protected  $guarded = [];
+
+    const LOAD_STATUS_SUCCESS = "Transaction Success";
+    const LOAD_STATUS_ERROR = "Error";
+
     // protected $casts = [
     //     "amount" => "integer",
     //     "load_time_stamp" => "datetime"
@@ -38,6 +43,11 @@ class NPSAccountLinkLoad extends Model
     public function transactions()
     {
         return $this->morphOne(TransactionEvent::class, 'transactionable','transaction_type', 'transaction_id');
+    }
+
+    public function linkedAccount()
+    {
+        return $this->belongsTo(LinkedAccounts::class, "linked_accounts_id");
     }
 
 

@@ -5,10 +5,18 @@ namespace App\Wallet\Report\Http\Controllers;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\FundRequest;
 use App\Models\Microservice\PreTransaction;
+use App\Models\NchlBankTransfer;
+use App\Models\NchlLoadTransaction;
+use App\Models\TransactionEvent;
+use App\Models\User;
+use App\Models\UserKYC;
+use App\Models\UserToUserFundTransfer;
 use App\Wallet\Report\Repositories\NchlLoadReportRepository;
 use App\Wallet\Report\Repositories\ReconciliationReportRepository;
 use App\Wallet\Report\Traits\ReconciliationReportGenerator;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -47,7 +55,7 @@ class WalletReportController extends Controller
         $date = $_GET['date'];
         $date = date('Y-m-d', strtotime(str_replace(',', ' ', $date)));
 
-        $next_day =  date('Y-m-d',(strtotime ( '+1 day' , strtotime ( $date) ) ));
+        $next_day = date('Y-m-d', (strtotime('+1 day', strtotime($date))));
 
 
         $ledger = DB::connection("dpaisa")->select(DB::connection("dpaisa")->raw("SELECT sum(amount/ 100) as total, transaction_type from transaction_events where date(created_at) = Date(:date) group by transaction_type"),
@@ -69,31 +77,31 @@ class WalletReportController extends Controller
         $lucky_winner = DB::connection("dpaisa")->select(DB::connection("dpaisa")->raw("SELECT SUM(amount/100) as lucky_winner_total  FROM `transaction_events` WHERE `service_type` LIKE 'LUCKY WINNER' AND date(created_at) = date(:date)"),
             array('date' => $date)
         );
-        if($lucky_winner[0]->lucky_winner_total == null){
+        if ($lucky_winner[0]->lucky_winner_total == null) {
             $lucky_winner[0]->lucky_winner_total = 0;
         }
         //dd($lucky_winner[0]->lucky_winner_total);
 
-        foreach ($ledger as $l){
-            if($l->transaction_type == 'App\Models\LoadTestFund'){
+        foreach ($ledger as $l) {
+            if ($l->transaction_type == 'App\Models\LoadTestFund') {
                 $l->transaction_type = 'Refunds/PaypointClearance/Test';
                 $l->type = 'credit';
-            }else if($l->transaction_type == 'App\Models\NchlBankTransfer'){
+            } else if ($l->transaction_type == 'App\Models\NchlBankTransfer') {
                 $l->transaction_type = 'Bank Transfer';
                 $l->type = 'debit';
-            }else if($l->transaction_type == 'App\Models\NchlLoadTransaction'){
+            } else if ($l->transaction_type == 'App\Models\NchlLoadTransaction') {
                 $l->transaction_type = 'NHCL Load';
                 $l->type = 'credit';
-            }else if($l->transaction_type == 'App\Models\NpsLoadTransaction'){
+            } else if ($l->transaction_type == 'App\Models\NpsLoadTransaction') {
                 $l->transaction_type = 'NPS LOAD';
                 $l->type = 'credit';
-            }else if($l->transaction_type == 'App\Models\UserLoadTransaction'){
+            } else if ($l->transaction_type == 'App\Models\UserLoadTransaction') {
                 $l->transaction_type = 'NPAY LOAD';
                 $l->type = 'credit';
-            }else if($l->transaction_type == 'App\Models\UserTransaction'){
+            } else if ($l->transaction_type == 'App\Models\UserTransaction') {
                 $l->transaction_type = 'Paypoint Payments';
                 $l->type = 'debit';
-            }else if($l->transaction_type == 'App\Wallet\Commission\Models\Commission'){
+            } else if ($l->transaction_type == 'App\Wallet\Commission\Models\Commission') {
                 $l->transaction_type = 'Commissions';
                 $l->type = 'credit';
             }
@@ -117,15 +125,14 @@ class WalletReportController extends Controller
 //        echo "<br/>";
 
 
-
         $data = [
             'ledger' => $ledger,
             'paypoint_load_clearance' => $paypoint_clearance_load[0]->pp_load_total,
             'cashback_total' => $cashback[0]->cashback_total,
             'commission_total' => $commission[0]->commission_total,
             'from_date' => $date,
-            'opening_balance' => round($opening_balance[0]->opening_balance,2),
-            'closing_balance' => round($closing_balance[0]->closing_balance,2),
+            'opening_balance' => round($opening_balance[0]->opening_balance, 2),
+            'closing_balance' => round($closing_balance[0]->closing_balance, 2),
             'lucky_winner' => $lucky_winner[0]->lucky_winner_total
         ];
 
@@ -146,8 +153,7 @@ class WalletReportController extends Controller
         $date_to = $_GET['to'];
         $date_to = date('Y-m-d', strtotime(str_replace(',', ' ', $date_to)));
 
-        $next_day =  date('Y-m-d',(strtotime ( '+1 day' , strtotime ( $date_to) ) ));
-
+        $next_day = date('Y-m-d', (strtotime('+1 day', strtotime($date_to))));
 
 
         $ledger = DB::connection('dpaisa')->select(DB::connection('dpaisa')->raw("SELECT sum(amount/ 100) as total, transaction_type from transaction_events where date(created_at) >= Date(:date) AND date(created_at) <= Date(:date_to) group by transaction_type"),
@@ -168,31 +174,31 @@ class WalletReportController extends Controller
         $lucky_winner = DB::connection('dpaisa')->select(DB::connection('dpaisa')->raw("SELECT SUM(amount/100) as lucky_winner_total  FROM `transaction_events` WHERE `service_type` LIKE 'LUCKY WINNER' AND date(created_at) >= Date(:date) AND date(created_at) <= Date(:date_to)"),
             array('date' => $date, 'date_to' => $date_to)
         );
-        if($lucky_winner[0]->lucky_winner_total == null){
+        if ($lucky_winner[0]->lucky_winner_total == null) {
             $lucky_winner[0]->lucky_winner_total = 0;
         }
         //dd($lucky_winner[0]->lucky_winner_total);
 
-        foreach ($ledger as $l){
-            if($l->transaction_type == 'App\Models\LoadTestFund'){
+        foreach ($ledger as $l) {
+            if ($l->transaction_type == 'App\Models\LoadTestFund') {
                 $l->transaction_type = 'Refunds/PaypointClearance/Test';
                 $l->type = 'credit';
-            }else if($l->transaction_type == 'App\Models\NchlBankTransfer'){
+            } else if ($l->transaction_type == 'App\Models\NchlBankTransfer') {
                 $l->transaction_type = 'Bank Transfer';
                 $l->type = 'debit';
-            }else if($l->transaction_type == 'App\Models\NchlLoadTransaction'){
+            } else if ($l->transaction_type == 'App\Models\NchlLoadTransaction') {
                 $l->transaction_type = 'NHCL Load';
                 $l->type = 'credit';
-            }else if($l->transaction_type == 'App\Models\NpsLoadTransaction'){
+            } else if ($l->transaction_type == 'App\Models\NpsLoadTransaction') {
                 $l->transaction_type = 'NPS LOAD';
                 $l->type = 'credit';
-            }else if($l->transaction_type == 'App\Models\UserLoadTransaction'){
+            } else if ($l->transaction_type == 'App\Models\UserLoadTransaction') {
                 $l->transaction_type = 'NPAY LOAD';
                 $l->type = 'credit';
-            }else if($l->transaction_type == 'App\Models\UserTransaction'){
+            } else if ($l->transaction_type == 'App\Models\UserTransaction') {
                 $l->transaction_type = 'Paypoint Payments';
                 $l->type = 'debit';
-            }else if($l->transaction_type == 'App\Wallet\Commission\Models\Commission'){
+            } else if ($l->transaction_type == 'App\Wallet\Commission\Models\Commission') {
                 $l->transaction_type = 'Commissions';
                 $l->type = 'credit';
             }
@@ -217,7 +223,6 @@ class WalletReportController extends Controller
 //        echo "<br/>";
 
 
-
         $data = [
             'ledger' => $ledger,
             'paypoint_load_clearance' => $paypoint_clearance_load[0]->pp_load_total,
@@ -225,8 +230,8 @@ class WalletReportController extends Controller
             'commission_total' => $commission[0]->commission_total,
             'from_date' => $date,
             'to_date' => $date_to,
-            'opening_balance' => round($opening_balance[0]->opening_balance,2),
-            'closing_balance' => round($closing_balance[0]->closing_balance,2),
+            'opening_balance' => round($opening_balance[0]->opening_balance, 2),
+            'closing_balance' => round($closing_balance[0]->closing_balance, 2),
             'lucky_winner' => $lucky_winner[0]->lucky_winner_total
         ];
 
@@ -242,7 +247,6 @@ class WalletReportController extends Controller
 //            'closing_balance' => $closing_balance
 //        ];
 //        return view('reconciliation')->with(['data' => $data]);
-
 
 
     }
@@ -272,14 +276,14 @@ class WalletReportController extends Controller
         return view('WalletReport::nrbReconciliation.report')->with(compact('totalAmounts', 'totalLoadAmount', 'totalPaymentAmount'));
     }
 
-    public function walletPayablesReports(Request $request){
+    public function walletPayablesReports(Request $request)
+    {
 
         $preTransactions = [];
-        if (count($_GET) > 0){
+        if (count($_GET) > 0) {
             $preTransactions = PreTransaction::filter($request)->paginate(10);
         }
         return view('WalletReport::walletPayables.walletPayablesView')->with(compact('preTransactions'));
 
     }
-
 }

@@ -189,12 +189,12 @@
                                                     <option value="" selected disabled>Select Service Type...</option>
                                                     <option value="">All</option>
                                                     @if(!empty($_GET['service']))
-                                                        @foreach($serviceTypes as $serviceType)
+                                                        @foreach($walletServiceTypes as $serviceType)
                                                             <option value="{{ $serviceType }}"
                                                                     @if($_GET['service'] == $serviceType) selected @endif>{{ $serviceType }}</option>
                                                         @endforeach
                                                     @else
-                                                        @foreach($serviceTypes as $serviceType)
+                                                        @foreach($walletServiceTypes as $serviceType)
                                                             <option
                                                                 value="{{ $serviceType }}"> {{ $serviceType }} </option>
                                                         @endforeach

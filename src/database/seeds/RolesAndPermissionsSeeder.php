@@ -284,6 +284,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'Repost transaction npay',
             'Repost transaction nps',
             'Repost transaction connectips',
+            'Repost transaction bfi',
+            'Repost transaction khalti',
 
             'Transaction nps view',
             'Transaction nchl load',
@@ -512,9 +514,11 @@ class RolesAndPermissionsSeeder extends Seeder
             'View lucky winner report',
             'View ticket sale report',
             'View load test fund report',
+            'Report campaign voting',
+            'Report device info',
 
             'View wallet payables',
-
+            'View daily info report',
             ];
 
         //get users having all permissions

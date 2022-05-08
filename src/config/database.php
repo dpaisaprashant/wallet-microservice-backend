@@ -544,6 +544,30 @@ return [
             ]
         ],
 
+        'swipe_voting' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE_SWIPE_VOTING_URL'),
+            'host' => env('DB_HOST_SWIPE_VOTING', '127.0.0.1'),
+            'port' => env('DB_PORT_SWIPE_VOTING', '3306'),
+            'database' => env('DB_DATABASE_SWIPE_VOTING', 'forge'),
+            'username' => env('DB_USERNAME_SWIPE_VOTING', 'forge'),
+            'password' => env('DB_PASSWORD_SWIPE_VOTING', ''),
+            'unix_socket' => env('DB_SWIPE_VOTING_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => false,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+            'dump' => [
+                'dump_binary_path' => env('DB_DUMP_PATH', '/usr/bin/'), // only the path, so without `mysqldump` or `pg_dump`
+                'use_single_transaction',
+                'timeout' => 60 * 5, // 5 minute timeout
+            ]
+        ],
 
         'pgsql' => [
             'driver' => 'pgsql',

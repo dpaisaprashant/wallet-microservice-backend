@@ -1,6 +1,8 @@
 <?php
 
     return [
+        "CORE" => env('CORE_MICROSERVICE_URL', ''),
+
         "PAYPOINT" => env('PAYPOINT_MICROSERVICE_URL', ''),
 
         "NCHL" => env('NCHL_MICROSERVICE_URL', ''),
@@ -23,5 +25,7 @@
 
         'PAYMENT_NEPAL' => env('PAYMENT_NEPAL_MICROSERVICE_URL', ''),
 
-        'WALLET_CLEARANCE' => env('WALLET_CLEARANCE_MICROSERVICE_URL', '')
+        'WALLET_CLEARANCE' => env('WALLET_CLEARANCE_MICROSERVICE_URL', ''),
+
+        'BFI' => env('BFI_MICROSERVICE_URL', '')
     ];

@@ -5,8 +5,8 @@ namespace App\Wallet\WalletAPI;
 
 
 use App\Wallet\Architecture\Exceptions\AddBalanceToUserException;
-use App\Wallet\Microservice\Exceptions\MicroserviceClientException;
 use App\Wallet\Microservice\Exceptions\MicroserviceException;
+use App\Wallet\WalletAPI\Exceptions\MicroserviceClientException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Log;
 class MicroserviceJSONAbstract
 {
     protected $apiParams = [];
+
+    protected $headers = [];
 
     protected $baseUrl;
 
@@ -57,6 +59,12 @@ class MicroserviceJSONAbstract
         return $this;
     }
 
+    public function addHeader($key, $value)
+    {
+        $this->headers[$key]  = $value;
+        return $this;
+    }
+
 
     public function makeRequest($endpoint = "")
     {
@@ -68,6 +76,7 @@ class MicroserviceJSONAbstract
 
             $client = new Client();
             $response = $client->request($this->httpMethod, $this->baseUrl . $this->url, [
+                'headers' => $this->headers,
                 'json' => $requestJson
             ]);
 

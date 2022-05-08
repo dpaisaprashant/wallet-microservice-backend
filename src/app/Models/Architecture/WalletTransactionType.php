@@ -12,6 +12,9 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class WalletTransactionType extends Model
 {
+    CONST LIMIT_TYPE_LOAD = 'LOAD';
+    CONST LIMIT_TYPE_BANK_TRANSFER = 'BANK_TRANSFER';
+
     use LogsActivity;
 
     protected static $logAttributes = ['*'];
@@ -51,6 +54,13 @@ class WalletTransactionType extends Model
         //retrieves from cache, if not in cache adds the query to cache
         return Cache::remember('walletVendors', 86400, function () {
             return  $this->groupBy('vendor')->pluck('vendor')->toArray();
+        });
+    }
+
+    public function getCachedWalletServiceTypes()
+    {
+        return Cache::remember('walletServiceTypes', 86400, function () {
+            return $this->groupBy('service_type')->pluck('service_type')->toArray();
         });
     }
 
@@ -99,4 +109,21 @@ class WalletTransactionType extends Model
     public function walletTransactionTypeMerchantRevenue(){
         return $this->hasMany(WalletTransactionTypeMerchantRevenue::class);
     }
+
+    public function getLoadTransactionModels()
+    {
+        return $this->where("limit_type", self::LIMIT_TYPE_LOAD)
+            ->groupBy("transaction_type")
+            ->pluck("transaction_type")
+            ->toArray();
+    }
+
+    public function getBankTransferTransactionModels()
+    {
+        return $this->where("limit_type", self::LIMIT_TYPE_BANK_TRANSFER)
+            ->groupBy("transaction_type")
+            ->pluck("transaction_type")
+            ->toArray();
+    }
+
 }

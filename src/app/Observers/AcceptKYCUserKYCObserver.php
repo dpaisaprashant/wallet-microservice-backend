@@ -11,6 +11,7 @@ use App\Models\UserReferralBonusTransaction;
 use App\Notifications\ReferralAcceptedBonusNotification;
 use App\Notifications\ReferralUsedBonusNotification;
 use App\Wallet\Helpers\TransactionIdGenerator;
+use App\Wallet\WalletAPI\MicroserviceJSONAbstract;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -26,6 +27,29 @@ class AcceptKYCUserKYCObserver
     public function updated(UserKYC $kyc)
     {
         DB::commit();
+        //user activity kyc accept
+        /*if ($kyc->accept == 1) {
+            try {
+                $username = 'BackendProduction';
+                $password = 'Pr0ducT10n8@ck3nd';
+                $basicAuth = base64_encode($username . ':' . $password);
+
+                $microservice = new MicroserviceJSONAbstract();
+                $microservice->setBaseUrl(config('microservices.CORE'))
+                    ->setUrl('/api/user-activity/kyc-accept')
+                    ->addParam('user_id', $kyc->user_id)
+                    ->addHeader('App-Authorizer', '647061697361')
+                    ->addHeader('Authorization', 'Basic ' . $basicAuth);
+
+                $response = $microservice->makeRequest();
+                Log::info("user activity kyc accept response", [$response]);
+
+            } catch (\Exception $e) {
+                Log::error("User Activity kyc accept request to core error");
+                Log::error($e);
+            }
+        }*/
+        //old referral
         try {
             $referralService = Setting::where('option', 'referral_service_enable')->first()->value ?? 0;
 

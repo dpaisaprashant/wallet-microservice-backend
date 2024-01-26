@@ -121,7 +121,9 @@ class Controller extends BaseController
             BfiGatewayDebitExecutePayment::class => "USER DEBIT BY BFI",
             TicketSale::class => "TICKET SALE",
             NepalQrTransaction::class => "NEPALQR PAYMENT"
-];
+        ];
+
+
 
         $userTypes = [
             User::class => 'USER',

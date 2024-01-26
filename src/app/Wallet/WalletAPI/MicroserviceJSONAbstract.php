@@ -67,19 +67,18 @@ class MicroserviceJSONAbstract
 
 
     public function makeRequest($endpoint = "")
-    {
+    {   
         try {
 
             $requestJson = (array_merge(request()->all(), $this->apiParams));
+            
             Log::info("Request Url", [$this->baseUrl . $this->url]);
             Log::info("Request Json", $requestJson);
-
             $client = new Client();
             $response = $client->request($this->httpMethod, $this->baseUrl . $this->url, [
                 'headers' => $this->headers,
                 'json' => $requestJson
             ]);
-
             return $response->getBody()->getContents();
         }catch (ClientException $e) {
             Log::info("Client Exception");

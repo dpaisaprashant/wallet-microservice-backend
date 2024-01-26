@@ -571,6 +571,10 @@ $url = url()->current();
                         @can('View load test fund report')
                             <li><a href="{{route('transactions.loadTestFundReport')}}">Lucky Winners Report</a></li>
                         @endcan
+
+                        @can('Transaction nps view')
+                            <li><a href="{{route('transactions.nepalQRpayment')}}">NepalQR Payment</a></li>
+                        @endcan
                     </ul>
                 </li>
             @endif

@@ -583,7 +583,7 @@ class UserController extends Controller
             'Solukhumbu'=> ['Solududhakunda'],
             'Sunsari'=> ['Dharan','Itahari','Barah','Duhabi','Inarwa','Ramdhuni'],
             'Surkhet'=> ['Bheriganga','Birendranagar','Gurbhakot','Lekbesi','Panchpuri'],
-            'Syangja'=> ['Bhirkot','Chapakot','Galyang','Putalibazar','Waling'],
+            'Syangja'=> ['Bhirkot','Chapakot','Galyang','Putalibazar','Waling','Aadhikhola'],
             'Tanahun'=> ['Bhanu', 'Bhimad', 'Byas', 'Shuklagandaki'],
             'Taplejung'=> ['Phungling'],
             'Terhathum'=> ['Laligurans', 'Myanglung'],

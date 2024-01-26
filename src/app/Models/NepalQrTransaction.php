@@ -120,4 +120,3 @@ class NepalQrTransaction extends Model
         (new UserTransactionFilters($request))->add($filters)->filter($builder);
     }
 }
-

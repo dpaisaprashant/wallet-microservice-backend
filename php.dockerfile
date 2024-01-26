@@ -22,11 +22,10 @@ RUN apk update &&\
     apk del build_deps && \
     rm -rf /var/cache/apk/* && \
     rm -rf /tmp/*
-    
+
 # COPY php/php.ini /php.ini
 # RUN mv /php.ini "$PHP_INI_DIR/php.ini"
 
 RUN apk add --no-cache zip libzip-dev
 RUN docker-php-ext-configure zip
 RUN docker-php-ext-install zip
-

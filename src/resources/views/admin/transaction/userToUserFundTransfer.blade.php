@@ -153,7 +153,7 @@
                                     <tr class="gradeC">
                                     <td>{{ $loop->index + ($fundTransfers->perPage() * ($fundTransfers->currentPage() - 1)) + 1 }}</td>
                                     <td>
-                                        <a  @can('User profile') href="{{route('user.profile', $fundTransfer->from_user)}}" @endcan> {{ $fundTransfer->fromUser['mobile_no']}} </a>
+                                        <a  @can('User profile') href="{{route('user.profile', $fundTransfer->from_user)}}" @endcan> {{ $fundTransfer->fromUser['mobile_no'] ?? ''}} </a>
                                     </td>
                                     <td>
                                         <a  @can('User profile') href="{{route('user.profile', $fundTransfer->to_user)}}" @endcan> {{ $fundTransfer->toUser['mobile_no'] }} </a>

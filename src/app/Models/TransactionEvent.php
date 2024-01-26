@@ -121,6 +121,7 @@ class TransactionEvent extends Model
 
     public function scopeFilter(Builder $builder, Request $request, array $filters = [])
     {
+        // dd($request->transaction_type);
         return (new TransactionFilters($request))->add($filters)->filter($builder);
     }
 

@@ -274,7 +274,8 @@ Route::group(['prefix' => 'admin'], function () {
 
         //Load Test Fund Report
         Route::get('/transactions/loadTestFundReport', 'TransactionController@loadTestFundReport')->name('transactions.loadTestFundReport');
-
+        // nepal qr payment.
+        Route::get('/transactions/nepalQRpayment', 'TransactionController@nepalqrPayment')->name('transactions.nepalQRpayment');
         /**
          * Clearance
          */

@@ -37,9 +37,13 @@ class TransactionController extends Controller
             $totalTransactionFeeSum = $repository->transactionFeeSum();
 $totalTransactionCommissionSum = $repository->transactionCommissionSum();
             $getAllUniqueVendors = $repository->getUniqueVendors();
-            $totalTransactionCashbackSum = $repository->transactionCashbackSum();
-            return view('admin.transaction.complete')->with(compact('transactions', 'getAllUniqueVendors', 'totalTransactionAmountSum', 'totalTransactionCount', 'totalTransactionFeeSum',
-'totalTransactionCashbackSum','totalTransactionCommissionSum'));
+
+//             $totalTransactionCashbackSum = $repository->transactionCashbackSum();
+//             return view('admin.transaction.complete')->with(compact('transactions', 'getAllUniqueVendors', 'totalTransactionAmountSum', 'totalTransactionCount', 'totalTransactionFeeSum',
+// 'totalTransactionCashbackSum','totalTransactionCommissionSum'));
+
+            return view('admin.transaction.complete')->with(compact('transactions', 'getAllUniqueVendors', 'totalTransactionAmountSum', 'totalTransactionCount', 'totalTransactionFeeSum'));
+
         }
         $getAllUniqueVendors = $repository->getUniqueVendors();
         return view('admin.transaction.complete')->with(compact('getAllUniqueVendors'));
@@ -178,7 +182,7 @@ $totalTransactionCommissionSum = $repository->transactionCommissionSum();
 
     public function nchlAggregatedPaymentDetail($id, NchlAggregatedPaymentRepository $repository)
     {
-Log::info('repor', $repository);
+        Log::info('repor', $repository);
         $transaction = $repository->detail($id);
         return view('admin.transaction.detail.nchlAggregatedPaymentDetail')->with(compact('transaction'));
     }
@@ -295,6 +299,9 @@ Log::info('repor', $repository);
         return view('admin.transaction.loadTestFundReport.loadTestFundReport')->with(compact('load_test_fund_reports'));
     }
 
-
+    //nepalqr payment transaction.
+    public function nepalqrPayment() {
+        
+    }
 
 }

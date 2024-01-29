@@ -20,6 +20,7 @@ use App\Wallet\PayPoint\Repository\PayPointRepository;
 use App\Wallet\TransactionEvent\Repository\TransactionEventRepository;
 use App\Wallet\User\Repositories\UserRepository;
 use App\Wallet\User\Repositories\UserTotalTransactionRepository;
+use App\Wallet\NepalQR\Repository\NepalQRRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -122,6 +123,7 @@ $totalTransactionCommissionSum = $repository->transactionCommissionSum();
             $totalPayPointTransactionCount = $repository->getPayPointTransactionCount();
             $totalPayPointTransactionSum = $repository->getPayPointTransactionSum();
             $transactions = $repository->paginatedTransactions();
+            dd($transactions);
             return view('admin.transaction.paypoint')->with(compact('transactions', 'totalPayPointTransactionCount', 'totalPayPointTransactionSum'));
         }
         return view('admin.transaction.paypoint');
@@ -257,23 +259,7 @@ $totalTransactionCommissionSum = $repository->transactionCommissionSum();
     }
 
     public function ticketSalesReport(Request $request){
-//      $ticket_sales_report =  DB::connection('dpaisa')->select(DB::raw('
-//            SELECT t.pre_transaction_id, u.name, u.mobile_no, u.email, (t.amount/100) AS "amount(Rs.)", t.created_at
-//            FROM transaction_events AS t
-//            JOIN users as u
-//            ON t.user_id = u.id
-//            WHERE refund_id IS NOT NULL
-//            AND t.transaction_type LIKE 'App\\\\Models\\\\TicketSale'
-//            AND date(t.created_at) <= date('2022-02-15');
-//      '));
-
-        //orWhere('name', 'like', '%' . Input::get('name') . '%')
-
-//         ->with(['user' => function ($query) {
-//        $query->select('id', 'username');
-        //select('pre_transaction_id','amount','created_at')
-//        'user:id,name,email,mobile_no'
-//    }])
+    
       $request->merge(['transaction_type'=>TicketSale::class]);
       $ticket_sales_reports = TransactionEvent::with('user')
           ->whereNull('refund_id')
@@ -283,13 +269,6 @@ $totalTransactionCommissionSum = $repository->transactionCommissionSum();
     }
 
     public function loadTestFundReport(Request $request){
-        //SELECT t.pre_transaction_id, u.name, u.mobile_no, u.email, (t.amount/100) AS "amount(Rs.)", t.created_at
-        //FROM transaction_events AS t
-        //JOIN users as u
-        //ON t.user_id = u.id
-        //WHERE t.transaction_type LIKE 'App\\\\Models\\\\LoadTestFund'
-        //AND t.service_type LIKE 'LUCKY WINNER'
-        //AND date(t.created_at) <= date('2022-02-15');
 
         $request->merge(['transaction_type'=>LoadTestFund::class,'service'=>'LUCKY WINNER']);
         $load_test_fund_reports = TransactionEvent::with('user')
@@ -300,8 +279,14 @@ $totalTransactionCommissionSum = $repository->transactionCommissionSum();
     }
 
     //nepalqr payment transaction.
-    public function nepalqrPayment() {
-        
+    public function nepalqrPayment(NepalQRRepository $repository, Request $request) {
+        if (!empty($_GET)) {
+            $totalTransactionCount = $repository->getNepalQrTransactionCount();
+            $totalTransactionSum = $repository->getNepalQrTransactionSum();
+            $transactions = $repository->paginatedTransactions();
+            return view('admin.transaction.nepalqr')->with(compact('transactions', 'totalTransactionCount', 'totalTransactionSum'));
+        }
+        return view('admin.transaction.nepalqr');
     }
 
 }

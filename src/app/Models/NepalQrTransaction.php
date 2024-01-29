@@ -32,41 +32,10 @@ class NepalQrTransaction extends Model
     ];
 
     public function transactions()
-    {
-        return $this->morphOne(TransactionEvent::class, 'transactionable', 'transaction_type', 'transaction_id');
+    {   
+        return $this->morphMany(TransactionEvent::class, 'transaction_id');
     }
 
-    public function clearanceTransactions()
-    {
-        return $this->morphOne(ClearanceTransaction::class, 'clearanceable', 'transaction_type', 'transaction_id');
-    }
-
-    public function checkTransaction()
-    {
-        return $this->hasOne(UserCheckPayment::class, "refStan", "refStan");
-    }
-
-    public function executeTransaction()
-    {
-        return $this->hasMany(UserExecutePayment::class, "refStan_request", "refStan");
-    }
-
-    public function excelTransaction()
-    {
-        return $this->hasOne(PaypointToDpaisaClearanceTransaction::class, 'refStan', 'refStan');
-    }
-
-    public function getFailedUserTransactions()
-    {
-        $successfulTransactionId = $this->pluck('refStan')->all();
-        return UserCheckPayment::with('user', 'userExecutePayment')->whereNotIn('refStan', $successfulTransactionId); //50
-    }
-
-    public function getCompleteUserTransactions()
-    {
-        $successfulTransactionId = $this->pluck('refStan')->all();
-        return UserCheckPayment::with('user', 'userExecutePayment')->whereIn('refStan', $successfulTransactionId); //50
-    }
 
     public function getCommission()
     {

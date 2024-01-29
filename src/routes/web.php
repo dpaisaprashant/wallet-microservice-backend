@@ -203,6 +203,11 @@ Route::group(['prefix' => 'admin'], function () {
         /**
          * Transactions
          */
+
+         //Nepalqr Payment.
+        Route::get('/transaction/nepal-qr-payment', 'TransactionController@nepalqrPayment')->name('nqr.nepalQrPayment')->middleware('permission:Transaction nchl bank transfer');
+        //Route::get('transaction/nchl-bank-transfer/detail/{id}', 'TransactionController@nchlBankTransferDetail')->name('nchl.bankTransfer.detail');
+
         Route::get('transaction/complete', 'TransactionController@complete')->name('transaction.complete')->middleware('permission:Complete transaction view');
         Route::get('transaction/complete-user-list', 'TransactionController@completeUserList')->name('transaction.complete.user')->middleware('permission:Complete transaction view');
 
@@ -242,9 +247,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/transaction/nchl-load-transaction', 'TransactionController@nchlLoadTransaction')->name('nchl.loadTransaction')->middleware('permission:Transaction nchl load');
         Route::get('transaction/nchl-load-transaction/detail/{id}', 'TransactionController@nchlLoadTransactionDetail')->name('nchl.loadTransaction.detail');
 
-//        //NicAsia CyberSource
-//        Route::get('transaction/nicasia-cybesource-load-transaction','TransactionController@nicAsiaCyberSourceLoad')->name('nicasia.cyberSourceLoad')->middleware('permission:Nicasia cybersource load transaction');
-//        Route::get('transaction/nicasia-cybesource-load-transaction/detail/{id}', 'TransactionController@nicAsiaCyberSourceLoadDetail')->name('nicasia.cyberSourceLoadTransaction.detail');
+        ////NicAsia CyberSource
+        //        Route::get('transaction/nicasia-cybesource-load-transaction','TransactionController@nicAsiaCyberSourceLoad')->name('nicasia.cyberSourceLoad')->middleware('permission:Nicasia cybersource load transaction');
+        //        Route::get('transaction/nicasia-cybesource-load-transaction/detail/{id}', 'TransactionController@nicAsiaCyberSourceLoadDetail')->name('nicasia.cyberSourceLoadTransaction.detail');
 
         //Khaltia
         Route::get('transaction/khalti-payment-transaction/detail/{id}', 'TransactionController@khaltiPaymentDetail')->name('khalti.payment.detail');

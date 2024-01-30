@@ -30,12 +30,14 @@ class NepalQRRepository
 
     public function sortedTransactions()
     {
-        return NepalQrTransaction::filter($this->request)->paginate($this->length);
+        //return NepalQrTransaction::filter($this->request)->paginate($this->length);
+        return NepalQrTransaction::with('user', 'transactions', 'commission')->latest()->filter($this->request)->paginate($this->length);
     }
 
     public function latestTransactions()
     {
-        return NepalQrTransaction::latest()->filter($this->request)->paginate($this->length);
+        //return NepalQrTransaction::latest()->filter($this->request)->paginate($this->length);
+        return NepalQrTransaction::with('user', 'transactions', 'commission')->latest()->filter($this->request)->paginate($this->length);
     }
 
     public function paginatedTransactions()

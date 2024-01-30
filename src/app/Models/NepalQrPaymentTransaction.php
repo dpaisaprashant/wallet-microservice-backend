@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
 use App\Filters\FiltersAbstract;
 use App\Traits\BelongsToUser;
 use App\Traits\BelongsToUseThroughMicroservice;
-use App\Traits\MorphOneTransaction;
 use App\Traits\MorphOneCommission;
 use App\Traits\MorphOneDispute;
 use Illuminate\Database\Eloquent\Builder;
@@ -13,9 +12,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Filters\UserTransaction\UserTransactionFilters;
 
-class NepalQrTransaction extends Model
+use Illuminate\Database\Eloquent\Model;
+
+class NepalQrPaymentTransaction extends Model
 {
-    use MorphOneTransaction, BelongsToUser, MorphOneCommission, MorphOneDispute;
+    use BelongsToUseThroughMicroservice, BelongsToUser, MorphOneCommission, MorphOneDispute;
 
     //protected $table = 'user_transactions';
     protected $connection = 'dpaisa';
@@ -34,7 +35,7 @@ class NepalQrTransaction extends Model
 
     public function transactions()
     {   
-        return $this->morphMany(TransactionEvent::class, 'transaction_id','transaction_id');
+        return $this->morphMany(TransactionEvent::class, 'transaction_id');
     }
 
 

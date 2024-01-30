@@ -142,6 +142,7 @@ $totalTransactionCommissionSum = $repository->transactionCommissionSum();
             $totalNchlLoadTransactionCount = $repository->getTotalNchlLoadTransactionCount();
             $totalNchlLoadTransactionSum = $repository->getTotalNchlLoadTransactionSum();
             $transactions = $repository->paginatedTransactions();
+            dd($transactions);
             return view('admin.transaction.nchlLoadTransaction')->with(compact('transactions', 'totalNchlLoadTransactionCount', 'totalNchlLoadTransactionSum'));
         }
         return view('admin.transaction.nchlLoadTransaction');

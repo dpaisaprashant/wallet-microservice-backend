@@ -210,6 +210,7 @@
                                         <th>User</th>
                                         <th>Amount</th>
                                         <th style="width: 1%">Commission</th>
+                                        <th style="width: 1%">Fee</th>
                                         <th>Status</th>
                                         <th>Date</th>
                                         <th style="width: 1%">Request</th>
@@ -219,7 +220,6 @@
                                     </thead>
                                     <tbody>
                                     @foreach($transactions as $transaction)
-                                    @php echo "<pre>" ;print_r($transaction->transactions) @endphp
                                         <tr class="gradeC">
                                             <td>{{ $loop->index + ($transactions->perPage() * ($transactions->currentPage() - 1)) + 1 }}</td>
                                             <td>{{ $transaction->pre_transaction_id }}</td>
@@ -232,6 +232,9 @@
 
                                             <td>
                                                 Rs. {{ $transaction->amount ?? 0}}
+                                            </td>
+                                            <td>
+                                                Rs. {{ $transaction->getCommission ?? 0 }}
                                             </td>
                                             <td>
                                                 <form

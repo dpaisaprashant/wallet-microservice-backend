@@ -19,6 +19,7 @@ use App\Models\UserExecutePayment;
 use App\Models\UserLoadTransaction;
 use App\Models\UserToBfiFundTransfer;
 use App\Models\UserTransaction;
+use App\Models\NepalQrTransaction;
 use App\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -131,6 +132,10 @@ class PreTransaction extends Model
 
     public function npsLoadTransaction(){
         return $this->hasOne(NpsLoadTransaction::class,'pre_transaction_id','pre_transaction_id');
+    }
+
+    public function nepalQrTransaction(){
+        return $this->hasOne(NepalQrTransaction::class,'pre_transaction_id','pre_transaction_id');
     }
 
 }

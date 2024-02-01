@@ -123,7 +123,6 @@ $totalTransactionCommissionSum = $repository->transactionCommissionSum();
             $totalPayPointTransactionCount = $repository->getPayPointTransactionCount();
             $totalPayPointTransactionSum = $repository->getPayPointTransactionSum();
             $transactions = $repository->paginatedTransactions();
-            dd($transactions);
             return view('admin.transaction.paypoint')->with(compact('transactions', 'totalPayPointTransactionCount', 'totalPayPointTransactionSum'));
         }
         return view('admin.transaction.paypoint');
@@ -142,7 +141,6 @@ $totalTransactionCommissionSum = $repository->transactionCommissionSum();
             $totalNchlLoadTransactionCount = $repository->getTotalNchlLoadTransactionCount();
             $totalNchlLoadTransactionSum = $repository->getTotalNchlLoadTransactionSum();
             $transactions = $repository->paginatedTransactions();
-            dd($transactions);
             return view('admin.transaction.nchlLoadTransaction')->with(compact('transactions', 'totalNchlLoadTransactionCount', 'totalNchlLoadTransactionSum'));
         }
         return view('admin.transaction.nchlLoadTransaction');
@@ -190,7 +188,6 @@ $totalTransactionCommissionSum = $repository->transactionCommissionSum();
         return view('admin.transaction.detail.nchlAggregatedPaymentDetail')->with(compact('transaction'));
     }
 
-
     //KHALTI
     public function khaltiPaymentDetail($id, KhaltiRepository $repository)
     {
@@ -208,7 +205,6 @@ $totalTransactionCommissionSum = $repository->transactionCommissionSum();
     {
         return view('admin.transaction.detail.reimburseDetail');
     }
-
 
     public function transactionDetail()
     {
@@ -285,9 +281,9 @@ $totalTransactionCommissionSum = $repository->transactionCommissionSum();
             $totalTransactionCount = $repository->getNepalQrTransactionCount();
             $totalTransactionSum = $repository->getNepalQrTransactionSum();
             $transactions = $repository->paginatedTransactions();
+            //dd($transactions);
             return view('admin.transaction.nepalqr')->with(compact('transactions', 'totalTransactionCount', 'totalTransactionSum'));
         }
         return view('admin.transaction.nepalqr');
     }
-
 }

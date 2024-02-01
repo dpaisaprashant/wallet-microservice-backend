@@ -194,7 +194,7 @@
                 <div class="col-lg-12">
                     <div class="ibox ">
                         <div class="ibox-title">
-                            <h5>List of NCHL Bank Transfers</h5>
+                            <h5>List of NEPAlQR Payments</P></h5>
                         </div>
                         <div class="ibox-content">
                             <h5><b>Total Count:</b> {{ $totalTransactionCount }}</h5>
@@ -205,12 +205,12 @@
                                     <thead>
                                     <tr>
                                         <th>S.No.</th>
+                                        <th>UID</th>
                                         <th>PreTransaction ID</th>
                                         <th>Transaction ID</th>
                                         <th>User</th>
                                         <th>Amount</th>
                                         <th style="width: 1%">Commission</th>
-                                        <th style="width: 1%">Fee</th>
                                         <th>Status</th>
                                         <th>Date</th>
                                         <th style="width: 1%">Request</th>
@@ -222,6 +222,7 @@
                                     @foreach($transactions as $transaction)
                                         <tr class="gradeC">
                                             <td>{{ $loop->index + ($transactions->perPage() * ($transactions->currentPage() - 1)) + 1 }}</td>
+                                            <td>{{ $transaction->transactionEvents->uid }}</td>
                                             <td>{{ $transaction->pre_transaction_id }}</td>
                                             <td>{{ $transaction->transaction_id }}</td>
                                             <td>
@@ -230,11 +231,15 @@
                                                 @endif
                                             </td>
 
+                                            <td> Rs. {{ $transaction->amount ?? 0 }}</td>
+                                            <td>Rs. {{ $transaction->getCommission() }}</td>
+                                            <td>{{ $transaction->status }}</td>
+                                            <td>{{ $transaction->transactionEvents->created_at }}</td>
                                             <td>
-                                                Rs. {{ $transaction->amount ?? 0}}
+                                                @include('admin.transaction.nepalqr.request')
                                             </td>
                                             <td>
-                                                Rs. {{ $transaction->getCommission ?? 0 }}
+                                                @include('admin.transaction.nepalqr.response')
                                             </td>
                                             <td>
                                                 <form

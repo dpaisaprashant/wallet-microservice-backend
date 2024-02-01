@@ -4,10 +4,10 @@ namespace App\Models;
 
 use App\Filters\FiltersAbstract;
 use App\Traits\BelongsToUser;
-use App\Traits\BelongsToUseThroughMicroservice;
 use App\Traits\MorphOneTransaction;
 use App\Traits\MorphOneCommission;
 use App\Traits\MorphOneDispute;
+use App\Traits\BelongsToPreTransaction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ use App\Filters\UserTransaction\UserTransactionFilters;
 
 class NepalQrTransaction extends Model
 {
-    use MorphOneTransaction, BelongsToUser, MorphOneCommission, MorphOneDispute;
+    use MorphOneTransaction, BelongsToUser, MorphOneCommission, BelongsToPreTransaction;
 
     //protected $table = 'user_transactions';
     protected $connection = 'dpaisa';
@@ -33,10 +33,19 @@ class NepalQrTransaction extends Model
     ];
 
     public function transactions()
-    {   
-        return $this->morphMany(TransactionEvent::class, 'transaction_id','transaction_id');
+    {
+        return $this->morphOne(TransactionEvent::class,'transactionable','transaction_type', 'transaction_id');
     }
 
+    public function transactionEvents()
+    {
+        return $this->belongsTo(TransactionEvent::class,'transaction_id','transaction_id');
+    }
+
+    // public function preTransaction()
+    // {
+    //     return $this->belongsTo(PreTransaction::class,'pre_transaction_id','pre_transaction_id');
+    // }
 
     public function getCommission()
     {
@@ -89,4 +98,13 @@ class NepalQrTransaction extends Model
     {
         (new UserTransactionFilters($request))->add($filters)->filter($builder);
     }
+<<<<<<< HEAD
 }
+=======
+    // public function user()
+    // {
+    //     return $this->belongsTo(User::class,'user_id','id');
+    // }
+    
+}
+>>>>>>> 95ff18e1 (fe:nepalqr report request and response veiw popup)

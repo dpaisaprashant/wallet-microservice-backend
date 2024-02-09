@@ -1133,6 +1133,74 @@ $url = url()->current();
                     </ul>
                 </li>
             @endif
+            
+            @if(auth()->user()->hasAnyPermission(['Frontend header view', 'Frontend service view', 'Frontend about view', 'Frontend process view']))
+                <li @if(preg_match('/frontend/i', $url)) class="active" @endif>
+                    <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Blogs</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'icash' || strtolower(config('app.'.'name')) == 'master')
+                            @can('Frontend header view')
+                                <li><a href="{{ route('frontend.header') }}">Headers</a></li>
+                            @endcan
+                        @endif
+
+                        @if(strtolower(config('app.'.'name')) == 'sajilopay' || strtolower(config('app.'.'name')) == 'master')
+                            <li><a href="{{ route('frontend.multipleHeader') }}">Headers</a></li>
+                        @endif
+
+                        @can('Frontend service view')
+                            <li><a href="{{ route('frontend.service.index') }}">Services</a></li>
+                        @endcan
+
+                        @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'icash' || strtolower(config('app.'.'name')) == 'master')
+                            @can('Frontend about view')
+                                <li><a href="{{ route('frontend.about.index') }}">Abouts</a></li>
+                            @endcan
+                        @endif
+
+
+                        @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'master')
+                            @can('Frontend process view')
+                                <li><a href="{{ route('frontend.process.index') }}">Processes</a></li>
+                            @endcan
+                        @endif
+
+                        @can('Frontend banner view')
+                            <li><a href="{{ route('frontend.banner.index') }}">Banners</a></li>
+                        @endcan
+
+                        @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'master')
+                            @can('Frontend contact view')
+                                <li><a href="{{ route('frontend.contact') }}">Contact</a></li>
+                            @endcan
+                        @endif
+
+                        @if(strtolower(config('app.'.'name')) == 'sajilopay' || strtolower(config('app.'.'name')) == 'icash' || strtolower(config('app.'.'name')) == 'master' )
+                            @can('Frontend faq view')
+                                <li><a href="{{route('frontend.faq.index')}}">FAQs</a></li>
+                            @endcan
+                        @endif
+
+                        @if(strtolower(config('app.'.'name')) == 'icash' || strtolower(config('app.'.'name')) == 'master')
+                            @can('Frontend news view')
+                                <li><a href="{{route('frontend.news.index')}}">NEWS</a></li>
+                            @endcan
+                        @endif
+
+                        @if(strtolower(config('app.'.'name')) == 'sajilopay' || strtolower(config('app.'.'name')) == 'master')
+                            @can('Frontend solution view')
+                                <li><a href="{{route('frontend.solution.index')}}">Solutions</a></li>
+                            @endcan
+                        @endif
+                        @if(strtolower(config('app.'.'name')) == 'sajilopay' || strtolower(config('app.'.'name')) == 'master')
+                            @can('Frontend partner view')
+                                <li><a href="{{route('frontend.partner.index')}}">Partners</a></li>
+                            @endcan
+                        @endif
+                    </ul>
+                </li>
+            @endif
 
             @if(auth()->user()->hasAnyPermission(['Frontend header view', 'Frontend service view', 'Frontend about view', 'Frontend process view']))
                 <li @if(preg_match('/frontend/i', $url)) class="active" @endif>

@@ -4,7 +4,7 @@
  */
 
 return [
-    'kyc_documentation_url' => env('KYC_DOCUMENTATION_URL', 'https://dpaisa.com/storage/img/kyc/'),
+    'kyc_documentation_url' => env('KYC_DOCUMENTATION_URL', 'http://172.31.251:5052/storage/img/kyc/'),
 
     'admin_documentation_url' => env('ADMIN_DOCUMENTATION_URL', 'https://api.sajilopay.com.np/storage/img/agent/'),
 

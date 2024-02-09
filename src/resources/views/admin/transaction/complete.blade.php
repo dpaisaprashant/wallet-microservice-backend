@@ -300,10 +300,14 @@
                                                 @endif
                                             </td>
                                             <td>
+<<<<<<< HEAD
                                                 <a @can('User profile') href="{{route('user.profile', $transaction->user_id)}}" @endcan> {{ $transaction->user['mobile_no'] ?? '' }} <br>
 
 
 
+=======
+                                                <a @can('User profile') href="{{route('user.profile', $transaction->user_id)}}" @endcan> {{ $transaction->user['mobile_no'] }} <br>
+>>>>>>> 0488a35f (blog management)
                                                 </a>
                                             </td>
                                             <td>

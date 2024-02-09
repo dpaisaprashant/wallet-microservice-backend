@@ -15,9 +15,6 @@
                                     $debtorRequest = $request['cipsBatchDetail'] ?? [];
                                     $creditorRequest = $request['cipsTransactionDetailList'][0] ?? [];
                                 ?>
-
-
-
                                 <?php foreach ($debtorRequest as $key => $value) { ?>
 
                                 <dt class="col-md-5 text-right">{{ $key }}</dt>

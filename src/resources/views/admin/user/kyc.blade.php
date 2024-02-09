@@ -6,6 +6,7 @@
             <div class="col-md-4" style="margin-top: 20px;">
                 <div class="profile-image">
                     @isset($user->kyc['p_photo'])
+                    {{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['p_photo'] }}
                         <img src="{{ config('dpaisa-api-url.kyc_documentation_url') . $user->kyc['p_photo'] }}"
                              class="rounded-circle circle-border m-b-md" alt="profile">
                     @else

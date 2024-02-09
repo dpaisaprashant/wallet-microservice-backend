@@ -48,7 +48,6 @@ $totalTransactionCommissionSum = $repository->transactionCommissionSum();
         }
         $getAllUniqueVendors = $repository->getUniqueVendors();
         return view('admin.transaction.complete')->with(compact('getAllUniqueVendors'));
-
     }
 
     //USER TO USER FUND TRANSFER

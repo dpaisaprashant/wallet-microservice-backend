@@ -653,6 +653,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::match(['get', 'post'], 'frontend/process/update/{id}', 'Frontend\ProcessController@update')->name('frontend.process.update')->middleware('permission:Frontend process update');
         Route::post('frontend/process/delete/', 'Frontend\ProcessController@delete')->name('frontend.process.delete')->middleware('permission:Frontend process delete');
 
+        //blogs
+        Route::get('blog/list', 'BlogController@index')->name('blog.index')->middleware('permission:Frontend process delete');
+
         //Banner
         Route::get('frontend/banner', 'Frontend\BannerController@index')->name('frontend.banner.index')->middleware('permission:Frontend banner view');
         Route::match(['get', 'post'], 'frontend/banner/create', 'Frontend\BannerController@create')->name('frontend.banner.create');

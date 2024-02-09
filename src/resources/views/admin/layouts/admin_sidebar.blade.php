@@ -1134,7 +1134,7 @@ $url = url()->current();
                 </li>
             @endif
             
-            @if(auth()->user()->hasAnyPermission(['Frontend header view', 'Frontend service view', 'Frontend about view', 'Frontend process view']))
+            @if(auth()->user()->hasAnyPermission(['Blog View']))
                 <li @if(preg_match('/frontend/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Blogs</span><span
                             class="fa arrow"></span></a>
@@ -1193,24 +1193,24 @@ $url = url()->current();
                             @endcan
                         @endif
 
-                        @if(strtolower(config('app.'.'name')) == 'sajilopay' || strtolower(config('app.'.'name')) == 'icash' || strtolower(config('app.'.'name')) == 'master' )
+                        @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'icash' || strtolower(config('app.'.'name')) == 'master' )
                             @can('Frontend faq view')
                                 <li><a href="{{route('frontend.faq.index')}}">FAQs</a></li>
                             @endcan
                         @endif
 
-                        @if(strtolower(config('app.'.'name')) == 'icash' || strtolower(config('app.'.'name')) == 'master')
+                        @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'master')
                             @can('Frontend news view')
                                 <li><a href="{{route('frontend.news.index')}}">NEWS</a></li>
                             @endcan
                         @endif
 
-                        @if(strtolower(config('app.'.'name')) == 'sajilopay' || strtolower(config('app.'.'name')) == 'master')
+                        @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'master')
                             @can('Frontend solution view')
                                 <li><a href="{{route('frontend.solution.index')}}">Solutions</a></li>
                             @endcan
                         @endif
-                        @if(strtolower(config('app.'.'name')) == 'sajilopay' || strtolower(config('app.'.'name')) == 'master')
+                        @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'master')
                             @can('Frontend partner view')
                                 <li><a href="{{route('frontend.partner.index')}}">Partners</a></li>
                             @endcan

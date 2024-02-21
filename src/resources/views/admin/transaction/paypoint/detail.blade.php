@@ -44,6 +44,7 @@
                             <dt class="col-md-3 text-right">User</dt>
                             <dd class="col-md-8">{{ $transaction->user['name'] ?? "" }}</dd>
 
+
                             <dt class="col-md-3 text-right">KYC Status</dt>
                             <dd class="col-md-8">
                                 @if(empty($transaction->user->kyc))

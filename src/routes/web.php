@@ -14,6 +14,10 @@
 use App\Models\Admin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MerchantTransactionController;
+use App\Http\Controllers\TypeController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\PostController;
+
 
 Route::match(['get', 'post'], '/', 'AdminController@login')->middleware('guest'); //admin login
 Route::group(['prefix' => 'admin'], function () {
@@ -656,6 +660,29 @@ Route::group(['prefix' => 'admin'], function () {
         //blogs
         Route::get('blog/list', 'BlogController@index')->name('blog.index')->middleware('permission:Frontend process delete');
 
+        //posts
+        Route::get('blog/post', 'PostController@index')->name('blog.post');
+        Route::post('/store-blog', 'PostController@store')->name('store-blog');
+        Route::get('/delete-post/{id}', 'PostController@delete')->name('delete-post');
+        Route::get('/edit-post/{id}', 'PostController@edit')->name('edit-post');
+        Route::post('/update-post/{id}', 'PostController@update')->name('update-post');
+        Route::get('/changeStatus/{id}', 'PostController@changeStatus')->name('changeStatus');
+        Route::get('/blog/post_form', 'PostController@create')->name('blog.post_form');
+
+        //types
+        Route::get('blog/type', 'TypeController@index')->name('blog.type');
+        Route::post('/store-type', 'TypeController@store')->name('store-type');
+        Route::get('delete-type/{id}', 'TypeController@delete')->name('delete-type');
+        Route::get('/edit-type/{id}', 'TypeController@edit')->name('edit-type');
+        Route::post('update-type/{id}', 'TypeController@update')->name('update-type');
+
+        //tags
+        Route::get('blog/tag', 'TagController@index')->name('blog.tag');
+        Route::post('/store-tag', 'TagController@store')->name('store-tag');
+        Route::get('delete-tag/{id}', 'TagController@delete')->name('delete-tag');
+        Route::get('/edit-tag/{id}', 'TagController@edit')->name('edit-tag');
+        Route::post('update-tag/{id}', 'TagController@update')->name('update-tag');
+
         //Banner
         Route::get('frontend/banner', 'Frontend\BannerController@index')->name('frontend.banner.index')->middleware('permission:Frontend banner view');
         Route::match(['get', 'post'], 'frontend/banner/create', 'Frontend\BannerController@create')->name('frontend.banner.create');
@@ -667,11 +694,9 @@ Route::group(['prefix' => 'admin'], function () {
 
         //RequestInfo
 
-
         Route::get('request-info', 'RequestInfoController@index')->name('requestinfo.index')->middleware('permission:View request info');
 
         Route::get('/excel/request-info', 'PhpSpreadSheetController@requestInfo')->name('requestinfo.excel')->middleware('permission:View request info');
-
 
         //Run seeder
         Route::get('/view-seeder-table', 'SeederController@index')->name('view.seeder')->middleware('permission:View seeder list');

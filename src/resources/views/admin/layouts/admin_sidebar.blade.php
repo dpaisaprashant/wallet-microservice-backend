@@ -22,7 +22,7 @@ $url = url()->current();
                 <a href="{{ route('admin.dashboard') }}"><i class="fa fa-diamond"></i> <span
                         class="nav-label">Dashboard</span></a>
             </li>
-
+           
             @if(auth()->user()->hasAnyPermission(['Stat Dashboard KYC', 'Stat Dashboard paypoint', 'Stat Dashboard npay','Dashboard NCHL bank transfer','Dashboard NCHL load transaction']))
                 <li @if($url == route('admin.dashboard.npay') || $url == route('admin.dashboard.paypoint') || $url == route('admin.dashboard.kyc'))class="active" @endif>
                     <a href="#"><i class="fa fa-bar-chart"></i> <span class="nav-label">Stat Dashboard</span><span
@@ -1138,14 +1138,16 @@ $url = url()->current();
                 <li @if(preg_match('/frontend/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Blogs</span><span
                             class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'icash' || strtolower(config('app.'.'name')) == 'master')
+                     <ul class="nav nav-second-level collapse"> 
+                        {{-- @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'icash' || strtolower(config('app.'.'name')) == 'master') --}} 
                           
-                            @can('Frontend header view')
-                            <li><a href="{{ route('frontend.header') }}">Types</a></li>
+                            @can('Blog View')
+                            <li><a href="{{ route('blog.post') }}">Posts</a></li>
+                            <li><a href="{{ route('blog.type') }}">Types</a></li>
+                            <li><a href="{{ route('blog.tag') }}">Tags</a></li>
                             @endcan
 
-                        @endif
+                        {{-- @endif --}}
 
                     </ul>
                 </li>

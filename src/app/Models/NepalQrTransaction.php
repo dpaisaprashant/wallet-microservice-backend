@@ -98,13 +98,11 @@ class NepalQrTransaction extends Model
     {
         (new UserTransactionFilters($request))->add($filters)->filter($builder);
     }
-<<<<<<< HEAD
-}
-=======
+
+
     // public function user()
     // {
     //     return $this->belongsTo(User::class,'user_id','id');
     // }
     
 }
->>>>>>> 95ff18e1 (fe:nepalqr report request and response veiw popup)

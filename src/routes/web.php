@@ -683,6 +683,11 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/edit-tag/{id}', 'TagController@edit')->name('edit-tag');
         Route::post('update-tag/{id}', 'TagController@update')->name('update-tag');
 
+        //career
+        Route::get('career/job', 'CareerController@index')->name('career.job');
+        Route::get('career/add_job', 'CareerController@create')->name('career.add_job');
+
+
         //Banner
         Route::get('frontend/banner', 'Frontend\BannerController@index')->name('frontend.banner.index')->middleware('permission:Frontend banner view');
         Route::match(['get', 'post'], 'frontend/banner/create', 'Frontend\BannerController@create')->name('frontend.banner.create');

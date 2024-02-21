@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Blog\Type;
 use Illuminate\Http\Request;
 
-class TypeController extends Controller
+class CareerController extends Controller
 {
-    /**
+     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $types = Type::all();
-        return view('admin.blog.type', compact('types'));
+        return view('admin.career.job');
     }
 
     /**
@@ -25,7 +23,7 @@ class TypeController extends Controller
      */
     public function create()
     {
-        return view('blog/type');
+        return view('admin.career.add_job');
     }
 
     /**
@@ -96,3 +94,4 @@ class TypeController extends Controller
           ->with('success', 'Post deleted successfully');
     }
 }
+

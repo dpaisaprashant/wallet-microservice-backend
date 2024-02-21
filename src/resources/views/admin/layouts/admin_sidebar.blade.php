@@ -1153,6 +1153,25 @@ $url = url()->current();
                 </li>
             @endif
 
+             @if(auth()->user()->hasAnyPermission(['Blog View']))
+                <li @if(preg_match('/frontend/i', $url)) class="active" @endif>
+                    <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Blogs</span><span
+                            class="fa arrow"></span></a>
+                     <ul class="nav nav-second-level collapse"> 
+                        {{-- @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'icash' || strtolower(config('app.'.'name')) == 'master') --}} 
+                          
+                            @can('Blog View')
+                            <li><a href="{{ route('career.job') }}">Careers</a></li>
+                            <li><a href="{{ route('blog.type') }}">Types</a></li>
+                            <li><a href="{{ route('blog.tag') }}">Tags</a></li>
+                            @endcan
+
+                        {{-- @endif --}}
+
+                    </ul>
+                </li>
+            @endif
+
             @if(auth()->user()->hasAnyPermission(['Frontend header view', 'Frontend service view', 'Frontend about view', 'Frontend process view']))
                 <li @if(preg_match('/frontend/i', $url)) class="active" @endif>
                     <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Frontend Settings</span><span

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Career\Job;
 use Illuminate\Http\Request;
 
 class CareerController extends Controller
@@ -12,7 +13,7 @@ class CareerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    { 
         return view('admin.career.job');
     }
 
@@ -34,12 +35,38 @@ class CareerController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request ->validate([
-            'name' => 'required',
-        ]);
-        Type::create($validated);
-        return redirect('admin/blog/type')
-        ->with('success','Post created successfully.');
+         $request->validate([
+            'title' => 'required',
+            'opening' => 'required',
+            'domain' => 'required',
+            'location' => 'required',
+            'salary' => 'required',
+            'description' => 'required',
+            'specification' => 'required',] ,
+            [
+            'title.required' => 'Title is required',
+            'opening.required' => 'Opening is required',
+            'domain.required' => 'Domain is required',
+            'location.required' => 'Location is required',
+            'salary.required' => 'Salary is required',
+            'description.required' => 'Description is required',
+            'specification.required' => 'Specification is required',
+            ]);
+
+            $jobs = new Job;
+            $jobs->title = $request->title;
+            $jobs->opening = $request->opening;
+            $jobs->domain = $request->domain;
+            $jobs->location = $request->location;
+            $jobs->salary = $request->salary;
+            $jobs->description = $request->description;
+            $jobs->specification = $request->specification;
+            // $jobs->slug = Str::slug($request->title);
+         
+            $jobs->save();
+            return redirect('admin/career/job')
+            ->with('success','New job opening is added');
+         
     }
 
 

@@ -686,7 +686,8 @@ Route::group(['prefix' => 'admin'], function () {
         //career
         Route::get('career/job', 'CareerController@index')->name('career.job');
         Route::get('career/add_job', 'CareerController@create')->name('career.add_job');
-
+        Route::post('/store-job', 'CareerController@store')->name('store-job');
+        
 
         //Banner
         Route::get('frontend/banner', 'Frontend\BannerController@index')->name('frontend.banner.index')->middleware('permission:Frontend banner view');

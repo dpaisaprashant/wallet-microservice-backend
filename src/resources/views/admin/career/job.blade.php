@@ -25,6 +25,7 @@
                                             <th>Location</th>
                                             <th>Salary</th>
                                             <th>Job Description</th>
+                                            <th>Job Specification</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -36,6 +37,7 @@
                                                 <td>trgtr</td>
                                                 <td>ddd </td>
                                                 <td>efe</td>
+                                                <td>ferf</td>
                                                 <td>ferf</td>
                                                 <td>
                                                     <div class="btn-group" role="group" aria-label="Basic example">

@@ -5,7 +5,7 @@
         <div class="ibox-content">
 
             <h2>Add Job</h2>
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="{{route('store-job')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label for="title">Title</label>
@@ -15,55 +15,61 @@
                     @enderror
                 </div>
 
-
                 <div class="form-group">
-                    <label for="description">No. of Opening</label>
-                    <input type="text" class="form-control" id="title" placeholder="Title" name="title" value="{{ old('title') }}">
-
-                    {{-- <textarea class="form-control" id="description" placeholder="Description" rows="5" name="description">
-                        {{ old('description') }}
-                    </textarea> --}}
-                    @error('description')
+                    <label for="opening">No. of Opening</label>
+                    <input type="text" class="form-control" id="opening" placeholder="Openings" name="opening" value="{{ old('opening') }}">
+                    @error('opening')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="form-group">
-                    <label for="author">Domain</label>
-                    <select name="type" id="type" class="form-control">
-                        <option value="">Select Type</option>
-                    </select>                    @error('author')
+                    <label for="domain">Domain</label>
+                    <select name="domain" id="domain" class="form-control">
+                        <option value="">Select Domain</option>
+                        <option value="Marketing">Information Technology</option>
+                    </select>                    
+                    @error('domain')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="form-group">
                     <label for="image">Location</label>
-                    <input type="file" class="form-control" id="image" placeholder="Image" name="image" >
-
-                    @error('image')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label for="tag">Salary</label>
-                    <select name="tag" id="tag" class="form-control">
-
+                    <select name="location" id="location" class="form-control">
+                        <option value="">Select Location</option>
+                        <option value="baneshwor">New Baneshwor</option>
                     </select>
-                    @error('tag')
+                    @error('location')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
+                <div class="form-group">
+                    <label for="salary">Salary</label>
+                    <input type="text" class="form-control" id="salary" placeholder="Salary" name="salary" value="{{ old('salary') }}">
+
+                    @error('salary')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
 
                 <div class="form-group">
-                    <label for="type">Job description</label>
-                   
-                    @error('type')
+                    <label for="description">Job description</label>
+                   <textarea class="form-control" id="description" placeholder="Job Description" rows="3" name="description">{{ old('description') }}</textarea>
+                    @error('description')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div> 
+
+                <div class="form-group">
+                    <label for="specification">Job Specification</label>
+                   <textarea class="form-control" id="specification" placeholder="Job Specification" rows="3" name="specification">{{ old('specification') }}</textarea>
+                    @error('specification')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div> 
+                <div>
                     <button class="btn btn-primary">Send</button>
                 </div>
 

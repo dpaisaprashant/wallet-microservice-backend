@@ -31,24 +31,25 @@
                                     </thead>
                                     <tbody>
 
+                                        @foreach ($jobs as $job)
                                             <tr>
-                                                <td>gregt</td>
-                                                <td>tgr</td>
-                                                <td>trgtr</td>
-                                                <td>ddd </td>
-                                                <td>efe</td>
-                                                <td>ferf</td>
-                                                <td>ferf</td>
+                                                <td>{{ $job->title }}</td>
+                                                <td>{{ $job->opening }}</td>
+                                                <td>{{ $job->domain }}</td>
+                                                <td>{{ $job->location }} </td>
+                                                <td>{{ $job->salary }}</td>
+                                                <td>{!! $job->description !!}</td>
+                                                <td>{!! $job->specification !!}</td>
                                                 <td>
                                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                                        <a href=""><button
+                                                        <a href="{{route('edit-job', $job->id)}}"><button
                                                                 type="button" class="btn btn-primary">Edit</button></a>
-                                                        <a href=""><button
-                                                                type="button" class="btn btn-danger">Delete</button></a>
+                                                        <a href="{{ route('delete-job', $job->id) }}"><button
+                                                                    type="button" class="btn btn-danger">Delete</button></a>
                                                     </div>
                                                 </td>
                                             </tr>
-                                   
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

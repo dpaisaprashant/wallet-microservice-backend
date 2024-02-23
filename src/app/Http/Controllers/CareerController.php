@@ -14,7 +14,8 @@ class CareerController extends Controller
      */
     public function index()
     { 
-        return view('admin.career.job');
+        $jobs = Job::all();
+        return view('admin.career.job', compact('jobs'));
     }
 
     /**
@@ -24,6 +25,7 @@ class CareerController extends Controller
      */
     public function create()
     {
+        
         return view('admin.career.add_job');
     }
 
@@ -83,10 +85,8 @@ class CareerController extends Controller
      */
     public function edit($id)
     {
-        $type = Type::find($id);
-        return view('admin/blog/edit_type', compact('type'));
-        // return redirect()->back()
-        //   ->with('success', 'Post edited successfully');
+       $jobs = Job::find($id);
+       return view('admin.career.edit_job', compact('jobs'));
     }
 
     /**
@@ -98,13 +98,17 @@ class CareerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validated = $request ->validate([
-            'name' => 'required',
-        ]);
-        Type::where('id', $id)->update($validated);
-        // $types->update();
-        return redirect('admin/blog/type')
-          ->with('success', 'Post updated successfully');
+      $validated = $request->validate([
+        'title' => 'required',
+        'opening' => 'required',
+        'domain' => 'required',
+        'location' => 'required',
+        'salary' => 'required',
+        'description' => 'required',
+        'specification' => 'required',
+      ]);
+      Job::find($id)->update($validated);
+      return redirect('admin/career/job');
     }
 
     /**
@@ -115,10 +119,10 @@ class CareerController extends Controller
      */
     public function delete($id)
     {
-        $type = Type::find($id);
-        $type->delete();
-        return redirect()->back()
-          ->with('success', 'Post deleted successfully');
+        $jobs = Job::find($id);
+        $jobs->delete();
+        return redirect()->back();
+        
     }
 }
 

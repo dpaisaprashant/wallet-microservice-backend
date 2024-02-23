@@ -1155,15 +1155,15 @@ $url = url()->current();
 
              @if(auth()->user()->hasAnyPermission(['Blog View']))
                 <li @if(preg_match('/frontend/i', $url)) class="active" @endif>
-                    <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Blogs</span><span
+                    <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Career</span><span
                             class="fa arrow"></span></a>
                      <ul class="nav nav-second-level collapse"> 
                         {{-- @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'icash' || strtolower(config('app.'.'name')) == 'master') --}} 
                           
                             @can('Blog View')
-                            <li><a href="{{ route('career.job') }}">Careers</a></li>
-                            <li><a href="{{ route('blog.type') }}">Types</a></li>
-                            <li><a href="{{ route('blog.tag') }}">Tags</a></li>
+                            <li><a href="{{ route('career.job') }}">Opportunities</a></li>
+                            <li><a href="{{ route('blog.type') }}">Domain</a></li>
+                            
                             @endcan
 
                         {{-- @endif --}}

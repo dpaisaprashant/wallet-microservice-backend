@@ -2,10 +2,16 @@
 @section('content')
 
     <body>
+        <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js" ></script>
+        <style>
+            .ck-editor__editable {
+                    min-height: 100px;
+                }
+        </style>
         <div class="ibox-content">
 
             <h2>Add Job</h2>
-            <form action="{{route('store-job')}}" method="post" enctype="multipart/form-data">
+            <form action="{{route('store-job')}}" method="post">
                 @csrf
                 <div class="form-group">
                     <label for="title">Title</label>
@@ -27,7 +33,7 @@
                     <label for="domain">Domain</label>
                     <select name="domain" id="domain" class="form-control">
                         <option value="">Select Domain</option>
-                        <option value="Marketing">Information Technology</option>
+                        <option value="Information Technology">Information Technology</option>
                     </select>                    
                     @error('domain')
                         <div class="alert alert-danger">{{ $message }}</div>
@@ -38,7 +44,7 @@
                     <label for="image">Location</label>
                     <select name="location" id="location" class="form-control">
                         <option value="">Select Location</option>
-                        <option value="baneshwor">New Baneshwor</option>
+                        <option value="New Baneshwor">New Baneshwor</option>
                     </select>
                     @error('location')
                         <div class="alert alert-danger">{{ $message }}</div>
@@ -74,7 +80,16 @@
                 </div>
 
         </form>
-       
+       <script>
+        const names=['description', 'specification']
+        names.forEach(name=> {
+            ClassicEditor
+                .create(document.querySelector(`[name="${name}"]`))
+                .catch(error => {
+                    console.error(error);
+                });
+                });
+        </script>
     <br>
     @endsection
 

@@ -1162,7 +1162,7 @@ $url = url()->current();
                           
                             @can('Blog View')
                             <li><a href="{{ route('career.job') }}">Opportunities</a></li>
-                            <li><a href="{{ route('blog.type') }}">Domain</a></li>
+                            <li><a href="{{ route('career.domain') }}">Domain</a></li>
                             
                             @endcan
 

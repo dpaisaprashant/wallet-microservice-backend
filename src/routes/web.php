@@ -683,13 +683,19 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/edit-tag/{id}', 'TagController@edit')->name('edit-tag');
         Route::post('update-tag/{id}', 'TagController@update')->name('update-tag');
 
-        //career
+        //....................career..................................................//
+        //jobs
         Route::get('career/job', 'CareerController@index')->name('career.job');
         Route::get('career/add_job', 'CareerController@create')->name('career.add_job');
         Route::post('/store-job', 'CareerController@store')->name('store-job');
         Route::get('delete-job/{id}','CareerController@delete')->name('delete-job');
         Route::get('/edit-job/{id}', 'CareerController@edit')->name('edit-job');
         Route::post('/update-job/{id}', 'CareerController@update')->name('update-job');
+
+        //domain
+        Route::get('career/domain','DomainController@index')->name('career.domain');
+
+        //.......................endCareer..........................................//
 
         //Banner
         Route::get('frontend/banner', 'Frontend\BannerController@index')->name('frontend.banner.index')->middleware('permission:Frontend banner view');

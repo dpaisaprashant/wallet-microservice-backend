@@ -1,6 +1,8 @@
 @extends('admin.layouts.admin_design')
 @section('content')
     <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <style>
         .ck-editor__editable {
             min-height: 100px;
@@ -36,7 +38,7 @@
 
                 <div class="form-group">
                     <label for="tag">Tag</label>
-                    <select name="tag" id="tag" class="form-control">
+                    <select name="tag[]" id="tag" class="form-control" multiple>
 
                         <option value="">Select Tag</option>
                         @foreach ($tags as $tag)
@@ -64,12 +66,13 @@
                         <option value="draft" {{ $posts->status == 'draft' ? 'selected' : '' }}>Draft</option>
                         <option value="published" {{ $posts->status == 'published' ? 'selected' : '' }}>Published</option>
                     </select>
-
                 </div>
+                <div>
                 <button class="btn btn-primary">Send</button>
-        </div>
+                </div>
 
         </form>
+        </div>
         <script>
             ClassicEditor
                 .create(document.querySelector('#description'))
@@ -77,4 +80,10 @@
                     console.error(error);
                 });
         </script>
+<br>
     @endsection
+<script>
+    $(document).ready(function() {
+        $('#tag').select2();
+    });
+</script>

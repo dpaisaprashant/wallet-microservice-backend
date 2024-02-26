@@ -52,7 +52,7 @@ class PostController extends Controller
             'description' => 'required',
             'author' => 'required',
             'image' => 'required',
-            'tag' => 'required',
+            'tag.*' => 'required',
             'type' => 'required',
             'status' => 'required',] ,
             [
@@ -64,13 +64,13 @@ class PostController extends Controller
             'type.required' => 'Type is required',
             'status.required' => 'Status is required',
             ]);
-
+            // dd($request->tag);
             $posts = new Post;
             $posts->title = $request->title;
             $posts->description = $request->description;
             $posts->author = $request->author;
             // $posts->image = $request->image;
-            $posts->tag = $request->tag;
+            $posts->tag = implode(',', $request->tag);            
             $posts->type = $request->type;
             $posts->status = $request->status;
             $posts->slug = Str::slug($request->title);
@@ -82,11 +82,10 @@ class PostController extends Controller
             $posts->image = $fileName;
             
           }
-         
+        
           $posts->save();
           return redirect('admin/blog/post')
-          ->with('success','Post created successfully.');
-         
+          ->with('success','Post created successfully.');  
     }
 
     /**
@@ -118,8 +117,17 @@ class PostController extends Controller
         'type' => 'required',
         'status' => 'required',
       ]);
-      
-      Post::where('id', $id)->update($validated);
+
+     $posts = Post::find($id);
+      if($request->hasFile('image')) {
+            $fileName = time() . '.'. $request->file('image')->extension();
+            $request->file('image')->storeAs('public', $fileName);
+            // $posts->image = $fileName;
+           $validated['image'] = $fileName;
+            
+          }
+                                           
+      Post::find($id)->update($validated);
       return redirect('admin/blog/post')
           ->with('success', 'Post updated successfully');
     }

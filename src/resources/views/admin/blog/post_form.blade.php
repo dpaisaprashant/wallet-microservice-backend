@@ -3,6 +3,8 @@
 
     <body>
         <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
         <style>
                 .ck-editor__editable {
                     min-height: 100px;
@@ -51,13 +53,13 @@
 
                 <div class="form-group">
                     <label for="tag">Tag</label>
-                    <select name="tag" id="tag" class="form-control">
+                    <select name="tag[]" id="tag" class="form-control"  multiple>
 
-                        <option value="{{old('tag')}}">Select Tag</option>
+                        {{-- <option value="{{old('tag')}}">Select Tag</option> --}}
 
                         @foreach ($tags as $tag)
-                            <option value="{{$tag->id}}" {{ old('tag') == $tag->id ? 'selected' : '' }}>{{$tag->name}}</option>
-                            {{-- <option value="{{ $tag->id }}">{{ $tag->name }}</option> --}}
+                            {{-- <option value="{{$tag->id}}" {{ old('tag') == $tag->id ? 'selected' : '' }}>{{$tag->name}}</option> --}}
+                            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
                         @endforeach
                     </select>
                     @error('tag')
@@ -93,18 +95,25 @@
         </div>
 
         </form>
-        <script>
+ <script>
             ClassicEditor
                 .create(document.querySelector('#description'))
                 .catch(error => {
                     console.error(error);
                 });
-        </script>
+</script>       
     <br>
     @endsection
 
-
 </body>
+
+
+
+<script>
+    $(document).ready(function() {
+        $('#tag').select2();
+    });
+</script>
 
 @if (session('status'))
     <script>

@@ -64,7 +64,7 @@ class PostController extends Controller
             'type.required' => 'Type is required',
             'status.required' => 'Status is required',
             ]);
-            // dd($request->tag);
+        
             $posts = new Post;
             $posts->title = $request->title;
             $posts->description = $request->description;
@@ -113,7 +113,7 @@ class PostController extends Controller
         'description' => 'required',
         'author' => 'required',
         // 'image' => 'required',
-        'tag' => 'required',
+        'tag.*' => 'required',
         'type' => 'required',
         'status' => 'required',
       ]);
@@ -126,7 +126,9 @@ class PostController extends Controller
            $validated['image'] = $fileName;
             
           }
-                                           
+  
+    $validated['tag'] = implode(',', $request->tag);
+
       Post::find($id)->update($validated);
       return redirect('admin/blog/post')
           ->with('success', 'Post updated successfully');

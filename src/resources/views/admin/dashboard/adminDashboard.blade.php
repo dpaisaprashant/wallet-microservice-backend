@@ -7,6 +7,9 @@
 {{--    @can('Dashboard successful transactions count')--}}
 {{--        @include('admin.dashboard.widgets.successfulTransactionCount')--}}
 {{--    @endcan--}}
+    @can('Dashboard total KYC filled users')
+    @include('admin.dashboard.widgets.totalUsersCount')
+    @endcan
 
     @can('Dashboard total KYC not filled users')
         @include('admin.dashboard.widgets.totalKYCNotFilledUsers')
@@ -24,9 +27,7 @@
         @include('admin.dashboard.widgets.rejectedKYCByBackendUserCount')
     @endcan
 
-    @can('Dashboard total KYC filled users')
-    @include('admin.dashboard.widgets.totalUsersCount')
-    @endcan
+    
 
 {{--    @can('Dashboard total NPay clearance cleared by backend user count')--}}
 {{--        @include('admin.dashboard.widgets.npayClearanceClearedByBackendUserCount')--}}

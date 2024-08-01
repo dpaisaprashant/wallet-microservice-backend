@@ -21,7 +21,7 @@ class AdminController extends Controller
     {
         $kycNotFilledUserCount = $repository->totalKYCNotFilledUsersCount();
         $kycFilledUserCount = $repository->totalKYCFilledUsersCount();
-
+        $totalUsersCount = $kycNotFilledUserCount + $kycFilledUserCount;
 //        $successfulTransactionCount = $repository->successfulTransactionCount();
 //        $successfulTransactionSum = $repository->successfulTransactionSum();
 
@@ -33,7 +33,7 @@ class AdminController extends Controller
 
         $acceptedKycsCount = (new Admin())->acceptedKycsCount();
         $rejectedKycsCount = (new Admin())->rejectedKycsCount();
-
+     
 
         $now = Carbon::now();
         $month = $now->format('m');
@@ -72,7 +72,7 @@ class AdminController extends Controller
             ->with(compact(
 //                'yearTransactionAmount', 'yearTransactionCount',
 //                'monthTransactionAmount','monthTransactionCount',
-                'kycFilledUserCount', 'kycNotFilledUserCount',
+                'kycFilledUserCount', 'kycNotFilledUserCount', 'totalUsersCount',
 //                'successfulTransactionCount',
 //                'successfulTransactionSum',
                 'month', 'year',

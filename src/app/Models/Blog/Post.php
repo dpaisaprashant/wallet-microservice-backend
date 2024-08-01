@@ -12,6 +12,7 @@ class Post extends Model
     protected $connection = 'dpaisa';
     protected $fillable = [
         'title',
+        'slug',
         'description',
         'author',
         'image',

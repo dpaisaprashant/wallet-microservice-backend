@@ -12,7 +12,9 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-/storage/*
+/storage/app
+yarn-error.log
+/storage/logs
 .idea/*
 /bootstrap/cache
 .env.save

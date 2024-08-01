@@ -10,6 +10,7 @@ class WalletTypeTransactionController extends Controller{
 
     public function index(){
         $walletTransactionTypes = WalletTransactionType::orderBy('created_at','DESC')->get();
+       
         return view('Architecture::TransactionType.viewTransactionType',compact('walletTransactionTypes'));
     }
 

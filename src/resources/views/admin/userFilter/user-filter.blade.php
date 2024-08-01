@@ -342,7 +342,7 @@
                                     <div class="col-md-4">
                                         <div class="input-group date">
                                                     <span class="input-group-addon">
-                                                        <i class="fa fa-home""></i>
+                                                        <i class="fa fa-home"></i>
                                                     </span>
                                             <select data-placeholder="Choose District..." class="chosen-select"  tabindex="2" name="district">
                                                 <option value="" selected disabled>Select District ...</option>
@@ -358,6 +358,25 @@
                                                 @endif
                                             </select>
                                         </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-group date">
+                                                    
+                                            <select data-placeholder="Choose Occupation..." class="chosen-select"  tabindex="2" name="occupation">
+                                                <option value="" selected disabled>Select Occupation ...</option>
+                                                <option value="">All</option>
+                                                @if(!empty($_GET['occupation']))
+                                              
+                                                    @foreach($occupations as $occupation)
+                                                        <option value="{{ $occupation }}" @if($_GET['occupation'] == $occupation) selected @endif>{{ $occupation }}</option>
+                                                    @endforeach
+                                                @else
+                                                    @foreach($occupations as $occupation)
+                                                        <option value="{{ $occupation }}"> {{ $occupation }} </option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div> 
                                     </div>
                             </div>
                             <br>

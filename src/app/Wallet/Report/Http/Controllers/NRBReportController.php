@@ -109,15 +109,15 @@ class NRBReportController extends Controller
         if ($request->all() == null) {
             return view('WalletReport::nrb.active-inactive-user-report-new');
         }
-
+       
         $repository = new ActiveInactiveUserReportRepository($request);
+        
 
         $check = $repository->checkForNewReport();
-
         if ($check == null) {
             $walletClearance = new WalletClearanceMicroService();
             $walletClearanceResponse = $walletClearance->dispatchActiveInactiveUserNewJobs(request(), request()->from);
-
+            
             $activeInactiveUserReports = 'Report is being generated. Please be patient and check in at another time. Current Status: Started Report Generation ....';
             return view('WalletReport::nrb.active-inactive-user-report-new', compact('activeInactiveUserReports'));
         }
@@ -130,6 +130,8 @@ class NRBReportController extends Controller
         }
 
         $walletClearanceResponse = $repository->dispatchWalletClearance();
+        dd($walletClearanceResponse);
+
         $activeInactiveUserReports = $walletClearanceResponse['activeInactiveUserReports'];
         $totalUsers = $walletClearanceResponse['totalUsers'];
         $totalBalance = $walletClearanceResponse['totalBalance'];

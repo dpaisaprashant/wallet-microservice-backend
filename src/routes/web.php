@@ -17,7 +17,7 @@ use App\Http\Controllers\MerchantTransactionController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\PostController;
-
+use App\Http\Controllers\TransactionController;
 
 Route::match(['get', 'post'], '/', 'AdminController@login')->middleware('guest'); //admin login
 Route::group(['prefix' => 'admin'], function () {
@@ -696,6 +696,18 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('career/domain','DomainController@index')->name('career.domain');
 
         //.......................endCareer..........................................//
+
+        //customer feedback
+        Route::get('feedback/feedback', 'FeedbackController@index')->name('feedback.feedback');
+
+        //khalti_services
+        Route::get('khalti/khalti_services', 'KhaltiServiceController@index')->name('khalti.khalti_services');
+        Route::post('/store-service', 'KhaltiServiceController@store')->name('store-service');
+        Route::get('delete-service/{id}', 'KhaltiServiceController@delete')->name('delete-service');
+        
+        //appNotification
+        Route::get('appNotification/notification', 'AppNotificationController@index')->name('appNotification.notification');
+        Route::post('/store-notification', 'AppNotificationController@store')->name('store-notification');
 
         //Banner
         Route::get('frontend/banner', 'Frontend\BannerController@index')->name('frontend.banner.index')->middleware('permission:Frontend banner view');

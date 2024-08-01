@@ -18,6 +18,13 @@
                     <input type="text" class="form-control" id="title" placeholder="Title" name="title"
                         value="{{ $posts->title }}">
                 </div>
+                 <div class="form-group">
+                    <label for="title">Short-Title</label>
+                    <input type="text" class="form-control" id="slug" placeholder="Short-Title" name="slug" value="{{ $posts->slug }}">
+                    @error('slug')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
 
                 <div class="form-group">
                     <label for="description">Description</label>
@@ -26,7 +33,7 @@
 
                 <div class="form-group">
                     <label for="author">Author</label>
-                    <input type="text" class="form-control" id="author" placeholder="Name" name="author"
+                    <input type="text" class="form-control" id="author" placeholder="Name" name="author"  
                         value="{{ $posts->author }} ">
                 </div>
 
@@ -47,7 +54,6 @@
                         @endforeach
                     </select>
                 </div>
-
 
                 <div class="form-group">
                     <label for="type">Type</label>

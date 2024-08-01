@@ -53,7 +53,8 @@ class KhaltiRepository
 
     public function detail($id)
     {
-        return KhaltiUserTransaction::with('user', 'transactions', 'preTransaction')->where('id', $id)->firstOrFail();
+        
+        return KhaltiUserTransaction::with('user', 'transactions', 'preTransaction')->where('transaction_id', $id)->firstOrFail();
     }
 
     public function getVendorName(){

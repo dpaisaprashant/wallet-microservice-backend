@@ -18,6 +18,7 @@ class WalletTransactionTypeController extends Controller
     public function vendorTransactions(Request $request, $vendorName)
     {
         $walletTransactionTypes = WalletTransactionType::where('vendor', $vendorName)->get();
+        
         return view('Architecture::walletTransactionTypes')->with(compact('walletTransactionTypes', 'vendorName'));
     }
 

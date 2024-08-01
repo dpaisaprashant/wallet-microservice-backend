@@ -161,6 +161,7 @@
                                 <th>S.No.</th>
                                 <th>Service</th>
                                 <th>Micro Service URL</th>
+                                <th>Micro Service Process</th>
                                 <th>Wallet Transaction Type </th>
                                 <th>Payment Validated</th>
                                 <th>Payment Handeled</th>
@@ -176,6 +177,7 @@
                                         &nbsp;{{ $service->service }}
                                     </td>
                                     <td>{{ $service->core_to_microservice_url }}</td>
+                                    <td>{{ $service->microservice_process ?? '-' }}</td>
                                     <td>{{optional($service->walletTransactionType)->transaction_type}}</td>
                                     <td>
                                         @if($service->validate_payment == 1)

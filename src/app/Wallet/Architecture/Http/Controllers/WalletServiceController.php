@@ -59,7 +59,7 @@ class WalletServiceController extends Controller{
         $walletService->wallet_transaction_type_id = $request->get('wallet_transaction_type_id');
         $walletService->validate_payment = $request->get('validate_payment');
         $walletService->handle_payment = $request->get('handle_payment');
-
+        
         $status = $walletService->save();
 
         if($status == true){

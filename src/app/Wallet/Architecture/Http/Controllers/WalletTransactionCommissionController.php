@@ -17,10 +17,11 @@ class WalletTransactionCommissionController extends Controller
 {
     public function index($walletTransactionTypeId, Request $request)
     {
+        
         $walletTransactionType = WalletTransactionType::with('walletTransactionTypeCashbacks')
             ->where('id', $walletTransactionTypeId)
             ->first();
-
+        
         return view('Architecture::commission.index')->with(compact('walletTransactionType'));
     }
 

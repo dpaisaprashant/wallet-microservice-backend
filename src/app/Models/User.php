@@ -513,5 +513,9 @@ class User extends Authenticatable
         return $this->hasOne(WalletTransactionTypeMerchantRevenue::class);
     }
 
+    public function khaltiTransaction()
+    {
+        return $this->hasOne(KhaltiUserTransaction::class, "user_id");
+    }
 
 }

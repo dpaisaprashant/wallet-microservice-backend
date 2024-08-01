@@ -49,6 +49,7 @@ class PostController extends Controller
        
              $request->validate([
             'title' => 'required',
+            'slug'=> 'required',
             'description' => 'required',
             'author' => 'required',
             'image' => 'required',
@@ -57,6 +58,7 @@ class PostController extends Controller
             'status' => 'required',] ,
             [
             'title.required' => 'Title is required',
+            'slug.required' => 'Short-Title is required',
             'description.required' => 'Description is required',
             'author.required' => 'Author is required',
             'image.required' => 'Image is required',
@@ -73,7 +75,7 @@ class PostController extends Controller
             $posts->tag = implode(',', $request->tag);            
             $posts->type = $request->type;
             $posts->status = $request->status;
-            $posts->slug = Str::slug($request->title);
+            $posts->slug = Str::slug($request->slug);
 
           if($request->hasFile('image')) {
             
@@ -110,6 +112,7 @@ class PostController extends Controller
     {
       $validated = $request->validate([
         'title' => 'required',
+        'slug' => 'required',
         'description' => 'required',
         'author' => 'required',
         // 'image' => 'required',

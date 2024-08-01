@@ -27,6 +27,12 @@ use App\Models\UserToUserFundTransfer;
 use App\Models\UserTransaction;
 
 use App\Models\NepalQrTransaction;
+
+//new services
+use App\Models\KhanepaniTransaction;
+use App\Models\NPIBillerTransaction;
+use App\Models\BussewaTransaction;
+//
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -120,7 +126,11 @@ class Controller extends BaseController
             BfiExecutePayment::class => "USER CREDIT BY BFI",
             BfiGatewayDebitExecutePayment::class => "USER DEBIT BY BFI",
             TicketSale::class => "TICKET SALE",
-            NepalQrTransaction::class => "NEPALQR PAYMENT"
+            NepalQrTransaction::class => "NEPALQR PAYMENT",
+            KhanepaniTransaction::class => "KHANEPANI",
+            BussewaTransaction::class => "BUSSEWA",
+            NPIBillerTransaction::class => "NPIBILLER",
+
         ];
 
 

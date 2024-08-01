@@ -33,6 +33,7 @@ abstract class FiltersAbstract
      */
     public function add(array $filters)
     {
+      
         $this->filters = array_merge($this->filters, $filters);
 
         return $this;
@@ -46,7 +47,9 @@ abstract class FiltersAbstract
      */
     public function filter(Builder $builder)
     {
+       
         foreach ($this->getFilters() as $filter => $value) {
+           
             $this->resolveFilter($filter)->filter($builder, $value);
         }
 

@@ -55,5 +55,9 @@ class KhaltiUserTransaction extends Model
         return $this->belongsTo(PreTransaction::class, 'reference_no','pre_transaction_id');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id');
+    }
 
 }

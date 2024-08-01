@@ -21,7 +21,7 @@ class NchlBankTransferRepository
 
     public function __construct(Request $request)
     {
-        $this->request = $request;
+        $this->request = $request;  
     }
 
     public function setLength(int $length)
@@ -32,6 +32,7 @@ class NchlBankTransferRepository
 
     private function latestTransactions()
     {
+       
         return NchlBankTransfer::with('user', 'transactions', 'commission')->latest()->filter($this->request)->paginate($this->length);
     }
 

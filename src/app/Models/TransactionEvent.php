@@ -60,10 +60,12 @@ class TransactionEvent extends Model
         return optional($this->commission)->cashbackAmount() ?? 0;
     }
 
-       public function getCommissionAmountAttribute()
+    public function getCommissionAmountAttribute()
     {
         return optional($this->commission)->commissionAmount() ?? 0;
     }
+    
+
     public function getFeeAttribute()
     {
         switch ($this->transaction_type) {
@@ -121,7 +123,6 @@ class TransactionEvent extends Model
 
     public function scopeFilter(Builder $builder, Request $request, array $filters = [])
     {
-        // dd($request->transaction_type);
         return (new TransactionFilters($request))->add($filters)->filter($builder);
     }
 
@@ -179,7 +180,6 @@ class TransactionEvent extends Model
     public function preTransactionMicroservice(){
         return $this->belongsTo(PreTransaction::class,'pre_transaction_id','pre_transaction_id');
     }
-
 
     //cashback pull
     public function cashbackPull()

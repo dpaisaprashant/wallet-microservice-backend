@@ -1148,7 +1148,7 @@ $url = url()->current();
                             @endcan
 
                         {{-- @endif --}}
-
+                        
                     </ul>
                 </li>
             @endif
@@ -1163,6 +1163,55 @@ $url = url()->current();
                             @can('Blog View')
                             <li><a href="{{ route('career.job') }}">Opportunities</a></li>
                             <li><a href="{{ route('career.domain') }}">Domain</a></li>
+                            
+                            @endcan
+
+                        {{-- @endif --}}
+
+                    </ul>
+                </li>
+            @endif
+
+            @if(auth()->user()->hasAnyPermission(['Blog View']))
+                <li @if(preg_match('/frontend/i', $url)) class="active" @endif>
+                    <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Khalti-Services</span><span
+                            class="fa arrow"></span></a>
+                     <ul class="nav nav-second-level collapse"> 
+                          
+                            @can('Blog View')
+                            <li><a href="{{ route('khalti.khalti_services') }}">Khalti_services</a></li>
+                            @endcan
+                    </ul>
+                </li>
+            @endif
+
+             @if(auth()->user()->hasAnyPermission(['Blog View']))
+                <li @if(preg_match('/frontend/i', $url)) class="active" @endif>
+                    <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Notification</span><span
+                            class="fa arrow"></span></a>
+                     <ul class="nav nav-second-level collapse"> 
+                        {{-- @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'icash' || strtolower(config('app.'.'name')) == 'master') --}} 
+                          
+                            @can('Blog View')
+                            <li><a href="{{ route('appNotification.notification') }}">Message</a></li>
+                            
+                            @endcan
+
+                        {{-- @endif --}}
+
+                    </ul>
+                </li>
+            @endif
+
+            @if(auth()->user()->hasAnyPermission(['Blog View']))
+                <li @if(preg_match('/frontend/i', $url)) class="active" @endif>
+                    <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Customer Feedback</span><span
+                        class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse"> 
+                        {{-- @if(strtolower(config('app.'.'name')) == 'dpaisa' || strtolower(config('app.'.'name')) == 'icash' || strtolower(config('app.'.'name')) == 'master') --}} 
+                        
+                            @can('Blog View')
+                            <li><a href= "{{ route('feedback.feedback')}}">Feedbacks</a></li>
                             
                             @endcan
 

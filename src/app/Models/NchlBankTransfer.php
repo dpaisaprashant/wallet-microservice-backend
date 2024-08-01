@@ -24,6 +24,7 @@ class NchlBankTransfer extends Model
 
     public function scopeFilter(Builder $builder, Request $request, array $filters = [])
     {
+        dd($filters);
         return (new NchlBankTransferFilters($request))->add($filters)->filter($builder);
     }
 
@@ -34,7 +35,9 @@ class NchlBankTransfer extends Model
 
     public function getCommissionAmountAttribute()
     {
+        
         if (!empty($this->commission)) {
+           
             $commission = ($this->commission->getOriginal('before_amount') - $this->commission->getOriginal('after_amount')) / 100;
             return round($commission, 8);
         }

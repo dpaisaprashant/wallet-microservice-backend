@@ -1,4 +1,4 @@
-@extends('admin.layouts.admin_design')
+       @extends('admin.layouts.admin_design')
 @section('content')
 
     <div class="row wrapper border-bottom white-bg page-heading">
@@ -259,8 +259,10 @@
                             <h5><b>Total Count:</b> {{ $totalTransactionCount }}</h5>
                             <h5><b>Total Amount Sum:</b> Rs. {{ $totalTransactionAmountSum }}</h5>
                             <h5><b>Total Fee Sum:</b> Rs. {{ $totalTransactionFeeSum }}</h5>
-<h5><b>Total Cashback Sum: </b> Rs. {{ $totalTransactionCashbackSum }}
- <h5><b>Total Commission Sum:</b> Rs. {{ $totalTransactionCommissionSum }}</h5>
+
+                            <h5><b>Total Cashback Sum:</b> Rs. {{ $totalTransactionCashbackSum }}</h5>
+                            <h5><b>Total Commission Sum:</b> Rs. {{ $totalTransactionCommissionSum }}</h5>
+
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover dataTables-example"
                                        title="Complete transactions list">
@@ -274,8 +276,10 @@
                                         <th>Vendor</th>
                                         <th>Service Type</th>
                                         <th>Amount</th>
+
                                         <th>Transaction Fee</th>
                                         <th>Cashback amount</th>
+
                                         <th>Commission</th>
                                         <th>Status</th>
                                         {{--<th>UserType</th>--}}
@@ -301,9 +305,13 @@
                                             </td>
                                             <td>
 
+
                                                 <!-- <a @can('User profile') href="{{route('user.profile', $transaction->user_id)}}" @endcan> {{ $transaction->user['mobile_no'] ?? '' }} <br> -->
 
-                                                <a @can('User profile') href="{{route('user.profile', $transaction->user_id)}}" @endcan> {{ $transaction->user['mobile_no'] }} <br>
+                                                <!-- <a @can('User profile') href="{{route('user.profile', $transaction->user_id)}}" @endcan> {{ $transaction->user['mobile_no'] }} <br> -->
+
+
+                                                <a @can('User profile') href="{{route('user.profile', $transaction->user_id)}}" @endcan> {{ $transaction->user['mobile_no'] ?? '--' }} <br>
 
                                                 </a>
                                             </td>
@@ -320,11 +328,15 @@
                                             <td>
                                                 Rs. {{ $transaction->cashback_amount }}
                                             </td>
-<td>Rs. {{ $transaction->commission_amount }}</td>
+
+                                            <!-- <td>Rs. {{ $transaction->commission_amount }}</td> -->
+
+                                            <td>Rs. {{ $transaction->commission_amount ?? 0 }}</td>
+
                                             <td>
                                                 <span class="badge badge-primary">Complete</span>
                                             </td>
-                                        {{--    <td>
+                                            {{--    <td>
                                                 @if($transaction->user->userType != null)
                                                     <span class="badge badge-primary">User</span>
                                                     @elseif($transaction->user->merchant != null)

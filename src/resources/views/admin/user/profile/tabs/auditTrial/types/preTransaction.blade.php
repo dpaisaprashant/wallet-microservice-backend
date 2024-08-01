@@ -145,7 +145,7 @@
 
         @if($event->microservice_type == "BFI")
             @if(!empty($event->userToBFIFundTransfer))
-                <a href="{{ route('user.to.bfi.fund.transfer.check.payment', $event->userToBFIFundTransfer->id) }}">
+                <a href="{{ route('user.to.bfi.fund.transfer.check.payment', $event->userToBFIFundTransfer->id) }}"  title="BFI">
                     <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button>
                 </a>
             @endif
@@ -159,27 +159,40 @@
         @endif
 
         @if($event->nicAsiaCyberSourceLoad)
-            <a href="{{route('nicAsia.detailCyberSourceLoad',$event->nicAsiaCyberSourceLoad->id)}}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+            <a href="{{route('nicAsia.detailCyberSourceLoad',$event->nicAsiaCyberSourceLoad->id)}}"  title="nicAsiaCyberSourceLoad"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         @elseif($event->userloadTransaction)
-            <a href="{{ route('eBanking.detail', $event->userLoadTransaction->id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
-        @elseif($event->userTransaction)
-            <a href="{{ route('paypoint.detail', $event->userTransaction->id) }}">    <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
-        {{--@elseif($event->khaltiUserTransaction)
+            <a href="{{ route('eBanking.detail', $event->userLoadTransaction->id) }}" title="eBanking Detail"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+        
+
+
+
+
+        {{-- This is the section causing extra eye button for paypoint so has been commented for now--}}
+            @elseif($event->userTransaction)
+            <a href="{{ route('paypoint.detail', $event->userTransaction->id) }}" title="Pay Point Detail">    <button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+        
+        
+
+         
+
+
+
+            {{--@elseif($event->khaltiUserTransaction)
             <a href="{{ route('khalti.payment.detail', $event->khaltiUserTransaction->id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>--}}
         @elseif($event->nchlBankTransfer)
-            <a href="{{ route('nchl.bankTransfer.detail', $event->nchlBankTransfer->id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+            <a href="{{ route('nchl.bankTransfer.detail', $event->nchlBankTransfer->id) }}" title="NCHL Bank Transfer"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         @elseif($event->nchlLoadTransaction)
-            <a href="{{ route('nchl.loadTransaction.detail', $event->nchlLoadTransaction->id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+            <a href="{{ route('nchl.loadTransaction.detail', $event->nchlLoadTransaction->id) }}" title="NCHL Load Transaction"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         @elseif($event->nchlAggregatePayment)
-            <a href="{{route('nchl.aggregatedPayment.detail',$event->nchlAggregatePayment->id)}}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+            <a href="{{route('nchl.aggregatedPayment.detail',$event->nchlAggregatePayment->id)}}" title="NCHL Aggregate PAyment><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         {{--@elseif($event->cellPayUserTransaction)
             <a href="{{route('cellPayUserTransaction.detail',$event->cellPayUserTransaction->id)}}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>--}}
         @elseif(optional($event->transactionEvent)->transaction_type == \App\Models\UserToUserFundTransfer::class)
-            <a href="{{ route('userToUserFundTransfer.detail', $event->transactionEvent->transaction_id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+            <a href="{{ route('userToUserFundTransfer.detail', $event->transactionEvent->transaction_id) }}" title="User To Use Fund Transfer"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         @elseif(optional($event->transactionEvent)->transaction_type == \App\Models\FundRequest::class)
-            <a href="{{ route('fundRequest.detail', $event->transactionEvent->transaction_id) }}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+            <a href="{{ route('fundRequest.detail', $event->transactionEvent->transaction_id) }}" title="Fund Request"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         @elseif($event->npsLoadTransaction)
-                <a href="{{route('nps.detail',$event->npsLoadTransaction->id)}}"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
+                <a href="{{route('nps.detail',$event->npsLoadTransaction->id)}}" title="NPS Detail"><button class="btn btn-primary btn-icon" type="button"><i class="fa fa-eye"></i></button></a>
         @endif
 
 {{--            without details page--}}

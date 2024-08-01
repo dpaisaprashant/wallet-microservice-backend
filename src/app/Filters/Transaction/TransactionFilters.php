@@ -40,14 +40,13 @@ class TransactionFilters extends FiltersAbstract
         'individual_user_number' => IndividualUserNumber::class,
         'user_type' => UserTypeFilter::class,
     ];
-
-
     /**
      * Mappings for course filter values.
      *
      * @return array
      */
     public static function mapping() {
+       
         $map = [
             'sort' => [
                 'date' => 'created_at',

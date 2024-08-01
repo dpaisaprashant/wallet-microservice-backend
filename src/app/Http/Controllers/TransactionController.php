@@ -21,6 +21,11 @@ use App\Wallet\TransactionEvent\Repository\TransactionEventRepository;
 use App\Wallet\User\Repositories\UserRepository;
 use App\Wallet\User\Repositories\UserTotalTransactionRepository;
 use App\Wallet\NepalQR\Repository\NepalQRRepository;
+
+use App\Wallet\NPI\Repository\NPIRepository;
+use App\Wallet\Bussewa\Repository\BussewaRepository;
+use App\Wallet\Khanepani\Repository\KhanepaniRepository;
+
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -36,14 +41,11 @@ class TransactionController extends Controller
             $totalTransactionCount = $repository->transactionsCount();
             $totalTransactionAmountSum = $repository->transactionAmountSum();
             $totalTransactionFeeSum = $repository->transactionFeeSum();
-$totalTransactionCommissionSum = $repository->transactionCommissionSum();
+
+            $totalTransactionCashbackSum = $repository->transactionCashbackSum();
+            $totalTransactionCommissionSum = $repository->transactionCommissionSum();
             $getAllUniqueVendors = $repository->getUniqueVendors();
-
-//             $totalTransactionCashbackSum = $repository->transactionCashbackSum();
-//             return view('admin.transaction.complete')->with(compact('transactions', 'getAllUniqueVendors', 'totalTransactionAmountSum', 'totalTransactionCount', 'totalTransactionFeeSum',
-// 'totalTransactionCashbackSum','totalTransactionCommissionSum'));
-
-            return view('admin.transaction.complete')->with(compact('transactions', 'getAllUniqueVendors', 'totalTransactionAmountSum', 'totalTransactionCount', 'totalTransactionFeeSum'));
+            return view('admin.transaction.complete')->with(compact('transactions', 'getAllUniqueVendors', 'totalTransactionAmountSum', 'totalTransactionCount', 'totalTransactionFeeSum','totalTransactionCashbackSum','totalTransactionCommissionSum'));
 
         }
         $getAllUniqueVendors = $repository->getUniqueVendors();
@@ -158,6 +160,7 @@ $totalTransactionCommissionSum = $repository->transactionCommissionSum();
             $totalNchlLoadBankTransferTransactionCount = $repository->getNchlLoadBankTransferTransactionCount();
             $totalNchlLoadBankTransferTransactionSum = $repository->getNchlLoadBankTransferTransactionSum();
             $transactions = $repository->paginatedTransactions();
+            
             return view('admin.transaction.nchlBankTransfer')->with(compact('transactions', 'totalNchlLoadBankTransferTransactionCount', 'totalNchlLoadBankTransferTransactionSum'));
         }
         return view('admin.transaction.nchlBankTransfer');
@@ -191,7 +194,7 @@ $totalTransactionCommissionSum = $repository->transactionCommissionSum();
     public function khaltiPaymentDetail($id, KhaltiRepository $repository)
     {
         $transaction = $repository->detail($id);
-        return view('admin.transaction.detail.khaltiDetail')->with(compact('transaction'));
+        return view('admin.transaction.detail.khaltiDetailView')->with(compact('transaction'));
     }
 
     //REIMBURSE TRANSACTION
@@ -280,7 +283,6 @@ $totalTransactionCommissionSum = $repository->transactionCommissionSum();
             $totalTransactionCount = $repository->getNepalQrTransactionCount();
             $totalTransactionSum = $repository->getNepalQrTransactionSum();
             $transactions = $repository->paginatedTransactions();
-            //dd($transactions);
             return view('admin.transaction.nepalqr')->with(compact('transactions', 'totalTransactionCount', 'totalTransactionSum'));
         }
         return view('admin.transaction.nepalqr');

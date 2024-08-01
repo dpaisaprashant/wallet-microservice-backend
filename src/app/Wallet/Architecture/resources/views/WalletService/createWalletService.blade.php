@@ -54,6 +54,14 @@
                                     </div>
 
                                     <div class="form-group  row">
+                                        <label class="col-sm-2 col-form-label">Micro Service Process</label>
+                                        <div class="col-sm-10">
+                                        <input type="text" class="form-control form-control-sm" name="microservice_process"
+                                                   placeholder="Micro Service Process">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group  row">
                                         <label class="col-sm-2 col-form-label">Wallet Transaction Type ID</label>
                                         <div class="col-sm-10">
                                             <select class="chosen-select" tabindex="2" name="wallet_transaction_type_id" required>

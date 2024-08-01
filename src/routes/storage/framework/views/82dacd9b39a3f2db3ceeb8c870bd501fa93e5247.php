@@ -1,0 +1,1 @@
+ <h1>bn bn</h1><?php /**PATH /var/www/html/resources/views/admin/transaction/detail/test.blade.php ENDPATH**/ ?>

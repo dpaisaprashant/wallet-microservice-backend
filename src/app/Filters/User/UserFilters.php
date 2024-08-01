@@ -47,6 +47,7 @@ class UserFilters extends FiltersAbstract
         'user_status' => UserStatusFilter::class,
         'locked_users' => LockedUsersFilter::class,
         'registered_using_referral' => RegisterUsingReferralFilter::class,
+        'occupation'=> OccupationFilter::class,
     ];
 
 

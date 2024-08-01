@@ -41,12 +41,10 @@ class TransactionEventRepository
     }
 
     public function latestTransactions()
-    {
+    {   
         return TransactionEvent::with('transactionable', 'user', 'commission', 'commission.transactions')
-            //->doesntHave('refundTransaction')
             ->whereNull("refund_id")
             ->latest()->filter($this->request)->paginate($this->length);
-        //->filter($this->request)->paginate($this->length);
     }
 
     public function currentMonthTransactions()
@@ -105,6 +103,14 @@ class TransactionEventRepository
                 ->sum('fee');
     }
 
+    public function transactionCashbackSum()
+    {
+        return TransactionEvent::whereNull("refund_id")
+                ->filter($this->request)
+                ->get()
+                ->sum('cashback_amount');
+    }
+
 
     public function transactionCommissionSum()
     {
@@ -147,11 +153,6 @@ class TransactionEventRepository
         return TransactionEvent::whereNull("refund_id")
             ->filter($this->request)->count();
     }
-    public function transactionCashbackSum()
-    {
-        return TransactionEvent::whereNull("refund_id")
-                ->filter($this->request)
-                ->get()
-                ->sum('cashback_amount');
-    }
+
+
 }

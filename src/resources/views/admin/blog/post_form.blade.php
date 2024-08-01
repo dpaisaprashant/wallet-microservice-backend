@@ -23,6 +23,13 @@
                     @enderror
                 </div>
 
+                <div class="form-group">
+                    <label for="title">Short-Title</label>
+                    <input type="text" class="form-control" id="slug" placeholder="Short-Title" name="slug" value="{{ old('slug') }}">
+                    @error('slug')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
 
                 <div class="form-group">
                     <label for="description">Description</label>

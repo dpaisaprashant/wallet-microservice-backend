@@ -34,16 +34,16 @@
                         </div>--}}
                         <div class="col-sm-6" style="margin-top: 30px;">
                             <h5>User:</h5>
-                            <address>
+                            {{-- <address>
                                 <strong>{{ $transaction->user['name']}}</strong><br>
                                 Email: {{ $transaction->user['email'] }}<br>
                                 Contact Number: {{ $transaction->user['mobile_no'] }}
-                            </address>
+                            </address> --}}
 
 
                             <span>Vendor:</span>
                             <address>
-                                <strong>{{ $transaction->vendor }}</strong><br>
+                                <strong>{{ $transaction->vendor}}</strong><br>
                                 Transaction Id: {{ $transaction->reference_no }}<br>
                                 Status: {{ $transaction->state }}
                             </address>

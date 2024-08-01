@@ -84,7 +84,8 @@ class UserController extends Controller
     public function view(UserRepository $repository)
     {
         $users = $repository->paginatedUsers();
-
+        $occupations = \App\Models\UserKYC::distinct()->pluck('occupation')->toArray();
+        View::share('occupations', $occupations);      
         $districts = config('districts.district_list');
         View::share('districts', $districts);
 

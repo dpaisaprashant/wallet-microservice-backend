@@ -24,6 +24,10 @@
         @include('admin.dashboard.widgets.rejectedKYCByBackendUserCount')
     @endcan
 
+    @can('Dashboard total KYC filled users')
+    @include('admin.dashboard.widgets.totalUsersCount')
+    @endcan
+
 {{--    @can('Dashboard total NPay clearance cleared by backend user count')--}}
 {{--        @include('admin.dashboard.widgets.npayClearanceClearedByBackendUserCount')--}}
 {{--    @endcan--}}

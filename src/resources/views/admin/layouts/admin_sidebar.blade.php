@@ -2,8 +2,21 @@
 $url = url()->current();
 //$today = \Carbon\Carbon::now()->format('d M, Y');
 ?>
+<style>
+    .sidebar-content {
+        height: calc(100vh);
+        overflow-y: auto;
+    }
+    .sidebar-content::-webkit-scrollbar {
+            display: none;
+        }
+    .scroll-page {
+    scrollbar-width: none;
+    }
+
+</style>
 <nav class="navbar-default navbar-static-side" role="navigation">
-    <div class="sidebar-collapse">
+    <div class="sidebar-collapse sidebar-content">
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header" style="background-color: #2f4050 !important;">
                 <div class="dropdown profile-element">

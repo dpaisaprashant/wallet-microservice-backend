@@ -1,4 +1,4 @@
-<div class="footer">
+<div class="footer" style="margin-left: 220px;">
     <div class="float-right">
 
     </div>

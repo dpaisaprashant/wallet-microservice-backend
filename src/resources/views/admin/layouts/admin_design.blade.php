@@ -55,6 +55,7 @@
             border-radius: 50%;
             animation: sp-anime 0.8s infinite linear;
         }
+        
         @keyframes sp-anime {
             0% {
                 transform: rotate(0deg);
@@ -93,15 +94,45 @@
 
     @include('admin.layouts.admin_sidebar')
 
-    <div id="page-wrapper" class="gray-bg">
+    <style>
+       
+        .scroll-page {
+           
+           
+            height: 100vh;
+            overflow-y: auto;
+          
+          
+        }
+        .scroll-page::-webkit-scrollbar {
+            display: none;
+        }
+        .scroll-page {
+        scrollbar-width: none;
+        }
 
+
+    </style>
+    <div id="page-wrapper" class="gray-bg scroll-page">
+       
         @include('admin.layouts.admin_header')
 
-        @yield('content')
-
-        @include('admin.layouts.admin_footer')
-
+        @yield('content') 
+        
+        
+        
+        
     </div>
+    <style>
+        .footer-margin{
+            margin-left: 40px;
+
+
+        }
+    </style>
+ 
+        @include('admin.layouts.admin_footer')
+ 
 
 </div>
 

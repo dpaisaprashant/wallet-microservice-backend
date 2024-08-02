@@ -318,6 +318,12 @@ class User extends Authenticatable
         return $this->with('wallet')->whereNotIn('id', $kycFilledId)->latest(); //50
     }
 
+    public function kycNotFilledUsersCount() {
+        $kycFilledIds = UserKYC::pluck('user_id')->all();   
+        // Return the count of users not in the filled KYC list
+        return $this->whereNotIn('id', $kycFilledIds)->count();
+    }
+    
     public function userAcceptRejectKyc()
     {
         if (empty($this->kyc()->first())) {

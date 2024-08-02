@@ -138,6 +138,11 @@ class UserKYC extends Model
         return (new User())->kycNotFilledUsers()->get();
     }
 
+    public function notFilledKYCCount()
+    {
+        return (new User())->kycNotFilledUsersCount();
+    }
+
     public function acceptedKYC()
     {
         return User::whereHas('kyc', function ($query) {

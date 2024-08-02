@@ -87,8 +87,6 @@ class DashboardController extends Controller
         $pieChart = json_encode($repository->pieChartKYC());
         $newUsersPerMonth = json_encode($repository->graphUsers());
         $kycs = $repository->latestKYCs();
-
-
         return view('admin.dashboard.stats.kyc')->with(compact('kycs','stats', 'pieChart', 'newUsersPerMonth'));
     }
 

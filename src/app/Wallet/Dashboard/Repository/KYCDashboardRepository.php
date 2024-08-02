@@ -37,7 +37,7 @@ class KYCDashboardRepository extends DashboardRepository
     public function pieChartKYC()
     {
         return [
-            'Not Filled KYC' => count($this->kyc->notFilledKYC()),
+            'Not Filled KYC' => $this->kyc->notFilledKYCCount(),
             'Accepted KYC' => ($this->totalAcceptedKYC()),
             'Rejected KYC' => $this->totalRejectedKYC(),
             'Unverified KYC' => count($this->kyc->unverifiedKYC()),

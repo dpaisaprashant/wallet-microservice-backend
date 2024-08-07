@@ -1,3 +1,5 @@
+
+
 @extends('admin.layouts.admin_design')
 @section('content')
 
@@ -31,7 +33,8 @@
                         <h5>Change {{ auth()->user()->name }}'s password</h5>
                     </div>
                     <div class="ibox-content">
-                        <form method="post" action="{{ route('backendUser.changePassword') }}" enctype="multipart/form-data" >
+
+                        <form action="{{ route('backendUser.verifyOtp') }}" method="post">
                             @csrf
 
                             <div class="form-group  row">
@@ -39,41 +42,25 @@
 
                                 @include('admin.asset.notification.notify')
 
-                                <label class="col-sm-2 col-form-label">Email</label>
+                                <label class="col-sm-2 col-form-label">Enter Your OTP</label>
                                 <div class="col-sm-10">
-                                    <input name="email" type="email" class="form-control" required placeholder="Enter Your Emai">
+                                    <input name="otp" type="text" id ="otp" class="form-control" required placeholder="Enter Your OTP">
                                     <p style="color: red; margin-bottom: 0px;">{{ $errors -> first('email') }}</p>
                                 </div>
                             </div>
-{{-- 
-                            <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">New Password</label>
-                                <div class="col-sm-10">
-                                    <input name="new_password" type="password" class="form-control" required placeholder="New Password">
-                                    <p style="color: red; margin-bottom: 0px;">{{ $errors -> first('new_password') }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Confirm New Password</label>
-                                <div class="col-sm-10">
-                                    <input name="new_password_confirmation" type="password" class="form-control" required placeholder="Current Password">
-                                    <p style="color: red; margin-bottom: 0px;">{{ $errors -> first('new_password_confirmation') }}</p>
-                                </div>
-                            </div> --}}
-
 
                             <div class="hr-line-dashed"></div>
 
 
                             <div class="form-group row">
                                 <div class="col-sm-4 col-sm-offset-2">
-                                    <button class="btn btn-primary btn-sm" type="submit">Send Otp</button>
+                                    <button class="btn btn-primary btn-sm" type="submit">Verify OTP</button>
                                 </div>
                             </div>
 
-
+        
                         </form>
+                        
                     </div>
                 </div>
             </div>

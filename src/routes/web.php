@@ -18,6 +18,7 @@ use App\Http\Controllers\TypeController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\BackendUsersController;
 
 Route::match(['get', 'post'], '/', 'AdminController@login')->middleware('guest'); //admin login
 Route::group(['prefix' => 'admin'], function () {
@@ -56,9 +57,24 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('backend-user-changed-kyc', 'BackendUsersController@kycList')->name('backendUser.kycList')->middleware('permission:KYC list changed by backend user view');
 
 
+        /**
+         * Verify Otp
+         */
+        Route::get('verify-otp', [BackendUsersController::class, 'showOtpForm'])->name('backendUser.verifyOtp');
+        Route::post('verify-otp', [BackendUsersController::class, 'verifyOtp']);
+        Route::match(['get', 'post'], '/backend-user/change-passwords', 'BackendUsersController@changePasswords')->name('backendUser.changePasswords')->middleware('permission:Backend user change password');
+
+
+
+
+
         Route::get('/roles', 'RoleController@view')->name('role.view')->middleware('permission:Roles view');
         Route::match(['get', 'post'], '/roles/create', 'RoleController@create')->name('role.create')->middleware('permission:Role create');
         Route::match(['get', 'post'], '/role/edit/{role_id}', 'RoleController@edit')->name('role.edit')->middleware('permission:Role edit');
+
+
+
+
 
         /**
          * Backend log

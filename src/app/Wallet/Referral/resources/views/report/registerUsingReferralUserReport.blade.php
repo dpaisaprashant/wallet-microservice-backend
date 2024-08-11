@@ -137,7 +137,7 @@
                                                 {{ $user->totalTransactionCount() }}
                                             </td>
                                             <td>
-                                                Rs. {{ $user->wallet->balance / 100 }}
+                                                Rs. {{ round(($user->wallet->balance / 100) , 2) }}
                                             </td>
                                             <td>
                                                 Rs. {{ $user->totalReferralAmount() }}

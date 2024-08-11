@@ -234,7 +234,7 @@
                         </div>
                         <div class="ibox-content">
                             <h5><b>Total Count:</b> {{ $totalPayPointTransactionCount }}</h5>
-                            <h5><b>Total Amount Sum:</b> Rs. {{$totalPayPointTransactionSum}}</h5>
+                            <h5><b>Total Amount Sum:</b> Rs. {{round($totalPayPointTransactionSum, 2)}}</h5>
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover dataTables-example"
                                        title="PayPoint transaction list">

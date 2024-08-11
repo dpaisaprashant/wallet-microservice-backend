@@ -223,7 +223,7 @@
                         </div>
                         <div class="ibox-content">
                             <h5><b>Total Count:</b> {{ $npsTotalTransactionCount }}</h5>
-                            <h5><b>Total Amount Sum:</b> Rs. {{ $npsTotalTransactionSum }}</h5>
+                            <h5><b>Total Amount Sum:</b> Rs. {{ round($npsTotalTransactionSum, 2) }}</h5>
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover dataTables-example"
                                        title="NPS transactions list">

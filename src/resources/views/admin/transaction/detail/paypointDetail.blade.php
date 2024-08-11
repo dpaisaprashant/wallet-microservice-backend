@@ -43,9 +43,9 @@
 
                             @isset($transaction->userTransaction)
                             <address>
-                                <strong>Amount: Rs. {{ $transaction->userTransaction->amount }}<br></strong>
+                                <strong>Amount: Rs. {{ round($transaction->userTransaction->amount, 2) }}<br></strong>
                                 @if(!empty($transaction->userTransaction->commission))
-                                    <strong>Commission: Rs. {{ ($transaction->userTransaction->commission['before_amount'] - $transaction->userTransaction->commission['after_amount']) }}<br></strong>
+                                    <strong>Commission: Rs. {{ round(($transaction->userTransaction->commission['before_amount'] - $transaction->userTransaction->commission['after_amount']), 2) }}<br></strong>
                                 @else
                                     <strong>Commission: Rs. 0 </strong>
                                 @endif
@@ -139,7 +139,7 @@
 
                                                                     {{ $key }} :
                                                                     @if($key == 'amount' )
-                                                                        Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                                        Rs. {{ round((empty($value) ? 0 : $value / 100) , 2)}}<br>
                                                                     @else
                                                                         {{ $value }}<br>
                                                                     @endif
@@ -160,7 +160,7 @@
 
                                                             {{ $key }} :
                                                             @if($key == 'amount' )
-                                                                Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                                Rs. {{ round((empty($value) ? 0 : $value / 100), 2) }}<br>
                                                             @else
                                                                 @if(is_string($value))
                                                                     {{ $value }}<br>
@@ -226,7 +226,7 @@
                                                                         <?php foreach ($request as $key => $value) { ?>
                                                                         {{ $key }} :
                                                                         @if($key == 'amount' )
-                                                                            Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                                            Rs. {{ round((empty($value) ? 0 : $value / 100),2) }}<br>
                                                                         @else
                                                                             {{ $value }}<br>
                                                                         @endif
@@ -244,7 +244,7 @@
 
                                                                         {{ $key }} :
                                                                         @if($key == 'amount' )
-                                                                            Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                                            Rs. {{ round((empty($value) ? 0 : $value / 100), 2) }}<br>
                                                                         @else
                                                                             @if(is_array($value))
                                                                                 <br>

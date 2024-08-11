@@ -93,12 +93,12 @@
                                         </td>
                                         <td>
                                             @isset($commission->slab_from)
-                                                Rs. {{ $commission->slab_from / 100 }}
+                                                Rs. {{ round(($commission->slab_from / 100) ,2) }}
                                             @endisset
                                         </td>
                                         <td>
                                             @isset($commission->slab_to)
-                                                Rs. {{ $commission->slab_to / 100 }}
+                                                Rs. {{ round(($commission->slab_to / 100) , 2) }}
                                             @endisset
                                         </td>
                                         <td>
@@ -109,7 +109,7 @@
 
                                         <td>
                                             @if($commission->commission_type == 'FLAT')
-                                                Rs. {{ $commission->commission_value / 100 }}
+                                                Rs. {{ round(($commission->commission_value / 100) , 2) }}
                                             @else
                                                 {{ $commission->commission_value }}
                                             @endif

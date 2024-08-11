@@ -158,9 +158,9 @@
                                     <td>
                                         <a  @can('User profile') href="{{route('user.profile', $fundTransfer->to_user)}}" @endcan> {{ $fundTransfer->toUser['mobile_no'] }} </a>
                                     </td>
-                                    <td class="center">Rs.{{ $fundTransfer->amount }}</td>
+                                    <td class="center">Rs.{{ round($fundTransfer->amount, 2) }}</td>
 
-                                    <td>Rs. {{ optional($fundTransfer->commission)['before_amount'] - optional($fundTransfer->commission)['after_amount'] }}</td>
+                                    <td>Rs. {{ round(optional($fundTransfer->commission)['before_amount'] - optional($fundTransfer->commission)['after_amount'], 2) }}</td>
 
                                     <td class="center">
                                         {{ $fundTransfer->created_at }}

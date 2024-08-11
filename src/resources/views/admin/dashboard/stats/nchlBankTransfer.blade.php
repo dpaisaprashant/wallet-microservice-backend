@@ -23,7 +23,7 @@
                         <h5> Transaction Amount</h5>
                     </div>
                     <div class="ibox-content">
-                        <h1 class="no-margins">Rs. {{ $stats['yesterday']['transaction']['amount'] }} </h1>
+                        <h1 class="no-margins">Rs. {{ round($stats['yesterday']['transaction']['amount'] , 2) }} </h1>
                         <small>Sum of  Transactions </small>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                         <h5>Pending Dispute Count</h5>
                     </div>
                     <div class="ibox-content">
-                        <h1 class="no-margins">Rs. {{ $stats['yesterday']['pendingDispute']['count'] }}</h1>
+                        <h1 class="no-margins">Rs. {{ round($stats['yesterday']['pendingDispute']['count'], 2) }}</h1>
                         <small>Number of  dispute transactions</small>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                         <h5>Pending Dispute Amount</h5>
                     </div>
                     <div class="ibox-content">
-                        <h1 class="no-margins">Rs. {{ $stats['yesterday']['pendingDispute']['amount'] }}</h1>
+                        <h1 class="no-margins">Rs. {{ round($stats['yesterday']['pendingDispute']['amount'] , 2) }}</h1>
                         <small>Sum of  dispute transactions </small>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                         <h5>Resolved Dispute Count</h5>
                     </div>
                     <div class="ibox-content">
-                        <h1 class="no-margins">Rs. {{ $stats['yesterday']['resolvedDispute']['count'] }}</h1>
+                        <h1 class="no-margins">Rs. {{ round($stats['yesterday']['resolvedDispute']['count'] , 2 )}}</h1>
                         <small>Number of  resolved transactions</small>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                         <h5>Resolved Dispute Amount</h5>
                     </div>
                     <div class="ibox-content">
-                        <h1 class="no-margins">Rs. {{ $stats['yesterday']['resolvedDispute']['amount'] }}</h1>
+                        <h1 class="no-margins">Rs. {{ round($stats['yesterday']['resolvedDispute']['amount'], 2) }}</h1>
                         <small>Sum of  resolved transactions </small>
                     </div>
                 </div>
@@ -100,7 +100,7 @@
                         <h5> Transaction Amount</h5>
                     </div>
                     <div class="ibox-content">
-                        <h1 class="no-margins">Rs. {{ $stats['today']['transaction']['amount'] }} </h1>
+                        <h1 class="no-margins">Rs. {{ round($stats['today']['transaction']['amount'], 2) }} </h1>
                         <small>Sum of  Transactions </small>
                     </div>
                 </div>
@@ -112,7 +112,7 @@
                         <h5>Pending Dispute Count</h5>
                     </div>
                     <div class="ibox-content">
-                        <h1 class="no-margins">Rs. {{ $stats['today']['pendingDispute']['count'] }}</h1>
+                        <h1 class="no-margins">Rs. {{ round($stats['today']['pendingDispute']['count'], 2) }}</h1>
                         <small>Number of  dispute transactions</small>
                     </div>
                 </div>
@@ -124,7 +124,7 @@
                         <h5>Pending Dispute Amount</h5>
                     </div>
                     <div class="ibox-content">
-                        <h1 class="no-margins">Rs. {{ $stats['today']['pendingDispute']['amount'] }}</h1>
+                        <h1 class="no-margins">Rs. {{ round($stats['today']['pendingDispute']['amount'], 2)}}</h1>
                         <small>Sum of  dispute transactions </small>
                     </div>
                 </div>
@@ -136,7 +136,7 @@
                         <h5>Resolved Dispute Count</h5>
                     </div>
                     <div class="ibox-content">
-                        <h1 class="no-margins">Rs. {{ $stats['today']['resolvedDispute']['count'] }}</h1>
+                        <h1 class="no-margins">Rs. {{ round($stats['today']['resolvedDispute']['count'], 2) }}</h1>
                         <small>Number of  resolved transactions</small>
                     </div>
                 </div>
@@ -148,7 +148,7 @@
                         <h5>Resolved Dispute Amount</h5>
                     </div>
                     <div class="ibox-content">
-                        <h1 class="no-margins">Rs. {{ $stats['today']['resolvedDispute']['amount'] }}</h1>
+                        <h1 class="no-margins">Rs. {{ round($stats['today']['resolvedDispute']['amount'], 2) }}</h1>
                         <small>Sum of  resolved transactions </small>
                     </div>
                 </div>
@@ -187,7 +187,7 @@
                                                 <span class="badge badge-warning">PENDING</span>
                                             </td>
                                             <td>
-                                                Rs. {{ $dispute->disputeable->amount }}
+                                                Rs. {{ round($dispute->disputeable->amount, 2) }}
                                             </td>
                                         </tr>
                                     @endforeach

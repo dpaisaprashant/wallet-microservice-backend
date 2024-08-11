@@ -56,7 +56,7 @@ class NRBReportController extends Controller
         $totalUsers = $walletClearanceResponse['active']['total_number'] + $walletClearanceResponse['inactive']['total_number'];
 
 
-        $totalBalance = $walletClearanceResponse['active']['total_amount'] / 100 + $walletClearanceResponse['inactive']['total_amount'] / 100;
+        $totalBalance = round(($walletClearanceResponse['active']['total_amount'] / 100 + $walletClearanceResponse['inactive']['total_amount'] / 100) , 2);
         $openingBalance = $walletClearanceResponse['wallet_balance'][0]['sum'];
         $shouldBeZero = $totalBalance - $openingBalance;
 

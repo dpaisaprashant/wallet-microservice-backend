@@ -176,7 +176,7 @@
 
                                                                     {{ $key }} :
                                                                     @if($key == 'amount' )
-                                                                        Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                                        Rs. {{ round((empty($value) ? 0 : $value / 100) , 2) }}<br>
                                                                     @else
                                                                         {{ $value }}<br>
                                                                     @endif
@@ -194,7 +194,7 @@
 
                                                                     {{ $key }} :
                                                                     @if($key == 'amount' )
-                                                                        Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                                        Rs. {{round((empty($value) ? 0 : $value / 100) , 2) }}<br>
                                                                     @else
                                                                         @if(!is_array($value))
                                                                             {{ $value }}<br>
@@ -219,7 +219,7 @@
 
                                                                     {{ $key }} :
                                                                     @if($key == 'amount' )
-                                                                        Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                                        Rs. {{ round((empty($value) ? 0 : $value / 100) , 2) }}<br>
                                                                     @else
                                                                         @if(!is_array($value))
                                                                             {{ $value }}<br>
@@ -245,7 +245,7 @@
 
                                                                     {{ $key }} :
                                                                     @if($key == 'amount' )
-                                                                        Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                                        Rs. {{ round((empty($value) ? 0 : $value / 100) , 2) }}<br>
                                                                     @else
                                                                         @if(!is_array($value))
                                                                             {{ $value }}<br>
@@ -365,7 +365,7 @@
 
                                                                     {{ $key }} :
                                                                     @if($key == 'amount' )
-                                                                        Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                                        Rs. {{ round((empty($value) ? 0 : $value / 100) , 2) }}<br>
                                                                     @else
                                                                         {{ print_r($value) }}<br>
                                                                     @endif
@@ -383,7 +383,7 @@
 
                                                                     {{ $key }} :
                                                                     @if($key == 'amount' )
-                                                                        Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                                        Rs. {{ round((empty($value) ? 0 : $value / 100) , 2) }}<br>
                                                                     @else
                                                                         @if(!is_array($value))
                                                                             {{ $value }}<br>
@@ -408,7 +408,7 @@
 
                                                                     {{ $key }} :
                                                                     @if($key == 'amount' )
-                                                                        Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                                        Rs. {{ round((empty($value) ? 0 : $value / 100) , 2) }}<br>
                                                                     @else
                                                                         @if(!is_array($value))
                                                                             {{ $value }}<br>
@@ -434,7 +434,7 @@
 
                                                                     {{ $key }} :
                                                                     @if($key == 'amount' )
-                                                                        Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                                        Rs. {{ round((empty($value) ? 0 : $value / 100) , 2)}}<br>
                                                                     @else
                                                                         @if(!is_array($value))
                                                                             {{ $value }}<br>

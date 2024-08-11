@@ -104,7 +104,7 @@
                             <div><b>Total Users : </b>{{$totalUsers??0}}</div>
                             <div><b>Total Balance : </b>Rs. {{round($totalBalance??0,2)}}</div>
                             <div><b>Opening Balance : </b>Rs. {{round($openingBalance??0,2)}}</div>
-                            <div><b>(Active + Inactive) - Opening Balance : </b>Rs. {{$shouldBeZero??0}}</div>
+                            <div><b>(Active + Inactive) - Opening Balance : </b>Rs. {{round($shouldBeZero??0,2)}}</div>
 
                             <br>
                             <div class="table-responsive">

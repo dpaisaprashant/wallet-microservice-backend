@@ -62,9 +62,9 @@
                             </address>
 
                             <address>
-                                <strong>Amount: Rs. {{ $transaction->amount }}<br></strong>
+                                <strong>Amount: Rs. {{ round($transaction->amount, 2)}}<br></strong>
                                 @if(! empty($transaction->commission))
-                                <strong>Commission: Rs. {{ $transaction->commission['before_amount'] - $transaction->commission['after_amount'] }}<br></strong>
+                                <strong>Commission: Rs. {{ round($transaction->commission['before_amount'] - $transaction->commission['after_amount'], 2) }}<br></strong>
                                 @endif
                             </address>
 
@@ -211,7 +211,7 @@
                                                                <?php foreach (json_decode($response) as $key => $value) { ?>
                                                                {{ $key }} :
                                                                @if($key == 'amount' )
-                                                                   &nbsp; Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                                   &nbsp; Rs. {{ round(empty($value) ? 0 : $value / 100 , 2) }}<br>
                                                                @else
                                                                    &nbsp;{{ $value }}<br>
                                                                @endif

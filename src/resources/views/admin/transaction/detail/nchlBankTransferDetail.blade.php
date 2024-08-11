@@ -51,8 +51,8 @@
                             </address>
 
                             <address>
-                                <strong>Amount: Rs. {{ $transaction->amount }}<br></strong>
-                                <strong>Commission: Rs.  {{ $transaction->commission_amount }}<br></strong>
+                                <strong>Amount: Rs. {{ round($transaction->amount , 2) }}<br></strong>
+                                <strong>Commission: Rs.  {{ round($transaction->commission_amount , 2) }}<br></strong>
                             </address>
 
                         </div>
@@ -162,7 +162,7 @@
                                                                <?php foreach ($debtorRequest as $key => $value) { ?>
                                                                {{ $key }} :
                                                                @if($key == 'amount' )
-                                                                   Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                                   Rs. {{ round((empty($value) ? 0 : $value / 100 ), 2)}}<br>
                                                                @else
                                                                    {{ $value }}<br>
                                                                @endif
@@ -177,7 +177,7 @@
                                                                    @if(!empty($value))
                                                                        {{ $key }} :
                                                                            @if($key == 'amount' )
-                                                                               Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                                               Rs. {{ round((empty($value) ? 0 : $value / 100 ), 2)}}<br>
                                                                            @else
                                                                                {{ $value }}<br>
                                                                            @endif
@@ -194,7 +194,7 @@
                                                                <?php foreach ($debtorResponse as $key => $value) { ?>
                                                                {{ $key }} :
                                                                @if($key == 'amount' )
-                                                                   Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                                   Rs. {{ round((empty($value) ? 0 : $value / 100), 2) }}<br>
                                                                @else
                                                                    {{ $value }}<br>
                                                                @endif
@@ -209,7 +209,7 @@
                                                                @if(!empty($value))
                                                                    {{ $key }} :
                                                                    @if($key == 'amount' )
-                                                                       Rs. {{ empty($value) ? 0 : $value / 100 }}<br>
+                                                                       Rs. {{ round((empty($value) ? 0 : $value / 100), 2) }}<br>
                                                                    @else
                                                                        {{ $value }}<br>
                                                                    @endif

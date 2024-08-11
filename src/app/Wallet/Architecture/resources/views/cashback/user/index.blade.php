@@ -94,12 +94,12 @@
                                         </td>
                                         <td>
                                             @isset($cashback->slab_from)
-                                                Rs. {{ $cashback->slab_from / 100 }}
+                                                Rs. {{ round(($cashback->slab_from / 100) , 2) }}
                                             @endisset
                                         </td>
                                         <td>
                                             @isset($cashback->slab_to)
-                                                Rs. {{ $cashback->slab_to / 100 }}
+                                                Rs. {{ round($cashback->slab_to / 100) , 2)}}
                                             @endisset
                                         </td>
                                         <td>
@@ -110,7 +110,7 @@
 
                                         <td>
                                             @if($cashback->cashback_type == 'FLAT')
-                                                Rs. {{ $cashback->cashback_value / 100 }}
+                                                Rs. {{ round(($cashback->cashback_value / 100) , 2) }}
                                             @else
                                                 {{ $cashback->cashback_value }}
                                             @endif

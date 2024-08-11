@@ -96,12 +96,12 @@
                                         </td>
                                         <td>
                                             @isset($bonus->slab_from)
-                                                Rs. {{ $bonus->slab_from / 100 }}
+                                                Rs. {{ round(($bonus->slab_from / 100) , 2) }}
                                             @endisset
                                         </td>
                                         <td>
                                             @isset($bonus->slab_to)
-                                                Rs. {{ $bonus->slab_to / 100 }}
+                                                Rs. {{ round(($bonus->slab_to / 100) , 2) }}
                                             @endisset
                                         </td>
                                         <td>

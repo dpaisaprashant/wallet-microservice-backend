@@ -86,12 +86,12 @@
                                         </td>
                                         <td>
                                             @isset($merchant_revenue->slab_from)
-                                                Rs. {{ $merchant_revenue->slab_from / 100 }}
+                                                Rs. {{ round(($merchant_revenue->slab_from / 100) , 2) }}
                                             @endisset
                                         </td>
                                         <td>
                                             @isset($merchant_revenue->slab_to)
-                                                Rs. {{ $merchant_revenue->slab_to / 100 }}
+                                                Rs. {{ round(($merchant_revenue->slab_to / 100) , 2) }}
                                             @endisset
                                         </td>
 
@@ -99,7 +99,7 @@
 
                                         <td>
                                             @if($merchant_revenue->merchant_revenue_type  == 'FLAT')
-                                                Rs. {{ $merchant_revenue->merchant_revenue_value  / 100 }}
+                                                Rs. {{ round(($merchant_revenue->merchant_revenue_value  / 100) , 2) }}
                                             @else
                                                 {{ $merchant_revenue->merchant_revenue_value }}
                                             @endif

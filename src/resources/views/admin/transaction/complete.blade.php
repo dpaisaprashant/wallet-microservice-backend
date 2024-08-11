@@ -256,6 +256,7 @@
 
                         </div>
                         <div class="ibox-content">
+<<<<<<< HEAD
                             <h5><b>Total Count:</b> {{ $totalTransactionCount }}</h5>
                             <h5><b>Total Amount Sum:</b> Rs. {{ $totalTransactionAmountSum }}</h5>
                             <h5><b>Total Fee Sum:</b> Rs. {{ $totalTransactionFeeSum }}</h5>
@@ -263,6 +264,13 @@
                             <h5><b>Total Cashback Sum:</b> Rs. {{ $totalTransactionCashbackSum }}</h5>
                             <h5><b>Total Commission Sum:</b> Rs. {{ $totalTransactionCommissionSum }}</h5>
 
+=======
+                            <h5><b>Total Count:</b> {{ round($totalTransactionCount, 2) }}</h5>
+                            <h5><b>Total Amount Sum:</b> Rs. {{ round($totalTransactionAmountSum, 2) }}</h5>
+                            <h5><b>Total Fee Sum:</b> Rs. {{ round($totalTransactionFeeSum, 2) }}</h5>
+                            <h5><b>Total Cashback Sum:</b> Rs. {{ round($totalTransactionCashbackSum, 2) }}</h5>
+                            <h5><b>Total Commission Sum:</b> Rs. {{ round($totalTransactionCommissionSum, 2) }}</h5>
+>>>>>>> 44aada80 (round Rs. by 2 decimals points)
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover dataTables-example"
                                        title="Complete transactions list">
@@ -323,15 +331,19 @@
                                             </td>
                                             <td class="center">Rs. {{ $transaction->amount }}</td>
                                             <td class="center">
-                                                Rs. {{ $transaction->fee }}
+                                                Rs. {{ round($transaction->fee, 2) }}
                                             </td>
                                             <td>
-                                                Rs. {{ $transaction->cashback_amount }}
+                                                Rs. {{ round($transaction->cashback_amount, 2) }}
                                             </td>
+
 
                                             <!-- <td>Rs. {{ $transaction->commission_amount }}</td> -->
 
-                                            <td>Rs. {{ $transaction->commission_amount ?? 0 }}</td>
+                                            <!-- <td>Rs. {{ $transaction->commission_amount ?? 0 }}</td> -->
+
+
+                                            <td>Rs. {{ round($transaction->commission_amount ?? 0, 2)}}</td>
 
                                             <td>
                                                 <span class="badge badge-primary">Complete</span>

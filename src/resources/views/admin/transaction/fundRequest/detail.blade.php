@@ -12,7 +12,7 @@
                             <dd class="col-md-8">Fund Request</dd>
 
                             <dt class="col-md-3 text-right">Amount</dt>
-                            <dd class="col-md-8">Rs.{{ $transaction->amount }}</dd>
+                            <dd class="col-md-8">Rs.{{ round($transaction->amount, 2) }}</dd>
 
                             <dt class="col-md-3 text-right">Date</dt>
                             <dd class="col-md-8">{{ $transaction->created_at }}</dd>

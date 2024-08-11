@@ -38,6 +38,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/dashboard-nchl-bank-transfer', 'DashboardController@nchlBankTransfer')->name('admin.dashboard.nchl.bankTransfer')->middleware('permission:Dashboard NCHL bank transfer');
         Route::get('/dashboard-nchl-load-transaction', 'DashboardController@nchlLoadTransaction')->name('admin.dashboard.nchl.loadTransaction')->middleware('permission:Dashboard NCHL load transaction');
 
+        Route::get('/dashboard-khalti', 'DashboardController@khalti')->name('admin.dashboard.khalti')->middleware('permission:Stat Dashboard khalti');
+
+
         Route::get('/dashboard', "AdminController@index")->name('admin.dashboard'); //admin dashboard
         Route::post('/dashboard/yearly-graph-paypoint', "AdminController@payPointYearly")->name('admin.dashboard.paypoint.yearly'); //admin yearly graph
         Route::post('/dashboard/yearly-graph-npay', "AdminController@nPayYearly")->name('admin.dashboard.npay.yearly'); //admin yearly graphStat Dashboard KYC
@@ -58,13 +61,19 @@ Route::group(['prefix' => 'admin'], function () {
 
 
         /**
-         * Verify Otp
+         *  Backend User Change Password Two Fact Auth using Email Verify Otp
          */
         Route::get('verify-otp', [BackendUsersController::class, 'showOtpForm'])->name('backendUser.verifyOtp');
         Route::post('verify-otp', [BackendUsersController::class, 'verifyOtp']);
         Route::match(['get', 'post'], '/backend-user/change-passwords', 'BackendUsersController@changePasswords')->name('backendUser.changePasswords')->middleware('permission:Backend user change password');
 
 
+        /**
+         *  Activate and Deactivate user by Backend Admin User
+         */
+        Route::post('/backend-user/activate-deactivate-user/{id}', [BackendUsersController::class, 'activateDeactivate'])
+            ->name('backendUser.activateDeactivate')
+            ->middleware('permission:Backend user activate/deactivate'); // Ensure only authenticated users can access
 
 
 

@@ -72,11 +72,30 @@
 
                                             <br><br>
                                         @can('Backend user reset password')
-                                        <form action="{{ route('backendUser.resetPassword') }}" method="post">
+                                        <form action="{{ route('backendUser.resetPassword') }}" method="post" class="d-inline">
                                             @csrf
                                             <input id="resetValue" type="hidden" name="admin_id" value="{{ $user->id }}">
                                             <button href="{{ route('backendUser.role', $user->id) }}" class="reset btn btn-sm btn-danger m-t-n-xs" rel="{{ $user->id }}"><strong>Reset Password</strong></button>
                                             <button id="resetBtn-{{ $user->id }}" style="display: none" type="submit" href="{{ route('backendUser.role', $user->id) }}"  class="resetBtn btn btn-sm btn-danger m-t-n-xs"><strong>Reset Password</strong></button>
+                                        </form>
+                                        @endcan
+
+                                        {{-- @can('Backend user reset password')
+                                        <form action="{{ route('backendUser.activateDeactivate') }}" method="post" class="d-inline">
+                                            @csrf
+                                            <input id="resetValue" type="hidden" name="admin_id" value="{{ $user->id }}">
+                                            <button href="{{ route('backendUser.role', $user->id) }}" class="reset btn btn-sm btn-danger m-t-n-xs" rel="{{ $user->id }}"><strong>Deactivate User</strong></button>
+                                            <button id="resetBtn-{{ $user->id }}" style="display: none" type="submit" href="{{ route('backendUser.role', $user->id) }}"  class="resetBtn btn btn-sm btn-danger m-t-n-xs"><strong>Deactivate User</strong></button>
+                                        </form>
+                                        @endcan --}}
+                                        @can('Backend user activate/deactivate')
+                                        <form action="{{ route('backendUser.activateDeactivate', $user->id) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @if ($user->status == 1)
+                                                <button type="submit" class="btn btn-sm btn-warning m-t-n-xs">Deactivate User</button>
+                                            @else
+                                                <button type="submit" class="btn btn-sm btn-success m-t-n-xs">Activate User</button>
+                                            @endif
                                         </form>
                                         @endcan
                                     </td>

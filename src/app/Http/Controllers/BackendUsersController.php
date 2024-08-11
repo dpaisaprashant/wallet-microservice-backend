@@ -35,7 +35,7 @@ class BackendUsersController extends Controller
 
     public function view()
     {
-        $users = Admin::with('roles')->where('status', 1)->paginate(10);
+        $users = Admin::with('roles')->paginate(10);
         return view('admin.backendUser.view')->with(compact('users'));
     }
 
@@ -80,6 +80,8 @@ class BackendUsersController extends Controller
         return view('admin.backendUser.roles')->with(compact('user', 'allRoles'));
     }
 
+
+
    public function kycList(Request $request)
     {
         $user = Admin::whereId(auth()->user()->id)->firstOrFail();
@@ -107,11 +109,13 @@ class BackendUsersController extends Controller
         return view('admin.backendUser.profile')->with(compact('admin'));
     }
 
+
+
+    # CHAANGE PASSOWRDS
     public function changePasswords (Request $request)
     {
         $admin = Admin::where('id', auth()->user()->id)->firstOrFail();
         if ($request->isMethod('post')) {
-            //get opt
 
             $otpRecord = AdminOtp::where('admin_id', $admin->id)
                          ->first();
@@ -134,12 +138,12 @@ class BackendUsersController extends Controller
             return redirect()->route('backendUser.changePasswords')->with('success','Password updated Successfully!');
         }
 
-        // dd('hello');
         return view('admin.backendUser.changePasswords')->with(compact('admin'));
     }
 
 
 
+    # CHANGE PASSOWRD
     public function changePassword(Request $request)
     {
         $admin = Admin::where('id', auth()->user()->id)->firstOrFail();
@@ -163,7 +167,6 @@ class BackendUsersController extends Controller
                     ]
                 );
                 
-                // Send OTP to email
                 Mail::to($admin->email)->send(new OTPMail($otp));
                     return redirect()->route('backendUser.verifyOtp')->with('success', 'Email send successfully at ' . $admin->email);
 
@@ -177,42 +180,61 @@ class BackendUsersController extends Controller
 
 
 
-    
+
+    //SHOW OTP FORM
     public function showOtpForm()
     {
         return view('admin.backendUser.verifyOtp');
     }
 
+
+
+    //VERIFY OTP
     public function verifyOtp(Request $request)
     {
         $admin = Admin::where('id', auth()->user()->id)->firstOrFail();
-    
         $request->validate([
             'otp' => 'required|string',
         ]);
         $current_time = now();
-        // dd($admin->id, $request->otp);
-
         $otpRecord = AdminOtp::where('admin_id', $admin->id)
                              ->where('token', $request->otp)
                              ->where('expires_on', '>', $current_time)
                              ->first();
     
         if ($otpRecord) {
-            #Check otp status
             if ($otpRecord->status == 1) {
                 return redirect()->route('backendUser.verifyOtp')->with('error', 'OTP has already been used.');
             }
-            // Mark OTP as used
             $otpRecord->update(['status' => 1]);
-            
             Log::info('After updating OTP status:', ['expires_on' => $otpRecord->expires_on]);
-
-            // Redirect to the change password form
             return redirect()->route('backendUser.changePasswords')->with('success', 'OTP verified successfully! You can now change your password.');
         }
     
         return redirect()->route('backendUser.verifyOtp')->with('error', 'Invalid or expired OTP.');
     }
+
+
+
+
+    // USER ACTIVATE / DEACTIVATE
+    public function activateDeactivate($id)
+    {
+        $user = Admin::findOrFail($id);
+        if ($user->status == 1) {
+            $user->status = 0; // Deactivate user
+            $messageType = 'error'; // Type of message for deactivation
+            $messageText = 'User has been deactivated successfully.';
+        } else {
+            $user->status = 1; // Activate user
+            $messageType = 'success'; // Type of message for activation
+            $messageText = 'User has been activated successfully.';
+        }
+        $user->save();
+
+        // Return a response with the flash message
+        return redirect()->back()->with($messageType, $messageText);
+    }
 }
+
 

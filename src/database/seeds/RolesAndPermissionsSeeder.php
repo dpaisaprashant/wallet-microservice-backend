@@ -57,6 +57,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'Stat Dashboard KYC',
             'Stat Dashboard paypoint',
             'Stat Dashboard npay',
+            'Stat Dashboard khalti',
+            'Stat Dashboard nps',
 
             'Development tools view',
             'Development tool backup database',
@@ -69,6 +71,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Backend user update role',
             'Backend user reset password',
             'Backend user create',
+            'Backend user activate/deactivate',
 
             'Roles view',
             'Role create',

@@ -405,9 +405,9 @@ Route::group(['prefix' => 'admin'], function () {
         /**
          * load test fund
          */
-        Route::get('/load-test-fund', 'LoadTestFundController@index')->name('loadTestFund.index');
-        Route::match(['get', 'post'], '/load-test-fund/create', 'LoadTestFundController@create')->name('loadTestFund.create');
-        Route::get('/load-test-fun/detail/{id}', 'LoadTestFundController@loadTestDetail')->name('loadTestFund.detail');
+        Route::get('/load-test-fund', 'LoadTestFundController@index')->name('loadTestFund.index')->middleware('permission:get load test fund');;
+        Route::match(['get', 'post'], '/load-test-fund/create', 'LoadTestFundController@create')->name('loadTestFund.create')->middleware('permission:create load test fund');;
+        Route::get('/load-test-fun/detail/{id}', 'LoadTestFundController@loadTestDetail')->name('loadTestFund.detail')->middleware('load test fund detail');;
 
         /**
          * Load paypoint fund

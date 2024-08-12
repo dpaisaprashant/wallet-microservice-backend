@@ -513,6 +513,11 @@ class RolesAndPermissionsSeeder extends Seeder
             //Magnus
             'View magnus linked accounts',
 
+            //Load Test Fund Perm
+            'get load test fund',
+            'create load test fund',
+            'load test fund detail',
+
             //Miscellaneous Reports
             'View lucky winner report',
             'View ticket sale report',

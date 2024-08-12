@@ -36,8 +36,8 @@ $url = url()->current();
                         class="nav-label">Dashboard</span></a>
             </li>
            
-            @if(auth()->user()->hasAnyPermission(['Stat Dashboard KYC', 'Stat Dashboard paypoint', 'Stat Dashboard npay','Dashboard NCHL bank transfer','Dashboard NCHL load transaction']))
-                <li @if($url == route('admin.dashboard.npay') || $url == route('admin.dashboard.paypoint') || $url == route('admin.dashboard.kyc'))class="active" @endif>
+            @if(auth()->user()->hasAnyPermission(['Stat Dashboard KYC', 'Stat Dashboard paypoint', 'Stat Dashboard khalti', 'Stat Dashboard npay','Dashboard NCHL bank transfer','Dashboard NCHL load transaction']))
+                <li @if($url == route('admin.dashboard.npay') || $url == route('admin.dashboard.paypoint') || $url == route('admin.dashboard.khalti') || $url == route('admin.dashboard.kyc'))class="active" @endif>
                     <a href="#"><i class="fa fa-bar-chart"></i> <span class="nav-label">Stat Dashboard</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
@@ -49,9 +49,13 @@ $url = url()->current();
                             <li><a href="{{ route('admin.dashboard.paypoint') }}">PayPoint</a></li>
                         @endcan
 
-                        {{--@can('Stat Dashboard npay')
+                        @can('Stat Dashboard khalti')
+                            <li><a href="{{ route('admin.dashboard.khalti') }}">Khalti</a></li>
+                        @endcan
+
+                        @can('Stat Dashboard npay')
                             <li><a href="{{ route('admin.dashboard.npay') }}">NPay</a></li>
-                        @endcan--}}
+                        @endcan
                         @can('Dashboard NCHL bank transfer')
                             <li><a href="{{ route('admin.dashboard.nchl.bankTransfer') }}">NCHL Bank Transfer</a></li>
                         @endcan
@@ -380,15 +384,20 @@ $url = url()->current();
                 </li>
             @endif
 
+            @if(auth()->user()->hasPermissionTo('get load test fund'))
+            @can('get load test fund')   
             <li @if(preg_match('/load-test/i', $url)) class="active" @endif>
                 <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Load Test Funds</span><span
                         class="fa arrow"></span></a>
+
                 <ul class="nav nav-second-level collapse">
                     <li><a href="{{ route('loadTestFund.index') }}">View Load Test Funds</a></li>
 
                     <li><a href="{{ route('loadTestFund.create') }}">Create Load Test Funds</a></li>
                 </ul>
             </li>
+            @endcan
+            @endif
 
             <li @if(preg_match('/load-for-paypoint/i', $url)) class="active" @endif>
                 <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">Load For Paypoint</span><span

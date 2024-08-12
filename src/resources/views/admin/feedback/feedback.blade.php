@@ -27,7 +27,12 @@
                                             <tr>
                                                 <td>{{$feedback->services}}</td>
                                                 <td>{{$feedback->description}}</td>
-                                                <td>{{$feedback->image}}</td>
+                                                <td>    @if($feedback->image)
+                                                    <img src="{{ 'http://172.31.251.2:5052/storage/'.$feedback->image }}" alt="Feedback Image" style="width:100px;height:auto;">
+                                                @else
+                                                    No Image
+                                                @endif</td>
+
                                             </tr>
                                         @endforeach 
                                     </tbody>

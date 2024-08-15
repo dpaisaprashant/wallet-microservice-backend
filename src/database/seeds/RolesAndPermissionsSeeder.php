@@ -59,6 +59,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'Stat Dashboard npay',
             'Stat Dashboard khalti',
             'Stat Dashboard nps',
+            'Stat Dashboard nepalqr',
 
             'Development tools view',
             'Development tool backup database',

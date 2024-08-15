@@ -9,6 +9,9 @@ use App\Wallet\Dashboard\Repository\NchlBankTransferDashboardRepository;
 use App\Wallet\Dashboard\Repository\NchlLoadDashboardRepository;
 use App\Wallet\Dashboard\Repository\NPayDashboardRepository;
 use App\Wallet\Dashboard\Repository\PayPointDashboardRepository;
+use App\Wallet\Dashboard\Repository\KhaltiDashboardRepository;
+use App\Wallet\Dashboard\Repository\NepalQrDashboardRepository;
+use App\Wallet\Dashboard\Repository\NpsDashboardRepository;
 use Carbon\Carbon;
 
 class DashboardController extends Controller
@@ -102,5 +105,35 @@ class DashboardController extends Controller
         $stats = $this->generateTransactionStats($repository);
         $disputes = $repository->disputes();
         return view('admin.dashboard.stats.nchlLoadTransaction')->with(compact('stats','disputes'));
+    }
+
+    public function khalti(KhaltiDashboardRepository $repository)
+    {
+        $stats = $this->generateTransactionStats($repository);
+        $graph = json_encode($repository->vendorTypeGraph());
+        $clearances = $repository->clearances();
+        $disputes = $repository->disputes();
+
+        return view('admin.dashboard.stats.khalti')->with(compact('stats', 'graph', 'clearances', 'disputes'));
+    }
+
+    public function nepalQr(NepalQrDashboardRepository $repository)
+    {
+        $stats = $this->generateTransactionStats($repository);
+        $graph = json_encode($repository->vendorTypeGraph());
+        $clearances = $repository->clearances();
+        $disputes = $repository->disputes();
+
+        return view('admin.dashboard.stats.nepalqr')->with(compact('stats', 'graph', 'clearances', 'disputes'));
+    }
+
+    public function nps(NpsDashboardRepository $repository)
+    {
+        $stats = $this->generateTransactionStats($repository);
+        $graph = json_encode($repository->vendorTypeGraph());
+        $clearances = $repository->clearances();
+        $disputes = $repository->disputes();
+
+        return view('admin.dashboard.stats.nps')->with(compact('stats', 'graph', 'clearances', 'disputes'));
     }
 }

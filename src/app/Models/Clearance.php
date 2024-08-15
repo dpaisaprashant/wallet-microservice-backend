@@ -29,6 +29,9 @@ class Clearance extends Model
 
     const TYPE_PAYPOINT = 'payPoint';
     const TYPE_NPAY = 'nPay';
+    const TYPE_KHALTI = 'khalti';
+    const TYPE_NPS = 'nps';
+    const TYPE_NEPALQR = 'nepalQr';
 
     protected $fillable = [
         'admin_id',

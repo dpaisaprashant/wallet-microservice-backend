@@ -35,7 +35,7 @@
                                         @foreach ($posts as $value)
                                             <tr>
                                                 <td>{{ $value->title }}</td>
-                                                <td>{!! $value->description !!}</td>
+                                                <td>{!! Str::limit($value->description, 100) !!}</td>
                                                 <td>{{ $value->author }}</td>
                                                 <td><img src="{{ asset('storage/' . $value->image) }}" alt="Post's Image" style="width: 600px; height: 200px;">
                                                 </td>

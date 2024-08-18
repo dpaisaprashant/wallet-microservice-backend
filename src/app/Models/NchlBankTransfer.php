@@ -61,4 +61,10 @@ class NchlBankTransfer extends Model
         }
         return false;
     }
+
+    // In the NchlBankTransfer model
+    public function transactionEvent()
+    {
+        return $this->hasOne(TransactionEvent::class, 'transaction_id', 'id');
+    }
 }

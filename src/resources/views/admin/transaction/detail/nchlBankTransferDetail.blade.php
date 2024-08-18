@@ -52,7 +52,7 @@
 
                             <address>
                                 <strong>Amount: Rs. {{ round($transaction->amount , 2) }}<br></strong>
-                                <strong>Commission: Rs.  {{ round($transaction->commission_amount , 2) }}<br></strong>
+                                <strong>Commission: Rs.  {{ round($transaction->transactions->commission_amount , 2) }}<br></strong>
                             </address>
 
                         </div>

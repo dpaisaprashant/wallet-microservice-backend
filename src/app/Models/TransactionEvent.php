@@ -194,4 +194,10 @@ class TransactionEvent extends Model
         });
     }
 
+    // In the TransactionEvent model
+    public function nchlBankTransfer()
+    {
+        return $this->belongsTo(NchlBankTransfer::class, 'transaction_id', 'id');
+    }
+
 }

@@ -1,7 +1,6 @@
 @extends('admin.layouts.admin_design')
 @section('content')
 
-
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
             <h2>Active Inactive User Report</h2>
@@ -9,25 +8,21 @@
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard') }}">Home</a>
                 </li>
-
                 <li class="breadcrumb-item active">
                     <strong>Report</strong>
                 </li>
-
                 <li class="breadcrumb-item active">
                     <strong>Active Inactive User Report</strong>
                 </li>
             </ol>
         </div>
-        <div class="col-lg-2">
-
-        </div>
     </div>
+
     <div class="wrapper wrapper-content animated fadeInRight">
 
         <div class="row">
             <div class="col-lg-12">
-                <div class="ibox ">
+                <div class="ibox">
                     <div class="ibox-title collapse-link">
                         <h5>Filter Transactions</h5>
                         <div class="ibox-tools">
@@ -37,7 +32,6 @@
                         </div>
                     </div>
 
-                    {{--                    <div class="ibox-content" @if( empty($_GET) || (!empty($_GET['page']) && count($_GET) === 1)  ) style="display: none"  @endif>--}}
                     <div class="ibox-content">
                         <div class="row">
                             <div class="col-sm-12">
@@ -54,8 +48,7 @@
                                                 <input id="date_load_from" type="text"
                                                        class="form-control date_from" placeholder="As of Date"
                                                        name="from" autocomplete="off"
-                                                       value="{{ !empty($_GET['from']) ? $_GET['from'] : '' }}"
-                                                       required>
+                                                       value="{{ request()->get('from', '') }}" required>
                                             </div>
                                             <br>
                                         </div>
@@ -67,7 +60,6 @@
                                             <strong>Generate Report</strong>
                                         </button>
                                     </div>
-
                                     <div>
                                         <button id="excelBtn" class="btn btn-sm btn-warning float-right m-t-n-xs"
                                                 type="submit" style="margin-right: 10px;"
@@ -76,78 +68,92 @@
                                             <strong>Export to Excel</strong>
                                         </button>
                                     </div>
-
                                     <div>
                                         <a class="btn btn-sm btn-warning float-right m-t-n-xs"
                                            style="margin-right: 10px;"
                                            href="{{ route('report.active.inactive.user.generated') }}">
-                                            <strong><i class="fa fa-bar-chart"></i>&nbsp; View Generated
-                                                Reports</strong></a>
+                                            <strong><i class="fa fa-bar-chart"></i>&nbsp; View Generated Reports</strong>
+                                        </a>
                                     </div>
                                     @include('admin.asset.components.clearFilterButton')
                                 </form>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         @if(!empty($_GET))
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="ibox ">
+                    <div class="ibox">
                         <div class="ibox-title">
-                            <h5>List Generated for Active/Inactive User Report for date {{request()->from}}</h5>
+                            <h5>List Generated for Active/Inactive User Report for date {{ request()->get('from') }}</h5>
                         </div>
                         <div class="ibox-content">
-                            <div><b>Total Users : </b>{{$totalUsers??0}}</div>
-                            <div><b>Total Balance : </b>Rs. {{round($totalBalance??0,2)}}</div>
-                            <div><b>Opening Balance : </b>Rs. {{round($openingBalance??0,2)}}</div>
-                            <div><b>(Active + Inactive) - Opening Balance : </b>Rs. {{round($shouldBeZero??0,2)}}</div>
+                            <div><b>Total Users:</b> {{ $totalUsers ?? 0 }}</div>
+                            <div><b>Total Balance:</b> Rs. {{ round($totalBalance ?? 0, 2) }}</div>
+                            <div><b>Opening Balance:</b> Rs. {{ round($openingBalance ?? 0, 2) }}</div>
+                            <div><b>(Active + Inactive) - Opening Balance:</b> Rs. {{ round($shouldBeZero ?? 0, 2) }}</div>
 
                             <br>
                             <div class="table-responsive">
-
-                                <table class="table table-striped table-bordered table-hover {{--dataTables-example--}}"
-                                       title="active inactive list">
+                                <table class="table table-striped table-bordered table-hover">
                                     @if(!is_array($activeInactiveUserReports))
                                         <div class="alert alert-warning">
                                             <i class="fa fa-info-circle"></i>
-                                            {{$activeInactiveUserReports}}
+                                            {{ $activeInactiveUserReports }}
                                         </div>
                                     @else
                                         @foreach($activeInactiveUserReports as $title => $reports)
                                             <thead>
-                                            <tr class="gradeX">
-                                                <td colspan="2"><h2><strong><b>{{ $title }}</b></strong></h2></td>
-                                            </tr>
+                                                <tr class="gradeX">
+                                                    <td colspan="3">
+                                                        <h2><strong><b>{{ $title }}</b></strong></h2>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Category</th>
+                                                    <th>Number</th>
+                                                    <th>Total Balance</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
-                                            @if(is_array($reports))
                                                 @foreach($reports as $reportTitle => $report)
                                                     <tr class="gradeX">
-                                                        <td style="font-size: 16px">
-                                                            &nbsp;&nbsp;&nbsp;&nbsp;<strong>{{ $reportTitle }}</strong>
+                                                        <td style="font-size: 16px" colspan="3">
+                                                            <strong>{{ $reportTitle }}</strong>
                                                         </td>
-                                                        <td></td>
                                                     </tr>
-                                                    @if(is_array($report))
-                                                        @foreach($report as $valueTitle => $value)
+                                                    @foreach($report as $key => $value)
+                                                        @if(is_array($value))
                                                             <tr class="gradeX">
                                                                 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                    <strong>{{ $valueTitle }}: </strong>
+                                                                    <strong>{{ ucfirst($key) }}:</strong>
                                                                 </td>
-                                                                <td>{{ $value }}</td>
+                                                                <td>{{ $value['Number'] ?? 0 }}</td>
+                                                                <td>{{ $value['Total Balance'] ?? '0.00' }}</td>
                                                             </tr>
-
-                                                        @endforeach
-                                                    @endif
+                                                        @else
+                                                            <tr class="gradeX">
+                                                                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                    <strong>{{ ucfirst($key) }}:</strong>
+                                                                </td>
+                                                                <td colspan="2">{{ $value }}</td>
+                                                            </tr>
+                                                        @endif
+                                                    @endforeach
                                                 @endforeach
-                                            @endif
+                                                {{-- @if(isset($reports['Grand Total']))
+                                                    <tr class="gradeX">
+                                                        <td><strong>Grand Total:</strong></td>
+                                                        <td>{{ $reports['Grand Total']['Number'] ?? 0 }}</td>
+                                                        <td>Rs. {{ $reports['Grand Total']['Total Balance'] ?? '0.00' }}</td>
+                                                    </tr>
+                                                @endif --}}
                                             </tbody>
                                         @endforeach
-
                                     @endif
                                 </table>
                             </div>
@@ -159,7 +165,6 @@
     </div>
 @endsection
 
-
 @section('styles')
     @include('admin.asset.css.chosen')
     @include('admin.asset.css.datepicker')
@@ -169,25 +174,14 @@
 @endsection
 
 @section('scripts')
-
     @include('admin.asset.js.chosen')
     @include('admin.asset.js.datepicker')
     @include('admin.asset.js.datatable')
-    {{--    <script>--}}
-    {{--        $(document).ready(function (e) {--}}
-    {{--            let a = "Showing {{ $transactions->firstItem() }} to {{ $transactions->lastItem() }} of {{ $transactions->total() }} entries";--}}
-    {{--            $('.dataTables_info').text(a);--}}
-    {{--        });--}}
-    {{--    </script>--}}
-
 
     <script>
-        $('#excel').submit(function (e) {
+        $('#excelBtn').click(function(e) {
             e.preventDefault();
-            let url = $(this).attr('action').val();
+            // Add your logic to handle Excel export if needed
         });
     </script>
-
 @endsection
-
-

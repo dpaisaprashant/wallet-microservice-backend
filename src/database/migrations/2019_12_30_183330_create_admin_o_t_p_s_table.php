@@ -17,7 +17,7 @@ class CreateAdminOTPSTable extends Migration
             $table->bigIncrements('id');
             $table->string('token', 20);
             $table->unsignedBigInteger('admin_id')->index();
-            $table->timestamp('expires_on');
+            $table->dateTime('expires_on');
             $table->string('description')->nullable();
             $table->boolean('status')->default(false);
             $table->softDeletes();

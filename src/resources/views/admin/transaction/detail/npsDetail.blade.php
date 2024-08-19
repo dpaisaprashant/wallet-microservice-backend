@@ -35,9 +35,9 @@
                         <div class="col-sm-6" style="margin-top: 30px;">
                             <h5>User:</h5>
                             <address>
-                                <strong>{{ $transaction->transactions->name}}</strong><br>
-                                Email: {{ $transaction->transactions->email }}<br>
-                                Contact Number: {{ $transaction->transactions->mobile_no }}
+                                <strong>{{ !empty($transaction->transactions->name) ? $transaction->transactions->name:'-'}}</strong><br>
+                                Email: {{!empty($transaction->transactions)? $transaction->transactions->email:'-' }}<br>
+                                Contact Number: {{!empty($transaction->transactions)? $transaction->transactions->mobile_no:'-' }}
                             </address>
 
 

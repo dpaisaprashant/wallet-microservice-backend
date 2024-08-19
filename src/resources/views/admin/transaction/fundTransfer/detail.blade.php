@@ -19,7 +19,7 @@
 
 
                             <dt class="col-md-3 text-right">From User</dt>
-                            <dd class="col-md-8">{{ $transaction->fromUser['name'] }}</dd>
+                            <dd class="col-md-8">{{ $transaction->fromUser['name']??"" }}</dd>
 
                             <dt class="col-md-3 text-right">To User</dt>
                             <dd class="col-md-8">{{ $transaction->toUser['name'] ?? ""}}</dd>

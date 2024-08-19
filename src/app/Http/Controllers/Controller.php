@@ -25,6 +25,8 @@ use App\Models\UserMerchantEventTicketPayment;
 use App\Models\UserToBfiFundTransfer;
 use App\Models\UserToUserFundTransfer;
 use App\Models\UserTransaction;
+
+use App\Models\NepalQrTransaction;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -117,8 +119,9 @@ class Controller extends BaseController
             UserToBfiFundTransfer::class => "USER TO BFI FUND TRANSFER",
             BfiExecutePayment::class => "USER CREDIT BY BFI",
             BfiGatewayDebitExecutePayment::class => "USER DEBIT BY BFI",
-            TicketSale::class => "TICKET SALE"
-        ];
+            TicketSale::class => "TICKET SALE",
+            NepalQrTransaction::class => "NEPALQR PAYMENT"
+];
 
         $userTypes = [
             User::class => 'USER',

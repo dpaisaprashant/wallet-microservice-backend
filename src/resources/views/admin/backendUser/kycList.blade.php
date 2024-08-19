@@ -196,10 +196,10 @@
                                             {{ $kyc->first_name . ' '. $kyc->last_name }}
                                         </td>
                                         <td>
-                                            {{ $kyc->user->mobile_no }}
+                                            {{ $kyc->user->mobile_no ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $kyc->user->email }}
+                                            {{ $kyc->user->email ?? '' }}
                                         </td>
                                         <td>
                                             {{--@if($kyc->pivot->status == 'ACCEPTED')

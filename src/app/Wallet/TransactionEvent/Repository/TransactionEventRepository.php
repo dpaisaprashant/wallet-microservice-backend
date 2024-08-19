@@ -105,6 +105,15 @@ class TransactionEventRepository
                 ->sum('fee');
     }
 
+
+    public function transactionCommissionSum()
+    {
+        return TransactionEvent::whereNull("refund_id")
+                ->filter($this->request)
+                ->get()
+                ->sum('commission_amount');
+    }
+
     public function paginatedMonthlyTransactions()
     {
         if (empty($this->request->from || $this->request->to))
@@ -138,5 +147,11 @@ class TransactionEventRepository
         return TransactionEvent::whereNull("refund_id")
             ->filter($this->request)->count();
     }
-
+    public function transactionCashbackSum()
+    {
+        return TransactionEvent::whereNull("refund_id")
+                ->filter($this->request)
+                ->get()
+                ->sum('cashback_amount');
+    }
 }

@@ -25,7 +25,7 @@ class TransactionEvent extends Model
         "amount" => "integer"
     ];
 
-    protected $appends = ["fee", "cashback_amount"];
+    protected $appends = ["fee", "cashback_amount","commission_amount"];
 
 
     /**
@@ -57,10 +57,13 @@ class TransactionEvent extends Model
 
     public function getCashbackAmountAttribute(){
 
-        return optional($this->commission)->transactions->amount ?? 0;
+        return optional($this->commission)->cashbackAmount() ?? 0;
     }
 
-
+       public function getCommissionAmountAttribute()
+    {
+        return optional($this->commission)->commissionAmount() ?? 0;
+    }
     public function getFeeAttribute()
     {
         switch ($this->transaction_type) {

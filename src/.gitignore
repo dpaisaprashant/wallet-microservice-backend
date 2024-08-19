@@ -15,4 +15,4 @@ yarn-error.log
 /storage/*
 .idea/*
 /bootstrap/cache
-
+.env.save

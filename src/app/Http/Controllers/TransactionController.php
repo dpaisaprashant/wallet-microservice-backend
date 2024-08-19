@@ -23,7 +23,7 @@ use App\Wallet\User\Repositories\UserTotalTransactionRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Log;
 
 class TransactionController extends Controller
 {
@@ -35,9 +35,11 @@ class TransactionController extends Controller
             $totalTransactionCount = $repository->transactionsCount();
             $totalTransactionAmountSum = $repository->transactionAmountSum();
             $totalTransactionFeeSum = $repository->transactionFeeSum();
+$totalTransactionCommissionSum = $repository->transactionCommissionSum();
             $getAllUniqueVendors = $repository->getUniqueVendors();
-//            dd($transactions);
-            return view('admin.transaction.complete')->with(compact('transactions', 'getAllUniqueVendors', 'totalTransactionAmountSum', 'totalTransactionCount', 'totalTransactionFeeSum'));
+            $totalTransactionCashbackSum = $repository->transactionCashbackSum();
+            return view('admin.transaction.complete')->with(compact('transactions', 'getAllUniqueVendors', 'totalTransactionAmountSum', 'totalTransactionCount', 'totalTransactionFeeSum',
+'totalTransactionCashbackSum','totalTransactionCommissionSum'));
         }
         $getAllUniqueVendors = $repository->getUniqueVendors();
         return view('admin.transaction.complete')->with(compact('getAllUniqueVendors'));
@@ -159,6 +161,7 @@ class TransactionController extends Controller
 
     public function nchlBankTransferDetail($id, NchlBankTransferRepository $repository)
     {
+        Log::info('detail',[$id]);
         $transaction = $repository->detail($id);
         return view('admin.transaction.detail.nchlBankTransferDetail')->with(compact('transaction'));
     }
@@ -175,6 +178,7 @@ class TransactionController extends Controller
 
     public function nchlAggregatedPaymentDetail($id, NchlAggregatedPaymentRepository $repository)
     {
+Log::info('repor', $repository);
         $transaction = $repository->detail($id);
         return view('admin.transaction.detail.nchlAggregatedPaymentDetail')->with(compact('transaction'));
     }

@@ -1,9 +1,11 @@
-@if($user->userType !=null)
+@if(!empty($user->userType))
+
     <span
         class="badge badge-success">User type : {{ optional($user->userType)->name }}</span><br>
+
 @endif
 
-@if($user->merchant != null)
+@if(!empty($user->merchant ))
     @if(optional($user->merchant->merchantType)->name == "normal")
         <span class="badge badge-primary">Merchant type : {{ optional($user->merchant->merchantType)->name }}</span>
         @elseif(optional($user->merchant->merchantType)->name == "reseller")
@@ -11,7 +13,7 @@
     @endif
     <br>
 @endif
-@if($user->agent != null && $user->isValidAgentOrSubAgent())
+@if(!empty($user->agent) && $user->isValidAgentOrSubAgent())
     <span class="badge badge-danger">Agent type :
         @if($user->agent != null)
             {{ optional($user->agent->agentType)->name }}

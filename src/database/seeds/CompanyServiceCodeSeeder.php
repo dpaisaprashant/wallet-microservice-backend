@@ -8,7 +8,7 @@ class CompanyServiceCodeSeeder extends Seeder
 {
     public function run()
     {
-        for ($i = 20000; $i <= 180000; $i = $i + 10000) {
+        for ($i = 0; $i <= 180000; $i = $i + 10000) {
             $preTransactions = PreTransaction::where('vendor', 'PAYPOINT')->orderBy('created_at', 'DESC')
                 ->limit(10000)
                 ->skip($i)

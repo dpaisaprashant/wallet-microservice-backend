@@ -185,3 +185,27 @@ services:
       - "5069:8081"
     networks:
       - laravel
+
+  mysql-cron-backup:
+    image: fradelg/mysql-cron-backup
+    depends_on:
+      - mysql
+    volumes:
+      - ~/db_bkps/core:/backup
+    environment:
+      - MYSQL_HOST=mysql_backend_wallet
+      - MYSQL_USER=root
+      - MYSQL_PASS=secret
+      - MAX_BACKUPS=1
+      - INIT_BACKUP=1
+      # Every hour
+      - CRON_TIME=0 * * * *
+      # Make it small
+      - GZIP_LEVEL=6
+      - MYSQL_DATABASE=mysql_backend_wallet
+      - TZ=Asia/Kathmandu
+    restart: unless-stopped
+    networks:
+      - laravel
+
+
